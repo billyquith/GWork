@@ -23,13 +23,13 @@ namespace Gwen
 		{
 			char strOut[1024];
 			va_list s;
-			va_start( s, str ); 
+
+			va_start( s, str );
 #ifdef _WIN32
-			vsnprintf_s( strOut, sizeof(strOut), str, s );
+			vsnprintf_s( strOut, sizeof( strOut ), str, s );
 #else
-			vsnprintf( strOut, sizeof(strOut), str, s );
+			vsnprintf( strOut, sizeof( strOut ), str, s );
 #endif
-			va_end(s);
 			GwenUtil_OutputDebugCharString( strOut );
 		}
 #ifdef UNICODE
@@ -37,18 +37,17 @@ namespace Gwen
 		{
 			wchar_t strOut[1024];
 			va_list s;
-			va_start( s, str ); 
-			vswprintf( strOut, sizeof(strOut), str, s );
-			va_end(s);
+			va_start( s, str );
+			vswprintf( strOut, sizeof( strOut ), str, s );
+			va_end( s );
 			GwenUtil_OutputDebugWideString( strOut );
 		}
 #endif
 		void AssertCheck( bool b, const char* strMsg )
 		{
-			if ( b ) return;
+			if ( b ) { return; }
 
 			Msg( "Assert: %s\n", strMsg );
-
 #ifdef _WIN32
 			MessageBoxA( NULL, strMsg, "Assert", MB_ICONEXCLAMATION | MB_OK );
 			_asm { int 3 }
