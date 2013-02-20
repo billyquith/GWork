@@ -32,15 +32,15 @@ class ComboBox : public GUnit
 				combo->SetPos( 50, 110 );
 				combo->SetWidth( 200 );
 
-				for ( int i=0; i<500; i++ )
+				for ( int i = 0; i < 500; i++ )
 				{ combo->AddItem( L"Lots Of Options" ); }
 			}
 		}
 
 		void OnComboSelect( Gwen::Controls::Base* pControl )
 		{
-			Gwen::Controls::ComboBox* combo = ( Gwen::Controls::ComboBox* )pControl;
-			UnitPrint( Utility::Format( L"Combo Changed: %s", combo->GetSelectedItem()->GetText().GetUnicode().c_str() ) );
+			Gwen::Controls::ComboBox* combo = ( Gwen::Controls::ComboBox* ) pControl;
+			UnitPrint( Utility::Format( L"Combo Changed: %ls", combo->GetSelectedItem()->GetText().GetUnicode().c_str() ) );
 		}
 };
 
