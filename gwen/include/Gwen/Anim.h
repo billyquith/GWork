@@ -199,7 +199,8 @@ namespace Gwen
             public:
 
                 Y(int iStartSize, int iEndSize, float fLength, bool bHide = false,
-                  float fDelay = 0.0f, float fEase = 1.0f) : TimedAnimation(fLength, fDelay, fEase)
+                  float fDelay = 0.0f, float fEase = 1.0f)
+				:	TimedAnimation(fLength, fDelay, fEase)
                 {
                     m_iStartSize = iStartSize;
                     m_iDelta = iEndSize-m_iStartSize;
@@ -250,9 +251,7 @@ namespace Gwen
 
             };
 
-
         }
-
 
     }
 }

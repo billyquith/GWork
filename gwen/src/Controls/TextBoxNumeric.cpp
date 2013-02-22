@@ -120,3 +120,4 @@ float TextBoxNumeric::GetFloatFromText()
     double temp = Gwen::Utility::Strings::To::Float( GetText().GetUnicode() );
     return temp;
 }
+

@@ -90,7 +90,7 @@ bool WindowControl::IsOnTop()
          iter != GetParent()->Children.rend();
          ++iter)
     {
-        WindowControl* pWindow = gwen_cast< WindowControl >(*iter);
+        WindowControl* pWindow = gwen_cast<WindowControl>(*iter);
 
         if (!pWindow)
         {

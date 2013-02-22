@@ -201,7 +201,7 @@ bool DockBase::DragAndDrop_HandleDrop(Gwen::DragAndDrop::Package* pPackage, int 
 
     if (pPackage->name == "TabButtonMove")
     {
-        TabButton* pTabButton = gwen_cast< TabButton >(DragAndDrop::SourceControl);
+        TabButton* pTabButton = gwen_cast<TabButton>(DragAndDrop::SourceControl);
 
         if (!pTabButton)
         {
@@ -213,7 +213,7 @@ bool DockBase::DragAndDrop_HandleDrop(Gwen::DragAndDrop::Package* pPackage, int 
 
     if (pPackage->name == "TabWindowMove")
     {
-        DockedTabControl* pTabControl = gwen_cast< DockedTabControl >(DragAndDrop::SourceControl);
+        DockedTabControl* pTabControl = gwen_cast<DockedTabControl>(DragAndDrop::SourceControl);
 
         if (!pTabControl)
         {
@@ -275,7 +275,7 @@ void DockBase::DoRedundancyCheck()
         return;
     }
 
-    DockBase* pDockParent = gwen_cast< DockBase >( GetParent() );
+    DockBase* pDockParent = gwen_cast<DockBase>( GetParent() );
 
     if (!pDockParent)
     {

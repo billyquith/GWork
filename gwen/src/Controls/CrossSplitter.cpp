@@ -94,27 +94,34 @@ void CrossSplitter::Layout(Skin::Base* /*skin*/)
     {
         if (m_Sections[0])
         {
-            m_Sections[0]->SetBounds( 0, 0, m_HSplitter->X(), m_VSplitter->Y() );
+            m_Sections[0]->SetBounds( 0,
+                                      0,
+                                      m_HSplitter->X(),
+                                      m_VSplitter->Y() );
         }
 
         if (m_Sections[1])
         {
-            m_Sections[1]->SetBounds( m_HSplitter->X()+m_fBarSize, 0, Width()-
-                                      (m_HSplitter->X()+m_fBarSize), m_VSplitter->Y() );
+            m_Sections[1]->SetBounds( m_HSplitter->X()+m_fBarSize,
+                                      0,
+                                      Width() - (m_HSplitter->X()+m_fBarSize),
+                                      m_VSplitter->Y() );
         }
 
         if (m_Sections[2])
         {
-            m_Sections[2]->SetBounds( 0, m_VSplitter->Y()+m_fBarSize, m_HSplitter->X(), Height()-
-                                      (m_VSplitter->Y()+m_fBarSize) );
+            m_Sections[2]->SetBounds( 0,
+                                      m_VSplitter->Y()+m_fBarSize,
+                                      m_HSplitter->X(),
+                                      Height()-(m_VSplitter->Y()+m_fBarSize) );
         }
 
         if (m_Sections[3])
         {
             m_Sections[3]->SetBounds( m_HSplitter->X()+m_fBarSize,
-                                      m_VSplitter->Y()+m_fBarSize, Width()-
-                                      (m_HSplitter->X()+
-                                       m_fBarSize), Height()-(m_VSplitter->Y()+m_fBarSize) );
+                                      m_VSplitter->Y()+m_fBarSize,
+                                      Width() - (m_HSplitter->X()+m_fBarSize),
+                                      Height()-(m_VSplitter->Y()+m_fBarSize) );
         }
     }
     else

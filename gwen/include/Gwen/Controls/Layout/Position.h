@@ -24,7 +24,7 @@ namespace Gwen
 
                 GWEN_CONTROL_INLINE(Position, Base)
                 {
-                    SetPosition(Pos::Left|Pos::Top);
+                    SetPosition(Pos::Left | Pos::Top);
                 }
 
                 void PostLayout(Skin::Base* skin)

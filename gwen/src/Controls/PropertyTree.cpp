@@ -29,7 +29,7 @@ namespace Gwen
 
             for (Base::List::iterator iter = children.begin(); iter != children.end(); ++iter)
             {
-                PropertyTreeNode* pChild = gwen_cast< PropertyTreeNode >(*iter);
+                PropertyTreeNode* pChild = gwen_cast<PropertyTreeNode>(*iter);
 
                 if (!pChild)
                 {
@@ -44,7 +44,7 @@ namespace Gwen
                          iter != nodechildren.end();
                          ++iter)
                     {
-                        Properties* pPropertyChild = gwen_cast< Properties >(*iter);
+                        Properties* pPropertyChild = gwen_cast<Properties>(*iter);
 
                         if (!pPropertyChild)
                         {

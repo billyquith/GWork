@@ -881,7 +881,7 @@ T* gwen_cast(Gwen::Controls::Base* p)
 template < typename T >
 T* Gwen::Controls::Base::FindChild(const Gwen::String& name, bool bRecursive)
 {
-    return gwen_cast< T >( FindChildByName(name, bRecursive) );
+    return gwen_cast<T>( FindChildByName(name, bRecursive) );
 }
 
 #   define GWEN_DYNAMIC(ThisName, BaseName)                                  \

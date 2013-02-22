@@ -163,21 +163,21 @@ void ScrollControl::UpdateScrollBars()
          ++iter)
     {
         Base* pChild = *iter;
-        childrenWidth = Utility::Max( childrenWidth, pChild->Right() );
-        childrenHeight = Utility::Max( childrenHeight, pChild->Bottom() );
+        childrenWidth = Gwen::Max( childrenWidth, pChild->Right() );
+        childrenHeight = Gwen::Max( childrenHeight, pChild->Bottom() );
     }
 
     if (m_bCanScrollH)
     {
-        m_InnerPanel->SetSize( Utility::Max(Width(),
+        m_InnerPanel->SetSize( Gwen::Max(Width(),
                                             childrenWidth),
-                               Utility::Max(Height(), childrenHeight) );
+                               Gwen::Max(Height(), childrenHeight) );
     }
     else
     {
         m_InnerPanel->SetSize( Width()-
                                (m_VerticalScrollBar->Hidden() ? 0 : m_VerticalScrollBar->Width()-1),
-                               Utility::Max(Height(), childrenHeight) );
+                               Gwen::Max(Height(), childrenHeight) );
     }
 
     float wPercent = (float)Width()/

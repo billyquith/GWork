@@ -53,18 +53,10 @@ float Slider::CalculateValue()
 
 void Slider::SetFloatValue(float val, bool /*forceUpdate*/)
 {
-    if (val < m_fMin)
-    {
-        val = m_fMin;
-    }
-
-    if (val > m_fMax)
-    {
-        val = m_fMax;
-    }
+    val = Clamp(val, m_fMin, m_fMax);
 
     // Normalize Value
-    val = (val-m_fMin)/(m_fMax-m_fMin);
+    val = (val-m_fMin) / (m_fMax-m_fMin);
     SetValueInternal(val);
     Redraw();
 }
@@ -73,7 +65,7 @@ void Slider::SetValueInternal(float val)
 {
     if (m_bClampToNotches)
     {
-        val = floorf( (val*(float)m_iNumNotches)+0.5f );
+        val = floorf( val*(float)m_iNumNotches + 0.5f );
         val /= (float)m_iNumNotches;
     }
 

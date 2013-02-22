@@ -24,7 +24,7 @@ public:
 
     virtual void Think()
     {
-        gwen_cast< TextBox >(m_Control)->UpdateCaretColor();
+        gwen_cast<TextBox>(m_Control)->UpdateCaretColor();
     }
 
 };
@@ -151,9 +151,9 @@ void TextBox::RefreshCursorBounds()
     MakeCaratVisible();
     Gwen::Rect pA = GetCharacterPosition(m_iCursorPos);
     Gwen::Rect pB = GetCharacterPosition(m_iCursorEnd);
-    m_rectSelectionBounds.x = Utility::Min(pA.x, pB.x);
+    m_rectSelectionBounds.x = Gwen::Min(pA.x, pB.x);
     m_rectSelectionBounds.y = m_Text->Y()-1;
-    m_rectSelectionBounds.w = Utility::Max(pA.x, pB.x)-m_rectSelectionBounds.x;
+    m_rectSelectionBounds.w = Gwen::Max(pA.x, pB.x)-m_rectSelectionBounds.x;
     m_rectSelectionBounds.h = m_Text->Height()+2;
     m_rectCaretBounds.x = pA.x;
     m_rectCaretBounds.y = pA.y;
@@ -208,8 +208,8 @@ UnicodeString TextBox::GetSelection()
         return L"";
     }
 
-    int iStart = Utility::Min(m_iCursorPos, m_iCursorEnd);
-    int iEnd = Utility::Max(m_iCursorPos, m_iCursorEnd);
+    int iStart = Gwen::Min(m_iCursorPos, m_iCursorEnd);
+    int iEnd = Gwen::Max(m_iCursorPos, m_iCursorEnd);
     const UnicodeString& str = GetText().GetUnicode();
     return str.substr(iStart, iEnd-iStart);
 }
@@ -397,8 +397,8 @@ bool TextBox::HasSelection()
 
 void TextBox::EraseSelection()
 {
-    int iStart = Utility::Min(m_iCursorPos, m_iCursorEnd);
-    int iEnd = Utility::Max(m_iCursorPos, m_iCursorEnd);
+    int iStart = Gwen::Min(m_iCursorPos, m_iCursorEnd);
+    int iEnd = Gwen::Max(m_iCursorPos, m_iCursorEnd);
     DeleteText(iStart, iEnd-iStart);
     // Move the cursor to the start of the selection,
     // since the end is probably outside of the string now.

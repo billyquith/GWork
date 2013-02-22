@@ -66,7 +66,7 @@ void ResizableControl::DisableResizing()
 {
     for (Base::List::iterator it = Children.begin(); it != Children.end(); ++it)
     {
-        Resizer* resizer = gwen_cast< Resizer >(*it);
+        Resizer* resizer = gwen_cast<Resizer>(*it);
 
         if (!resizer)
         {
@@ -85,15 +85,8 @@ bool ResizableControl::SetBounds(int x, int y, int w, int h)
     Gwen::Point minSize = GetMinimumSize();
 
     // Clamp Minimum Size
-    if (w < minSize.x)
-    {
-        w = minSize.x;
-    }
-
-    if (h < minSize.y)
-    {
-        h = minSize.y;
-    }
+    w = Max(w, minSize.x);
+    h = Max(h, minSize.y);
 
     // Clamp to parent's window
     Base* pParent = GetParent();

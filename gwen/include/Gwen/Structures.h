@@ -74,11 +74,11 @@ namespace Gwen
     struct GWEN_EXPORT Rect
     {
         Rect(int x_ = 0, int y_ = 0, int w_ = 0, int h_ = 0)
+        :	x(x_)
+        ,	y(y_)
+        ,	w(w_)
+        ,	h(h_)
         {
-            this->x = x_;
-            this->y = y_;
-            this->w = w_;
-            this->h = h_;
         }
 
         Rect operator + (const Rect& rct) const

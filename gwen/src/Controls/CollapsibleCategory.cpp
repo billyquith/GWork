@@ -14,7 +14,7 @@ class CategoryButton : public Button
 {
     GWEN_CONTROL_INLINE(CategoryButton, Button)
     {
-        SetAlignment(Pos::Left|Pos::CenterV);
+        SetAlignment(Pos::Left | Pos::CenterV);
         m_bAlt = false;
     }
 
@@ -135,7 +135,7 @@ Button* CollapsibleCategory::Add(const TextObject& name)
 
 void CollapsibleCategory::OnSelection(Controls::Base* control)
 {
-    CategoryButton* pChild = gwen_cast< CategoryButton >(control);
+    CategoryButton* pChild = gwen_cast<CategoryButton>(control);
 
     if (!pChild)
     {
@@ -171,7 +171,7 @@ void CollapsibleCategory::UnselectAll()
 
     for (Base::List::iterator iter = children.begin(); iter != children.end(); ++iter)
     {
-        CategoryButton* pChild = gwen_cast< CategoryButton >(*iter);
+        CategoryButton* pChild = gwen_cast<CategoryButton>(*iter);
 
         if (!pChild)
         {
@@ -198,7 +198,7 @@ void CollapsibleCategory::PostLayout(Skin::Base* /*skin*/)
 
     for (Base::List::iterator iter = children.begin(); iter != children.end(); ++iter)
     {
-        CategoryButton* pChild = gwen_cast< CategoryButton >(*iter);
+        CategoryButton* pChild = gwen_cast<CategoryButton>(*iter);
 
         if (!pChild)
         {
@@ -217,7 +217,7 @@ Button* CollapsibleCategory::GetSelected()
 
     for (Base::List::iterator iter = children.begin(); iter != children.end(); ++iter)
     {
-        CategoryButton* pChild = gwen_cast< CategoryButton >(*iter);
+        CategoryButton* pChild = gwen_cast<CategoryButton>(*iter);
 
         if (!pChild)
         {

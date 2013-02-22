@@ -168,7 +168,7 @@ void ListBox::SetSelectedRow(Gwen::Controls::Base* pControl, bool bClearOthers)
         UnselectAll();
     }
 
-    ListBoxRow* pRow = gwen_cast< ListBoxRow >(pControl);
+    ListBoxRow* pRow = gwen_cast<ListBoxRow>(pControl);
 
     if (!pRow)
     {
@@ -192,7 +192,7 @@ void ListBox::SelectByString(const TextObject& strName, bool bClearOthers)
 
     for (Base::List::iterator iter = children.begin(); iter != children.end(); ++iter)
     {
-        ListBoxRow* pChild = gwen_cast< ListBoxRow >(*iter);
+        ListBoxRow* pChild = gwen_cast<ListBoxRow>(*iter);
 
         if (!pChild)
         {
@@ -233,7 +233,7 @@ bool ListBox::OnKeyDown(bool bDown)
                 result = next;
             }
 
-            ListBoxRow* pRow = gwen_cast< ListBoxRow >(*result);
+            ListBoxRow* pRow = gwen_cast<ListBoxRow>(*result);
 
             if (pRow)
             {
@@ -263,8 +263,8 @@ bool ListBox::OnKeyUp(bool bDown)
         Base::List::const_iterator end = children.end();
         Controls::Base* sel_row = GetSelectedRow();
 
-        if ( sel_row == NULL && !children.empty() ) // no user selection yet, so
-                                                    // select first element
+         // no user selection yet, so select first element
+        if ( sel_row == NULL && !children.empty() )
         {
             sel_row = children.front();
         }
@@ -278,7 +278,7 @@ bool ListBox::OnKeyUp(bool bDown)
                 --result;
             }
 
-            ListBoxRow* pRow = gwen_cast< ListBoxRow >(*result);
+            ListBoxRow* pRow = gwen_cast<ListBoxRow>(*result);
 
             if (pRow)
             {

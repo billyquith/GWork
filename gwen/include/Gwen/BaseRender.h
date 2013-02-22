@@ -90,6 +90,7 @@ namespace Gwen
             }
 
             virtual void        DrawMissingImage(Gwen::Rect pTargetRect);
+            
             virtual Gwen::Color PixelColour( Gwen::Texture* pTexture, unsigned int x,
                                              unsigned int y, const Gwen::Color& col_default = Gwen::Color(
                                                  255, 255, 255,

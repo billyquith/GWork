@@ -63,7 +63,7 @@ PropertyRow* Properties::Find(const TextObject& text)
 {
     for (Base::List::iterator it = GetChildren().begin(); it != GetChildren().end(); ++it)
     {
-        PropertyRow* row = gwen_cast< PropertyRow >(*it);
+        PropertyRow* row = gwen_cast<PropertyRow>(*it);
 
         if (!row)
         {
@@ -85,7 +85,7 @@ void Properties::Clear()
 
     for (Base::List::iterator it = ChildListCopy.begin(); it != ChildListCopy.end(); ++it)
     {
-        PropertyRow* row = gwen_cast< PropertyRow >(*it);
+        PropertyRow* row = gwen_cast<PropertyRow>(*it);
 
         if (!row)
         {
@@ -168,7 +168,7 @@ void PropertyRow::Render(Gwen::Skin::Base* skin)
 
 void PropertyRow::Layout(Gwen::Skin::Base* /*skin*/)
 {
-    Properties* pParent = gwen_cast< Properties >( GetParent() );
+    Properties* pParent = gwen_cast<Properties>( GetParent() );
 
     if (!pParent)
     {
