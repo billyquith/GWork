@@ -5,13 +5,13 @@
 using namespace Gwen;
 using namespace Controls;
 
-GWEN_CONTROL_CONSTRUCTOR( SplitterBar )
+GWEN_CONTROL_CONSTRUCTOR(SplitterBar)
 {
-	SetTarget( this );
-	RestrictToParent( true );
+    SetTarget(this);
+    RestrictToParent(true);
 }
 
-void SplitterBar::Layout( Skin::Base* /*skin*/ )
+void SplitterBar::Layout(Skin::Base* /*skin*/)
 {
-	MoveTo( X(), Y() );
+    MoveTo( X(), Y() );
 }

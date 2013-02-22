@@ -1,8 +1,8 @@
 /*
-	GWEN
-	Copyright (c) 2010 Facepunch Studios
-	See license in Gwen.h
-*/
+ *  GWEN
+ *  Copyright (c) 2010 Facepunch Studios
+ *  See license in Gwen.h
+ */
 
 
 #include "Gwen/Controls/ScrollBar.h"
@@ -12,46 +12,50 @@ using namespace Gwen;
 using namespace Gwen::Controls;
 using namespace Gwen::ControlsInternal;
 
-//Actual bar representing height of parent
+// Actual bar representing height of parent
 
-GWEN_CONTROL_CONSTRUCTOR( ScrollBarBar )
+GWEN_CONTROL_CONSTRUCTOR(ScrollBarBar)
 {
-	RestrictToParent( true );
-	SetTarget( this );
+    RestrictToParent(true);
+    SetTarget(this);
 }
 
-void ScrollBarBar::Render( Skin::Base* skin )
+void ScrollBarBar::Render(Skin::Base* skin)
 {
-	skin->DrawScrollBarBar( this, m_bDepressed, IsHovered(), m_bHorizontal );
-	BaseClass::Render( skin );
+    skin->DrawScrollBarBar(this, m_bDepressed, IsHovered(), m_bHorizontal);
+    BaseClass::Render(skin);
 }
 
-void ScrollBarBar::OnMouseMoved( int x, int y, int deltaX, int deltaY )
+void ScrollBarBar::OnMouseMoved(int x, int y, int deltaX, int deltaY)
 {
-	BaseClass::OnMouseMoved( x, y, deltaX, deltaY );
+    BaseClass::OnMouseMoved(x, y, deltaX, deltaY);
 
-	if ( !m_bDepressed )
-	{ return; }
+    if (!m_bDepressed)
+    {
+        return;
+    }
 
-	InvalidateParent();
+    InvalidateParent();
 }
 
-void ScrollBarBar::OnMouseClickLeft( int x, int y, bool bDown )
+void ScrollBarBar::OnMouseClickLeft(int x, int y, bool bDown)
 {
-	BaseClass::OnMouseClickLeft( x, y, bDown );
-	InvalidateParent();
+    BaseClass::OnMouseClickLeft(x, y, bDown);
+    InvalidateParent();
 }
 
-void ScrollBarBar::Layout( Skin::Base* /*skin*/ )
+void ScrollBarBar::Layout(Skin::Base* /*skin*/)
 {
-	if ( !GetParent() )
-	{ return; }
+    if ( !GetParent() )
+    {
+        return;
+    }
 
-	//Move to our current position to force clamping - is this a hack?
-	MoveTo( X(), Y() );
+    // Move to our current position to force clamping - is this a hack?
+    MoveTo( X(), Y() );
 }
 
-void ScrollBarBar::MoveTo( int x, int y )
+void ScrollBarBar::MoveTo(int x, int y)
 {
-	BaseClass::MoveTo( x, y );
+    BaseClass::MoveTo(x, y);
 }

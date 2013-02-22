@@ -4,31 +4,39 @@
 
 namespace Gwen
 {
-	namespace ControlFactory
-	{
+    namespace ControlFactory
+    {
+        using namespace Gwen;
 
-		using namespace Gwen;
+        class FolderPicker_Factory : public Gwen::ControlFactory::Base
+        {
+        public:
 
-		class FolderPicker_Factory : public Gwen::ControlFactory::Base
-		{
-			public:
+            GWEN_CONTROL_FACTORY_CONSTRUCTOR(FolderPicker_Factory, ControlFactory::Base)
+            {
+            }
 
-				GWEN_CONTROL_FACTORY_CONSTRUCTOR( FolderPicker_Factory, ControlFactory::Base )
-				{
-				}
+            virtual Gwen::String Name()
+            {
+                return "FolderPicker";
+            }
 
-				virtual Gwen::String Name()     { return "FolderPicker"; }
-				virtual Gwen::String BaseName() { return "Base"; }
+            virtual Gwen::String BaseName()
+            {
+                return "Base";
+            }
 
-				virtual Gwen::Controls::Base* CreateInstance( Gwen::Controls::Base* parent )
-				{
-					Gwen::Controls::FolderPicker* pControl = new Gwen::Controls::FolderPicker( parent );
-					pControl->SetSize( 100, 20 );
-					return pControl;
-				}
-		};
+            virtual Gwen::Controls::Base* CreateInstance(Gwen::Controls::Base* parent)
+            {
+                Gwen::Controls::FolderPicker* pControl = new Gwen::Controls::FolderPicker(parent);
+                pControl->SetSize(100, 20);
+                return pControl;
+            }
 
-		GWEN_CONTROL_FACTORY( FolderPicker_Factory );
+        };
 
-	}
+
+        GWEN_CONTROL_FACTORY(FolderPicker_Factory);
+
+    }
 }

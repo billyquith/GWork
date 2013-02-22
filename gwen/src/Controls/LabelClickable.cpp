@@ -1,8 +1,8 @@
 /*
-	GWEN
-	Copyright (c) 2010 Facepunch Studios
-	See license in Gwen.h
-*/
+ *  GWEN
+ *  Copyright (c) 2010 Facepunch Studios
+ *  See license in Gwen.h
+ */
 
 
 #include "Gwen/Gwen.h"
@@ -12,14 +12,14 @@
 using namespace Gwen;
 using namespace Gwen::Controls;
 
-GWEN_CONTROL_CONSTRUCTOR( LabelClickable )
+GWEN_CONTROL_CONSTRUCTOR(LabelClickable)
 {
-	SetIsToggle( false );
-	SetCursor( Gwen::CursorType::Finger );
-	SetAlignment( Gwen::Pos::Left | Gwen::Pos::CenterV );
+    SetIsToggle(false);
+    SetCursor(Gwen::CursorType::Finger);
+    SetAlignment(Gwen::Pos::Left|Gwen::Pos::CenterV);
 }
 
-void LabelClickable::Render( Skin::Base* /*skin*/ )
+void LabelClickable::Render(Skin::Base* /*skin*/)
 {
-	//skin->DrawButton( this, IsDepressed(), IsToggle() && GetToggleState() );
+    // skin->DrawButton( this, IsDepressed(), IsToggle() && GetToggleState() );
 }

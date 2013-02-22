@@ -1,8 +1,8 @@
 /*
-	GWEN
-	Copyright (c) 2010 Facepunch Studios
-	See license in Gwen.h
-*/
+ *  GWEN
+ *  Copyright (c) 2010 Facepunch Studios
+ *  See license in Gwen.h
+ */
 
 
 #include "Gwen/Gwen.h"
@@ -17,332 +17,427 @@ using namespace Gwen;
 using namespace Gwen::Controls;
 
 
-GWEN_CONTROL_CONSTRUCTOR( DockBase )
+GWEN_CONTROL_CONSTRUCTOR(DockBase)
 {
-	SetPadding( Padding( 1, 1, 1, 1 ) );
-	SetSize( 200, 200 );
-	m_DockedTabControl = NULL;
-	m_Left = NULL;
-	m_Right = NULL;
-	m_Top = NULL;
-	m_Bottom = NULL;
-	m_bDrawHover = false;
+    SetPadding( Padding(1, 1, 1, 1) );
+    SetSize(200, 200);
+    m_DockedTabControl = NULL;
+    m_Left = NULL;
+    m_Right = NULL;
+    m_Top = NULL;
+    m_Bottom = NULL;
+    m_bDrawHover = false;
 }
 
 TabControl* DockBase::GetTabControl()
 {
-	return m_DockedTabControl;
+    return m_DockedTabControl;
 }
 
-void DockBase::SetupChildDock( int iPos )
+void DockBase::SetupChildDock(int iPos)
 {
-	if ( !m_DockedTabControl )
-	{
-		m_DockedTabControl = new DockedTabControl( this );
-		m_DockedTabControl->onLoseTab.Add( this, &DockBase::OnTabRemoved );
-		m_DockedTabControl->SetTabStripPosition( Pos::Bottom );
-		m_DockedTabControl->SetShowTitlebar( true );
-	}
+    if (!m_DockedTabControl)
+    {
+        m_DockedTabControl = new DockedTabControl(this);
+        m_DockedTabControl->onLoseTab.Add(this, &DockBase::OnTabRemoved);
+        m_DockedTabControl->SetTabStripPosition(Pos::Bottom);
+        m_DockedTabControl->SetShowTitlebar(true);
+    }
 
-	Dock( iPos );
-	int iSizeDirection = Pos::Left;
+    Dock(iPos);
+    int iSizeDirection = Pos::Left;
 
-	if ( iPos == Pos::Left ) { iSizeDirection = Pos::Right; }
+    if (iPos == Pos::Left)
+    {
+        iSizeDirection = Pos::Right;
+    }
 
-	if ( iPos == Pos::Top ) { iSizeDirection = Pos::Bottom; }
+    if (iPos == Pos::Top)
+    {
+        iSizeDirection = Pos::Bottom;
+    }
 
-	if ( iPos == Pos::Bottom ) { iSizeDirection = Pos::Top; }
+    if (iPos == Pos::Bottom)
+    {
+        iSizeDirection = Pos::Top;
+    }
 
-	ControlsInternal::Resizer* sizer = new ControlsInternal::Resizer( this );
-	sizer->Dock( iSizeDirection );
-	sizer->SetResizeDir( iSizeDirection );
-	sizer->SetSize( 2, 2 );
-	sizer->SetTarget( this );
+    ControlsInternal::Resizer* sizer = new ControlsInternal::Resizer(this);
+    sizer->Dock(iSizeDirection);
+    sizer->SetResizeDir(iSizeDirection);
+    sizer->SetSize(2, 2);
+    sizer->SetTarget(this);
 }
 
-void DockBase::Render( Skin::Base* /*skin*/ )
+void DockBase::Render(Skin::Base* /*skin*/)
 {
-	//Gwen::Render->SetDrawColor( Colors::Black );
-	//Gwen::Render->DrawLinedRect( GetRenderBounds() );
+    // Gwen::Render->SetDrawColor( Colors::Black );
+    // Gwen::Render->DrawLinedRect( GetRenderBounds() );
 }
 
-DockBase** DockBase::GetChildDockPtr( int iPos )
+DockBase** DockBase::GetChildDockPtr(int iPos)
 {
-	if ( iPos == Pos::Left ) { return &m_Left; }
+    if (iPos == Pos::Left)
+    {
+        return &m_Left;
+    }
 
-	if ( iPos == Pos::Right ) { return &m_Right; }
+    if (iPos == Pos::Right)
+    {
+        return &m_Right;
+    }
 
-	if ( iPos == Pos::Top ) { return &m_Top; }
+    if (iPos == Pos::Top)
+    {
+        return &m_Top;
+    }
 
-	if ( iPos == Pos::Bottom ) { return &m_Bottom; }
+    if (iPos == Pos::Bottom)
+    {
+        return &m_Bottom;
+    }
 
-	return NULL;
+    return NULL;
 }
 
-DockBase* DockBase::GetChildDock( int iPos )
+DockBase* DockBase::GetChildDock(int iPos)
 {
-	DockBase** pDock = GetChildDockPtr( iPos );
+    DockBase** pDock = GetChildDockPtr(iPos);
 
-	if ( !( *pDock ) )
-	{
-		( *pDock ) = new DockBase( this );
-		( *pDock )->SetupChildDock( iPos );
-	}
-	else
-	{
-		( *pDock )->SetHidden( false );
-	}
+    if ( !(*pDock) )
+    {
+        (*pDock) = new DockBase(this);
+        (*pDock)->SetupChildDock(iPos);
+    }
+    else
+    {
+        (*pDock)->SetHidden(false);
+    }
 
-	return *pDock;
+    return *pDock;
 }
 
-int DockBase::GetDroppedTabDirection( int x, int y )
+int DockBase::GetDroppedTabDirection(int x, int y)
 {
-	int w = Width();
-	int h = Height();
-	float top = ( float ) y / ( float ) h;
-	float left = ( float ) x / ( float ) w;
-	float right = ( float )( w - x ) / ( float ) w;
-	float bottom = ( float )( h - y ) / ( float ) h;
-	float minimum = Gwen::Min( Gwen::Min( Gwen::Min( top, left ), right ), bottom );
-	m_bDropFar = ( minimum < 0.2f );
+    int w = Width();
+    int h = Height();
+    float top = (float)y/(float)h;
+    float left = (float)x/(float)w;
+    float right = (float)(w-x)/(float)w;
+    float bottom = (float)(h-y)/(float)h;
+    float minimum = Gwen::Min(Gwen::Min(Gwen::Min(top, left), right), bottom);
+    m_bDropFar = (minimum < 0.2f);
 
-	if ( minimum > 0.3 ) { return Pos::Fill; }
+    if (minimum > 0.3)
+    {
+        return Pos::Fill;
+    }
 
-	if ( top == minimum && ( !m_Top || m_Top->Hidden() ) ) { return Pos::Top; }
+    if ( top == minimum && ( !m_Top || m_Top->Hidden() ) )
+    {
+        return Pos::Top;
+    }
 
-	if ( left == minimum && ( !m_Left || m_Left->Hidden() ) ) { return Pos::Left; }
+    if ( left == minimum && ( !m_Left || m_Left->Hidden() ) )
+    {
+        return Pos::Left;
+    }
 
-	if ( right == minimum && ( !m_Right || m_Right->Hidden() ) ) { return Pos::Right; }
+    if ( right == minimum && ( !m_Right || m_Right->Hidden() ) )
+    {
+        return Pos::Right;
+    }
 
-	if ( bottom == minimum && ( !m_Bottom || m_Bottom->Hidden() ) ) { return Pos::Bottom; }
+    if ( bottom == minimum && ( !m_Bottom || m_Bottom->Hidden() ) )
+    {
+        return Pos::Bottom;
+    }
 
-	return Pos::Fill;
+    return Pos::Fill;
 }
 
-bool DockBase::DragAndDrop_CanAcceptPackage( Gwen::DragAndDrop::Package* pPackage )
+bool DockBase::DragAndDrop_CanAcceptPackage(Gwen::DragAndDrop::Package* pPackage)
 {
-	// A TAB button dropped
-	if ( pPackage->name == "TabButtonMove" )
-	{ return true; }
+    // A TAB button dropped
+    if (pPackage->name == "TabButtonMove")
+    {
+        return true;
+    }
 
-	// a TAB window dropped
-	if ( pPackage->name == "TabWindowMove" )
-	{ return true; }
+    // a TAB window dropped
+    if (pPackage->name == "TabWindowMove")
+    {
+        return true;
+    }
 
-	return false;
+    return false;
 }
 
-bool DockBase::DragAndDrop_HandleDrop( Gwen::DragAndDrop::Package* pPackage, int x, int y )
+bool DockBase::DragAndDrop_HandleDrop(Gwen::DragAndDrop::Package* pPackage, int x, int y)
 {
-	Gwen::Point pPos = CanvasPosToLocal( Gwen::Point( x, y ) );
-	int dir = GetDroppedTabDirection( pPos.x, pPos.y );
-	DockedTabControl* pAddTo = m_DockedTabControl;
+    Gwen::Point pPos = CanvasPosToLocal( Gwen::Point(x, y) );
+    int dir = GetDroppedTabDirection(pPos.x, pPos.y);
+    DockedTabControl* pAddTo = m_DockedTabControl;
 
-	if ( dir == Pos::Fill && pAddTo == NULL ) { return false; }
+    if (dir == Pos::Fill && pAddTo == NULL)
+    {
+        return false;
+    }
 
-	if ( dir != Pos::Fill )
-	{
-		DockBase* pDock = GetChildDock( dir );
-		pAddTo = pDock->m_DockedTabControl;
+    if (dir != Pos::Fill)
+    {
+        DockBase* pDock = GetChildDock(dir);
+        pAddTo = pDock->m_DockedTabControl;
 
-		if ( !m_bDropFar ) { pDock->BringToFront(); }
-		else { pDock->SendToBack(); }
-	}
+        if (!m_bDropFar)
+        {
+            pDock->BringToFront();
+        }
+        else
+        {
+            pDock->SendToBack();
+        }
+    }
 
-	if ( pPackage->name == "TabButtonMove" )
-	{
-		TabButton* pTabButton = gwen_cast<TabButton> ( DragAndDrop::SourceControl );
+    if (pPackage->name == "TabButtonMove")
+    {
+        TabButton* pTabButton = gwen_cast< TabButton >(DragAndDrop::SourceControl);
 
-		if ( !pTabButton ) { return false; }
+        if (!pTabButton)
+        {
+            return false;
+        }
 
-		pAddTo->AddPage( pTabButton );
-	}
+        pAddTo->AddPage(pTabButton);
+    }
 
-	if ( pPackage->name == "TabWindowMove" )
-	{
-		DockedTabControl* pTabControl = gwen_cast<DockedTabControl> ( DragAndDrop::SourceControl );
+    if (pPackage->name == "TabWindowMove")
+    {
+        DockedTabControl* pTabControl = gwen_cast< DockedTabControl >(DragAndDrop::SourceControl);
 
-		if ( !pTabControl ) { return false; }
+        if (!pTabControl)
+        {
+            return false;
+        }
 
-		if ( pTabControl == pAddTo ) { return false; }
+        if (pTabControl == pAddTo)
+        {
+            return false;
+        }
 
-		pTabControl->MoveTabsTo( pAddTo );
-	}
+        pTabControl->MoveTabsTo(pAddTo);
+    }
 
-	Invalidate();
-	return true;
+    Invalidate();
+    return true;
 }
 
 bool DockBase::IsEmpty()
 {
-	if ( m_DockedTabControl && m_DockedTabControl->TabCount() > 0 ) { return false; }
+    if (m_DockedTabControl && m_DockedTabControl->TabCount() > 0)
+    {
+        return false;
+    }
 
-	if ( m_Left && !m_Left->IsEmpty() ) { return false; }
+    if ( m_Left && !m_Left->IsEmpty() )
+    {
+        return false;
+    }
 
-	if ( m_Right && !m_Right->IsEmpty() ) { return false; }
+    if ( m_Right && !m_Right->IsEmpty() )
+    {
+        return false;
+    }
 
-	if ( m_Top && !m_Top->IsEmpty() ) { return false; }
+    if ( m_Top && !m_Top->IsEmpty() )
+    {
+        return false;
+    }
 
-	if ( m_Bottom && !m_Bottom->IsEmpty() ) { return false; }
+    if ( m_Bottom && !m_Bottom->IsEmpty() )
+    {
+        return false;
+    }
 
-	return true;
+    return true;
 }
 
-void DockBase::OnTabRemoved( Gwen::Controls::Base* /*pControl*/ )
+void DockBase::OnTabRemoved(Gwen::Controls::Base* /*pControl*/)
 {
-	DoRedundancyCheck();
-	DoConsolidateCheck();
+    DoRedundancyCheck();
+    DoConsolidateCheck();
 }
 
 void DockBase::DoRedundancyCheck()
 {
-	if ( !IsEmpty() ) { return; }
+    if ( !IsEmpty() )
+    {
+        return;
+    }
 
-	DockBase* pDockParent = gwen_cast<DockBase> ( GetParent() );
+    DockBase* pDockParent = gwen_cast< DockBase >( GetParent() );
 
-	if ( !pDockParent ) { return; }
+    if (!pDockParent)
+    {
+        return;
+    }
 
-	pDockParent->OnRedundantChildDock( this );
+    pDockParent->OnRedundantChildDock(this);
 }
 
 void DockBase::DoConsolidateCheck()
 {
-	if ( IsEmpty() ) { return; }
+    if ( IsEmpty() )
+    {
+        return;
+    }
 
-	if ( !m_DockedTabControl ) { return; }
+    if (!m_DockedTabControl)
+    {
+        return;
+    }
 
-	if ( m_DockedTabControl->TabCount() > 0 ) { return; }
+    if (m_DockedTabControl->TabCount() > 0)
+    {
+        return;
+    }
 
-	if ( m_Bottom && !m_Bottom->IsEmpty() )
-	{
-		m_Bottom->m_DockedTabControl->MoveTabsTo( m_DockedTabControl );
-		return;
-	}
+    if ( m_Bottom && !m_Bottom->IsEmpty() )
+    {
+        m_Bottom->m_DockedTabControl->MoveTabsTo(m_DockedTabControl);
+        return;
+    }
 
-	if ( m_Top && !m_Top->IsEmpty() )
-	{
-		m_Top->m_DockedTabControl->MoveTabsTo( m_DockedTabControl );
-		return;
-	}
+    if ( m_Top && !m_Top->IsEmpty() )
+    {
+        m_Top->m_DockedTabControl->MoveTabsTo(m_DockedTabControl);
+        return;
+    }
 
-	if ( m_Left && !m_Left->IsEmpty() )
-	{
-		m_Left->m_DockedTabControl->MoveTabsTo( m_DockedTabControl );
-		return;
-	}
+    if ( m_Left && !m_Left->IsEmpty() )
+    {
+        m_Left->m_DockedTabControl->MoveTabsTo(m_DockedTabControl);
+        return;
+    }
 
-	if ( m_Right && !m_Right->IsEmpty() )
-	{
-		m_Right->m_DockedTabControl->MoveTabsTo( m_DockedTabControl );
-		return;
-	}
+    if ( m_Right && !m_Right->IsEmpty() )
+    {
+        m_Right->m_DockedTabControl->MoveTabsTo(m_DockedTabControl);
+        return;
+    }
 }
 
-void DockBase::OnRedundantChildDock( DockBase* pDockBase )
+void DockBase::OnRedundantChildDock(DockBase* pDockBase)
 {
-	pDockBase->SetHidden( true );
-	DoRedundancyCheck();
-	DoConsolidateCheck();
+    pDockBase->SetHidden(true);
+    DoRedundancyCheck();
+    DoConsolidateCheck();
 }
 
-void DockBase::DragAndDrop_HoverEnter( Gwen::DragAndDrop::Package* /*pPackage*/, int /*x*/, int /*y*/ )
+void DockBase::DragAndDrop_HoverEnter(Gwen::DragAndDrop::Package* /*pPackage*/, int /*x*/,
+                                      int /*y*/)
 {
-	m_bDrawHover = true;
+    m_bDrawHover = true;
 }
 
-void DockBase::DragAndDrop_HoverLeave( Gwen::DragAndDrop::Package* /*pPackage*/ )
+void DockBase::DragAndDrop_HoverLeave(Gwen::DragAndDrop::Package* /*pPackage*/)
 {
-	m_bDrawHover = false;
+    m_bDrawHover = false;
 }
 
-void DockBase::DragAndDrop_Hover( Gwen::DragAndDrop::Package* /*pPackage*/, int x, int y )
+void DockBase::DragAndDrop_Hover(Gwen::DragAndDrop::Package* /*pPackage*/, int x, int y)
 {
-	Gwen::Point pPos = CanvasPosToLocal( Gwen::Point( x, y ) );
-	int dir = GetDroppedTabDirection( pPos.x, pPos.y );
+    Gwen::Point pPos = CanvasPosToLocal( Gwen::Point(x, y) );
+    int dir = GetDroppedTabDirection(pPos.x, pPos.y);
 
-	if ( dir == Pos::Fill )
-	{
-		if ( !m_DockedTabControl )
-		{
-			m_HoverRect = Gwen::Rect( 0, 0, 0, 0 );
-			return;
-		}
+    if (dir == Pos::Fill)
+    {
+        if (!m_DockedTabControl)
+        {
+            m_HoverRect = Gwen::Rect(0, 0, 0, 0);
+            return;
+        }
 
-		m_HoverRect = GetInnerBounds();
-		return;
-	}
+        m_HoverRect = GetInnerBounds();
+        return;
+    }
 
-	m_HoverRect = GetRenderBounds();
-	int HelpBarWidth = 0;
+    m_HoverRect = GetRenderBounds();
+    int HelpBarWidth = 0;
 
-	if ( dir == Pos::Left )
-	{
-		HelpBarWidth = m_HoverRect.w * 0.25f;
-		m_HoverRect.w = HelpBarWidth;
-	}
+    if (dir == Pos::Left)
+    {
+        HelpBarWidth = m_HoverRect.w*0.25f;
+        m_HoverRect.w = HelpBarWidth;
+    }
 
-	if ( dir == Pos::Right )
-	{
-		HelpBarWidth = m_HoverRect.w * 0.25f;
-		m_HoverRect.x = m_HoverRect.w - HelpBarWidth;
-		m_HoverRect.w = HelpBarWidth;
-	}
+    if (dir == Pos::Right)
+    {
+        HelpBarWidth = m_HoverRect.w*0.25f;
+        m_HoverRect.x = m_HoverRect.w-HelpBarWidth;
+        m_HoverRect.w = HelpBarWidth;
+    }
 
-	if ( dir == Pos::Top )
-	{
-		HelpBarWidth = m_HoverRect.h * 0.25f;
-		m_HoverRect.h = HelpBarWidth;
-	}
+    if (dir == Pos::Top)
+    {
+        HelpBarWidth = m_HoverRect.h*0.25f;
+        m_HoverRect.h = HelpBarWidth;
+    }
 
-	if ( dir == Pos::Bottom )
-	{
-		HelpBarWidth = m_HoverRect.h * 0.25f;
-		m_HoverRect.y = m_HoverRect.h - HelpBarWidth;
-		m_HoverRect.h = HelpBarWidth;
-	}
+    if (dir == Pos::Bottom)
+    {
+        HelpBarWidth = m_HoverRect.h*0.25f;
+        m_HoverRect.y = m_HoverRect.h-HelpBarWidth;
+        m_HoverRect.h = HelpBarWidth;
+    }
 
-	if ( ( dir == Pos::Top || dir == Pos::Bottom ) && !m_bDropFar )
-	{
-		if ( m_Left && m_Left->Visible() )
-		{
-			m_HoverRect.x += m_Left->Width();
-			m_HoverRect.w -= m_Left->Width();
-		}
+    if ( (dir == Pos::Top || dir == Pos::Bottom) && !m_bDropFar )
+    {
+        if ( m_Left && m_Left->Visible() )
+        {
+            m_HoverRect.x += m_Left->Width();
+            m_HoverRect.w -= m_Left->Width();
+        }
 
-		if ( m_Right && m_Right->Visible() )
-		{
-			m_HoverRect.w -= m_Right->Width();
-		}
-	}
+        if ( m_Right && m_Right->Visible() )
+        {
+            m_HoverRect.w -= m_Right->Width();
+        }
+    }
 
-	if ( ( dir == Pos::Left || dir == Pos::Right ) && !m_bDropFar )
-	{
-		if ( m_Top && m_Top->Visible() )
-		{
-			m_HoverRect.y += m_Top->Height();
-			m_HoverRect.h -= m_Top->Height();
-		}
+    if ( (dir == Pos::Left || dir == Pos::Right) && !m_bDropFar )
+    {
+        if ( m_Top && m_Top->Visible() )
+        {
+            m_HoverRect.y += m_Top->Height();
+            m_HoverRect.h -= m_Top->Height();
+        }
 
-		if ( m_Bottom && m_Bottom->Visible() )
-		{
-			m_HoverRect.h -= m_Bottom->Height();
-		}
-	}
+        if ( m_Bottom && m_Bottom->Visible() )
+        {
+            m_HoverRect.h -= m_Bottom->Height();
+        }
+    }
 }
 
-void DockBase::RenderOver( Skin::Base* skin )
+void DockBase::RenderOver(Skin::Base* skin)
 {
-	if ( !m_bDrawHover ) { return; }
+    if (!m_bDrawHover)
+    {
+        return;
+    }
 
-	Gwen::Renderer::Base* render = skin->GetRender();
-	render->SetDrawColor( Gwen::Color( 255, 100, 255, 20 ) );
-	render->DrawFilledRect( GetRenderBounds() );
+    Gwen::Renderer::Base* render = skin->GetRender();
+    render->SetDrawColor( Gwen::Color(255, 100, 255, 20) );
+    render->DrawFilledRect( GetRenderBounds() );
 
-	if ( m_HoverRect.w == 0 ) { return; }
+    if (m_HoverRect.w == 0)
+    {
+        return;
+    }
 
-	render->SetDrawColor( Gwen::Color( 255, 100, 255, 100 ) );
-	render->DrawFilledRect( m_HoverRect );
-	render->SetDrawColor( Gwen::Color( 255, 100, 255, 200 ) );
-	render->DrawLinedRect( m_HoverRect );
+    render->SetDrawColor( Gwen::Color(255, 100, 255, 100) );
+    render->DrawFilledRect(m_HoverRect);
+    render->SetDrawColor( Gwen::Color(255, 100, 255, 200) );
+    render->DrawLinedRect(m_HoverRect);
 }

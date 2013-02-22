@@ -4,102 +4,148 @@
 
 namespace Gwen
 {
-	namespace ControlFactory
-	{
+    namespace ControlFactory
+    {
+        using namespace Gwen;
 
-		using namespace Gwen;
+        namespace Properties
+        {
+            class Color : public ControlFactory::Property
+            {
+                GWEN_CONTROL_FACTORY_PROPERTY(Color, "Rectangle's Background Color");
 
-		namespace Properties
-		{
+                UnicodeString GetValue(Controls::Base* ctrl)
+                {
+                    Controls::Rectangle* pRect = gwen_cast< Controls::Rectangle >(ctrl);
+                    return Utility::Format(L"%i %i %i %i", pRect->GetColor().r,
+                                           pRect->GetColor().g,
+                                           pRect->GetColor().b, pRect->GetColor().a);
+                }
 
-			class Color : public ControlFactory::Property
-			{
-					GWEN_CONTROL_FACTORY_PROPERTY( Color, "Rectangle's Background Color" );
+                void SetValue(Controls::Base* ctrl, const UnicodeString& str)
+                {
+                    Controls::Rectangle* pRect = gwen_cast< Controls::Rectangle >(ctrl);
+                    int r, g, b, a;
 
-					UnicodeString GetValue( Controls::Base* ctrl )
-					{
-						Controls::Rectangle* pRect = gwen_cast<Controls::Rectangle> ( ctrl );
-						return Utility::Format( L"%i %i %i %i", pRect->GetColor().r, pRect->GetColor().g, pRect->GetColor().b, pRect->GetColor().a );
-					}
+                    if (swscanf(str.c_str(), L"%i %i %i %i", &r, &g, &b, &a) != 4)
+                    {
+                        return;
+                    }
 
-					void SetValue( Controls::Base* ctrl, const UnicodeString & str )
-					{
-						Controls::Rectangle* pRect = gwen_cast<Controls::Rectangle> ( ctrl );
-						int r, g, b, a;
+                    pRect->SetColor( Gwen::Color(r, g, b, a) );
+                }
 
-						if ( swscanf( str.c_str(), L"%i %i %i %i", &r, &g, &b, &a ) != 4 ) { return; }
+                int NumCount()
+                {
+                    return 4;
+                }
 
-						pRect->SetColor( Gwen::Color( r, g, b, a ) );
-					}
+                Gwen::String NumName(int i)
+                {
+                    if (i == 0)
+                    {
+                        return "r";
+                    }
 
-					int	NumCount() { return 4; };
+                    if (i == 1)
+                    {
+                        return "g";
+                    }
 
-					Gwen::String NumName( int i )
-					{
-						if ( i == 0 ) { return "r"; }
+                    if (i == 2)
+                    {
+                        return "b";
+                    }
 
-						if ( i == 1 ) { return "g"; }
+                    return "a";
+                }
 
-						if ( i == 2 ) { return "b"; }
+                float NumGet(Controls::Base* ctrl, int i)
+                {
+                    Controls::Rectangle* pRect = gwen_cast< Controls::Rectangle >(ctrl);
 
-						return "a";
-					}
+                    if (i == 0)
+                    {
+                        return pRect->GetColor().r;
+                    }
 
-					float NumGet( Controls::Base* ctrl, int i )
-					{
-						Controls::Rectangle* pRect = gwen_cast<Controls::Rectangle> ( ctrl );
+                    if (i == 1)
+                    {
+                        return pRect->GetColor().g;
+                    }
 
-						if ( i == 0 ) { return pRect->GetColor().r; }
+                    if (i == 2)
+                    {
+                        return pRect->GetColor().b;
+                    }
 
-						if ( i == 1 ) { return pRect->GetColor().g; }
+                    return pRect->GetColor().a;
+                }
 
-						if ( i == 2 ) { return pRect->GetColor().b; }
+                void NumSet(Controls::Base* ctrl, int i, float f)
+                {
+                    Controls::Rectangle* pRect = gwen_cast< Controls::Rectangle >(ctrl);
+                    Gwen::Color c = pRect->GetColor();
 
-						return pRect->GetColor().a;
-					}
+                    if (i == 0)
+                    {
+                        c.r = f;
+                    }
 
-					void NumSet( Controls::Base* ctrl, int i, float f )
-					{
-						Controls::Rectangle* pRect = gwen_cast<Controls::Rectangle> ( ctrl );
-						Gwen::Color c = pRect->GetColor();
+                    if (i == 1)
+                    {
+                        c.g = f;
+                    }
 
-						if ( i == 0 ) { c.r = f; }
+                    if (i == 2)
+                    {
+                        c.b = f;
+                    }
 
-						if ( i == 1 ) { c.g = f; }
+                    if (i == 3)
+                    {
+                        c.a = f;
+                    }
 
-						if ( i == 2 ) { c.b = f; }
+                    pRect->SetColor(c);
+                }
 
-						if ( i == 3 ) { c.a = f; }
-
-						pRect->SetColor( c );
-					}
-
-			};
-
-		}
+            };
 
 
-		class Rectangle_Factory : public Gwen::ControlFactory::Base
-		{
-			public:
+        }
 
-				GWEN_CONTROL_FACTORY_CONSTRUCTOR( Rectangle_Factory, ControlFactory::Base )
-				{
-					AddProperty( new Properties::Color() );
-				}
 
-				virtual Gwen::String Name() { return "Rectangle"; }
-				virtual Gwen::String BaseName() { return "Base"; }
+        class Rectangle_Factory : public Gwen::ControlFactory::Base
+        {
+        public:
 
-				virtual Gwen::Controls::Base* CreateInstance( Gwen::Controls::Base* parent )
-				{
-					Gwen::Controls::Rectangle* pControl = new Gwen::Controls::Rectangle( parent );
-					pControl->SetSize( 100, 100 );
-					return pControl;
-				}
-		};
+            GWEN_CONTROL_FACTORY_CONSTRUCTOR(Rectangle_Factory, ControlFactory::Base)
+            {
+                AddProperty( new Properties::Color() );
+            }
 
-		GWEN_CONTROL_FACTORY( Rectangle_Factory );
+            virtual Gwen::String Name()
+            {
+                return "Rectangle";
+            }
 
-	}
+            virtual Gwen::String BaseName()
+            {
+                return "Base";
+            }
+
+            virtual Gwen::Controls::Base* CreateInstance(Gwen::Controls::Base* parent)
+            {
+                Gwen::Controls::Rectangle* pControl = new Gwen::Controls::Rectangle(parent);
+                pControl->SetSize(100, 100);
+                return pControl;
+            }
+
+        };
+
+
+        GWEN_CONTROL_FACTORY(Rectangle_Factory);
+
+    }
 }

@@ -1,88 +1,137 @@
 /*
-	GWEN
-	Copyright (c) 2010 Facepunch Studios
-	See license in Gwen.h
-*/
+ *  GWEN
+ *  Copyright (c) 2010 Facepunch Studios
+ *  See license in Gwen.h
+ */
 
 #pragma once
 #ifndef GWEN_CONTROLS_COLORPICKER_H
-#define GWEN_CONTROLS_COLORPICKER_H
+#   define GWEN_CONTROLS_COLORPICKER_H
 
-#include "Gwen/Controls/Base.h"
-#include "Gwen/Gwen.h"
-#include "Gwen/Skin.h"
+#   include "Gwen/Controls/Base.h"
+#   include "Gwen/Gwen.h"
+#   include "Gwen/Skin.h"
 
 
 namespace Gwen
 {
-	namespace ControlsInternal
-	{
-		class GWEN_EXPORT ColorDisplay : public Controls::Base
-		{
-			public:
-				GWEN_CONTROL_INLINE( ColorDisplay, Controls::Base )
-				{
-					SetSize( 32, 32 );
-					m_Color = Color( 255, 0, 0, 255 );
-					m_DrawCheckers = true;
-				}
+    namespace ControlsInternal
+    {
+        class GWEN_EXPORT ColorDisplay : public Controls::Base
+        {
+        public:
 
-				virtual void Render( Gwen::Skin::Base* skin )
-				{
-					skin->DrawColorDisplay( this, m_Color );
-				}
+            GWEN_CONTROL_INLINE(ColorDisplay, Controls::Base)
+            {
+                SetSize(32, 32);
+                m_Color = Color(255, 0, 0, 255);
+                m_DrawCheckers = true;
+            }
 
-				virtual void SetColor( Gwen::Color color ) { m_Color = color; }
-				virtual Gwen::Color GetColor() { return m_Color; }
+            virtual void Render(Gwen::Skin::Base* skin)
+            {
+                skin->DrawColorDisplay(this, m_Color);
+            }
 
-				virtual void SetRed( int red )  	{ m_Color.r = red;	}
-				virtual void SetGreen( int green )	{ m_Color.g = green;}
-				virtual void SetBlue( int blue )	{ m_Color.b = blue;	}
-				virtual void SetAlpha( int alpha )	{ m_Color.a = alpha;}
+            virtual void SetColor(Gwen::Color color)
+            {
+                m_Color = color;
+            }
 
-				virtual void SetDrawCheckers( bool should ) { m_DrawCheckers = should; }
+            virtual Gwen::Color GetColor()
+            {
+                return m_Color;
+            }
 
-			protected:
-				Gwen::Color m_Color;
-				bool m_DrawCheckers;
-		};
-	}
-	namespace Controls
-	{
+            virtual void SetRed(int red)
+            {
+                m_Color.r = red;
+            }
 
-		class GWEN_EXPORT ColorPicker : public Base
-		{
-			public:
+            virtual void SetGreen(int green)
+            {
+                m_Color.g = green;
+            }
 
-				GWEN_CONTROL( ColorPicker, Base );
+            virtual void SetBlue(int blue)
+            {
+                m_Color.b = blue;
+            }
 
-				virtual void Layout( Skin::Base* skin );
-				virtual void CreateControls();
-				virtual void SlidersMoved( Gwen::Controls::Base* control );
-				virtual void NumericTyped( Gwen::Controls::Base* control );
-				virtual void UpdateControls();
-				virtual void UpdateColorControls( Gwen::String name, Gwen::Color col, int sliderVal );
-				virtual void CreateColorControl( Gwen::String name, int y );
+            virtual void SetAlpha(int alpha)
+            {
+                m_Color.a = alpha;
+            }
 
-				virtual void SetColor( Gwen::Color color );
-				virtual Gwen::Color GetColor() { return m_Color; }
+            virtual void SetDrawCheckers(bool should)
+            {
+                m_DrawCheckers = should;
+            }
 
-				int GetColorByName( Gwen::String colorName );
-				void SetColorByName( Gwen::String colorName, int colorValue );
-				Gwen::String GetColorFromName( Gwen::String name );
-				virtual void SetAlphaVisible( bool visible );
+        protected:
 
-				virtual void SetRed( int red )  	{ m_Color.r = red;	}
-				virtual void SetGreen( int green )	{ m_Color.g = green;}
-				virtual void SetBlue( int blue )	{ m_Color.b = blue;	}
-				virtual void SetAlpha( int alpha )	{ m_Color.a = alpha;}
+            Gwen::Color m_Color;
+            bool m_DrawCheckers;
+        };
 
-				Event::Caller	onColorChanged;
 
-			protected:
-				Gwen::Color m_Color;
+    }
+    namespace Controls
+    {
+        class GWEN_EXPORT ColorPicker : public Base
+        {
+        public:
 
-		};
-	}
+            GWEN_CONTROL(ColorPicker, Base);
+
+            virtual void Layout(Skin::Base* skin);
+            virtual void CreateControls();
+            virtual void SlidersMoved(Gwen::Controls::Base* control);
+            virtual void NumericTyped(Gwen::Controls::Base* control);
+            virtual void UpdateControls();
+            virtual void UpdateColorControls(Gwen::String name, Gwen::Color col, int sliderVal);
+            virtual void CreateColorControl(Gwen::String name, int y);
+
+            virtual void        SetColor(Gwen::Color color);
+            virtual Gwen::Color GetColor()
+            {
+                return m_Color;
+            }
+
+            int          GetColorByName(Gwen::String colorName);
+            void         SetColorByName(Gwen::String colorName, int colorValue);
+            Gwen::String GetColorFromName(Gwen::String name);
+            virtual void SetAlphaVisible(bool visible);
+
+            virtual void SetRed(int red)
+            {
+                m_Color.r = red;
+            }
+
+            virtual void SetGreen(int green)
+            {
+                m_Color.g = green;
+            }
+
+            virtual void SetBlue(int blue)
+            {
+                m_Color.b = blue;
+            }
+
+            virtual void SetAlpha(int alpha)
+            {
+                m_Color.a = alpha;
+            }
+
+            Event::Caller onColorChanged;
+
+        protected:
+
+            Gwen::Color m_Color;
+
+        };
+
+
+    }
 }
 #endif

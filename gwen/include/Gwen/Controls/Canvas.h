@@ -1,106 +1,133 @@
 /*
-	GWEN
-	Copyright (c) 2010 Facepunch Studios
-	See license in Gwen.h
-*/
+ *  GWEN
+ *  Copyright (c) 2010 Facepunch Studios
+ *  See license in Gwen.h
+ */
 
 #pragma once
 #ifndef GWEN_CONTROLS_CANVAS_H
-#define GWEN_CONTROLS_CANVAS_H
+#   define GWEN_CONTROLS_CANVAS_H
 
-#include <set>
-#include "Gwen/Controls/Base.h"
-#include "Gwen/InputHandler.h"
+#   include <set>
+#   include "Gwen/Controls/Base.h"
+#   include "Gwen/InputHandler.h"
 
 namespace Gwen
 {
-	namespace Controls
-	{
-		class GWEN_EXPORT Canvas : public Base
-		{
-			public:
+    namespace Controls
+    {
+        class GWEN_EXPORT Canvas : public Base
+        {
+        public:
 
-				typedef Controls::Base BaseClass;
+            typedef Controls::Base BaseClass;
 
-				Canvas( Skin::Base* pSkin );
-				virtual ~Canvas();
+            Canvas(Skin::Base* pSkin);
+            virtual ~Canvas();
 
-				//
-				// For additional initialization
-				// (which is sometimes not appropriate in the constructor)
-				//
-				virtual void Initialize() {};
+            //
+            // For additional initialization
+            // (which is sometimes not appropriate in the constructor)
+            //
+            virtual void Initialize()
+            {
+            }
 
-				//
-				// You should call this to render your canvas.
-				//
-				virtual void RenderCanvas();
+            //
+            // You should call this to render your canvas.
+            //
+            virtual void RenderCanvas();
 
-				//
-				// Call this whenever you want to process input. This
-				// is usually once a frame..
-				//
-				virtual void DoThink();
+            //
+            // Call this whenever you want to process input. This
+            // is usually once a frame..
+            //
+            virtual void DoThink();
 
-				//
-				// In most situations you will be rendering the canvas
-				// every frame. But in some situations you will only want
-				// to render when there have been changes. You can do this
-				// by checking NeedsRedraw().
-				//
-				virtual bool NeedsRedraw() { return m_bNeedsRedraw; }
-				virtual void Redraw() { m_bNeedsRedraw = true; }
+            //
+            // In most situations you will be rendering the canvas
+            // every frame. But in some situations you will only want
+            // to render when there have been changes. You can do this
+            // by checking NeedsRedraw().
+            //
+            virtual bool NeedsRedraw()
+            {
+                return m_bNeedsRedraw;
+            }
 
-				// Internal. Do not call directly.
-				virtual void Render( Skin::Base* pRender );
+            virtual void Redraw()
+            {
+                m_bNeedsRedraw = true;
+            }
 
-				// Childpanels call parent->GetCanvas() until they get to
-				// this top level function.
-				virtual Controls::Canvas* GetCanvas() { return this; }
+            // Internal. Do not call directly.
+            virtual void Render(Skin::Base* pRender);
 
-				virtual void SetScale( float f );
-				virtual float Scale() const { return m_fScale; }
+            // Childpanels call parent->GetCanvas() until they get to
+            // this top level function.
+            virtual Controls::Canvas* GetCanvas()
+            {
+                return this;
+            }
 
-				virtual void OnBoundsChanged( Gwen::Rect oldBounds );
+            virtual void  SetScale(float f);
+            virtual float Scale() const
+            {
+                return m_fScale;
+            }
 
-				// Delete all children (this is done called in the destructor too)
-				virtual void ReleaseChildren();
+            virtual void OnBoundsChanged(Gwen::Rect oldBounds);
 
-				// Delayed deletes
-				virtual void AddDelayedDelete( Controls::Base* pControl );
-				virtual void ProcessDelayedDeletes();
+            // Delete all children (this is done called in the destructor too)
+            virtual void ReleaseChildren();
 
-				Controls::Base*	FirstTab;
-				Controls::Base*	NextTab;
+            // Delayed deletes
+            virtual void AddDelayedDelete(Controls::Base* pControl);
+            virtual void ProcessDelayedDeletes();
 
-				// Input
-				virtual bool InputMouseMoved( int x, int y, int deltaX, int deltaY );
-				virtual bool InputMouseButton( int iButton, bool bDown );
-				virtual bool InputKey( int iKey, bool bDown );
-				virtual bool InputCharacter( Gwen::UnicodeChar chr );
-				virtual bool InputMouseWheel( int val );
-				virtual bool InputQuit() { return true; };
+            Controls::Base* FirstTab;
+            Controls::Base* NextTab;
 
-				// Background
-				virtual void SetBackgroundColor( const Gwen::Color & color ) { m_BackgroundColor = color; }
-				virtual void SetDrawBackground( bool bShouldDraw ) { m_bDrawBackground = bShouldDraw; }
+            // Input
+            virtual bool InputMouseMoved(int x, int y, int deltaX, int deltaY);
+            virtual bool InputMouseButton(int iButton, bool bDown);
+            virtual bool InputKey(int iKey, bool bDown);
+            virtual bool InputCharacter(Gwen::UnicodeChar chr);
+            virtual bool InputMouseWheel(int val);
+            virtual bool InputQuit()
+            {
+                return true;
+            }
 
-			protected:
+            // Background
+            virtual void SetBackgroundColor(const Gwen::Color& color)
+            {
+                m_BackgroundColor = color;
+            }
 
-				bool	m_bNeedsRedraw;
-				bool	m_bAnyDelete;
-				float	m_fScale;
+            virtual void SetDrawBackground(bool bShouldDraw)
+            {
+                m_bDrawBackground = bShouldDraw;
+            }
 
-				Controls::Base::List	m_DeleteList;
-				std::set< Controls::Base* > m_DeleteSet;
-				friend class Controls::Base;
-				void PreDelete( Controls::Base* );
+        protected:
 
-				bool			m_bDrawBackground;
-				Gwen::Color		m_BackgroundColor;
+            bool m_bNeedsRedraw;
+            bool m_bAnyDelete;
+            float m_fScale;
+
+            Controls::Base::List m_DeleteList;
+            std::set< Controls::Base* >m_DeleteSet;
+            friend class Controls::Base;
+            void PreDelete(Controls::Base*);
+
+            bool m_bDrawBackground;
+            Gwen::Color m_BackgroundColor;
 
 
-		};
-	}
+        };
+
+
+    }
 }
 #endif

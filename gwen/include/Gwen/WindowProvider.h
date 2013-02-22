@@ -1,15 +1,16 @@
 #pragma once
 #ifndef GWEN_WINDOW_PROVIDER_H
-#define GWEN_WINDOW_PROVIDER_H
+#   define GWEN_WINDOW_PROVIDER_H
 
 namespace Gwen
 {
-	class WindowProvider
-	{
-		public:
+    class WindowProvider
+    {
+    public:
 
-			virtual void* GetWindow() = 0;
-	};
+        virtual void* GetWindow() = 0;
+    };
+
 
 }
 
