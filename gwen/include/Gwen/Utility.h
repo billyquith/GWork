@@ -18,28 +18,7 @@ namespace Gwen
 
     namespace Utility
     {
-        template < typename T >
-        const T& Max(const T& x, const T& y)
-        {
-            if (y < x)
-            {
-                return x;
-            }
-
-            return y;
-        }
-
-        template < typename T >
-        const T& Min(const T& x, const T& y)
-        {
-            if (y > x)
-            {
-                return x;
-            }
-
-            return y;
-        }
-
+        
 #   ifdef _MSC_VER
 #      pragma warning( push )
 #      pragma warning( disable : 4996 )

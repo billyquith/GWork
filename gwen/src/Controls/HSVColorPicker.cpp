@@ -78,7 +78,7 @@ GWEN_CONTROL_CONSTRUCTOR(HSVColorPicker)
 
 void HSVColorPicker::NumericTyped(Gwen::Controls::Base* control)
 {
-    TextBoxNumeric* box = gwen_cast< TextBoxNumeric >(control);
+    TextBoxNumeric* box = gwen_cast<TextBoxNumeric>(control);
 
     if (!box)
     {
@@ -127,21 +127,21 @@ void HSVColorPicker::NumericTyped(Gwen::Controls::Base* control)
 void HSVColorPicker::UpdateControls(Gwen::Color color)
 {
     // What in the FUCK
-    TextBoxNumeric* redBox = gwen_cast< TextBoxNumeric >( FindChildByName("RedBox",   false) );
+    TextBoxNumeric* redBox = gwen_cast<TextBoxNumeric>( FindChildByName("RedBox", false) );
 
     if (redBox)
     {
         redBox->SetText(Gwen::Utility::ToString( (int)color.r ), false);
     }
 
-    TextBoxNumeric* greenBox = gwen_cast< TextBoxNumeric >( FindChildByName("GreenBox",   false) );
+    TextBoxNumeric* greenBox = gwen_cast<TextBoxNumeric>( FindChildByName("GreenBox", false) );
 
     if (greenBox)
     {
         greenBox->SetText(Gwen::Utility::ToString( (int)color.g ), false);
     }
 
-    TextBoxNumeric* blueBox = gwen_cast< TextBoxNumeric >( FindChildByName("BlueBox",   false) );
+    TextBoxNumeric* blueBox = gwen_cast<TextBoxNumeric>( FindChildByName("BlueBox", false) );
 
     if (blueBox)
     {

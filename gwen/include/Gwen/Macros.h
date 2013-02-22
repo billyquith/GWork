@@ -60,17 +60,7 @@ namespace Gwen
     template < typename T >
     inline T Clamp(T current, T vmin, T vmax)
     {
-        if (current >= vmax)
-        {
-            return vmax;
-        }
-
-        if (current <= vmin)
-        {
-            return vmin;
-        }
-
-        return current;
+		return current < vmin ? vmin : ( current > vmax ? vmax : current );
     }
 
     template < typename T, typename T2 >

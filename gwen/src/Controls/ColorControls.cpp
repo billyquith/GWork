@@ -282,9 +282,8 @@ void ColorSlider::Render(Gwen::Skin::Base* skin)
 {
     // Is there any way to move this into skin? Not for now, no idea how we'll
     // "actually" render these
-    int y = 0;
 
-    for (y = 0; y < Height(); y++)
+    for (int y = 0; y < Height(); y++)
     {
         float yPercent = (float)y/(float)Height();
         skin->GetRender()->SetDrawColor( HSVToColor(yPercent*360, 1, 1) );
@@ -320,7 +319,7 @@ void ColorSlider::OnMouseClickLeft(int x, int y, bool bDown)
 
 Gwen::Color ColorSlider::GetColorAtHeight(int y)
 {
-    float yPercent = (float)y/(float)Height();
+    float yPercent = (float)y / (float)Height();
     return HSVToColor(yPercent*360, 1, 1);
 }
 

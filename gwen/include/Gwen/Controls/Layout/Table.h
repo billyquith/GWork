@@ -131,7 +131,7 @@ namespace Gwen
                             m_Columns[i]->SizeToContents();
                         }
 
-                        iHeight = Utility::Max( iHeight, m_Columns[i]->Height() );
+                        iHeight = Gwen::Max( iHeight, m_Columns[i]->Height() );
                     }
 
                     SetHeight(iHeight);
@@ -213,7 +213,7 @@ namespace Gwen
 
                     for (Base::List::iterator it = Children.begin(); it != Children.end(); ++it)
                     {
-                        TableRow* pRow = gwen_cast< TableRow >(*it);
+                        TableRow* pRow = gwen_cast<TableRow>(*it);
 
                         if (!pRow)
                         {
@@ -255,7 +255,7 @@ namespace Gwen
 
                 TableRow* GetRow(int i)
                 {
-                    return gwen_cast< TableRow >( GetChild(i) );
+                    return gwen_cast<TableRow>( GetChild(i) );
                 }
 
                 unsigned int RowCount(int i)
@@ -272,7 +272,7 @@ namespace Gwen
                 {
                     for (Base::List::iterator it = Children.begin(); it != Children.end(); ++it)
                     {
-                        TableRow* pRow = gwen_cast< TableRow >(*it);
+                        TableRow* pRow = gwen_cast<TableRow>(*it);
 
                         if (!pRow)
                         {
@@ -314,7 +314,7 @@ namespace Gwen
 
                     for (Base::List::iterator it = Children.begin(); it != Children.end(); ++it)
                     {
-                        TableRow* pRow = gwen_cast< TableRow >(*it);
+                        TableRow* pRow = gwen_cast<TableRow>(*it);
 
                         if (!pRow)
                         {
@@ -365,7 +365,7 @@ namespace Gwen
 
                     for (Base::List::iterator it = Children.begin(); it != Children.end(); ++it)
                     {
-                        TableRow* pRow = gwen_cast< TableRow >(*it);
+                        TableRow* pRow = gwen_cast<TableRow>(*it);
 
                         if (!pRow)
                         {
@@ -378,7 +378,7 @@ namespace Gwen
                         {
                             if (pRow->m_Columns[i])
                             {
-                                m_ColumnWidth[i] = Utility::Max( m_ColumnWidth[i],
+                                m_ColumnWidth[i] = Gwen::Max( m_ColumnWidth[i],
                                                                  pRow->m_Columns[i]->Width() );
                             }
                         }

@@ -43,14 +43,14 @@ void ColorPicker::CreateColorControl(Gwen::String name, int y)
     HorizontalSlider* slider = new HorizontalSlider(colorGroup);
     slider->SetPos(colorSize+5, 8);
     slider->SetRange(0, 255);
-    slider->SetSize( 80, Gwen::Utility::Max(colorSize, 15) );
+    slider->SetSize( 80, Gwen::Max(colorSize, 15) );
     slider->SetName(name+"Slider");
     slider->onValueChanged.Add(this, &ColorPicker::SlidersMoved);
 }
 
 void ColorPicker::NumericTyped(Gwen::Controls::Base* control)
 {
-    TextBoxNumeric* box = gwen_cast< TextBoxNumeric >(control);
+    TextBoxNumeric* box = gwen_cast<TextBoxNumeric>(control);
 
     if (!box)
     {
@@ -125,12 +125,12 @@ void ColorPicker::CreateControls()
 
 void ColorPicker::UpdateColorControls(Gwen::String name, Gwen::Color col, int sliderVal)
 {
-    ColorDisplay* disp = gwen_cast< ColorDisplay >( FindChildByName(name, true) );
+    ColorDisplay* disp = gwen_cast<ColorDisplay>( FindChildByName(name, true) );
     disp->SetColor(col);
     HorizontalSlider* slider =
-        gwen_cast< HorizontalSlider >( FindChildByName(name+"Slider", true) );
+        gwen_cast<HorizontalSlider>( FindChildByName(name+"Slider", true) );
     slider->SetFloatValue(sliderVal);
-    TextBoxNumeric* box = gwen_cast< TextBoxNumeric >( FindChildByName(name+"Box", true) );
+    TextBoxNumeric* box = gwen_cast<TextBoxNumeric>( FindChildByName(name+"Box", true) );
     box->SetText( Gwen::Utility::ToString(sliderVal) );
 }
 
@@ -141,7 +141,7 @@ void ColorPicker::UpdateControls()
     UpdateColorControls("Green",   Color(0, GetColor().g, 0, 255), GetColor().g);
     UpdateColorControls("Blue",    Color(0, 0, GetColor().b, 255), GetColor().b);
     UpdateColorControls("Alpha",   Color(255, 255, 255, GetColor().a), GetColor().a);
-    ColorDisplay* disp = gwen_cast< ColorDisplay >( FindChildByName("Result", true) );
+    ColorDisplay* disp = gwen_cast<ColorDisplay>( FindChildByName("Result", true) );
     disp->SetColor( Color(GetColor().r, GetColor().g, GetColor().b, GetColor().a) );
     onColorChanged.Call(this);
 }
@@ -158,7 +158,7 @@ void ColorPicker::SlidersMoved(Gwen::Controls::Base* control)
      * HorizontalSlider* alphaSlider	= gwen_cast<HorizontalSlider>(	FindChildByName(
      * "AlphaSlider", true ) );
      */
-    HorizontalSlider* slider = gwen_cast< HorizontalSlider >(control);
+    HorizontalSlider* slider = gwen_cast<HorizontalSlider>(control);
 
     if (slider)
     {
@@ -175,7 +175,7 @@ void ColorPicker::Layout(Skin::Base* skin)
     BaseClass::Layout(skin);
     SizeToChildren(false, true);
     SetSize(Width(), Height()+5);
-    GroupBox* groupBox = gwen_cast< GroupBox >( FindChildByName("ResultGroupBox", true) );
+    GroupBox* groupBox = gwen_cast<GroupBox>( FindChildByName("ResultGroupBox", true) );
 
     if (groupBox)
     {
@@ -258,7 +258,7 @@ void ColorPicker::SetColorByName(Gwen::String colorName, int colorValue)
 
 void ColorPicker::SetAlphaVisible(bool visible)
 {
-    GroupBox* groupBox = gwen_cast< GroupBox >( FindChildByName("Alphagroupbox", true) );
+    GroupBox* groupBox = gwen_cast<GroupBox>( FindChildByName("Alphagroupbox", true) );
     groupBox->SetHidden(!visible);
     Invalidate();
 }

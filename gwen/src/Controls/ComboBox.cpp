@@ -151,7 +151,7 @@ void ComboBox::SelectItem(MenuItem* pItem, bool bFireChangeEvents)
 void ComboBox::OnItemSelected(Controls::Base* pControl)
 {
     // Convert selected to a menu item
-    MenuItem* pItem = gwen_cast< MenuItem >(pControl);
+    MenuItem* pItem = gwen_cast<MenuItem>(pControl);
 
     if (!pItem)
     {
@@ -168,7 +168,7 @@ void ComboBox::SelectItemByName(const Gwen::String& name, bool bFireChangeEvents
 
     while ( it != children.end() )
     {
-        MenuItem* pChild = gwen_cast< MenuItem >(*it);
+        MenuItem* pChild = gwen_cast<MenuItem>(*it);
 
         if (pChild->GetName() == name)
         {

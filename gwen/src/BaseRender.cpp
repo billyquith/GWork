@@ -152,17 +152,16 @@ namespace Gwen
             DrawFilledRect(pTargetRect);
         }
 
-        /*
-         *  If they haven't defined these font functions in their renderer code
-         *  we just draw some rects where the letters would be to give them an
-         * idea.
-         */
+        
+        //  If they haven't defined these font functions in their renderer code
+        //  we just draw some rects where the letters would be to give them an
+        //  idea.
 
         void Base::RenderText(Gwen::Font* pFont, Gwen::Point pos, const Gwen::UnicodeString& text)
         {
             float fSize = pFont->size*Scale();
 
-            for (float i = 0; i < text.length(); i++)
+            for (unsigned int i = 0; i < text.length(); i++)
             {
                 wchar_t chr = text[i];
 
@@ -173,11 +172,10 @@ namespace Gwen
 
                 Gwen::Rect r(pos.x+i*fSize*0.4, pos.y, fSize*0.4-1, fSize);
 
-                /*
-                 *  This isn't important, it's just me messing around changing
-                 * the
-                 *  shape of the rect based on the letter.. just for fun.
-                 */
+                //
+                // This isn't important, it's just me messing around changing
+                // the shape of the rect based on the letter.. just for fun.
+                //
                 if (chr == 'l' || chr == 'i' || chr == '!' || chr == 't')
                 {
                     r.w = 1;
@@ -215,7 +213,7 @@ namespace Gwen
         Gwen::Point Base::MeasureText(Gwen::Font* pFont, const Gwen::UnicodeString& text)
         {
             Gwen::Point p;
-            p.x = pFont->size*Scale()*(float)text.length()*0.4;
+            p.x = pFont->size*Scale() * (float)text.length() * 0.4;
             p.y = pFont->size*Scale();
             return p;
         }

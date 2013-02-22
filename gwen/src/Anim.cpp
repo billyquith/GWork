@@ -24,7 +24,7 @@ void Gwen::Anim::Add(Gwen::Controls::Base* control, Animation* animation)
 
 void Gwen::Anim::Cancel(Gwen::Controls::Base* control)
 {
-    /* cannot use std::list iterator with algoryhtmns based on pointers
+    /* cannot use std::list iterator with algorithms based on pointers
      * struct AnimDeletePredicate
      * {
      *  AnimDeletePredicate( Gwen::Controls::Base* control )
@@ -108,15 +108,15 @@ Gwen::Anim::TimedAnimation::TimedAnimation(float fLength, float fDelay, float fE
     m_bFinished = false;
 }
 
-float GetEased(float fTime, float fEase)
+static float GetEased(float fTime, float fEase)
 {
     // Ease in and Out if ease is < 0
     if (fEase < 0)
     {
-        return -fTime/2*(cos(3.14159f*fTime)-1);
+        return -fTime / 2*( cosf(3.14159f*fTime) - 1 );
     }
 
-    return pow(fTime, fEase);
+    return powf(fTime, fEase);
 }
 
 void Gwen::Anim::TimedAnimation::Think()
@@ -140,17 +140,7 @@ void Gwen::Anim::TimedAnimation::Think()
         OnStart();
     }
 
-    float fDelta = fSecondsIn/(m_fEnd-m_fStart);
-
-    if (fDelta < 0.0f)
-    {
-        fDelta = 0.0f;
-    }
-
-    if (fDelta > 1.0f)
-    {
-        fDelta = 1.0f;
-    }
+    float fDelta = Clamp( fSecondsIn/(m_fEnd-m_fStart), 0.f, 1.f );
 
     float fEased = GetEased(fDelta, m_fEase);
     Run(fEased);

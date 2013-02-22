@@ -117,7 +117,7 @@ void Menu::CloseAll()
          ++it)
     {
         Base* pChild = *it;
-        MenuItem* pItem = gwen_cast< MenuItem >(pChild);
+        MenuItem* pItem = gwen_cast<MenuItem>(pChild);
 
         if (!pItem)
         {
@@ -135,7 +135,7 @@ bool Menu::IsMenuOpen()
          ++it)
     {
         Base* pChild = *it;
-        MenuItem* pItem = gwen_cast< MenuItem >(pChild);
+        MenuItem* pItem = gwen_cast<MenuItem>(pChild);
 
         if (!pItem)
         {
@@ -158,7 +158,7 @@ void Menu::OnHoverItem(Gwen::Controls::Base* pControl)
         return;
     }
 
-    MenuItem* pItem = gwen_cast< MenuItem >(pControl);
+    MenuItem* pItem = gwen_cast<MenuItem>(pControl);
 
     if (!pItem)
     {

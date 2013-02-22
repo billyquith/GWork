@@ -115,3 +115,4 @@ void Label::SetFont(Gwen::UnicodeString strFacename, int iSize, bool bBold)
     SetFont(m_CreatedFont);
     m_Text->RefreshSize();
 }
+

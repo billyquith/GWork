@@ -108,7 +108,7 @@ TreeNode* TreeNode::AddNode(const TextObject& strLabel)
     TreeNode* node = new TreeNode(this);
     node->SetText(strLabel);
     node->Dock(Pos::Top);
-    node->SetRoot(gwen_cast< TreeControl >(this) != NULL);
+    node->SetRoot(gwen_cast<TreeControl>(this) != NULL);
     node->SetTreeControl(m_TreeControl);
 
     if (m_TreeControl)
@@ -198,7 +198,7 @@ void TreeNode::ExpandAll()
 
     for (Base::List::iterator iter = children.begin(); iter != children.end(); ++iter)
     {
-        TreeNode* pChild = gwen_cast< TreeNode >(*iter);
+        TreeNode* pChild = gwen_cast<TreeNode>(*iter);
 
         if (!pChild)
         {
@@ -296,7 +296,7 @@ void TreeNode::DeselectAll()
 
     for (Base::List::iterator iter = children.begin(); iter != children.end(); ++iter)
     {
-        TreeNode* pChild = gwen_cast< TreeNode >(*iter);
+        TreeNode* pChild = gwen_cast<TreeNode>(*iter);
 
         if (!pChild)
         {
