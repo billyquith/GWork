@@ -1,61 +1,64 @@
 /*
-	GWEN
-	Copyright (c) 2011 Facepunch Studios
-	See license in Gwen.h
-*/
+ *  GWEN
+ *  Copyright (c) 2011 Facepunch Studios
+ *  See license in Gwen.h
+ */
 
 #pragma once
 
 #ifndef GWEN_RENDERERS_ALLEGRO_H
-#define GWEN_RENDERERS_ALLEGRO_H
+#   define GWEN_RENDERERS_ALLEGRO_H
 
-#include "Gwen/Gwen.h"
-#include "Gwen/BaseRender.h"
-#include <allegro5/allegro5.h>
+#   include "Gwen/Gwen.h"
+#   include "Gwen/BaseRender.h"
+#   include <allegro5/allegro5.h>
 
 namespace Gwen
 {
-	namespace Renderer
-	{
+    namespace Renderer
+    {
+        class Allegro : public Gwen::Renderer::Base
+        {
+        public:
 
-		class Allegro : public Gwen::Renderer::Base
-		{
-			public:
+            Allegro();
+            ~Allegro();
 
-				Allegro();
-				~Allegro();
+            virtual void SetDrawColor(Gwen::Color color);
 
-				virtual void SetDrawColor( Gwen::Color color );
+            virtual void DrawFilledRect(Gwen::Rect rect);
 
-				virtual void DrawFilledRect( Gwen::Rect rect );
+            virtual void LoadFont(Gwen::Font* pFont);
+            virtual void FreeFont(Gwen::Font* pFont);
+            virtual void RenderText(Gwen::Font* pFont, Gwen::Point pos,
+                                    const Gwen::UnicodeString& text);
+            virtual Gwen::Point MeasureText(Gwen::Font* pFont, const Gwen::UnicodeString& text);
 
-				virtual void LoadFont( Gwen::Font* pFont );
-				virtual void FreeFont( Gwen::Font* pFont );
-				virtual void RenderText( Gwen::Font* pFont, Gwen::Point pos, const Gwen::UnicodeString & text );
-				virtual Gwen::Point MeasureText( Gwen::Font* pFont, const Gwen::UnicodeString & text );
+            void StartClip();
+            void EndClip();
 
-				void StartClip();
-				void EndClip();
+            void DrawTexturedRect(Gwen::Texture* pTexture, Gwen::Rect pTargetRect,
+                                  float u1 = 0.0f, float v1 = 0.0f, float u2 = 1.0f, float v2 =
+                                      1.0f);
+            void        LoadTexture(Gwen::Texture* pTexture);
+            void        FreeTexture(Gwen::Texture* pTexture);
+            Gwen::Color PixelColour(Gwen::Texture* pTexture, unsigned int x, unsigned int y,
+                                    const Gwen::Color& col_default);
 
-				void DrawTexturedRect( Gwen::Texture* pTexture, Gwen::Rect pTargetRect,
-									   float u1 = 0.0f, float v1 = 0.0f, float u2 = 1.0f, float v2 = 1.0f );
-				void LoadTexture( Gwen::Texture* pTexture );
-				void FreeTexture( Gwen::Texture* pTexture );
-				Gwen::Color PixelColour( Gwen::Texture* pTexture, unsigned int x, unsigned int y,
-										 const Gwen::Color & col_default );
+            void DrawLinedRect(Gwen::Rect rect);
+            void DrawPixel(int x, int y);
 
-				void DrawLinedRect( Gwen::Rect rect );
-				void DrawPixel( int x, int y );
+            bool BeginContext(Gwen::WindowProvider* pWindow);
+            bool EndContext(Gwen::WindowProvider* pWindow);
+            bool PresentContext(Gwen::WindowProvider* pWindow);
 
-				bool BeginContext( Gwen::WindowProvider* pWindow );
-				bool EndContext( Gwen::WindowProvider* pWindow );
-				bool PresentContext( Gwen::WindowProvider* pWindow );
+        protected:
 
-			protected:
+            ALLEGRO_COLOR m_Color;
 
-				ALLEGRO_COLOR   m_Color;
+        };
 
-		};
-	}
+
+    }
 }
 #endif

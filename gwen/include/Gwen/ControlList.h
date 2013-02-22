@@ -1,107 +1,112 @@
 #pragma once
 #ifndef GWEN_CONTROLLIST_H
-#define GWEN_CONTROLLIST_H
+#   define GWEN_CONTROLLIST_H
 
 
 namespace Gwen
 {
-	struct Point;
-	class TextObject;
+    struct Point;
+    class TextObject;
 
-	namespace Controls
-	{
-		class Base;
-	}
+    namespace Controls
+    {
+        class Base;
+    }
 
-	namespace Event
-	{
-		class Handler;
-		struct Information;
-		struct Packet;
+    namespace Event
+    {
+        class Handler;
+        struct Information;
+        struct Packet;
 
-		typedef const Gwen::Event::Information & Info;
-	}
+        typedef const Gwen::Event::Information& Info;
+    }
 
-	template < typename TYPE >
-	class TEasyList
-	{
-		public:
+    template < typename TYPE >
+    class TEasyList
+    {
+    public:
 
-			typedef std::list<TYPE> List;
+        typedef std::list< TYPE >List;
 
-			void Add( TYPE pControl )
-			{
-				if ( Contains( pControl ) ) { return; }
+        void Add(TYPE pControl)
+        {
+            if ( Contains(pControl) )
+            {
+                return;
+            }
 
-				list.push_back( pControl );
-			}
+            list.push_back(pControl);
+        }
 
-			void Remove( TYPE pControl )
-			{
-				list.remove( pControl );
-			}
+        void Remove(TYPE pControl)
+        {
+            list.remove(pControl);
+        }
 
-			void Add( const List & list )
-			{
-				for ( typename List::const_iterator it = list.begin(); it != list.end(); ++it )
-				{
-					Add( *it );
-				}
-			}
+        void Add(const List& list)
+        {
+            for (typename List::const_iterator it = list.begin(); it != list.end(); ++it)
+            {
+                Add(*it);
+            }
+        }
 
-			void Add( const TEasyList<TYPE> & list )
-			{
-				Add( list.list );
-			}
+        void Add(const TEasyList< TYPE >& list)
+        {
+            Add(list.list);
+        }
 
-			bool Contains( TYPE pControl ) const
-			{
-				typename List::const_iterator it = std::find( list.begin(), list.end(), pControl );
-				return it != list.end();
-			}
+        bool Contains(TYPE pControl) const
+        {
+            typename List::const_iterator it = std::find(list.begin(), list.end(), pControl);
+            return it != list.end();
+        }
 
-			inline void Clear()
-			{
-				list.clear();
-			}
+        inline void Clear()
+        {
+            list.clear();
+        }
 
-			List list;
-	};
+        List list;
+    };
 
-	class ControlList : public TEasyList<Gwen::Controls::Base*>
-	{
-		public:
 
-			void Enable();
-			void Disable();
+    class ControlList : public TEasyList< Gwen::Controls::Base* >
+    {
+    public:
 
-			void Show();
-			void Hide();
+        void Enable();
+        void Disable();
 
-			Gwen::TextObject GetValue();
-			void SetValue( const Gwen::TextObject & value );
+        void Show();
+        void Hide();
 
-			template <typename T>
-			void SetAction( Gwen::Event::Handler* ob,
-							void ( T::*f )( Gwen::Event::Info ),
-							const Gwen::Event::Packet & packet )
-			{
-				SetActionInternal( ob,
-								   static_cast<void ( Gwen::Event::Handler::* )( Gwen::Event::Info ) > ( f ),
-								   packet );
-			}
+        Gwen::TextObject GetValue();
+        void             SetValue(const Gwen::TextObject& value);
 
-			void MoveBy( const Gwen::Point & point );
+        template < typename T >
+        void SetAction(Gwen::Event::Handler* ob,
+                       void ( T::*f )(Gwen::Event::Info),
+                       const Gwen::Event::Packet& packet)
+        {
+            SetActionInternal(ob,
+                              static_cast< void(Gwen::Event::Handler::*) (Gwen::Event::Info) >(f),
+                              packet);
+        }
 
-			void DoAction();
+        void MoveBy(const Gwen::Point& point);
 
-		protected:
+        void DoAction();
 
-			void SetActionInternal( Gwen::Event::Handler* pObject,
-									void ( Gwen::Event::Handler::*f )( Gwen::Event::Info ),
-									const Gwen::Event::Packet & packet );
-	};
+    protected:
 
-};
+        void SetActionInternal(Gwen::Event::Handler*pObject,
+                               void ( Gwen::Event::Handler::*f )(Gwen::Event::Info),
+                               const Gwen::Event::Packet&packet);
+    };
+
+
+}
 
 #endif

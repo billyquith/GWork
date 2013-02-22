@@ -1,134 +1,156 @@
 /*
-	GWEN
-	Copyright (c) 2010 Facepunch Studios
-	See license in Gwen.h
-*/
+ *  GWEN
+ *  Copyright (c) 2010 Facepunch Studios
+ *  See license in Gwen.h
+ */
 
 #pragma once
 #ifndef GWEN_CONTROLS_TEXTBOX_H
-#define GWEN_CONTROLS_TEXTOBX_H
+#   define GWEN_CONTROLS_TEXTOBX_H
 
-#include "Gwen/BaseRender.h"
-#include "Gwen/Controls/Base.h"
-#include "Gwen/Controls/Label.h"
-#include "Gwen/Controls/ScrollControl.h"
+#   include "Gwen/BaseRender.h"
+#   include "Gwen/Controls/Base.h"
+#   include "Gwen/Controls/Label.h"
+#   include "Gwen/Controls/ScrollControl.h"
 
 namespace Gwen
 {
-	namespace Controls
-	{
-		class GWEN_EXPORT TextBox : public Label
-		{
-				GWEN_CONTROL( TextBox, Label );
+    namespace Controls
+    {
+        class GWEN_EXPORT TextBox : public Label
+        {
+            GWEN_CONTROL(TextBox, Label);
 
-				virtual void Render( Skin::Base* skin );
-				virtual void RenderFocus( Gwen::Skin::Base* /*skin*/ ) {};
-				virtual void Layout( Skin::Base* skin );
-				virtual void PostLayout( Skin::Base* skin );
+            virtual void Render(Skin::Base* skin);
+            virtual void RenderFocus(Gwen::Skin::Base* /*skin*/)
+            {
+            }
 
-#ifndef GWEN_NO_ANIMATION
-				virtual void UpdateCaretColor();
-#endif
+            virtual void Layout(Skin::Base* skin);
+            virtual void PostLayout(Skin::Base* skin);
 
-				virtual bool OnChar( Gwen::UnicodeChar c );
+#   ifndef GWEN_NO_ANIMATION
+            virtual void UpdateCaretColor();
+#   endif
 
-				virtual void InsertText( const Gwen::UnicodeString & str );
-				virtual void DeleteText( int iStartPos, int iLength );
+            virtual bool OnChar(Gwen::UnicodeChar c);
 
-				virtual void RefreshCursorBounds();
+            virtual void InsertText(const Gwen::UnicodeString& str);
+            virtual void DeleteText(int iStartPos, int iLength);
 
-				virtual bool OnKeyReturn( bool bDown );
-				virtual bool OnKeyBackspace( bool bDown );
-				virtual bool OnKeyDelete( bool bDown );
-				virtual bool OnKeyRight( bool bDown );
-				virtual bool OnKeyLeft( bool bDown );
-				virtual bool OnKeyHome( bool bDown );
-				virtual bool OnKeyEnd( bool bDown );
+            virtual void RefreshCursorBounds();
 
-				virtual bool AccelOnlyFocus() { return true; }
+            virtual bool OnKeyReturn(bool bDown);
+            virtual bool OnKeyBackspace(bool bDown);
+            virtual bool OnKeyDelete(bool bDown);
+            virtual bool OnKeyRight(bool bDown);
+            virtual bool OnKeyLeft(bool bDown);
+            virtual bool OnKeyHome(bool bDown);
+            virtual bool OnKeyEnd(bool bDown);
 
-				virtual void OnPaste( Gwen::Controls::Base* pCtrl );
-				virtual void OnCopy( Gwen::Controls::Base* pCtrl );
-				virtual void OnCut( Gwen::Controls::Base* pCtrl );
-				virtual void OnSelectAll( Gwen::Controls::Base* pCtrl );
+            virtual bool AccelOnlyFocus()
+            {
+                return true;
+            }
 
-				virtual void OnMouseDoubleClickLeft( int x, int y );
+            virtual void OnPaste(Gwen::Controls::Base* pCtrl);
+            virtual void OnCopy(Gwen::Controls::Base* pCtrl);
+            virtual void OnCut(Gwen::Controls::Base* pCtrl);
+            virtual void OnSelectAll(Gwen::Controls::Base* pCtrl);
 
-				virtual void EraseSelection();
-				virtual bool HasSelection();
-				virtual UnicodeString GetSelection();
+            virtual void OnMouseDoubleClickLeft(int x, int y);
 
-				virtual void SetCursorPos( int i );
-				virtual void SetCursorEnd( int i );
+            virtual void          EraseSelection();
+            virtual bool          HasSelection();
+            virtual UnicodeString GetSelection();
 
-				virtual void OnMouseClickLeft( int x, int y, bool bDown );
-				virtual void OnMouseMoved( int x, int y, int deltaX, int deltaY );
+            virtual void SetCursorPos(int i);
+            virtual void SetCursorEnd(int i);
 
-				virtual void SetSelectAllOnFocus( bool b ) { m_bSelectAll = b; if ( b ) { OnSelectAll( this ); } }
+            virtual void OnMouseClickLeft(int x, int y, bool bDown);
+            virtual void OnMouseMoved(int x, int y, int deltaX, int deltaY);
 
-				virtual void MakeCaratVisible();
+            virtual void SetSelectAllOnFocus(bool b)
+            {
+                m_bSelectAll = b; if (b)
+                {
+                    OnSelectAll(this);
+                }
+            }
 
-				virtual void OnEnter();
+            virtual void MakeCaratVisible();
 
-				virtual bool NeedsInputChars() { return true; }
+            virtual void OnEnter();
 
-				virtual void MoveCaretToEnd();
-				virtual void MoveCaretToStart();
+            virtual bool NeedsInputChars()
+            {
+                return true;
+            }
 
-				Event::Caller	onTextChanged;
-				Event::Caller	onReturnPressed;
+            virtual void MoveCaretToEnd();
+            virtual void MoveCaretToStart();
 
-			protected:
+            Event::Caller onTextChanged;
+            Event::Caller onReturnPressed;
 
-				virtual void OnTextChanged();
-				virtual bool IsTextAllowed( const Gwen::UnicodeString & /*str*/, int /*iPos*/ ) { return true; }
+        protected:
 
-				bool m_bSelectAll;
+            virtual void OnTextChanged();
+            virtual bool IsTextAllowed(const Gwen::UnicodeString& /*str*/, int /*iPos*/)
+            {
+                return true;
+            }
 
-				int m_iCursorPos;
-				int m_iCursorEnd;
-				int m_iCursorLine;
+            bool m_bSelectAll;
 
-				Gwen::Rect m_rectSelectionBounds;
-				Gwen::Rect m_rectCaretBounds;
+            int m_iCursorPos;
+            int m_iCursorEnd;
+            int m_iCursorLine;
 
-				float m_fNextCaretColorChange;
-				Gwen::Color	m_CaretColor;
-		};
+            Gwen::Rect m_rectSelectionBounds;
+            Gwen::Rect m_rectCaretBounds;
 
-		class GWEN_EXPORT TextBoxNumeric : public TextBox
-		{
-			public:
+            float m_fNextCaretColorChange;
+            Gwen::Color m_CaretColor;
+        };
 
-				GWEN_CONTROL( TextBoxNumeric, TextBox );
 
-				virtual float GetFloatFromText();
+        class GWEN_EXPORT TextBoxNumeric : public TextBox
+        {
+        public:
 
-			private:
+            GWEN_CONTROL(TextBoxNumeric, TextBox);
 
-				virtual bool IsTextAllowed( const Gwen::UnicodeString & str, int iPos );
+            virtual float GetFloatFromText();
 
-		};
+        private:
 
-		class GWEN_EXPORT TextBoxMultiline : public TextBox
-		{
-			public:
+            virtual bool IsTextAllowed(const Gwen::UnicodeString& str, int iPos);
 
-				GWEN_CONTROL( TextBoxMultiline, TextBox );
+        };
 
-				virtual bool OnKeyReturn( bool bDown );
-				virtual void MakeCaratVisible();
 
-				virtual bool OnKeyHome( bool bDown );
-				virtual bool OnKeyEnd( bool bDown );
-				virtual bool OnKeyUp( bool bDown );
-				virtual bool OnKeyDown( bool bDown );
+        class GWEN_EXPORT TextBoxMultiline : public TextBox
+        {
+        public:
 
-				virtual int GetCurrentLine();
+            GWEN_CONTROL(TextBoxMultiline, TextBox);
 
-			protected:
+            virtual bool OnKeyReturn(bool bDown);
+            virtual void MakeCaratVisible();
 
-		};
-	}
+            virtual bool OnKeyHome(bool bDown);
+            virtual bool OnKeyEnd(bool bDown);
+            virtual bool OnKeyUp(bool bDown);
+            virtual bool OnKeyDown(bool bDown);
+
+            virtual int GetCurrentLine();
+
+        protected:
+
+        };
+
+
+    }
 }
 #endif

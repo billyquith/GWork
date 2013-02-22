@@ -1,111 +1,115 @@
 #pragma once
 #ifndef GWEN_USERDATA_H
-#define GWEN_USERDATA_H
+#   define GWEN_USERDATA_H
 
 namespace Gwen
 {
-	/*
+    /*
+     *
+     *  Allows you to store multiple and various user data
+     *
+     *  //
+     *  // Valid
+     *  //
+     *  UserDataStorage.Set( 100.0f );
+     *  UserDataStorage.<float>Get();
+     *
+     *  //
+     *  // Invalid - didn't Add a float type!
+     *  //
+     *  UserDataStorage.Set( 100 );
+     *  UserDataStorage.<float>Get();
+     *
+     *  //
+     *  // You can pass structs as long as they can be copied safely.
+     *  //
+     *  UserDataStorage.Set( mystruct );
+     *  UserDataStorage.<MyStruct>Get();
+     *
+     *  //
+     *  // If you pass a pointer then whatever it's pointing to
+     *  // should be valid for the duration. And it won't be freed.
+     *  //
+     *  UserDataStorage.Set( &mystruct );
+     *  UserDataStorage.<MyStruct*>Get();
+     *
+     */
+    class UserDataStorage
+    {
+        struct ValueBase
+        {
+            virtual void DeleteThis() = 0;
+        };
 
-		Allows you to store multiple and various user data
 
-		//
-		// Valid
-		//
-		UserDataStorage.Set( 100.0f );
-		UserDataStorage.<float>Get();
+        template < typename T >struct Value : public ValueBase
+        {
+            T val;
 
-		//
-		// Invalid - didn't Add a float type!
-		//
-		UserDataStorage.Set( 100 );
-		UserDataStorage.<float>Get();
+            Value(const T& v)
+            {
+                val = v;
+            }
 
-		//
-		// You can pass structs as long as they can be copied safely.
-		//
-		UserDataStorage.Set( mystruct );
-		UserDataStorage.<MyStruct>Get();
+            virtual void DeleteThis()
+            {
+                delete this;
+            }
 
-		//
-		// If you pass a pointer then whatever it's pointing to
-		// should be valid for the duration. And it won't be freed.
-		//
-		UserDataStorage.Set( &mystruct );
-		UserDataStorage.<MyStruct*>Get();
+        };
 
-	*/
-	class UserDataStorage
-	{
-			struct ValueBase
-			{
-				virtual void DeleteThis() = 0;
-			};
 
-			template<typename T> struct Value : public ValueBase
-			{
-				T val;
+    public:
 
-				Value( const T & v )
-				{
-					val = v;
-				}
+        UserDataStorage()
+        {
+        }
 
-				virtual void DeleteThis()
-				{
-					delete this;
-				}
-			};
+        ~UserDataStorage()
+        {
+            std::map< Gwen::String, void* >::iterator it = m_List.begin();
+            std::map< Gwen::String, void* >::iterator itEnd = m_List.end();
 
-		public:
+            while (it != itEnd)
+            {
+                ( (ValueBase*)it->second )->DeleteThis();
+                ++it;
+            }
+        }
 
-			UserDataStorage()
-			{
-			}
+        template < typename T >
+        void Set(const Gwen::String& str, const T& var)
+        {
+            Value< T >* val = NULL;
+            std::map< Gwen::String, void* >::iterator it = m_List.find(str);
 
-			~UserDataStorage()
-			{
-				std::map< Gwen::String, void*>::iterator it = m_List.begin();
-				std::map< Gwen::String, void*>::iterator itEnd = m_List.end();
+            if ( it != m_List.end() )
+            {
+                ( (Value< T >*)it->second )->val = var;
+            }
+            else
+            {
+                val = new Value< T >(var);
+                m_List[ str ] = (void*)val;
+            }
+        }
 
-				while ( it != itEnd )
-				{
-					( ( ValueBase* ) it->second )->DeleteThis();
-					++it;
-				}
-			}
+        bool Exists(const Gwen::String& str)
+        {
+            return m_List.find(str) != m_List.end();
+        }
 
-			template<typename T>
-			void Set( const Gwen::String & str, const T & var )
-			{
-				Value<T>* val = NULL;
-				std::map< Gwen::String, void*>::iterator it = m_List.find( str );
+        template < typename T >
+        T& Get(const Gwen::String& str)
+        {
+            Value< T >* v = (Value< T >*)m_List[ str ];
+            return v->val;
+        }
 
-				if ( it != m_List.end() )
-				{
-					( ( Value<T>* ) it->second )->val = var;
-				}
-				else
-				{
-					val = new Value<T> ( var );
-					m_List[ str ] = ( void* ) val;
-				}
-			};
+        std::map< Gwen::String, void* >m_List;
+    };
 
-			bool Exists( const Gwen::String & str )
-			{
-				return m_List.find( str ) != m_List.end();
-			};
 
-			template <typename T>
-			T & Get( const Gwen::String & str )
-			{
-				Value<T>* v = ( Value<T>* ) m_List[ str ];
-				return v->val;
-			}
-
-			std::map< Gwen::String, void*>	m_List;
-	};
-
-};
+}
 
 #endif

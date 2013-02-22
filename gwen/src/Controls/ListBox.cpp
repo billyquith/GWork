@@ -1,8 +1,8 @@
 /*
-	GWEN
-	Copyright (c) 2010 Facepunch Studios
-	See license in Gwen.h
-*/
+ *  GWEN
+ *  Copyright (c) 2010 Facepunch Studios
+ *  See license in Gwen.h
+ */
 
 
 #include "Gwen/Controls/ListBox.h"
@@ -14,245 +14,287 @@ using namespace Gwen::Controls;
 
 class ListBoxRow : public Layout::TableRow
 {
-		GWEN_CONTROL_INLINE( ListBoxRow, Layout::TableRow )
-		{
-			SetMouseInputEnabled( true );
-			SetSelected( false );
-		}
+    GWEN_CONTROL_INLINE(ListBoxRow, Layout::TableRow)
+    {
+        SetMouseInputEnabled(true);
+        SetSelected(false);
+    }
 
-		void Render( Skin::Base* skin )
-		{
-			skin->DrawListBoxLine( this, IsSelected(), GetEven() );
-		}
+    void Render(Skin::Base* skin)
+    {
+        skin->DrawListBoxLine( this, IsSelected(), GetEven() );
+    }
 
-		bool IsSelected() const
-		{
-			return m_bSelected;
-		}
+    bool IsSelected() const
+    {
+        return m_bSelected;
+    }
 
-		void DoSelect()
-		{
-			SetSelected( true );
-			onRowSelected.Call( this );
-			Redraw();
-		}
+    void DoSelect()
+    {
+        SetSelected(true);
+        onRowSelected.Call(this);
+        Redraw();
+    }
 
-		void OnMouseClickLeft( int /*x*/, int /*y*/, bool bDown )
-		{
-			if ( bDown )
-			{
-				DoSelect();
-			}
-		}
+    void OnMouseClickLeft(int /*x*/, int /*y*/, bool bDown)
+    {
+        if (bDown)
+        {
+            DoSelect();
+        }
+    }
 
-		void SetSelected( bool b )
-		{
-			m_bSelected = b;
+    void SetSelected(bool b)
+    {
+        m_bSelected = b;
 
-			// TODO: Get these values from the skin.
-			if ( b )
-			{ SetTextColor( Gwen::Colors::White ); }
-			else
-			{ SetTextColor( Gwen::Colors::Black ); }
-		}
+        // TODO: Get these values from the skin.
+        if (b)
+        {
+            SetTextColor(Gwen::Colors::White);
+        }
+        else
+        {
+            SetTextColor(Gwen::Colors::Black);
+        }
+    }
 
-	private:
+private:
 
-		bool			m_bSelected;
+    bool m_bSelected;
 
 };
 
-GWEN_CONTROL_CONSTRUCTOR( ListBox )
+
+GWEN_CONTROL_CONSTRUCTOR(ListBox)
 {
-	SetScroll( false, true );
-	SetAutoHideBars( true );
-	SetMargin( Margin( 1, 1, 1, 1 ) );
-	m_InnerPanel->SetPadding( Padding( 2, 2, 2, 2 ) );
-	m_Table = new Controls::Layout::Table( this );
-	m_Table->SetColumnCount( 1 );
-	m_bMultiSelect = false;
+    SetScroll(false, true);
+    SetAutoHideBars(true);
+    SetMargin( Margin(1, 1, 1, 1) );
+    m_InnerPanel->SetPadding( Padding(2, 2, 2, 2) );
+    m_Table = new Controls::Layout::Table(this);
+    m_Table->SetColumnCount(1);
+    m_bMultiSelect = false;
 }
 
-Layout::TableRow* ListBox::AddItem( const TextObject & strLabel, const String & strName )
+Layout::TableRow* ListBox::AddItem(const TextObject& strLabel, const String& strName)
 {
-	ListBoxRow* pRow = new ListBoxRow( this );
-	m_Table->AddRow( pRow );
-	pRow->SetCellText( 0, strLabel );
-	pRow->SetName( strName );
-	pRow->onRowSelected.Add( this, &ListBox::OnRowSelected );
-	return pRow;
+    ListBoxRow* pRow = new ListBoxRow(this);
+    m_Table->AddRow(pRow);
+    pRow->SetCellText(0, strLabel);
+    pRow->SetName(strName);
+    pRow->onRowSelected.Add(this, &ListBox::OnRowSelected);
+    return pRow;
 }
 
-void ListBox::RemoveItem( Layout::TableRow* row )
+void ListBox::RemoveItem(Layout::TableRow* row)
 {
-	m_SelectedRows.erase( std::find( m_SelectedRows.begin(), m_SelectedRows.end(), row ) );
-	m_Table->Remove( row );
+    m_SelectedRows.erase( std::find(m_SelectedRows.begin(), m_SelectedRows.end(), row) );
+    m_Table->Remove(row);
 }
 
-void ListBox::Render( Skin::Base* skin )
+void ListBox::Render(Skin::Base* skin)
 {
-	skin->DrawListBox( this );
+    skin->DrawListBox(this);
 }
 
-void ListBox::Layout( Skin::Base* skin )
+void ListBox::Layout(Skin::Base* skin)
 {
-	BaseClass::Layout( skin );
-	const Gwen::Rect & inner = m_InnerPanel->GetInnerBounds();
-	m_Table->SetPos( inner.x, inner.y );
-	m_Table->SetWidth( inner.w );
-	m_Table->SizeToChildren( false, true );
-	BaseClass::Layout( skin );
+    BaseClass::Layout(skin);
+    const Gwen::Rect& inner = m_InnerPanel->GetInnerBounds();
+    m_Table->SetPos(inner.x, inner.y);
+    m_Table->SetWidth(inner.w);
+    m_Table->SizeToChildren(false, true);
+    BaseClass::Layout(skin);
 }
 
 void ListBox::UnselectAll()
 {
-	std::list<Layout::TableRow*>::iterator it = m_SelectedRows.begin();
+    std::list< Layout::TableRow* >::iterator it = m_SelectedRows.begin();
 
-	while ( it != m_SelectedRows.end() )
-	{
-		ListBoxRow* pRow = static_cast<ListBoxRow*>( *it );
-		it = m_SelectedRows.erase( it );
-		pRow->SetSelected( false );
-	}
+    while ( it != m_SelectedRows.end() )
+    {
+        ListBoxRow* pRow = static_cast< ListBoxRow* >(*it);
+        it = m_SelectedRows.erase(it);
+        pRow->SetSelected(false);
+    }
 }
 
-void ListBox::OnRowSelected( Base* pControl )
+void ListBox::OnRowSelected(Base* pControl)
 {
-	bool bClear = !Gwen::Input::IsShiftDown();
+    bool bClear = !Gwen::Input::IsShiftDown();
 
-	if ( !AllowMultiSelect() ) { bClear = true; }
+    if ( !AllowMultiSelect() )
+    {
+        bClear = true;
+    }
 
-	SetSelectedRow( pControl, bClear );
+    SetSelectedRow(pControl, bClear);
 }
 
 Layout::TableRow* ListBox::GetSelectedRow()
 {
-	if ( m_SelectedRows.empty() ) { return NULL; }
+    if ( m_SelectedRows.empty() )
+    {
+        return NULL;
+    }
 
-	return *m_SelectedRows.begin();
+    return *m_SelectedRows.begin();
 }
 
 Gwen::String ListBox::GetSelectedRowName()
 {
-	Layout::TableRow* row = GetSelectedRow();
+    Layout::TableRow* row = GetSelectedRow();
 
-	if ( !row ) { return ""; }
+    if (!row)
+    {
+        return "";
+    }
 
-	return row->GetName();
+    return row->GetName();
 }
 
 void ListBox::Clear()
 {
-	UnselectAll();
-	m_Table->Clear();
+    UnselectAll();
+    m_Table->Clear();
 }
 
-void ListBox::SetSelectedRow( Gwen::Controls::Base* pControl, bool bClearOthers )
+void ListBox::SetSelectedRow(Gwen::Controls::Base* pControl, bool bClearOthers)
 {
-	if ( bClearOthers )
-	{ UnselectAll(); }
+    if (bClearOthers)
+    {
+        UnselectAll();
+    }
 
-	ListBoxRow* pRow = gwen_cast<ListBoxRow> ( pControl );
+    ListBoxRow* pRow = gwen_cast< ListBoxRow >(pControl);
 
-	if ( !pRow ) { return; }
+    if (!pRow)
+    {
+        return;
+    }
 
-	// TODO: make sure this is one of our rows!
-	pRow->SetSelected( true );
-	m_SelectedRows.push_back( pRow );
-	onRowSelected.Call( this );
+    // TODO: make sure this is one of our rows!
+    pRow->SetSelected(true);
+    m_SelectedRows.push_back(pRow);
+    onRowSelected.Call(this);
 }
 
-
-
-void ListBox::SelectByString( const TextObject & strName, bool bClearOthers )
+void ListBox::SelectByString(const TextObject& strName, bool bClearOthers)
 {
-	if ( bClearOthers )
-	{ UnselectAll(); }
+    if (bClearOthers)
+    {
+        UnselectAll();
+    }
 
-	Base::List & children = m_Table->GetChildren();
+    Base::List& children = m_Table->GetChildren();
 
-	for ( Base::List::iterator iter = children.begin(); iter != children.end(); ++iter )
-	{
-		ListBoxRow* pChild = gwen_cast<ListBoxRow> ( *iter );
+    for (Base::List::iterator iter = children.begin(); iter != children.end(); ++iter)
+    {
+        ListBoxRow* pChild = gwen_cast< ListBoxRow >(*iter);
 
-		if ( !pChild ) { continue; }
+        if (!pChild)
+        {
+            continue;
+        }
 
-		if ( Utility::Strings::Wildcard( strName, pChild->GetText( 0 ) ) )
-		{ SetSelectedRow( pChild, false ); }
-	}
+        if ( Utility::Strings::Wildcard( strName, pChild->GetText(0) ) )
+        {
+            SetSelectedRow(pChild, false);
+        }
+    }
 }
 
-bool ListBox::OnKeyDown( bool bDown )
+bool ListBox::OnKeyDown(bool bDown)
 {
-	if ( bDown )
-	{
-		Base::List & children = m_Table->Children;
-		Base::List::const_iterator begin = children.begin();
-		Base::List::const_iterator end = children.end();
-		Controls::Base* sel_row = GetSelectedRow();
+    if (bDown)
+    {
+        Base::List& children = m_Table->Children;
+        Base::List::const_iterator begin = children.begin();
+        Base::List::const_iterator end = children.end();
+        Controls::Base* sel_row = GetSelectedRow();
 
-		if ( sel_row == NULL && !children.empty() ) // no user selection yet, so select first element
-		{ sel_row = children.front(); }
+        if ( sel_row == NULL && !children.empty() ) // no user selection yet, so
+                                                    // select first element
+        {
+            sel_row = children.front();
+        }
 
-		Base::List::const_iterator result = std::find( begin, end, sel_row );
+        Base::List::const_iterator result = std::find(begin, end, sel_row);
 
-		if ( result != end )
-		{
-			Base::List::const_iterator next = result;
-			++next;
+        if (result != end)
+        {
+            Base::List::const_iterator next = result;
+            ++next;
 
-			if ( next != end )
-			{ result = next; }
+            if (next != end)
+            {
+                result = next;
+            }
 
-			ListBoxRow* pRow = gwen_cast<ListBoxRow> ( *result );
+            ListBoxRow* pRow = gwen_cast< ListBoxRow >(*result);
 
-			if ( pRow )
-			{
-				pRow->DoSelect();
-				Controls::VerticalScrollBar* pScroll = gwen_cast<Controls::VerticalScrollBar> ( m_VerticalScrollBar );
+            if (pRow)
+            {
+                pRow->DoSelect();
+                Controls::VerticalScrollBar* pScroll = gwen_cast< Controls::VerticalScrollBar >(
+                    m_VerticalScrollBar);
 
-				if ( pScroll ) { pScroll->NudgeDown( this ); }
+                if (pScroll)
+                {
+                    pScroll->NudgeDown(this);
+                }
 
-				Redraw();
-			}
-		}
-	}
+                Redraw();
+            }
+        }
+    }
 
-	return true;
+    return true;
 }
 
-bool ListBox::OnKeyUp( bool bDown )
+bool ListBox::OnKeyUp(bool bDown)
 {
-	if ( bDown )
-	{
-		Base::List & children = m_Table->Children;
-		Base::List::const_iterator begin = children.begin();
-		Base::List::const_iterator end = children.end();
-		Controls::Base* sel_row = GetSelectedRow();
+    if (bDown)
+    {
+        Base::List& children = m_Table->Children;
+        Base::List::const_iterator begin = children.begin();
+        Base::List::const_iterator end = children.end();
+        Controls::Base* sel_row = GetSelectedRow();
 
-		if ( sel_row == NULL && !children.empty() ) // no user selection yet, so select first element
-		{ sel_row = children.front(); }
+        if ( sel_row == NULL && !children.empty() ) // no user selection yet, so
+                                                    // select first element
+        {
+            sel_row = children.front();
+        }
 
-		Base::List::const_iterator result = std::find( begin, end, sel_row );
+        Base::List::const_iterator result = std::find(begin, end, sel_row);
 
-		if ( result != end )
-		{
-			if ( result != begin )
-			{ --result; }
+        if (result != end)
+        {
+            if (result != begin)
+            {
+                --result;
+            }
 
-			ListBoxRow* pRow = gwen_cast<ListBoxRow> ( *result );
+            ListBoxRow* pRow = gwen_cast< ListBoxRow >(*result);
 
-			if ( pRow )
-			{
-				pRow->DoSelect();
-				Controls::VerticalScrollBar* pScroll = gwen_cast<Controls::VerticalScrollBar> ( m_VerticalScrollBar );
+            if (pRow)
+            {
+                pRow->DoSelect();
+                Controls::VerticalScrollBar* pScroll = gwen_cast< Controls::VerticalScrollBar >(
+                    m_VerticalScrollBar);
 
-				if ( pScroll ) { pScroll->NudgeUp( this ); }
+                if (pScroll)
+                {
+                    pScroll->NudgeUp(this);
+                }
 
-				Redraw();
-			}
-		}
-	}
+                Redraw();
+            }
+        }
+    }
 
-	return true;
+    return true;
 }

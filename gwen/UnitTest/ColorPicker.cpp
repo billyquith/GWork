@@ -6,17 +6,16 @@ using namespace Gwen;
 
 class ColorPicker : public GUnit
 {
-	public:
+public:
 
-		GWEN_CONTROL_INLINE( ColorPicker, GUnit )
-		{
-			Controls::ColorPicker* pCtrl = new Controls::ColorPicker( this );
-			pCtrl->SetBounds( 0, 10, 250, 150 );
-			Controls::HSVColorPicker* pHSVCtrl = new Controls::HSVColorPicker( this );
-			pHSVCtrl->SetBounds( 260, 10, 250, 150 );
-		}
+    GWEN_CONTROL_INLINE(ColorPicker, GUnit)
+    {
+        Controls::ColorPicker* pCtrl = new Controls::ColorPicker(this);
+        pCtrl->SetBounds(0, 10, 250, 150);
+        Controls::HSVColorPicker* pHSVCtrl = new Controls::HSVColorPicker(this);
+        pHSVCtrl->SetBounds(260, 10, 250, 150);
+    }
 };
 
 
-
-DEFINE_UNIT_TEST( ColorPicker, L"ColorPicker" );
+DEFINE_UNIT_TEST(ColorPicker, L"ColorPicker");

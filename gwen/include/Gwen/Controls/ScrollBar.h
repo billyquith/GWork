@@ -1,79 +1,119 @@
 /*
-	GWEN
-	Copyright (c) 2010 Facepunch Studios
-	See license in Gwen.h
-*/
+ *  GWEN
+ *  Copyright (c) 2010 Facepunch Studios
+ *  See license in Gwen.h
+ */
 
 #pragma once
 #ifndef GWEN_CONTROLS_SCROLLBAR_H
-#define GWEN_CONTROLS_SCROLLBAR_H
+#   define GWEN_CONTROLS_SCROLLBAR_H
 
-#include "Gwen/Controls/Base.h"
-#include "Gwen/Controls/ScrollBarBar.h"
-#include "Gwen/Controls/ScrollBarButton.h"
-#include "Gwen/Gwen.h"
+#   include "Gwen/Controls/Base.h"
+#   include "Gwen/Controls/ScrollBarBar.h"
+#   include "Gwen/Controls/ScrollBarButton.h"
+#   include "Gwen/Gwen.h"
 
 
-#define SCROLL_BUTTON_UP 0
-#define SCROLL_BUTTON_LEFT 0
-#define SCROLL_BUTTON_DOWN 1
-#define SCROLL_BUTTON_RIGHT 1
-#define NUDGE_DIST 10
+#   define SCROLL_BUTTON_UP 0
+#   define SCROLL_BUTTON_LEFT 0
+#   define SCROLL_BUTTON_DOWN 1
+#   define SCROLL_BUTTON_RIGHT 1
+#   define NUDGE_DIST 10
 
 namespace Gwen
 {
-	namespace Controls
-	{
-		class GWEN_EXPORT BaseScrollBar : public Base
-		{
-			public:
+    namespace Controls
+    {
+        class GWEN_EXPORT BaseScrollBar : public Base
+        {
+        public:
 
-				GWEN_CONTROL( BaseScrollBar, Base );
+            GWEN_CONTROL(BaseScrollBar, Base);
 
-				virtual void Render( Skin::Base* skin );
+            virtual void Render(Skin::Base* skin);
 
-				virtual void SetBarSize( int size ) = 0;
-				virtual int GetBarSize() = 0;
-				virtual int GetBarPos() = 0;
+            virtual void SetBarSize(int size) = 0;
+            virtual int  GetBarSize() = 0;
+            virtual int  GetBarPos() = 0;
 
-				virtual void OnBarMoved( Controls::Base* control );
-				virtual void OnMouseClickLeft( int /*x*/, int /*y*/, bool /*bDown*/ ) {}
+            virtual void OnBarMoved(Controls::Base* control);
+            virtual void OnMouseClickLeft(int /*x*/, int /*y*/, bool /*bDown*/)
+            {
+            }
 
-				virtual void ScrollToLeft() {}
-				virtual void ScrollToRight() {}
-				virtual void ScrollToTop() {}
-				virtual void ScrollToBottom() {}
+            virtual void ScrollToLeft()
+            {
+            }
 
-				virtual float GetNudgeAmount() { return m_fNudgeAmount / m_fContentSize; }
-				virtual void SetNudgeAmount( float nudge ) { m_fNudgeAmount = nudge; }
+            virtual void ScrollToRight()
+            {
+            }
 
-				virtual void BarMovedNotification();
+            virtual void ScrollToTop()
+            {
+            }
 
-				virtual float CalculateScrolledAmount() { return 0; }
-				virtual int CalculateBarSize() { return 0; }
-				virtual bool SetScrolledAmount( float amount, bool forceUpdate );
+            virtual void ScrollToBottom()
+            {
+            }
 
-				virtual void SetContentSize( float size );
-				virtual void SetViewableContentSize( float size );
+            virtual float GetNudgeAmount()
+            {
+                return m_fNudgeAmount/m_fContentSize;
+            }
 
-				virtual int GetButtonSize() { return 0; }
-				virtual float GetScrolledAmount() { return m_fScrolledAmount; }
+            virtual void SetNudgeAmount(float nudge)
+            {
+                m_fNudgeAmount = nudge;
+            }
 
-				virtual bool IsHorizontal() { return false; }
+            virtual void BarMovedNotification();
 
-				Gwen::Event::Caller	onBarMoved;
+            virtual float CalculateScrolledAmount()
+            {
+                return 0;
+            }
 
-			protected:
+            virtual int CalculateBarSize()
+            {
+                return 0;
+            }
 
-				ControlsInternal::ScrollBarButton* m_ScrollButton[2];
-				ControlsInternal::ScrollBarBar* m_Bar;
+            virtual bool SetScrolledAmount(float amount, bool forceUpdate);
 
-				bool m_bDepressed;
-				float m_fScrolledAmount;
-				float m_fContentSize;
-				float m_fViewableContentSize;
-				float m_fNudgeAmount;
-		};
-	}
+            virtual void SetContentSize(float size);
+            virtual void SetViewableContentSize(float size);
+
+            virtual int GetButtonSize()
+            {
+                return 0;
+            }
+
+            virtual float GetScrolledAmount()
+            {
+                return m_fScrolledAmount;
+            }
+
+            virtual bool IsHorizontal()
+            {
+                return false;
+            }
+
+            Gwen::Event::Caller onBarMoved;
+
+        protected:
+
+            ControlsInternal::ScrollBarButton* m_ScrollButton[2];
+            ControlsInternal::ScrollBarBar* m_Bar;
+
+            bool m_bDepressed;
+            float m_fScrolledAmount;
+            float m_fContentSize;
+            float m_fViewableContentSize;
+            float m_fNudgeAmount;
+        };
+
+
+    }
 }
 #endif
