@@ -55,11 +55,11 @@ Caller::~Caller()
 
 void Caller::CleanLinks()
 {
-    std::list< handler >::iterator iter;
+    std::list< HandlerInstance >::iterator iter;
 
     for (iter = m_Handlers.begin(); iter != m_Handlers.end(); ++iter)
     {
-        handler& h = *iter;
+        HandlerInstance& h = *iter;
         h.pObject->UnRegisterCaller(this);
     }
 
@@ -78,11 +78,11 @@ void Caller::Call(Controls::Base* pThis, Gwen::Event::Info information)
     Gwen::Event::Information info;
     info = information;
     info.ControlCaller  = pThis;
-    std::list< handler >::iterator iter;
+    std::list< HandlerInstance >::iterator iter;
 
     for (iter = m_Handlers.begin(); iter != m_Handlers.end(); ++iter)
     {
-        handler& h = *iter;
+        HandlerInstance& h = *iter;
         info.Packet = &h.Packet;
 
         if (h.fnFunction)
@@ -104,7 +104,7 @@ void Caller::Call(Controls::Base* pThis, Gwen::Event::Info information)
 
 void Caller::AddInternal(Event::Handler* pObject, Event::Handler::Function pFunction)
 {
-    handler h;
+    HandlerInstance h;
     h.fnFunction = pFunction;
     h.pObject = pObject;
     m_Handlers.push_back(h);
@@ -119,7 +119,7 @@ void Caller::AddInternal(Event::Handler* pObject, Handler::FunctionWithInformati
 void Caller::AddInternal(Event::Handler* pObject, Handler::FunctionWithInformation pFunction,
                          const Gwen::Event::Packet& packet)
 {
-    handler h;
+    HandlerInstance h;
     h.fnFunctionInfo    = pFunction;
     h.pObject           = pObject;
     h.Packet            = packet;
@@ -129,7 +129,7 @@ void Caller::AddInternal(Event::Handler* pObject, Handler::FunctionWithInformati
 
 void Caller::AddInternal(Event::Handler* pObject, Handler::FunctionBlank pFunction)
 {
-    handler h;
+    HandlerInstance h;
     h.fnFunctionBlank = pFunction;
     h.pObject = pObject;
     m_Handlers.push_back(h);
@@ -139,11 +139,11 @@ void Caller::AddInternal(Event::Handler* pObject, Handler::FunctionBlank pFuncti
 void Caller::RemoveHandler(Event::Handler* pObject)
 {
     pObject->UnRegisterCaller(this);
-    std::list< handler >::iterator iter = m_Handlers.begin();
+    std::list< HandlerInstance >::iterator iter = m_Handlers.begin();
 
     while ( iter != m_Handlers.end() )
     {
-        handler& h = *iter;
+        HandlerInstance& h = *iter;
 
         if (h.pObject == pObject)
         {

@@ -16,6 +16,9 @@ namespace Gwen
 {
     namespace Controls
     {
+        //
+        //! A control that contains a text item.
+        //
         class GWEN_EXPORT Label : public Controls::Base
         {
         public:
@@ -103,7 +106,9 @@ namespace Gwen
 
             virtual void SetTextPadding(const Padding& padding)
             {
-                m_Text->SetPadding(padding); Invalidate(); InvalidateParent();
+                m_Text->SetPadding(padding);
+                Invalidate();
+                InvalidateParent();
             }
 
             virtual const Padding& GetTextPadding()
@@ -166,7 +171,7 @@ namespace Gwen
 
             Gwen::Font*                 m_CreatedFont;
             ControlsInternal::Text*     m_Text;
-            int m_iAlign;
+            int                         m_iAlign;
 
 
         };
@@ -174,4 +179,5 @@ namespace Gwen
 
     }
 }
+
 #endif
