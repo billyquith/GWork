@@ -1,6 +1,6 @@
 
-#include "Gwen/Util/ImportExport.h"
-#include "Bootil/Bootil.h"
+#include <Gwen/Util/ImportExport.h>
+#include "GwenUtil.h"
 
 
 class DesignerFormat : public Gwen::ImportExport::Base
@@ -28,8 +28,8 @@ public:
 
     virtual void Export(Gwen::Controls::Base* pRoot, const Gwen::String& strFilename);
 
-    void ExportToTree(Gwen::Controls::Base* pRoot, Bootil::Data::Tree& tree);
-    void ImportFromTree(Gwen::Controls::Base* pRoot, Bootil::Data::Tree& tree);
+    void ExportToTree(Gwen::Controls::Base* pRoot, GwenUtil::Data::Tree& tree);
+    void ImportFromTree(Gwen::Controls::Base* pRoot, GwenUtil::Data::Tree& tree);
 
 };
 
@@ -43,15 +43,15 @@ DesignerFormat::DesignerFormat()
 
 void DesignerFormat::Import(Gwen::Controls::Base* pRoot, const Gwen::String& strFilename)
 {
-    Bootil::BString strContents;
+    GwenUtil::BString strContents;
 
-    if ( !Bootil::File::Read(strFilename, strContents) )
+    if ( !GwenUtil::File::Read(strFilename, strContents) )
     {
         return;
     }
 
-    Bootil::Data::Tree tree;
-    Bootil::Data::Json::Import(tree, strContents);
+    GwenUtil::Data::Tree tree;
+    GwenUtil::Data::Json::Import(tree, strContents);
 
     if ( !tree.HasChild("Controls") )
     {
@@ -62,7 +62,7 @@ void DesignerFormat::Import(Gwen::Controls::Base* pRoot, const Gwen::String& str
     ImportFromTree( pRoot, tree.GetChild("Controls") );
 }
 
-void DesignerFormat::ImportFromTree(Gwen::Controls::Base* pRoot, Bootil::Data::Tree& tree)
+void DesignerFormat::ImportFromTree(Gwen::Controls::Base* pRoot, GwenUtil::Data::Tree& tree)
 {
     ControlFactory::Base* pRootFactory = ControlFactory::Find("Base");
 
@@ -73,8 +73,8 @@ void DesignerFormat::ImportFromTree(Gwen::Controls::Base* pRoot, Bootil::Data::T
 
     if ( tree.HasChild("Properties") )
     {
-        Bootil::Data::Tree& Properties = tree.GetChild("Properties");
-        BOOTIL_FOREACH(p, Properties.Children(), Bootil::Data::Tree::List)
+        GwenUtil::Data::Tree& Properties = tree.GetChild("Properties");
+        GWENUTIL_FOREACH(p, Properties.Children(), GwenUtil::Data::Tree::List)
         {
             ControlFactory::Property* prop = pRootFactory->GetProperty( p->Name() );
 
@@ -85,7 +85,7 @@ void DesignerFormat::ImportFromTree(Gwen::Controls::Base* pRoot, Bootil::Data::T
 
             if ( p->HasChildren() )
             {
-                BOOTIL_FOREACH(pc, p->Children(), Bootil::Data::Tree::List)
+                GWENUTIL_FOREACH(pc, p->Children(), GwenUtil::Data::Tree::List)
                 {
                     prop->NumSet( pRoot, pc->Name(), pc->Var< float >() );
                 }
@@ -93,17 +93,17 @@ void DesignerFormat::ImportFromTree(Gwen::Controls::Base* pRoot, Bootil::Data::T
             else
             {
                 pRootFactory->SetControlValue( pRoot, p->Name(),
-                                               Bootil::String::Convert::ToWide( p->Value() ) );
+                                               GwenUtil::String::Convert::ToWide( p->Value() ) );
             }
         }
     }
 
     if ( tree.HasChild("Children") )
     {
-        Bootil::Data::Tree& ChildrenObject = tree.GetChild("Children");
-        BOOTIL_FOREACH(c, ChildrenObject.Children(), Bootil::Data::Tree::List)
+        GwenUtil::Data::Tree& ChildrenObject = tree.GetChild("Children");
+        GWENUTIL_FOREACH(c, ChildrenObject.Children(), GwenUtil::Data::Tree::List)
         {
-            Bootil::BString strType = c->ChildValue("Type");
+            GwenUtil::BString strType = c->ChildValue("Type");
             ControlFactory::Base* pFactory = ControlFactory::Find(strType);
 
             if (!pFactory)
@@ -132,19 +132,19 @@ void DesignerFormat::ImportFromTree(Gwen::Controls::Base* pRoot, Bootil::Data::T
 
 void DesignerFormat::Export(Gwen::Controls::Base* pRoot, const Gwen::String& strFilename)
 {
-    Bootil::Data::Tree tree;
+    GwenUtil::Data::Tree tree;
     ExportToTree(pRoot, tree);
-    Bootil::BString strOutput;
+    GwenUtil::BString strOutput;
 
-    if ( Bootil::Data::Json::Export(tree, strOutput, true) )
+    if ( GwenUtil::Data::Json::Export(tree, strOutput, true) )
     {
-        Bootil::File::Write(strFilename, strOutput);
+        GwenUtil::File::Write(strFilename, strOutput);
     }
 }
 
-void DesignerFormat::ExportToTree(Gwen::Controls::Base* pRoot, Bootil::Data::Tree& tree)
+void DesignerFormat::ExportToTree(Gwen::Controls::Base* pRoot, GwenUtil::Data::Tree& tree)
 {
-    Bootil::Data::Tree* me = &tree;
+    GwenUtil::Data::Tree* me = &tree;
 
     if (strcmp(pRoot->GetTypeName(), "DocumentCanvas") == 0)
     {
@@ -162,7 +162,7 @@ void DesignerFormat::ExportToTree(Gwen::Controls::Base* pRoot, Bootil::Data::Tre
     //
     if ( pRoot->UserData.Exists("ControlFactory") )
     {
-        Bootil::Data::Tree& props = me->AddChild("Properties");
+        GwenUtil::Data::Tree& props = me->AddChild("Properties");
         ControlFactory::Base* pCF = pRoot->UserData.Get< ControlFactory::Base* >("ControlFactory");
         // Save the ParentPage
         {
@@ -182,7 +182,7 @@ void DesignerFormat::ExportToTree(Gwen::Controls::Base* pRoot, Bootil::Data::Tre
             {
                 if ( (*it)->NumCount() > 0 )
                 {
-                    Bootil::Data::Tree& prop = props.AddChild( (*it)->Name() );
+                    GwenUtil::Data::Tree& prop = props.AddChild( (*it)->Name() );
 
                     for (int i = 0; i < (*it)->NumCount(); i++)
                     {
@@ -204,7 +204,7 @@ void DesignerFormat::ExportToTree(Gwen::Controls::Base* pRoot, Bootil::Data::Tre
 
     if ( !list.list.empty() )
     {
-        Bootil::Data::Tree& children = me->AddChild("Children");
+        GwenUtil::Data::Tree& children = me->AddChild("Children");
         ControlList::List::iterator it = list.list.begin();
         ControlList::List::iterator itEnd = list.list.end();
 
