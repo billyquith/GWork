@@ -8,61 +8,61 @@
 #include "Gwen/ToolTip.h"
 #include "Gwen/Utility.h"
 
-using namespace Gwen;
-using namespace Gwen::Controls;
+namespace Gwen {
 
-namespace ToolTip
-{
-    Base* g_ToolTip = NULL;
-
-    GWEN_EXPORT bool TooltipActive()
+    namespace ToolTip
     {
-        return g_ToolTip != NULL;
-    }
-
-    void Enable(Controls::Base* pControl)
-    {
-        if ( !pControl->GetToolTip() )
+        Controls::Base* g_ToolTip = NULL;
+        
+        GWEN_EXPORT bool TooltipActive()
         {
-            return;
+            return g_ToolTip != NULL;
         }
-
-        g_ToolTip = pControl;
-    }
-
-    void Disable(Controls::Base* pControl)
-    {
-        if (g_ToolTip == pControl)
+        
+        void Enable(Controls::Base* pControl)
         {
-            g_ToolTip = NULL;
+            if ( !pControl->GetToolTip() )
+            {
+                return;
+            }
+            
+            g_ToolTip = pControl;
         }
-    }
-
-    void RenderToolTip(Skin::Base* skin)
-    {
-        if (!g_ToolTip)
+        
+        void Disable(Controls::Base* pControl)
         {
-            return;
+            if (g_ToolTip == pControl)
+            {
+                g_ToolTip = NULL;
+            }
         }
-
-        Gwen::Renderer::Base* render = skin->GetRender();
-        Gwen::Point pOldRenderOffset = render->GetRenderOffset();
-        Gwen::Point MousePos = Input::GetMousePosition();
-        Gwen::Rect Bounds = g_ToolTip->GetToolTip()->GetBounds();
-        Gwen::Rect rOffset = Gwen::Rect(MousePos.x-Bounds.w*0.5f, MousePos.y-Bounds.h-10, Bounds.w,
-                                        Bounds.h);
-        rOffset = Utility::ClampRectToRect( rOffset, g_ToolTip->GetCanvas()->GetBounds() );
-        // Calculate offset on screen bounds
-        render->AddRenderOffset(rOffset);
-        render->EndClip();
-        skin->DrawToolTip( g_ToolTip->GetToolTip() );
-        g_ToolTip->GetToolTip()->DoRender(skin);
-        render->SetRenderOffset(pOldRenderOffset);
-    }
-
-    void ControlDeleted(Controls::Base* pControl)
-    {
-        Disable(pControl);
-    }
-
+        
+        void RenderToolTip(Skin::Base* skin)
+        {
+            if (!g_ToolTip)
+            {
+                return;
+            }
+            
+            Gwen::Renderer::Base* render = skin->GetRender();
+            Gwen::Point pOldRenderOffset = render->GetRenderOffset();
+            Gwen::Point MousePos = Input::GetMousePosition();
+            Gwen::Rect Bounds = g_ToolTip->GetToolTip()->GetBounds();
+            Gwen::Rect rOffset = Gwen::Rect(MousePos.x-Bounds.w*0.5f, MousePos.y-Bounds.h-10, Bounds.w,
+                                            Bounds.h);
+            rOffset = Utility::ClampRectToRect( rOffset, g_ToolTip->GetCanvas()->GetBounds() );
+            // Calculate offset on screen bounds
+            render->AddRenderOffset(rOffset);
+            render->EndClip();
+            skin->DrawToolTip( g_ToolTip->GetToolTip() );
+            g_ToolTip->GetToolTip()->DoRender(skin);
+            render->SetRenderOffset(pOldRenderOffset);
+        }
+        
+        void ControlDeleted(Controls::Base* pControl)
+        {
+            Disable(pControl);
+        }
+        
+    }        
 }
