@@ -1,4 +1,7 @@
 
+gwen/docs/html/*
+gwen/include/allegro5/*
+
 #################
 ## Eclipse
 #################
@@ -117,7 +120,6 @@ Backup*/
 UpgradeLog*.XML
 
 
-
 ############
 ## Windows
 ############
@@ -175,6 +177,7 @@ xcschemes
 *.xcuserstate
 *.xcsettings
 *.xcworkspacedata
-
+*.xcuserdatad
+*Instruments.trace*
 
 
