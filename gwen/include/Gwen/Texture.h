@@ -6,11 +6,11 @@
 
 #pragma once
 #ifndef GWEN_TEXTURE_H
-#   define GWEN_TEXTURE_H
+#define GWEN_TEXTURE_H
 
-#   include <string>
+#include <string>
 
-#   include "Gwen/BaseRender.h"
+#include "Gwen/BaseRender.h"
 
 namespace Gwen
 {
@@ -19,7 +19,7 @@ namespace Gwen
     //
     struct Texture
     {
-        typedef std::list< Texture* >List;
+        typedef std::list<Texture*> List;
 
         TextObject name;
         void*   data;
@@ -60,4 +60,4 @@ namespace Gwen
 
 
 }
-#endif
+#endif // ifndef GWEN_TEXTURE_H

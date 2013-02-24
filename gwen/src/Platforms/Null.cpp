@@ -7,9 +7,9 @@
 #include "Gwen/Macros.h"
 #include "Gwen/Platform.h"
 
-#if !defined(_WIN32) && !defined(GWEN_ALLEGRO_PLATFORM)
+#if !defined (_WIN32) && !defined (GWEN_ALLEGRO_PLATFORM)
 
-#   include <time.h>
+#include <time.h>
 
 static Gwen::UnicodeString gs_ClipboardEmulator;
 

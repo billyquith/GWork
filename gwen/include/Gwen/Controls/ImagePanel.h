@@ -6,12 +6,12 @@
 
 #pragma once
 #ifndef GWEN_CONTROLS_IMAGEPANEL_H
-#   define GWEN_CONTROLS_IMAGEPANEL_H
+#define GWEN_CONTROLS_IMAGEPANEL_H
 
-#   include "Gwen/Gwen.h"
-#   include "Gwen/Controls/Base.h"
-#   include "Gwen/BaseRender.h"
-#   include "Gwen/Texture.h"
+#include "Gwen/Gwen.h"
+#include "Gwen/Controls/Base.h"
+#include "Gwen/BaseRender.h"
+#include "Gwen/Texture.h"
 
 namespace Gwen
 {
@@ -31,7 +31,7 @@ namespace Gwen
 
             virtual ~ImagePanel()
             {
-                m_Texture.Release( GetSkin()->GetRender() );
+                m_Texture.Release(GetSkin()->GetRender());
             }
 
             virtual void SetUV(float u1, float v1, float u2, float v2)
@@ -44,7 +44,7 @@ namespace Gwen
 
             virtual void SetImage(const TextObject& imageName)
             {
-                m_Texture.Load( imageName, GetSkin()->GetRender() );
+                m_Texture.Load(imageName, GetSkin()->GetRender());
             }
 
             virtual TextObject& GetImage()
@@ -124,4 +124,4 @@ namespace Gwen
 
     }
 }
-#endif
+#endif // ifndef GWEN_CONTROLS_IMAGEPANEL_H

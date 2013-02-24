@@ -6,12 +6,12 @@
 
 #pragma once
 #ifndef GWEN_HOOK_H
-#   define GWEN_HOOK_H
+#define GWEN_HOOK_H
 
-#   include "Gwen/Gwen.h"
-#   include <list>
+#include "Gwen/Gwen.h"
+#include <list>
 
-#   ifdef GWEN_HOOKSYSTEM
+#ifdef GWEN_HOOKSYSTEM
 
 namespace Gwen
 {
@@ -29,64 +29,56 @@ namespace Gwen
         };
 
 
-        typedef std::list< BaseHook* >HookList;
+        typedef std::list<BaseHook*> HookList;
 
         GWEN_EXPORT HookList& GetHookList();
 
         GWEN_EXPORT void AddHook(BaseHook* pHook);
         GWEN_EXPORT void RemoveHook(BaseHook* pHook);
 
-        template < typename fnc >
+        template <typename fnc>
         bool CallHook(fnc f)
         {
             for (HookList::iterator it = GetHookList().begin(); it != GetHookList().end(); ++it)
             {
-                if ( ( (*it)->*f )() )
-                {
+                if (((*it)->*f)())
                     return true;
-                }
             }
 
             return false;
         }
 
-        template < typename fnc, typename AA >
+        template <typename fnc, typename AA>
         bool CallHook(fnc f, AA a)
         {
             for (HookList::iterator it = GetHookList().begin(); it != GetHookList().end(); ++it)
             {
-                if ( ( (*it)->*f )(a) )
-                {
+                if (((*it)->*f)(a))
                     return true;
-                }
             }
 
             return false;
         }
 
-        template < typename fnc, typename AA, typename AB >
+        template <typename fnc, typename AA, typename AB>
         bool CallHook(fnc f, AA a, AB b)
         {
             for (HookList::iterator it = GetHookList().begin(); it != GetHookList().end(); ++it)
             {
-                if ( ( (*it)->*f )(a, b) )
-                {
+                if (((*it)->*f)(a, b))
                     return true;
-                }
             }
 
             return false;
         }
 
-        template < typename fnc, typename AA, typename AB, typename AC >
+        template <typename fnc, typename AA, typename AB, typename AC>
         bool CallHook(fnc f, AA a, AB b, AC c)
         {
             for (HookList::iterator it = GetHookList().begin(); it != GetHookList().end(); ++it)
             {
-                if ( ( (*it)->*f )(a, b, c) )
-                {
+                if (((*it)->*f)(a, b, c))
                     return true;
-                }
             }
 
             return false;
@@ -96,5 +88,5 @@ namespace Gwen
 
 }
 
-#   endif
-#endif
+#endif // ifdef GWEN_HOOKSYSTEM
+#endif // ifndef GWEN_HOOK_H

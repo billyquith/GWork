@@ -87,7 +87,7 @@ namespace Gwen
                 &pTextFormat
                 );
 
-            if ( SUCCEEDED(hr) )
+            if (SUCCEEDED(hr))
             {
                 FontData*   pFontData = new FontData();
                 pFontData->pTextFormat = pTextFormat;
@@ -101,23 +101,17 @@ namespace Gwen
 
         void Direct2D::LoadFont(Gwen::Font* pFont)
         {
-            if ( InternalLoadFont(pFont) )
-            {
+            if (InternalLoadFont(pFont))
                 m_FontList.push_back(pFont);
-            }
         }
 
         void Direct2D::InternalFreeFont(Gwen::Font* pFont, bool bRemove)
         {
             if (bRemove)
-            {
                 m_FontList.remove(pFont);
-            }
 
             if (!pFont->data)
-            {
                 return;
-            }
 
             FontData* pFontData = (FontData*)pFont->data;
             pFontData->pTextFormat->Release();
@@ -134,7 +128,7 @@ namespace Gwen
                                   const Gwen::UnicodeString& text)
         {
             // If the font doesn't exist, or the font size should be changed
-            if (!pFont->data || fabs( pFont->realsize-pFont->size*Scale() ) > 2)
+            if (!pFont->data || fabs(pFont->realsize-pFont->size*Scale()) > 2)
             {
                 InternalFreeFont(pFont, false);
                 InternalLoadFont(pFont);
@@ -154,7 +148,7 @@ namespace Gwen
         Gwen::Point Direct2D::MeasureText(Gwen::Font* pFont, const Gwen::UnicodeString& text)
         {
             // If the font doesn't exist, or the font size should be changed
-            if (!pFont->data || fabs( pFont->realsize-pFont->size*Scale() ) > 2)
+            if (!pFont->data || fabs(pFont->realsize-pFont->size*Scale()) > 2)
             {
                 InternalFreeFont(pFont, false);
                 InternalLoadFont(pFont);
@@ -205,8 +199,8 @@ namespace Gwen
         {
             Gwen::Rect rect = ClipRegion();
             D2D1_RECT_F r =
-                D2D1::RectF( rect.x*Scale(), rect.y*Scale(),
-                             (rect.x+rect.w)*Scale(), (rect.y+rect.h)*Scale() );
+                D2D1::RectF(rect.x*Scale(), rect.y*Scale(),
+                            (rect.x+rect.w)*Scale(), (rect.y+rect.h)*Scale());
             m_pRT->PushAxisAlignedClip(r, D2D1_ANTIALIAS_MODE_PER_PRIMITIVE);
         }
 
@@ -222,9 +216,7 @@ namespace Gwen
 
             // Missing image, not loaded properly?
             if (!pTexData || pTexData->pBitmap == NULL)
-            {
                 return DrawMissingImage(rect);
-            }
 
             Translate(rect);
             m_pRT->DrawBitmap(pTexData->pBitmap,
@@ -249,19 +241,17 @@ namespace Gwen
                 &pDecoder
                 );
 
-            if ( SUCCEEDED(hr) )
-            {
+            if (SUCCEEDED(hr))
                 hr = pDecoder->GetFrame(0, &pSource);
-            }
 
-            if ( SUCCEEDED(hr) )
+            if (SUCCEEDED(hr))
             {
                 // Convert the image format to 32bppPBGRA
                 // (DXGI_FORMAT_B8G8R8A8_UNORM + D2D1_ALPHA_MODE_PREMULTIPLIED).
                 hr = m_pWICFactory->CreateFormatConverter(&pConverter);
             }
 
-            if ( SUCCEEDED(hr) )
+            if (SUCCEEDED(hr))
             {
                 hr = pConverter->Initialize(
                     pSource,
@@ -273,7 +263,7 @@ namespace Gwen
                     );
             }
 
-            if ( SUCCEEDED(hr) )
+            if (SUCCEEDED(hr))
             {
                 hr = m_pRT->CreateBitmapFromWicBitmap(
                     pConverter,
@@ -282,7 +272,7 @@ namespace Gwen
                     );
             }
 
-            if ( SUCCEEDED(hr) )
+            if (SUCCEEDED(hr))
             {
                 TextureData* texdata = new TextureData();
                 texdata->pWICBitmap = pSource;
@@ -299,46 +289,34 @@ namespace Gwen
             }
 
             if (pDecoder != NULL)
-            {
                 pDecoder->Release();
-            }
 
             if (pConverter != NULL)
-            {
                 pConverter->Release();
-            }
 
             return SUCCEEDED(hr);
         }
 
         void Direct2D::LoadTexture(Gwen::Texture* pTexture)
         {
-            if ( InternalLoadTexture(pTexture) )
-            {
+            if (InternalLoadTexture(pTexture))
                 m_TextureList.push_back(pTexture);
-            }
         }
 
         void Direct2D::InternalFreeTexture(Gwen::Texture* pTexture, bool bRemove)
         {
             if (bRemove)
-            {
                 m_TextureList.remove(pTexture);
-            }
 
             if (pTexture->data != NULL)
             {
                 TextureData* texdata = (TextureData*)pTexture->data;
 
                 if (texdata->pWICBitmap != NULL)
-                {
                     texdata->pWICBitmap->Release();
-                }
 
                 if (texdata->pBitmap != NULL)
-                {
                     texdata->pBitmap->Release();
-                }
 
                 delete texdata;
             }
@@ -357,9 +335,7 @@ namespace Gwen
             TextureData* pTexData = (TextureData*)pTexture->data;
 
             if (!pTexData || pTexData->pBitmap == NULL)
-            {
                 return col_default;
-            }
 
             WICRect sourceRect;
             sourceRect.X = x;
@@ -400,7 +376,7 @@ namespace Gwen
         {
             Texture::List::iterator tex_it = m_TextureList.begin();
 
-            while ( tex_it != m_TextureList.end() )
+            while (tex_it != m_TextureList.end())
             {
                 FreeTexture(*tex_it);
                 tex_it = m_TextureList.begin();
@@ -408,7 +384,7 @@ namespace Gwen
 
             Font::List::iterator it = m_FontList.begin();
 
-            while ( it != m_FontList.end() )
+            while (it != m_FontList.end())
             {
                 FreeFont(*it);
                 it = m_FontList.begin();
@@ -435,7 +411,7 @@ namespace Gwen
                     &pRT
                     );
 
-                if ( SUCCEEDED(hr) )
+                if (SUCCEEDED(hr))
                 {
                     pRT->SetTextAntialiasMode(D2D1_TEXT_ANTIALIAS_MODE_CLEARTYPE);
                     DeviceAcquired(pRT);
@@ -462,41 +438,33 @@ namespace Gwen
                 &m_pD2DFactory
                 );
 
-            if ( FAILED(hr) )
-            {
+            if (FAILED(hr))
                 return false;
-            }
 
             hr = DWriteCreateFactory(
                 DWRITE_FACTORY_TYPE_SHARED,
                 __uuidof(IDWriteFactory),
-                reinterpret_cast< IUnknown** >(&m_pDWriteFactory)
+                reinterpret_cast<IUnknown**>(&m_pDWriteFactory)
                 );
 
-            if ( FAILED(hr) )
-            {
+            if (FAILED(hr))
                 return false;
-            }
 
             hr = CoInitialize(NULL);
 
-            if ( FAILED(hr) )
-            {
+            if (FAILED(hr))
                 return false;
-            }
 
             hr = CoCreateInstance(
                 CLSID_WICImagingFactory,
                 NULL,
                 CLSCTX_INPROC_SERVER,
                 IID_IWICImagingFactory,
-                reinterpret_cast< void** >(&m_pWICFactory)
+                reinterpret_cast<void**>(&m_pWICFactory)
                 );
 
-            if ( FAILED(hr) )
-            {
+            if (FAILED(hr))
                 return false;
-            }
 
             return InternalCreateDeviceResources();
         }
@@ -515,13 +483,13 @@ namespace Gwen
 
         bool Direct2D::ResizedContext(Gwen::WindowProvider* pWindow, int w, int h)
         {
-            HRESULT hr = ( (ID2D1HwndRenderTarget*)m_pRT )->Resize( D2D1::SizeU(w, h) );
+            HRESULT hr = ((ID2D1HwndRenderTarget*)m_pRT)->Resize(D2D1::SizeU(w, h));
             return SUCCEEDED(hr);
         }
 
         bool Direct2D::BeginContext(Gwen::WindowProvider* pWindow)
         {
-            if ( SUCCEEDED( InternalCreateDeviceResources() ) )
+            if (SUCCEEDED(InternalCreateDeviceResources()))
             {
                 m_pRT->BeginDraw();
                 return true;

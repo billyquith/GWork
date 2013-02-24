@@ -42,7 +42,7 @@ int main()
 
     pCanvas->SetSize(App.getSize().x, App.getSize().y);
     pCanvas->SetDrawBackground(true);
-    pCanvas->SetBackgroundColor( Gwen::Color(150, 170, 170, 255) );
+    pCanvas->SetBackgroundColor(Gwen::Color(150, 170, 170, 255));
 
     //
     // Create our unittest control (which is a Window with controls in it)
@@ -55,17 +55,17 @@ int main()
     Gwen::Input::SFML GwenInput;
     GwenInput.Initialize(pCanvas);
 
-    while ( App.isOpen() )
+    while (App.isOpen())
     {
         // Handle events
         sf::Event Event;
 
-        while ( App.pollEvent(Event) )
+        while (App.pollEvent(Event))
         {
             // Window closed or escape key pressed : exit
-            if ( (Event.type == sf::Event::Closed) ||
-                 ( (Event.type == sf::Event::KeyPressed) &&
-                   (Event.key.code == sf::Keyboard::Escape) ) )
+            if ((Event.type == sf::Event::Closed) ||
+                ((Event.type == sf::Event::KeyPressed) &&
+                 (Event.key.code == sf::Keyboard::Escape)))
             {
                 App.close();
                 break;

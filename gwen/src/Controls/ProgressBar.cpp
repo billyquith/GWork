@@ -25,7 +25,7 @@ public:
     virtual void Think()
     {
         float fDiff = Platform::GetTimeInSeconds()-m_fLastFrame;
-        gwen_cast<ProgressBar>(m_Control)->CycleThink( Gwen::Clamp(fDiff, 0.f, 0.3f) );
+        gwen_cast<ProgressBar>(m_Control)->CycleThink(Gwen::Clamp(fDiff, 0.f, 0.3f));
         m_fLastFrame = Platform::GetTimeInSeconds();
     }
 
@@ -36,27 +36,23 @@ public:
 GWEN_CONTROL_CONSTRUCTOR(ProgressBar)
 {
     SetMouseInputEnabled(true);
-    SetBounds( Gwen::Rect(0, 0, 128, 32) );
-    SetTextPadding( Padding(3, 3, 3, 3) );
+    SetBounds(Gwen::Rect(0, 0, 128, 32));
+    SetTextPadding(Padding(3, 3, 3, 3));
     SetHorizontal();
     SetAlignment(Gwen::Pos::Center);
     m_fProgress = 0.0f;
     m_bAutoLabel = true;
     m_fCycleSpeed = 0.0f;
-    Gwen::Anim::Add( this, new ProgressBarThink() );
+    Gwen::Anim::Add(this, new ProgressBarThink());
 }
 
 void ProgressBar::SetValue(float val)
 {
     if (val < 0)
-    {
         val = 0;
-    }
 
     if (val > 1)
-    {
         val = 1;
-    }
 
     m_fProgress = val;
 
@@ -69,27 +65,19 @@ void ProgressBar::SetValue(float val)
 
 void ProgressBar::CycleThink(float fDelta)
 {
-    if ( !Visible() )
-    {
+    if (!Visible())
         return;
-    }
 
     if (m_fCycleSpeed == 0.0f)
-    {
         return;
-    }
 
     m_fProgress += m_fCycleSpeed*fDelta;
 
     if (m_fProgress < 0.0f)
-    {
         m_fProgress += 1.0f;
-    }
 
     if (m_fProgress > 1.0f)
-    {
         m_fProgress -= 1.0f;
-    }
 
     Redraw();
 }

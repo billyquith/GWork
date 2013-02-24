@@ -17,7 +17,7 @@ using namespace Gwen::Controls;
 GWEN_CONTROL_CONSTRUCTOR(Menu)
 {
     SetBounds(0, 0, 10, 10);
-    SetPadding( Padding(2, 2, 2, 2) );
+    SetPadding(Padding(2, 2, 2, 2));
     SetDisableIconMargin(false);
     SetAutoHideBars(true);
     SetScroll(false, true);
@@ -27,7 +27,7 @@ GWEN_CONTROL_CONSTRUCTOR(Menu)
 
 void Menu::Render(Skin::Base* skin)
 {
-    skin->DrawMenu( this, IconMarginDisabled() );
+    skin->DrawMenu(this, IconMarginDisabled());
 }
 
 void Menu::RenderUnder(Skin::Base* skin)
@@ -47,17 +47,13 @@ void Menu::Layout(Skin::Base* skin)
         Base* pChild = (*it);
 
         if (!pChild)
-        {
             continue;
-        }
 
         childrenHeight += pChild->Height();
     }
 
-    if ( Y()+childrenHeight > GetCanvas()->Height() )
-    {
+    if (Y()+childrenHeight > GetCanvas()->Height())
         childrenHeight = GetCanvas()->Height()-Y();
-    }
 
     SetSize(Width(), childrenHeight);
     BaseClass::Layout(skin);
@@ -67,7 +63,7 @@ MenuItem* Menu::AddItem(const TextObject& strName, const TextObject& strIconName
                         const TextObject& strAccelerator)
 {
     MenuItem* pItem = new MenuItem(this);
-    pItem->SetPadding( Padding(2, 4, 4, 4) );
+    pItem->SetPadding(Padding(2, 4, 4, 4));
     pItem->SetText(strName);
     pItem->SetImage(strIconName);
     pItem->SetAccelerator(strAccelerator);
@@ -77,7 +73,7 @@ MenuItem* Menu::AddItem(const TextObject& strName, const TextObject& strIconName
 
 void Menu::OnAddItem(MenuItem* item)
 {
-    item->SetTextPadding( Padding(IconMarginDisabled() ? 0 : 24, 0, 16, 0) );
+    item->SetTextPadding(Padding(IconMarginDisabled() ? 0 : 24, 0, 16, 0));
     item->Dock(Pos::Top);
     item->SizeToContents();
     item->SetAlignment(Pos::CenterV|Pos::Left);
@@ -85,12 +81,10 @@ void Menu::OnAddItem(MenuItem* item)
     // Do this here - after Top Docking these values mean nothing in layout
     int w = item->Width()+10+32;
 
-    if ( w < Width() )
-    {
+    if (w < Width())
         w = Width();
-    }
 
-    SetSize( w, Height() );
+    SetSize(w, Height());
 }
 
 void Menu::ClearItems()
@@ -102,9 +96,7 @@ void Menu::ClearItems()
         Base* pChild = *it;
 
         if (!pChild)
-        {
             continue;
-        }
 
         pChild->DelayedDelete();
     }
@@ -120,9 +112,7 @@ void Menu::CloseAll()
         MenuItem* pItem = gwen_cast<MenuItem>(pChild);
 
         if (!pItem)
-        {
             continue;
-        }
 
         pItem->CloseMenu();
     }
@@ -138,14 +128,10 @@ bool Menu::IsMenuOpen()
         MenuItem* pItem = gwen_cast<MenuItem>(pChild);
 
         if (!pItem)
-        {
             continue;
-        }
 
-        if ( pItem->IsMenuOpen() )
-        {
+        if (pItem->IsMenuOpen())
             return true;
-        }
     }
 
     return false;
@@ -153,22 +139,16 @@ bool Menu::IsMenuOpen()
 
 void Menu::OnHoverItem(Gwen::Controls::Base* pControl)
 {
-    if ( !ShouldHoverOpenMenu() )
-    {
+    if (!ShouldHoverOpenMenu())
         return;
-    }
 
     MenuItem* pItem = gwen_cast<MenuItem>(pControl);
 
     if (!pItem)
-    {
         return;
-    }
 
-    if ( pItem->IsMenuOpen() )
-    {
+    if (pItem->IsMenuOpen())
         return;
-    }
 
     CloseAll();
     pItem->OpenMenu();
@@ -186,10 +166,8 @@ void Menu::Close()
 {
     SetHidden(true);
 
-    if ( DeleteOnClose() )
-    {
+    if (DeleteOnClose())
         DelayedDelete();
-    }
 }
 
 void Menu::CloseMenus()
@@ -203,7 +181,7 @@ void Menu::AddDivider()
 {
     MenuDivider* divider = new MenuDivider(this);
     divider->Dock(Pos::Top);
-    divider->SetMargin( Margin(IconMarginDisabled() ? 0 : 24, 0, 4, 0) );
+    divider->SetMargin(Margin(IconMarginDisabled() ? 0 : 24, 0, 4, 0));
 }
 
 void MenuDivider::Render(Gwen::Skin::Base* skin)

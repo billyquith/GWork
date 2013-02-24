@@ -13,7 +13,7 @@
 #include "Gwen/ToolTip.h"
 
 #ifndef GWEN_NO_ANIMATION
-#   include "Gwen/Anim.h"
+#include "Gwen/Anim.h"
 #endif
 
 using namespace Gwen;
@@ -25,21 +25,17 @@ WindowCanvas::WindowCanvas(int x, int y, int w, int h, Gwen::Skin::Base* pSkin,
     m_bQuit = false;
     m_bCanMaximize = true;
     m_bIsMaximized = false;
-    SetPadding( Padding(1, 0, 1, 1) );
+    SetPadding(Padding(1, 0, 1, 1));
     // Centering the window on the desktop
     {
         int dw, dh;
         Gwen::Platform::GetDesktopSize(dw, dh);
 
         if (x < 0)
-        {
             x = (dw-w)*0.5;
-        }
 
         if (y < 0)
-        {
             y = (dh-h)*0.5;
-        }
     }
     m_pOSWindow = Gwen::Platform::CreatePlatformWindow(x, y, w, h, strWindowTitle);
     m_WindowPos  = Gwen::Point(x, y);
@@ -49,8 +45,8 @@ WindowCanvas::WindowCanvas(int x, int y, int w, int h, Gwen::Skin::Base* pSkin,
     SetSize(w, h);
     m_TitleBar = new Gwen::ControlsInternal::Dragger(this);
     m_TitleBar->SetHeight(24);
-    m_TitleBar->SetPadding( Padding(0, 0, 0, 0) );
-    m_TitleBar->SetMargin( Margin(0, 0, 0, 0) );
+    m_TitleBar->SetPadding(Padding(0, 0, 0, 0));
+    m_TitleBar->SetMargin(Margin(0, 0, 0, 0));
     m_TitleBar->Dock(Pos::Top);
     m_TitleBar->SetDoMove(false);
     m_TitleBar->onDragged.Add(this, &ThisClass::Dragger_Moved);
@@ -60,13 +56,13 @@ WindowCanvas::WindowCanvas(int x, int y, int w, int h, Gwen::Skin::Base* pSkin,
     m_Title->SetAlignment(Pos::Left|Pos::CenterV);
     m_Title->SetText(strWindowTitle);
     m_Title->Dock(Pos::Fill);
-    m_Title->SetPadding( Padding(8, 0, 0, 0) );
+    m_Title->SetPadding(Padding(8, 0, 0, 0));
     m_Title->SetTextColor(GetSkin()->Colors.Window.TitleInactive);
     // CLOSE
     {
         m_pClose = new Gwen::Controls::WindowCloseButton(m_TitleBar, "Close");
         m_pClose->Dock(Pos::Right);
-        m_pClose->SetMargin( Margin(0, 0, 4, 0) );
+        m_pClose->SetMargin(Margin(0, 0, 4, 0));
         m_pClose->onPress.Add(this, &WindowCanvas::CloseButtonPressed);
         m_pClose->SetTabable(false);
         m_pClose->SetWindow(this);
@@ -130,7 +126,7 @@ void WindowCanvas::RenderCanvas()
     // method that needs continual updates, just call canvas->redraw every
     // frame.
     //
-    if ( !NeedsRedraw() )
+    if (!NeedsRedraw())
     {
         Platform::Sleep(10);
         return;
@@ -139,18 +135,18 @@ void WindowCanvas::RenderCanvas()
     m_bNeedsRedraw = false;
     Gwen::Renderer::Base* render = m_Skin->GetRender();
 
-    if ( render->BeginContext(this) )
+    if (render->BeginContext(this))
     {
         render->Begin();
         RecurseLayout(m_Skin);
-        render->SetClipRegion( GetRenderBounds() );
-        render->SetRenderOffset( Gwen::Point(X()* -1, Y()* -1) );
-        render->SetScale( Scale() );
+        render->SetClipRegion(GetRenderBounds());
+        render->SetRenderOffset(Gwen::Point(X()* -1, Y()* -1));
+        render->SetScale(Scale());
 
         if (m_bDrawBackground)
         {
             render->SetDrawColor(m_BackgroundColor);
-            render->DrawFilledRect( GetRenderBounds() );
+            render->DrawFilledRect(GetRenderBounds());
         }
 
         DoRender(m_Skin);
@@ -168,13 +164,9 @@ void WindowCanvas::Render(Skin::Base* skin)
     bool bHasFocus = IsOnTop();
 
     if (bHasFocus)
-    {
         m_Title->SetTextColor(GetSkin()->Colors.Window.TitleActive);
-    }
     else
-    {
         m_Title->SetTextColor(GetSkin()->Colors.Window.TitleInactive);
-    }
 
     skin->DrawWindow(this, m_TitleBar->Bottom(), bHasFocus);
 }
@@ -227,7 +219,7 @@ void WindowCanvas::Dragger_Moved()
         SetMaximize(false);
         // Change the hold pos to be the same distance across the titlebar of
         // the resized window
-        m_HoldPos.x = ( (float)m_HoldPos.x )*( (float)Width()/fOldWidth );
+        m_HoldPos.x = ((float)m_HoldPos.x)*((float)Width()/fOldWidth);
         m_HoldPos.y = 10;
     }
 
@@ -241,7 +233,7 @@ void WindowCanvas::SetPos(int x, int y)
     y = Gwen::Clamp(y, 0, h);
     m_WindowPos.x = x;
     m_WindowPos.y = y;
-    Gwen::Platform::SetBoundsPlatformWindow( m_pOSWindow, x, y, Width(), Height() );
+    Gwen::Platform::SetBoundsPlatformWindow(m_pOSWindow, x, y, Width(), Height());
 }
 
 void WindowCanvas::CloseButtonPressed()
@@ -271,10 +263,8 @@ void WindowCanvas::Sizer_Moved()
 
 void WindowCanvas::OnTitleDoubleClicked()
 {
-    if ( !CanMaximize() )
-    {
+    if (!CanMaximize())
         return;
-    }
 
     SetMaximize(!m_bIsMaximized);
 }
@@ -294,10 +284,8 @@ void WindowCanvas::SetMaximize(bool b)
 
 void WindowCanvas::MaximizeButtonPressed()
 {
-    if ( !CanMaximize() )
-    {
+    if (!CanMaximize())
         return;
-    }
 
     SetMaximize(!m_bIsMaximized);
 }
@@ -310,9 +298,7 @@ void WindowCanvas::MinimizeButtonPressed()
 void WindowCanvas::SetCanMaximize(bool b)
 {
     if (m_bCanMaximize == b)
-    {
         return;
-    }
 
     m_bCanMaximize = b;
     m_pMaximize->SetDisabled(!b);

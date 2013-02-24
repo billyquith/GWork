@@ -21,34 +21,26 @@ GWEN_CONTROL_CONSTRUCTOR(CheckBox)
 
 void CheckBox::Render(Skin::Base* skin)
 {
-    skin->DrawCheckBox( this, m_bChecked, IsDepressed() );
+    skin->DrawCheckBox(this, m_bChecked, IsDepressed());
 }
 
 void CheckBox::OnPress()
 {
-    if ( IsDisabled() )
-    {
+    if (IsDisabled())
         return;
-    }
 
-    if ( IsChecked() && !AllowUncheck() )
-    {
+    if (IsChecked() && !AllowUncheck())
         return;
-    }
 
     Toggle();
 }
 
 void CheckBox::OnCheckStatusChanged()
 {
-    if ( IsChecked() )
-    {
+    if (IsChecked())
         onChecked.Call(this);
-    }
     else
-    {
         onUnChecked.Call(this);
-    }
 
     onCheckChanged.Call(this);
 }
@@ -56,9 +48,7 @@ void CheckBox::OnCheckStatusChanged()
 void CheckBox::SetChecked(bool bChecked)
 {
     if (m_bChecked == bChecked)
-    {
         return;
-    }
 
     m_bChecked = bChecked;
     OnCheckStatusChanged();

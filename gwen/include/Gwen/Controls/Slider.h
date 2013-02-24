@@ -6,13 +6,13 @@
 
 #pragma once
 #ifndef GWEN_CONTROLS_SLIDER_H
-#   define GWEN_CONTROLS_SLIDER_H
+#define GWEN_CONTROLS_SLIDER_H
 
-#   include "Gwen/Controls/Base.h"
-#   include "Gwen/Controls/Button.h"
-#   include "Gwen/Controls/Dragger.h"
-#   include "Gwen/Gwen.h"
-#   include "Gwen/Skin.h"
+#include "Gwen/Controls/Base.h"
+#include "Gwen/Controls/Button.h"
+#include "Gwen/Controls/Dragger.h"
+#include "Gwen/Gwen.h"
+#include "Gwen/Skin.h"
 
 namespace Gwen
 {
@@ -79,9 +79,7 @@ namespace Gwen
             virtual bool OnKeyRight(bool bDown)
             {
                 if (bDown)
-                {
                     SetFloatValue(GetFloatValue()+1, true);
-                }
 
                 return true;
             }
@@ -89,9 +87,7 @@ namespace Gwen
             virtual bool OnKeyLeft(bool bDown)
             {
                 if (bDown)
-                {
                     SetFloatValue(GetFloatValue()-1, true);
-                }
 
                 return true;
             }
@@ -99,9 +95,7 @@ namespace Gwen
             virtual bool OnKeyUp(bool bDown)
             {
                 if (bDown)
-                {
                     SetFloatValue(GetFloatValue()+1, true);
-                }
 
                 return true;
             }
@@ -109,9 +103,7 @@ namespace Gwen
             virtual bool OnKeyDown(bool bDown)
             {
                 if (bDown)
-                {
                     SetFloatValue(GetFloatValue()-1, true);
-                }
 
                 return true;
             }
@@ -150,4 +142,4 @@ namespace Gwen
 
 
 }
-#endif
+#endif // ifndef GWEN_CONTROLS_SLIDER_H

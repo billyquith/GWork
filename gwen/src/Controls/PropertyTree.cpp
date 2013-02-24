@@ -32,9 +32,7 @@ namespace Gwen
                 PropertyTreeNode* pChild = gwen_cast<PropertyTreeNode>(*iter);
 
                 if (!pChild)
-                {
                     continue;
-                }
 
                 if (pChild->GetText() == text)
                 {
@@ -47,9 +45,7 @@ namespace Gwen
                         Properties* pPropertyChild = gwen_cast<Properties>(*iter);
 
                         if (!pPropertyChild)
-                        {
                             continue;
-                        }
 
                         return pPropertyChild;
                     }

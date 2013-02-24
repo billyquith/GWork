@@ -6,10 +6,10 @@
 
 #pragma once
 #ifndef GWEN_CONTROLS_FIELDLABEL_H
-#   define GWEN_CONTROLS_FIELDLABEL_H
+#define GWEN_CONTROLS_FIELDLABEL_H
 
-#   include "Gwen/BaseRender.h"
-#   include "Gwen/Controls/Label.h"
+#include "Gwen/BaseRender.h"
+#include "Gwen/Controls/Label.h"
 
 namespace Gwen
 {
@@ -21,10 +21,10 @@ namespace Gwen
 
             static inline FieldLabel* Setup(Controls::Base* pControl, const Gwen::TextObject& text)
             {
-                FieldLabel* plbl = new FieldLabel( pControl->GetParent() );
+                FieldLabel* plbl = new FieldLabel(pControl->GetParent());
                 plbl->SetText(text);
-                plbl->SetSize( pControl->Width(), pControl->Height() );
-                plbl->Dock( pControl->GetDock() );
+                plbl->SetSize(pControl->Width(), pControl->Height());
+                plbl->Dock(pControl->GetDock());
                 plbl->SetField(pControl);
                 return plbl;
             }
@@ -34,7 +34,7 @@ namespace Gwen
             GWEN_CONTROL_INLINE(FieldLabel, Controls::Label)
             {
                 m_pField = NULL;
-                SetMargin( Margin(0, 1, 0, 1) );
+                SetMargin(Margin(0, 1, 0, 1));
                 SetAlignment(Pos::CenterV|Pos::Left);
             }
 
@@ -61,4 +61,4 @@ namespace Gwen
     }
 }
 
-#endif
+#endif // ifndef GWEN_CONTROLS_FIELDLABEL_H

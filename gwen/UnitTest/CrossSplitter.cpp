@@ -66,9 +66,7 @@ public:
         m_iCurZoom++;
 
         if (m_iCurZoom == 4)
-        {
             m_iCurZoom = 0;
-        }
     }
 
     void UnZoomTest(Gwen::Controls::Base* pFromPanel)

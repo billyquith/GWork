@@ -34,12 +34,10 @@ void DockedTabControl::Layout(Skin::Base* skin)
 
 void DockedTabControl::UpdateTitleBar()
 {
-    if ( !GetCurrentButton() )
-    {
+    if (!GetCurrentButton())
         return;
-    }
 
-    m_pTitleBar->UpdateFromTab( GetCurrentButton() );
+    m_pTitleBar->UpdateFromTab(GetCurrentButton());
 }
 
 void DockedTabControl::DragAndDrop_StartDragging(Gwen::DragAndDrop::Package* pPackage, int x, int y)
@@ -55,9 +53,7 @@ void DockedTabControl::DragAndDrop_EndDragging(bool bSuccess, int /*x*/, int /*y
     SetHidden(false);
 
     if (!bSuccess)
-    {
         GetParent()->SetHidden(false);
-    }
 
     /*
      *  if ( !bSuccess )
@@ -86,9 +82,7 @@ void DockedTabControl::MoveTabsTo(DockedTabControl* pTarget)
         TabButton* pButton = gwen_cast<TabButton>(*iter);
 
         if (!pButton)
-        {
             continue;
-        }
 
         pTarget->AddPage(pButton);
     }

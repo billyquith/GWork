@@ -6,11 +6,11 @@
 
 #pragma once
 #ifndef GWEN_CONTROLS_SCROLLBARBAR_H
-#   define GWEN_CONTROLS_SCROLLBARBAR_H
+#define GWEN_CONTROLS_SCROLLBARBAR_H
 
-#   include "Gwen/Controls/Dragger.h"
-#   include "Gwen/Gwen.h"
-#   include "Gwen/Skin.h"
+#include "Gwen/Controls/Dragger.h"
+#include "Gwen/Gwen.h"
+#include "Gwen/Skin.h"
 
 namespace Gwen
 {
@@ -64,4 +64,4 @@ namespace Gwen
 
     }
 }
-#endif
+#endif // ifndef GWEN_CONTROLS_SCROLLBARBAR_H

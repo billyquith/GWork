@@ -7,16 +7,16 @@
 
 #pragma once
 #ifndef GWEN_UNITTEST_UNITTEST_H
-#   define GWEN_UNITTEST_UNITTEST_H
+#define GWEN_UNITTEST_UNITTEST_H
 
-#   include "Gwen/Gwen.h"
-#   include "Gwen/Align.h"
-#   include "Gwen/Utility.h"
-#   include "Gwen/Controls/WindowControl.h"
-#   include "Gwen/Controls/TabControl.h"
-#   include "Gwen/Controls/ListBox.h"
-#   include "Gwen/Controls/DockBase.h"
-#   include "Gwen/Controls/StatusBar.h"
+#include "Gwen/Gwen.h"
+#include "Gwen/Align.h"
+#include "Gwen/Utility.h"
+#include "Gwen/Controls/WindowControl.h"
+#include "Gwen/Controls/TabControl.h"
+#include "Gwen/Controls/ListBox.h"
+#include "Gwen/Controls/DockBase.h"
+#include "Gwen/Controls/StatusBar.h"
 
 class UnitTest;
 
@@ -40,9 +40,7 @@ public:
     void Layout(Gwen::Skin::Base* skin)
     {
         if (GetDock() != Gwen::Pos::None)
-        {
             return;
-        }
 
         SizeToChildren(true, true);
     }
@@ -76,7 +74,7 @@ private:
 };
 
 
-#   define DEFINE_UNIT_TEST(name, \
-                            displayname) GUnit* \
-    RegisterUnitTest_ ## name(Gwen::Controls::Base*tab){ return new name(tab); }
-#endif
+#define DEFINE_UNIT_TEST(name, \
+                         displayname) GUnit* \
+    RegisterUnitTest_##name(Gwen::Controls::Base*tab){ return new name(tab); }
+#endif // ifndef GWEN_UNITTEST_UNITTEST_H

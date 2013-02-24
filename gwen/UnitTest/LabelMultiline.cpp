@@ -13,7 +13,7 @@ public:
         Dock(Pos::Fill);
         Gwen::Controls::CrossSplitter* pSplitter = new Gwen::Controls::CrossSplitter(this);
         pSplitter->Dock(Pos::Fill);
-        pSplitter->SetMargin( Margin(10, 10, 10, 10) );
+        pSplitter->SetMargin(Margin(10, 10, 10, 10));
         {
             Gwen::Controls::Label* label = new Gwen::Controls::Label(pSplitter);
             label->SetText(

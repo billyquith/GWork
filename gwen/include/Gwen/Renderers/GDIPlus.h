@@ -105,4 +105,4 @@ namespace Gwen
 
     }
 }
-#endif
+#endif // ifndef GWEN_RENDERERS_GDIPLUS_H

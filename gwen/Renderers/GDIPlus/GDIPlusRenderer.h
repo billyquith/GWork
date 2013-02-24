@@ -51,21 +51,15 @@ public:
         int height = rect.bottom-rect.top;
 
         if (m_iWidth != width)
-        {
             DestroyOffscreenBitmap();
-        }
 
         if (m_iHeight != height)
-        {
             DestroyOffscreenBitmap();
-        }
 
 #ifdef USE_GDIPLUS_DOUBLE_BUFFERING
 
         if (m_Bitmap)
-        {
             return;
-        }
 
         m_iWidth = width;
         m_iHeight = height;
@@ -129,7 +123,7 @@ public:
     virtual void DrawFilledRect(Gwen::Rect rect)
     {
         Translate(rect);
-        SolidBrush solidBrush( GetGDIColor() );
+        SolidBrush solidBrush(GetGDIColor());
         graphics->FillRectangle(&solidBrush, rect.x, rect.y, rect.w, rect.h);
     }
 
@@ -175,7 +169,7 @@ public:
 
     virtual void LoadFont(Gwen::Font* font)
     {
-        Gwen::Debug::Msg( "LOAD FONT %s\n", font->facename.c_str() );
+        Gwen::Debug::Msg("LOAD FONT %s\n", font->facename.c_str());
         FontStyle fs = FontStyleRegular;
         font->realsize = font->size*Scale();
         Font* pFont = new Font(Gwen::Utility::StringToUnicode(
@@ -185,14 +179,12 @@ public:
 
     virtual void FreeFont(Gwen::Font* pFont)
     {
-        Gwen::Debug::Msg( "FREE FONT %s\n", pFont->facename.c_str() );
+        Gwen::Debug::Msg("FREE FONT %s\n", pFont->facename.c_str());
 
         if (!pFont->data)
-        {
             return;
-        }
 
-        Font* font = ( (Font*)pFont->data );
+        Font* font = ((Font*)pFont->data);
         delete font;
         pFont->data = NULL;
     }
@@ -206,14 +198,14 @@ public:
          */
         Translate(rect);
 
-        if (!pFont->data || fabs( pFont->realsize-pFont->size*Scale() ) > 2)
+        if (!pFont->data || fabs(pFont->realsize-pFont->size*Scale()) > 2)
         {
             FreeFont(pFont);
             LoadFont(pFont);
         }
 
-        StringFormat strFormat( StringFormat::GenericDefault() );
-        SolidBrush solidBrush( GetGDIColor() );
+        StringFormat strFormat(StringFormat::GenericDefault());
+        SolidBrush solidBrush(GetGDIColor());
         RectF r(rect.x, rect.y, rect.w, rect.h);
         Font* pGDIFont = (Font*)pFont->data;
         graphics->DrawString(text.c_str(), text.length()+1, pGDIFont, r, &strFormat, &solidBrush);
@@ -223,15 +215,15 @@ public:
     {
         Gwen::Point p(32, 32);
 
-        if (!pFont->data || fabs( pFont->realsize-pFont->size*Scale() ) > 2)
+        if (!pFont->data || fabs(pFont->realsize-pFont->size*Scale()) > 2)
         {
             FreeFont(pFont);
             LoadFont(pFont);
         }
 
-        StringFormat strFormat( StringFormat::GenericDefault() );
-        strFormat.SetFormatFlags( StringFormatFlagsMeasureTrailingSpaces|
-                                  strFormat.GetFormatFlags() );
+        StringFormat strFormat(StringFormat::GenericDefault());
+        strFormat.SetFormatFlags(StringFormatFlagsMeasureTrailingSpaces|
+                                 strFormat.GetFormatFlags());
         SizeF size;
         Graphics g(m_HWND);
         Font* pGDIFont = (Font*)pFont->data;
@@ -242,8 +234,8 @@ public:
     void StartClip()
     {
         const Gwen::Rect& rect = ClipRegion();
-        graphics->SetClip(Rect( rect.x*Scale(), rect.y*Scale(), rect.w*Scale(),
-                                rect.h*Scale() ), CombineMode::CombineModeReplace);
+        graphics->SetClip(Rect(rect.x*Scale(), rect.y*Scale(), rect.w*Scale(),
+                               rect.h*Scale()), CombineMode::CombineModeReplace);
         // Pen      pen( Color( 100, 255, 0, 255 ) );
         // graphics->DrawRectangle( &pen, Rect( rect.x*Scale(), rect.y*Scale(),
         // rect.w*Scale(), rect.h*Scale() ) );
@@ -272,9 +264,7 @@ public:
 
         // Missing image, not loaded properly?
         if (pImage->GetType() == ImageTypeUnknown)
-        {
             return DrawMissingImage(pTargetRect);
-        }
 
         Translate(pTargetRect);
         RectF TargetRect(pTargetRect.x, pTargetRect.y, pTargetRect.w, pTargetRect.h);
@@ -298,8 +288,8 @@ public:
 
     void LoadTexture(Gwen::Texture* pTexture)
     {
-        Gwen::Debug::Msg( "LOAD TEXTURE %s\n", pTexture->name.c_str() );
-        Image* pImage = new Image( Gwen::Utility::StringToUnicode(pTexture->name).c_str() );
+        Gwen::Debug::Msg("LOAD TEXTURE %s\n", pTexture->name.c_str());
+        Image* pImage = new Image(Gwen::Utility::StringToUnicode(pTexture->name).c_str());
         pTexture->data = pImage;
         pTexture->width = pImage->GetWidth();
         pTexture->height = pImage->GetHeight();
@@ -307,13 +297,11 @@ public:
 
     void FreeTexture(Gwen::Texture* pTexture)
     {
-        Gwen::Debug::Msg( "RELEASED TEXTURE %s\n", pTexture->name.c_str() );
+        Gwen::Debug::Msg("RELEASED TEXTURE %s\n", pTexture->name.c_str());
         Image* pImage = (Image*)pTexture->data;
 
         if (!pImage)
-        {
             return;
-        }
 
         delete pImage;
     }

@@ -6,14 +6,14 @@
 
 #pragma once
 #ifndef GWEN_CONTROLS_WINDOWCANVAS_H
-#   define GWEN_CONTROLS_WINDOWCANVAS_H
+#define GWEN_CONTROLS_WINDOWCANVAS_H
 
-#   include "Gwen/Controls/Base.h"
-#   include "Gwen/InputHandler.h"
-#   include "Gwen/WindowProvider.h"
-#   include "Gwen/Controls/Dragger.h"
-#   include "Gwen/Controls/Label.h"
-#   include "Gwen/Controls/WindowButtons.h"
+#include "Gwen/Controls/Base.h"
+#include "Gwen/InputHandler.h"
+#include "Gwen/WindowProvider.h"
+#include "Gwen/Controls/Dragger.h"
+#include "Gwen/Controls/Label.h"
+#include "Gwen/Controls/WindowButtons.h"
 
 namespace Gwen
 {
@@ -107,4 +107,4 @@ namespace Gwen
 
     }
 }
-#endif
+#endif // ifndef GWEN_CONTROLS_WINDOWCANVAS_H

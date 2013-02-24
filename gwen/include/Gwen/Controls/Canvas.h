@@ -6,11 +6,11 @@
 
 #pragma once
 #ifndef GWEN_CONTROLS_CANVAS_H
-#   define GWEN_CONTROLS_CANVAS_H
+#define GWEN_CONTROLS_CANVAS_H
 
-#   include <set>
-#   include "Gwen/Controls/Base.h"
-#   include "Gwen/InputHandler.h"
+#include <set>
+#include "Gwen/Controls/Base.h"
+#include "Gwen/InputHandler.h"
 
 namespace Gwen
 {
@@ -117,7 +117,7 @@ namespace Gwen
             float m_fScale;
 
             Controls::Base::List m_DeleteList;
-            std::set< Controls::Base* >m_DeleteSet;
+            std::set<Controls::Base*> m_DeleteSet;
             friend class Controls::Base;
             void PreDelete(Controls::Base*);
 
@@ -130,4 +130,4 @@ namespace Gwen
 
     }
 }
-#endif
+#endif // ifndef GWEN_CONTROLS_CANVAS_H

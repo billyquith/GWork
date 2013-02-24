@@ -15,12 +15,12 @@ namespace Gwen
 
                 UnicodeString GetValue(Controls::Base* ctrl)
                 {
-                    return gwen_cast< Controls::ImagePanel >(ctrl)->GetImage();
+                    return gwen_cast<Controls::ImagePanel>(ctrl)->GetImage();
                 }
 
                 void SetValue(Controls::Base* ctrl, const UnicodeString& str)
                 {
-                    gwen_cast< Controls::ImagePanel >(ctrl)->SetImage(str);
+                    gwen_cast<Controls::ImagePanel>(ctrl)->SetImage(str);
                 }
 
             };
@@ -32,10 +32,8 @@ namespace Gwen
 
                 UnicodeString GetValue(Controls::Base* ctrl)
                 {
-                    if ( gwen_cast< Controls::ImagePanel >(ctrl)->GetStretch() )
-                    {
+                    if (gwen_cast<Controls::ImagePanel>(ctrl)->GetStretch())
                         return True;
-                    }
 
                     return False;
                 }
@@ -43,7 +41,7 @@ namespace Gwen
                 void SetValue(Controls::Base* ctrl, const UnicodeString& str)
                 {
                     bool bTrue = (str == True);
-                    gwen_cast< Controls::ImagePanel >(ctrl)->SetStretch(bTrue);
+                    gwen_cast<Controls::ImagePanel>(ctrl)->SetStretch(bTrue);
                 }
 
             };
@@ -57,8 +55,8 @@ namespace Gwen
 
             GWEN_CONTROL_FACTORY_CONSTRUCTOR(Image_Factory, ControlFactory::Base)
             {
-                AddProperty( new Properties::ImageName() );
-                AddProperty( new Properties::Stretch() );
+                AddProperty(new Properties::ImageName());
+                AddProperty(new Properties::Stretch());
             }
 
             virtual Gwen::String Name()

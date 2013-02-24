@@ -19,5 +19,5 @@ GWEN_CONTROL_CONSTRUCTOR(RadioButton)
 
 void RadioButton::Render(Skin::Base* skin)
 {
-    skin->DrawRadioButton( this, IsChecked(), IsDepressed() );
+    skin->DrawRadioButton(this, IsChecked(), IsDepressed());
 }

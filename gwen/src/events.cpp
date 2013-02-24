@@ -23,9 +23,9 @@ Handler::~Handler()
 void Handler::CleanLinks()
 {
     // Tell all the callers that we're dead
-    std::list< Caller* >::iterator iter = m_Callers.begin();
+    std::list<Caller*>::iterator iter = m_Callers.begin();
 
-    while ( iter != m_Callers.end() )
+    while (iter != m_Callers.end())
     {
         Caller* pCaller = *iter;
         UnRegisterCaller(pCaller);
@@ -55,7 +55,7 @@ Caller::~Caller()
 
 void Caller::CleanLinks()
 {
-    std::list< HandlerInstance >::iterator iter;
+    std::list<HandlerInstance>::iterator iter;
 
     for (iter = m_Handlers.begin(); iter != m_Handlers.end(); ++iter)
     {
@@ -78,7 +78,7 @@ void Caller::Call(Controls::Base* pThis, Gwen::Event::Info information)
     Gwen::Event::Information info;
     info = information;
     info.ControlCaller  = pThis;
-    std::list< HandlerInstance >::iterator iter;
+    std::list<HandlerInstance>::iterator iter;
 
     for (iter = m_Handlers.begin(); iter != m_Handlers.end(); ++iter)
     {
@@ -86,19 +86,13 @@ void Caller::Call(Controls::Base* pThis, Gwen::Event::Info information)
         info.Packet = &h.Packet;
 
         if (h.fnFunction)
-        {
             (h.pObject->*h.fnFunction)(pThis);
-        }
 
         if (h.fnFunctionInfo)
-        {
             (h.pObject->*h.fnFunctionInfo)(info);
-        }
 
         if (h.fnFunctionBlank)
-        {
             (h.pObject->*h.fnFunctionBlank)();
-        }
     }
 }
 
@@ -113,7 +107,7 @@ void Caller::AddInternal(Event::Handler* pObject, Event::Handler::Function pFunc
 
 void Caller::AddInternal(Event::Handler* pObject, Handler::FunctionWithInformation pFunction)
 {
-    AddInternal( pObject, pFunction, Gwen::Event::Packet() );
+    AddInternal(pObject, pFunction, Gwen::Event::Packet());
 }
 
 void Caller::AddInternal(Event::Handler* pObject, Handler::FunctionWithInformation pFunction,
@@ -139,19 +133,15 @@ void Caller::AddInternal(Event::Handler* pObject, Handler::FunctionBlank pFuncti
 void Caller::RemoveHandler(Event::Handler* pObject)
 {
     pObject->UnRegisterCaller(this);
-    std::list< HandlerInstance >::iterator iter = m_Handlers.begin();
+    std::list<HandlerInstance>::iterator iter = m_Handlers.begin();
 
-    while ( iter != m_Handlers.end() )
+    while (iter != m_Handlers.end())
     {
         HandlerInstance& h = *iter;
 
         if (h.pObject == pObject)
-        {
             iter = m_Handlers.erase(iter);
-        }
         else
-        {
             ++iter;
-        }
     }
 }

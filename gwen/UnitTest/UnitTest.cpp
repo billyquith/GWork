@@ -14,14 +14,14 @@
 using namespace Gwen;
 
 #define ADD_UNIT_TEST(name) \
-    GUnit*RegisterUnitTest_ ## name(Gwen::Controls::Base*tab); \
+    GUnit*RegisterUnitTest_##name(Gwen::Controls::Base*tab); \
     { \
-        Controls::Button* pButton = cat->Add( # name); \
-        pButton->SetName( # name); \
-        GUnit* test = RegisterUnitTest_ ## name(pCenter); \
+        Controls::Button* pButton = cat->Add( #name); \
+        pButton->SetName( #name); \
+        GUnit* test = RegisterUnitTest_##name(pCenter); \
         test->Hide(); \
         test->SetUnitTest(this); \
-        pButton->onPress.Add( this, &ThisClass::OnCategorySelect, Gwen::Event::Packet(test) ); \
+        pButton->onPress.Add(this, &ThisClass::OnCategorySelect, Gwen::Event::Packet(test)); \
     } \
 
 Gwen::Controls::TabButton* pButton = NULL;
@@ -34,7 +34,7 @@ GWEN_CONTROL_CONSTRUCTOR(UnitTest)
     Controls::CollapsibleList* pList = new Controls::CollapsibleList(this);
     GetLeft()->GetTabControl()->AddPage("CollapsibleList", pList);
     GetLeft()->SetWidth(150);
-    m_TextOutput = new Controls::ListBox( GetBottom() );
+    m_TextOutput = new Controls::ListBox(GetBottom());
     pButton = GetBottom()->GetTabControl()->AddPage("Output", m_TextOutput);
     GetBottom()->SetHeight(200);
     m_StatusBar = new Controls::StatusBar(this);
@@ -90,9 +90,7 @@ GWEN_CONTROL_CONSTRUCTOR(UnitTest)
 void UnitTest::OnCategorySelect(Gwen::Event::Info info)
 {
     if (m_pLastControl)
-    {
         m_pLastControl->Hide();
-    }
 
     info.Packet->Control->Show();
     m_pLastControl = info.Packet->Control;
@@ -108,9 +106,9 @@ void UnitTest::Render(Gwen::Skin::Base* skin)
 {
     m_iFrames++;
 
-    if ( m_fLastSecond < Gwen::Platform::GetTimeInSeconds() )
+    if (m_fLastSecond < Gwen::Platform::GetTimeInSeconds())
     {
-        m_StatusBar->SetText( Gwen::Utility::Format(L"GWEN Unit Test - %i fps", m_iFrames*2) );
+        m_StatusBar->SetText(Gwen::Utility::Format(L"GWEN Unit Test - %i fps", m_iFrames*2));
         m_fLastSecond = Gwen::Platform::GetTimeInSeconds()+0.5f;
         m_iFrames = 0;
     }
@@ -125,5 +123,5 @@ void GUnit::UnitPrint(Gwen::UnicodeString str)
 
 void GUnit::UnitPrint(Gwen::String str)
 {
-    UnitPrint( Utility::StringToUnicode(str) );
+    UnitPrint(Utility::StringToUnicode(str));
 }

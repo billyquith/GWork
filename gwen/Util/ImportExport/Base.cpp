@@ -29,10 +29,8 @@ ImportExport::Base* ImportExport::Find(Gwen::String strName)
 
     while (it != itEnd)
     {
-        if ( (*it)->Name() == strName )
-        {
+        if ((*it)->Name() == strName)
             return *it;
-        }
 
         ++it;
     }
@@ -60,18 +58,16 @@ namespace Gwen
                     Gwen::Controls::Base* pBaseChild = pRoot->GetChild(i);
 
                     if (!pBaseChild)
-                    {
                         continue;
-                    }
 
                     //
                     // If we have a child is isn't exportable - maybe it has a
                     // child that is
                     // We will count it as one of our children.
                     //
-                    if ( !pBaseChild->UserData.Exists("ControlFactory") )
+                    if (!pBaseChild->UserData.Exists("ControlFactory"))
                     {
-                        list.Add( GetExportableChildren(pBaseChild) );
+                        list.Add(GetExportableChildren(pBaseChild));
                         continue;
                     }
 

@@ -1,11 +1,11 @@
 
 #pragma once
 #ifndef GWEN_CONTROLS_PROPERTY_FOLDER_H
-#   define GWEN_CONTROLS_PROPERTY_FOLDER_H
+#define GWEN_CONTROLS_PROPERTY_FOLDER_H
 
-#   include "Gwen/Controls/Properties.h"
-#   include "Gwen/Controls/Button.h"
-#   include "Gwen/Controls/Dialogs/FolderOpen.h"
+#include "Gwen/Controls/Properties.h"
+#include "Gwen/Controls/Button.h"
+#include "Gwen/Controls/Dialogs/FolderOpen.h"
 
 namespace Gwen
 {
@@ -22,7 +22,7 @@ namespace Gwen
                     pButton->SetText("...");
                     pButton->SetWidth(20);
                     pButton->onPress.Add(this, &ThisClass::OnButtonPress);
-                    pButton->SetMargin( Margin(1, 1, 1, 2) );
+                    pButton->SetMargin(Margin(1, 1, 1, 2));
                     m_strDialogName = "Find Folder";
                 }
 
@@ -46,4 +46,4 @@ namespace Gwen
         }
     }
 }
-#endif
+#endif // ifndef GWEN_CONTROLS_PROPERTY_FOLDER_H

@@ -6,9 +6,9 @@
 
 #pragma once
 #ifndef GWEN_CONTROLS_LAYOUT_TILE_H
-#   define GWEN_CONTROLS_LAYOUT_TILE_H
+#define GWEN_CONTROLS_LAYOUT_TILE_H
 
-#   include "Gwen/Controls/Base.h"
+#include "Gwen/Controls/Base.h"
 
 namespace Gwen
 {
@@ -36,12 +36,10 @@ namespace Gwen
                         Base* pChild = *it;
 
                         if (pChild->GetDock() != Pos::None)
-                        {
                             continue;
-                        }
 
-                        pChild->SetPos( pos.x + m_TileSize.x/2 - pChild->Width()/2,
-                                        pos.y + m_TileSize.y/2 - pChild->Height()/2 );
+                        pChild->SetPos(pos.x+m_TileSize.x/2-pChild->Width()/2,
+                                       pos.y+m_TileSize.y/2-pChild->Height()/2);
                         pos.x = pos.x+m_TileSize.x;
 
                         if (pos.x+m_TileSize.x > bounds.x+bounds.w)
@@ -67,4 +65,4 @@ namespace Gwen
     }
 }
 
-#endif
+#endif // ifndef GWEN_CONTROLS_LAYOUT_TILE_H

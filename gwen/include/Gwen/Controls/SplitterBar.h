@@ -1,10 +1,10 @@
 #pragma once
 #ifndef GWEN_CONTROLS_SPLITTERBAR_H
-#   define GWEN_CONTROLS_SPLITTERBAR_H
+#define GWEN_CONTROLS_SPLITTERBAR_H
 
-#   include "Gwen/Gwen.h"
-#   include "Gwen/Controls/Base.h"
-#   include "Gwen/Controls/Dragger.h"
+#include "Gwen/Gwen.h"
+#include "Gwen/Controls/Base.h"
+#include "Gwen/Controls/Dragger.h"
 
 namespace Gwen
 {
@@ -22,4 +22,4 @@ namespace Gwen
 
     }
 }
-#endif
+#endif // ifndef GWEN_CONTROLS_SPLITTERBAR_H

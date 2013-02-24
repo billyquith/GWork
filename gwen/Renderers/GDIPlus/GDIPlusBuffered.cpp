@@ -33,23 +33,17 @@ namespace Gwen
                 int height = rect.bottom-rect.top;
 
                 if (m_iWidth != width)
-                {
                     DestroyBackbuffer();
-                }
 
                 if (m_iHeight != height)
-                {
                     DestroyBackbuffer();
-                }
 
                 m_iWidth = width;
                 m_iHeight = height;
             }
 
             if (m_Bitmap)
-            {
                 return;
-            }
 
             Gdiplus::Graphics gfx(m_hDC);
             m_Bitmap = new Gdiplus::Bitmap(m_iWidth, m_iHeight, &gfx);

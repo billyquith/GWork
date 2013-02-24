@@ -6,13 +6,13 @@
 
 #pragma once
 #ifndef GWEN_INPUT_ALLEGRO_H
-#   define GWEN_INPUT_ALLEGRO_H
+#define GWEN_INPUT_ALLEGRO_H
 
-#   include "Gwen/InputHandler.h"
-#   include "Gwen/Gwen.h"
-#   include "Gwen/Controls/Canvas.h"
+#include "Gwen/InputHandler.h"
+#include "Gwen/Gwen.h"
+#include "Gwen/Controls/Canvas.h"
 
-#   include <allegro5/allegro.h>
+#include <allegro5/allegro.h>
 
 namespace Gwen
 {
@@ -99,9 +99,7 @@ namespace Gwen
             bool ProcessMessage(ALLEGRO_EVENT& event)
             {
                 if (!m_Canvas)
-                {
                     return false;
-                }
 
                 switch (event.type)
                 {
@@ -111,9 +109,7 @@ namespace Gwen
                         int dy = event.mouse.y-m_MouseY;
 
                         if (event.mouse.dz != 0)
-                        {
                             return m_Canvas->InputMouseWheel(event.mouse.dz*60);
-                        }
 
                         m_MouseX = event.mouse.x;
                         m_MouseY = event.mouse.y;
@@ -138,9 +134,7 @@ namespace Gwen
                             && bPressed
                             && event.keyboard.keycode >= 'a'
                             && event.keyboard.keycode <= 'z')
-                        {
                             return m_Canvas->InputCharacter(event.keyboard.keycode);
-                        }
 
                         unsigned char iKey = TranslateKeyCode(event.keyboard.keycode);
                         return m_Canvas->InputKey(iKey, bPressed);
@@ -161,4 +155,4 @@ namespace Gwen
 
     }
 }
-#endif
+#endif // ifndef GWEN_INPUT_ALLEGRO_H

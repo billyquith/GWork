@@ -1,10 +1,10 @@
 #pragma once
 #ifndef GWEN_CONTROLS_PROPERTY_COLORSELECTOR_H
-#   define GWEN_CONTROLS_PROPERTY_COLORSELECTOR_H
+#define GWEN_CONTROLS_PROPERTY_COLORSELECTOR_H
 
-#   include "Gwen/Controls/Properties.h"
-#   include "Gwen/Controls/Menu.h"
-#   include "Gwen/Controls/HSVColorPicker.h"
+#include "Gwen/Controls/Properties.h"
+#include "Gwen/Controls/Menu.h"
+#include "Gwen/Controls/HSVColorPicker.h"
 
 namespace Gwen
 {
@@ -23,7 +23,7 @@ namespace Gwen
                 void Render(Skin::Base* skin)
                 {
                     skin->GetRender()->SetDrawColor(m_Color);
-                    skin->GetRender()->DrawFilledRect( GetRenderBounds() );
+                    skin->GetRender()->DrawFilledRect(GetRenderBounds());
                 }
 
                 void SetColor(const Gwen::Color& col)
@@ -47,12 +47,12 @@ namespace Gwen
                     m_Button->Dock(Pos::Right);
                     m_Button->SetWidth(20);
                     m_Button->onPress.Add(this, &ThisClass::OnButtonPress);
-                    m_Button->SetMargin( Margin(1, 1, 1, 2) );
+                    m_Button->SetMargin(Margin(1, 1, 1, 2));
                 }
 
                 void OnButtonPress(Controls::Base* control)
                 {
-                    Gwen::Controls::Menu* pMenu = new Menu( GetCanvas() );
+                    Gwen::Controls::Menu* pMenu = new Menu(GetCanvas());
                     pMenu->SetSize(256, 180);
                     pMenu->SetDeleteOnClose(true);
                     pMenu->SetDisableIconMargin(true);
@@ -71,11 +71,11 @@ namespace Gwen
                 void ColorChanged(Controls::Base* control)
                 {
                     Gwen::Controls::HSVColorPicker* picker =
-                        gwen_cast< Gwen::Controls::HSVColorPicker >(control);
+                        gwen_cast<Gwen::Controls::HSVColorPicker>(control);
                     Gwen::String colorStr;
-                    colorStr += Gwen::Utility::ToString( (int)picker->GetColor().r )+" ";
-                    colorStr += Gwen::Utility::ToString( (int)picker->GetColor().g )+" ";
-                    colorStr += Gwen::Utility::ToString( (int)picker->GetColor().b );
+                    colorStr += Gwen::Utility::ToString((int)picker->GetColor().r)+" ";
+                    colorStr += Gwen::Utility::ToString((int)picker->GetColor().g)+" ";
+                    colorStr += Gwen::Utility::ToString((int)picker->GetColor().b);
                     m_TextBox->SetText(colorStr);
                     DoChanged();
                 }
@@ -100,7 +100,7 @@ namespace Gwen
                     BaseClass::DoChanged();
                     float col[3];
                     Gwen::Utility::Strings::To::Floats(m_TextBox->GetText().Get(), col, 3);
-                    m_Button->SetColor( Gwen::Color(col[0], col[1], col[2]) );
+                    m_Button->SetColor(Gwen::Color(col[0], col[1], col[2]));
                 }
 
                 Controls::Internal::ColourButton*       m_Button;
@@ -110,4 +110,4 @@ namespace Gwen
         }
     }
 }
-#endif
+#endif // ifndef GWEN_CONTROLS_PROPERTY_COLORSELECTOR_H

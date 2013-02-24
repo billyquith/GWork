@@ -21,8 +21,8 @@ namespace Gwen
         {
         public:
 
-            typedef std::list< Animation* >ChildList;
-            typedef std::map< Gwen::Controls::Base*, ChildList >List;
+            typedef std::list<Animation*> ChildList;
+            typedef std::map<Gwen::Controls::Base*, ChildList> List;
 
             virtual void Think() = 0;
             virtual bool Finished()
@@ -101,7 +101,7 @@ namespace Gwen
 
                 virtual void Run(float delta)
                 {
-                    m_Control->SetHeight( m_iStartSize+( ( (float)m_iDelta )*delta ) );
+                    m_Control->SetHeight(m_iStartSize+(((float)m_iDelta)*delta));
                 }
 
                 virtual void OnFinish()
@@ -137,7 +137,7 @@ namespace Gwen
 
                 virtual void Run(float delta)
                 {
-                    m_Control->SetWidth( m_iStartSize+( ( (float)m_iDelta )*delta ) );
+                    m_Control->SetWidth(m_iStartSize+(((float)m_iDelta)*delta));
                 }
 
                 virtual void OnFinish()
@@ -176,7 +176,7 @@ namespace Gwen
 
                 virtual void Run(float delta)
                 {
-                    m_Control->SetPos(m_iStartSize+( ( (float)m_iDelta )*delta ),
+                    m_Control->SetPos(m_iStartSize+(((float)m_iDelta)*delta),
                                       m_Control->GetPos().y);
                 }
 
@@ -200,7 +200,7 @@ namespace Gwen
 
                 Y(int iStartSize, int iEndSize, float fLength, bool bHide = false,
                   float fDelay = 0.0f, float fEase = 1.0f)
-				:	TimedAnimation(fLength, fDelay, fEase)
+                    :   TimedAnimation(fLength, fDelay, fEase)
                 {
                     m_iStartSize = iStartSize;
                     m_iDelta = iEndSize-m_iStartSize;
@@ -214,8 +214,8 @@ namespace Gwen
 
                 virtual void Run(float delta)
                 {
-                    m_Control->SetPos( m_Control->GetPos().x, m_iStartSize+
-                                       ( ( (float)m_iDelta )*delta ) );
+                    m_Control->SetPos(m_Control->GetPos().x, m_iStartSize+
+                                      (((float)m_iDelta)*delta));
                 }
 
                 virtual void OnFinish()
@@ -251,6 +251,7 @@ namespace Gwen
 
             };
 
+
         }
 
     }
@@ -258,4 +259,3 @@ namespace Gwen
 
 #endif // !GWEN_NO_ANIMATION
 #endif // GWEN_ANIM_H
-

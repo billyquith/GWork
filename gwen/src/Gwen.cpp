@@ -44,8 +44,8 @@ namespace Gwen
             GwenUtil_OutputDebugWideString(strOut);
         }
 
-#endif
-        
+#endif // ifdef UNICODE
+
         void AssertCheck(bool b, const char* strMsg)
         {
             if (!b)

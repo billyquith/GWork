@@ -6,11 +6,11 @@
 
 #pragma once
 #ifndef GWEN_RENDERERS_SFML_H
-#   define GWEN_RENDERERS_SFML_H
-#   include "Gwen/Gwen.h"
-#   include "Gwen/BaseRender.h"
-#   include <SFML/Graphics/Color.hpp>
-#   include <SFML/Graphics/RectangleShape.hpp>
+#define GWEN_RENDERERS_SFML_H
+#include "Gwen/Gwen.h"
+#include "Gwen/BaseRender.h"
+#include <SFML/Graphics/Color.hpp>
+#include <SFML/Graphics/RectangleShape.hpp>
 
 namespace sf { class RenderTarget; }
 
@@ -59,4 +59,4 @@ namespace Gwen
 
     }
 }
-#endif
+#endif // ifndef GWEN_RENDERERS_SFML_H

@@ -6,15 +6,15 @@
 
 #pragma once
 #ifndef GWEN_CONTROLS_RADIOBUTTON_H
-#   define GWEN_CONTROLS_RADIOBUTTON_H
+#define GWEN_CONTROLS_RADIOBUTTON_H
 
-#   include "Gwen/Controls/Base.h"
-#   include "Gwen/Controls/Label.h"
-#   include "Gwen/Controls/Button.h"
-#   include "Gwen/Gwen.h"
-#   include "Gwen/Skin.h"
-#   include "Gwen/Controls/CheckBox.h"
-#   include "Gwen/Controls/LabelClickable.h"
+#include "Gwen/Controls/Base.h"
+#include "Gwen/Controls/Label.h"
+#include "Gwen/Controls/Button.h"
+#include "Gwen/Gwen.h"
+#include "Gwen/Skin.h"
+#include "Gwen/Controls/CheckBox.h"
+#include "Gwen/Controls/LabelClickable.h"
 
 namespace Gwen
 {
@@ -45,7 +45,7 @@ namespace Gwen
                 SetSize(200, 19);
                 m_RadioButton = new RadioButton(this);
                 m_RadioButton->Dock(Pos::Left);
-                m_RadioButton->SetMargin( Margin(0, 2, 2, 2) );
+                m_RadioButton->SetMargin(Margin(0, 2, 2, 2));
                 m_RadioButton->SetTabable(false);
                 m_RadioButton->SetKeyboardInputEnabled(false);
                 m_Label = new LabelClickable(this);
@@ -60,14 +60,10 @@ namespace Gwen
             void RenderFocus(Gwen::Skin::Base* skin)
             {
                 if (Gwen::KeyboardFocus != this)
-                {
                     return;
-                }
 
-                if ( !IsTabable() )
-                {
+                if (!IsTabable())
                     return;
-                }
 
                 skin->DrawKeyboardHighlight(this, GetRenderBounds(), 0);
             }
@@ -85,9 +81,7 @@ namespace Gwen
             virtual bool OnKeySpace(bool bDown)
             {
                 if (bDown)
-                {
-                    m_RadioButton->SetChecked( !m_RadioButton->IsChecked() );
-                }
+                    m_RadioButton->SetChecked(!m_RadioButton->IsChecked());
 
                 return true;
             }
@@ -106,4 +100,4 @@ namespace Gwen
 
     }
 }
-#endif
+#endif // ifndef GWEN_CONTROLS_RADIOBUTTON_H

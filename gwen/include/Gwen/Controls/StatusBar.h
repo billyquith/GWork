@@ -1,9 +1,9 @@
 #pragma once
 #ifndef GWEN_CONTROLS_STATUSBAR_H
-#   define GWEN_CONTROLS_STATUSBAR_H
+#define GWEN_CONTROLS_STATUSBAR_H
 
-#   include "Gwen/Gwen.h"
-#   include "Gwen/Controls/Label.h"
+#include "Gwen/Gwen.h"
+#include "Gwen/Controls/Label.h"
 
 namespace Gwen
 {
@@ -17,7 +17,7 @@ namespace Gwen
             {
                 SetHeight(22);
                 Dock(Pos::Bottom);
-                SetPadding( Padding(2, 2, 2, 2) );
+                SetPadding(Padding(2, 2, 2, 2));
                 SetText("");
                 SetAlignment(Pos::Left|Pos::CenterV);
             }
@@ -38,4 +38,4 @@ namespace Gwen
 
     }
 }
-#endif
+#endif // ifndef GWEN_CONTROLS_STATUSBAR_H

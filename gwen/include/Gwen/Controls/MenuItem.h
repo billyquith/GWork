@@ -6,12 +6,12 @@
 
 #pragma once
 #ifndef GWEN_CONTROLS_MENUITEM_H
-#   define GWEN_CONTROLS_MENUITEM_H
+#define GWEN_CONTROLS_MENUITEM_H
 
-#   include "Gwen/BaseRender.h"
-#   include "Gwen/Controls/Base.h"
-#   include "Gwen/Controls/Button.h"
-#   include "Gwen/Controls/Menu.h"
+#include "Gwen/BaseRender.h"
+#include "Gwen/Controls/Base.h"
+#include "Gwen/Controls/Button.h"
+#include "Gwen/Controls/Menu.h"
 
 namespace Gwen
 {
@@ -62,13 +62,11 @@ namespace Gwen
                 return m_bChecked;
             }
 
-            template < typename T >
+            template <typename T>
             MenuItem* SetAction(Gwen::Event::Handler* pHandler, T fn)
             {
                 if (m_Accelerator)
-                {
                     AddAccelerator(m_Accelerator->GetText(), fn, pHandler);
-                }
 
                 onMenuItemSelected.Add(pHandler, fn);
                 return this;
@@ -98,4 +96,4 @@ namespace Gwen
     }
 
 }
-#endif
+#endif // ifndef GWEN_CONTROLS_MENUITEM_H

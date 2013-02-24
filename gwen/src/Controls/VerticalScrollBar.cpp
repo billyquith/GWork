@@ -25,33 +25,27 @@ void VerticalScrollBar::Layout(Skin::Base* skin)
 {
     BaseClass::Layout(skin);
     m_ScrollButton[SCROLL_BUTTON_UP]->Dock(Pos::Top);
-    m_ScrollButton[SCROLL_BUTTON_UP]->SetHeight( Width() );
+    m_ScrollButton[SCROLL_BUTTON_UP]->SetHeight(Width());
     m_ScrollButton[SCROLL_BUTTON_DOWN]->Dock(Pos::Bottom);
-    m_ScrollButton[SCROLL_BUTTON_DOWN]->SetHeight( Width() );
-    m_Bar->SetWidth( GetButtonSize() );
+    m_ScrollButton[SCROLL_BUTTON_DOWN]->SetHeight(Width());
+    m_Bar->SetWidth(GetButtonSize());
     // Add padding
-    m_Bar->SetPadding( Padding( 0, GetButtonSize(), 0, GetButtonSize() ) );
+    m_Bar->SetPadding(Padding(0, GetButtonSize(), 0, GetButtonSize()));
     // Calculate bar sizes
-    float barHeight = (m_fViewableContentSize/m_fContentSize)*( Height()-GetButtonSize() );
+    float barHeight = (m_fViewableContentSize/m_fContentSize)*(Height()-GetButtonSize());
 
     if (barHeight < GetButtonSize()*0.5)
-    {
         barHeight = GetButtonSize()*0.5;
-    }
 
     m_Bar->SetHeight(barHeight);
     m_Bar->SetHidden(Height()-(GetButtonSize()*2) <= barHeight);
 
-    if ( Hidden() )
-    {
+    if (Hidden())
         SetScrolledAmount(0, true);
-    }
 
     // Based on our last scroll amount, produce a position for the bar
-    if ( !m_Bar->IsDepressed() )
-    {
+    if (!m_Bar->IsDepressed())
         SetScrolledAmount(GetScrolledAmount(), true);
-    }
 }
 
 void VerticalScrollBar::ScrollToTop()
@@ -66,30 +60,22 @@ void VerticalScrollBar::ScrollToBottom()
 
 void VerticalScrollBar::NudgeUp(Base* /*control*/)
 {
-    if ( !IsDisabled() )
-    {
+    if (!IsDisabled())
         SetScrolledAmount(GetScrolledAmount()-GetNudgeAmount(), true);
-    }
 }
 
 void VerticalScrollBar::NudgeDown(Base* /*control*/)
 {
-    if ( !IsDisabled() )
-    {
+    if (!IsDisabled())
         SetScrolledAmount(GetScrolledAmount()+GetNudgeAmount(), true);
-    }
 }
 
 float VerticalScrollBar::GetNudgeAmount()
 {
     if (m_bDepressed)
-    {
         return m_fViewableContentSize/m_fContentSize;
-    }
     else
-    {
         return BaseClass::GetNudgeAmount();
-    }
 }
 
 void VerticalScrollBar::OnMouseClickLeft(int x, int y, bool bDown)
@@ -101,16 +87,12 @@ void VerticalScrollBar::OnMouseClickLeft(int x, int y, bool bDown)
     }
     else
     {
-        Gwen::Point clickPos = CanvasPosToLocal( Gwen::Point(x, y) );
+        Gwen::Point clickPos = CanvasPosToLocal(Gwen::Point(x, y));
 
-        if ( clickPos.y < m_Bar->Y() )
-        {
+        if (clickPos.y < m_Bar->Y())
             NudgeUp(this);
-        }
-        else if ( clickPos.y > m_Bar->Y()+m_Bar->Height() )
-        {
+        else if (clickPos.y > m_Bar->Y()+m_Bar->Height())
             NudgeDown(this);
-        }
 
         m_bDepressed = false;
         Gwen::MouseFocus = NULL;
@@ -119,22 +101,20 @@ void VerticalScrollBar::OnMouseClickLeft(int x, int y, bool bDown)
 
 float VerticalScrollBar::CalculateScrolledAmount()
 {
-    return (float)( m_Bar->Y()-
-                    GetButtonSize() )/(float)( Height()-m_Bar->Height()-(GetButtonSize()*2) );
+    return (float)(m_Bar->Y()-
+                   GetButtonSize())/(float)(Height()-m_Bar->Height()-(GetButtonSize()*2));
 }
 
 bool VerticalScrollBar::SetScrolledAmount(float amount, bool forceUpdate)
 {
     amount = Gwen::Clamp(amount, 0.f, 1.f);
 
-    if ( !BaseClass::SetScrolledAmount(amount, forceUpdate) )
-    {
+    if (!BaseClass::SetScrolledAmount(amount, forceUpdate))
         return false;
-    }
 
     if (forceUpdate)
     {
-        int newY = GetButtonSize()+( amount*( ( Height()-m_Bar->Height() )-(GetButtonSize()*2) ) );
+        int newY = GetButtonSize()+(amount*((Height()-m_Bar->Height())-(GetButtonSize()*2)));
         m_Bar->MoveTo(m_Bar->X(), newY);
     }
 
@@ -143,7 +123,7 @@ bool VerticalScrollBar::SetScrolledAmount(float amount, bool forceUpdate)
 
 void VerticalScrollBar::OnBarMoved(Controls::Base* control)
 {
-    if ( m_Bar->IsDepressed() )
+    if (m_Bar->IsDepressed())
     {
         SetScrolledAmount(CalculateScrolledAmount(), false);
         BaseClass::OnBarMoved(control);

@@ -18,14 +18,14 @@ namespace Gwen
 
                 UnicodeString GetValue(Controls::Base* ctrl)
                 {
-                    return Utility::StringToUnicode( gwen_cast< Controls::FilePicker >(
-                                                         ctrl)->GetFileType() );
+                    return Utility::StringToUnicode(gwen_cast<Controls::FilePicker>(
+                                                        ctrl)->GetFileType());
                 }
 
                 void SetValue(Controls::Base* ctrl, const UnicodeString& str)
                 {
-                    gwen_cast< Controls::FilePicker >(ctrl)->SetFileType( Utility::UnicodeToString(
-                                                                              str) );
+                    gwen_cast<Controls::FilePicker>(ctrl)->SetFileType(Utility::UnicodeToString(
+                                                                           str));
                 }
 
             };
@@ -39,7 +39,7 @@ namespace Gwen
 
             GWEN_CONTROL_FACTORY_CONSTRUCTOR(FilePicker_Factory, ControlFactory::Base)
             {
-                AddProperty( new Properties::FileType() );
+                AddProperty(new Properties::FileType());
             }
 
             virtual Gwen::String Name()

@@ -35,13 +35,9 @@ void RadioButtonController::OnRadioClicked(Gwen::Controls::Base* pFromPanel)
             RadioButton* pChildRadioButton = pLRB->GetRadioButton();
 
             if (pChildRadioButton == pCheckedRadioButton)
-            {
                 m_Selected = pLRB;
-            }
             else
-            {
                 pLRB->GetRadioButton()->SetChecked(false);
-            }
         }
     }
 
@@ -67,7 +63,7 @@ LabeledRadioButton* RadioButtonController::AddOption(const Gwen::UnicodeString& 
     lrb->GetLabel()->SetText(strText);
     lrb->GetRadioButton()->onChecked.Add(this, &RadioButtonController::OnRadioClicked);
     lrb->Dock(Pos::Top);
-    lrb->SetMargin( Margin(0, 1, 0, 1) );
+    lrb->SetMargin(Margin(0, 1, 0, 1));
     lrb->SetKeyboardInputEnabled(false);
     lrb->SetTabable(false);
     Invalidate();

@@ -15,10 +15,8 @@ void Gwen::Dialogs::FileSaveEx(bool bUseSystem, const String& Name, const String
                                const String& Extension, Gwen::Event::Handler* pHandler,
                                Gwen::Event::Handler::FunctionWithInformation fnCallback)
 {
-    if ( bUseSystem && Gwen::Platform::FileSave(Name, StartPath, Extension, pHandler, fnCallback) )
-    {
+    if (bUseSystem && Gwen::Platform::FileSave(Name, StartPath, Extension, pHandler, fnCallback))
         return;
-    }
 
     //
     // TODO: SHOW GWEN FILE SELECTION DIALOG

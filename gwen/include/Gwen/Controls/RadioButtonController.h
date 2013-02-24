@@ -6,11 +6,11 @@
 
 #pragma once
 #ifndef GWEN_CONTROLS_RADIOBOTTONCONTROLLER_H
-#   define GWEN_CONTROLS_RADIOBOTTONCONTROLLER_H
+#define GWEN_CONTROLS_RADIOBOTTONCONTROLLER_H
 
-#   include "Gwen/Controls/Base.h"
-#   include "Gwen/Controls/Label.h"
-#   include "Gwen/Controls/RadioButton.h"
+#include "Gwen/Controls/Base.h"
+#include "Gwen/Controls/Label.h"
+#include "Gwen/Controls/RadioButton.h"
 
 
 namespace Gwen
@@ -61,4 +61,4 @@ namespace Gwen
 
     }
 }
-#endif
+#endif // ifndef GWEN_CONTROLS_RADIOBOTTONCONTROLLER_H

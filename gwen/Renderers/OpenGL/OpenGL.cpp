@@ -51,9 +51,7 @@ namespace Gwen
         void OpenGL::Flush()
         {
             if (m_iVertNum == 0)
-            {
                 return;
-            }
 
             glVertexPointer(3, GL_FLOAT,  sizeof(Vertex), (void*)&m_Vertices[0].x);
             glEnableClientState(GL_VERTEX_ARRAY);
@@ -69,9 +67,7 @@ namespace Gwen
         void OpenGL::AddVert(int x, int y, float u, float v)
         {
             if (m_iVertNum >= MaxVerts-1)
-            {
                 Flush();
-            }
 
             m_Vertices[ m_iVertNum ].x = (float)x;
             m_Vertices[ m_iVertNum ].y = (float)y;
@@ -106,7 +102,7 @@ namespace Gwen
 
         void OpenGL::SetDrawColor(Gwen::Color color)
         {
-            glColor4ubv( (GLubyte*)&color );
+            glColor4ubv((GLubyte*)&color);
             m_Color = color;
         }
 
@@ -121,7 +117,7 @@ namespace Gwen
                 glGetIntegerv(GL_VIEWPORT, &view[0]);
                 rect.y = view[3]-(rect.y+rect.h);
             }
-            glScissor( rect.x*Scale(), rect.y*Scale(), rect.w*Scale(), rect.h*Scale() );
+            glScissor(rect.x*Scale(), rect.y*Scale(), rect.w*Scale(), rect.h*Scale());
             glEnable(GL_SCISSOR_TEST);
         }
 
@@ -138,9 +134,7 @@ namespace Gwen
 
             // Missing image, not loaded properly?
             if (!tex)
-            {
                 return DrawMissingImage(rect);
-            }
 
             Translate(rect);
             GLuint boundtex;
@@ -169,9 +163,7 @@ namespace Gwen
             FREE_IMAGE_FORMAT imageFormat = FreeImage_GetFileTypeU(wFileName);
 
             if (imageFormat == FIF_UNKNOWN)
-            {
                 imageFormat = FreeImage_GetFIFFromFilenameU(wFileName);
-            }
 
             // Image failed to load..
             if (imageFormat == FIF_UNKNOWN)
@@ -217,8 +209,8 @@ namespace Gwen
 #else
             GLenum format = GL_BGRA;
 #endif
-            glTexImage2D( GL_TEXTURE_2D, 0, GL_RGBA, pTexture->width, pTexture->height, 0, format,
-                          GL_UNSIGNED_BYTE, (const GLvoid*)FreeImage_GetBits(bits32) );
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, pTexture->width, pTexture->height, 0, format,
+                         GL_UNSIGNED_BYTE, (const GLvoid*)FreeImage_GetBits(bits32));
             FreeImage_Unload(bits32);
         }
 
@@ -227,9 +219,7 @@ namespace Gwen
             GLuint* tex = (GLuint*)pTexture->data;
 
             if (!tex)
-            {
                 return;
-            }
 
             glDeleteTextures(1, tex);
             delete tex;
@@ -242,9 +232,7 @@ namespace Gwen
             GLuint* tex = (GLuint*)pTexture->data;
 
             if (!tex)
-            {
                 return col_default;
-            }
 
             unsigned int iPixelSize = sizeof(unsigned char)*4;
             glBindTexture(GL_TEXTURE_2D, *tex);
@@ -273,16 +261,14 @@ namespace Gwen
             HWND pHwnd = (HWND)pWindow->GetWindow();
 
             if (!pHwnd)
-            {
                 return false;
-            }
 
             HDC hDC = GetDC(pHwnd);
             //
             // Set the pixel format
             //
             PIXELFORMATDESCRIPTOR pfd;
-            memset( &pfd, 0, sizeof(pfd) );
+            memset(&pfd, 0, sizeof(pfd));
             pfd.nSize = sizeof(pfd);
             pfd.nVersion = 1;
             pfd.dwFlags = PFD_DRAW_TO_WINDOW|PFD_SUPPORT_OPENGL|PFD_DOUBLEBUFFER;
@@ -297,7 +283,7 @@ namespace Gwen
             wglMakeCurrent(hDC, hRC);
             RECT r;
 
-            if ( GetClientRect(pHwnd, &r) )
+            if (GetClientRect(pHwnd, &r))
             {
                 glMatrixMode(GL_PROJECTION);
                 glLoadIdentity();
@@ -308,14 +294,14 @@ namespace Gwen
 
             m_pContext = (void*)hRC;
             return true;
-#endif
+#endif // ifdef _WIN32
             return false;
         }
 
         bool OpenGL::ShutdownContext(Gwen::WindowProvider* pWindow)
         {
 #ifdef _WIN32
-            wglDeleteContext( (HGLRC)m_pContext );
+            wglDeleteContext((HGLRC)m_pContext);
             return true;
 #endif
             return false;
@@ -327,9 +313,7 @@ namespace Gwen
             HWND pHwnd = (HWND)pWindow->GetWindow();
 
             if (!pHwnd)
-            {
                 return false;
-            }
 
             HDC hDC = GetDC(pHwnd);
             SwapBuffers(hDC);
@@ -343,7 +327,7 @@ namespace Gwen
 #ifdef _WIN32
             RECT r;
 
-            if ( GetClientRect( (HWND)pWindow->GetWindow(), &r ) )
+            if (GetClientRect((HWND)pWindow->GetWindow(), &r))
             {
                 glMatrixMode(GL_PROJECTION);
                 glLoadIdentity();
@@ -353,7 +337,7 @@ namespace Gwen
             }
 
             return true;
-#endif
+#endif // ifdef _WIN32
             return false;
         }
 

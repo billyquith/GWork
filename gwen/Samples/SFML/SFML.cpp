@@ -34,9 +34,9 @@ int main()
     //
     Gwen::Controls::Canvas* pCanvas = new Gwen::Controls::Canvas(&skin);
 
-    pCanvas->SetSize( App.GetWidth(), App.GetHeight() );
+    pCanvas->SetSize(App.GetWidth(), App.GetHeight());
     pCanvas->SetDrawBackground(true);
-    pCanvas->SetBackgroundColor( Gwen::Color(150, 170, 170, 255) );
+    pCanvas->SetBackgroundColor(Gwen::Color(150, 170, 170, 255));
     //
     // Create our unittest control (which is a Window with controls in it)
     //
@@ -48,16 +48,16 @@ int main()
     Gwen::Input::SFML GwenInput;
     GwenInput.Initialize(pCanvas);
 
-    while ( App.IsOpened() )
+    while (App.IsOpened())
     {
         // Handle events
         sf::Event Event;
 
-        while ( App.GetEvent(Event) )
+        while (App.GetEvent(Event))
         {
             // Window closed or escape key pressed : exit
-            if ( (Event.Type == sf::Event::Closed) ||
-                 ( (Event.Type == sf::Event::KeyPressed) && (Event.Key.Code == sf::Key::Escape) ) )
+            if ((Event.Type == sf::Event::Closed) ||
+                ((Event.Type == sf::Event::KeyPressed) && (Event.Key.Code == sf::Key::Escape)))
             {
                 App.Close();
                 break;

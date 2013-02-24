@@ -6,11 +6,11 @@
 
 #pragma once
 #ifndef GWEN_CONTROLS_LISTBOX_H
-#   define GWEN_CONTROLS_LISTBOX_H
+#define GWEN_CONTROLS_LISTBOX_H
 
-#   include "Gwen/Gwen.h"
-#   include "Gwen/Controls/Layout/Table.h"
-#   include "Gwen/Controls/ScrollControl.h"
+#include "Gwen/Gwen.h"
+#include "Gwen/Controls/Layout/Table.h"
+#include "Gwen/Controls/ScrollControl.h"
 
 
 namespace Gwen
@@ -25,7 +25,7 @@ namespace Gwen
 
             GWEN_CONTROL(ListBox, ScrollControl);
 
-            typedef std::list< Layout::TableRow* >Rows;
+            typedef std::list<Layout::TableRow*> Rows;
 
             Layout::TableRow* AddItem(const TextObject& strLabel, const String& strName = "");
 
@@ -92,4 +92,4 @@ namespace Gwen
 
     }
 }
-#endif
+#endif // ifndef GWEN_CONTROLS_LISTBOX_H

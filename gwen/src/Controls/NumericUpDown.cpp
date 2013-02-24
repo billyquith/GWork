@@ -29,7 +29,7 @@ GWEN_CONTROL_CONSTRUCTOR(NumericUpDown)
     pButtonDown->onPress.Add(this, &NumericUpDown::OnButtonDown);
     pButtonDown->SetTabable(false);
     pButtonDown->Dock(Pos::Fill);
-    pButtonUp->SetPadding( Padding(0, 1, 1, 0) );
+    pButtonUp->SetPadding(Padding(0, 1, 1, 0));
     m_iMax = 100;
     m_iMin = 0;
     m_iNumber = 0;
@@ -50,12 +50,12 @@ void NumericUpDown::OnButtonDown(Base* /*control*/)
 
 void NumericUpDown::SyncTextFromNumber()
 {
-    SetText( Utility::ToString(m_iNumber) );
+    SetText(Utility::ToString(m_iNumber));
 }
 
 void NumericUpDown::SyncNumberFromText()
 {
-    SetValue( (int)GetFloatFromText() );
+    SetValue((int)GetFloatFromText());
 }
 
 void NumericUpDown::SetMin(int i)
@@ -71,19 +71,13 @@ void NumericUpDown::SetMax(int i)
 void NumericUpDown::SetValue(int i)
 {
     if (i > m_iMax)
-    {
         i = m_iMax;
-    }
 
     if (i < m_iMin)
-    {
         i = m_iMin;
-    }
 
     if (m_iNumber == i)
-    {
         return;
-    }
 
     m_iNumber = i;
     // Don't update the text if we're typing in it..

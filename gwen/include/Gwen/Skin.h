@@ -6,10 +6,10 @@
 
 #pragma once
 #ifndef GWEN_SKIN_H
-#   define GWEN_SKIN_H
+#define GWEN_SKIN_H
 
-#   include "Gwen/BaseRender.h"
-#   include "Gwen/Font.h"
+#include "Gwen/BaseRender.h"
+#include "Gwen/Font.h"
 
 namespace Gwen
 {
@@ -47,14 +47,10 @@ namespace Gwen
             virtual void ReleaseFont(Gwen::Font* fnt)
             {
                 if (!fnt)
-                {
                     return;
-                }
 
                 if (!m_Render)
-                {
                     return;
-                }
 
                 m_Render->FreeFont(fnt);
             }
@@ -296,4 +292,4 @@ namespace Gwen
 
     }
 }
-#endif
+#endif // ifndef GWEN_SKIN_H

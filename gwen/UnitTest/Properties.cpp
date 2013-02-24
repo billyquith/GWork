@@ -62,8 +62,8 @@ public:
     void OnFirstNameChanged(Controls::Base* pControl)
     {
         Gwen::Controls::PropertyRow* pRow = (Gwen::Controls::PropertyRow*)pControl;
-        UnitPrint( Utility::Format( L"First Name Changed: %ls",
-                                    pRow->GetProperty()->GetPropertyValue().GetUnicode().c_str() ) );
+        UnitPrint(Utility::Format(L"First Name Changed: %ls",
+                                  pRow->GetProperty()->GetPropertyValue().GetUnicode().c_str()));
     }
 
 };

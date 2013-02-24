@@ -6,12 +6,12 @@
 
 #pragma once
 #ifndef GWEN_CONTROLS_PROPERTY_BASEPROPERTY_H
-#   define GWEN_CONTROLS_PROPERTY_BASEPROPERTY_H
+#define GWEN_CONTROLS_PROPERTY_BASEPROPERTY_H
 
-#   include "Gwen/Controls/Base.h"
-#   include "Gwen/Gwen.h"
-#   include "Gwen/Skin.h"
-#   include "Gwen/Utility.h"
+#include "Gwen/Controls/Base.h"
+#include "Gwen/Gwen.h"
+#include "Gwen/Skin.h"
+#include "Gwen/Utility.h"
 
 
 namespace Gwen
@@ -55,4 +55,4 @@ namespace Gwen
         }
     }
 }
-#endif
+#endif // ifndef GWEN_CONTROLS_PROPERTY_BASEPROPERTY_H

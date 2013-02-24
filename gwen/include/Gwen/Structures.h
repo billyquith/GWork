@@ -6,14 +6,14 @@
 
 #pragma once
 #ifdef _MSC_VER
-#   pragma warning( disable : 4244 )
-#   pragma warning( disable : 4251 )
+#pragma warning( disable : 4244 )
+#pragma warning( disable : 4251 )
 #endif
 #ifndef GWEN_STRUCTURES_H
-#   define GWEN_STRUCTURES_H
+#define GWEN_STRUCTURES_H
 
-#   include "Gwen/Exports.h"
-#   include <string>
+#include "Gwen/Exports.h"
+#include <string>
 
 namespace Gwen
 {
@@ -54,7 +54,7 @@ namespace Gwen
             this->right = right_;
         }
 
-        Margin operator + (const Margin& margin) const
+        Margin operator +(const Margin& margin) const
         {
             Margin m;
             m.top       = top+margin.top;
@@ -74,14 +74,14 @@ namespace Gwen
     struct GWEN_EXPORT Rect
     {
         Rect(int x_ = 0, int y_ = 0, int w_ = 0, int h_ = 0)
-        :	x(x_)
-        ,	y(y_)
-        ,	w(w_)
-        ,	h(h_)
+            :   x(x_)
+            ,   y(y_)
+            ,   w(w_)
+            ,   h(h_)
         {
         }
 
-        Rect operator + (const Rect& rct) const
+        Rect operator +(const Rect& rct) const
         {
             Rect m;
             m.x     = x+rct.x;
@@ -103,24 +103,24 @@ namespace Gwen
             this->y = y_;
         }
 
-        void operator += (const Point& p)
+        void operator +=(const Point& p)
         {
             x += p.x;
             y += p.y;
         }
 
-        Point operator + (const Point& p) const
+        Point operator +(const Point& p) const
         {
             return Point(x+p.x, p.y+y);
         }
 
-        void operator -= (const Point& p)
+        void operator -=(const Point& p)
         {
             x -= p.x;
             y -= p.y;
         }
 
-        Point operator - (const Point& p) const
+        Point operator -(const Point& p) const
         {
             return Point(x-p.x, y-p.y);
         }
@@ -148,7 +148,7 @@ namespace Gwen
             this->a = a_;
         }
 
-        void operator = (Color c)
+        void operator =(Color c)
         {
             this->r = c.r;
             this->g = c.g;
@@ -156,7 +156,7 @@ namespace Gwen
             this->a = c.a;
         }
 
-        void operator += (Color c)
+        void operator +=(Color c)
         {
             this->r += c.r;
             this->g += c.g;
@@ -164,7 +164,7 @@ namespace Gwen
             this->a += c.a;
         }
 
-        void operator -= (Color c)
+        void operator -=(Color c)
         {
             this->r -= c.r;
             this->g -= c.g;
@@ -172,7 +172,7 @@ namespace Gwen
             this->a -= c.a;
         }
 
-        void operator *= (float f)
+        void operator *=(float f)
         {
             this->r *= f;
             this->g *= f;
@@ -180,7 +180,7 @@ namespace Gwen
             this->a *= f;
         }
 
-        Color operator * (float f)
+        Color operator *(float f)
         {
             return Color(
                 (float)this->r*f,
@@ -190,7 +190,7 @@ namespace Gwen
                 );
         }
 
-        Color operator - (Color c)
+        Color operator -(Color c)
         {
             return Color(
                 this->r-c.r,
@@ -200,7 +200,7 @@ namespace Gwen
                 );
         }
 
-        Color operator + (Color c)
+        Color operator +(Color c)
         {
             return Color(
                 this->r+c.r,
@@ -210,7 +210,7 @@ namespace Gwen
                 );
         }
 
-        bool operator == (const Color& c) const
+        bool operator ==(const Color& c) const
         {
             return c.r == r && c.g == g && c.b == b && c.a == a;
         }
@@ -243,4 +243,4 @@ namespace Gwen
     }
 
 }
-#endif
+#endif // ifndef GWEN_STRUCTURES_H

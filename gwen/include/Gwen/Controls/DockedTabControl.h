@@ -6,10 +6,10 @@
 
 #pragma once
 #ifndef GWEN_CONTROLS_DOCKEDTABCONTROL_H
-#   define GWEN_CONTROLS_DOCKEDTABCONTROL_H
+#define GWEN_CONTROLS_DOCKEDTABCONTROL_H
 
-#   include "Gwen/Controls/Base.h"
-#   include "Gwen/Controls/TabControl.h"
+#include "Gwen/Controls/Base.h"
+#include "Gwen/Controls/TabControl.h"
 
 namespace Gwen
 {
@@ -45,4 +45,4 @@ namespace Gwen
 
     }
 }
-#endif
+#endif // ifndef GWEN_CONTROLS_DOCKEDTABCONTROL_H

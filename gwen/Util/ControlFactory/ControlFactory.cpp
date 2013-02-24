@@ -57,10 +57,8 @@ namespace Gwen
                  it != ControlFactory::GetList().end();
                  ++it)
             {
-                if ( (*it)->Name() == name )
-                {
+                if ((*it)->Name() == name)
                     return *it;
-                }
             }
 
             return NULL;
@@ -82,10 +80,8 @@ namespace Gwen
                  it != ControlFactory::GetList().end();
                  ++it)
             {
-                if ( (*it)->Name() == BaseName() )
-                {
+                if ((*it)->Name() == BaseName())
                     return *it;
-                }
             }
 
             return NULL;
@@ -97,10 +93,8 @@ namespace Gwen
                  itEnd = Properties().end();
                  it != itEnd; ++it)
             {
-                if ( (*it)->Name() != name )
-                {
+                if ((*it)->Name() != name)
                     continue;
-                }
 
                 return *it;
             }
@@ -108,9 +102,7 @@ namespace Gwen
             Base* pBase = GetBaseFactory();
 
             if (!pBase)
-            {
                 return NULL;
-            }
 
             return pBase->GetProperty(name);
         }
@@ -125,9 +117,7 @@ namespace Gwen
                 Base* pBase = GetBaseFactory();
 
                 if (!pBase)
-                {
                     return;
-                }
 
                 return pBase->SetControlValue(ctrl, name, str);
             }
@@ -148,7 +138,7 @@ namespace Gwen
 
         Controls::Base* Clone(Controls::Base* pSource, ControlFactory::Base* pFactory)
         {
-            Controls::Base* pControl = pFactory->CreateInstance( pSource->GetParent() );
+            Controls::Base* pControl = pFactory->CreateInstance(pSource->GetParent());
 
             while (pFactory)
             {
@@ -156,7 +146,7 @@ namespace Gwen
                      it = pFactory->Properties().begin(), itEnd = pFactory->Properties().end();
                      it != itEnd; ++it)
                 {
-                    (*it)->SetValue( pControl, (*it)->GetValue(pSource) );
+                    (*it)->SetValue(pControl, (*it)->GetValue(pSource));
                 }
 
                 pFactory = pFactory->GetBaseFactory();
@@ -167,17 +157,15 @@ namespace Gwen
 
         void Base::SetParentPage(Gwen::Controls::Base* ctrl, int i)
         {
-            ctrl->UserData.Set< int >("ParentPage", i);
+            ctrl->UserData.Set<int>("ParentPage", i);
         }
 
         int Base::GetParentPage(Gwen::Controls::Base* ctrl)
         {
-            if ( !ctrl->UserData.Exists("ParentPage") )
-            {
+            if (!ctrl->UserData.Exists("ParentPage"))
                 return 0;
-            }
 
-            return ctrl->UserData.Get< int >("ParentPage");
+            return ctrl->UserData.Get<int>("ParentPage");
         }
 
     }

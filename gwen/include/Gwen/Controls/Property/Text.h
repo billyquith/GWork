@@ -6,10 +6,10 @@
 
 #pragma once
 #ifndef GWEN_CONTROLS_PROPERTY_TEXT_H
-#   define GWEN_CONTROLS_PROPERTY_TEXT_H
+#define GWEN_CONTROLS_PROPERTY_TEXT_H
 
-#   include "Gwen/Controls/Property/BaseProperty.h"
-#   include "Gwen/Controls/TextBox.h"
+#include "Gwen/Controls/Property/BaseProperty.h"
+#include "Gwen/Controls/TextBox.h"
 
 namespace Gwen
 {
@@ -56,4 +56,4 @@ namespace Gwen
         }
     }
 }
-#endif
+#endif // ifndef GWEN_CONTROLS_PROPERTY_TEXT_H

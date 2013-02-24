@@ -33,9 +33,7 @@ namespace Gwen
             std::string fontName = Utility::UnicodeToString(font->facename);
 
             if (fontName.find(".ttf") == std::string::npos)
-            {
                 fontName += ".ttf";
-            }
 
             ALLEGRO_FONT* afont = al_load_font(
                 fontName.c_str(), font->realsize, ALLEGRO_TTF_NO_KERNING);
@@ -45,11 +43,9 @@ namespace Gwen
         void Allegro::FreeFont(Gwen::Font* pFont)
         {
             if (!pFont->data)
-            {
                 return;
-            }
 
-            al_destroy_font( (ALLEGRO_FONT*)pFont->data );
+            al_destroy_font((ALLEGRO_FONT*)pFont->data);
             pFont->data = NULL;
         }
 
@@ -58,8 +54,8 @@ namespace Gwen
         {
             Translate(pos.x, pos.y);
             ALLEGRO_FONT* afont = (ALLEGRO_FONT*)pFont->data;
-            al_draw_text( afont, m_Color, pos.x, pos.y, ALLEGRO_ALIGN_LEFT,
-                          Utility::UnicodeToString(text).c_str() );
+            al_draw_text(afont, m_Color, pos.x, pos.y, ALLEGRO_ALIGN_LEFT,
+                         Utility::UnicodeToString(text).c_str());
         }
 
         Gwen::Point Allegro::MeasureText(Gwen::Font* pFont, const Gwen::UnicodeString& text)
@@ -67,7 +63,7 @@ namespace Gwen
             ALLEGRO_FONT* afont = (ALLEGRO_FONT*)pFont->data;
 
             // If the font doesn't exist, or the font size should be changed
-            if ( !afont || pFont->realsize != pFont->size*Scale() )
+            if (!afont || pFont->realsize != pFont->size*Scale())
             {
                 FreeFont(pFont);
                 LoadFont(pFont);
@@ -75,9 +71,7 @@ namespace Gwen
             }
 
             if (!afont)
-            {
                 return Gwen::Point(0, 0);
-            }
 
             int bx, by, tw, th;
             al_get_text_dimensions(afont, Utility::UnicodeToString(text).c_str(), &bx, &by, &tw,
@@ -94,23 +88,19 @@ namespace Gwen
         void Allegro::EndClip()
         {
             ALLEGRO_BITMAP* targ = al_get_target_bitmap();
-            al_set_clipping_rectangle( 0, 0, al_get_bitmap_width(targ),
-                                       al_get_bitmap_height(targ) );
+            al_set_clipping_rectangle(0, 0, al_get_bitmap_width(targ),
+                                      al_get_bitmap_height(targ));
         }
 
         void Allegro::LoadTexture(Gwen::Texture* pTexture)
         {
             if (!pTexture)
-            {
                 return;
-            }
 
             if (pTexture->data)
-            {
                 FreeTexture(pTexture);
-            }
 
-            ALLEGRO_BITMAP* bmp = al_load_bitmap( pTexture->name.Get().c_str() );
+            ALLEGRO_BITMAP* bmp = al_load_bitmap(pTexture->name.Get().c_str());
 
             if (bmp)
             {
@@ -128,7 +118,7 @@ namespace Gwen
 
         void Allegro::FreeTexture(Gwen::Texture* pTexture)
         {
-            al_destroy_bitmap( (ALLEGRO_BITMAP*)pTexture->data );
+            al_destroy_bitmap((ALLEGRO_BITMAP*)pTexture->data);
             pTexture->data = NULL;
         }
 
@@ -138,9 +128,7 @@ namespace Gwen
             ALLEGRO_BITMAP* bmp = (ALLEGRO_BITMAP*)pTexture->data;
 
             if (!bmp)
-            {
                 return DrawMissingImage(rect);
-            }
 
             Translate(rect);
             const unsigned int w = pTexture->width;
@@ -159,9 +147,7 @@ namespace Gwen
             ALLEGRO_BITMAP* bmp = (ALLEGRO_BITMAP*)pTexture->data;
 
             if (!bmp)
-            {
                 return col_default;
-            }
 
             ALLEGRO_COLOR col = al_get_pixel(bmp, x, y);
             Gwen::Color gcol;
@@ -193,7 +179,7 @@ namespace Gwen
 
         bool Allegro::BeginContext(Gwen::WindowProvider* pWindow)
         {
-            al_clear_to_color( al_map_rgba_f(0.f, 0.f, 0.f, 0.f) );
+            al_clear_to_color(al_map_rgba_f(0.f, 0.f, 0.f, 0.f));
             return true;
         }
 

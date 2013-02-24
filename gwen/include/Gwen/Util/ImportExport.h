@@ -27,7 +27,7 @@ namespace Gwen
 
         public:
 
-            typedef std::list< ImportExport::Base* >List;
+            typedef std::list<ImportExport::Base*> List;
 
         protected:
 
@@ -45,11 +45,11 @@ namespace Gwen
 }
 
 #define GWEN_IMPORTEXPORT(name) \
-    void GWENIMPORTEXPORT_ ## name() \
+    void GWENIMPORTEXPORT_##name() \
     { \
         static name my_instance; \
     }
 
 #define DECLARE_GWEN_IMPORTEXPORT(name) \
-    void GWENIMPORTEXPORT_ ## name(); \
-    GWENIMPORTEXPORT_ ## name();
+    void GWENIMPORTEXPORT_##name(); \
+    GWENIMPORTEXPORT_##name();

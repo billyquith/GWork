@@ -45,9 +45,7 @@ Gwen::Font* Text::GetFont()
 void Text::SetFont(Gwen::Font* pFont)
 {
     if (m_Font == pFont)
-    {
         return;
-    }
 
     m_Font = pFont;
     m_bTextChanged = true;
@@ -68,9 +66,7 @@ void Text::SetFont(Gwen::Font* pFont)
 void Text::SetString(const TextObject& str)
 {
     if (m_String == str)
-    {
         return;
-    }
 
     m_String = str.GetUnicode();
     m_bTextChanged = true;
@@ -80,32 +76,24 @@ void Text::SetString(const TextObject& str)
 void Text::Render(Skin::Base* skin)
 {
     if (m_bWrap)
-    {
         return;
-    }
 
-    if ( Length() == 0 || !GetFont() )
-    {
+    if (Length() == 0 || !GetFont())
         return;
-    }
 
     if (m_ColorOverride.a == 0)
-    {
         skin->GetRender()->SetDrawColor(m_Color);
-    }
     else
-    {
         skin->GetRender()->SetDrawColor(m_ColorOverride);
-    }
 
-    skin->GetRender()->RenderText( GetFont(), Gwen::Point(GetPadding().left,
-                                                          GetPadding().top),
-                                   m_String.GetUnicode() );
+    skin->GetRender()->RenderText(GetFont(), Gwen::Point(GetPadding().left,
+                                                         GetPadding().top),
+                                  m_String.GetUnicode());
 }
 
 Gwen::Rect Text::GetCharacterPosition(int iChar)
 {
-    if ( !m_Lines.empty() )
+    if (!m_Lines.empty())
     {
         TextLines::iterator it = m_Lines.begin();
         TextLines::iterator itEnd = m_Lines.end();
@@ -118,9 +106,7 @@ Gwen::Rect Text::GetCharacterPosition(int iChar)
             iChars += pLine->Length();
 
             if (iChars <= iChar)
-            {
                 continue;
-            }
 
             iChars -= pLine->Length();
             Gwen::Rect rect = pLine->GetCharacterPosition(iChar-iChars);
@@ -143,7 +129,7 @@ Gwen::Rect Text::GetCharacterPosition(int iChar)
 
 int Text::GetClosestCharacter(Gwen::Point p)
 {
-    if ( !m_Lines.empty() )
+    if (!m_Lines.empty())
     {
         TextLines::iterator it = m_Lines.begin();
         TextLines::iterator itEnd = m_Lines.end();
@@ -155,19 +141,15 @@ int Text::GetClosestCharacter(Gwen::Point p)
             ++it;
             iChars += pLine->Length();
 
-            if ( p.y < pLine->Y() )
-            {
+            if (p.y < pLine->Y())
                 continue;
-            }
 
-            if ( p.y > pLine->Bottom() )
-            {
+            if (p.y > pLine->Bottom())
                 continue;
-            }
 
             iChars -= pLine->Length();
             int iLinePos =
-                pLine->GetClosestCharacter( Gwen::Point( p.x-pLine->X(), p.y-pLine->Y() ) );
+                pLine->GetClosestCharacter(Gwen::Point(p.x-pLine->X(), p.y-pLine->Y()));
             // if ( iLinePos > 0 && iLinePos == pLine->Length() ) iLinePos--;
             iLinePos--;
             return iChars+iLinePos;
@@ -184,9 +166,7 @@ int Text::GetClosestCharacter(Gwen::Point p)
                                                              // proper
 
         if (iDist > iDistance)
-        {
             continue;
-        }
 
         iDistance = iDist;
         iChar = i;
@@ -203,11 +183,9 @@ void Text::OnScaleChanged()
 void Text::RefreshSize()
 {
     if (m_bWrap)
-    {
         return RefreshSizeWrap();
-    }
 
-    if ( !GetFont() )
+    if (!GetFont())
     {
         Debug::AssertCheck(0, "Text::RefreshSize() - No Font!!\n");
         return;
@@ -216,22 +194,16 @@ void Text::RefreshSize()
     Gwen::Point p(1, GetFont()->size);
 
     if (Length() > 0)
-    {
-        p = GetSkin()->GetRender()->MeasureText( GetFont(), m_String.GetUnicode() );
-    }
+        p = GetSkin()->GetRender()->MeasureText(GetFont(), m_String.GetUnicode());
 
     p.x += GetPadding().left+GetPadding().right;
     p.y += GetPadding().top+GetPadding().bottom;
 
-    if ( p.x == Width() && p.y == Height() )
-    {
+    if (p.x == Width() && p.y == Height())
         return;
-    }
 
     if (p.y < GetFont()->size)
-    {
         p.y = GetFont()->size;
-    }
 
     SetSize(p.x, p.y);
     InvalidateParent();
@@ -239,7 +211,7 @@ void Text::RefreshSize()
 }
 
 void SplitWords(const Gwen::UnicodeString& s, wchar_t delim,
-                std::vector< Gwen::UnicodeString >& elems)
+                std::vector<Gwen::UnicodeString>& elems)
 {
     Gwen::UnicodeString str;
 
@@ -247,10 +219,8 @@ void SplitWords(const Gwen::UnicodeString& s, wchar_t delim,
     {
         if (s[i] == L'\n')
         {
-            if ( !str.empty() )
-            {
+            if (!str.empty())
                 elems.push_back(str);
-            }
 
             elems.push_back(L"\n");
             str.clear();
@@ -268,10 +238,8 @@ void SplitWords(const Gwen::UnicodeString& s, wchar_t delim,
         str += s[i];
     }
 
-    if ( !str.empty() )
-    {
+    if (!str.empty())
         elems.push_back(str);
-    }
 }
 
 void Text::RefreshSizeWrap()
@@ -284,13 +252,13 @@ void Text::RefreshSizeWrap()
     }
 
     m_Lines.clear();
-    std::vector< Gwen::UnicodeString >words;
+    std::vector<Gwen::UnicodeString> words;
     SplitWords(GetText().GetUnicode(), L' ', words);
     // Adding a bullshit word to the end simplifies the code below
     // which is anything but simple.
     words.push_back(L"");
 
-    if ( !GetFont() )
+    if (!GetFont())
     {
         Debug::AssertCheck(0, "Text::RefreshSize() - No Font!!\n");
         return;
@@ -301,24 +269,22 @@ void Text::RefreshSizeWrap()
     int x = 0, y = 0;
     Gwen::UnicodeString strLine;
 
-    for (std::vector< Gwen::UnicodeString >::iterator it = words.begin(); it != words.end(); ++it)
+    for (std::vector<Gwen::UnicodeString>::iterator it = words.begin(); it != words.end(); ++it)
     {
         bool bFinishLine = false;
         bool bWrapped = false;
 
         // If this word is a newline - make a newline (we still add it to the
         // text)
-        if ( (*it).c_str() [0] == L'\n' )
-        {
+        if ((*it).c_str() [0] == L'\n')
             bFinishLine = true;
-        }
 
         // Does adding this word drive us over the width?
         {
             strLine += (*it);
             Gwen::Point p = GetSkin()->GetRender()->MeasureText(GetFont(), strLine);
 
-            if ( p.x > Width() )
+            if (p.x > Width())
             {
                 bFinishLine = true; bWrapped = true;
             }
@@ -326,15 +292,13 @@ void Text::RefreshSizeWrap()
 
         // If this is the last word then finish the line
         if (--words.end() == it)
-        {
             bFinishLine = true;
-        }
 
         if (bFinishLine)
         {
             Text* t = new Text(this);
-            t->SetFont( GetFont() );
-            t->SetString( strLine.substr( 0, strLine.length()-(*it).length() ) );
+            t->SetFont(GetFont());
+            t->SetString(strLine.substr(0, strLine.length()-(*it).length()));
             t->RefreshSize();
             t->SetPos(x, y);
             m_Lines.push_back(t);
@@ -369,9 +333,7 @@ Text* Text::GetLine(int i)
     while (it != itEnd)
     {
         if (i == 0)
-        {
             return *it;
-        }
 
         ++it;
         i--;
@@ -394,9 +356,7 @@ int Text::GetLineFromChar(int i)
         iChars += pLine->Length();
 
         if (iChars > i)
-        {
             return iLine;
-        }
 
         iLine++;
     }
@@ -416,15 +376,13 @@ int Text::GetStartCharFromLine(int i)
         ++it;
 
         if (i == 0)
-        {
-            return Gwen::Clamp( iChars, 0, Length() );
-        }
+            return Gwen::Clamp(iChars, 0, Length());
 
         iChars += pLine->Length();
         i--;
     }
 
-    return Gwen::Clamp( iChars, 0, Length() );
+    return Gwen::Clamp(iChars, 0, Length());
 }
 
 int Text::GetEndCharFromLine(int i)
@@ -433,11 +391,9 @@ int Text::GetEndCharFromLine(int i)
     Text* iLine = GetLine(i);
 
     if (iLine)
-    {
         iStart += iLine->Length();
-    }
 
-    return Gwen::Clamp( iStart, 0, Length() );
+    return Gwen::Clamp(iStart, 0, Length());
 }
 
 int Text::GetCharPosOnLine(int i)
@@ -446,9 +402,7 @@ int Text::GetCharPosOnLine(int i)
     Text* line = GetLine(iLine);
 
     if (!line)
-    {
         return 0;
-    }
 
     int iStart = GetStartCharFromLine(iLine);
     return i-iStart;

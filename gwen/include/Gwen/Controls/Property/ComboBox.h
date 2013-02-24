@@ -6,10 +6,10 @@
 
 #pragma once
 #ifndef GWEN_CONTROLS_PROPERTY_COMBOBOX_H
-#   define GWEN_CONTROLS_PROPERTY_COMBOBOX_H
+#define GWEN_CONTROLS_PROPERTY_COMBOBOX_H
 
-#   include "Gwen/Controls/Property/BaseProperty.h"
-#   include "Gwen/Controls/ComboBox.h"
+#include "Gwen/Controls/Property/BaseProperty.h"
+#include "Gwen/Controls/ComboBox.h"
 
 namespace Gwen
 {
@@ -37,9 +37,7 @@ namespace Gwen
                     Gwen::Controls::Label* pControl = m_ComboBox->GetSelectedItem();
 
                     if (!pControl)
-                    {
                         return L"";
-                    }
 
                     return pControl->GetName();
                 }
@@ -73,4 +71,4 @@ namespace Gwen
         }
     }
 }
-#endif
+#endif // ifndef GWEN_CONTROLS_PROPERTY_COMBOBOX_H

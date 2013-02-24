@@ -50,7 +50,7 @@ int main()
     UnitTest* pUnit = new UnitTest(&window_canvas);
     pUnit->SetPos(10, 10);
 
-    while ( !window_canvas.WantsQuit() )
+    while (!window_canvas.WantsQuit())
     {
         window_canvas.DoThink();
     }

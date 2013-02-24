@@ -69,14 +69,12 @@ void ResizableControl::DisableResizing()
         Resizer* resizer = gwen_cast<Resizer>(*it);
 
         if (!resizer)
-        {
             continue;
-        }
 
         resizer->SetMouseInputEnabled(false);
         resizer->SetHidden(false);
-        SetPadding( Padding( resizer->Width(), resizer->Width(), resizer->Width(),
-                             resizer->Width() ) );
+        SetPadding(Padding(resizer->Width(), resizer->Width(), resizer->Width(),
+                           resizer->Width()));
     }
 }
 
@@ -93,25 +91,17 @@ bool ResizableControl::SetBounds(int x, int y, int w, int h)
 
     if (pParent && m_bClampMovement)
     {
-        if ( x+w > pParent->Width() )
-        {
+        if (x+w > pParent->Width())
             x = pParent->Width()-w;
-        }
 
         if (x < 0)
-        {
             x = 0;
-        }
 
-        if ( y+h > pParent->Height() )
-        {
+        if (y+h > pParent->Height())
             y = pParent->Height()-h;
-        }
 
         if (y < 0)
-        {
             y = 0;
-        }
     }
 
     return BaseClass::SetBounds(x, y, w, h);

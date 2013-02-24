@@ -6,11 +6,11 @@
 
 #pragma once
 #ifndef GWEN_UTILITY_H
-#   define GWEN_UTILITY_H
+#define GWEN_UTILITY_H
 
-#   include <sstream>
-#   include <vector>
-#   include "Gwen/Structures.h"
+#include <sstream>
+#include <vector>
+#include "Gwen/Structures.h"
 
 namespace Gwen
 {
@@ -18,54 +18,50 @@ namespace Gwen
 
     namespace Utility
     {
-        
-#   ifdef _MSC_VER
-#      pragma warning( push )
-#      pragma warning( disable : 4996 )
-#   endif
+#ifdef _MSC_VER
+#pragma warning( push )
+#pragma warning( disable : 4996 )
+#endif
 
         inline String UnicodeToString(const UnicodeString& strIn)
         {
-            if ( !strIn.length() )
-            {
+            if (!strIn.length())
                 return "";
-            }
 
             String temp(strIn.length(), (char)0);
-            std::use_facet< std::ctype< wchar_t > >( std::locale() ). \
+            std::use_facet<std::ctype<wchar_t> >(std::locale()). \
             narrow(&strIn[0], &strIn[0]+strIn.length(), ' ', &temp[0]);
             return temp;
         }
 
         inline UnicodeString StringToUnicode(const String& strIn)
         {
-            if ( !strIn.length() )
-            {
+            if (!strIn.length())
                 return L"";
-            }
 
             UnicodeString temp(strIn.length(), (wchar_t)0);
-            std::use_facet< std::ctype< wchar_t > >( std::locale() ). \
+            std::use_facet<std::ctype<wchar_t> >(std::locale()). \
             widen(&strIn[0], &strIn[0]+strIn.length(), &temp[0]);
             return temp;
         }
 
-        template < typename T >void Replace(T& str, const T& strFind, const T& strReplace)
+        template <typename T>
+        void Replace(T& str, const T& strFind, const T& strReplace)
         {
             size_t pos = 0;
 
-            while ( ( pos = str.find(strFind, pos) ) != T::npos )
+            while ((pos = str.find(strFind, pos)) != T::npos)
             {
                 str.replace(pos, strFind.length(), strReplace);
                 pos += strReplace.length();
             }
         }
 
-#   ifdef _MSC_VER
-#      pragma warning( pop )
-#   endif
+#ifdef _MSC_VER
+#pragma warning( pop )
+#endif
 
-        template < class T >
+        template <class T>
         String ToString(const T& object)
         {
             std::ostringstream os;
@@ -77,37 +73,25 @@ namespace Gwen
                                           bool clampSize = false)
         {
             if (inside.x < outside.x)
-            {
                 inside.x = outside.x;
-            }
 
             if (inside.y  < outside.y)
-            {
                 inside.y = outside.y;
-            }
 
             if (inside.x+inside.w > outside.x+outside.w)
             {
                 if (clampSize)
-                {
                     inside.w = outside.w;
-                }
                 else
-                {
                     inside.x = outside.x+outside.w-inside.w;
-                }
             }
 
             if (inside.y+inside.h > outside.y+outside.h)
             {
                 if (clampSize)
-                {
                     inside.h = outside.h;
-                }
                 else
-                {
                     inside.y = outside.w+outside.h-inside.h;
-                }
             }
 
             return inside;
@@ -117,8 +101,8 @@ namespace Gwen
 
         namespace Strings
         {
-            typedef std::vector< Gwen::String >List;
-            typedef std::vector< Gwen::UnicodeString >UnicodeList;
+            typedef std::vector<Gwen::String> List;
+            typedef std::vector<Gwen::UnicodeString> UnicodeList;
 
             GWEN_EXPORT void Split(const Gwen::String& str, const Gwen::String& seperator,
                                    Strings::List& outbits, bool bLeaveSeperators = false);
@@ -131,11 +115,11 @@ namespace Gwen
             GWEN_EXPORT void ToUpper(Gwen::UnicodeString& str);
             GWEN_EXPORT void Strip(Gwen::UnicodeString& str, const Gwen::UnicodeString& chars);
 
-            template < typename T >
+            template <typename T>
             T TrimLeft(const T& str, const T& strChars)
             {
                 T outstr = str;
-                outstr.erase( 0, outstr.find_first_not_of(strChars) );
+                outstr.erase(0, outstr.find_first_not_of(strChars));
                 return outstr;
             }
 
@@ -152,4 +136,4 @@ namespace Gwen
 
 
 }
-#endif
+#endif // ifndef GWEN_UTILITY_H

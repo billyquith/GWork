@@ -6,14 +6,14 @@
 
 #pragma once
 #ifndef GWEN_CONTROLS_COLLAPSIBLELIST_H
-#   define GWEN_CONTROLS_COLLAPSIBLELIST_H
+#define GWEN_CONTROLS_COLLAPSIBLELIST_H
 
-#   include "Gwen/Controls/Base.h"
-#   include "Gwen/Controls/Button.h"
-#   include "Gwen/Controls/ScrollControl.h"
-#   include "Gwen/Gwen.h"
-#   include "Gwen/Skin.h"
-#   include "Gwen/Controls/CollapsibleCategory.h"
+#include "Gwen/Controls/Base.h"
+#include "Gwen/Controls/Button.h"
+#include "Gwen/Controls/ScrollControl.h"
+#include "Gwen/Gwen.h"
+#include "Gwen/Skin.h"
+#include "Gwen/Controls/CollapsibleCategory.h"
 
 
 namespace Gwen
@@ -38,7 +38,7 @@ namespace Gwen
             {
                 pCategory->SetParent(this);
                 pCategory->Dock(Pos::Top);
-                pCategory->SetMargin( Margin(1, 0, 1, 1) );
+                pCategory->SetMargin(Margin(1, 0, 1, 1));
                 pCategory->SetList(this);
                 pCategory->onSelection.Add(this, &ThisClass::OnSelectionEvent);
             }
@@ -63,12 +63,10 @@ namespace Gwen
                 for (Base::List::iterator iter = children.begin(); iter != children.end(); ++iter)
                 {
                     Gwen::Controls::CollapsibleCategory* pChild =
-                        gwen_cast< Gwen::Controls::CollapsibleCategory >(*iter);
+                        gwen_cast<Gwen::Controls::CollapsibleCategory>(*iter);
 
                     if (!pChild)
-                    {
                         continue;
-                    }
 
                     pChild->UnselectAll();
                 }
@@ -81,19 +79,15 @@ namespace Gwen
                 for (Base::List::iterator iter = children.begin(); iter != children.end(); ++iter)
                 {
                     Gwen::Controls::CollapsibleCategory* pChild =
-                        gwen_cast< Gwen::Controls::CollapsibleCategory >(*iter);
+                        gwen_cast<Gwen::Controls::CollapsibleCategory>(*iter);
 
                     if (!pChild)
-                    {
                         continue;
-                    }
 
                     Gwen::Controls::Button* pSelected = pChild->GetSelected();
 
                     if (pSelected)
-                    {
                         return pSelected;
-                    }
                 }
 
                 return NULL;
@@ -110,14 +104,12 @@ namespace Gwen
             void OnSelectionEvent(Controls::Base* pControl)
             {
                 Gwen::Controls::CollapsibleCategory* pChild =
-                    gwen_cast< Gwen::Controls::CollapsibleCategory >(pControl);
+                    gwen_cast<Gwen::Controls::CollapsibleCategory>(pControl);
 
                 if (!pChild)
-                {
                     return;
-                }
 
-                OnSelection( pChild, pChild->GetSelected() );
+                OnSelection(pChild, pChild->GetSelected());
             }
 
         };
@@ -125,4 +117,4 @@ namespace Gwen
 
     }
 }
-#endif
+#endif // ifndef GWEN_CONTROLS_COLLAPSIBLELIST_H

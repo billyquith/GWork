@@ -14,7 +14,8 @@ namespace Gwen
         //
         void GWEN_EXPORT FolderOpenEx(bool bUseSystem, const String& Name, const String& StartPath,
                                       Gwen::Event::Handler* pHandler = NULL,
-                                      Gwen::Event::Handler::FunctionWithInformation fnCallback = NULL);
+                                      Gwen::Event::Handler::FunctionWithInformation fnCallback =
+                                          NULL);
 
         //! Open a dialog to choose a folder.
         //!
@@ -28,15 +29,15 @@ namespace Gwen
         //! @note Templated function simply to avoid having to manually cast the
         //!       callback function.
         //
-        template < typename A >
+        template <typename A>
         void FolderOpen(bool bUseSystem, const String& Name, const String& StartPath,
                         Gwen::Event::Handler* pHandler = NULL, A fnCallback = NULL)
         {
-            FolderOpenEx( bUseSystem, Name, StartPath, pHandler,
-                          static_cast< Gwen::Event::Handler::FunctionWithInformation >(fnCallback) );
+            FolderOpenEx(bUseSystem, Name, StartPath, pHandler,
+                         static_cast<Gwen::Event::Handler::FunctionWithInformation>(fnCallback));
         }
 
     }
 }
 
-#endif
+#endif // ifndef GWEN_CONTROLS_DIALOGS_FOLDEROPEN_H

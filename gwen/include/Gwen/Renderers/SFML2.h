@@ -52,7 +52,7 @@ namespace Gwen
                     v *= m_RenderStates.texture->getSize().y;
                 }
 
-                m_Buffer.append( sf::Vertex( sf::Vector2f(x, y), m_Color, sf::Vector2f(u, v) ) );
+                m_Buffer.append(sf::Vertex(sf::Vector2f(x, y), m_Color, sf::Vector2f(u, v)));
             }
 
             inline void Flush()

@@ -32,12 +32,12 @@ GWEN_CONTROL_CONSTRUCTOR(CrossSplitter)
 
 void CrossSplitter::UpdateVSplitter()
 {
-    m_VSplitter->MoveTo( m_VSplitter->X(), ( Height()-m_VSplitter->Height() )*(m_fVVal) );
+    m_VSplitter->MoveTo(m_VSplitter->X(), (Height()-m_VSplitter->Height())*(m_fVVal));
 }
 
 void CrossSplitter::UpdateHSplitter()
 {
-    m_HSplitter->MoveTo( ( Width()-m_HSplitter->Width() )*(m_fHVal), m_HSplitter->Y() );
+    m_HSplitter->MoveTo((Width()-m_HSplitter->Width())*(m_fHVal), m_HSplitter->Y());
 }
 
 void CrossSplitter::OnCenterMoved(Controls::Base* /*control*/)
@@ -49,8 +49,8 @@ void CrossSplitter::OnCenterMoved(Controls::Base* /*control*/)
 
 void CrossSplitter::UpdateCSplitter()
 {
-    m_CSplitter->MoveTo( ( Width()-m_CSplitter->Width() )*(m_fHVal),
-                         ( Height()-m_CSplitter->Height() )*(m_fVVal) );
+    m_CSplitter->MoveTo((Width()-m_CSplitter->Width())*(m_fHVal),
+                        (Height()-m_CSplitter->Height())*(m_fVVal));
 }
 
 void CrossSplitter::OnHorizontalMoved(Controls::Base* /*control*/)
@@ -67,24 +67,24 @@ void CrossSplitter::OnVerticalMoved(Controls::Base* /*control*/)
 
 void CrossSplitter::CalculateValueCenter()
 {
-    m_fHVal = (float)m_CSplitter->X()/(float)( Width()-m_CSplitter->Width() );
-    m_fVVal = (float)m_CSplitter->Y()/(float)( Height()-m_CSplitter->Height() );
+    m_fHVal = (float)m_CSplitter->X()/(float)(Width()-m_CSplitter->Width());
+    m_fVVal = (float)m_CSplitter->Y()/(float)(Height()-m_CSplitter->Height());
 }
 
 float CrossSplitter::CalculateValueHorizontal()
 {
-    return (float)m_HSplitter->X()/(float)( Width()-m_HSplitter->Width() );
+    return (float)m_HSplitter->X()/(float)(Width()-m_HSplitter->Width());
 }
 
 float CrossSplitter::CalculateValueVertical()
 {
-    return (float)m_VSplitter->Y()/(float)( Height()-m_VSplitter->Height() );
+    return (float)m_VSplitter->Y()/(float)(Height()-m_VSplitter->Height());
 }
 
 void CrossSplitter::Layout(Skin::Base* /*skin*/)
 {
     m_VSplitter->SetSize(Width(), m_fBarSize);
-    m_HSplitter->SetSize( m_fBarSize, Height() );
+    m_HSplitter->SetSize(m_fBarSize, Height());
     m_CSplitter->SetSize(m_fBarSize, m_fBarSize);
     UpdateVSplitter();
     UpdateHSplitter();
@@ -94,40 +94,40 @@ void CrossSplitter::Layout(Skin::Base* /*skin*/)
     {
         if (m_Sections[0])
         {
-            m_Sections[0]->SetBounds( 0,
-                                      0,
-                                      m_HSplitter->X(),
-                                      m_VSplitter->Y() );
+            m_Sections[0]->SetBounds(0,
+                                     0,
+                                     m_HSplitter->X(),
+                                     m_VSplitter->Y());
         }
 
         if (m_Sections[1])
         {
-            m_Sections[1]->SetBounds( m_HSplitter->X()+m_fBarSize,
-                                      0,
-                                      Width() - (m_HSplitter->X()+m_fBarSize),
-                                      m_VSplitter->Y() );
+            m_Sections[1]->SetBounds(m_HSplitter->X()+m_fBarSize,
+                                     0,
+                                     Width()-(m_HSplitter->X()+m_fBarSize),
+                                     m_VSplitter->Y());
         }
 
         if (m_Sections[2])
         {
-            m_Sections[2]->SetBounds( 0,
-                                      m_VSplitter->Y()+m_fBarSize,
-                                      m_HSplitter->X(),
-                                      Height()-(m_VSplitter->Y()+m_fBarSize) );
+            m_Sections[2]->SetBounds(0,
+                                     m_VSplitter->Y()+m_fBarSize,
+                                     m_HSplitter->X(),
+                                     Height()-(m_VSplitter->Y()+m_fBarSize));
         }
 
         if (m_Sections[3])
         {
-            m_Sections[3]->SetBounds( m_HSplitter->X()+m_fBarSize,
-                                      m_VSplitter->Y()+m_fBarSize,
-                                      Width() - (m_HSplitter->X()+m_fBarSize),
-                                      Height()-(m_VSplitter->Y()+m_fBarSize) );
+            m_Sections[3]->SetBounds(m_HSplitter->X()+m_fBarSize,
+                                     m_VSplitter->Y()+m_fBarSize,
+                                     Width()-(m_HSplitter->X()+m_fBarSize),
+                                     Height()-(m_VSplitter->Y()+m_fBarSize));
         }
     }
     else
     {
         // This should probably use Fill docking instead
-        m_Sections[m_iZoomedSection]->SetBounds( 0, 0, Width(), Height() );
+        m_Sections[m_iZoomedSection]->SetBounds(0, 0, Width(), Height());
     }
 }
 
@@ -155,13 +155,9 @@ void CrossSplitter::ZoomChanged()
     onZoomChange.Call(this);
 
     if (m_iZoomedSection == -1)
-    {
         onUnZoomed.Call(this);
-    }
     else
-    {
         onZoomed.Call(this);
-    }
 }
 
 void CrossSplitter::Zoom(int section)
@@ -173,9 +169,7 @@ void CrossSplitter::Zoom(int section)
         for (int i = 0; i < 4; i++)
         {
             if (i != section && m_Sections[i])
-            {
                 m_Sections[i]->SetHidden(true);
-            }
         }
 
         m_iZoomedSection = section;
@@ -192,9 +186,7 @@ void CrossSplitter::UnZoom()
     for (int i = 0; i < 4; i++)
     {
         if (m_Sections[i])
-        {
             m_Sections[i]->SetHidden(false);
-        }
     }
 
     Invalidate();

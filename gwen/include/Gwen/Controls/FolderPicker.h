@@ -6,11 +6,11 @@
 
 #pragma once
 #ifndef GWEN_CONTROLS_FOLDERPICKER_H
-#   define GWEN_CONTROLS_FOLDERPICKER_H
+#define GWEN_CONTROLS_FOLDERPICKER_H
 
-#   include "Gwen/BaseRender.h"
-#   include "Gwen/Controls/Dialogs/FolderOpen.h"
-#   include "Gwen/Controls/TextBox.h"
+#include "Gwen/BaseRender.h"
+#include "Gwen/Controls/Dialogs/FolderOpen.h"
+#include "Gwen/Controls/TextBox.h"
 
 
 namespace Gwen
@@ -25,7 +25,7 @@ namespace Gwen
             {
                 m_Button = new Controls::Button(this);
                 m_Button->Dock(Pos::Right);
-                m_Button->SetMargin( Margin(2, 0, 0, 0) );
+                m_Button->SetMargin(Margin(2, 0, 0, 0));
                 m_Button->SetText("..");
                 m_Button->SetSize(20, 20);
                 m_Button->onPress.Add(this, &FolderPicker::OnBrowse);
@@ -84,4 +84,4 @@ namespace Gwen
     }
 
 }
-#endif
+#endif // ifndef GWEN_CONTROLS_FOLDERPICKER_H

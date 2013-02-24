@@ -6,10 +6,10 @@
 
 #pragma once
 #ifndef GWEN_CONTROLS_BUTTON_H
-#   define GWEN_CONTROLS_BUTTON_H
+#define GWEN_CONTROLS_BUTTON_H
 
-#   include "Gwen/Controls/Base.h"
-#   include "Gwen/Controls/Label.h"
+#include "Gwen/Controls/Base.h"
+#include "Gwen/Controls/Label.h"
 
 namespace Gwen
 {
@@ -63,7 +63,7 @@ namespace Gwen
             virtual void SetToggleState(bool b);
             virtual void Toggle()
             {
-                SetToggleState( !GetToggleState() );
+                SetToggleState(!GetToggleState());
             }
 
             virtual void SetImage(const TextObject& strName, bool bCenter = false);
@@ -108,4 +108,4 @@ namespace Gwen
 
     }
 }
-#endif
+#endif // ifndef GWEN_CONTROLS_BUTTON_H

@@ -15,10 +15,8 @@ void Gwen::Dialogs::FolderOpenEx(bool bUseSystem, const String& Name, const Stri
                                  Gwen::Event::Handler* pHandler,
                                  Gwen::Event::Handler::FunctionWithInformation fnCallback)
 {
-    if ( bUseSystem && Gwen::Platform::FolderOpen(Name, StartPath, pHandler, fnCallback) )
-    {
+    if (bUseSystem && Gwen::Platform::FolderOpen(Name, StartPath, pHandler, fnCallback))
         return;
-    }
 
     //
     // TODO: SHOW GWEN FOLDER SELECTION DIALOG

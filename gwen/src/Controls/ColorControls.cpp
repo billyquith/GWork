@@ -15,23 +15,17 @@ using namespace Gwen::Controls;
 Color HSVToColor(float h, float s, float v)
 {
     if (h < 0.0f)
-    {
         h += 360.0f;
-    }
 
     if (h > 360.0f)
-    {
         h -= 360.0f;
-    }
 
     s *= 255.0f;
     v *= 255.0f;
     float r, g, b;
 
     if (!h && !s)
-    {
         r = g = b = v;
-    }
 
     double min, max, delta, hue;
     max = v;
@@ -47,7 +41,7 @@ Color HSVToColor(float h, float s, float v)
         {
             g = (int)min;
             hue = (hue-360.0)/60.0;
-            b = (int)( (hue*delta-min)* -1 );
+            b = (int)((hue*delta-min)* -1);
         }
         else
         {
@@ -97,8 +91,8 @@ Color HSVToColor(float h, float s, float v)
 HSV RGBtoHSV(int r, int g, int b)
 {
     double min, max, delta, temp;
-    min = Gwen::Min( r, Gwen::Min(g, b) );
-    max = Gwen::Max( r, Gwen::Max(g, b) );
+    min = Gwen::Min(r, Gwen::Min(g, b));
+    max = Gwen::Max(r, Gwen::Max(g, b));
     delta = max-min;
     HSV hsv;
     hsv.v = (int)max;
@@ -113,29 +107,19 @@ HSV RGBtoHSV(int r, int g, int b)
         hsv.s = (int)(temp*255);
 
         if (r == (int)max)
-        {
             temp = (double)(g-b)/delta;
-        }
         else if (g == (int)max)
-        {
-            temp = 2.0+( (double)(b-r)/delta );
-        }
+            temp = 2.0+((double)(b-r)/delta);
         else
-        {
-            temp = 4.0+( (double)(r-g)/delta );
-        }
+            temp = 4.0+((double)(r-g)/delta);
 
         temp *= 60;
 
         if (temp < 0)
-        {
             temp += 360;
-        }
 
         if (temp == 360)
-        {
             temp = 0;
-        }
 
         hsv.h = (int)temp;
     }
@@ -147,7 +131,7 @@ HSV RGBtoHSV(int r, int g, int b)
 
 GWEN_CONTROL_CONSTRUCTOR(ColorLerpBox)
 {
-    SetColor( Gwen::Color(255, 128, 0, 255) );
+    SetColor(Gwen::Color(255, 128, 0, 255));
     SetSize(128, 128);
     SetMouseInputEnabled(true);
     m_bDepressed = false;
@@ -187,28 +171,20 @@ void ColorLerpBox::OnMouseMoved(int x, int y, int /*deltaX*/, int /*deltaY*/)
 {
     if (m_bDepressed)
     {
-        cursorPos = CanvasPosToLocal( Gwen::Point(x, y) );
+        cursorPos = CanvasPosToLocal(Gwen::Point(x, y));
 
         // Do we have clamp?
         if (cursorPos.x < 0)
-        {
             cursorPos.x = 0;
-        }
 
-        if ( cursorPos.x > Width() )
-        {
+        if (cursorPos.x > Width())
             cursorPos.x = Width();
-        }
 
         if (cursorPos.y < 0)
-        {
             cursorPos.y = 0;
-        }
 
-        if ( cursorPos.y > Height() )
-        {
+        if (cursorPos.y > Height())
             cursorPos.y = Height();
-        }
 
         onSelectionChanged.Call(this);
     }
@@ -219,21 +195,17 @@ void ColorLerpBox::OnMouseClickLeft(int x, int y, bool bDown)
     m_bDepressed = bDown;
 
     if (bDown)
-    {
         Gwen::MouseFocus = this;
-    }
     else
-    {
         Gwen::MouseFocus = NULL;
-    }
 
     OnMouseMoved(x, y, 0, 0);
 }
 
 Gwen::Color ColorLerpBox::GetColorAtPos(int x, int y)
 {
-    float xPercent = ( (float)x/(float)Width() );
-    float yPercent = 1-( (float)y/(float)Height() );
+    float xPercent = ((float)x/(float)Width());
+    float yPercent = 1-((float)y/(float)Height());
     Gwen::Color result = HSVToColor(m_Hue, xPercent, yPercent);
     result.a = 255;
     return result;
@@ -249,23 +221,19 @@ void ColorLerpBox::Render(Gwen::Skin::Base* skin)
     {
         for (int y = 0; y < Height(); y++)
         {
-            skin->GetRender()->SetDrawColor( GetColorAtPos(x, y) );
+            skin->GetRender()->SetDrawColor(GetColorAtPos(x, y));
             skin->GetRender()->DrawPixel(x, y);
         }
     }
 
-    skin->GetRender()->SetDrawColor( Gwen::Color(0, 0, 0, 255) );
-    skin->GetRender()->DrawLinedRect( GetRenderBounds() );
+    skin->GetRender()->SetDrawColor(Gwen::Color(0, 0, 0, 255));
+    skin->GetRender()->DrawLinedRect(GetRenderBounds());
     Gwen::Color selected = GetSelectedColor();
 
-    if ( (selected.r+selected.g+selected.b)/3 < 170 )
-    {
-        skin->GetRender()->SetDrawColor( Gwen::Color(255, 255, 255, 255) );
-    }
+    if ((selected.r+selected.g+selected.b)/3 < 170)
+        skin->GetRender()->SetDrawColor(Gwen::Color(255, 255, 255, 255));
     else
-    {
-        skin->GetRender()->SetDrawColor( Gwen::Color(0, 0, 0, 255) );
-    }
+        skin->GetRender()->SetDrawColor(Gwen::Color(0, 0, 0, 255));
 
     Gwen::Rect testRect = Gwen::Rect(cursorPos.x-3, cursorPos.y-3, 6, 6);
     skin->GetRender()->DrawShavedCornerRect(testRect);
@@ -286,19 +254,19 @@ void ColorSlider::Render(Gwen::Skin::Base* skin)
     for (int y = 0; y < Height(); y++)
     {
         float yPercent = (float)y/(float)Height();
-        skin->GetRender()->SetDrawColor( HSVToColor(yPercent*360, 1, 1) );
-        skin->GetRender()->DrawFilledRect( Gwen::Rect(5, y, Width()-10, 1) );
+        skin->GetRender()->SetDrawColor(HSVToColor(yPercent*360, 1, 1));
+        skin->GetRender()->DrawFilledRect(Gwen::Rect(5, y, Width()-10, 1));
     }
 
     int drawHeight = m_iSelectedDist-3;
     // Draw our selectors
-    skin->GetRender()->SetDrawColor( Gwen::Color(0, 0, 0, 255) );
-    skin->GetRender()->DrawFilledRect( Gwen::Rect(0, drawHeight+2, Width(), 1) );
-    skin->GetRender()->DrawFilledRect( Gwen::Rect(0, drawHeight, 5, 5) );
-    skin->GetRender()->DrawFilledRect( Gwen::Rect(Width()-5, drawHeight, 5, 5) );
-    skin->GetRender()->SetDrawColor( Gwen::Color(255, 255, 255, 255) );
-    skin->GetRender()->DrawFilledRect( Gwen::Rect(1, drawHeight+1, 3, 3) );
-    skin->GetRender()->DrawFilledRect( Gwen::Rect(Width()-4, drawHeight+1, 3, 3) );
+    skin->GetRender()->SetDrawColor(Gwen::Color(0, 0, 0, 255));
+    skin->GetRender()->DrawFilledRect(Gwen::Rect(0, drawHeight+2, Width(), 1));
+    skin->GetRender()->DrawFilledRect(Gwen::Rect(0, drawHeight, 5, 5));
+    skin->GetRender()->DrawFilledRect(Gwen::Rect(Width()-5, drawHeight, 5, 5));
+    skin->GetRender()->SetDrawColor(Gwen::Color(255, 255, 255, 255));
+    skin->GetRender()->DrawFilledRect(Gwen::Rect(1, drawHeight+1, 3, 3));
+    skin->GetRender()->DrawFilledRect(Gwen::Rect(Width()-4, drawHeight+1, 3, 3));
 }
 
 void ColorSlider::OnMouseClickLeft(int x, int y, bool bDown)
@@ -306,20 +274,16 @@ void ColorSlider::OnMouseClickLeft(int x, int y, bool bDown)
     m_bDepressed = bDown;
 
     if (bDown)
-    {
         Gwen::MouseFocus = this;
-    }
     else
-    {
         Gwen::MouseFocus = NULL;
-    }
 
     OnMouseMoved(x, y, 0, 0);
 }
 
 Gwen::Color ColorSlider::GetColorAtHeight(int y)
 {
-    float yPercent = (float)y / (float)Height();
+    float yPercent = (float)y/(float)Height();
     return HSVToColor(yPercent*360, 1, 1);
 }
 
@@ -327,17 +291,13 @@ void ColorSlider::OnMouseMoved(int x, int y, int /*deltaX*/, int /*deltaY*/)
 {
     if (m_bDepressed)
     {
-        Gwen::Point cursorPos = CanvasPosToLocal( Gwen::Point(x, y) );
+        Gwen::Point cursorPos = CanvasPosToLocal(Gwen::Point(x, y));
 
         if (cursorPos.y < 0)
-        {
             cursorPos.y = 0;
-        }
 
-        if ( cursorPos.y > Height() )
-        {
+        if (cursorPos.y > Height())
             cursorPos.y = Height();
-        }
 
         m_iSelectedDist = cursorPos.y;
         onSelectionChanged.Call(this);

@@ -6,11 +6,11 @@
 
 #pragma once
 #ifndef GWEN_CONTROLS_LABEL_H
-#   define GWEN_CONTROLS_LABEL_H
+#define GWEN_CONTROLS_LABEL_H
 
-#   include "Gwen/BaseRender.h"
-#   include "Gwen/Controls/Base.h"
-#   include "Gwen/Controls/Text.h"
+#include "Gwen/BaseRender.h"
+#include "Gwen/Controls/Base.h"
+#include "Gwen/Controls/Text.h"
 
 namespace Gwen
 {
@@ -171,7 +171,7 @@ namespace Gwen
 
             Gwen::Font*                 m_CreatedFont;
             ControlsInternal::Text*     m_Text;
-            int                         m_iAlign;
+            int m_iAlign;
 
 
         };
@@ -180,4 +180,4 @@ namespace Gwen
     }
 }
 
-#endif
+#endif // ifndef GWEN_CONTROLS_LABEL_H

@@ -6,10 +6,10 @@
 
 #pragma once
 #ifndef GWEN_CONTROLS_LAYOUT_TABLE_H
-#   define GWEN_CONTROLS_LAYOUT_TABLE_H
+#define GWEN_CONTROLS_LAYOUT_TABLE_H
 
-#   include "Gwen/Controls/Button.h"
-#   include "Gwen/Utility.h"
+#include "Gwen/Controls/Button.h"
+#include "Gwen/Utility.h"
 
 namespace Gwen
 {
@@ -38,14 +38,10 @@ namespace Gwen
                 void SetColumnCount(int iCount)
                 {
                     if (iCount == m_ColumnCount)
-                    {
                         return;
-                    }
 
                     if (iCount >= MaxColumns)
-                    {
                         m_ColumnCount = MaxColumns;
-                    }
 
                     for (int i = 0; i < MaxColumns; i++)
                     {
@@ -55,7 +51,7 @@ namespace Gwen
                             {
                                 m_Columns[i] = new Label(this);
                                 m_Columns[i]->Dock(Pos::Left);
-                                m_Columns[i]->SetPadding( Padding(3, 3, 3, 3) );
+                                m_Columns[i]->SetPadding(Padding(3, 3, 3, 3));
                             }
                         }
                         else if (m_Columns[i])
@@ -71,14 +67,10 @@ namespace Gwen
                 void SetColumnWidth(int i, int iWidth)
                 {
                     if (!m_Columns[i])
-                    {
                         return;
-                    }
 
                     if (m_Columns[i]->Width() == iWidth)
-                    {
                         return;
-                    }
 
                     m_Columns[i]->SetWidth(iWidth);
                 }
@@ -86,9 +78,7 @@ namespace Gwen
                 void SetCellText(int i, const TextObject& strString)
                 {
                     if (!m_Columns[i])
-                    {
                         return;
-                    }
 
                     m_Columns[i]->SetText(strString);
                 }
@@ -96,9 +86,7 @@ namespace Gwen
                 void SetCellContents(int i, Base* pControl, bool bEnableMouseInput = false)
                 {
                     if (!m_Columns[i])
-                    {
                         return;
-                    }
 
                     pControl->SetParent(m_Columns[i]);
                     m_Columns[i]->SetMouseInputEnabled(bEnableMouseInput);
@@ -116,22 +104,16 @@ namespace Gwen
                     for (int i = 0; i < m_ColumnCount; i++)
                     {
                         if (!m_Columns[i])
-                        {
                             continue;
-                        }
 
                         // Note, more than 1 child here, because the
                         // label has a child built in ( The Text )
                         if (m_Columns[i]->NumChildren() > 1)
-                        {
                             m_Columns[i]->SizeToChildren();
-                        }
                         else
-                        {
                             m_Columns[i]->SizeToContents();
-                        }
 
-                        iHeight = Gwen::Max( iHeight, m_Columns[i]->Height() );
+                        iHeight = Gwen::Max(iHeight, m_Columns[i]->Height());
                     }
 
                     SetHeight(iHeight);
@@ -142,9 +124,7 @@ namespace Gwen
                     for (int i = 0; i < m_ColumnCount; i++)
                     {
                         if (!m_Columns[i])
-                        {
                             continue;
-                        }
 
                         m_Columns[i]->SetTextColor(color);
                     }
@@ -207,18 +187,14 @@ namespace Gwen
                 void SetColumnCount(int i)
                 {
                     if (m_iColumnCount == i)
-                    {
                         return;
-                    }
 
                     for (Base::List::iterator it = Children.begin(); it != Children.end(); ++it)
                     {
                         TableRow* pRow = gwen_cast<TableRow>(*it);
 
                         if (!pRow)
-                        {
                             continue;
-                        }
 
                         pRow->SetColumnCount(i);
                     }
@@ -229,9 +205,7 @@ namespace Gwen
                 void SetColumnWidth(int i, int iWidth)
                 {
                     if (m_ColumnWidth[i] == iWidth)
-                    {
                         return;
-                    }
 
                     m_ColumnWidth[i] = iWidth;
                     Invalidate();
@@ -255,7 +229,7 @@ namespace Gwen
 
                 TableRow* GetRow(int i)
                 {
-                    return gwen_cast<TableRow>( GetChild(i) );
+                    return gwen_cast<TableRow>(GetChild(i));
                 }
 
                 unsigned int RowCount(int i)
@@ -275,9 +249,7 @@ namespace Gwen
                         TableRow* pRow = gwen_cast<TableRow>(*it);
 
                         if (!pRow)
-                        {
                             continue;
-                        }
 
                         Remove(pRow);
                     }
@@ -288,9 +260,7 @@ namespace Gwen
                     BaseClass::Layout(skin);
 
                     if (m_bSizeToContents)
-                    {
                         DoSizeToContents();
-                    }
 
                     int iSizeRemainder = Width();
                     int iAutoSizeColumns = 0;
@@ -300,15 +270,11 @@ namespace Gwen
                         iSizeRemainder -= m_ColumnWidth[i];
 
                         if (m_ColumnWidth[i] == 0)
-                        {
                             iAutoSizeColumns++;
-                        }
                     }
 
                     if (iAutoSizeColumns > 1)
-                    {
                         iSizeRemainder /= iAutoSizeColumns;
-                    }
 
                     bool bEven = false;
 
@@ -317,9 +283,7 @@ namespace Gwen
                         TableRow* pRow = gwen_cast<TableRow>(*it);
 
                         if (!pRow)
-                        {
                             continue;
-                        }
 
                         pRow->SizeToContents();
                         pRow->SetEven(bEven);
@@ -328,13 +292,9 @@ namespace Gwen
                         for (int i = 0; i < TableRow::MaxColumns && i < m_iColumnCount; i++)
                         {
                             if (m_ColumnWidth[i] == 0)
-                            {
                                 pRow->SetColumnWidth(i, iSizeRemainder);
-                            }
                             else
-                            {
                                 pRow->SetColumnWidth(i, m_ColumnWidth[i]);
-                            }
                         }
                     }
 
@@ -368,9 +328,7 @@ namespace Gwen
                         TableRow* pRow = gwen_cast<TableRow>(*it);
 
                         if (!pRow)
-                        {
                             continue;
-                        }
 
                         pRow->SizeToContents();
 
@@ -378,8 +336,8 @@ namespace Gwen
                         {
                             if (pRow->m_Columns[i])
                             {
-                                m_ColumnWidth[i] = Gwen::Max( m_ColumnWidth[i],
-                                                                 pRow->m_Columns[i]->Width() );
+                                m_ColumnWidth[i] = Gwen::Max(m_ColumnWidth[i],
+                                                             pRow->m_Columns[i]->Width());
                             }
                         }
 
@@ -402,4 +360,4 @@ namespace Gwen
         }
     }
 }
-#endif
+#endif // ifndef GWEN_CONTROLS_LAYOUT_TABLE_H

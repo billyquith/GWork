@@ -44,13 +44,13 @@ namespace Gwen
 
                 UnicodeString GetValue(Controls::Base* ctrl)
                 {
-                    return gwen_cast< Controls::CheckBoxWithLabel >(ctrl)->Label()->GetText().
+                    return gwen_cast<Controls::CheckBoxWithLabel>(ctrl)->Label()->GetText().
                            GetUnicode();
                 }
 
                 void SetValue(Controls::Base* ctrl, const UnicodeString& str)
                 {
-                    gwen_cast< Controls::CheckBoxWithLabel >(ctrl)->Label()->SetText(str);
+                    gwen_cast<Controls::CheckBoxWithLabel>(ctrl)->Label()->SetText(str);
                 }
 
             };
@@ -64,7 +64,7 @@ namespace Gwen
 
             GWEN_CONTROL_FACTORY_CONSTRUCTOR(CheckBoxWithLabel_Factory, Gwen::ControlFactory::Base)
             {
-                AddProperty( new Properties::CheckboxText() );
+                AddProperty(new Properties::CheckboxText());
             }
 
             virtual Gwen::String Name()

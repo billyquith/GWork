@@ -37,17 +37,13 @@ namespace Gwen
             void AddChild(Gwen::Controls::Base* ctrl, Gwen::Controls::Base* child, Gwen::Point& pos)
             {
                 Gwen::Controls::SplitterVertical* pSplitter =
-                    gwen_cast< Gwen::Controls::SplitterVertical >(ctrl);
+                    gwen_cast<Gwen::Controls::SplitterVertical>(ctrl);
                 child->SetParent(pSplitter);
 
-                if ( pos.y < pSplitter->SplitterPos() )
-                {
+                if (pos.y < pSplitter->SplitterPos())
                     pSplitter->SetPanels(child, NULL);
-                }
                 else
-                {
                     pSplitter->SetPanels(NULL, child);
-                }
             }
 
             void AddChild(Gwen::Controls::Base* ctrl, Gwen::Controls::Base* child, int iPage)
