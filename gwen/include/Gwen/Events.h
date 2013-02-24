@@ -78,7 +78,7 @@ namespace Gwen
 
             //! This is set by the event hook, e.g. :-
             //! ~~~
-            //!     onDoSomething.Add( this, &ThisClass::MyFunction, Gwen::Event::Packet("Something") );
+            //! onDoSomething.Add( this, &ThisClass::MyFunction, Gwen::Event::Packet("Something") );
             //! ~~~
             Gwen::Event::Packet* Packet;
 
@@ -125,7 +125,7 @@ namespace Gwen
         };
 
 
-        //! Callback management.
+        //! Event callback management.
         //
         class GWEN_EXPORT Caller
         {
@@ -138,29 +138,29 @@ namespace Gwen
             void Call(Controls::Base* pThis, Gwen::Event::Info info);
 
             template <typename T>
-            void Add(Event::Handler* ob, T f)
+            void Add( Event::Handler* ob, T f )
             {
                 AddInternal( ob, static_cast< Handler::Function >(f) );
             }
 
             template <typename T>
-            void Add( Event::Handler* ob, void ( T::*f )(Gwen::Event::Info) )
+            void Add( Event::Handler* ob, void (T::*f)(Gwen::Event::Info) )
             {
-                AddInternal( ob, static_cast< Handler::FunctionWithInformation >(f) );
+                AddInternal( ob, static_cast<Handler::FunctionWithInformation>(f) );
             }
 
             template <typename T>
             void Add( Event::Handler* ob,
-                      void ( T::*f )(Gwen::Event::Info),
+                      void (T::*f)(Gwen::Event::Info),
                       const Gwen::Event::Packet& packet )
             {
-                AddInternal(ob, static_cast< Handler::FunctionWithInformation >(f), packet);
+                AddInternal(ob, static_cast<Handler::FunctionWithInformation>(f), packet);
             }
 
             template <typename T>
             void Add( Event::Handler* ob, void (T::*f)() )
             {
-                AddInternal( ob, static_cast< Handler::FunctionBlank >(f) );
+                AddInternal( ob, static_cast<Handler::FunctionBlank>(f) );
             }
 
             void RemoveHandler(Event::Handler* pObject);

@@ -501,6 +501,7 @@ namespace Gwen
             {
                 UpdateColours();
                 m_bCacheTextureDirty = true;
+                
                 if (m_Parent)
                 {
                     m_Parent->Redraw();
@@ -544,7 +545,8 @@ namespace Gwen
                 m_ToolTip = tooltip;
                 if (m_ToolTip)
                 {
-                    m_ToolTip->SetParent(this); m_ToolTip->SetHidden(true);
+                    m_ToolTip->SetParent(this);
+                    m_ToolTip->SetHidden(true);
                 }
             }
 
@@ -832,7 +834,8 @@ namespace Gwen
      *      address it could be the same on one or more variables. Something to
      *      bear in mind.
      *
-     *  * DynamicCast :- non static, takes an address returned by GetIdentifier().
+     *  * DynamicCast :-
+     *      Non static, takes an address returned by GetIdentifier().
      *      Will return an address of a control if the control can safely be cast to
      *      the class from which the identifier was taken.
      *

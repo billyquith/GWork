@@ -6,12 +6,12 @@
 
 #pragma once
 #ifndef GWEN_ANIM_H
-#   define GWEN_ANIM_H
-#   include "Gwen/Gwen.h"
-#   include "Gwen/Controls/Base.h"
-#   include "Gwen/Platform.h"
+#define GWEN_ANIM_H
+#include "Gwen/Gwen.h"
+#include "Gwen/Controls/Base.h"
+#include "Gwen/Platform.h"
 
-#   ifndef GWEN_NO_ANIMATION
+#ifndef GWEN_NO_ANIMATION
 
 namespace Gwen
 {
@@ -256,5 +256,6 @@ namespace Gwen
     }
 }
 
-#   endif
-#endif
+#endif // !GWEN_NO_ANIMATION
+#endif // GWEN_ANIM_H
+
