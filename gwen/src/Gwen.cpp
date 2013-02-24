@@ -45,20 +45,18 @@ namespace Gwen
         }
 
 #endif
+        
         void AssertCheck(bool b, const char* strMsg)
         {
-            if (b)
+            if (!b)
             {
-                return;
-            }
-
-            Msg("Assert: %s\n", strMsg);
+                Msg("Assert: %s\n", strMsg);
 #ifdef _WIN32
-            MessageBoxA(NULL, strMsg, "Assert", MB_ICONEXCLAMATION|MB_OK);
-            _asm { int 3 }
+                MessageBoxA(NULL, strMsg, "Assert", MB_ICONEXCLAMATION|MB_OK);
+                _asm { int 3 }
 #endif
+            }
         }
 
     }
-
 }

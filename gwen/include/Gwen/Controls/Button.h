@@ -42,8 +42,8 @@ namespace Gwen
             virtual void SetDepressed(bool b);
 
             //
-            // Buttons can be toggle type, which means that it is
-            // toggled on and off. Its toggle status is in IsDepressed.
+            //! Buttons can be toggle type, which means that it is
+            //! toggled on and off. Its toggle status is in IsDepressed.
             //
             virtual void SetIsToggle(bool b)
             {
@@ -96,13 +96,13 @@ namespace Gwen
 
         protected:
 
-            ImagePanel*     m_Image;
+            ImagePanel*     m_Image;    //!< Optional image to be displayed on button.
 
-            bool m_bDepressed;
-            bool m_bToggle;
+            bool m_bDepressed;          //!< Is button currently being pressed?
+            bool m_bToggle;             //!< Is this a toggling button, i.e. on or off.
             bool m_bToggleStatus;
 
-            bool m_bCenterImage;
+            bool m_bCenterImage;        //!< Centre the image in the button?
         };
 
 

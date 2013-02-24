@@ -118,8 +118,7 @@ namespace Gwen
 
             //
             // No need to implement these functions in your derived class, but
-            // if
-            // you can do them faster than the default implementation it's a
+            // if you can do them faster than the default implementation it's a
             // good idea to.
             //
             virtual void        DrawLinedRect(Gwen::Rect rect);
