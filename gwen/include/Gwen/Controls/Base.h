@@ -37,7 +37,7 @@ namespace Gwen
             CenterV     = (1<<5),
             CenterH     = (1<<6),
             Fill        = (1<<7),
-            Center      = CenterV | CenterH,
+            Center      = CenterV|CenterH,
         };
 
 
@@ -61,9 +61,9 @@ namespace Gwen
         {
         public:
 
-            typedef std::list< Base* > List;
+            typedef std::list<Base*> List;
 
-            typedef std::map< Gwen::UnicodeString, Gwen::Event::Caller* > AccelMap;
+            typedef std::map<Gwen::UnicodeString, Gwen::Event::Caller*> AccelMap;
 
             Base(Base* pParent, const Gwen::String& Name = "");
             virtual ~Base();
@@ -99,7 +99,8 @@ namespace Gwen
             virtual Controls::Base* GetChild(unsigned int i);
             virtual bool            SizeToChildren(bool w = true, bool h = true);
             virtual Gwen::Point     ChildrenSize();
-            virtual Controls::Base* FindChildByName(const Gwen::String& name, bool bRecursive = false);
+            virtual Controls::Base* FindChildByName(const Gwen::String& name,
+                                                    bool bRecursive = false);
 
             template <class T>
             T* FindChild(const Gwen::String& name, bool bRecursive = false);
@@ -133,7 +134,7 @@ namespace Gwen
             virtual void BringToFront(void);
             virtual void BringNextToControl(Controls::Base* pChild, bool bBehind);
 
-            virtual Gwen::Point LocalPosToCanvas( const Gwen::Point& in = Point(0, 0) );
+            virtual Gwen::Point LocalPosToCanvas(const Gwen::Point& in = Point(0, 0));
             virtual Gwen::Point CanvasPosToLocal(const Gwen::Point& in);
 
             virtual void Dock(int iDock);
@@ -171,12 +172,12 @@ namespace Gwen
 
             virtual int Bottom() const
             {
-                return m_Bounds.y + m_Bounds.h + m_Margin.bottom;
+                return m_Bounds.y+m_Bounds.h+m_Margin.bottom;
             }
 
             virtual int Right() const
             {
-                return m_Bounds.x + m_Bounds.w + m_Margin.right;
+                return m_Bounds.x+m_Bounds.w+m_Margin.right;
             }
 
             virtual const Margin& GetMargin() const
@@ -197,12 +198,12 @@ namespace Gwen
 
             virtual Point GetPos()
             {
-                return Point( X(), Y() );
+                return Point(X(), Y());
             }
 
             virtual void SetWidth(int w)
             {
-                SetSize( w, Height() );
+                SetSize(w, Height());
             }
 
             virtual void SetHeight(int h)
@@ -214,7 +215,7 @@ namespace Gwen
             virtual bool  SetSize(const Point& p);
             virtual Point GetSize()
             {
-                return Point( Width(), Height() );
+                return Point(Width(), Height());
             }
 
             virtual bool SetBounds(int x, int y, int w, int h);
@@ -485,9 +486,7 @@ namespace Gwen
             virtual void SetDisabled(bool active)
             {
                 if (m_bDisabled == active)
-                {
                     return;
-                }
 
                 m_bDisabled = active; Redraw();
             }
@@ -501,11 +500,9 @@ namespace Gwen
             {
                 UpdateColours();
                 m_bCacheTextureDirty = true;
-                
+
                 if (m_Parent)
-                {
                     m_Parent->Redraw();
-                }
             }
 
             virtual void UpdateColours()
@@ -585,7 +582,7 @@ namespace Gwen
 
             virtual bool HandleAccelerator(Gwen::UnicodeString& accelerator);
 
-            template < typename T >
+            template <typename T>
             void AddAccelerator(const TextObject& accelerator, T func,
                                 Gwen::Event::Handler* handler = NULL)
             {
@@ -640,11 +637,11 @@ namespace Gwen
 
             Skin::Base* m_Skin;
 
-            Gwen::Rect  m_Bounds;
-            Gwen::Rect  m_RenderBounds;
+            Gwen::Rect m_Bounds;
+            Gwen::Rect m_RenderBounds;
 
-            Padding     m_Padding;
-            Margin      m_Margin;
+            Padding m_Padding;
+            Margin m_Margin;
 
             Gwen::String m_Name;
 
@@ -705,9 +702,11 @@ namespace Gwen
                 return true;
             }
 
-            virtual void DragAndDrop_StartDragging(Gwen::DragAndDrop::Package* pPackage, int x, int y);
+            virtual void DragAndDrop_StartDragging(
+                Gwen::DragAndDrop::Package* pPackage, int x, int y);
             virtual Gwen::DragAndDrop::Package* DragAndDrop_GetPackage(int x, int y);
-            virtual void DragAndDrop_EndDragging(bool /*bSuccess*/, int /*x*/, int /*y*/)
+            virtual void                        DragAndDrop_EndDragging(bool /*bSuccess*/,
+                                                                        int /*x*/, int /*y*/)
             {
             }
 
@@ -840,8 +839,8 @@ namespace Gwen
      *      the class from which the identifier was taken.
      *
      *  Really you shouldn't actually have to concern yourself with that stuff.
-     *  The only thing you should use in theory is gwen_cast - which is used 
-     *  just the same as dynamic cast - except for one difference. We pass in 
+     *  The only thing you should use in theory is gwen_cast - which is used
+     *  just the same as dynamic cast - except for one difference. We pass in
      *  the class name, not a pointer to the class:
      *
      *      gwen_cast<MyControl>(control)
@@ -853,22 +852,21 @@ namespace Gwen
     {
         if (!p)
             return NULL;
-     
-        Gwen::Controls::Base* pReturn = p->DynamicCast( T::GetIdentifier() );
+
+        Gwen::Controls::Base* pReturn = p->DynamicCast(T::GetIdentifier());
 
         if (!pReturn)
             return NULL;
-     
-        return static_cast< T* >(pReturn);
+
+        return static_cast<T*>(pReturn);
     }
 
     template <class T>
     inline T* Controls::Base::FindChild(const Gwen::String& name, bool bRecursive)
     {
-        return gwen_cast<T>( FindChildByName(name, bRecursive) );
+        return gwen_cast<T>(FindChildByName(name, bRecursive));
     }
 
-    
 #define GWEN_DYNAMIC(THISNAME, BASENAME) \
     static const char* GetIdentifier()                                  \
     {                                                                   \
@@ -889,12 +887,12 @@ namespace Gwen
 
 // To be placed in the controls .h definition.
 #define GWEN_CONTROL(THISNAME, BASENAME) \
-    public: \
-        GWEN_CLASS(THISNAME, BASENAME)  \
-        GWEN_DYNAMIC(THISNAME, BASENAME) \
-        virtual const char* GetTypeName()       { return #THISNAME; } \
-        virtual const char* GetBaseTypeName()   { return BaseClass::GetTypeName(); } \
-        THISNAME(Gwen::Controls::Base* pParent, const Gwen::String& pName = "")
+public: \
+    GWEN_CLASS(THISNAME, BASENAME)  \
+    GWEN_DYNAMIC(THISNAME, BASENAME) \
+    virtual const char* GetTypeName()       { return #THISNAME; } \
+    virtual const char* GetBaseTypeName()   { return BaseClass::GetTypeName(); } \
+    THISNAME(Gwen::Controls::Base*pParent, const Gwen::String&pName = "")
 
 #define GWEN_CONTROL_INLINE(THISNAME, BASENAME) \
     GWEN_CONTROL(THISNAME, BASENAME) : BaseClass(pParent, pName)
@@ -904,6 +902,5 @@ namespace Gwen
         : BaseClass(pParent, pName)
 
 } // namespace Gwen
-    
-#endif
 
+#endif // ifndef GWEN_CONTROLS_BASE_H

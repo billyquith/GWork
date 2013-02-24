@@ -35,18 +35,14 @@ namespace Gwen
             bool ProcessMessage(MSG msg)
             {
                 if (!m_Canvas)
-                {
                     return false;
-                }
 
                 switch (msg.message)
                 {
                 // case WM_NCLBUTTONDOWN:
                 case WM_SYSCOMMAND:
                     if (msg.message == WM_SYSCOMMAND && msg.wParam != SC_CLOSE)
-                    {
                         return false;
-                    }
 
                     return m_Canvas->InputQuit();
 
@@ -70,7 +66,7 @@ namespace Gwen
 #ifdef WM_MOUSEWHEEL
 
                 case WM_MOUSEWHEEL:
-                    return m_Canvas->InputMouseWheel( (short)HIWORD(msg.wParam) );
+                    return m_Canvas->InputMouseWheel((short)HIWORD(msg.wParam));
 
 #endif
 
@@ -122,66 +118,36 @@ namespace Gwen
                         }
 
                         if (msg.wParam == VK_SHIFT)
-                        {
                             iKey = Gwen::Key::Shift;
-                        }
                         else if (msg.wParam == VK_RETURN)
-                        {
                             iKey = Gwen::Key::Return;
-                        }
                         else if (msg.wParam == VK_BACK)
-                        {
                             iKey = Gwen::Key::Backspace;
-                        }
                         else if (msg.wParam == VK_DELETE)
-                        {
                             iKey = Gwen::Key::Delete;
-                        }
                         else if (msg.wParam == VK_LEFT)
-                        {
                             iKey = Gwen::Key::Left;
-                        }
                         else if (msg.wParam == VK_RIGHT)
-                        {
                             iKey = Gwen::Key::Right;
-                        }
                         else if (msg.wParam == VK_TAB)
-                        {
                             iKey = Gwen::Key::Tab;
-                        }
                         else if (msg.wParam == VK_SPACE)
-                        {
                             iKey = Gwen::Key::Space;
-                        }
                         else if (msg.wParam == VK_HOME)
-                        {
                             iKey = Gwen::Key::Home;
-                        }
                         else if (msg.wParam == VK_END)
-                        {
                             iKey = Gwen::Key::End;
-                        }
                         else if (msg.wParam == VK_CONTROL)
-                        {
                             iKey = Gwen::Key::Control;
-                        }
                         else if (msg.wParam == VK_SPACE)
-                        {
                             iKey = Gwen::Key::Space;
-                        }
                         else if (msg.wParam == VK_UP)
-                        {
                             iKey = Gwen::Key::Up;
-                        }
                         else if (msg.wParam == VK_DOWN)
-                        {
                             iKey = Gwen::Key::Down;
-                        }
 
                         if (iKey != -1)
-                        {
                             return m_Canvas->InputKey(iKey, bDown);
-                        }
 
                         break;
                     }
@@ -204,4 +170,4 @@ namespace Gwen
 
     }
 }
-#endif
+#endif // ifndef GWEN_INPUT_WINDOWS_H

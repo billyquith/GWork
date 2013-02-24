@@ -26,9 +26,7 @@ void Dragger::OnMouseClickLeft(int x, int y, bool bDown)
         m_bDepressed = true;
 
         if (m_pTarget)
-        {
-            m_HoldPos = m_pTarget->CanvasPosToLocal( Gwen::Point(x, y) );
-        }
+            m_HoldPos = m_pTarget->CanvasPosToLocal(Gwen::Point(x, y));
 
         Gwen::MouseFocus = this;
         onDragStart.Call(this);
@@ -43,19 +41,15 @@ void Dragger::OnMouseClickLeft(int x, int y, bool bDown)
 void Dragger::OnMouseMoved(int x, int y, int deltaX, int deltaY)
 {
     if (!m_bDepressed)
-    {
         return;
-    }
 
     if (m_bDoMove && m_pTarget)
     {
         Gwen::Point p = Gwen::Point(x-m_HoldPos.x, y-m_HoldPos.y);
 
         // Translate to parent
-        if ( m_pTarget->GetParent() )
-        {
+        if (m_pTarget->GetParent())
             p = m_pTarget->GetParent()->CanvasPosToLocal(p);
-        }
 
         m_pTarget->MoveTo(p.x, p.y);
     }

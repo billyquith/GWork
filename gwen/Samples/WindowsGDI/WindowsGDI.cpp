@@ -17,19 +17,19 @@
 HWND CreateGameWindow(void)
 {
     WNDCLASS wc;
-    ZeroMemory( &wc, sizeof(wc) );
+    ZeroMemory(&wc, sizeof(wc));
     wc.style            = CS_HREDRAW|CS_VREDRAW|CS_OWNDC;
     wc.lpfnWndProc      = DefWindowProc;
     wc.hInstance        = GetModuleHandle(NULL);
     wc.lpszClassName    = L"GWENWindow";
     wc.hCursor          = LoadCursor(NULL, IDC_ARROW);
     RegisterClass(&wc);
-    HWND hWindow = CreateWindowEx( (WS_EX_APPWINDOW|WS_EX_WINDOWEDGE), wc.lpszClassName,
-                                   L"GWEN - GDI+ Sample",
-                                   (WS_OVERLAPPEDWINDOW|WS_CLIPSIBLINGS|
-                                    WS_CLIPCHILDREN)&~(WS_MINIMIZEBOX|WS_MAXIMIZEBOX|WS_THICKFRAME),
-                                   -1, -1, 1004, 650, NULL, NULL, GetModuleHandle(
-                                       NULL), NULL );
+    HWND hWindow = CreateWindowEx((WS_EX_APPWINDOW|WS_EX_WINDOWEDGE), wc.lpszClassName,
+                                  L"GWEN - GDI+ Sample",
+                                  (WS_OVERLAPPEDWINDOW|WS_CLIPSIBLINGS|
+                                   WS_CLIPCHILDREN)&~(WS_MINIMIZEBOX|WS_MAXIMIZEBOX|WS_THICKFRAME),
+                                  -1, -1, 1004, 650, NULL, NULL, GetModuleHandle(
+                                      NULL), NULL);
     ShowWindow(hWindow, SW_SHOW);
     SetForegroundWindow(hWindow);
     SetFocus(hWindow);
@@ -64,7 +64,7 @@ int main()
     Gwen::Controls::Canvas* pCanvas = new Gwen::Controls::Canvas(skin);
     pCanvas->SetSize(998, 650-24);
     pCanvas->SetDrawBackground(true);
-    pCanvas->SetBackgroundColor( Gwen::Color(150, 170, 170, 255) );
+    pCanvas->SetBackgroundColor(Gwen::Color(150, 170, 170, 255));
     //
     // Create our unittest control (which is a Window with controls in it)
     //
@@ -84,22 +84,18 @@ int main()
     while (true)
     {
         // Skip out if the window is closed
-        if ( !IsWindowVisible(g_pHWND) )
-        {
+        if (!IsWindowVisible(g_pHWND))
             break;
-        }
 
         // If we have a message from windows..
-        if ( PeekMessage(&msg, NULL, 0, 0, PM_REMOVE) )
+        if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
         {
             // .. give it to the input handler to process
             GwenInput.ProcessMessage(msg);
 
             // if it's QUIT then quit..
             if (msg.message == WM_QUIT)
-            {
                 break;
-            }
 
             if (msg.message == WM_PAINT)
             {
@@ -119,10 +115,8 @@ int main()
         //  every frame. But we have the option of only
         //  drawing it when it needs it too.
         //
-        if ( pCanvas->NeedsRedraw() )
-        {
+        if (pCanvas->NeedsRedraw())
             pCanvas->RenderCanvas();
-        }
     }
 
     delete pCanvas;

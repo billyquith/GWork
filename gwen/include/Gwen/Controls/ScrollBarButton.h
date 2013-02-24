@@ -6,9 +6,9 @@
 
 #pragma once
 #ifndef GWEN_CONTROLS_SCROLLBARBOTTON_H
-#   define GWEN_CONTROLS_SCROLLBARBOTTON_H
+#define GWEN_CONTROLS_SCROLLBARBOTTON_H
 
-#   include "Gwen/Controls/Button.h"
+#include "Gwen/Controls/Button.h"
 
 namespace Gwen
 {
@@ -35,4 +35,4 @@ namespace Gwen
 
     }
 }
-#endif
+#endif // ifndef GWEN_CONTROLS_SCROLLBARBOTTON_H

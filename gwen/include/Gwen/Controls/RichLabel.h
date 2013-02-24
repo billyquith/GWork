@@ -6,11 +6,11 @@
 
 #pragma once
 #ifndef GWEN_CONTROLS_RICHLABEL_H
-#   define GWEN_CONTROLS_RICHLABEL_H
+#define GWEN_CONTROLS_RICHLABEL_H
 
-#   include "Gwen/BaseRender.h"
-#   include "Gwen/Controls/Base.h"
-#   include "Gwen/Controls/Text.h"
+#include "Gwen/BaseRender.h"
+#include "Gwen/Controls/Base.h"
+#include "Gwen/Controls/Text.h"
 
 
 namespace Gwen
@@ -32,7 +32,7 @@ namespace Gwen
 
             struct DividedText
             {
-                typedef std::list< DividedText >List;
+                typedef std::list<DividedText> List;
                 DividedText()
                 {
                     type = 0;
@@ -63,4 +63,4 @@ namespace Gwen
 
     }
 }
-#endif
+#endif // ifndef GWEN_CONTROLS_RICHLABEL_H

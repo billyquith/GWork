@@ -26,14 +26,10 @@ struct TextureData
     ~TextureData()
     {
         if (texture != NULL)
-        {
             delete texture;
-        }
 
         if (image != NULL)
-        {
             delete image;
-        }
     }
 
     sf::Texture *texture;
@@ -157,13 +153,11 @@ void Gwen::Renderer::SFML2::DrawShavedCornerRect(Gwen::Rect rect, bool bSlight)
 void Gwen::Renderer::SFML2::DrawTexturedRect(Gwen::Texture* pTexture, Gwen::Rect rect, float u1,
                                              float v1, float u2, float v2)
 {
-    TextureData* data = reinterpret_cast< TextureData* >(pTexture->data);
+    TextureData* data = reinterpret_cast<TextureData*>(pTexture->data);
 
     // Missing image, not loaded properly?
     if (!data)
-    {
         return DrawMissingImage(rect);
-    }
 
     const sf::Texture* tex = data->texture;
 
@@ -187,7 +181,7 @@ void Gwen::Renderer::SFML2::LoadFont(Gwen::Font* font)
 
     sf::Font* pFont = new sf::Font();
 
-    if ( !pFont->loadFromFile( Utility::UnicodeToString(font->facename) ) )
+    if (!pFont->loadFromFile(Utility::UnicodeToString(font->facename)))
     {
         // Ideally here we should be setting the font to a system default font
         // here.
@@ -201,11 +195,9 @@ void Gwen::Renderer::SFML2::LoadFont(Gwen::Font* font)
 void Gwen::Renderer::SFML2::FreeFont(Gwen::Font* pFont)
 {
     if (!pFont->data)
-    {
         return;
-    }
 
-    sf::Font* font = reinterpret_cast< sf::Font* >(pFont->data);
+    sf::Font* font = reinterpret_cast<sf::Font*>(pFont->data);
     delete font;
     pFont->data = NULL;
 }
@@ -218,13 +210,13 @@ void Gwen::Renderer::SFML2::RenderText(Gwen::Font* pFont, Gwen::Point pos,
     Translate(pos.x, pos.y);
 
     // If the font doesn't exist, or the font size should be changed
-    if (!pFont->data || fabs( pFont->realsize-pFont->size*Scale() ) > 2)
+    if (!pFont->data || fabs(pFont->realsize-pFont->size*Scale()) > 2)
     {
         FreeFont(pFont);
         LoadFont(pFont);
     }
 
-    const sf::Font* pSFFont = reinterpret_cast< sf::Font* >(pFont->data);
+    const sf::Font* pSFFont = reinterpret_cast<sf::Font*>(pFont->data);
 
     sf::Text sfStr;
     sfStr.setString(text);
@@ -238,18 +230,18 @@ void Gwen::Renderer::SFML2::RenderText(Gwen::Font* pFont, Gwen::Point pos,
 Gwen::Point Gwen::Renderer::SFML2::MeasureText(Gwen::Font* pFont, const Gwen::UnicodeString& text)
 {
     // If the font doesn't exist, or the font size should be changed
-    if (!pFont->data || fabs( pFont->realsize-pFont->size*Scale() ) > 2)
+    if (!pFont->data || fabs(pFont->realsize-pFont->size*Scale()) > 2)
     {
         FreeFont(pFont);
         LoadFont(pFont);
     }
 
-    const sf::Font* pSFFont = reinterpret_cast< sf::Font* >(pFont->data);
+    const sf::Font* pSFFont = reinterpret_cast<sf::Font*>(pFont->data);
 
     sf::Text sfStr;
     sfStr.setString(text);
     sfStr.setFont(*pSFFont);
-    sfStr.setScale( Scale(), Scale() );
+    sfStr.setScale(Scale(), Scale());
     sfStr.setCharacterSize(pFont->realsize);
     sf::FloatRect sz = sfStr.getLocalBounds();
     return Gwen::Point(sz.left+sz.width, sz.top+sz.height);
@@ -258,18 +250,14 @@ Gwen::Point Gwen::Renderer::SFML2::MeasureText(Gwen::Font* pFont, const Gwen::Un
 void Gwen::Renderer::SFML2::LoadTexture(Gwen::Texture* pTexture)
 {
     if (!pTexture)
-    {
         return;
-    }
 
     if (pTexture->data)
-    {
         FreeTexture(pTexture);
-    }
 
     sf::Texture* tex = new sf::Texture();
     tex->setSmooth(true);
-    if ( !tex->loadFromFile( pTexture->name.Get() ) )
+    if (!tex->loadFromFile(pTexture->name.Get()))
     {
         delete(tex);
         pTexture->failed = true;
@@ -283,12 +271,10 @@ void Gwen::Renderer::SFML2::LoadTexture(Gwen::Texture* pTexture)
 
 void Gwen::Renderer::SFML2::FreeTexture(Gwen::Texture* pTexture)
 {
-    TextureData* data = reinterpret_cast< TextureData* >(pTexture->data);
+    TextureData* data = reinterpret_cast<TextureData*>(pTexture->data);
 
     if (data)
-    {
         delete data;
-    }
 
     pTexture->data = NULL;
 }
@@ -296,12 +282,10 @@ void Gwen::Renderer::SFML2::FreeTexture(Gwen::Texture* pTexture)
 Gwen::Color Gwen::Renderer::SFML2::PixelColour(Gwen::Texture* pTexture, unsigned int x,
                                                unsigned int y, const Gwen::Color& col_default)
 {
-    TextureData* data = static_cast< TextureData* >(pTexture->data);
+    TextureData* data = static_cast<TextureData*>(pTexture->data);
 
     if (!data->texture && !data->image)
-    {
         return col_default;
-    }
 
     if (!data->image)
     {

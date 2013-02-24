@@ -40,5 +40,5 @@ void ScrollBarButton::SetDirectionRight()
 
 void ScrollBarButton::Render(Skin::Base* skin)
 {
-    skin->DrawScrollButton( this, m_iDirection, m_bDepressed, IsHovered(), IsDisabled() );
+    skin->DrawScrollButton(this, m_iDirection, m_bDepressed, IsHovered(), IsDisabled());
 }

@@ -35,9 +35,7 @@ namespace Gwen
         void OpenGL_DebugFont::CreateDebugFont()
         {
             if (m_pFontTexture)
-            {
                 return;
-            }
 
             m_pFontTexture = new Gwen::Texture();
             // Create a little texture pointer..
@@ -69,16 +67,12 @@ namespace Gwen
         void OpenGL_DebugFont::DestroyDebugFont()
         {
             if (!m_pFontTexture)
-            {
                 return;
-            }
 
             GLuint* tex = (GLuint*)m_pFontTexture->data;
 
             if (!tex)
-            {
                 return;
-            }
 
             glDeleteTextures(1, tex);
             delete tex;
@@ -92,10 +86,8 @@ namespace Gwen
         {
             float fSize = pFont->size*Scale();
 
-            if ( !text.length() )
-            {
+            if (!text.length())
                 return;
-            }
 
             Gwen::String converted_string = Gwen::Utility::UnicodeToString(text);
             float yOffset = 0.0f;

@@ -6,11 +6,11 @@
 
 #pragma once
 #ifndef GWEN_CONTROLS_HIGHLIGHT_H
-#   define GWEN_CONTROLS_HIGHLIGHT_H
+#define GWEN_CONTROLS_HIGHLIGHT_H
 
-#   include "Gwen/BaseRender.h"
-#   include "Gwen/Controls/Base.h"
-#   include "Gwen/Skin.h"
+#include "Gwen/BaseRender.h"
+#include "Gwen/Controls/Base.h"
+#include "Gwen/Skin.h"
 
 namespace Gwen
 {
@@ -35,4 +35,4 @@ namespace Gwen
     }
 
 }
-#endif
+#endif // ifndef GWEN_CONTROLS_HIGHLIGHT_H

@@ -16,12 +16,12 @@ namespace Gwen
 
                 UnicodeString GetValue(Controls::Base* ctrl)
                 {
-                    return Utility::Format( L"%S", ctrl->GetName().c_str() );
+                    return Utility::Format(L"%S", ctrl->GetName().c_str());
                 }
 
                 void SetValue(Controls::Base* ctrl, const UnicodeString& str)
                 {
-                    ctrl->SetName( Gwen::Utility::UnicodeToString(str) );
+                    ctrl->SetName(Gwen::Utility::UnicodeToString(str));
                 }
 
             };
@@ -33,7 +33,7 @@ namespace Gwen
 
                 UnicodeString GetValue(Controls::Base* ctrl)
                 {
-                    return Utility::Format( L"%i %i", ctrl->X(), ctrl->Y() );
+                    return Utility::Format(L"%i %i", ctrl->X(), ctrl->Y());
                 }
 
                 void SetValue(Controls::Base* ctrl, const UnicodeString& str)
@@ -41,9 +41,7 @@ namespace Gwen
                     int x, y;
 
                     if (swscanf(str.c_str(), L"%i %i", &x, &y) != 2)
-                    {
                         return;
-                    }
 
                     ctrl->SetPos(x, y);
                 }
@@ -56,9 +54,7 @@ namespace Gwen
                 Gwen::String NumName(int i)
                 {
                     if (i == 0)
-                    {
                         return "x";
-                    }
 
                     return "y";
                 }
@@ -66,9 +62,7 @@ namespace Gwen
                 float NumGet(Controls::Base* ctrl, int i)
                 {
                     if (i == 0)
-                    {
                         return ctrl->X();
-                    }
 
                     return ctrl->Y();
                 }
@@ -76,13 +70,9 @@ namespace Gwen
                 void NumSet(Controls::Base* ctrl, int i, float f)
                 {
                     if (i == 0)
-                    {
-                        ctrl->SetPos( f, ctrl->Y() );
-                    }
+                        ctrl->SetPos(f, ctrl->Y());
                     else
-                    {
                         ctrl->SetPos(ctrl->X(), f);
-                    }
                 }
 
             };
@@ -104,9 +94,7 @@ namespace Gwen
 
                     if (swscanf(str.c_str(), L"%i %i %i %i", &m.left, &m.top, &m.right,
                                 &m.bottom) != 4)
-                    {
                         return;
-                    }
 
                     ctrl->SetMargin(m);
                 }
@@ -119,19 +107,13 @@ namespace Gwen
                 Gwen::String NumName(int i)
                 {
                     if (i == 0)
-                    {
                         return "left";
-                    }
 
                     if (i == 1)
-                    {
                         return "top";
-                    }
 
                     if (i == 2)
-                    {
                         return "right";
-                    }
 
                     return "bottom";
                 }
@@ -141,19 +123,13 @@ namespace Gwen
                     Gwen::Margin m = ctrl->GetMargin();
 
                     if (i == 0)
-                    {
                         return m.left;
-                    }
 
                     if (i == 1)
-                    {
                         return m.top;
-                    }
 
                     if (i == 2)
-                    {
                         return m.right;
-                    }
 
                     return m.bottom;
                 }
@@ -163,24 +139,16 @@ namespace Gwen
                     Gwen::Margin m = ctrl->GetMargin();
 
                     if (i == 0)
-                    {
                         m.left = f;
-                    }
 
                     if (i == 1)
-                    {
                         m.top = f;
-                    }
 
                     if (i == 2)
-                    {
                         m.right = f;
-                    }
 
                     if (i == 3)
-                    {
                         m.bottom = f;
-                    }
 
                     ctrl->SetMargin(m);
                 }
@@ -194,7 +162,7 @@ namespace Gwen
 
                 UnicodeString GetValue(Controls::Base* ctrl)
                 {
-                    return Utility::Format( L"%i %i", ctrl->Width(), ctrl->Height() );
+                    return Utility::Format(L"%i %i", ctrl->Width(), ctrl->Height());
                 }
 
                 void SetValue(Controls::Base* ctrl, const UnicodeString& str)
@@ -202,9 +170,7 @@ namespace Gwen
                     int w, h;
 
                     if (swscanf(str.c_str(), L"%i %i", &w, &h) != 2)
-                    {
                         return;
-                    }
 
                     ctrl->SetSize(w, h);
                 }
@@ -217,9 +183,7 @@ namespace Gwen
                 Gwen::String NumName(int i)
                 {
                     if (i == 0)
-                    {
                         return "w";
-                    }
 
                     return "h";
                 }
@@ -227,9 +191,7 @@ namespace Gwen
                 float NumGet(Controls::Base* ctrl, int i)
                 {
                     if (i == 0)
-                    {
                         return ctrl->Width();
-                    }
 
                     return ctrl->Height();
                 }
@@ -237,13 +199,9 @@ namespace Gwen
                 void NumSet(Controls::Base* ctrl, int i, float f)
                 {
                     if (i == 0)
-                    {
-                        ctrl->SetSize( f, ctrl->Height() );
-                    }
+                        ctrl->SetSize(f, ctrl->Height());
                     else
-                    {
                         ctrl->SetSize(ctrl->Width(), f);
-                    }
                 }
 
             };
@@ -255,7 +213,7 @@ namespace Gwen
 
                 UnicodeString GetValue(Controls::Base* ctrl)
                 {
-                    switch ( ctrl->GetDock() )
+                    switch (ctrl->GetDock())
                     {
                     case Pos::Left:
                         return L"Left";
@@ -279,34 +237,22 @@ namespace Gwen
                 void SetValue(Controls::Base* ctrl, const UnicodeString& str)
                 {
                     if (str == L"Fill")
-                    {
                         ctrl->Dock(Pos::Fill);
-                    }
 
                     if (str == L"Left")
-                    {
                         ctrl->Dock(Pos::Left);
-                    }
 
                     if (str == L"Right")
-                    {
                         ctrl->Dock(Pos::Right);
-                    }
 
                     if (str == L"Top")
-                    {
                         ctrl->Dock(Pos::Top);
-                    }
 
                     if (str == L"Bottom")
-                    {
                         ctrl->Dock(Pos::Bottom);
-                    }
 
                     if (str == L"None")
-                    {
                         ctrl->Dock(Pos::None);
-                    }
                 }
 
                 int OptionNum()
@@ -317,29 +263,19 @@ namespace Gwen
                 Gwen::UnicodeString OptionGet(int i)
                 {
                     if (i == 0)
-                    {
                         return L"None";
-                    }
 
                     if (i == 1)
-                    {
                         return L"Left";
-                    }
 
                     if (i == 2)
-                    {
                         return L"Right";
-                    }
 
                     if (i == 3)
-                    {
                         return L"Top";
-                    }
 
                     if (i == 4)
-                    {
                         return L"Bottom";
-                    }
 
                     return L"Fill";
                 }
@@ -356,11 +292,11 @@ namespace Gwen
 
             GWEN_CONTROL_FACTORY_CONSTRUCTOR(Base_Factory, Gwen::ControlFactory::Base)
             {
-                AddProperty( new Properties::ControlName() );
-                AddProperty( new Properties::Dock() );
-                AddProperty( new Properties::Position() );
-                AddProperty( new Properties::Size() );
-                AddProperty( new Properties::Margin() );
+                AddProperty(new Properties::ControlName());
+                AddProperty(new Properties::Dock());
+                AddProperty(new Properties::Position());
+                AddProperty(new Properties::Size());
+                AddProperty(new Properties::Margin());
             }
 
             virtual Gwen::String Name()

@@ -13,5 +13,5 @@ GWEN_CONTROL_CONSTRUCTOR(SplitterBar)
 
 void SplitterBar::Layout(Skin::Base* /*skin*/)
 {
-    MoveTo( X(), Y() );
+    MoveTo(X(), Y());
 }

@@ -17,8 +17,8 @@ namespace Gwen
 
                 UnicodeString GetValue(Controls::Base* ctrl)
                 {
-                    return Utility::Format( L"%i", (int)gwen_cast< Controls::PageControl >(
-                                                ctrl)->GetPageCount() );
+                    return Utility::Format(L"%i", (int)gwen_cast<Controls::PageControl>(
+                                               ctrl)->GetPageCount());
                 }
 
                 void SetValue(Controls::Base* ctrl, const UnicodeString& str)
@@ -26,11 +26,9 @@ namespace Gwen
                     int num;
 
                     if (swscanf(str.c_str(), L"%i", &num) != 1)
-                    {
                         return;
-                    }
 
-                    gwen_cast< Controls::PageControl >(ctrl)->SetPageCount(num);
+                    gwen_cast<Controls::PageControl>(ctrl)->SetPageCount(num);
                 }
 
             };
@@ -43,15 +41,15 @@ namespace Gwen
                 UnicodeString GetValue(Controls::Base* ctrl)
                 {
                     Gwen::Controls::PageControl* pControl =
-                        gwen_cast< Gwen::Controls::PageControl >(ctrl);
-                    return Utility::StringToUnicode( pControl->FinishButton()->GetName() );
+                        gwen_cast<Gwen::Controls::PageControl>(ctrl);
+                    return Utility::StringToUnicode(pControl->FinishButton()->GetName());
                 }
 
                 void SetValue(Controls::Base* ctrl, const UnicodeString& str)
                 {
                     Gwen::Controls::PageControl* pControl =
-                        gwen_cast< Gwen::Controls::PageControl >(ctrl);
-                    pControl->FinishButton()->SetName( Utility::UnicodeToString(str) );
+                        gwen_cast<Gwen::Controls::PageControl>(ctrl);
+                    pControl->FinishButton()->SetName(Utility::UnicodeToString(str));
                 }
 
             };
@@ -65,8 +63,8 @@ namespace Gwen
 
             GWEN_CONTROL_FACTORY_CONSTRUCTOR(PageControl_Factory, Gwen::ControlFactory::Base)
             {
-                AddProperty( new Properties::NumPages() );
-                AddProperty( new Properties::FinishName() );
+                AddProperty(new Properties::NumPages());
+                AddProperty(new Properties::FinishName());
             }
 
             virtual Gwen::String Name()
@@ -93,15 +91,15 @@ namespace Gwen
             virtual bool ChildTouched(Gwen::Controls::Base* ctrl,
                                       Gwen::Controls::Base* pChildControl)
             {
-                Gwen::Controls::PageControl* pControl = gwen_cast< Gwen::Controls::PageControl >(
+                Gwen::Controls::PageControl* pControl = gwen_cast<Gwen::Controls::PageControl>(
                     ctrl);
 
-                if ( pChildControl == pControl->NextButton() )
+                if (pChildControl == pControl->NextButton())
                 {
                     pControl->NextButton()->DoAction(); return true;
                 }
 
-                if ( pChildControl == pControl->BackButton() )
+                if (pChildControl == pControl->BackButton())
                 {
                     pControl->BackButton()->DoAction(); return true;
                 }
@@ -116,23 +114,21 @@ namespace Gwen
             void AddChild(Gwen::Controls::Base* ctrl, Gwen::Controls::Base* child,
                           const Gwen::Point& pos)
             {
-                Gwen::Controls::PageControl* pControl = gwen_cast< Gwen::Controls::PageControl >(
+                Gwen::Controls::PageControl* pControl = gwen_cast<Gwen::Controls::PageControl>(
                     ctrl);
-                AddChild( ctrl, child, pControl->GetPageNumber() );
+                AddChild(ctrl, child, pControl->GetPageNumber());
             }
 
             void AddChild(Gwen::Controls::Base* ctrl, Gwen::Controls::Base* child, int iPage)
             {
-                Gwen::Controls::PageControl* pControl = gwen_cast< Gwen::Controls::PageControl >(
+                Gwen::Controls::PageControl* pControl = gwen_cast<Gwen::Controls::PageControl>(
                     ctrl);
 
-                if ( !pControl->GetPage(iPage) )
-                {
+                if (!pControl->GetPage(iPage))
                     iPage = 0;
-                }
 
                 SetParentPage(child, iPage);
-                child->SetParent( pControl->GetPage(iPage) );
+                child->SetParent(pControl->GetPage(iPage));
             }
 
         };

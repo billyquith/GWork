@@ -6,10 +6,10 @@
 
 #pragma once
 #ifndef GWEN_CONTROLS_TREECONTROL_H
-#   define GWEN_CONTROLS_TREECONTROL_H
+#define GWEN_CONTROLS_TREECONTROL_H
 
-#   include "Gwen/Controls/Base.h"
-#   include "Gwen/Controls/TreeNode.h"
+#include "Gwen/Controls/Base.h"
+#include "Gwen/Controls/TreeNode.h"
 
 namespace Gwen
 {
@@ -54,4 +54,4 @@ namespace Gwen
 
     }
 }
-#endif
+#endif // ifndef GWEN_CONTROLS_TREECONTROL_H

@@ -45,19 +45,19 @@ void Gwen::Anim::Cancel(Gwen::Controls::Base* control)
      */
     Gwen::Anim::Animation::List::iterator iAnimations;
 
-    if ( ( iAnimations = g_Animations.find(control) ) != g_Animations.end() )
+    if ((iAnimations = g_Animations.find(control)) != g_Animations.end())
     {
         Gwen::Anim::Animation::ChildList& ChildAnimationsForControl = iAnimations->second;
         Gwen::Anim::Animation::ChildList::iterator iAnimationChild =
             ChildAnimationsForControl.begin();
 
-        if ( iAnimationChild != ChildAnimationsForControl.end() )
+        if (iAnimationChild != ChildAnimationsForControl.end())
         {
             do
             {
                 delete(*iAnimationChild);
             }
-            while ( ++iAnimationChild != ChildAnimationsForControl.end() );
+            while (++iAnimationChild != ChildAnimationsForControl.end());
         }
 
         g_Animations.erase(iAnimations);
@@ -68,21 +68,21 @@ void Gwen::Anim::Think()
 {
     Gwen::Anim::Animation::List::iterator it = g_Animations.begin();
 
-    if ( it != g_Animations.end() )
+    if (it != g_Animations.end())
     {
         Gwen::Anim::Animation::ChildList::iterator itChild;
         Gwen::Anim::Animation* anim;
 
         do
         {
-            if ( ( itChild = it->second.begin() ) != it->second.end() )
+            if ((itChild = it->second.begin()) != it->second.end())
             {
                 do
                 {
                     anim = *itChild;
                     anim->Think();
 
-                    if ( anim->Finished() )
+                    if (anim->Finished())
                     {
                         itChild = it->second.erase(itChild);
                         delete anim;
@@ -92,10 +92,10 @@ void Gwen::Anim::Think()
                         ++itChild;
                     }
                 }
-                while ( itChild != it->second.end() );
+                while (itChild != it->second.end());
             }
         }
-        while ( ++it != g_Animations.end() );
+        while (++it != g_Animations.end());
     }
 }
 
@@ -112,9 +112,7 @@ static float GetEased(float fTime, float fEase)
 {
     // Ease in and Out if ease is < 0
     if (fEase < 0)
-    {
-        return -fTime / 2*( cosf(3.14159f*fTime) - 1 );
-    }
+        return -fTime/2*(cosf(3.14159f*fTime)-1);
 
     return powf(fTime, fEase);
 }
@@ -122,17 +120,13 @@ static float GetEased(float fTime, float fEase)
 void Gwen::Anim::TimedAnimation::Think()
 {
     if (m_bFinished)
-    {
         return;
-    }
 
     float fCurrent = Platform::GetTimeInSeconds();
     float fSecondsIn = fCurrent-m_fStart;
 
     if (fSecondsIn < 0.0f)
-    {
         return;
-    }
 
     if (!m_bStarted)
     {
@@ -140,7 +134,7 @@ void Gwen::Anim::TimedAnimation::Think()
         OnStart();
     }
 
-    float fDelta = Clamp( fSecondsIn/(m_fEnd-m_fStart), 0.f, 1.f );
+    float fDelta = Clamp(fSecondsIn/(m_fEnd-m_fStart), 0.f, 1.f);
 
     float fEased = GetEased(fDelta, m_fEase);
     Run(fEased);
@@ -157,4 +151,4 @@ bool Gwen::Anim::TimedAnimation::Finished()
     return m_bFinished;
 }
 
-#endif
+#endif // ifndef GWEN_NO_ANIMATION

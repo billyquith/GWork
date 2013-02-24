@@ -21,18 +21,14 @@ GWEN_CONTROL_CONSTRUCTOR(Resizer)
 void Resizer::OnMouseMoved(int x, int y, int /*deltaX*/, int /*deltaY*/)
 {
     if (!m_pTarget)
-    {
         return;
-    }
 
     if (!m_bDepressed)
-    {
         return;
-    }
 
     Gwen::Rect pBounds = m_pTarget->GetBounds();
     Gwen::Point pntMin = m_pTarget->GetMinimumSize();
-    Gwen::Point pCursorPos = m_pTarget->CanvasPosToLocal( Gwen::Point(x, y) );
+    Gwen::Point pCursorPos = m_pTarget->CanvasPosToLocal(Gwen::Point(x, y));
     Gwen::Point pDelta = m_pTarget->LocalPosToCanvas(m_HoldPos);
     pDelta.x -= x;
     pDelta.y -= y;
@@ -83,9 +79,7 @@ void Resizer::OnMouseMoved(int x, int y, int /*deltaX*/, int /*deltaY*/)
         pBounds.w = pCursorPos.x+woff;
 
         if (pBounds.w < pntMin.x)
-        {
             pBounds.w = pntMin.x;
-        }
 
         diff -= pBounds.w;
         m_HoldPos.x -= diff;
@@ -98,9 +92,7 @@ void Resizer::OnMouseMoved(int x, int y, int /*deltaX*/, int /*deltaY*/)
         pBounds.h = pCursorPos.y+hoff;
 
         if (pBounds.h < pntMin.y)
-        {
             pBounds.h = pntMin.y;
-        }
 
         diff -= pBounds.h;
         m_HoldPos.y -= diff;
@@ -114,23 +106,15 @@ void Resizer::SetResizeDir(int dir)
 {
     m_iResizeDir = dir;
 
-    if ( (dir&Pos::Left && dir&Pos::Top) || (dir&Pos::Right && dir&Pos::Bottom) )
-    {
+    if ((dir&Pos::Left && dir&Pos::Top) || (dir&Pos::Right && dir&Pos::Bottom))
         return SetCursor(Gwen::CursorType::SizeNWSE);
-    }
 
-    if ( (dir&Pos::Right && dir&Pos::Top) || (dir&Pos::Left && dir&Pos::Bottom) )
-    {
+    if ((dir&Pos::Right && dir&Pos::Top) || (dir&Pos::Left && dir&Pos::Bottom))
         return SetCursor(Gwen::CursorType::SizeNESW);
-    }
 
     if (dir&Pos::Right || dir&Pos::Left)
-    {
         return SetCursor(Gwen::CursorType::SizeWE);
-    }
 
     if (dir&Pos::Top || dir&Pos::Bottom)
-    {
         return SetCursor(Gwen::CursorType::SizeNS);
-    }
 }

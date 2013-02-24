@@ -6,15 +6,15 @@
 
 #pragma once
 #ifndef GWEN_CONTROLS_PROPERTIES_H
-#   define GWEN_CONTROLS_PROPERTIES_H
+#define GWEN_CONTROLS_PROPERTIES_H
 
-#   include "Gwen/Controls/Base.h"
-#   include "Gwen/Controls/Label.h"
-#   include "Gwen/Controls/Property/BaseProperty.h"
-#   include "Gwen/Controls/Property/Text.h"
-#   include "Gwen/Controls/SplitterBar.h"
-#   include "Gwen/Gwen.h"
-#   include "Gwen/Skin.h"
+#include "Gwen/Controls/Base.h"
+#include "Gwen/Controls/Label.h"
+#include "Gwen/Controls/Property/BaseProperty.h"
+#include "Gwen/Controls/Property/Text.h"
+#include "Gwen/Controls/SplitterBar.h"
+#include "Gwen/Gwen.h"
+#include "Gwen/Skin.h"
 
 
 namespace Gwen
@@ -76,7 +76,7 @@ namespace Gwen
 
             virtual bool IsHovered()
             {
-                return BaseClass::IsHovered() || ( m_Property && m_Property->IsHovered() );
+                return BaseClass::IsHovered() || (m_Property && m_Property->IsHovered());
             }
 
             virtual void OnEditingChanged();
@@ -99,4 +99,4 @@ namespace Gwen
 
     }
 }
-#endif
+#endif // ifndef GWEN_CONTROLS_PROPERTIES_H

@@ -6,12 +6,12 @@
 
 #pragma once
 #ifndef GWEN_CONTROLS_RESIZER_H
-#   define GWEN_CONTROLS_RESIZER_H
+#define GWEN_CONTROLS_RESIZER_H
 
-#   include "Gwen/Controls/Base.h"
-#   include "Gwen/Gwen.h"
-#   include "Gwen/Skin.h"
-#   include "Gwen/Controls/Dragger.h"
+#include "Gwen/Controls/Base.h"
+#include "Gwen/Gwen.h"
+#include "Gwen/Skin.h"
+#include "Gwen/Controls/Dragger.h"
 
 
 namespace Gwen
@@ -38,4 +38,4 @@ namespace Gwen
 
     }
 }
-#endif
+#endif // ifndef GWEN_CONTROLS_RESIZER_H

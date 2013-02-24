@@ -6,13 +6,13 @@
 
 #pragma once
 #ifndef GWEN_CONTROLS_CHECKBOX_H
-#   define GWEN_CONTROLS_CHECKBOX_H
+#define GWEN_CONTROLS_CHECKBOX_H
 
-#   include "Gwen/Controls/Base.h"
-#   include "Gwen/Controls/Button.h"
-#   include "Gwen/Gwen.h"
-#   include "Gwen/Skin.h"
-#   include "Gwen/Controls/LabelClickable.h"
+#include "Gwen/Controls/Base.h"
+#include "Gwen/Controls/Button.h"
+#include "Gwen/Gwen.h"
+#include "Gwen/Skin.h"
+#include "Gwen/Controls/LabelClickable.h"
 
 namespace Gwen
 {
@@ -30,7 +30,7 @@ namespace Gwen
             virtual void SetChecked(bool Checked);
             virtual void Toggle()
             {
-                SetChecked( !IsChecked() );
+                SetChecked(!IsChecked());
             }
 
             virtual bool IsChecked()
@@ -65,7 +65,7 @@ namespace Gwen
                 SetSize(200, 19);
                 m_Checkbox = new CheckBox(this);
                 m_Checkbox->Dock(Pos::Left);
-                m_Checkbox->SetMargin( Margin(0, 2, 2, 2) );
+                m_Checkbox->SetMargin(Margin(0, 2, 2, 2));
                 m_Checkbox->SetTabable(false);
                 m_Label = new LabelClickable(this);
                 m_Label->Dock(Pos::Fill);
@@ -87,9 +87,7 @@ namespace Gwen
             virtual bool OnKeySpace(bool bDown)
             {
                 if (!bDown)
-                {
-                    m_Checkbox->SetChecked( !m_Checkbox->IsChecked() );
-                }
+                    m_Checkbox->SetChecked(!m_Checkbox->IsChecked());
 
                 return true;
             }
@@ -103,4 +101,4 @@ namespace Gwen
 
     }
 }
-#endif
+#endif // ifndef GWEN_CONTROLS_CHECKBOX_H

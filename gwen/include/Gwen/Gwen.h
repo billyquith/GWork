@@ -28,25 +28,25 @@
 
 #pragma once
 #ifndef GWEN_GWEN_H
-#   define GWEN_GWEN_H
+#define GWEN_GWEN_H
 
-#   include <stdlib.h>
-#   include <memory.h>
-#   include <set>
-#   include <list>
-#   include <algorithm>
+#include <stdlib.h>
+#include <memory.h>
+#include <set>
+#include <list>
+#include <algorithm>
 
-#   include "Gwen/Macros.h"
-#   include "Gwen/Config.h"
-#   include "Gwen/Exports.h"
-#   include "Gwen/Structures.h"
-#   include "Gwen/Skin.h"
-#   include "Gwen/Controls/Base.h"
-#   include "Gwen/Controls/Canvas.h"
-#   include "Gwen/Align.h"
+#include "Gwen/Macros.h"
+#include "Gwen/Config.h"
+#include "Gwen/Exports.h"
+#include "Gwen/Structures.h"
+#include "Gwen/Skin.h"
+#include "Gwen/Controls/Base.h"
+#include "Gwen/Controls/Canvas.h"
+#include "Gwen/Align.h"
 
 // Enable the hook system (se Hook.h)
-#   define GWEN_HOOKSYSTEM
+#define GWEN_HOOKSYSTEM
 
 namespace Gwen
 {
@@ -93,13 +93,11 @@ namespace Gwen
         inline void Blur()
         {
             if (KeyboardFocus)
-            {
                 KeyboardFocus->Blur();
-            }
         }
 
     }
 
 } // namespace Gwen
 
-#endif
+#endif // ifndef GWEN_GWEN_H

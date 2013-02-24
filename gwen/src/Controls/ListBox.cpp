@@ -22,7 +22,7 @@ class ListBoxRow : public Layout::TableRow
 
     void Render(Skin::Base* skin)
     {
-        skin->DrawListBoxLine( this, IsSelected(), GetEven() );
+        skin->DrawListBoxLine(this, IsSelected(), GetEven());
     }
 
     bool IsSelected() const
@@ -40,9 +40,7 @@ class ListBoxRow : public Layout::TableRow
     void OnMouseClickLeft(int /*x*/, int /*y*/, bool bDown)
     {
         if (bDown)
-        {
             DoSelect();
-        }
     }
 
     void SetSelected(bool b)
@@ -51,13 +49,9 @@ class ListBoxRow : public Layout::TableRow
 
         // TODO: Get these values from the skin.
         if (b)
-        {
             SetTextColor(Gwen::Colors::White);
-        }
         else
-        {
             SetTextColor(Gwen::Colors::Black);
-        }
     }
 
 private:
@@ -71,8 +65,8 @@ GWEN_CONTROL_CONSTRUCTOR(ListBox)
 {
     SetScroll(false, true);
     SetAutoHideBars(true);
-    SetMargin( Margin(1, 1, 1, 1) );
-    m_InnerPanel->SetPadding( Padding(2, 2, 2, 2) );
+    SetMargin(Margin(1, 1, 1, 1));
+    m_InnerPanel->SetPadding(Padding(2, 2, 2, 2));
     m_Table = new Controls::Layout::Table(this);
     m_Table->SetColumnCount(1);
     m_bMultiSelect = false;
@@ -90,7 +84,7 @@ Layout::TableRow* ListBox::AddItem(const TextObject& strLabel, const String& str
 
 void ListBox::RemoveItem(Layout::TableRow* row)
 {
-    m_SelectedRows.erase( std::find(m_SelectedRows.begin(), m_SelectedRows.end(), row) );
+    m_SelectedRows.erase(std::find(m_SelectedRows.begin(), m_SelectedRows.end(), row));
     m_Table->Remove(row);
 }
 
@@ -111,11 +105,11 @@ void ListBox::Layout(Skin::Base* skin)
 
 void ListBox::UnselectAll()
 {
-    std::list< Layout::TableRow* >::iterator it = m_SelectedRows.begin();
+    std::list<Layout::TableRow*>::iterator it = m_SelectedRows.begin();
 
-    while ( it != m_SelectedRows.end() )
+    while (it != m_SelectedRows.end())
     {
-        ListBoxRow* pRow = static_cast< ListBoxRow* >(*it);
+        ListBoxRow* pRow = static_cast<ListBoxRow*>(*it);
         it = m_SelectedRows.erase(it);
         pRow->SetSelected(false);
     }
@@ -125,20 +119,16 @@ void ListBox::OnRowSelected(Base* pControl)
 {
     bool bClear = !Gwen::Input::IsShiftDown();
 
-    if ( !AllowMultiSelect() )
-    {
+    if (!AllowMultiSelect())
         bClear = true;
-    }
 
     SetSelectedRow(pControl, bClear);
 }
 
 Layout::TableRow* ListBox::GetSelectedRow()
 {
-    if ( m_SelectedRows.empty() )
-    {
+    if (m_SelectedRows.empty())
         return NULL;
-    }
 
     return *m_SelectedRows.begin();
 }
@@ -148,9 +138,7 @@ Gwen::String ListBox::GetSelectedRowName()
     Layout::TableRow* row = GetSelectedRow();
 
     if (!row)
-    {
         return "";
-    }
 
     return row->GetName();
 }
@@ -164,16 +152,12 @@ void ListBox::Clear()
 void ListBox::SetSelectedRow(Gwen::Controls::Base* pControl, bool bClearOthers)
 {
     if (bClearOthers)
-    {
         UnselectAll();
-    }
 
     ListBoxRow* pRow = gwen_cast<ListBoxRow>(pControl);
 
     if (!pRow)
-    {
         return;
-    }
 
     // TODO: make sure this is one of our rows!
     pRow->SetSelected(true);
@@ -184,9 +168,7 @@ void ListBox::SetSelectedRow(Gwen::Controls::Base* pControl, bool bClearOthers)
 void ListBox::SelectByString(const TextObject& strName, bool bClearOthers)
 {
     if (bClearOthers)
-    {
         UnselectAll();
-    }
 
     Base::List& children = m_Table->GetChildren();
 
@@ -195,14 +177,10 @@ void ListBox::SelectByString(const TextObject& strName, bool bClearOthers)
         ListBoxRow* pChild = gwen_cast<ListBoxRow>(*iter);
 
         if (!pChild)
-        {
             continue;
-        }
 
-        if ( Utility::Strings::Wildcard( strName, pChild->GetText(0) ) )
-        {
+        if (Utility::Strings::Wildcard(strName, pChild->GetText(0)))
             SetSelectedRow(pChild, false);
-        }
     }
 }
 
@@ -215,9 +193,8 @@ bool ListBox::OnKeyDown(bool bDown)
         Base::List::const_iterator end = children.end();
         Controls::Base* sel_row = GetSelectedRow();
 
-        if ( sel_row == NULL && !children.empty() ) // no user selection yet, so
-                                                    // select first element
-        {
+        if (sel_row == NULL && !children.empty())   // no user selection yet, so
+        {                                           // select first element
             sel_row = children.front();
         }
 
@@ -229,22 +206,18 @@ bool ListBox::OnKeyDown(bool bDown)
             ++next;
 
             if (next != end)
-            {
                 result = next;
-            }
 
             ListBoxRow* pRow = gwen_cast<ListBoxRow>(*result);
 
             if (pRow)
             {
                 pRow->DoSelect();
-                Controls::VerticalScrollBar* pScroll = gwen_cast< Controls::VerticalScrollBar >(
+                Controls::VerticalScrollBar* pScroll = gwen_cast<Controls::VerticalScrollBar>(
                     m_VerticalScrollBar);
 
                 if (pScroll)
-                {
                     pScroll->NudgeDown(this);
-                }
 
                 Redraw();
             }
@@ -263,33 +236,27 @@ bool ListBox::OnKeyUp(bool bDown)
         Base::List::const_iterator end = children.end();
         Controls::Base* sel_row = GetSelectedRow();
 
-         // no user selection yet, so select first element
-        if ( sel_row == NULL && !children.empty() )
-        {
+        // no user selection yet, so select first element
+        if (sel_row == NULL && !children.empty())
             sel_row = children.front();
-        }
 
         Base::List::const_iterator result = std::find(begin, end, sel_row);
 
         if (result != end)
         {
             if (result != begin)
-            {
                 --result;
-            }
 
             ListBoxRow* pRow = gwen_cast<ListBoxRow>(*result);
 
             if (pRow)
             {
                 pRow->DoSelect();
-                Controls::VerticalScrollBar* pScroll = gwen_cast< Controls::VerticalScrollBar >(
+                Controls::VerticalScrollBar* pScroll = gwen_cast<Controls::VerticalScrollBar>(
                     m_VerticalScrollBar);
 
                 if (pScroll)
-                {
                     pScroll->NudgeUp(this);
-                }
 
                 Redraw();
             }

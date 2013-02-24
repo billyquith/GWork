@@ -26,8 +26,8 @@ public:
 
     void OpenWindow()
     {
-        Controls::WindowControl* pWindow = new Controls::WindowControl( GetCanvas() );
-        pWindow->SetTitle( Utility::Format(L"Window %i", m_iWindowCount) );
+        Controls::WindowControl* pWindow = new Controls::WindowControl(GetCanvas());
+        pWindow->SetTitle(Utility::Format(L"Window %i", m_iWindowCount));
         pWindow->SetSize(200+rand()%100, 200+rand()%100);
         pWindow->SetPos(rand()%700, rand()%400);
         pWindow->SetDeleteOnClose(true);
@@ -36,8 +36,8 @@ public:
 
     void OpenModalWindow()
     {
-        Controls::WindowControl* pWindow = new Controls::WindowControl( GetCanvas() );
-        pWindow->SetTitle( Utility::Format(L"Window %i", m_iWindowCount) );
+        Controls::WindowControl* pWindow = new Controls::WindowControl(GetCanvas());
+        pWindow->SetTitle(Utility::Format(L"Window %i", m_iWindowCount));
         pWindow->SetSize(200+rand()%100, 200+rand()%100);
         pWindow->MakeModal(true);
         pWindow->Position(Pos::Center);

@@ -17,7 +17,7 @@ GWEN_CONTROL_CONSTRUCTOR(GroupBox)
     // children will want mouse input, and they
     // can't get it without us..
     SetMouseInputEnabled(true);
-    SetTextPadding( Padding(10, 0, 0, 0) );
+    SetTextPadding(Padding(10, 0, 0, 0));
     SetAlignment(Pos::Top|Pos::Left);
     Invalidate();
     m_InnerPanel = new Base(this);
@@ -27,12 +27,12 @@ GWEN_CONTROL_CONSTRUCTOR(GroupBox)
 
 void GroupBox::Layout(Skin::Base* skin)
 {
-    m_InnerPanel->SetMargin( Margin(m_InnerMargin, TextHeight()-3+m_InnerMargin,
-                                    m_InnerMargin, m_InnerMargin) );
+    m_InnerPanel->SetMargin(Margin(m_InnerMargin, TextHeight()-3+m_InnerMargin,
+                                   m_InnerMargin, m_InnerMargin));
     BaseClass::Layout(skin);
 }
 
 void GroupBox::Render(Skin::Base* skin)
 {
-    skin->DrawGroupBox( this, TextX(), TextHeight(), TextWidth() );
+    skin->DrawGroupBox(this, TextX(), TextHeight(), TextWidth());
 }

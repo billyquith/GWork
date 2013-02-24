@@ -25,9 +25,9 @@ GWEN_CONTROL_CONSTRUCTOR(TabStrip)
 
 bool TabStrip::DragAndDrop_HandleDrop(Gwen::DragAndDrop::Package* /*pPackage*/, int x, int y)
 {
-    Gwen::Point LocalPos = CanvasPosToLocal( Gwen::Point(x, y) );
+    Gwen::Point LocalPos = CanvasPosToLocal(Gwen::Point(x, y));
     TabButton* pButton = gwen_cast<TabButton>(DragAndDrop::SourceControl);
-    TabControl* pTabControl = gwen_cast<TabControl>( GetParent() );
+    TabControl* pTabControl = gwen_cast<TabControl>(GetParent());
 
     if (pTabControl && pButton)
     {
@@ -42,7 +42,7 @@ bool TabStrip::DragAndDrop_HandleDrop(Gwen::DragAndDrop::Package* /*pPackage*/, 
 
     if (DroppedOn)
     {
-        Gwen::Point DropPos = DroppedOn->CanvasPosToLocal( Gwen::Point(x, y) );
+        Gwen::Point DropPos = DroppedOn->CanvasPosToLocal(Gwen::Point(x, y));
         DragAndDrop::SourceControl->BringNextToControl(DroppedOn, DropPos.x > DroppedOn->Width()/2);
     }
     else
@@ -56,14 +56,10 @@ bool TabStrip::DragAndDrop_HandleDrop(Gwen::DragAndDrop::Package* /*pPackage*/, 
 bool TabStrip::DragAndDrop_CanAcceptPackage(Gwen::DragAndDrop::Package* pPackage)
 {
     if (!m_bAllowReorder)
-    {
         return false;
-    }
 
     if (pPackage->name == "TabButtonMove")
-    {
         return true;
-    }
 
     return false;
 }
@@ -78,9 +74,7 @@ void TabStrip::Layout(Skin::Base* skin)
         TabButton* pButton = gwen_cast<TabButton>(*iter);
 
         if (!pButton)
-        {
             continue;
-        }
 
         pButton->SizeToContents();
         Margin m;
@@ -110,21 +104,17 @@ void TabStrip::Layout(Skin::Base* skin)
             pButton->Dock(Pos::Left);
         }
 
-        pLargestTab.x = Gwen::Max( pLargestTab.x, pButton->Width() );
-        pLargestTab.y = Gwen::Max( pLargestTab.y, pButton->Height() );
+        pLargestTab.x = Gwen::Max(pLargestTab.x, pButton->Width());
+        pLargestTab.y = Gwen::Max(pLargestTab.y, pButton->Height());
         pButton->SetMargin(m);
         iNum++;
     }
 
     if (m_iDock == Pos::Top || m_iDock == Pos::Bottom)
-    {
         SetSize(Width(), pLargestTab.y);
-    }
 
     if (m_iDock == Pos::Left || m_iDock == Pos::Right)
-    {
-        SetSize( pLargestTab.x, Height() );
-    }
+        SetSize(pLargestTab.x, Height());
 
     BaseClass::Layout(skin);
 }
@@ -133,13 +123,11 @@ void TabStrip::DragAndDrop_HoverEnter(Gwen::DragAndDrop::Package* /*pPackage*/, 
                                       int /*y*/)
 {
     if (m_TabDragControl)
-    {
         Debug::Msg("ERROR! TabStrip::DragAndDrop_HoverEnter\n");
-    }
 
     m_TabDragControl = new ControlsInternal::Highlight(this);
     m_TabDragControl->SetMouseInputEnabled(false);
-    m_TabDragControl->SetSize( 3, Height() );
+    m_TabDragControl->SetSize(3, Height());
 }
 
 void TabStrip::DragAndDrop_HoverLeave(Gwen::DragAndDrop::Package* /*pPackage*/)
@@ -150,20 +138,18 @@ void TabStrip::DragAndDrop_HoverLeave(Gwen::DragAndDrop::Package* /*pPackage*/)
 
 void TabStrip::DragAndDrop_Hover(Gwen::DragAndDrop::Package* /*pPackage*/, int x, int y)
 {
-    Gwen::Point LocalPos = CanvasPosToLocal( Gwen::Point(x, y) );
+    Gwen::Point LocalPos = CanvasPosToLocal(Gwen::Point(x, y));
     Base* DroppedOn = GetControlAt(LocalPos.x, LocalPos.y);
 
     if (DroppedOn && DroppedOn != this)
     {
-        Gwen::Point DropPos = DroppedOn->CanvasPosToLocal( Gwen::Point(x, y) );
-        m_TabDragControl->SetBounds( Gwen::Rect( 0, 0, 3, Height() ) );
+        Gwen::Point DropPos = DroppedOn->CanvasPosToLocal(Gwen::Point(x, y));
+        m_TabDragControl->SetBounds(Gwen::Rect(0, 0, 3, Height()));
         m_TabDragControl->BringToFront();
         m_TabDragControl->SetPos(DroppedOn->X()-1, 0);
 
         if (DropPos.x > DroppedOn->Width()/2)
-        {
             m_TabDragControl->MoveBy(DroppedOn->Width()-1, 0);
-        }
 
         m_TabDragControl->Dock(Pos::None);
     }
@@ -179,24 +165,16 @@ void TabStrip::SetTabPosition(int iPos)
     Dock(iPos);
 
     if (m_iDock == Pos::Top)
-    {
-        SetPadding( Padding(5, 0, 0, 0) );
-    }
+        SetPadding(Padding(5, 0, 0, 0));
 
     if (m_iDock == Pos::Left)
-    {
-        SetPadding( Padding(0, 5, 0, 0) );
-    }
+        SetPadding(Padding(0, 5, 0, 0));
 
     if (m_iDock == Pos::Right)
-    {
-        SetPadding( Padding(0, 5, 0, 0) );
-    }
+        SetPadding(Padding(0, 5, 0, 0));
 
     if (m_iDock == Pos::Bottom)
-    {
-        SetPadding( Padding(5, 0, 0, 0) );
-    }
+        SetPadding(Padding(5, 0, 0, 0));
 
     InvalidateChildren(true);
 }

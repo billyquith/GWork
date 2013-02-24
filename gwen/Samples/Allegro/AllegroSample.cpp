@@ -16,24 +16,18 @@
 
 int main(int argc, char** argv)
 {
-    if ( !al_init() )
-    {
+    if (!al_init())
         return -1;
-    }
 
     ALLEGRO_DISPLAY* display = al_create_display(1024, 768);
 
     if (!display)
-    {
         return -1;
-    }
 
     ALLEGRO_EVENT_QUEUE* event_queue = al_create_event_queue();
 
     if (!event_queue)
-    {
         return -1;
-    }
 
     al_init_image_addon();
     al_init_font_addon();
@@ -41,9 +35,9 @@ int main(int argc, char** argv)
     al_init_ttf_addon();
     al_install_mouse();
     al_install_keyboard();
-    al_register_event_source( event_queue, al_get_display_event_source(display) );
-    al_register_event_source( event_queue, al_get_mouse_event_source() );
-    al_register_event_source( event_queue, al_get_keyboard_event_source() );
+    al_register_event_source(event_queue, al_get_display_event_source(display));
+    al_register_event_source(event_queue, al_get_mouse_event_source());
+    al_register_event_source(event_queue, al_get_keyboard_event_source());
     //
     // Create a GWEN OpenGL Renderer
     //
@@ -63,7 +57,7 @@ int main(int argc, char** argv)
     Gwen::Controls::Canvas* pCanvas = new Gwen::Controls::Canvas(&skin);
     pCanvas->SetSize(1024, 768);
     pCanvas->SetDrawBackground(true);
-    pCanvas->SetBackgroundColor( Gwen::Color(150, 170, 170, 255) );
+    pCanvas->SetBackgroundColor(Gwen::Color(150, 170, 170, 255));
     //
     // Create our unittest control (which is a Window with controls in it)
     //
@@ -80,12 +74,10 @@ int main(int argc, char** argv)
 
     while (!bQuit)
     {
-        while ( al_get_next_event(event_queue, &ev) )
+        while (al_get_next_event(event_queue, &ev))
         {
             if (ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE)
-            {
                 bQuit = true;
-            }
 
             GwenInput.ProcessMessage(ev);
         }

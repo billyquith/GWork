@@ -56,13 +56,9 @@ GWEN_CONTROL_CONSTRUCTOR(TabControl)
 TabButton* TabControl::AddPage(TextObject strText, Controls::Base* pPage)
 {
     if (!pPage)
-    {
         pPage = new Base(this);
-    }
     else
-    {
         pPage->SetParent(this);
-    }
 
     TabButton* pButton = new TabButton(m_TabStrip);
     pButton->SetText(strText);
@@ -74,7 +70,7 @@ TabButton* TabControl::AddPage(TextObject strText, Controls::Base* pPage)
 
 void TabControl::RemovePage(TabButton* pButton)
 {
-    pButton->SetParent( GetCanvas() );
+    pButton->SetParent(GetCanvas());
     OnLoseTab(pButton);
 }
 
@@ -83,24 +79,20 @@ void TabControl::AddPage(TabButton* pButton)
     Base* pPage = pButton->GetPage();
     pPage->SetParent(this);
     pPage->SetHidden(true);
-    pPage->SetMargin( Margin(6, 6, 6, 6) );
+    pPage->SetMargin(Margin(6, 6, 6, 6));
     pPage->Dock(Pos::Fill);
     pButton->SetParent(m_TabStrip);
     pButton->Dock(Pos::Left);
     pButton->SizeToContents();
 
-    if ( pButton->GetTabControl() )
-    {
-        pButton->onPress.RemoveHandler( pButton->GetTabControl() );
-    }
+    if (pButton->GetTabControl())
+        pButton->onPress.RemoveHandler(pButton->GetTabControl());
 
     pButton->SetTabControl(this);
     pButton->onPress.Add(this, &TabControl::OnTabPressed);
 
     if (!m_pCurrentButton)
-    {
         pButton->OnPress();
-    }
 
     onAddTab.Call(this);
     Invalidate();
@@ -111,30 +103,22 @@ void TabControl::OnTabPressed(Controls::Base* control)
     TabButton* pButton = gwen_cast<TabButton>(control);
 
     if (!pButton)
-    {
         return;
-    }
 
     Base* pPage = pButton->GetPage();
 
     if (!pPage)
-    {
         return;
-    }
 
     if (m_pCurrentButton == pButton)
-    {
         return;
-    }
 
     if (m_pCurrentButton)
     {
         Base* pPage = m_pCurrentButton->GetPage();
 
         if (pPage)
-        {
             pPage->SetHidden(true);
-        }
 
         m_pCurrentButton->Redraw();
         m_pCurrentButton = NULL;
@@ -155,9 +139,7 @@ void TabControl::PostLayout(Skin::Base* skin)
 void TabControl::OnLoseTab(TabButton* pButton)
 {
     if (m_pCurrentButton == pButton)
-    {
         m_pCurrentButton = NULL;
-    }
 
     // TODO: Select a tab if any exist.
     onLoseTab.Call(this);
@@ -171,7 +153,7 @@ int TabControl::TabCount(void)
 
 TabButton* TabControl::GetTab(int iNum)
 {
-    return gwen_cast<TabButton>( m_TabStrip->GetChild(iNum) );
+    return gwen_cast<TabButton>(m_TabStrip->GetChild(iNum));
 }
 
 void TabControl::SetTabStripPosition(int iDock)
@@ -197,9 +179,7 @@ void TabControl::HandleOverflow()
     m_pScroll[1]->SetHidden(!bNeeded);
 
     if (!bNeeded)
-    {
         return;
-    }
 
     m_iScrollOffset = Gwen::Clamp(m_iScrollOffset, 0, TabsSize.x-Width()+32);
 #if 0
@@ -210,12 +190,12 @@ void TabControl::HandleOverflow()
     // Then get a margin animation type and do it properly!
     // TODO!
     //
-    m_TabStrip->SetMargin( Margin(Gwen::Approach(m_TabStrip->GetMargin().left, m_iScrollOffset* -1,
-                                                 2), 0, 0, 0) );
+    m_TabStrip->SetMargin(Margin(Gwen::Approach(m_TabStrip->GetMargin().left, m_iScrollOffset* -1,
+                                                2), 0, 0, 0));
     InvalidateParent();
-#else
-    m_TabStrip->SetMargin( Margin(m_iScrollOffset* -1, 0, 0, 0) );
-#endif
+#else // if 0
+    m_TabStrip->SetMargin(Margin(m_iScrollOffset* -1, 0, 0, 0));
+#endif // if 0
     m_pScroll[0]->SetPos(Width()-30, 5);
     m_pScroll[1]->SetPos(m_pScroll[0]->Right(), 5);
 }

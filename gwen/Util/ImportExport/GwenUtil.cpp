@@ -17,7 +17,6 @@
 
 
 namespace GwenUtil {
-    
     namespace String
     {
         namespace Convert
@@ -447,21 +446,13 @@ namespace GwenUtil {
                         }
 
                         if (it->value.IsString())
-                        {
                             tree.SetChild(it->name.GetString(), it->value.GetString());
-                        }
                         else if (it->value.IsBool())
-                        {
                             tree.SetChildVar<bool>(it->name.GetString(), it->value.GetBool());
-                        }
                         else if (it->value.IsInt())
-                        {
                             tree.SetChildVar<int>(it->name.GetString(), it->value.GetInt());
-                        }
                         else if (it->value.IsNumber())
-                        {
                             tree.SetChildVar<float>(it->name.GetString(), it->value.GetDouble());
-                        }
 
                         ++it;
                     }
@@ -477,9 +468,7 @@ namespace GwenUtil {
                     return false;
 
                 if (doc.IsObject() || doc.IsArray())
-                {
                     DoImport(tree, doc);
-                }
 
                 return true;
             }

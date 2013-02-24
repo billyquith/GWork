@@ -73,11 +73,9 @@ namespace Gwen
         void GDIPlus::FreeFont(Gwen::Font* pFont)
         {
             if (!pFont->data)
-            {
                 return;
-            }
 
-            Gdiplus::Font* font = ( (Gdiplus::Font*)pFont->data );
+            Gdiplus::Font* font = ((Gdiplus::Font*)pFont->data);
             delete font;
             pFont->data = NULL;
         }
@@ -88,13 +86,13 @@ namespace Gwen
             Translate(pos.x, pos.y);
 
             // If the font doesn't exist, or the font size should be changed
-            if (!pFont->data || fabs( pFont->realsize-pFont->size*Scale() ) > 2)
+            if (!pFont->data || fabs(pFont->realsize-pFont->size*Scale()) > 2)
             {
                 FreeFont(pFont);
                 LoadFont(pFont);
             }
 
-            Gdiplus::StringFormat strFormat( Gdiplus::StringFormat::GenericDefault() );
+            Gdiplus::StringFormat strFormat(Gdiplus::StringFormat::GenericDefault());
             Gdiplus::SolidBrush solidBrush(m_Colour);
             Gdiplus::RectF r(pos.x, pos.y, 1000, 1000);
             Gdiplus::Font* pGDIFont = (Gdiplus::Font*)pFont->data;
@@ -106,15 +104,15 @@ namespace Gwen
         {
             Gwen::Point p(1, 1);
 
-            if (!pFont->data || fabs( pFont->realsize-pFont->size*Scale() ) > 2)
+            if (!pFont->data || fabs(pFont->realsize-pFont->size*Scale()) > 2)
             {
                 FreeFont(pFont);
                 LoadFont(pFont);
             }
 
-            Gdiplus::StringFormat strFormat( Gdiplus::StringFormat::GenericDefault() );
+            Gdiplus::StringFormat strFormat(Gdiplus::StringFormat::GenericDefault());
             strFormat.SetFormatFlags(
-                Gdiplus::StringFormatFlagsMeasureTrailingSpaces|strFormat.GetFormatFlags() );
+                Gdiplus::StringFormatFlagsMeasureTrailingSpaces|strFormat.GetFormatFlags());
             Gdiplus::SizeF size;
             Gdiplus::Graphics g(m_HWND);
             Gdiplus::Font* pGDIFont = (Gdiplus::Font*)pFont->data;
@@ -126,8 +124,8 @@ namespace Gwen
         void GDIPlus::StartClip()
         {
             const Gwen::Rect& rect = ClipRegion();
-            graphics->SetClip(Gdiplus::Rect( rect.x*Scale(), rect.y*Scale(), rect.w*Scale(), rect.h*
-                                             Scale() ), Gdiplus::CombineMode::CombineModeReplace);
+            graphics->SetClip(Gdiplus::Rect(rect.x*Scale(), rect.y*Scale(), rect.w*Scale(), rect.h*
+                                            Scale()), Gdiplus::CombineMode::CombineModeReplace);
         }
 
         void GDIPlus::EndClip()
@@ -142,9 +140,7 @@ namespace Gwen
 
             // Missing image, not loaded properly?
             if (!pImage || pImage->GetType() == Gdiplus::ImageTypeUnknown)
-            {
                 return DrawMissingImage(pTargetRect);
-            }
 
             Translate(pTargetRect);
             Gdiplus::RectF TargetRect(pTargetRect.x, pTargetRect.y, pTargetRect.w, pTargetRect.h);
@@ -162,7 +158,7 @@ namespace Gwen
 
         void GDIPlus::LoadTexture(Gwen::Texture* pTexture)
         {
-            Gdiplus::Bitmap* pImage = new Gdiplus::Bitmap( pTexture->name.GetUnicode().c_str() );
+            Gdiplus::Bitmap* pImage = new Gdiplus::Bitmap(pTexture->name.GetUnicode().c_str());
             pTexture->data = pImage;
             pTexture->width = pImage->GetWidth();
             pTexture->height = pImage->GetHeight();
@@ -173,9 +169,7 @@ namespace Gwen
             Gdiplus::Bitmap* pImage = (Gdiplus::Bitmap*)pTexture->data;
 
             if (!pImage)
-            {
                 return;
-            }
 
             delete pImage;
         }
@@ -186,13 +180,11 @@ namespace Gwen
             Gdiplus::Bitmap* pImage = (Gdiplus::Bitmap*)pTexture->data;
 
             if (!pImage)
-            {
                 return col_default;
-            }
 
             Gdiplus::Color c;
             pImage->GetPixel(x, y, &c);
-            return Gwen::Color( c.GetR(), c.GetG(), c.GetB(), c.GetA() );
+            return Gwen::Color(c.GetR(), c.GetG(), c.GetB(), c.GetA());
         }
 
         bool GDIPlus::InitializeContext(Gwen::WindowProvider* pWindow)

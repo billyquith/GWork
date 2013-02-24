@@ -25,12 +25,10 @@ GWEN_CONTROL_CONSTRUCTOR(Properties)
 
 void Properties::PostLayout(Gwen::Skin::Base* /*skin*/)
 {
-    if ( SizeToChildren(false, true) )
-    {
+    if (SizeToChildren(false, true))
         InvalidateParent();
-    }
 
-    m_SplitterBar->SetSize( 3, Height() );
+    m_SplitterBar->SetSize(3, Height());
 }
 
 void Properties::OnSplitterMoved(Controls::Base* /*control*/)
@@ -66,14 +64,10 @@ PropertyRow* Properties::Find(const TextObject& text)
         PropertyRow* row = gwen_cast<PropertyRow>(*it);
 
         if (!row)
-        {
             continue;
-        }
 
         if (row->GetLabel()->GetText() == text)
-        {
             return row;
-        }
     }
 
     return NULL;
@@ -88,9 +82,7 @@ void Properties::Clear()
         PropertyRow* row = gwen_cast<PropertyRow>(*it);
 
         if (!row)
-        {
             continue;
-        }
 
         row->DelayedDelete();
     }
@@ -106,20 +98,14 @@ class PropertyRowLabel : public Label
 
     void UpdateColours()
     {
-        if ( IsDisabled() )
-        {
+        if (IsDisabled())
             return SetTextColor(GetSkin()->Colors.Button.Disabled);
-        }
 
-        if ( m_pPropertyRow && m_pPropertyRow->IsEditing() )
-        {
+        if (m_pPropertyRow && m_pPropertyRow->IsEditing())
             return SetTextColor(GetSkin()->Colors.Properties.Label_Selected);
-        }
 
-        if ( m_pPropertyRow && m_pPropertyRow->IsHovered() )
-        {
+        if (m_pPropertyRow && m_pPropertyRow->IsHovered())
             return SetTextColor(GetSkin()->Colors.Properties.Label_Hover);
-        }
 
         SetTextColor(GetSkin()->Colors.Properties.Label_Normal);
     }
@@ -142,7 +128,7 @@ GWEN_CONTROL_CONSTRUCTOR(PropertyRow)
     pLabel->SetPropertyRow(this);
     pLabel->Dock(Pos::Left);
     pLabel->SetAlignment(Pos::Left|Pos::Top);
-    pLabel->SetMargin( Margin(2, 2, 0, 0) );
+    pLabel->SetMargin(Margin(2, 2, 0, 0));
     m_Label = pLabel;
 }
 
@@ -162,25 +148,21 @@ void PropertyRow::Render(Gwen::Skin::Base* skin)
     }
 
     /* SORRY */
-    skin->DrawPropertyRow( this, m_Label->Right(), IsEditing(), IsHovered()|
-                           m_Property->IsHovered() );
+    skin->DrawPropertyRow(this, m_Label->Right(), IsEditing(), IsHovered()|
+                          m_Property->IsHovered());
 }
 
 void PropertyRow::Layout(Gwen::Skin::Base* /*skin*/)
 {
-    Properties* pParent = gwen_cast<Properties>( GetParent() );
+    Properties* pParent = gwen_cast<Properties>(GetParent());
 
     if (!pParent)
-    {
         return;
-    }
 
-    m_Label->SetWidth( pParent->GetSplitWidth() );
+    m_Label->SetWidth(pParent->GetSplitWidth());
 
     if (m_Property)
-    {
-        SetHeight( m_Property->Height() );
-    }
+        SetHeight(m_Property->Height());
 }
 
 void PropertyRow::SetProperty(Property::Base* prop)

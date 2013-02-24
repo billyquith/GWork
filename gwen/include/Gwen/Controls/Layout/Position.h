@@ -6,10 +6,10 @@
 
 #pragma once
 #ifndef GWEN_CONTROLS_LAYOUT_POSITION_H
-#   define GWEN_CONTROLS_LAYOUT_POSITION_H
+#define GWEN_CONTROLS_LAYOUT_POSITION_H
 
-#   include "Gwen/Controls/Label.h"
-#   include "Gwen/Utility.h"
+#include "Gwen/Controls/Label.h"
+#include "Gwen/Utility.h"
 
 
 namespace Gwen
@@ -24,7 +24,7 @@ namespace Gwen
 
                 GWEN_CONTROL_INLINE(Position, Base)
                 {
-                    SetPosition(Pos::Left | Pos::Top);
+                    SetPosition(Pos::Left|Pos::Top);
                 }
 
                 void PostLayout(Skin::Base* skin)
@@ -34,9 +34,7 @@ namespace Gwen
                         Base* pChild = *it;
 
                         if (pChild->GetDock() != Pos::None)
-                        {
                             continue;
-                        }
 
                         pChild->Position(m_iPosition);
                     }
@@ -45,9 +43,7 @@ namespace Gwen
                 void SetPosition(int p)
                 {
                     if (m_iPosition == p)
-                    {
                         return;
-                    }
 
                     m_iPosition = p;
                     Invalidate();
@@ -71,4 +67,4 @@ namespace Gwen
         }
     }
 }
-#endif
+#endif // ifndef GWEN_CONTROLS_LAYOUT_POSITION_H

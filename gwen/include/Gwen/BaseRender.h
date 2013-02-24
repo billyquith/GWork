@@ -6,9 +6,9 @@
 
 #pragma once
 #ifndef GWEN_BASERENDER_H
-#   define GWEN_BASERENDER_H
+#define GWEN_BASERENDER_H
 
-#   include "Gwen/Structures.h"
+#include "Gwen/Structures.h"
 
 namespace Gwen
 {
@@ -89,12 +89,12 @@ namespace Gwen
             {
             }
 
-            virtual void        DrawMissingImage(Gwen::Rect pTargetRect);
-            
-            virtual Gwen::Color PixelColour( Gwen::Texture* pTexture, unsigned int x,
-                                             unsigned int y, const Gwen::Color& col_default = Gwen::Color(
-                                                 255, 255, 255,
-                                                 255) )
+            virtual void DrawMissingImage(Gwen::Rect pTargetRect);
+
+            virtual Gwen::Color PixelColour(Gwen::Texture* pTexture, unsigned int x,
+                                            unsigned int y, const Gwen::Color& col_default = Gwen::Color(
+                                                255, 255, 255,
+                                                255))
             {
                 return col_default;
             }
@@ -227,4 +227,4 @@ namespace Gwen
 
     }
 }
-#endif
+#endif // ifndef GWEN_BASERENDER_H

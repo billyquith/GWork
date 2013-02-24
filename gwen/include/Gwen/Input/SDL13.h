@@ -11,9 +11,9 @@
 #include "Gwen/Controls/Canvas.h"
 
 #ifdef _WIN32
-#   define UCS_STRING "UCS-2"
+#define UCS_STRING "UCS-2"
 #else
-#   define UCS_STRING "UCS-4"
+#define UCS_STRING "UCS-4"
 #endif
 
 namespace Gwen
@@ -37,9 +37,7 @@ namespace Gwen
             bool ProcessEvent(SDL_Event* Event)
             {
                 if (!m_Canvas)
-                {
                     return false;
-                }
 
                 switch (Event->type)
                 {
@@ -194,4 +192,4 @@ namespace Gwen
 
     }
 }
-#endif
+#endif // ifndef GWEN_INPUT_SDL13_H

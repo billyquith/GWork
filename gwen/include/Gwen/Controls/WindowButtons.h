@@ -6,11 +6,11 @@
 
 #pragma once
 #ifndef GWEN_CONTROLS_WINDOWS_BUTTONS_H
-#   define GWEN_CONTROLS_WINDOWS_BUTTONS_H
+#define GWEN_CONTROLS_WINDOWS_BUTTONS_H
 
-#   include "Gwen/Gwen.h"
-#   include "Gwen/Controls/Button.h"
-#   include "Gwen/Skin.h"
+#include "Gwen/Gwen.h"
+#include "Gwen/Controls/Button.h"
+#include "Gwen/Skin.h"
 
 
 namespace Gwen
@@ -29,12 +29,10 @@ namespace Gwen
             virtual void Render(Skin::Base* skin)
             {
                 if (!m_pWindow)
-                {
                     return;
-                }
 
-                skin->DrawWindowCloseButton( this, IsDepressed() && IsHovered(),
-                                             IsHovered() && ShouldDrawHover(), IsDisabled() );
+                skin->DrawWindowCloseButton(this, IsDepressed() && IsHovered(),
+                                            IsHovered() && ShouldDrawHover(), IsDisabled());
             }
 
             void SetWindow(Gwen::Controls::Base* p)
@@ -57,9 +55,7 @@ namespace Gwen
             virtual void Render(Skin::Base* skin)
             {
                 if (!m_pWindow)
-                {
                     return;
-                }
 
                 skin->DrawWindowMaximizeButton(this, IsDepressed() && IsHovered(),
                                                IsHovered() && ShouldDrawHover(),
@@ -85,12 +81,10 @@ namespace Gwen
             virtual void Render(Skin::Base* skin)
             {
                 if (!m_pWindow)
-                {
                     return;
-                }
 
-                skin->DrawWindowMinimizeButton( this, IsDepressed() && IsHovered(),
-                                                IsHovered() && ShouldDrawHover(), IsDisabled() );
+                skin->DrawWindowMinimizeButton(this, IsDepressed() && IsHovered(),
+                                               IsHovered() && ShouldDrawHover(), IsDisabled());
             }
 
         };
@@ -99,4 +93,4 @@ namespace Gwen
     }
 }
 
-#endif
+#endif // ifndef GWEN_CONTROLS_WINDOWS_BUTTONS_H

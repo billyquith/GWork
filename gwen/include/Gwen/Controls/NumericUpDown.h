@@ -6,11 +6,11 @@
 
 #pragma once
 #ifndef GWEN_CONTROLS_NUMERICUPDOWN_H
-#   define GWEN_CONTROLS_NUMERICUPDOWN_H
+#define GWEN_CONTROLS_NUMERICUPDOWN_H
 
-#   include "Gwen/Controls/Base.h"
-#   include "Gwen/Controls/Button.h"
-#   include "Gwen/Controls/TextBox.h"
+#include "Gwen/Controls/Base.h"
+#include "Gwen/Controls/Button.h"
+#include "Gwen/Controls/TextBox.h"
 
 namespace Gwen
 {
@@ -70,9 +70,7 @@ namespace Gwen
             virtual bool OnKeyUp(bool bDown)
             {
                 if (bDown)
-                {
                     OnButtonUp(NULL);
-                }
 
                 return true;
             }
@@ -80,9 +78,7 @@ namespace Gwen
             virtual bool OnKeyDown(bool bDown)
             {
                 if (bDown)
-                {
                     OnButtonDown(NULL);
-                }
 
                 return true;
             }
@@ -100,4 +96,4 @@ namespace Gwen
 
     }
 }
-#endif
+#endif // ifndef GWEN_CONTROLS_NUMERICUPDOWN_H

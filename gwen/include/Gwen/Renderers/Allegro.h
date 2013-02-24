@@ -7,11 +7,11 @@
 #pragma once
 
 #ifndef GWEN_RENDERERS_ALLEGRO_H
-#   define GWEN_RENDERERS_ALLEGRO_H
+#define GWEN_RENDERERS_ALLEGRO_H
 
-#   include "Gwen/Gwen.h"
-#   include "Gwen/BaseRender.h"
-#   include <allegro5/allegro5.h>
+#include "Gwen/Gwen.h"
+#include "Gwen/BaseRender.h"
+#include <allegro5/allegro5.h>
 
 namespace Gwen
 {
@@ -61,4 +61,4 @@ namespace Gwen
 
     }
 }
-#endif
+#endif // ifndef GWEN_RENDERERS_ALLEGRO_H

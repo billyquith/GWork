@@ -17,8 +17,8 @@ namespace Gwen
 
                 UnicodeString GetValue(Controls::Base* ctrl)
                 {
-                    return Gwen::Utility::Format( L"%f", (int)gwen_cast< Controls::Slider >(
-                                                      ctrl)->GetMin() );
+                    return Gwen::Utility::Format(L"%f", (int)gwen_cast<Controls::Slider>(
+                                                     ctrl)->GetMin());
                 }
 
                 void SetValue(Controls::Base* ctrl, const UnicodeString& str)
@@ -26,17 +26,13 @@ namespace Gwen
                     float val;
 
                     if (swscanf(str.c_str(), L"%f", &val) != 1)
-                    {
                         return;
-                    }
 
-                    if ( val == gwen_cast< Controls::Slider >(ctrl)->GetMin() )
-                    {
+                    if (val == gwen_cast<Controls::Slider>(ctrl)->GetMin())
                         return;
-                    }
 
-                    gwen_cast< Controls::Slider >(ctrl)->SetRange( val, gwen_cast< Controls::Slider >(
-                                                                       ctrl)->GetMax() );
+                    gwen_cast<Controls::Slider>(ctrl)->SetRange(val, gwen_cast<Controls::Slider>(
+                                                                    ctrl)->GetMax());
                 }
 
             };
@@ -48,8 +44,8 @@ namespace Gwen
 
                 UnicodeString GetValue(Controls::Base* ctrl)
                 {
-                    return Gwen::Utility::Format( L"%f", (int)gwen_cast< Controls::Slider >(
-                                                      ctrl)->GetMax() );
+                    return Gwen::Utility::Format(L"%f", (int)gwen_cast<Controls::Slider>(
+                                                     ctrl)->GetMax());
                 }
 
                 void SetValue(Controls::Base* ctrl, const UnicodeString& str)
@@ -57,17 +53,13 @@ namespace Gwen
                     float val;
 
                     if (swscanf(str.c_str(), L"%f", &val) != 1)
-                    {
                         return;
-                    }
 
-                    if ( val == gwen_cast< Controls::Slider >(ctrl)->GetMax() )
-                    {
+                    if (val == gwen_cast<Controls::Slider>(ctrl)->GetMax())
                         return;
-                    }
 
-                    gwen_cast< Controls::Slider >(ctrl)->SetRange(gwen_cast< Controls::Slider >(
-                                                                      ctrl)->GetMin(), val);
+                    gwen_cast<Controls::Slider>(ctrl)->SetRange(gwen_cast<Controls::Slider>(
+                                                                    ctrl)->GetMin(), val);
                 }
 
             };
@@ -81,8 +73,8 @@ namespace Gwen
 
             GWEN_CONTROL_FACTORY_CONSTRUCTOR(HorizontalSlider_Factory, Gwen::ControlFactory::Base)
             {
-                AddProperty( new Properties::Min() );
-                AddProperty( new Properties::Max() );
+                AddProperty(new Properties::Min());
+                AddProperty(new Properties::Max());
             }
 
             virtual Gwen::String Name()

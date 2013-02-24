@@ -6,11 +6,11 @@
 
 #pragma once
 #ifndef GWEN_CONTROLS_TABSTRIP_H
-#   define GWEN_CONTROLS_TABSTRIP_H
+#define GWEN_CONTROLS_TABSTRIP_H
 
-#   include "Gwen/Controls/Base.h"
-#   include "Gwen/Controls/Button.h"
-#   include "Gwen/Controls/TabButton.h"
+#include "Gwen/Controls/Base.h"
+#include "Gwen/Controls/Button.h"
+#include "Gwen/Controls/TabButton.h"
 
 namespace Gwen
 {
@@ -60,4 +60,4 @@ namespace Gwen
 
     }
 }
-#endif
+#endif // ifndef GWEN_CONTROLS_TABSTRIP_H

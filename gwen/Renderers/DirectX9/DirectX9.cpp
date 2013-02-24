@@ -65,8 +65,8 @@ namespace Gwen
             if (m_iVertNum > 0)
             {
                 m_pDevice->SetFVF(D3DFVF_VERTEXFORMAT2D);
-                m_pDevice->DrawPrimitiveUP( D3DPT_TRIANGLELIST, m_iVertNum/3, &m_pVerts[0],
-                                            sizeof(VertexFormat) );
+                m_pDevice->DrawPrimitiveUP(D3DPT_TRIANGLELIST, m_iVertNum/3, &m_pVerts[0],
+                                           sizeof(VertexFormat));
                 m_iVertNum = 0;
             }
         }
@@ -74,9 +74,7 @@ namespace Gwen
         void DirectX9::AddVert(int x, int y)
         {
             if (m_iVertNum >= MaxVerts-1)
-            {
                 Flush();
-            }
 
             m_pVerts[ m_iVertNum ].x = (float)x;
             m_pVerts[ m_iVertNum ].y = (float)y;
@@ -87,9 +85,7 @@ namespace Gwen
         void DirectX9::AddVert(int x, int y, float u, float v)
         {
             if (m_iVertNum >= MaxVerts-1)
-            {
                 Flush();
-            }
 
             m_pVerts[ m_iVertNum ].x = -0.5f+(float)x;
             m_pVerts[ m_iVertNum ].y = -0.5f+(float)y;
@@ -128,8 +124,8 @@ namespace Gwen
             // Scale the font according to canvas
             font->realsize = font->size*Scale();
             D3DXFONT_DESC fd;
-            memset( &fd, 0, sizeof(fd) );
-            wcscpy_s( fd.FaceName, LF_FACESIZE, font->facename.c_str() );
+            memset(&fd, 0, sizeof(fd));
+            wcscpy_s(fd.FaceName, LF_FACESIZE, font->facename.c_str());
             fd.Width = 0;
             fd.MipLevels = 1;
             fd.CharSet = DEFAULT_CHARSET;
@@ -168,9 +164,7 @@ namespace Gwen
             m_FontList.remove(pFont);
 
             if (!pFont->data)
-            {
                 return;
-            }
 
             FontData* pFontData = (FontData*)pFont->data;
 
@@ -190,7 +184,7 @@ namespace Gwen
             Flush();
 
             // If the font doesn't exist, or the font size should be changed
-            if (!pFont->data || fabs( pFont->realsize-pFont->size*Scale() ) > 2)
+            if (!pFont->data || fabs(pFont->realsize-pFont->size*Scale()) > 2)
             {
                 FreeFont(pFont);
                 LoadFont(pFont);
@@ -207,7 +201,7 @@ namespace Gwen
         Gwen::Point DirectX9::MeasureText(Gwen::Font* pFont, const Gwen::UnicodeString& text)
         {
             // If the font doesn't exist, or the font size should be changed
-            if (!pFont->data || fabs( pFont->realsize-pFont->size*Scale() ) > 2)
+            if (!pFont->data || fabs(pFont->realsize-pFont->size*Scale()) > 2)
             {
                 FreeFont(pFont);
                 LoadFont(pFont);
@@ -216,7 +210,7 @@ namespace Gwen
             FontData* pFontData = (FontData*)pFont->data;
             Gwen::Point size;
 
-            if ( text.empty() )
+            if (text.empty())
             {
                 RECT rct = {0, 0, 0, 0};
                 pFontData->pFont->DrawTextW(NULL, L"W", -1, &rct, DT_CALCRECT, 0);
@@ -233,7 +227,7 @@ namespace Gwen
                 rct.right += pFontData->iSpaceWidth;
             }
 
-            return Gwen::Point( rct.right/Scale(), rct.bottom/Scale() );
+            return Gwen::Point(rct.right/Scale(), rct.bottom/Scale());
         }
 
         void DirectX9::StartClip()
@@ -242,10 +236,10 @@ namespace Gwen
             m_pDevice->SetRenderState(D3DRS_SCISSORTESTENABLE, TRUE);
             const Gwen::Rect& rect = ClipRegion();
             RECT r;
-            r.left = ceil( ( (float)rect.x )*Scale() );
-            r.right = ceil( ( (float)(rect.x+rect.w) )*Scale() );
-            r.top = ceil( (float)rect.y*Scale() );
-            r.bottom = ceil( ( (float)(rect.y+rect.h) )*Scale() );
+            r.left = ceil(((float)rect.x)*Scale());
+            r.right = ceil(((float)(rect.x+rect.w))*Scale());
+            r.top = ceil((float)rect.y*Scale());
+            r.bottom = ceil(((float)(rect.y+rect.h))*Scale());
             m_pDevice->SetScissorRect(&r);
         }
 
@@ -262,9 +256,7 @@ namespace Gwen
 
             // Missing image, not loaded properly?
             if (!pImage)
-            {
                 return DrawMissingImage(rect);
-            }
 
             Translate(rect);
 
@@ -292,9 +284,7 @@ namespace Gwen
                                                       &ptr);
 
             if (hr != S_OK)
-            {
                 return;
-            }
 
             pTexture->data = ptr;
             pTexture->width = ImageInfo.Width;
@@ -306,9 +296,7 @@ namespace Gwen
             IDirect3DTexture9* pImage = (IDirect3DTexture9*)pTexture->data;
 
             if (!pImage)
-            {
                 return;
-            }
 
             pImage->Release();
             pTexture->data = NULL;
@@ -320,21 +308,15 @@ namespace Gwen
             IDirect3DTexture9* pImage = (IDirect3DTexture9*)pTexture->data;
 
             if (!pImage)
-            {
                 return col_default;
-            }
 
             IDirect3DSurface9* pSurface = NULL;
 
             if (pImage->GetSurfaceLevel(0, &pSurface) != S_OK)
-            {
                 return col_default;
-            }
 
             if (!pSurface)
-            {
                 return col_default;
-            }
 
             D3DLOCKED_RECT lockedRect;
             pSurface->LockRect(&lockedRect, NULL, D3DLOCK_READONLY);
@@ -349,7 +331,7 @@ namespace Gwen
         {
             Font::List::iterator it = m_FontList.begin();
 
-            while ( it != m_FontList.end() )
+            while (it != m_FontList.end())
             {
                 FreeFont(*it);
                 it = m_FontList.begin();
@@ -362,7 +344,7 @@ namespace Gwen
             HWND pHWND = (HWND)pWindow->GetWindow();
             RECT ClientRect;
             GetClientRect(pHWND, &ClientRect);
-            ZeroMemory( &Params, sizeof(Params) );
+            ZeroMemory(&Params, sizeof(Params));
             Params.Windowed                     = true;
             Params.SwapEffect                   = D3DSWAPEFFECT_DISCARD;
             Params.BackBufferWidth              = ClientRect.right;
@@ -378,18 +360,14 @@ namespace Gwen
             m_pD3D = Direct3DCreate9(D3D_SDK_VERSION);
 
             if (!m_pD3D)
-            {
                 return false;
-            }
 
             D3DCAPS9 D3DCaps;
             m_pD3D->GetDeviceCaps(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, &D3DCaps);
             DWORD BehaviourFlags = D3DCREATE_SOFTWARE_VERTEXPROCESSING;
 
             if (D3DCaps.VertexProcessingCaps != 0)
-            {
                 BehaviourFlags = D3DCREATE_HARDWARE_VERTEXPROCESSING;
-            }
 
             D3DPRESENT_PARAMETERS Params;
             FillPresentParameters(pWindow, Params);
@@ -397,10 +375,8 @@ namespace Gwen
                                               D3DCREATE_HARDWARE_VERTEXPROCESSING, &Params,
                                               &m_pDevice);
 
-            if ( FAILED(hr) )
-            {
+            if (FAILED(hr))
                 return false;
-            }
 
             return true;
         }

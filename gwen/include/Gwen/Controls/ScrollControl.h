@@ -6,15 +6,15 @@
 
 #pragma once
 #ifndef GWEN_CONTROLS_SCROLLCONTROL_H
-#   define GWEN_CONTROLS_SCROLLCONTROL_H
+#define GWEN_CONTROLS_SCROLLCONTROL_H
 
-#   include "Gwen/Controls/Base.h"
-#   include "Gwen/Controls/Button.h"
-#   include "Gwen/Gwen.h"
-#   include "Gwen/Skin.h"
-#   include "Gwen/Controls/ScrollBar.h"
-#   include "Gwen/Controls/VerticalScrollBar.h"
-#   include "Gwen/Controls/HorizontalScrollBar.h"
+#include "Gwen/Controls/Base.h"
+#include "Gwen/Controls/Button.h"
+#include "Gwen/Gwen.h"
+#include "Gwen/Skin.h"
+#include "Gwen/Controls/ScrollBar.h"
+#include "Gwen/Controls/VerticalScrollBar.h"
+#include "Gwen/Controls/HorizontalScrollBar.h"
 
 
 namespace Gwen
@@ -82,4 +82,4 @@ namespace Gwen
 
     }
 }
-#endif
+#endif // ifndef GWEN_CONTROLS_SCROLLCONTROL_H

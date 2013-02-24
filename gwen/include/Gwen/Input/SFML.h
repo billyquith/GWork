@@ -6,13 +6,13 @@
 
 #pragma once
 #ifndef GWEN_INPUT_SFML_H
-#   define GWEN_INPUT_SFML_H
+#define GWEN_INPUT_SFML_H
 
-#   include "Gwen/InputHandler.h"
-#   include "Gwen/Gwen.h"
-#   include "Gwen/Controls/Canvas.h"
+#include "Gwen/InputHandler.h"
+#include "Gwen/Gwen.h"
+#include "Gwen/Controls/Canvas.h"
 
-#   include <SFML/Window/Event.hpp>
+#include <SFML/Window/Event.hpp>
 
 namespace Gwen
 {
@@ -38,7 +38,7 @@ namespace Gwen
             {
                 switch (iKeyCode)
                 {
-#   if SFML_VERSION_MAJOR == 2
+#if SFML_VERSION_MAJOR == 2
 
                 case sf::Keyboard::BackSpace:
                     return Gwen::Key::Backspace;
@@ -93,7 +93,7 @@ namespace Gwen
 
                 case sf::Keyboard::RShift:
                     return Gwen::Key::Shift;
-#   else
+#else // if SFML_VERSION_MAJOR == 2
 
                 case sf::Key::Back:
                     return Gwen::Key::Backspace;
@@ -148,7 +148,7 @@ namespace Gwen
 
                 case sf::Key::RShift:
                     return Gwen::Key::Shift;
-#   endif
+#endif // if SFML_VERSION_MAJOR == 2
                 }
 
                 return Gwen::Key::Invalid;
@@ -157,77 +157,73 @@ namespace Gwen
             bool ProcessMessage(sf::Event& event)
             {
                 if (!m_Canvas)
-                {
                     return false;
-                }
 
-#   if SFML_VERSION_MAJOR == 2
+#if SFML_VERSION_MAJOR == 2
 
                 switch (event.type)
-#   else
+#else
 
                 switch (event.Type)
-#   endif
+#endif
                 {
                 case sf::Event::MouseMoved:
                     {
-#   if SFML_VERSION_MAJOR == 2
+#if SFML_VERSION_MAJOR == 2
                         int dx = event.mouseMove.x-m_MouseX;
                         int dy = event.mouseMove.y-m_MouseY;
                         m_MouseX = event.mouseMove.x;
                         m_MouseY = event.mouseMove.y;
-#   else
+#else
                         int dx = event.MouseMove.X-m_MouseX;
                         int dy = event.MouseMove.Y-m_MouseY;
                         m_MouseX = event.MouseMove.X;
                         m_MouseY = event.MouseMove.Y;
-#   endif
+#endif
                         return m_Canvas->InputMouseMoved(m_MouseX, m_MouseY, dx, dy);
                     }
 
                 case sf::Event::MouseButtonPressed:
                 case sf::Event::MouseButtonReleased:
-#   if SFML_VERSION_MAJOR == 2
+#if SFML_VERSION_MAJOR == 2
                     return m_Canvas->InputMouseButton(event.mouseButton.button,
                                                       event.type ==
                                                       sf::Event::MouseButtonPressed);
-#   else
+#else
                     return m_Canvas->InputMouseButton(event.MouseButton.Button,
                                                       event.Type ==
                                                       sf::Event::MouseButtonPressed);
-#   endif
+#endif
 
                 case sf::Event::MouseWheelMoved:
-#   if SFML_VERSION_MAJOR == 2
+#if SFML_VERSION_MAJOR == 2
                     return m_Canvas->InputMouseWheel(event.mouseWheel.delta*60);
-#   else
+#else
                     return m_Canvas->InputMouseWheel(event.MouseWheel.Delta*60);
-#   endif
+#endif
 
                 case sf::Event::TextEntered:
-#   if SFML_VERSION_MAJOR == 2
+#if SFML_VERSION_MAJOR == 2
                     return m_Canvas->InputCharacter(event.text.unicode);
-#   else
+#else
                     return m_Canvas->InputCharacter(event.Text.Unicode);
-#   endif
+#endif
 
                 case sf::Event::KeyPressed:
                 case sf::Event::KeyReleased:
                     {
-#   if SFML_VERSION_MAJOR == 2
+#if SFML_VERSION_MAJOR == 2
                         bool bPressed = (event.type == sf::Event::KeyPressed);
                         char keyCode = event.key.code;
                         bool control = event.key.control;
-#   else
+#else
                         bool bPressed = (event.Type == sf::Event::KeyPressed);
                         char keyCode = event.Key.Code;
                         bool control = event.Key.Control;
-#   endif
+#endif
 
                         if (control && bPressed && keyCode >= 'a' && keyCode <= 'z')
-                        {
                             return m_Canvas->InputCharacter(keyCode);
-                        }
 
                         unsigned char iKey = TranslateKeyCode(keyCode);
                         return m_Canvas->InputKey(iKey, bPressed);
@@ -248,4 +244,4 @@ namespace Gwen
 
     }
 }
-#endif
+#endif // ifndef GWEN_INPUT_SFML_H

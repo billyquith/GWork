@@ -1,6 +1,6 @@
 #pragma once
 #ifndef GWEN_CONTROLLIST_H
-#   define GWEN_CONTROLLIST_H
+#define GWEN_CONTROLLIST_H
 
 
 namespace Gwen
@@ -22,19 +22,17 @@ namespace Gwen
         typedef const Gwen::Event::Information& Info;
     }
 
-    template < typename TYPE >
+    template <typename TYPE>
     class TEasyList
     {
     public:
 
-        typedef std::list< TYPE >List;
+        typedef std::list<TYPE> List;
 
         void Add(TYPE pControl)
         {
-            if ( Contains(pControl) )
-            {
+            if (Contains(pControl))
                 return;
-            }
 
             list.push_back(pControl);
         }
@@ -52,7 +50,7 @@ namespace Gwen
             }
         }
 
-        void Add(const TEasyList< TYPE >& list)
+        void Add(const TEasyList<TYPE>& list)
         {
             Add(list.list);
         }
@@ -72,7 +70,7 @@ namespace Gwen
     };
 
 
-    class ControlList : public TEasyList< Gwen::Controls::Base* >
+    class ControlList : public TEasyList<Gwen::Controls::Base*>
     {
     public:
 
@@ -85,13 +83,13 @@ namespace Gwen
         Gwen::TextObject GetValue();
         void             SetValue(const Gwen::TextObject& value);
 
-        template < typename T >
+        template <typename T>
         void SetAction(Gwen::Event::Handler* ob,
                        void ( T::*f )(Gwen::Event::Info),
                        const Gwen::Event::Packet& packet)
         {
             SetActionInternal(ob,
-                              static_cast< void(Gwen::Event::Handler::*) (Gwen::Event::Info) >(f),
+                              static_cast<void(Gwen::Event::Handler::*) (Gwen::Event::Info)>(f),
                               packet);
         }
 
@@ -109,4 +107,4 @@ namespace Gwen
 
 }
 
-#endif
+#endif // ifndef GWEN_CONTROLLIST_H

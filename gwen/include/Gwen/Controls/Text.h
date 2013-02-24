@@ -6,10 +6,10 @@
 
 #pragma once
 #ifndef GWEN_CONTROLS_TEXT_H
-#   define GWEN_CONTROLS_TEXT_H
+#define GWEN_CONTROLS_TEXT_H
 
-#   include "Gwen/BaseRender.h"
-#   include "Gwen/Controls/Base.h"
+#include "Gwen/BaseRender.h"
+#include "Gwen/Controls/Base.h"
 
 namespace Gwen
 {
@@ -76,9 +76,7 @@ namespace Gwen
             virtual void SetWrap(bool b)
             {
                 if (m_bWrap == b)
-                {
                     return;
-                }
 
                 m_bWrap = b; m_bTextChanged = true; Invalidate();
             }
@@ -102,7 +100,7 @@ namespace Gwen
             bool m_bWrap;
             bool m_bTextChanged;
 
-            typedef std::list< Text* >TextLines;
+            typedef std::list<Text*> TextLines;
             TextLines m_Lines;
         };
 
@@ -110,4 +108,4 @@ namespace Gwen
     }
 
 }
-#endif
+#endif // ifndef GWEN_CONTROLS_TEXT_H

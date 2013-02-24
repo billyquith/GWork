@@ -6,18 +6,18 @@
 
 #pragma once
 #ifndef GWEN_CONTROLS_WINDOWCONTROL_H
-#   define GWEN_CONTROLS_WINDOWCONTROL_H
+#define GWEN_CONTROLS_WINDOWCONTROL_H
 
-#   include "Gwen/Gwen.h"
-#   include "Gwen/Controls/Base.h"
-#   include "Gwen/Controls/Label.h"
-#   include "Gwen/Controls/Button.h"
-#   include "Gwen/Controls/Dragger.h"
-#   include "Gwen/Controls/Label.h"
-#   include "Gwen/Controls/ResizableControl.h"
-#   include "Gwen/Controls/Modal.h"
-#   include "Gwen/Controls/WindowButtons.h"
-#   include "Gwen/Skin.h"
+#include "Gwen/Gwen.h"
+#include "Gwen/Controls/Base.h"
+#include "Gwen/Controls/Label.h"
+#include "Gwen/Controls/Button.h"
+#include "Gwen/Controls/Dragger.h"
+#include "Gwen/Controls/Label.h"
+#include "Gwen/Controls/ResizableControl.h"
+#include "Gwen/Controls/Modal.h"
+#include "Gwen/Controls/WindowButtons.h"
+#include "Gwen/Skin.h"
 
 
 namespace Gwen
@@ -39,7 +39,7 @@ namespace Gwen
             virtual void SetTitle(Gwen::UnicodeString title);
             virtual void SetTitle(Gwen::String title)
             {
-                SetTitle( Gwen::Utility::StringToUnicode(title) );
+                SetTitle(Gwen::Utility::StringToUnicode(title));
             }
 
             virtual void SetClosable(bool closeable);
@@ -75,4 +75,4 @@ namespace Gwen
 
     }
 }
-#endif
+#endif // ifndef GWEN_CONTROLS_WINDOWCONTROL_H

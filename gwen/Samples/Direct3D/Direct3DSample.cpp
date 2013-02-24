@@ -31,19 +31,19 @@ D3DPRESENT_PARAMETERS g_D3DParams;
 HWND CreateGameWindow(void)
 {
     WNDCLASS wc;
-    ZeroMemory( &wc, sizeof(wc) );
+    ZeroMemory(&wc, sizeof(wc));
     wc.style            = CS_HREDRAW|CS_VREDRAW|CS_OWNDC;
     wc.lpfnWndProc      = DefWindowProc;
     wc.hInstance        = GetModuleHandle(NULL);
     wc.lpszClassName    = L"GWENWindow";
     wc.hCursor          = LoadCursor(NULL, IDC_ARROW);
     RegisterClass(&wc);
-    HWND hWindow = CreateWindowEx( (WS_EX_APPWINDOW|WS_EX_WINDOWEDGE), wc.lpszClassName,
-                                   L"GWEN - Direct 3D Sample",
-                                   (WS_OVERLAPPEDWINDOW|WS_CLIPSIBLINGS|
-                                    WS_CLIPCHILDREN)&~(WS_MINIMIZEBOX|WS_MAXIMIZEBOX|WS_THICKFRAME),
-                                   -1, -1, 1004, 650, NULL, NULL, GetModuleHandle(
-                                       NULL), NULL );
+    HWND hWindow = CreateWindowEx((WS_EX_APPWINDOW|WS_EX_WINDOWEDGE), wc.lpszClassName,
+                                  L"GWEN - Direct 3D Sample",
+                                  (WS_OVERLAPPEDWINDOW|WS_CLIPSIBLINGS|
+                                   WS_CLIPCHILDREN)&~(WS_MINIMIZEBOX|WS_MAXIMIZEBOX|WS_THICKFRAME),
+                                  -1, -1, 1004, 650, NULL, NULL, GetModuleHandle(
+                                      NULL), NULL);
     ShowWindow(hWindow, SW_SHOW);
     SetForegroundWindow(hWindow);
     SetFocus(hWindow);
@@ -60,7 +60,7 @@ void ResetD3DDevice()
 
 void CreateD3DDevice()
 {
-    ZeroMemory( &g_D3DParams, sizeof(g_D3DParams) );
+    ZeroMemory(&g_D3DParams, sizeof(g_D3DParams));
     RECT ClientRect;
     GetClientRect(g_pHWND, &ClientRect);
     g_D3DParams.Windowed = TRUE;
@@ -76,7 +76,7 @@ void CreateD3DDevice()
                                       D3DCREATE_SOFTWARE_VERTEXPROCESSING, &g_D3DParams,
                                       &g_pD3DDevice);
 
-    if ( FAILED(hr) )
+    if (FAILED(hr))
     {
         OutputDebugString(L"Couldn't create D3D Device for some reason!");
         return;
@@ -111,7 +111,7 @@ int main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCm
     Gwen::Controls::Canvas* pCanvas = new Gwen::Controls::Canvas(pSkin);
     pCanvas->SetSize(FrameBounds.right, FrameBounds.bottom);
     pCanvas->SetDrawBackground(true);
-    pCanvas->SetBackgroundColor( Gwen::Color(150, 170, 170, 255) );
+    pCanvas->SetBackgroundColor(Gwen::Color(150, 170, 170, 255));
     //
     // Create our unittest control (which is a Window with controls in it)
     //
@@ -131,22 +131,18 @@ int main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCm
     while (true)
     {
         // Skip out if the window is closed
-        if ( !IsWindowVisible(g_pHWND) )
-        {
+        if (!IsWindowVisible(g_pHWND))
             break;
-        }
 
         // If we have a message from windows..
-        if ( PeekMessage(&msg, NULL, 0, 0, PM_REMOVE) )
+        if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
         {
             // .. give it to the input handler to process
             GwenInput.ProcessMessage(msg);
 
             // if it's QUIT then quit..
             if (msg.message == WM_QUIT)
-            {
                 break;
-            }
 
             // Handle the regular window stuff..
             TranslateMessage(&msg);

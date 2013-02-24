@@ -26,17 +26,15 @@ GWEN_CONTROL_CONSTRUCTOR(TreeControl)
     m_ScrollControl->Dock(Pos::Fill);
     m_ScrollControl->SetScroll(false, true);
     m_ScrollControl->SetAutoHideBars(true);
-    m_ScrollControl->SetMargin( Margin(1, 1, 1, 1) );
+    m_ScrollControl->SetMargin(Margin(1, 1, 1, 1));
     m_InnerPanel = m_ScrollControl;
     m_ScrollControl->SetInnerSize(1000, 1000);
 }
 
 void TreeControl::Render(Skin::Base* skin)
 {
-    if ( ShouldDrawBackground() )
-    {
+    if (ShouldDrawBackground())
         skin->DrawTreeControl(this);
-    }
 }
 
 void TreeControl::OnChildBoundsChanged(Gwen::Rect /*oldChildBounds*/, Base* /*pChild*/)
@@ -67,8 +65,6 @@ void TreeControl::OnNodeAdded(TreeNode* pNode)
 
 void TreeControl::OnNodeSelection(Controls::Base* /*control*/)
 {
-    if ( !m_bAllowMultipleSelection || !Gwen::Input::IsKeyDown(Key::Control) )
-    {
+    if (!m_bAllowMultipleSelection || !Gwen::Input::IsKeyDown(Key::Control))
         DeselectAll();
-    }
 }

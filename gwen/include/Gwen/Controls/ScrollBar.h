@@ -6,19 +6,19 @@
 
 #pragma once
 #ifndef GWEN_CONTROLS_SCROLLBAR_H
-#   define GWEN_CONTROLS_SCROLLBAR_H
+#define GWEN_CONTROLS_SCROLLBAR_H
 
-#   include "Gwen/Controls/Base.h"
-#   include "Gwen/Controls/ScrollBarBar.h"
-#   include "Gwen/Controls/ScrollBarButton.h"
-#   include "Gwen/Gwen.h"
+#include "Gwen/Controls/Base.h"
+#include "Gwen/Controls/ScrollBarBar.h"
+#include "Gwen/Controls/ScrollBarButton.h"
+#include "Gwen/Gwen.h"
 
 
-#   define SCROLL_BUTTON_UP 0
-#   define SCROLL_BUTTON_LEFT 0
-#   define SCROLL_BUTTON_DOWN 1
-#   define SCROLL_BUTTON_RIGHT 1
-#   define NUDGE_DIST 10
+#define SCROLL_BUTTON_UP 0
+#define SCROLL_BUTTON_LEFT 0
+#define SCROLL_BUTTON_DOWN 1
+#define SCROLL_BUTTON_RIGHT 1
+#define NUDGE_DIST 10
 
 namespace Gwen
 {
@@ -116,4 +116,4 @@ namespace Gwen
 
     }
 }
-#endif
+#endif // ifndef GWEN_CONTROLS_SCROLLBAR_H

@@ -16,7 +16,7 @@ GWEN_CONTROL_CONSTRUCTOR(Label)
 {
     m_CreatedFont = NULL;
     m_Text = new ControlsInternal::Text(this);
-    m_Text->SetFont( GetSkin()->GetDefaultFont() );
+    m_Text->SetFont(GetSkin()->GetDefaultFont());
     SetMouseInputEnabled(false);
     SetBounds(0, 0, 100, 10);
     SetAlignment(Gwen::Pos::Left|Gwen::Pos::Top);
@@ -41,9 +41,7 @@ void Label::PostLayout(Skin::Base* /*skin*/)
 void Label::SetAlignment(int iAlign)
 {
     if (m_iAlign == iAlign)
-    {
         return;
-    }
 
     m_iAlign = iAlign;
     Invalidate();
@@ -56,18 +54,14 @@ int Label::GetAlignment()
 
 void Label::SetText(const TextObject& str, bool bDoEvents)
 {
-    if ( m_Text->GetText() == str.GetUnicode() )
-    {
+    if (m_Text->GetText() == str.GetUnicode())
         return;
-    }
 
     m_Text->SetString(str);
     Redraw();
 
     if (bDoEvents)
-    {
         OnTextChanged();
-    }
 }
 
 void Label::SizeToContents()
@@ -90,7 +84,7 @@ void Label::OnBoundsChanged(Gwen::Rect oldChildBounds)
 {
     BaseClass::OnBoundsChanged(oldChildBounds);
 
-    if ( m_Text->Wrap() )
+    if (m_Text->Wrap())
     {
         m_Text->RefreshSize();
         Invalidate();
@@ -115,4 +109,3 @@ void Label::SetFont(Gwen::UnicodeString strFacename, int iSize, bool bBold)
     SetFont(m_CreatedFont);
     m_Text->RefreshSize();
 }
-

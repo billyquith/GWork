@@ -17,7 +17,7 @@
 #include <list>
 
 #ifndef GWEN_NO_ANIMATION
-#   include "Gwen/Anim.h"
+#include "Gwen/Anim.h"
 #endif
 
 using namespace Gwen;
@@ -57,13 +57,11 @@ Base::~Base()
         Canvas* canvas = GetCanvas();
 
         if (canvas)
-        {
             canvas->PreDelete(this);
-        }
     }
     Base::List::iterator iter = Children.begin();
 
-    while ( iter != Children.end() )
+    while (iter != Children.end())
     {
         Base* pChild = *iter;
         iter = Children.erase(iter);
@@ -81,19 +79,13 @@ Base::~Base()
     SetParent(NULL);
 
     if (Gwen::HoveredControl == this)
-    {
         Gwen::HoveredControl = NULL;
-    }
 
     if (Gwen::KeyboardFocus == this)
-    {
         Gwen::KeyboardFocus = NULL;
-    }
 
     if (Gwen::MouseFocus == this)
-    {
         Gwen::MouseFocus = NULL;
-    }
 
     DragAndDrop::ControlDeleted(this);
     ToolTip::ControlDeleted(this);
@@ -125,9 +117,7 @@ Canvas* Base::GetCanvas()
     Base* pCanvas = m_Parent;
 
     if (!pCanvas)
-    {
         return NULL;
-    }
 
     return pCanvas->GetCanvas();
 }
@@ -135,30 +125,22 @@ Canvas* Base::GetCanvas()
 void Base::SetParent(Base* pParent)
 {
     if (m_Parent == pParent)
-    {
         return;
-    }
 
     if (m_Parent)
-    {
         m_Parent->RemoveChild(this);
-    }
 
     m_Parent = pParent;
     m_ActualParent = NULL;
 
     if (m_Parent)
-    {
         m_Parent->AddChild(this);
-    }
 }
 
 void Base::Dock(int iDock)
 {
     if (m_iDock == iDock)
-    {
         return;
-    }
 
     m_iDock = iDock;
     Invalidate();
@@ -177,15 +159,11 @@ bool Base::Hidden() const
 
 bool Base::Visible() const
 {
-    if ( Hidden() )
-    {
+    if (Hidden())
         return false;
-    }
 
-    if ( GetParent() )
-    {
+    if (GetParent())
         return GetParent()->Visible();
-    }
 
     return true;
 }
@@ -197,9 +175,7 @@ void Base::InvalidateChildren(bool bRecursive)
         (*it)->Invalidate();
 
         if (bRecursive)
-        {
             (*it)->InvalidateChildren(bRecursive);
-        }
     }
 
     if (m_InnerPanel)
@@ -211,9 +187,7 @@ void Base::InvalidateChildren(bool bRecursive)
             (*it)->Invalidate();
 
             if (bRecursive)
-            {
                 (*it)->InvalidateChildren(bRecursive);
-            }
         }
     }
 }
@@ -226,34 +200,22 @@ void Base::Position(int pos, int xpadding, int ypadding)
     int y = Y();
 
     if (pos&Pos::Left)
-    {
         x = bounds.x+xpadding+margin.left;
-    }
 
     if (pos&Pos::Right)
-    {
         x = bounds.x+(bounds.w-Width()-xpadding-margin.right);
-    }
 
     if (pos&Pos::CenterH)
-    {
-        x = bounds.x+( bounds.w-Width() )*0.5;
-    }
+        x = bounds.x+(bounds.w-Width())*0.5;
 
     if (pos&Pos::Top)
-    {
         y = bounds.y+ypadding;
-    }
 
     if (pos&Pos::Bottom)
-    {
         y = bounds.y+(bounds.h-Height()-ypadding);
-    }
 
     if (pos&Pos::CenterV)
-    {
-        y = bounds.y+( bounds.h-Height() )*0.5;
-    }
+        y = bounds.y+(bounds.h-Height())*0.5;
 
     SetPos(x, y);
 }
@@ -261,14 +223,10 @@ void Base::Position(int pos, int xpadding, int ypadding)
 void Base::SendToBack()
 {
     if (!m_ActualParent)
-    {
         return;
-    }
 
     if (m_ActualParent->Children.front() == this)
-    {
         return;
-    }
 
     m_ActualParent->Children.remove(this);
     m_ActualParent->Children.push_front(this);
@@ -278,14 +236,10 @@ void Base::SendToBack()
 void Base::BringToFront()
 {
     if (!m_ActualParent)
-    {
         return;
-    }
 
     if (m_ActualParent->Children.back() == this)
-    {
         return;
-    }
 
     m_ActualParent->Children.remove(this);
     m_ActualParent->Children.push_back(this);
@@ -302,18 +256,14 @@ Controls::Base* Base::FindChildByName(const Gwen::String& name, bool bRecursive)
         Base* pChild = *iter;
 
         if (!pChild->GetName().empty() && pChild->GetName() == name)
-        {
             return pChild;
-        }
 
         if (bRecursive)
         {
             Controls::Base* pSubChild = pChild->FindChildByName(name, true);
 
             if (pSubChild)
-            {
                 return pSubChild;
-            }
         }
     }
 
@@ -323,27 +273,21 @@ Controls::Base* Base::FindChildByName(const Gwen::String& name, bool bRecursive)
 void Base::BringNextToControl(Controls::Base* pChild, bool bBehind)
 {
     if (!m_ActualParent)
-    {
         return;
-    }
 
     m_ActualParent->Children.remove(this);
     Base::List::iterator it = std::find(
         m_ActualParent->Children.begin(), m_ActualParent->Children.end(), pChild);
 
-    if ( it == m_ActualParent->Children.end() )
-    {
+    if (it == m_ActualParent->Children.end())
         return BringToFront();
-    }
 
     if (bBehind)
     {
         ++it;
 
-        if ( it == m_ActualParent->Children.end() )
-        {
+        if (it == m_ActualParent->Children.end())
             return BringToFront();
-        }
     }
 
     m_ActualParent->Children.insert(it, this);
@@ -368,14 +312,10 @@ void Base::RemoveChild(Base* pChild)
     // If we removed our innerpanel
     // remove our pointer to it
     if (m_InnerPanel == pChild)
-    {
         m_InnerPanel = NULL;
-    }
 
     if (m_InnerPanel)
-    {
         m_InnerPanel->RemoveChild(pChild);
-    }
 
     Children.remove(pChild);
     OnChildRemoved(pChild);
@@ -385,7 +325,7 @@ void Base::RemoveAllChildren()
 {
     while (Children.size() > 0)
     {
-        RemoveChild( *Children.begin() );
+        RemoveChild(*Children.begin());
     }
 }
 
@@ -397,17 +337,13 @@ unsigned int Base::NumChildren()
 
 Controls::Base* Base::GetChild(unsigned int i)
 {
-    if ( i >= NumChildren() )
-    {
+    if (i >= NumChildren())
         return NULL;
-    }
 
     for (Base::List::iterator iter = Children.begin(); iter != Children.end(); ++iter)
     {
         if (i == 0)
-        {
             return *iter;
-        }
 
         i--;
     }
@@ -429,14 +365,10 @@ void Base::OnChildRemoved(Base* /*pChild*/)
 Skin::Base* Base::GetSkin(void)
 {
     if (m_Skin)
-    {
         return m_Skin;
-    }
 
     if (m_Parent)
-    {
         return m_Parent->GetSkin();
-    }
 
     Debug::AssertCheck(0, "Base::GetSkin Returning NULL!\n");
     return NULL;
@@ -449,37 +381,29 @@ void Base::MoveBy(int x, int y)
 
 void Base::MoveTo(int x, int y)
 {
-    if ( m_bRestrictToParent && GetParent() )
+    if (m_bRestrictToParent && GetParent())
     {
         Base* pParent = GetParent();
 
         if (x-GetPadding().left < pParent->GetMargin().left)
-        {
             x = pParent->GetMargin().left+GetPadding().left;
-        }
 
         if (y-GetPadding().top < pParent->GetMargin().top)
-        {
             y = pParent->GetMargin().top+GetPadding().top;
-        }
 
         if (x+Width()+GetPadding().right > pParent->Width()-pParent->GetMargin().right)
-        {
             x = pParent->Width()-pParent->GetMargin().right-Width()-GetPadding().right;
-        }
 
         if (y+Height()+GetPadding().bottom > pParent->Height()-pParent->GetMargin().bottom)
-        {
             y = pParent->Height()-pParent->GetMargin().bottom-Height()-GetPadding().bottom;
-        }
     }
 
-    SetBounds( x, y, Width(), Height() );
+    SetBounds(x, y, Width(), Height());
 }
 
 void Base::SetPos(int x, int y)
 {
-    SetBounds( x, y, Width(), Height() );
+    SetBounds(x, y, Width(), Height());
 }
 
 bool Base::SetSize(int w, int h)
@@ -503,9 +427,7 @@ bool Base::SetBounds(int x, int y, int w, int h)
         m_Bounds.y == y &&
         m_Bounds.w == w &&
         m_Bounds.h == h)
-    {
         return false;
-    }
 
     Gwen::Rect oldBounds = GetBounds();
     m_Bounds.x = x;
@@ -521,15 +443,11 @@ void Base::OnBoundsChanged(Gwen::Rect oldBounds)
     // Anything that needs to update on size changes
     // Iterate my children and tell them I've changed
     //
-    if ( GetParent() )
-    {
+    if (GetParent())
         GetParent()->OnChildBoundsChanged(oldBounds, this);
-    }
 
     if (m_Bounds.w != oldBounds.w || m_Bounds.h != oldBounds.h)
-    {
         Invalidate();
-    }
 
     Redraw();
     UpdateRenderBounds();
@@ -557,53 +475,47 @@ void Base::DoCacheRender(Gwen::Skin::Base* skin, Gwen::Controls::Base* pMaster)
     Gwen::Renderer::ICacheToTexture* cache = render->GetCTT();
 
     if (!cache)
-    {
         return;
-    }
 
     Gwen::Point pOldRenderOffset = render->GetRenderOffset();
     Gwen::Rect rOldRegion = render->ClipRegion();
 
     if (this != pMaster)
     {
-        render->AddRenderOffset( GetBounds() );
-        render->AddClipRegion( GetBounds() );
+        render->AddRenderOffset(GetBounds());
+        render->AddClipRegion(GetBounds());
     }
     else
     {
-        render->SetRenderOffset( Gwen::Point(0, 0) );
-        render->SetClipRegion( GetBounds() );
+        render->SetRenderOffset(Gwen::Point(0, 0));
+        render->SetClipRegion(GetBounds());
     }
 
-    if ( m_bCacheTextureDirty && render->ClipRegionVisible() )
+    if (m_bCacheTextureDirty && render->ClipRegionVisible())
     {
         render->StartClip();
         {
-            if ( ShouldCacheToTexture() )
-            {
+            if (ShouldCacheToTexture())
                 cache->SetupCacheTexture(this);
-            }
 
             // Render myself first
             Render(skin);
 
-            if ( !Children.empty() )
+            if (!Children.empty())
             {
                 // Now render my kids
                 for (Base::List::iterator iter = Children.begin(); iter != Children.end(); ++iter)
                 {
                     Base* pChild = *iter;
 
-                    if ( pChild->Hidden() )
-                    {
+                    if (pChild->Hidden())
                         continue;
-                    }
 
                     pChild->DoCacheRender(skin, pMaster);
                 }
             }
 
-            if ( ShouldCacheToTexture() )
+            if (ShouldCacheToTexture())
             {
                 cache->FinishCacheTexture(this);
                 m_bCacheTextureDirty = false;
@@ -626,21 +538,19 @@ void Base::DoRender(Gwen::Skin::Base* skin)
     // If this control has a different skin,
     // then so does its children.
     if (m_Skin)
-    {
         skin = m_Skin;
-    }
 
     // Do think
     Think();
     Gwen::Renderer::Base* render = skin->GetRender();
 
-    if ( render->GetCTT() && ShouldCacheToTexture() )
+    if (render->GetCTT() && ShouldCacheToTexture())
     {
         DoCacheRender(skin, this);
         return;
     }
 
-    RenderRecursive( skin, GetBounds() );
+    RenderRecursive(skin, GetBounds());
 }
 
 void Base::RenderRecursive(Gwen::Skin::Base* skin, const Gwen::Rect& cliprect)
@@ -655,11 +565,11 @@ void Base::RenderRecursive(Gwen::Skin::Base* skin, const Gwen::Rect& cliprect)
     // If this control is clipping, change the clip rect to ourselves
     // ( if not then we still clip using our parents clip rect )
     //
-    if ( ShouldClip() )
+    if (ShouldClip())
     {
         render->AddClipRegion(cliprect);
 
-        if ( !render->ClipRegionVisible() )
+        if (!render->ClipRegionVisible())
         {
             render->SetRenderOffset(pOldRenderOffset);
             render->SetClipRegion(rOldRegion);
@@ -674,17 +584,15 @@ void Base::RenderRecursive(Gwen::Skin::Base* skin, const Gwen::Rect& cliprect)
     {
         Render(skin);
 
-        if ( !Children.empty() )
+        if (!Children.empty())
         {
             // Now render my kids
             for (Base::List::iterator iter = Children.begin(); iter != Children.end(); ++iter)
             {
                 Base* pChild = *iter;
 
-                if ( pChild->Hidden() )
-                {
+                if (pChild->Hidden())
                     continue;
-                }
 
                 pChild->DoRender(skin);
             }
@@ -709,9 +617,7 @@ void Base::RenderRecursive(Gwen::Skin::Base* skin, const Gwen::Rect& cliprect)
 void Base::SetSkin(Skin::Base* skin, bool doChildren)
 {
     if (m_Skin == skin)
-    {
         return;
-    }
 
     m_Skin = skin;
     Invalidate();
@@ -735,9 +641,7 @@ void Base::OnSkinChanged(Skin::Base* /*skin*/)
 bool Base::OnMouseWheeled(int iDelta)
 {
     if (m_ActualParent)
-    {
         return m_ActualParent->OnMouseWheeled(iDelta);
-    }
 
     return false;
 }
@@ -750,14 +654,10 @@ void Base::OnMouseEnter()
 {
     onHoverEnter.Call(this);
 
-    if ( GetToolTip() )
-    {
+    if (GetToolTip())
         ToolTip::Enable(this);
-    }
-    else if ( GetParent() && GetParent()->GetToolTip() )
-    {
-        ToolTip::Enable( GetParent() );
-    }
+    else if (GetParent() && GetParent()->GetToolTip())
+        ToolTip::Enable(GetParent());
 
     Redraw();
 }
@@ -766,10 +666,8 @@ void Base::OnMouseLeave()
 {
     onHoverLeave.Call(this);
 
-    if ( GetToolTip() )
-    {
+    if (GetToolTip())
         ToolTip::Disable(this);
-    }
 
     Redraw();
 }
@@ -792,14 +690,10 @@ bool Base::HasFocus()
 void Base::Focus()
 {
     if (Gwen::KeyboardFocus == this)
-    {
         return;
-    }
 
     if (Gwen::KeyboardFocus)
-    {
         Gwen::KeyboardFocus->OnLostKeyboardFocus();
-    }
 
     Gwen::KeyboardFocus = this;
     OnKeyboardFocus();
@@ -809,9 +703,7 @@ void Base::Focus()
 void Base::Blur()
 {
     if (Gwen::KeyboardFocus != this)
-    {
         return;
-    }
 
     Gwen::KeyboardFocus = NULL;
     OnLostKeyboardFocus();
@@ -820,28 +712,22 @@ void Base::Blur()
 
 bool Base::IsOnTop()
 {
-    if ( !GetParent() )
-    {
+    if (!GetParent())
         return false;
-    }
 
     Base::List::iterator iter = GetParent()->Children.begin();
     Base* pChild = *iter;
 
     if (pChild == this)
-    {
         return true;
-    }
 
     return false;
 }
 
 void Base::Touch()
 {
-    if ( GetParent() )
-    {
+    if (GetParent())
         GetParent()->OnChildTouched(this);
-    }
 }
 
 void Base::OnChildTouched(Controls::Base* /*pChild*/)
@@ -851,15 +737,11 @@ void Base::OnChildTouched(Controls::Base* /*pChild*/)
 
 Base* Base::GetControlAt(int x, int y, bool bOnlyIfMouseEnabled)
 {
-    if ( Hidden() )
-    {
+    if (Hidden())
         return NULL;
-    }
 
-    if ( x < 0 || y < 0 || x >= Width() || y >= Height() )
-    {
+    if (x < 0 || y < 0 || x >= Width() || y >= Height())
         return NULL;
-    }
 
     Base::List::reverse_iterator iter;
 
@@ -870,40 +752,30 @@ Base* Base::GetControlAt(int x, int y, bool bOnlyIfMouseEnabled)
         pFound = pChild->GetControlAt(x-pChild->X(), y-pChild->Y(), bOnlyIfMouseEnabled);
 
         if (pFound)
-        {
             return pFound;
-        }
     }
 
-    if ( bOnlyIfMouseEnabled && !GetMouseInputEnabled() )
-    {
+    if (bOnlyIfMouseEnabled && !GetMouseInputEnabled())
         return NULL;
-    }
 
     return this;
 }
 
 void Base::Layout(Skin::Base* skin)
 {
-    if ( skin->GetRender()->GetCTT() && ShouldCacheToTexture() )
-    {
+    if (skin->GetRender()->GetCTT() && ShouldCacheToTexture())
         skin->GetRender()->GetCTT()->CreateControlCacheTexture(this);
-    }
 }
 
 void Base::RecurseLayout(Skin::Base* skin)
 {
     if (m_Skin)
-    {
         skin = m_Skin;
-    }
 
-    if ( Hidden() )
-    {
+    if (Hidden())
         return;
-    }
 
-    if ( NeedsLayout() )
+    if (NeedsLayout())
     {
         m_bNeedsLayout = false;
         Layout(skin);
@@ -920,23 +792,19 @@ void Base::RecurseLayout(Skin::Base* skin)
     {
         Base* pChild = *iter;
 
-        if ( pChild->Hidden() )
-        {
+        if (pChild->Hidden())
             continue;
-        }
 
         int iDock = pChild->GetDock();
 
         if (iDock&Pos::Fill)
-        {
             continue;
-        }
 
         if (iDock&Pos::Top)
         {
             const Margin& margin = pChild->GetMargin();
-            pChild->SetBounds( rBounds.x+margin.left, rBounds.y+margin.top,
-                               rBounds.w-margin.left-margin.right, pChild->Height() );
+            pChild->SetBounds(rBounds.x+margin.left, rBounds.y+margin.top,
+                              rBounds.w-margin.left-margin.right, pChild->Height());
             int iHeight = margin.top+margin.bottom+pChild->Height();
             rBounds.y += iHeight;
             rBounds.h -= iHeight;
@@ -967,9 +835,9 @@ void Base::RecurseLayout(Skin::Base* skin)
         {
             // TODO: THIS MARGIN CODE MIGHT NOT BE FULLY FUNCTIONAL
             const Margin& margin = pChild->GetMargin();
-            pChild->SetBounds( rBounds.x+margin.left,
-                               (rBounds.y+rBounds.h)-pChild->Height()-margin.bottom, rBounds.w-margin.left-margin.right,
-                               pChild->Height() );
+            pChild->SetBounds(rBounds.x+margin.left,
+                              (rBounds.y+rBounds.h)-pChild->Height()-margin.bottom, rBounds.w-margin.left-margin.right,
+                              pChild->Height());
             rBounds.h -= pChild->Height()+margin.bottom+margin.top;
         }
 
@@ -986,10 +854,8 @@ void Base::RecurseLayout(Skin::Base* skin)
         Base* pChild = *iter;
         int iDock = pChild->GetDock();
 
-        if ( !(iDock&Pos::Fill) )
-        {
+        if (!(iDock&Pos::Fill))
             continue;
-        }
 
         const Margin& margin = pChild->GetMargin();
         pChild->SetBounds(rBounds.x+margin.left, rBounds.y+margin.top,
@@ -999,33 +865,25 @@ void Base::RecurseLayout(Skin::Base* skin)
 
     PostLayout(skin);
 
-    if ( IsTabable() && !IsDisabled() )
+    if (IsTabable() && !IsDisabled())
     {
         if (!GetCanvas()->FirstTab)
-        {
             GetCanvas()->FirstTab = this;
-        }
 
         if (!GetCanvas()->NextTab)
-        {
             GetCanvas()->NextTab = this;
-        }
     }
 
     if (Gwen::KeyboardFocus == this)
-    {
         GetCanvas()->NextTab = NULL;
-    }
 }
 
 bool Base::IsChild(Controls::Base* pChild)
 {
     for (Base::List::iterator iter = Children.begin(); iter != Children.end(); ++iter)
     {
-        if ( pChild == (*iter) )
-        {
+        if (pChild == (*iter))
             return true;
-        }
     }
 
     return false;
@@ -1041,13 +899,13 @@ Gwen::Point Base::LocalPosToCanvas(const Gwen::Point& pnt)
         // If our parent has an innerpanel and we're a child of it
         // add its offset onto us.
         //
-        if ( m_Parent->m_InnerPanel && m_Parent->m_InnerPanel->IsChild(this) )
+        if (m_Parent->m_InnerPanel && m_Parent->m_InnerPanel->IsChild(this))
         {
             x += m_Parent->m_InnerPanel->X();
             y += m_Parent->m_InnerPanel->Y();
         }
 
-        return m_Parent->LocalPosToCanvas( Gwen::Point(x, y) );
+        return m_Parent->LocalPosToCanvas(Gwen::Point(x, y));
     }
 
     return pnt;
@@ -1063,13 +921,13 @@ Gwen::Point Base::CanvasPosToLocal(const Gwen::Point& pnt)
         // If our parent has an innerpanel and we're a child of it
         // add its offset onto us.
         //
-        if ( m_Parent->m_InnerPanel && m_Parent->m_InnerPanel->IsChild(this) )
+        if (m_Parent->m_InnerPanel && m_Parent->m_InnerPanel->IsChild(this))
         {
             x -= m_Parent->m_InnerPanel->X();
             y -= m_Parent->m_InnerPanel->Y();
         }
 
-        return m_Parent->CanvasPosToLocal( Gwen::Point(x, y) );
+        return m_Parent->CanvasPosToLocal(Gwen::Point(x, y));
     }
 
     return pnt;
@@ -1078,9 +936,7 @@ Gwen::Point Base::CanvasPosToLocal(const Gwen::Point& pnt)
 bool Base::IsMenuComponent()
 {
     if (!m_Parent)
-    {
         return false;
-    }
 
     return m_Parent->IsMenuComponent();
 }
@@ -1120,9 +976,7 @@ bool Base::DragAndDrop_HandleDrop(Gwen::DragAndDrop::Package* /*pPackage*/, int 
 bool Base::DragAndDrop_Draggable()
 {
     if (!m_DragAndDrop_Package)
-    {
         return false;
-    }
 
     return m_DragAndDrop_Package->draggable;
 }
@@ -1130,9 +984,7 @@ bool Base::DragAndDrop_Draggable()
 void Base::DragAndDrop_SetPackage(bool bDraggable, const String& strName, void* pUserData)
 {
     if (!m_DragAndDrop_Package)
-    {
         m_DragAndDrop_Package = new Gwen::DragAndDrop::Package();
-    }
 
     m_DragAndDrop_Package->draggable = bDraggable;
     m_DragAndDrop_Package->name = strName;
@@ -1141,7 +993,7 @@ void Base::DragAndDrop_SetPackage(bool bDraggable, const String& strName, void* 
 
 void Base::DragAndDrop_StartDragging(Gwen::DragAndDrop::Package* pPackage, int x, int y)
 {
-    pPackage->holdoffset = CanvasPosToLocal( Gwen::Point(x, y) );
+    pPackage->holdoffset = CanvasPosToLocal(Gwen::Point(x, y));
     pPackage->drawcontrol = this;
 }
 
@@ -1150,7 +1002,7 @@ bool Base::SizeToChildren(bool w, bool h)
     Gwen::Point size = ChildrenSize();
     size.y += GetPadding().bottom;
     size.x += GetPadding().right;
-    return SetSize( w ? size.x : Width(), h ? size.y : Height() );
+    return SetSize(w ? size.x : Width(), h ? size.y : Height());
 }
 
 Gwen::Point Base::ChildrenSize()
@@ -1161,18 +1013,14 @@ Gwen::Point Base::ChildrenSize()
     {
         Base* pChild = *iter;
 
-        if ( pChild->Hidden() )
-        {
+        if (pChild->Hidden())
             continue;
-        }
 
-        if ( !pChild->ShouldIncludeInSize() )
-        {
+        if (!pChild->ShouldIncludeInSize())
             continue;
-        }
 
-        size.x = Gwen::Max( size.x, pChild->Right() );
-        size.y = Gwen::Max( size.y, pChild->Bottom() );
+        size.x = Gwen::Max(size.x, pChild->Right());
+        size.y = Gwen::Max(size.y, pChild->Bottom());
     }
 
     return size;
@@ -1184,9 +1032,7 @@ void Base::SetPadding(const Padding& padding)
         m_Padding.top == padding.top &&
         m_Padding.right == padding.right &&
         m_Padding.bottom == padding.bottom)
-    {
         return;
-    }
 
     m_Padding = padding;
     Invalidate();
@@ -1199,9 +1045,7 @@ void Base::SetMargin(const Margin& margin)
         m_Margin.left == margin.left &&
         m_Margin.bottom == margin.bottom &&
         m_Margin.right == margin.right)
-    {
         return;
-    }
 
     m_Margin = margin;
     Invalidate();
@@ -1210,11 +1054,11 @@ void Base::SetMargin(const Margin& margin)
 
 bool Base::HandleAccelerator(Gwen::UnicodeString& accelerator)
 {
-    if ( Gwen::KeyboardFocus == this || !AccelOnlyFocus() )
+    if (Gwen::KeyboardFocus == this || !AccelOnlyFocus())
     {
         AccelMap::iterator iter = m_Accelerators.find(accelerator);
 
-        if ( iter != m_Accelerators.end() )
+        if (iter != m_Accelerators.end())
         {
             iter->second->Call(this);
             return true;
@@ -1223,10 +1067,8 @@ bool Base::HandleAccelerator(Gwen::UnicodeString& accelerator)
 
     for (Base::List::iterator it = Children.begin(); it != Children.end(); ++it)
     {
-        if ( (*it)->HandleAccelerator(accelerator) )
-        {
+        if ((*it)->HandleAccelerator(accelerator))
             return true;
-        }
     }
 
     return false;
@@ -1290,10 +1132,8 @@ bool Base::OnKeyPress(int iKey, bool bPress)
         break;
     }
 
-    if ( !bHandled && GetParent() )
-    {
+    if (!bHandled && GetParent())
         GetParent()->OnKeyPress(iKey, bPress);
-    }
 
     return bHandled;
 }
@@ -1306,9 +1146,7 @@ bool Base::OnKeyRelease(int iKey)
 bool Base::OnKeyTab(bool bDown)
 {
     if (!bDown)
-    {
         return true;
-    }
 
     if (GetCanvas()->NextTab)
     {
@@ -1322,14 +1160,10 @@ bool Base::OnKeyTab(bool bDown)
 void Base::RenderFocus(Gwen::Skin::Base* skin)
 {
     if (Gwen::KeyboardFocus != this)
-    {
         return;
-    }
 
-    if ( !IsTabable() )
-    {
+    if (!IsTabable())
         return;
-    }
 
     skin->DrawKeyboardHighlight(this, GetRenderBounds(), 3);
 }
@@ -1339,7 +1173,7 @@ void Base::SetToolTip(const TextObject& strText)
     Label* tooltip = new Label(this);
     tooltip->SetText(strText);
     tooltip->SetTextColorOverride(GetSkin()->Colors.TooltipText);
-    tooltip->SetPadding( Padding(5, 3, 5, 3) );
+    tooltip->SetPadding(Padding(5, 3, 5, 3));
     tooltip->SizeToContents();
     SetToolTip(tooltip);
 }
@@ -1349,9 +1183,7 @@ TextObject Base::GetChildValue(const Gwen::String& strName)
     Base* pChild = FindChildByName(strName, true);
 
     if (!pChild)
-    {
         return "";
-    }
 
     return pChild->GetValue();
 }
@@ -1382,9 +1214,7 @@ int Base::GetNamedChildren(Gwen::ControlList& list, const Gwen::String& strName,
         }
 
         if (!bDeep)
-        {
             continue;
-        }
 
         iFound += pChild->GetNamedChildren(list, strName, bDeep);
     }
@@ -1403,26 +1233,26 @@ Gwen::ControlList Base::GetNamedChildren(const Gwen::String& strName, bool bDeep
 
 void Base::Anim_WidthIn(float fLength, float fDelay, float fEase)
 {
-    Gwen::Anim::Add( this, new Gwen::Anim::Size::Width(0, Width(), fLength, false, fDelay, fEase) );
+    Gwen::Anim::Add(this, new Gwen::Anim::Size::Width(0, Width(), fLength, false, fDelay, fEase));
     SetWidth(0);
 }
 
 void Base::Anim_HeightIn(float fLength, float fDelay, float fEase)
 {
-    Gwen::Anim::Add( this,
-                     new Gwen::Anim::Size::Height(0, Height(), fLength, false, fDelay, fEase) );
+    Gwen::Anim::Add(this,
+                    new Gwen::Anim::Size::Height(0, Height(), fLength, false, fDelay, fEase));
     SetHeight(0);
 }
 
 void Base::Anim_WidthOut(float fLength, bool bHide, float fDelay, float fEase)
 {
-    Gwen::Anim::Add( this, new Gwen::Anim::Size::Width(Width(), 0, fLength, bHide, fDelay, fEase) );
+    Gwen::Anim::Add(this, new Gwen::Anim::Size::Width(Width(), 0, fLength, bHide, fDelay, fEase));
 }
 
 void Base::Anim_HeightOut(float fLength, bool bHide, float fDelay, float fEase)
 {
-    Gwen::Anim::Add( this,
-                     new Gwen::Anim::Size::Height(Height(), 0, fLength, bHide, fDelay, fEase) );
+    Gwen::Anim::Add(this,
+                    new Gwen::Anim::Size::Height(Height(), 0, fLength, bHide, fDelay, fEase));
 }
 
-#endif
+#endif // ifndef GWEN_NO_ANIMATION

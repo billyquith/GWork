@@ -6,12 +6,12 @@
 
 #pragma once
 #ifndef GWEN_CONTROLS_TEXTBOX_H
-#   define GWEN_CONTROLS_TEXTOBX_H
+#define GWEN_CONTROLS_TEXTOBX_H
 
-#   include "Gwen/BaseRender.h"
-#   include "Gwen/Controls/Base.h"
-#   include "Gwen/Controls/Label.h"
-#   include "Gwen/Controls/ScrollControl.h"
+#include "Gwen/BaseRender.h"
+#include "Gwen/Controls/Base.h"
+#include "Gwen/Controls/Label.h"
+#include "Gwen/Controls/ScrollControl.h"
 
 namespace Gwen
 {
@@ -29,9 +29,9 @@ namespace Gwen
             virtual void Layout(Skin::Base* skin);
             virtual void PostLayout(Skin::Base* skin);
 
-#   ifndef GWEN_NO_ANIMATION
+#ifndef GWEN_NO_ANIMATION
             virtual void UpdateCaretColor();
-#   endif
+#endif
 
             virtual bool OnChar(Gwen::UnicodeChar c);
 
@@ -73,9 +73,7 @@ namespace Gwen
             virtual void SetSelectAllOnFocus(bool b)
             {
                 m_bSelectAll = b; if (b)
-                {
                     OnSelectAll(this);
-                }
             }
 
             virtual void MakeCaratVisible();
@@ -153,4 +151,4 @@ namespace Gwen
 
     }
 }
-#endif
+#endif // ifndef GWEN_CONTROLS_TEXTBOX_H

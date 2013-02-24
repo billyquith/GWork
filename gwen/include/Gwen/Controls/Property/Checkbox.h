@@ -6,10 +6,10 @@
 
 #pragma once
 #ifndef GWEN_CONTROLS_PROPERTY_CHECKBOX_H
-#   define GWEN_CONTROLS_PROPERTY_CHECKBOX_H
+#define GWEN_CONTROLS_PROPERTY_CHECKBOX_H
 
-#   include "Gwen/Controls/Property/BaseProperty.h"
-#   include "Gwen/Controls/CheckBox.h"
+#include "Gwen/Controls/Property/BaseProperty.h"
+#include "Gwen/Controls/CheckBox.h"
 
 namespace Gwen
 {
@@ -40,9 +40,7 @@ namespace Gwen
                 virtual void SetPropertyValue(const TextObject& v, bool bFireChangeEvents)
                 {
                     if (v == L"1" || v == L"true" || v == L"TRUE" || v == L"yes" || v == L"YES")
-                    {
                         return m_Checkbox->SetChecked(true);
-                    }
 
                     return m_Checkbox->SetChecked(false);
                 }
@@ -64,4 +62,4 @@ namespace Gwen
         }
     }
 }
-#endif
+#endif // ifndef GWEN_CONTROLS_PROPERTY_CHECKBOX_H

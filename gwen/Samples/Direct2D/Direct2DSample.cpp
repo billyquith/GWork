@@ -31,19 +31,19 @@ Gwen::Renderer::Direct2D* g_pRenderer = NULL;
 HWND CreateGameWindow(void)
 {
     WNDCLASS wc;
-    ZeroMemory( &wc, sizeof(wc) );
+    ZeroMemory(&wc, sizeof(wc));
     wc.style            = CS_HREDRAW|CS_VREDRAW|CS_OWNDC;
     wc.lpfnWndProc      = DefWindowProc;
     wc.hInstance        = GetModuleHandle(NULL);
     wc.lpszClassName    = L"GWENWindow";
     wc.hCursor          = LoadCursor(NULL, IDC_ARROW);
     RegisterClass(&wc);
-    HWND hWindow = CreateWindowEx( (WS_EX_APPWINDOW|WS_EX_WINDOWEDGE), wc.lpszClassName,
-                                   L"GWEN - Direct 2D Sample",
-                                   (WS_OVERLAPPEDWINDOW|WS_CLIPSIBLINGS|
-                                    WS_CLIPCHILDREN)&~(WS_MINIMIZEBOX|WS_MAXIMIZEBOX|WS_THICKFRAME),
-                                   -1, -1, 1004, 650, NULL, NULL, GetModuleHandle(
-                                       NULL), NULL );
+    HWND hWindow = CreateWindowEx((WS_EX_APPWINDOW|WS_EX_WINDOWEDGE), wc.lpszClassName,
+                                  L"GWEN - Direct 2D Sample",
+                                  (WS_OVERLAPPEDWINDOW|WS_CLIPSIBLINGS|
+                                   WS_CLIPCHILDREN)&~(WS_MINIMIZEBOX|WS_MAXIMIZEBOX|WS_THICKFRAME),
+                                  -1, -1, 1004, 650, NULL, NULL, GetModuleHandle(
+                                      NULL), NULL);
     ShowWindow(hWindow, SW_SHOW);
     SetForegroundWindow(hWindow);
     SetFocus(hWindow);
@@ -66,7 +66,7 @@ int main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCm
     hr = DWriteCreateFactory(
         DWRITE_FACTORY_TYPE_SHARED,
         __uuidof(IDWriteFactory),
-        reinterpret_cast< IUnknown** >(&g_pDWriteFactory)
+        reinterpret_cast<IUnknown**>(&g_pDWriteFactory)
         );
     hr = CoInitialize(NULL);
     hr = CoCreateInstance(
@@ -74,7 +74,7 @@ int main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCm
         NULL,
         CLSCTX_INPROC_SERVER,
         IID_IWICImagingFactory,
-        reinterpret_cast< void** >(&g_pWICFactory)
+        reinterpret_cast<void**>(&g_pWICFactory)
         );
     g_pHWND = CreateGameWindow();
     createDeviceResources();
@@ -146,7 +146,7 @@ void runSample()
     Gwen::Controls::Canvas* pCanvas = new Gwen::Controls::Canvas(&skin);
     pCanvas->SetSize(FrameBounds.right, FrameBounds.bottom);
     pCanvas->SetDrawBackground(true);
-    pCanvas->SetBackgroundColor( Gwen::Color(150, 170, 170, 255) );
+    pCanvas->SetBackgroundColor(Gwen::Color(150, 170, 170, 255));
     //
     // Create our unittest control (which is a Window with controls in it)
     //
@@ -166,22 +166,18 @@ void runSample()
     while (true)
     {
         // Skip out if the window is closed
-        if ( !IsWindowVisible(g_pHWND) )
-        {
+        if (!IsWindowVisible(g_pHWND))
             break;
-        }
 
         // If we have a message from windows..
-        if ( PeekMessage(&msg, NULL, 0, 0, PM_REMOVE) )
+        if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
         {
             // .. give it to the input handler to process
             GwenInput.ProcessMessage(msg);
 
             // if it's QUIT then quit..
             if (msg.message == WM_QUIT)
-            {
                 break;
-            }
 
             // Handle the regular window stuff..
             TranslateMessage(&msg);
@@ -189,11 +185,11 @@ void runSample()
         }
 
         {
-            if ( SUCCEEDED( createDeviceResources() ) )
+            if (SUCCEEDED(createDeviceResources()))
             {
                 g_pRT->BeginDraw();
-                g_pRT->SetTransform( D2D1::Matrix3x2F::Identity() );
-                g_pRT->Clear( D2D1::ColorF(D2D1::ColorF::White) );
+                g_pRT->SetTransform(D2D1::Matrix3x2F::Identity());
+                g_pRT->Clear(D2D1::ColorF(D2D1::ColorF::White));
                 // This is how easy it is to render GWEN!
                 pCanvas->RenderCanvas();
                 HRESULT hr = g_pRT->EndDraw();

@@ -6,14 +6,14 @@
 
 #pragma once
 #ifndef GWEN_CONTROLS_PROPERTYTREE_H
-#   define GWEN_CONTROLS_PROPERTYTREE_H
+#define GWEN_CONTROLS_PROPERTYTREE_H
 
-#   include "Gwen/Controls/Base.h"
-#   include "Gwen/Controls/Label.h"
-#   include "Gwen/Gwen.h"
-#   include "Gwen/Skin.h"
-#   include "Gwen/Controls/TreeControl.h"
-#   include "Gwen/Controls/Properties.h"
+#include "Gwen/Controls/Base.h"
+#include "Gwen/Controls/Label.h"
+#include "Gwen/Gwen.h"
+#include "Gwen/Skin.h"
+#include "Gwen/Controls/TreeControl.h"
+#include "Gwen/Controls/Properties.h"
 
 
 namespace Gwen
@@ -31,7 +31,7 @@ namespace Gwen
 
             virtual void Render(Skin::Base* skin)
             {
-                skin->DrawPropertyTreeNode( this, m_InnerPanel->X(), m_InnerPanel->Y() );
+                skin->DrawPropertyTreeNode(this, m_InnerPanel->X(), m_InnerPanel->Y());
             }
 
         };
@@ -52,4 +52,4 @@ namespace Gwen
 
     }
 }
-#endif
+#endif // ifndef GWEN_CONTROLS_PROPERTYTREE_H

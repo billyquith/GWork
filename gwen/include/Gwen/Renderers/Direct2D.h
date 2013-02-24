@@ -106,4 +106,4 @@ namespace Gwen
 
     }
 }
-#endif
+#endif // ifndef GWEN_RENDERERS_DIRECT2D_H

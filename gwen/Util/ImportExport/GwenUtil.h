@@ -137,19 +137,27 @@ namespace GwenUtil
             //
             // Setting non-string values
             //
-            template <typename TValue> TreeT<TString>& SetChildVar(TString strKey, TValue strValue);
-            template <typename TValue> TValue          ChildVar(TString strKey,
-                                                                TValue Default) const;
-            template <typename TValue> void   Var(TValue strValue);
-            template <typename TValue> TValue Var() const;
-            template <typename TValue> bool   IsVar() const;
+            template <typename TValue>
+            TreeT<TString>& SetChildVar(TString strKey, TValue strValue);
+            template <typename TValue>
+            TValue ChildVar(TString strKey,
+                            TValue Default) const;
+            template <typename TValue>
+            void Var(TValue strValue);
+            template <typename TValue>
+            TValue Var() const;
+            template <typename TValue>
+            bool IsVar() const;
 
             // Utility methods
             //
-            template <typename TValue> TString       VarToString(TValue var) const;
-            template <typename TValue> TValue        StringToVar(const TString& str) const;
-            template <typename TValue> unsigned char VarID() const;
-            bool                                     IsBranch() const
+            template <typename TValue>
+            TString VarToString(TValue var) const;
+            template <typename TValue>
+            TValue StringToVar(const TString& str) const;
+            template <typename TValue>
+            unsigned char VarID() const;
+            bool          IsBranch() const
             {
                 return m_Info == 0;
             }
@@ -326,4 +334,4 @@ namespace GwenUtil
 
 }
 
-#endif
+#endif // ifndef IMPORTEXPORT_UIDATA_H

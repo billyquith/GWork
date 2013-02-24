@@ -9,7 +9,7 @@ namespace Gwen
     namespace ControlFactory
     {
         class Base;
-        typedef std::list< ControlFactory::Base* >List;
+        typedef std::list<ControlFactory::Base*> List;
 
         List&                 GetList();
         ControlFactory::Base* Find(const Gwen::String& name);
@@ -19,7 +19,7 @@ namespace Gwen
         {
         public:
 
-            typedef std::list< Property* >List;
+            typedef std::list<Property*> List;
 
             virtual Gwen::String Name() = 0;
             virtual Gwen::String Description() = 0;
@@ -62,9 +62,7 @@ namespace Gwen
                 for (int i = 0; i < NumCount(); i++)
                 {
                     if (NumName(i) == str)
-                    {
                         NumSet(ctrl, i, f);
-                    }
                 }
             }
 
@@ -86,9 +84,7 @@ namespace Gwen
             virtual Gwen::UnicodeString OptionGet(int i)
             {
                 if (i == 0)
-                {
                     return False;
-                }
 
                 return True;
             }
@@ -160,16 +156,16 @@ namespace Gwen
     ThisName() : BaseClass()
 
 #define GWEN_CONTROL_FACTORY(ThisName) \
-    void GWENCONTROLFACTORY ## ThisName() \
+    void GWENCONTROLFACTORY##ThisName() \
     { \
         new ThisName(); \
     }
 
 #define DECLARE_GWEN_CONTROL_FACTORY(ThisName) \
-    extern void GWENCONTROLFACTORY ## ThisName(); \
-    GWENCONTROLFACTORY ## ThisName();
+    extern void GWENCONTROLFACTORY##ThisName(); \
+    GWENCONTROLFACTORY##ThisName();
 
 #define GWEN_CONTROL_FACTORY_PROPERTY(_name_, _description_) \
 public: \
-    Gwen::String Name() { return # _name_; } \
+    Gwen::String Name() { return #_name_; } \
     Gwen::String Description() { return _description_; }

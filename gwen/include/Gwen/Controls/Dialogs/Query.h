@@ -14,4 +14,4 @@ namespace Gwen
     }
 }
 
-#endif
+#endif // ifndef GWEN_CONTROLS_DIALOGS_QUERY_H

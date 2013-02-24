@@ -9,16 +9,16 @@
 #include "Gwen/Input/Windows.h"
 
 #ifdef USE_DEBUG_FONT
-#   include "Gwen/Renderers/OpenGL_DebugFont.h"
+#include "Gwen/Renderers/OpenGL_DebugFont.h"
 #else
-#   include "Gwen/Renderers/OpenGL.h"
+#include "Gwen/Renderers/OpenGL.h"
 #endif
 #include "gl/glew.h"
 
 HWND CreateGameWindow(void)
 {
     WNDCLASSW wc;
-    ZeroMemory( &wc, sizeof(wc) );
+    ZeroMemory(&wc, sizeof(wc));
     wc.style            = CS_HREDRAW|CS_VREDRAW|CS_OWNDC;
     wc.lpfnWndProc      = DefWindowProc;
     wc.hInstance        = GetModuleHandle(NULL);
@@ -26,19 +26,19 @@ HWND CreateGameWindow(void)
     wc.hCursor          = LoadCursor(NULL, IDC_ARROW);
     RegisterClassW(&wc);
 #ifdef USE_DEBUG_FONT
-    HWND hWindow = CreateWindowExW( (WS_EX_APPWINDOW|WS_EX_WINDOWEDGE), wc.lpszClassName,
-                                    L"GWEN - OpenGL Sample (Using embedded debug font renderer)",
-                                    (WS_OVERLAPPEDWINDOW|WS_CLIPSIBLINGS|
-                                     WS_CLIPCHILDREN)&~(WS_MINIMIZEBOX|WS_MAXIMIZEBOX|WS_THICKFRAME),
-                                    -1, -1, 1004, 650, NULL, NULL, GetModuleHandle(
-                                        NULL), NULL );
+    HWND hWindow = CreateWindowExW((WS_EX_APPWINDOW|WS_EX_WINDOWEDGE), wc.lpszClassName,
+                                   L"GWEN - OpenGL Sample (Using embedded debug font renderer)",
+                                   (WS_OVERLAPPEDWINDOW|WS_CLIPSIBLINGS|
+                                    WS_CLIPCHILDREN)&~(WS_MINIMIZEBOX|WS_MAXIMIZEBOX|WS_THICKFRAME),
+                                   -1, -1, 1004, 650, NULL, NULL, GetModuleHandle(
+                                       NULL), NULL);
 #else
-    HWND hWindow = CreateWindowExW( (WS_EX_APPWINDOW|WS_EX_WINDOWEDGE), wc.lpszClassName,
-                                    L"GWEN - OpenGL Sample (No cross platform way to render fonts in OpenGL)",
-                                    (WS_OVERLAPPEDWINDOW|WS_CLIPSIBLINGS|
-                                     WS_CLIPCHILDREN)&~(WS_MINIMIZEBOX|WS_MAXIMIZEBOX|WS_THICKFRAME), -1, -1, 1004, 650, NULL, NULL,
-                                    GetModuleHandle(NULL), NULL );
-#endif
+    HWND hWindow = CreateWindowExW((WS_EX_APPWINDOW|WS_EX_WINDOWEDGE), wc.lpszClassName,
+                                   L"GWEN - OpenGL Sample (No cross platform way to render fonts in OpenGL)",
+                                   (WS_OVERLAPPEDWINDOW|WS_CLIPSIBLINGS|
+                                    WS_CLIPCHILDREN)&~(WS_MINIMIZEBOX|WS_MAXIMIZEBOX|WS_THICKFRAME), -1, -1, 1004, 650, NULL, NULL,
+                                   GetModuleHandle(NULL), NULL);
+#endif // ifdef USE_DEBUG_FONT
     ShowWindow(hWindow, SW_SHOW);
     SetForegroundWindow(hWindow);
     SetFocus(hWindow);
@@ -65,16 +65,14 @@ HGLRC CreateOpenGLDeviceContext()
     int pixelFormat = ChoosePixelFormat(GetDC(g_pHWND), &pfd);
 
     if (pixelFormat == 0)
-    {
-        FatalAppExit( NULL, TEXT("ChoosePixelFormat() failed!") );
-    }
+        FatalAppExit(NULL, TEXT("ChoosePixelFormat() failed!"));
 
     SetPixelFormat(GetDC(g_pHWND), pixelFormat, &pfd);
-    HGLRC OpenGLContext = wglCreateContext( GetDC(g_pHWND) );
+    HGLRC OpenGLContext = wglCreateContext(GetDC(g_pHWND));
     wglMakeCurrent(GetDC(g_pHWND), OpenGLContext);
     RECT r;
 
-    if ( GetClientRect(g_pHWND, &r) )
+    if (GetClientRect(g_pHWND, &r))
     {
         glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
@@ -116,7 +114,7 @@ int main()
     Gwen::Controls::Canvas* pCanvas = new Gwen::Controls::Canvas(pSkin);
     pCanvas->SetSize(998, 650-24);
     pCanvas->SetDrawBackground(true);
-    pCanvas->SetBackgroundColor( Gwen::Color(150, 170, 170, 255) );
+    pCanvas->SetBackgroundColor(Gwen::Color(150, 170, 170, 255));
     //
     // Create our unittest control (which is a Window with controls in it)
     //
@@ -136,22 +134,18 @@ int main()
     while (true)
     {
         // Skip out if the window is closed
-        if ( !IsWindowVisible(g_pHWND) )
-        {
+        if (!IsWindowVisible(g_pHWND))
             break;
-        }
 
         // If we have a message from windows..
-        if ( PeekMessage(&msg, NULL, 0, 0, PM_REMOVE) )
+        if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
         {
             // .. give it to the input handler to process
             GwenInput.ProcessMessage(msg);
 
             // if it's QUIT then quit..
             if (msg.message == WM_QUIT)
-            {
                 break;
-            }
 
             // Handle the regular window stuff..
             TranslateMessage(&msg);
@@ -162,7 +156,7 @@ int main()
         {
             glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
             pCanvas->RenderCanvas();
-            SwapBuffers( GetDC(g_pHWND) );
+            SwapBuffers(GetDC(g_pHWND));
         }
     }
 

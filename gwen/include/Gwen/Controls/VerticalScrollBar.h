@@ -6,11 +6,11 @@
 
 #pragma once
 #ifndef GWEN_CONTROLS_VERTICALSCROLLBAR_H
-#   define GWEN_CONTROLS_VERTICALSCROLLBAR_H
-#   include "Gwen/Controls/Base.h"
-#   include "Gwen/Controls/ScrollBar.h"
-#   include "Gwen/Gwen.h"
-#   include "Gwen/Skin.h"
+#define GWEN_CONTROLS_VERTICALSCROLLBAR_H
+#include "Gwen/Controls/Base.h"
+#include "Gwen/Controls/ScrollBar.h"
+#include "Gwen/Gwen.h"
+#include "Gwen/Skin.h"
 
 namespace Gwen
 {
@@ -59,4 +59,4 @@ namespace Gwen
 
     }
 }
-#endif
+#endif // ifndef GWEN_CONTROLS_VERTICALSCROLLBAR_H

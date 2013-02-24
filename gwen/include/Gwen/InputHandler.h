@@ -6,10 +6,10 @@
 
 #pragma once
 #ifndef GWEN_INPUTHANDLER_H
-#   define GWEN_INPUTHANDLER_H
+#define GWEN_INPUTHANDLER_H
 
-#   include <queue>
-#   include "Gwen/Gwen.h"
+#include <queue>
+#include "Gwen/Gwen.h"
 
 namespace Gwen
 {
@@ -88,4 +88,4 @@ namespace Gwen
 
     }
 }
-#endif
+#endif // ifndef GWEN_INPUTHANDLER_H

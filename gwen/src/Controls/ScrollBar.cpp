@@ -48,9 +48,7 @@ void BaseScrollBar::BarMovedNotification()
 void BaseScrollBar::SetContentSize(float size)
 {
     if (m_fContentSize != size)
-    {
         Invalidate();
-    }
 
     m_fContentSize = size;
 }
@@ -58,9 +56,7 @@ void BaseScrollBar::SetContentSize(float size)
 void BaseScrollBar::SetViewableContentSize(float size)
 {
     if (m_fViewableContentSize != size)
-    {
         Invalidate();
-    }
 
     m_fViewableContentSize = size;
 }
@@ -68,9 +64,7 @@ void BaseScrollBar::SetViewableContentSize(float size)
 bool BaseScrollBar::SetScrolledAmount(float amount, bool forceUpdate)
 {
     if (m_fScrolledAmount == amount && !forceUpdate)
-    {
         return false;
-    }
 
     m_fScrolledAmount = amount;
     Invalidate();

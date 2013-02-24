@@ -52,14 +52,14 @@ public:
         {
             Gwen::Controls::Label* label = new Gwen::Controls::Label(this);
             label->SetText(L"Wow, Coloured Text");
-            label->SetTextColor( Gwen::Color(0, 0, 255, 255) );
+            label->SetTextColor(Gwen::Color(0, 0, 255, 255));
             label->SizeToContents();
             label->SetPos(10, 130);
         }
         {
             Gwen::Controls::Label* label = new Gwen::Controls::Label(this);
             label->SetText(L"Coloured Text With Alpha");
-            label->SetTextColor( Gwen::Color(0, 0, 255, 100) );
+            label->SetTextColor(Gwen::Color(0, 0, 255, 100));
             label->SizeToContents();
             label->SetPos(10, 150);
         }

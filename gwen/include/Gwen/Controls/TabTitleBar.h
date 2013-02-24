@@ -6,13 +6,13 @@
 
 #pragma once
 #ifndef GWEN_CONTROLS_TABTITLEBAR_H
-#   define GWEN_CONTROLS_TABTITLEBAR_H
+#define GWEN_CONTROLS_TABTITLEBAR_H
 
-#   include "Gwen/Controls/Base.h"
-#   include "Gwen/Controls/Label.h"
-#   include "Gwen/Controls/TabButton.h"
-#   include "Gwen/DragAndDrop.h"
-#   include "Gwen/Skin.h"
+#include "Gwen/Controls/Base.h"
+#include "Gwen/Controls/Label.h"
+#include "Gwen/Controls/TabButton.h"
+#include "Gwen/DragAndDrop.h"
+#include "Gwen/Skin.h"
 
 namespace Gwen
 {
@@ -25,8 +25,8 @@ namespace Gwen
             GWEN_CONTROL_INLINE(TabTitleBar, Label)
             {
                 SetMouseInputEnabled(true);
-                SetTextPadding( Gwen::Padding(5, 2, 5, 2) );
-                SetPadding( Gwen::Padding(1, 2, 1, 2) );
+                SetTextPadding(Gwen::Padding(5, 2, 5, 2));
+                SetPadding(Gwen::Padding(1, 2, 1, 2));
                 DragAndDrop_SetPackage(true, "TabWindowMove");
             }
 
@@ -43,7 +43,7 @@ namespace Gwen
 
             void UpdateFromTab(TabButton* pButton)
             {
-                SetText( pButton->GetText() );
+                SetText(pButton->GetText());
                 SizeToContents();
             }
 
@@ -54,4 +54,4 @@ namespace Gwen
 
     }
 }
-#endif
+#endif // ifndef GWEN_CONTROLS_TABTITLEBAR_H

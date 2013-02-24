@@ -20,12 +20,12 @@ GWEN_CONTROL_CONSTRUCTOR(SliderBar)
 
 void SliderBar::Render(Skin::Base* skin)
 {
-    skin->DrawSlideButton( this, IsDepressed(), IsHorizontal() );
+    skin->DrawSlideButton(this, IsDepressed(), IsHorizontal());
 }
 
 GWEN_CONTROL_CONSTRUCTOR(Slider)
 {
-    SetBounds( Gwen::Rect(0, 0, 32, 128) );
+    SetBounds(Gwen::Rect(0, 0, 32, 128));
     m_SliderBar = new SliderBar(this);
     m_SliderBar->onDragged.Add(this, &Slider::OnMoved);
     m_fMin = 0.0f;
@@ -38,7 +38,7 @@ GWEN_CONTROL_CONSTRUCTOR(Slider)
 
 void Slider::OnMoved(Controls::Base* /*control*/)
 {
-    SetValueInternal( CalculateValue() );
+    SetValueInternal(CalculateValue());
 }
 
 void Slider::Layout(Skin::Base* skin)
@@ -56,7 +56,7 @@ void Slider::SetFloatValue(float val, bool /*forceUpdate*/)
     val = Clamp(val, m_fMin, m_fMax);
 
     // Normalize Value
-    val = (val-m_fMin) / (m_fMax-m_fMin);
+    val = (val-m_fMin)/(m_fMax-m_fMin);
     SetValueInternal(val);
     Redraw();
 }
@@ -65,7 +65,7 @@ void Slider::SetValueInternal(float val)
 {
     if (m_bClampToNotches)
     {
-        val = floorf( val*(float)m_iNumNotches + 0.5f );
+        val = floorf(val*(float)m_iNumNotches+0.5f);
         val /= (float)m_iNumNotches;
     }
 
@@ -80,7 +80,7 @@ void Slider::SetValueInternal(float val)
 
 float Slider::GetFloatValue()
 {
-    return m_fMin+( m_fValue*(m_fMax-m_fMin) );
+    return m_fMin+(m_fValue*(m_fMax-m_fMin));
 }
 
 void Slider::SetRange(float fMin, float fMax)
@@ -92,14 +92,10 @@ void Slider::SetRange(float fMin, float fMax)
 void Slider::RenderFocus(Gwen::Skin::Base* skin)
 {
     if (Gwen::KeyboardFocus != this)
-    {
         return;
-    }
 
-    if ( !IsTabable() )
-    {
+    if (!IsTabable())
         return;
-    }
 
     skin->DrawKeyboardHighlight(this, GetRenderBounds(), 0);
 }

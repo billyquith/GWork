@@ -6,18 +6,18 @@
 
 #pragma once
 #ifndef GWEN_FONT_H
-#   define GWEN_FONT_H
+#define GWEN_FONT_H
 
-#   include <string>
-#   include <list>
+#include <string>
+#include <list>
 
-#   include "Gwen/BaseRender.h"
+#include "Gwen/BaseRender.h"
 
 namespace Gwen
 {
     struct Font
     {
-        typedef std::list< Font* >List;
+        typedef std::list<Font*> List;
 
         Font()
         {
@@ -45,4 +45,4 @@ namespace Gwen
 
 
 } // namespace Gwen
-#endif
+#endif // ifndef GWEN_FONT_H

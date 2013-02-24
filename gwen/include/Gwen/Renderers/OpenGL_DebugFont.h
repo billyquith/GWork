@@ -41,4 +41,4 @@ namespace Gwen
 
     }
 }
-#endif
+#endif // ifndef GWEN_RENDERERS_OPENGL_DEBUGFONT_H

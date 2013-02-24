@@ -1,6 +1,6 @@
 #pragma once
 #ifndef GWEN_WINDOW_PROVIDER_H
-#   define GWEN_WINDOW_PROVIDER_H
+#define GWEN_WINDOW_PROVIDER_H
 
 namespace Gwen
 {
@@ -14,4 +14,4 @@ namespace Gwen
 
 }
 
-#endif
+#endif // ifndef GWEN_WINDOW_PROVIDER_H

@@ -18,7 +18,8 @@ namespace Gwen
         //
         void GWEN_EXPORT FileSaveEx(bool bUseSystem, const String& Name, const String& StartPath,
                                     const String& Extension, Gwen::Event::Handler* pHandler = NULL,
-                                    Gwen::Event::Handler::FunctionWithInformation fnCallback = NULL);
+                                    Gwen::Event::Handler::FunctionWithInformation fnCallback =
+                                        NULL);
 
         //! Open a dialog to save a file.
         //!
@@ -34,16 +35,16 @@ namespace Gwen
         //! @note Templated function simply to avoid having to manually cast the
         //!       callback function.
         //
-        template < typename A >
+        template <typename A>
         void FileSave(bool bUseSystem, const String& Name, const String& StartPath,
                       const String& Extension, Gwen::Event::Handler* pHandler = NULL,
                       A fnCallback = NULL)
         {
-            FileSaveEx( bUseSystem, Name, StartPath, Extension, pHandler,
-                        static_cast< Gwen::Event::Handler::FunctionWithInformation >(fnCallback) );
+            FileSaveEx(bUseSystem, Name, StartPath, Extension, pHandler,
+                       static_cast<Gwen::Event::Handler::FunctionWithInformation>(fnCallback));
         }
 
     }
 }
 
-#endif
+#endif // ifndef GWEN_CONTROLS_DIALOGS_FILESAVE_H
