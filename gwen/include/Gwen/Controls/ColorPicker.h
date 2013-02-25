@@ -33,40 +33,15 @@ namespace Gwen
                 skin->DrawColorDisplay(this, m_Color);
             }
 
-            virtual void SetColor(Gwen::Color color)
-            {
-                m_Color = color;
-            }
+            virtual void SetColor(Gwen::Color color)    { m_Color = color; }
+            virtual Gwen::Color GetColor()              { return m_Color; }
 
-            virtual Gwen::Color GetColor()
-            {
-                return m_Color;
-            }
+            virtual void SetRed(int red)                { m_Color.r = red; }
+            virtual void SetGreen(int green)            { m_Color.g = green; }
+            virtual void SetBlue(int blue)              { m_Color.b = blue; }
+            virtual void SetAlpha(int alpha)            { m_Color.a = alpha; }
 
-            virtual void SetRed(int red)
-            {
-                m_Color.r = red;
-            }
-
-            virtual void SetGreen(int green)
-            {
-                m_Color.g = green;
-            }
-
-            virtual void SetBlue(int blue)
-            {
-                m_Color.b = blue;
-            }
-
-            virtual void SetAlpha(int alpha)
-            {
-                m_Color.a = alpha;
-            }
-
-            virtual void SetDrawCheckers(bool should)
-            {
-                m_DrawCheckers = should;
-            }
+            virtual void SetDrawCheckers(bool should)   { m_DrawCheckers = should; }
 
         protected:
 
@@ -76,6 +51,7 @@ namespace Gwen
 
 
     }
+    
     namespace Controls
     {
         class GWEN_EXPORT ColorPicker : public Base
@@ -103,32 +79,16 @@ namespace Gwen
             Gwen::String GetColorFromName(Gwen::String name);
             virtual void SetAlphaVisible(bool visible);
 
-            virtual void SetRed(int red)
-            {
-                m_Color.r = red;
-            }
-
-            virtual void SetGreen(int green)
-            {
-                m_Color.g = green;
-            }
-
-            virtual void SetBlue(int blue)
-            {
-                m_Color.b = blue;
-            }
-
-            virtual void SetAlpha(int alpha)
-            {
-                m_Color.a = alpha;
-            }
+            virtual void SetRed(int red)        { m_Color.r = red; }
+            virtual void SetGreen(int green)    { m_Color.g = green; }
+            virtual void SetBlue(int blue)      { m_Color.b = blue; }
+            virtual void SetAlpha(int alpha)    { m_Color.a = alpha; }
 
             Event::Caller onColorChanged;
 
         protected:
 
             Gwen::Color m_Color;
-
         };
 
 
