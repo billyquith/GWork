@@ -15,6 +15,9 @@ using namespace Gwen;
 using namespace Gwen::Controls;
 using namespace Gwen::ControlsInternal;
 
+static const int gc_pickChannelHeight = 40;     // As small as boxes will go without clipping.
+
+
 GWEN_CONTROL_CONSTRUCTOR(ColorPicker)
 {
     SetMouseInputEnabled(true);
@@ -25,23 +28,27 @@ GWEN_CONTROL_CONSTRUCTOR(ColorPicker)
 
 void ColorPicker::CreateColorControl(Gwen::String name, int y)
 {
-    int colorSize = 12;
+    const int colorSize = 10;
+    
     GroupBox* colorGroup = new GroupBox(this);
     colorGroup->SetPos(10, y);
     colorGroup->SetText(name);
-    colorGroup->SetSize(160, 35);
+    colorGroup->SetSize(160, gc_pickChannelHeight);
     colorGroup->SetName(name+"groupbox");
+    
     ColorDisplay* disp = new ColorDisplay(colorGroup);
     disp->SetName(name);
-    disp->SetBounds(0, 10, colorSize, colorSize);
+    disp->SetBounds(0, 0, colorSize, colorSize);
+    
     TextBoxNumeric* numeric = new TextBoxNumeric(colorGroup);
     numeric->SetName(name+"Box");
-    numeric->SetPos(105, 7);
+    numeric->SetPos(105, 0);
     numeric->SetSize(26, 16);
     numeric->SetSelectAllOnFocus(true);
     numeric->onTextChanged.Add(this, &ColorPicker::NumericTyped);
+    
     HorizontalSlider* slider = new HorizontalSlider(colorGroup);
-    slider->SetPos(colorSize+5, 8);
+    slider->SetPos(colorSize+5, 0);
     slider->SetRange(0, 255);
     slider->SetSize(80, Gwen::Max(colorSize, 15));
     slider->SetName(name+"Slider");
@@ -58,13 +65,7 @@ void ColorPicker::NumericTyped(Gwen::Controls::Base* control)
     if (box->GetText() == L"")
         return;
 
-    int textValue = atoi(box->GetText().c_str());
-
-    if (textValue < 0)
-        textValue = 0;
-
-    if (textValue > 255)
-        textValue = 255;
+    const int textValue = Clamp( atoi(box->GetText().c_str()), 0, 255 );
 
     if (box->GetName().find("Red") != Gwen::String::npos)
         SetRed(textValue);
@@ -89,17 +90,19 @@ void ColorPicker::SetColor(Gwen::Color color)
 
 void ColorPicker::CreateControls()
 {
-    int startY = 5;
-    int height = 35;
+    const int startY = 0;
+    
     CreateColorControl("Red",   startY);
-    CreateColorControl("Green", startY+height);
-    CreateColorControl("Blue",  startY+height*2);
-    CreateColorControl("Alpha", startY+height*3);
+    CreateColorControl("Green", startY+gc_pickChannelHeight);
+    CreateColorControl("Blue",  startY+gc_pickChannelHeight*2);
+    CreateColorControl("Alpha", startY+gc_pickChannelHeight*3);
+    
     GroupBox* finalGroup = new GroupBox(this);
     finalGroup->SetPos(180, 40);
     finalGroup->SetSize(60, 60);
     finalGroup->SetText("Result");
     finalGroup->SetName("ResultGroupBox");
+    
     ColorDisplay* disp = new ColorDisplay(finalGroup);
     disp->SetName("Result");
     disp->SetBounds(0, 10, 32, 32);
@@ -111,9 +114,10 @@ void ColorPicker::UpdateColorControls(Gwen::String name, Gwen::Color col, int sl
 {
     ColorDisplay* disp = gwen_cast<ColorDisplay>(FindChildByName(name, true));
     disp->SetColor(col);
-    HorizontalSlider* slider =
-        gwen_cast<HorizontalSlider>(FindChildByName(name+"Slider", true));
+    
+    HorizontalSlider* slider = gwen_cast<HorizontalSlider>(FindChildByName(name+"Slider", true));
     slider->SetFloatValue(sliderVal);
+    
     TextBoxNumeric* box = gwen_cast<TextBoxNumeric>(FindChildByName(name+"Box", true));
     box->SetText(Gwen::Utility::ToString(sliderVal));
 }
@@ -125,6 +129,7 @@ void ColorPicker::UpdateControls()
     UpdateColorControls("Green",   Color(0, GetColor().g, 0, 255), GetColor().g);
     UpdateColorControls("Blue",    Color(0, 0, GetColor().b, 255), GetColor().b);
     UpdateColorControls("Alpha",   Color(255, 255, 255, GetColor().a), GetColor().a);
+    
     ColorDisplay* disp = gwen_cast<ColorDisplay>(FindChildByName("Result", true));
     disp->SetColor(Color(GetColor().r, GetColor().g, GetColor().b, GetColor().a));
     onColorChanged.Call(this);
@@ -160,7 +165,7 @@ void ColorPicker::Layout(Skin::Base* skin)
     GroupBox* groupBox = gwen_cast<GroupBox>(FindChildByName("ResultGroupBox", true));
 
     if (groupBox)
-        groupBox->SetPos(groupBox->X(), Height()*0.5f-groupBox->Height()*0.5f);
+        groupBox->SetPos(groupBox->X(), Height()/2 - groupBox->Height()/2);
 
     UpdateControls();
 }
