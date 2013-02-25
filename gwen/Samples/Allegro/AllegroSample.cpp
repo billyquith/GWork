@@ -74,16 +74,14 @@ int main(int argc, char** argv)
 
     while (!bQuit)
     {
-        while (al_get_next_event(event_queue, &ev))
-        {
-            if (ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE)
-                bQuit = true;
-
-            GwenInput.ProcessMessage(ev);
-        }
-
         pCanvas->RenderCanvas();
         al_flip_display();
+        
+        al_wait_for_event(event_queue, &ev);
+        if (ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE)
+            bQuit = true;
+    
+        GwenInput.ProcessMessage(ev);
     }
 
     al_destroy_display(display);

@@ -105,8 +105,8 @@ namespace Gwen
                 {
                 case ALLEGRO_EVENT_MOUSE_AXES:
                     {
-                        int dx = event.mouse.x-m_MouseX;
-                        int dy = event.mouse.y-m_MouseY;
+                        int dx = event.mouse.dx;
+                        int dy = event.mouse.dy;
 
                         if (event.mouse.dz != 0)
                             return m_Canvas->InputMouseWheel(event.mouse.dz*60);
@@ -119,8 +119,7 @@ namespace Gwen
                 case ALLEGRO_EVENT_MOUSE_BUTTON_DOWN:
                 case ALLEGRO_EVENT_MOUSE_BUTTON_UP:
                     return m_Canvas->InputMouseButton(event.mouse.button-1,
-                                                      event.type ==
-                                                      ALLEGRO_EVENT_MOUSE_BUTTON_DOWN);
+                                                      event.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN);
 
                 case ALLEGRO_EVENT_KEY_CHAR:
                     return m_Canvas->InputCharacter(event.keyboard.unichar);
