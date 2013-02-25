@@ -174,17 +174,8 @@ void ColorLerpBox::OnMouseMoved(int x, int y, int /*deltaX*/, int /*deltaY*/)
         cursorPos = CanvasPosToLocal(Gwen::Point(x, y));
 
         // Do we have clamp?
-        if (cursorPos.x < 0)
-            cursorPos.x = 0;
-
-        if (cursorPos.x > Width())
-            cursorPos.x = Width();
-
-        if (cursorPos.y < 0)
-            cursorPos.y = 0;
-
-        if (cursorPos.y > Height())
-            cursorPos.y = Height();
+        cursorPos.x = Clamp(cursorPos.x, 0, Width());
+        cursorPos.y = Clamp(cursorPos.y, 0, Height());
 
         onSelectionChanged.Call(this);
     }
@@ -204,8 +195,8 @@ void ColorLerpBox::OnMouseClickLeft(int x, int y, bool bDown)
 
 Gwen::Color ColorLerpBox::GetColorAtPos(int x, int y)
 {
-    float xPercent = ((float)x/(float)Width());
-    float yPercent = 1-((float)y/(float)Height());
+    float xPercent = (float)x / (float)Width();
+    float yPercent = 1.f - (float)y/(float)Height();
     Gwen::Color result = HSVToColor(m_Hue, xPercent, yPercent);
     result.a = 255;
     return result;
