@@ -134,10 +134,8 @@ namespace Gwen
             const unsigned int w = pTexture->width;
             const unsigned int h = pTexture->height;
             al_draw_scaled_bitmap(bmp,
-                                  u1*w, v1*h, (u2-u1)*w, (v2-v1)*h,                //
-                                                                                   // source
-                                  rect.x, rect.y, rect.w, rect.h,    //
-                                                                     // destination
+                                  u1*w, v1*h, (u2-u1)*w, (v2-v1)*h,  // source
+                                  rect.x, rect.y, rect.w, rect.h,    // destination
                                   0);
         }
 
@@ -172,10 +170,13 @@ namespace Gwen
             al_draw_rectangle(rect.x, rect.y, rect.x+rect.w, rect.y+rect.h, m_Color, 0.f);
         }
 
-        void Allegro::DrawPixel(int x, int y)
-        {
-            al_put_pixel(x+0.5f, y+0.5f, m_Color);
-        }
+        //  Unfortunately I think we need to lock the target texture to use this. The default
+        //  is that a rect of size (1,1) will be drawn.
+        //
+        //    void Allegro::DrawPixel(int x, int y)
+        //    {
+        //        al_put_pixel(x+0.5f, y+0.5f, m_Color);
+        //    }
 
         bool Allegro::BeginContext(Gwen::WindowProvider* pWindow)
         {

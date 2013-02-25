@@ -21,19 +21,24 @@ GWEN_CONTROL_CONSTRUCTOR(HSVColorPicker)
     SetMouseInputEnabled(true);
     SetSize(256, 64);
     SetCacheToTexture();
+    
     m_LerpBox = new Gwen::Controls::ColorLerpBox(this);
     m_LerpBox->onSelectionChanged.Add(this, &HSVColorPicker::ColorBoxChanged);
     m_LerpBox->Dock(Pos::Left);
+    
     m_ColorSlider = new Gwen::Controls::ColorSlider(this);
     m_ColorSlider->SetPos(m_LerpBox->Width()+15, 5);
     m_ColorSlider->onSelectionChanged.Add(this, &HSVColorPicker::ColorSliderChanged);
     m_ColorSlider->Dock(Pos::Left);
+    
     m_After = new Gwen::ControlsInternal::ColorDisplay(this);
     m_After->SetSize(48, 24);
     m_After->SetPos(m_ColorSlider->X()+m_ColorSlider->Width()+15, 5);
+    
     m_Before = new Gwen::ControlsInternal::ColorDisplay(this);
     m_Before->SetSize(48, 24);
     m_Before->SetPos(m_After->X(), 28);
+    
     int x = m_Before->X();
     int y = m_Before->Y()+30;
     {
@@ -41,6 +46,7 @@ GWEN_CONTROL_CONSTRUCTOR(HSVColorPicker)
         label->SetText(L"R:");
         label->SizeToContents();
         label->SetPos(x, y);
+        
         TextBoxNumeric* numeric = new TextBoxNumeric(this);
         numeric->SetName("RedBox");
         numeric->SetPos(x+15, y-1);
@@ -54,6 +60,7 @@ GWEN_CONTROL_CONSTRUCTOR(HSVColorPicker)
         label->SetText(L"G:");
         label->SizeToContents();
         label->SetPos(x, y);
+        
         TextBoxNumeric* numeric = new TextBoxNumeric(this);
         numeric->SetName("GreenBox");
         numeric->SetPos(x+15, y-1);
@@ -67,6 +74,7 @@ GWEN_CONTROL_CONSTRUCTOR(HSVColorPicker)
         label->SetText(L"B:");
         label->SizeToContents();
         label->SetPos(x, y);
+        
         TextBoxNumeric* numeric = new TextBoxNumeric(this);
         numeric->SetName("BlueBox");
         numeric->SetPos(x+15, y-1);
@@ -86,13 +94,7 @@ void HSVColorPicker::NumericTyped(Gwen::Controls::Base* control)
     if (box->GetText() == L"")
         return;
 
-    int textValue = atoi(box->GetText().c_str());
-
-    if (textValue < 0)
-        textValue = 0;
-
-    if (textValue > 255)
-        textValue = 255;
+    int textValue = Clamp( atoi(box->GetText().c_str()), 0, 255 );
 
     Gwen::Color newColor = GetColor();
 

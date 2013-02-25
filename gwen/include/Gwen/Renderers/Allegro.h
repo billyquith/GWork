@@ -46,7 +46,7 @@ namespace Gwen
                                     const Gwen::Color& col_default);
 
             void DrawLinedRect(Gwen::Rect rect);
-            void DrawPixel(int x, int y);
+            // void DrawPixel(int x, int y);
 
             bool BeginContext(Gwen::WindowProvider* pWindow);
             bool EndContext(Gwen::WindowProvider* pWindow);
@@ -55,7 +55,7 @@ namespace Gwen
         protected:
 
             ALLEGRO_COLOR m_Color;
-
+            
         };
 
 
