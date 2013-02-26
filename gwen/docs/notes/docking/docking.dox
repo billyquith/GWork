@@ -1,0 +1,54 @@
+/*!
+
+@page docking_notes Docking
+
+@note These notes are [from Garry's blog](http://garry.tv/post/9338161524/docking).
+
+I always feel like I learn better by looking at images rather than text.
+So here goes (this is in GWEN but it"s the same principle in GMod).
+
+### New Window
+![](dock01.png)
+
+### New Button called Bart
+![](dock02.png)
+
+### Dock Bart "Left"
+![](dock03.png)
+
+### New Button Homer - Dock "Fill"
+![](dock04.png)
+
+### Dock Bart "Bottom"
+![](dock05.png)
+
+### Dock Homer "Left"
+![](dock06.png)
+
+### Send Homer To The Back
+![](dock07.png)
+
+### Reduce Homer's Width
+![](dock08.png)
+
+### Add Marge - Dock "Fill"
+![](dock09.png)
+
+### Change Homer's Margin (0,0,4,0) (l,u,r,d)
+![](dock10.png)
+
+### Create Button ":D" on Homer, Dock "Bottom"
+![](dock11.png)
+
+### Change :D margin to (4,4,4,4)
+![](dock12.png)
+
+
+As you can see it makes laying out your controls set and forget. Previously
+you'd be setting the layout in something like PerformLayout - manually
+working out pixels, subtracting from the width of the parent. It gets messy.
+
+Docking isn't appropriate for everything but it works for a lot of stuff.
+It also has the advantage that it automatically scales when stuff gets resized.
+
+*/
