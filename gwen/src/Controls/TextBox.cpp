@@ -428,7 +428,7 @@ void TextBox::MakeCaratVisible()
             y = Height()-m_Text->Height()-GetPadding().bottom;
 
         if (m_iAlign&Pos::CenterV)
-            y = (Height()-m_Text->Height())*0.5;
+            y = (Height()-m_Text->Height()) / 2;
 
         m_Text->SetPos(x, y);
     }

@@ -547,8 +547,8 @@ namespace Gwen
 				virtual void DrawGroupBox( Gwen::Controls::Base* control, int textStart, int textHeight, int textWidth )
 				{
 					Gwen::Rect rect = control->GetRenderBounds();
-					rect.y += textHeight * 0.5f;
-					rect.h -= textHeight * 0.5f;
+					rect.y += textHeight/2;
+					rect.h -= textHeight/2;
 					Textures.GroupBox.Draw( GetRender(), rect, Gwen::Colors::White, true, false );
 					rect.x += textStart + textWidth - 4;
 					rect.w -= textStart + textWidth - 4;
@@ -732,19 +732,19 @@ namespace Gwen
 					if ( bIsHorizontal )
 					{
 						Gwen::Rect rect = control->GetRenderBounds();
-						rect.x += barSize * 0.5;
+						rect.x += barSize/2;
 						rect.w -= barSize;
-						rect.y += rect.h * 0.5 - 1;
+						rect.y += rect.h/2 - 1;
 						rect.h = 1;
 						GetRender()->SetDrawColor( Gwen::Color( 0, 0, 0, 100 ) );
-						DrawSliderNotchesH( rect, numNotches, barSize * 0.5 );
+						DrawSliderNotchesH( rect, numNotches, barSize/2 );
 						return GetRender()->DrawFilledRect( rect );
 					}
 
 					Gwen::Rect rect = control->GetRenderBounds();
-					rect.y += barSize * 0.5;
+					rect.y += barSize/2;
 					rect.h -= barSize;
-					rect.x += rect.w * 0.5 - 1;
+					rect.x += rect.w/2 - 1;
 					rect.w = 1;
 					GetRender()->SetDrawColor( Gwen::Color( 0, 0, 0, 100 ) );
 					DrawSliderNotchesV( rect, numNotches, barSize * 0.4 );
@@ -775,7 +775,7 @@ namespace Gwen
 					//draw the top and bottom
 					bool skip = true;
 
-					for ( int i = 0; i < rect.w * 0.5; i++ )
+					for ( int i = 0; i < rect.w/2; i++ )
 					{
 						m_Render->SetDrawColor( Gwen::Color( 0, 0, 0, 255 ) );
 
@@ -790,7 +790,7 @@ namespace Gwen
 
 					skip = false;
 
-					for ( int i = 0; i < rect.h * 0.5; i++ )
+					for ( int i = 0; i < rect.h/2; i++ )
 					{
 						GetRender()->SetDrawColor( Gwen::Color( 0, 0, 0, 255 ) );
 
@@ -891,8 +891,8 @@ namespace Gwen
 						GetRender()->SetDrawColor( Gwen::Color( 255, 255, 255, 255 ) );
 						GetRender()->DrawFilledRect( rect );
 						GetRender()->SetDrawColor( Gwen::Color( 128, 128, 128, 128 ) );
-						GetRender()->DrawFilledRect( Gwen::Rect( 0, 0, rect.w * 0.5, rect.h * 0.5 ) );
-						GetRender()->DrawFilledRect( Gwen::Rect( rect.w * 0.5, rect.h * 0.5, rect.w * 0.5, rect.h * 0.5 ) );
+						GetRender()->DrawFilledRect( Gwen::Rect( 0, 0, rect.w/2, rect.h/2 ) );
+						GetRender()->DrawFilledRect( Gwen::Rect( rect.w/2, rect.h/2, rect.w/2, rect.h/2 ) );
 					}
 
 					GetRender()->SetDrawColor( color );

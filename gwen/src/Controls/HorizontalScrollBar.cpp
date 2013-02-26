@@ -32,8 +32,8 @@ void HorizontalScrollBar::Layout(Skin::Base* skin)
     m_Bar->SetPadding(Padding(GetButtonSize(), 0, GetButtonSize(), 0));
     float barWidth = (m_fViewableContentSize/m_fContentSize)*(Width()-GetButtonSize());
 
-    if (barWidth < GetButtonSize()*0.5)
-        barWidth = GetButtonSize()*0.5;
+    if (barWidth < GetButtonSize()/2)
+        barWidth = GetButtonSize()/2;
 
     m_Bar->SetWidth(barWidth);
     m_Bar->SetHidden(Width()-(GetButtonSize()*2) <= barWidth);

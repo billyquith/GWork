@@ -307,26 +307,26 @@ void DockBase::DragAndDrop_Hover(Gwen::DragAndDrop::Package* /*pPackage*/, int x
 
     if (dir == Pos::Left)
     {
-        HelpBarWidth = m_HoverRect.w*0.25f;
+        HelpBarWidth = m_HoverRect.w/4;
         m_HoverRect.w = HelpBarWidth;
     }
 
     if (dir == Pos::Right)
     {
-        HelpBarWidth = m_HoverRect.w*0.25f;
+        HelpBarWidth = m_HoverRect.w/4;
         m_HoverRect.x = m_HoverRect.w-HelpBarWidth;
         m_HoverRect.w = HelpBarWidth;
     }
 
     if (dir == Pos::Top)
     {
-        HelpBarWidth = m_HoverRect.h*0.25f;
+        HelpBarWidth = m_HoverRect.h/4;
         m_HoverRect.h = HelpBarWidth;
     }
 
     if (dir == Pos::Bottom)
     {
-        HelpBarWidth = m_HoverRect.h*0.25f;
+        HelpBarWidth = m_HoverRect.h/4;
         m_HoverRect.y = m_HoverRect.h-HelpBarWidth;
         m_HoverRect.h = HelpBarWidth;
     }
