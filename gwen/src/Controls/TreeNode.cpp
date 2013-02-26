@@ -87,11 +87,15 @@ void TreeNode::Render(Skin::Base* skin)
     int iBottom = 0;
 
     if (m_InnerPanel->Children.size() > 0)
-        iBottom = m_InnerPanel->Children.back()->Y()+m_InnerPanel->Y();
+        iBottom = m_InnerPanel->Children.back()->Y() + m_InnerPanel->Y();
 
-    skin->DrawTreeNode(this, m_InnerPanel->Visible(), IsSelected(),
-                       m_Title->Height(), m_Title->TextRight(),
-                       m_ToggleButton->Y()+m_ToggleButton->Height()*0.5, iBottom,
+    skin->DrawTreeNode(this,
+                       m_InnerPanel->Visible(),
+                       IsSelected(),
+                       m_Title->Height(),
+                       m_Title->TextRight(),
+                       m_ToggleButton->Y() + m_ToggleButton->Height()/2,
+                       iBottom,
                        GetParent() == m_TreeControl);
 }
 
@@ -114,7 +118,7 @@ void TreeNode::Layout(Skin::Base* skin)
     if (m_ToggleButton)
     {
         if (m_Title)
-            m_ToggleButton->SetPos(0, (m_Title->Height()-m_ToggleButton->Height())*0.5);
+            m_ToggleButton->SetPos(0, (m_Title->Height()-m_ToggleButton->Height()) / 2);
 
         if (m_InnerPanel->NumChildren() == 0)
         {

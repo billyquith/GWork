@@ -199,23 +199,23 @@ void Base::Position(int pos, int xpadding, int ypadding)
     int x = X();
     int y = Y();
 
-    if (pos&Pos::Left)
-        x = bounds.x+xpadding+margin.left;
+    if (pos & Pos::Left)
+        x = bounds.x + xpadding+margin.left;
 
-    if (pos&Pos::Right)
-        x = bounds.x+(bounds.w-Width()-xpadding-margin.right);
+    if (pos & Pos::Right)
+        x = bounds.x + (bounds.w-Width()-xpadding-margin.right);
 
-    if (pos&Pos::CenterH)
-        x = bounds.x+(bounds.w-Width())*0.5;
+    if (pos & Pos::CenterH)
+        x = bounds.x + (bounds.w-Width())/2;
 
-    if (pos&Pos::Top)
-        y = bounds.y+ypadding;
+    if (pos & Pos::Top)
+        y = bounds.y + ypadding;
 
-    if (pos&Pos::Bottom)
-        y = bounds.y+(bounds.h-Height()-ypadding);
+    if (pos & Pos::Bottom)
+        y = bounds.y + (bounds.h-Height()-ypadding);
 
-    if (pos&Pos::CenterV)
-        y = bounds.y+(bounds.h-Height())*0.5;
+    if (pos & Pos::CenterV)
+        y = bounds.y + (bounds.h-Height())/2;
 
     SetPos(x, y);
 }
@@ -309,8 +309,7 @@ void Base::AddChild(Base* pChild)
 
 void Base::RemoveChild(Base* pChild)
 {
-    // If we removed our innerpanel
-    // remove our pointer to it
+    // If we removed our innerpanel, remove our pointer to it
     if (m_InnerPanel == pChild)
         m_InnerPanel = NULL;
 

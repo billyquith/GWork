@@ -34,8 +34,8 @@ void VerticalScrollBar::Layout(Skin::Base* skin)
     // Calculate bar sizes
     float barHeight = (m_fViewableContentSize/m_fContentSize)*(Height()-GetButtonSize());
 
-    if (barHeight < GetButtonSize()*0.5)
-        barHeight = GetButtonSize()*0.5;
+    if (barHeight < GetButtonSize()/2)
+        barHeight = GetButtonSize()/2;
 
     m_Bar->SetHeight(barHeight);
     m_Bar->SetHidden(Height()-(GetButtonSize()*2) <= barHeight);

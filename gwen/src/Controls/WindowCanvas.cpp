@@ -20,29 +20,33 @@ using namespace Gwen;
 using namespace Gwen::Controls;
 
 WindowCanvas::WindowCanvas(int x, int y, int w, int h, Gwen::Skin::Base* pSkin,
-                           const Gwen::String& strWindowTitle) : BaseClass(NULL)
+                           const Gwen::String& strWindowTitle)
+: BaseClass(NULL)
 {
     m_bQuit = false;
     m_bCanMaximize = true;
     m_bIsMaximized = false;
     SetPadding(Padding(1, 0, 1, 1));
+    
     // Centering the window on the desktop
     {
         int dw, dh;
         Gwen::Platform::GetDesktopSize(dw, dh);
 
         if (x < 0)
-            x = (dw-w)*0.5;
+            x = (dw-w)/2;
 
         if (y < 0)
-            y = (dh-h)*0.5;
+            y = (dh-h)/2;
     }
+    
     m_pOSWindow = Gwen::Platform::CreatePlatformWindow(x, y, w, h, strWindowTitle);
     m_WindowPos  = Gwen::Point(x, y);
     pSkin->GetRender()->InitializeContext(this);
     pSkin->GetRender()->Init();
     m_pSkinChange = pSkin;
     SetSize(w, h);
+    
     m_TitleBar = new Gwen::ControlsInternal::Dragger(this);
     m_TitleBar->SetHeight(24);
     m_TitleBar->SetPadding(Padding(0, 0, 0, 0));
@@ -52,12 +56,14 @@ WindowCanvas::WindowCanvas(int x, int y, int w, int h, Gwen::Skin::Base* pSkin,
     m_TitleBar->onDragged.Add(this, &ThisClass::Dragger_Moved);
     m_TitleBar->onDragStart.Add(this, &ThisClass::Dragger_Start);
     m_TitleBar->onDoubleClickLeft.Add(this, &ThisClass::OnTitleDoubleClicked);
+    
     m_Title = new Gwen::Controls::Label(m_TitleBar);
     m_Title->SetAlignment(Pos::Left|Pos::CenterV);
     m_Title->SetText(strWindowTitle);
     m_Title->Dock(Pos::Fill);
     m_Title->SetPadding(Padding(8, 0, 0, 0));
     m_Title->SetTextColor(GetSkin()->Colors.Window.TitleInactive);
+    
     // CLOSE
     {
         m_pClose = new Gwen::Controls::WindowCloseButton(m_TitleBar, "Close");
@@ -140,7 +146,7 @@ void WindowCanvas::RenderCanvas()
         render->Begin();
         RecurseLayout(m_Skin);
         render->SetClipRegion(GetRenderBounds());
-        render->SetRenderOffset(Gwen::Point(X()* -1, Y()* -1));
+        render->SetRenderOffset( Gwen::Point(-X(), -Y()) );
         render->SetScale(Scale());
 
         if (m_bDrawBackground)

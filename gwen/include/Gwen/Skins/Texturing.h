@@ -43,8 +43,8 @@ namespace Gwen
 				{
 					if ( !texture ) { return; }
 
-					r.x += ( r.w - iWidth ) * 0.5;
-					r.y += ( r.h - iHeight ) * 0.5;
+					r.x += ( r.w - iWidth )/2;
+					r.y += ( r.h - iHeight )/2;
 					r.w = iWidth;
 					r.h = iHeight;
 					Draw( render, r, col );
