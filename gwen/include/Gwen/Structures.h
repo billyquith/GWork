@@ -6,8 +6,8 @@
 
 #pragma once
 #ifdef _MSC_VER
-#pragma warning( disable : 4244 )
-#pragma warning( disable : 4251 )
+#   pragma warning( disable : 4244 )
+#   pragma warning( disable : 4251 )
 #endif
 #ifndef GWEN_STRUCTURES_H
 #define GWEN_STRUCTURES_H
@@ -39,22 +39,22 @@ namespace Gwen
         static const unsigned char Count    = 10;
     }
 
-    typedef std::wstring UnicodeString;
-    typedef std::string String;
+    typedef std::wstring    UnicodeString;
+    typedef std::string     String;
 
-    typedef wchar_t UnicodeChar; // Portability??
+    typedef wchar_t         UnicodeChar; // Portability??
 
+    
     struct GWEN_EXPORT Margin
     {
         Margin(int left_ = 0, int top_ = 0, int right_ = 0, int bottom_ = 0)
-        {
-            this->top = top_;
-            this->bottom = bottom_;
-            this->left = left_;
-            this->right = right_;
-        }
+        :   top(top_)
+        ,   bottom(bottom_)
+        ,   left(left_)
+        ,   right(right_)
+        {}
 
-        Margin operator +(const Margin& margin) const
+        Margin operator + (const Margin& margin) const
         {
             Margin m;
             m.top       = top+margin.top;
@@ -74,20 +74,19 @@ namespace Gwen
     struct GWEN_EXPORT Rect
     {
         Rect(int x_ = 0, int y_ = 0, int w_ = 0, int h_ = 0)
-            :   x(x_)
-            ,   y(y_)
-            ,   w(w_)
-            ,   h(h_)
-        {
-        }
+        :   x(x_)
+        ,   y(y_)
+        ,   w(w_)
+        ,   h(h_)
+        {}
 
-        Rect operator +(const Rect& rct) const
+        Rect operator + (const Rect& rct) const
         {
             Rect m;
-            m.x     = x+rct.x;
-            m.y     = y+rct.y;
-            m.w     = w+rct.w;
-            m.h     = h+rct.h;
+            m.x = x+rct.x;
+            m.y = y+rct.y;
+            m.w = w+rct.w;
+            m.h = h+rct.h;
             return m;
         }
 
@@ -97,32 +96,30 @@ namespace Gwen
 
     struct GWEN_EXPORT Point
     {
-        Point(int x_ = 0, int y_ = 0)
-        {
-            this->x = x_;
-            this->y = y_;
-        }
+        Point(int x_=0, int y_=0)
+        :   x(x_), y(y_)
+        {}
 
-        void operator +=(const Point& p)
+        void operator += (const Point& p)
         {
             x += p.x;
             y += p.y;
         }
 
-        Point operator +(const Point& p) const
+        Point operator + (const Point& p) const
         {
-            return Point(x+p.x, p.y+y);
+            return Point(x + p.x, p.y + y);
         }
 
-        void operator -=(const Point& p)
+        void operator -= (const Point& p)
         {
             x -= p.x;
             y -= p.y;
         }
 
-        Point operator -(const Point& p) const
+        Point operator - (const Point& p) const
         {
-            return Point(x-p.x, y-p.y);
+            return Point(x - p.x, y - p.y);
         }
 
         int x, y;
@@ -139,80 +136,63 @@ namespace Gwen
 
     struct GWEN_EXPORT Color
     {
-        Color(unsigned char r_ = 255, unsigned char g_ = 255, unsigned char b_ = 255,
-              unsigned char a_ = 255)
-        {
-            this->r = r_;
-            this->g = g_;
-            this->b = b_;
-            this->a = a_;
+        Color(unsigned char r_=255,
+              unsigned char g_=255,
+              unsigned char b_=255,
+              unsigned char a_=255)
+        :   r(r_)
+        ,   g(g_)
+        ,   b(b_)
+        ,   a(a_)
+        {}
+
+        void operator = (Color c)
+        {            
+            r = c.r;
+            g = c.g;
+            b = c.b;
+            a = c.a;
         }
 
-        void operator =(Color c)
+        void operator += (Color c)
         {
-            this->r = c.r;
-            this->g = c.g;
-            this->b = c.b;
-            this->a = c.a;
+            r += c.r;
+            g += c.g;
+            b += c.b;
+            a += c.a;
         }
 
-        void operator +=(Color c)
+        void operator -= (Color c)
         {
-            this->r += c.r;
-            this->g += c.g;
-            this->b += c.b;
-            this->a += c.a;
+            r -= c.r;
+            g -= c.g;
+            b -= c.b;
+            a -= c.a;
         }
 
-        void operator -=(Color c)
+        void operator *= (float f)
         {
-            this->r -= c.r;
-            this->g -= c.g;
-            this->b -= c.b;
-            this->a -= c.a;
+            *this = *this * f;
         }
 
-        void operator *=(float f)
+        Color operator * (float f) const
         {
-            this->r *= f;
-            this->g *= f;
-            this->b *= f;
-            this->a *= f;
+            return Color(f*r, f*g, f*b, f*a);
         }
 
-        Color operator *(float f)
+        Color operator - (Color c) const
         {
-            return Color(
-                (float)this->r*f,
-                (float)this->g*f,
-                (float)this->b*f,
-                (float)this->a*f
-                );
+            return Color(r - c.r, g - c.g, b - c.b, a - c.a);
         }
 
-        Color operator -(Color c)
+        Color operator + (Color c) const
         {
-            return Color(
-                this->r-c.r,
-                this->g-c.g,
-                this->b-c.b,
-                this->a-c.a
-                );
+            return Color(r + c.r, g + c.g, b + c.b, a + c.a);
         }
 
-        Color operator +(Color c)
+        bool operator == (const Color& c) const
         {
-            return Color(
-                this->r+c.r,
-                this->g+c.g,
-                this->b+c.b,
-                this->a+c.a
-                );
-        }
-
-        bool operator ==(const Color& c) const
-        {
-            return c.r == r && c.g == g && c.b == b && c.a == a;
+            return c.r==r && c.g==g && c.b==b && c.a==a;
         }
 
         unsigned char r, g, b, a;
@@ -231,12 +211,12 @@ namespace Gwen
                 holdoffset = Gwen::Point(0, 0);
             }
 
-            String name;
+            String  name;
             void*   userdata;
-            bool draggable;
+            bool    draggable;
 
             Gwen::Controls::Base*   drawcontrol;
-            Gwen::Point holdoffset;
+            Gwen::Point             holdoffset;
         };
 
 
