@@ -72,36 +72,15 @@ namespace Gwen
                 return m_Text->TextColor();
             }
 
-            virtual int TextWidth()
-            {
-                return m_Text->Width();
-            }
+            virtual int TextWidth()         { return m_Text->Width(); }
+            virtual int TextRight()         { return m_Text->Right(); }
+            virtual int TextHeight()        { return m_Text->Height(); }
 
-            virtual int TextRight()
-            {
-                return m_Text->Right();
-            }
+            virtual int TextX()             { return m_Text->X(); }
+            virtual int TextY()             { return m_Text->Y(); }
 
-            virtual int TextHeight()
-            {
-                return m_Text->Height();
-            }
-
-            virtual int TextX()
-            {
-                return m_Text->X();
-            }
-
-            virtual int TextY()
-            {
-                return m_Text->Y();
-            }
-
-            virtual int TextLength()
-            {
-                return m_Text->Length();
-            }
-
+            virtual int TextLength()        { return m_Text->Length(); }
+            
             Gwen::Rect GetCharacterPosition(int iChar);
 
             virtual void SetTextPadding(const Padding& padding)
@@ -116,7 +95,7 @@ namespace Gwen
                 return m_Text->GetPadding();
             }
 
-            inline int Alignment() const
+            int Alignment() const
             {
                 return m_iAlign;
             }
@@ -165,14 +144,11 @@ namespace Gwen
 
         protected:
 
-            virtual void OnTextChanged()
-            {
-            }
+            virtual void OnTextChanged() {}
 
             Gwen::Font*                 m_CreatedFont;
             ControlsInternal::Text*     m_Text;
             int m_iAlign;
-
 
         };
 

@@ -31,8 +31,10 @@ namespace Gwen
                 if (!m_pWindow)
                     return;
 
-                skin->DrawWindowCloseButton(this, IsDepressed() && IsHovered(),
-                                            IsHovered() && ShouldDrawHover(), IsDisabled());
+                skin->DrawWindowCloseButton(this,
+                                            IsDepressed() && IsHovered(),
+                                            IsHovered() && ShouldDrawHover(),
+                                            IsDisabled());
             }
 
             void SetWindow(Gwen::Controls::Base* p)
@@ -48,18 +50,21 @@ namespace Gwen
 
         class GWEN_EXPORT WindowMaximizeButton : public WindowCloseButton
         {
-            GWEN_CONTROL_INLINE(WindowMaximizeButton, WindowCloseButton) {
+            GWEN_CONTROL_INLINE(WindowMaximizeButton, WindowCloseButton)
+            {
                 m_bMaximized = false;
-            };
+            }
 
             virtual void Render(Skin::Base* skin)
             {
                 if (!m_pWindow)
                     return;
 
-                skin->DrawWindowMaximizeButton(this, IsDepressed() && IsHovered(),
+                skin->DrawWindowMaximizeButton(this,
+                                               IsDepressed() && IsHovered(),
                                                IsHovered() && ShouldDrawHover(),
-                                               IsDisabled(), m_bMaximized);
+                                               IsDisabled(),
+                                               m_bMaximized);
             }
 
             virtual void SetMaximized(bool b)
@@ -75,16 +80,19 @@ namespace Gwen
 
         class GWEN_EXPORT WindowMinimizeButton : public WindowCloseButton
         {
-            GWEN_CONTROL_INLINE(WindowMinimizeButton, WindowCloseButton) {
-            };
+            GWEN_CONTROL_INLINE(WindowMinimizeButton, WindowCloseButton)
+            {
+            }
 
             virtual void Render(Skin::Base* skin)
             {
                 if (!m_pWindow)
                     return;
 
-                skin->DrawWindowMinimizeButton(this, IsDepressed() && IsHovered(),
-                                               IsHovered() && ShouldDrawHover(), IsDisabled());
+                skin->DrawWindowMinimizeButton(this,
+                                               IsDepressed() && IsHovered(),
+                                               IsHovered() && ShouldDrawHover(),
+                                               IsDisabled());
             }
 
         };

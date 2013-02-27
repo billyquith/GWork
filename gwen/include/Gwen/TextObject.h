@@ -12,7 +12,7 @@
 
 namespace Gwen
 {
-    /*
+    /**
      *
      *  TextObjects can be either a UnicodeString or a String
      *
@@ -50,28 +50,28 @@ namespace Gwen
             *this = unicode;
         }
 
-        operator const Gwen::String&(){ return m_String; }
-        operator const Gwen::UnicodeString&(){ return m_Unicode; }
+        operator const Gwen::String&()          { return m_String; }
+        operator const Gwen::UnicodeString&()   { return m_Unicode; }
 
-        void operator =(const char* str)
+        void operator = (const char* str)
         {
             m_String = str;
             m_Unicode = Gwen::Utility::StringToUnicode(m_String);
         }
 
-        void operator =(const Gwen::String& str)
+        void operator = (const Gwen::String& str)
         {
             m_String = str;
             m_Unicode = Gwen::Utility::StringToUnicode(m_String);
         }
 
-        void operator =(const Gwen::UnicodeString& unicodeStr)
+        void operator = (const Gwen::UnicodeString& unicodeStr)
         {
             m_Unicode = unicodeStr;
             m_String = Gwen::Utility::UnicodeToString(m_Unicode);
         }
 
-        bool operator ==(const TextObject& to) const
+        bool operator == (const TextObject& to) const
         {
             return m_Unicode == to.m_Unicode;
         }

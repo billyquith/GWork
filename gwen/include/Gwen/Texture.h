@@ -28,11 +28,11 @@ namespace Gwen
         int height;
 
         Texture()
+        :   data(NULL)
+        ,   width(4)
+        ,   height(4)
+        ,   failed(false)
         {
-            data = NULL;
-            width = 4;
-            height = 4;
-            failed = false;
         }
 
         ~Texture()

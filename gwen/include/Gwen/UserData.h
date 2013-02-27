@@ -4,10 +4,11 @@
 
 namespace Gwen
 {
-    /*
+    /**
      *
      *  Allows you to store multiple and various user data
      *
+     *  ~~~
      *  //
      *  // Valid
      *  //
@@ -32,7 +33,7 @@ namespace Gwen
      *  //
      *  UserDataStorage.Set( &mystruct );
      *  UserDataStorage.<MyStruct*>Get();
-     *
+     *  ~~~
      */
     class UserDataStorage
     {

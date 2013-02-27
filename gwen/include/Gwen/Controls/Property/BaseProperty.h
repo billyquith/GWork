@@ -31,8 +31,8 @@ namespace Gwen
 
                 virtual TextObject GetPropertyValue() = 0;
 
-                virtual void SetPropertyValue(const TextObject& v, bool bFireChangeEvents =
-                                                  false) = 0;
+                virtual void SetPropertyValue(const TextObject& v,
+                                              bool bFireChangeEvents = false) = 0;
 
                 virtual bool IsEditing() = 0;
 

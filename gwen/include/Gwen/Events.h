@@ -25,7 +25,7 @@ namespace Gwen
     {
         class Caller;
 
-        /*!
+        /**
          *
          *  When adding an event hook you can add a Packet too.
          *  This will be passed in Event::Info when you receive an event.
@@ -47,7 +47,7 @@ namespace Gwen
         };
 
 
-        /*!
+        /**
          *
          *  Passed to an event hook
          *
@@ -73,18 +73,18 @@ namespace Gwen
                 Integer         = 0;
             }
 
-            //! This is set by the event caller, it will always be
-            //! the control which is calling the event.
+            /// This is set by the event caller, it will always be
+            /// the control which is calling the event.
             Gwen::Controls::Base* ControlCaller;
 
-            //! This is set by the event hook, e.g. :-
-            //! ~~~
-            //! onDoSomething.Add( this, &ThisClass::MyFunction, Gwen::Event::Packet("Something") );
-            //! ~~~
+            /// This is set by the event hook, e.g. :-
+            /// ~~~
+            /// onDoSomething.Add( this, &ThisClass::MyFunction, Gwen::Event::Packet("Something") );
+            /// ~~~
             Gwen::Event::Packet* Packet;
 
             //
-            //! These are set by the event and may or may not be set.
+            /// These are set by the event and may or may not be set.
             //
             Gwen::Controls::Base* Control;
 
@@ -98,9 +98,9 @@ namespace Gwen
 
         typedef const Gwen::Event::Information& Info;
 
-        //!
-        //! A class wanting to receive events must be derived from this.
-        //!
+        //
+        /// A class wanting to receive events must be derived from this.
+        //
         class GWEN_EXPORT Handler
         {
         public:
@@ -126,7 +126,7 @@ namespace Gwen
         };
 
 
-        //! Event callback management.
+        /// Event callback management.
         //
         class GWEN_EXPORT Caller
         {

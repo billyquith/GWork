@@ -24,9 +24,7 @@ namespace Gwen
         {
         public:
 
-            virtual ~ICacheToTexture()
-            {
-            }
+            virtual ~ICacheToTexture() {}
 
             virtual void Initialize() = 0;
             virtual void ShutDown() = 0;
@@ -39,7 +37,8 @@ namespace Gwen
 
         };
 
-
+        //! Base class for all renderer implementations.
+        //
         class GWEN_EXPORT Base
         {
         public:
@@ -47,54 +46,31 @@ namespace Gwen
             Base();
             virtual ~Base();
 
-            virtual void Init()
-            {
-            }
+            virtual void Init()         {}
+            virtual void Begin()        {}
+            virtual void End()          {}
 
-            virtual void Begin()
-            {
-            }
+            virtual void SetDrawColor(Color color)          {}
 
-            virtual void End()
-            {
-            }
+            virtual void DrawFilledRect(Gwen::Rect rect)    {}
 
-            virtual void SetDrawColor(Color color)
-            {
-            }
+            virtual void StartClip()    {}
+            virtual void EndClip()      {}
 
-            virtual void DrawFilledRect(Gwen::Rect rect)
-            {
-            }
-
-            virtual void StartClip()
-            {
-            }
-
-            virtual void EndClip()
-            {
-            }
-
-            virtual void LoadTexture(Gwen::Texture* pTexture)
-            {
-            }
-
-            virtual void FreeTexture(Gwen::Texture* pTexture)
-            {
-            }
+            virtual void LoadTexture(Gwen::Texture* pTexture)   {}
+            virtual void FreeTexture(Gwen::Texture* pTexture)   {}
 
             virtual void DrawTexturedRect(Gwen::Texture* pTexture, Gwen::Rect pTargetRect,
-                                          float u1 = 0.0f, float v1 = 0.0f, float u2 = 1.0f,
-                                          float v2 = 1.0f)
-            {
-            }
+                                          float u1 = 0.0f, float v1 = 0.0f,
+                                          float u2 = 1.0f, float v2 = 1.0f)
+            {}
 
             virtual void DrawMissingImage(Gwen::Rect pTargetRect);
 
-            virtual Gwen::Color PixelColour(Gwen::Texture* pTexture, unsigned int x,
-                                            unsigned int y, const Gwen::Color& col_default = Gwen::Color(
-                                                255, 255, 255,
-                                                255))
+            virtual Gwen::Color PixelColour(Gwen::Texture* pTexture,
+                                            unsigned int x, unsigned int y,
+                                            const Gwen::Color& col_default =
+                                                                    Gwen::Color(255,255,255,255))
             {
                 return col_default;
             }
@@ -104,42 +80,40 @@ namespace Gwen
                 return NULL;
             }
 
-            virtual void LoadFont(Gwen::Font* pFont)
-            {
-            }
+            virtual void LoadFont(Gwen::Font* pFont)    {}
+            virtual void FreeFont(Gwen::Font* pFont)    {}
 
-            virtual void FreeFont(Gwen::Font* pFont)
-            {
-            }
-
-            virtual void RenderText(Gwen::Font* pFont, Gwen::Point pos,
+            virtual void RenderText(Gwen::Font* pFont,
+                                    Gwen::Point pos,
                                     const Gwen::UnicodeString& text);
-            virtual Gwen::Point MeasureText(Gwen::Font* pFont, const Gwen::UnicodeString& text);
+            
+            virtual Gwen::Point MeasureText(Gwen::Font* pFont,
+                                            const Gwen::UnicodeString& text);
 
+            /// \sect{Render Specialisation}
+            ///     No need to implement these functions in your derived class, but
+            ///     if you can do them faster than the default implementation it's a
+            ///     good idea to.
             //
-            // No need to implement these functions in your derived class, but
-            // if you can do them faster than the default implementation it's a
-            // good idea to.
-            //
-            virtual void        DrawLinedRect(Gwen::Rect rect);
-            virtual void        DrawPixel(int x, int y);
-            virtual void        DrawShavedCornerRect(Gwen::Rect rect, bool bSlight = false);
+            virtual void    DrawLinedRect(Gwen::Rect rect);
+            virtual void    DrawPixel(int x, int y);
+            virtual void    DrawShavedCornerRect(Gwen::Rect rect, bool bSlight = false);
             virtual Gwen::Point MeasureText(Gwen::Font* pFont, const Gwen::String& text);
-            virtual void        RenderText(Gwen::Font* pFont, Gwen::Point pos,
-                                           const Gwen::String& text);
+            virtual void    RenderText(Gwen::Font* pFont, Gwen::Point pos, const Gwen::String& text);
+            /// \}
 
         public:
 
-            //
-            // Translate a panel's local drawing coordinate
-            //  into view space, taking Offset's into account.
+            /// \sect{Translate}
+            ///     Translate a panel's local drawing coordinate
+            ///     into view space, taking Offsets into account.
             //
             void Translate(int& x, int& y);
             void Translate(Gwen::Rect& rect);
+            /// \}
 
             //
-            // Set the rendering offset. You shouldn't have to
-            // touch these, ever.
+            /// Set the rendering offset. You shouldn't have to touch these, ever.
             //
             void SetRenderOffset(const Gwen::Point& offset)
             {
@@ -148,7 +122,8 @@ namespace Gwen
 
             void AddRenderOffset(const Gwen::Rect& offset)
             {
-                m_RenderOffset.x += offset.x; m_RenderOffset.y += offset.y;
+                m_RenderOffset.x += offset.x;
+                m_RenderOffset.y += offset.y;
             }
 
             const Gwen::Point& GetRenderOffset() const
@@ -174,17 +149,8 @@ namespace Gwen
 
         public:
 
-            void SetScale(float fScale)
-            {
-                m_fScale = fScale;
-            }
-
-            float Scale() const
-            {
-                return m_fScale;
-            }
-
-            float m_fScale;
+            void SetScale(float fScale)     { m_fScale = fScale; }
+            float Scale() const             { return m_fScale; }
 
         public:
 
@@ -221,7 +187,11 @@ namespace Gwen
             {
                 return false;
             }
+            
+        protected:
 
+            float m_fScale;
+            
         };
 
 

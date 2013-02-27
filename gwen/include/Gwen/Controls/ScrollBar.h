@@ -37,25 +37,12 @@ namespace Gwen
             virtual int  GetBarPos() = 0;
 
             virtual void OnBarMoved(Controls::Base* control);
-            virtual void OnMouseClickLeft(int /*x*/, int /*y*/, bool /*bDown*/)
-            {
-            }
+            virtual void OnMouseClickLeft(int /*x*/, int /*y*/, bool /*bDown*/) {}
 
-            virtual void ScrollToLeft()
-            {
-            }
-
-            virtual void ScrollToRight()
-            {
-            }
-
-            virtual void ScrollToTop()
-            {
-            }
-
-            virtual void ScrollToBottom()
-            {
-            }
+            virtual void ScrollToLeft()     {}
+            virtual void ScrollToRight()    {}
+            virtual void ScrollToTop()      {}
+            virtual void ScrollToBottom()   {}
 
             virtual float GetNudgeAmount()
             {

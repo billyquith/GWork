@@ -74,7 +74,8 @@ private:
 };
 
 
-#define DEFINE_UNIT_TEST(name, \
-                         displayname) GUnit* \
-    RegisterUnitTest_##name(Gwen::Controls::Base*tab){ return new name(tab); }
+#define DEFINE_UNIT_TEST(name, displayname) \
+    GUnit* \
+    RegisterUnitTest_##name(Gwen::Controls::Base*tab) { return new name(tab); }
+
 #endif // ifndef GWEN_UNITTEST_UNITTEST_H

@@ -39,10 +39,10 @@ namespace Gwen
                     font = NULL;
                 }
 
-                unsigned char type;
+                unsigned char       type;
                 Gwen::UnicodeString text;
-                Gwen::Color color;
-                Gwen::Font*             font;
+                Gwen::Color         color;
+                Gwen::Font        * font;
             };
 
 
