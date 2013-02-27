@@ -25,7 +25,7 @@ namespace Gwen
             va_list s;
 
             va_start(s, str);
-#ifdef _WIN32
+#ifdef WIN32
             vsnprintf_s(strOut, sizeof(strOut), str, s);
 #else
             vsnprintf(strOut, sizeof(strOut), str, s);
@@ -51,9 +51,13 @@ namespace Gwen
             if (!b)
             {
                 Msg("Assert: %s\n", strMsg);
-#ifdef _WIN32
-                MessageBoxA(NULL, strMsg, "Assert", MB_ICONEXCLAMATION|MB_OK);
-                _asm { int 3 }
+#ifdef WIN32
+                MessageBoxA(NULL, strMsg, "Assert", MB_ICONEXCLAMATION | MB_OK);
+                _asm { int 3 }      // Break to debugger.
+#endif
+                
+#ifdef __APPLE__
+                __builtin_trap();   // Break to debugger.
 #endif
             }
         }
