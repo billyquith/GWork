@@ -17,9 +17,9 @@ namespace Gwen
     namespace Renderer
     {
         Base::Base()
+        :   m_RenderOffset(Gwen::Point(0, 0))
+        ,   m_fScale(1.0f)
         {
-            m_RenderOffset = Gwen::Point(0, 0);
-            m_fScale = 1.0f;
         }
 
         Base::~Base()

@@ -43,7 +43,7 @@ namespace Gwen
         GWEN_EXPORT void Think();
 
         //
-        // Timed animation. Provides a useful base for animations.
+        /// Timed animation. Provides a useful base for animations.
         //
         class GWEN_EXPORT TimedAnimation : public Animation
         {
@@ -57,17 +57,9 @@ namespace Gwen
             //
             // These are the magic functions you should be overriding
             //
-            virtual void OnStart()
-            {
-            }
-
-            virtual void Run(float /*delta*/)
-            {
-            }
-
-            virtual void OnFinish()
-            {
-            }
+            virtual void OnStart()              {}
+            virtual void Run(float /*delta*/)   {}
+            virtual void OnFinish()             {}
 
         protected:
 
@@ -86,8 +78,8 @@ namespace Gwen
             public:
 
                 Height(int iStartSize, int iEndSize, float fLength, bool bHide = false,
-                       float fDelay = 0.0f, float fEase = -1.0f) : TimedAnimation(fLength, fDelay,
-                                                                                  fEase)
+                       float fDelay = 0.0f, float fEase = -1.0f)
+                : TimedAnimation(fLength, fDelay, fEase)
                 {
                     m_iStartSize = iStartSize;
                     m_iDelta = iEndSize-m_iStartSize;
@@ -122,8 +114,8 @@ namespace Gwen
             public:
 
                 Width(int iStartSize, int iEndSize, float fLength, bool bHide = false,
-                      float fDelay = 0.0f, float fEase = -1.0f) : TimedAnimation(fLength, fDelay,
-                                                                                 fEase)
+                      float fDelay = 0.0f, float fEase = -1.0f)
+                : TimedAnimation(fLength, fDelay, fEase)
                 {
                     m_iStartSize = iStartSize;
                     m_iDelta = iEndSize-m_iStartSize;
@@ -162,7 +154,8 @@ namespace Gwen
             public:
 
                 X(int iStartSize, int iEndSize, float fLength, bool bHide = false,
-                  float fDelay = 0.0f, float fEase = 1.0f) : TimedAnimation(fLength, fDelay, fEase)
+                  float fDelay = 0.0f, float fEase = 1.0f)
+                : TimedAnimation(fLength, fDelay, fEase)
                 {
                     m_iStartSize = iStartSize;
                     m_iDelta = iEndSize-m_iStartSize;
@@ -200,7 +193,7 @@ namespace Gwen
 
                 Y(int iStartSize, int iEndSize, float fLength, bool bHide = false,
                   float fDelay = 0.0f, float fEase = 1.0f)
-                    :   TimedAnimation(fLength, fDelay, fEase)
+                :   TimedAnimation(fLength, fDelay, fEase)
                 {
                     m_iStartSize = iStartSize;
                     m_iDelta = iEndSize-m_iStartSize;
@@ -240,7 +233,8 @@ namespace Gwen
             {
             public:
 
-                Remove(float fDelay = 0.0f) : TimedAnimation(0.0f, fDelay)
+                Remove(float fDelay = 0.0f)
+                : TimedAnimation(0.0f, fDelay)
                 {
                 }
 

@@ -39,9 +39,8 @@ namespace Gwen
             Fill        = (1<<7),
             Center      = CenterV|CenterH,
         };
-
-
-    }
+        
+    } // Pos
 
     class TextObject;
 
@@ -105,19 +104,10 @@ namespace Gwen
             template <class T>
             T* FindChild(const Gwen::String& name, bool bRecursive = false);
 
-            virtual void SetName(const Gwen::String& name)
-            {
-                m_Name = name;
-            }
+            virtual void SetName(const Gwen::String& name)  { m_Name = name; }
+            virtual const Gwen::String& GetName()           { return m_Name; }
 
-            virtual const Gwen::String& GetName()
-            {
-                return m_Name;
-            }
-
-            virtual void Think()
-            {
-            }
+            virtual void Think() {}
 
         protected:
 
@@ -140,83 +130,42 @@ namespace Gwen
             virtual void Dock(int iDock);
             virtual int  GetDock();
 
-            virtual void RestrictToParent(bool restrict)
-            {
-                m_bRestrictToParent = restrict;
-            }
+            virtual void RestrictToParent(bool restrict)    { m_bRestrictToParent = restrict; }
+            virtual bool ShouldRestrictToParent()           { return m_bRestrictToParent; }
 
-            virtual bool ShouldRestrictToParent()
-            {
-                return m_bRestrictToParent;
-            }
+            virtual int X() const       { return m_Bounds.x; }  //!< Get X position of Control.
+            virtual int Y() const       { return m_Bounds.y; }  //!< Get Y position of Control.
 
-            virtual int X() const
-            {
-                return m_Bounds.x;
-            }
-
-            virtual int Y() const
-            {
-                return m_Bounds.y;
-            }
-
-            virtual int Width() const
-            {
-                return m_Bounds.w;
-            }
-
-            virtual int Height() const
-            {
-                return m_Bounds.h;
-            }
+            virtual int Width() const   { return m_Bounds.w; }  //!< Get Control width.
+            virtual int Height() const  { return m_Bounds.h; }  //!< Get Control height.
 
             virtual int Bottom() const
             {
                 return m_Bounds.y+m_Bounds.h+m_Margin.bottom;
             }
 
+            //! Get right boundary of control.
             virtual int Right() const
             {
                 return m_Bounds.x+m_Bounds.w+m_Margin.right;
             }
 
-            virtual const Margin& GetMargin() const
-            {
-                return m_Margin;
-            }
-
-            virtual const Padding& GetPadding() const
-            {
-                return m_Padding;
-            }
+            //! Get the margin of the control. 
+            virtual const Margin& GetMargin() const     { return m_Margin; }
+            
+            //! Get the padding for the control.
+            virtual const Padding& GetPadding() const   { return m_Padding; }
 
             virtual void SetPos(int x, int y);
-            virtual void SetPos(const Point& p)
-            {
-                return SetPos(p.x, p.y);
-            }
+            virtual void SetPos(const Point& p)     { return SetPos(p.x, p.y); }
+            virtual Point GetPos()                  { return Point(X(), Y()); }
 
-            virtual Point GetPos()
-            {
-                return Point(X(), Y());
-            }
-
-            virtual void SetWidth(int w)
-            {
-                SetSize(w, Height());
-            }
-
-            virtual void SetHeight(int h)
-            {
-                SetSize(Width(), h);
-            }
+            virtual void SetWidth(int w)            { SetSize(w, Height()); }
+            virtual void SetHeight(int h)           { SetSize(Width(), h); }
 
             virtual bool  SetSize(int w, int h);
             virtual bool  SetSize(const Point& p);
-            virtual Point GetSize()
-            {
-                return Point(Width(), Height());
-            }
+            virtual Point GetSize()                 { return Point(Width(), Height()); }
 
             virtual bool SetBounds(int x, int y, int w, int h);
             virtual bool SetBounds(const Gwen::Rect& bounds);
@@ -224,14 +173,11 @@ namespace Gwen
             virtual void SetPadding(const Padding& padding);
             virtual void SetMargin(const Margin& margin);
 
-            //! MoveTo is identical to SetPos except it uses ShouldRestrictToParent()
+            //! MoveTo is identical to SetPos except it uses ShouldRestrictToParent().
             virtual void MoveTo(int x, int y);
             virtual void MoveBy(int x, int y);
 
-            virtual const Gwen::Rect& GetBounds() const
-            {
-                return m_Bounds;
-            }
+            virtual const Gwen::Rect& GetBounds() const { return m_Bounds; }
 
             virtual Controls::Base* GetControlAt(int x, int y, bool bOnlyIfMouseEnabled = true);
 
@@ -246,10 +192,7 @@ namespace Gwen
 
             //! InnerBounds is the area inside the control that
             //! doesn't have child controls docked to it.
-            virtual const Gwen::Rect& GetInnerBounds() const
-            {
-                return m_InnerBounds;
-            }
+            virtual const Gwen::Rect& GetInnerBounds() const { return m_InnerBounds; }
 
         protected:
 
@@ -257,10 +200,7 @@ namespace Gwen
 
         public:
 
-            virtual const Gwen::Rect& GetRenderBounds() const
-            {
-                return m_RenderBounds;
-            }
+            virtual const Gwen::Rect& GetRenderBounds() const { return m_RenderBounds; }
 
         protected:
 
@@ -272,22 +212,13 @@ namespace Gwen
             virtual void DoCacheRender(Gwen::Skin::Base* skin, Gwen::Controls::Base* pMaster);
             virtual void RenderRecursive(Gwen::Skin::Base* skin, const Gwen::Rect& cliprect);
 
-            virtual bool ShouldClip()
-            {
-                return true;
-            }
+            virtual bool ShouldClip()   { return true; }
 
         protected:
 
             virtual void Render(Gwen::Skin::Base* skin);
-            virtual void RenderUnder(Gwen::Skin::Base* /*skin*/)
-            {
-            }
-
-            virtual void RenderOver(Gwen::Skin::Base* /*skin*/)
-            {
-            }
-
+            virtual void RenderUnder(Gwen::Skin::Base* /*skin*/)    {}
+            virtual void RenderOver(Gwen::Skin::Base* /*skin*/)     {}
             virtual void RenderFocus(Gwen::Skin::Base* /*skin*/);
 
         public:
@@ -304,15 +235,9 @@ namespace Gwen
 
             virtual bool Hidden() const;    //!< Returns true only if this control is hidden.
             virtual bool Visible() const;   //!< Returns false if this control or its parents are hidden.
-            virtual void Hide()
-            {
-                SetHidden(true);
-            }
-
-            virtual void Show()
-            {
-                SetHidden(false);
-            }
+            
+            virtual void Hide()     { SetHidden(true); }    //!< Make control invisible.
+            virtual void Show()     { SetHidden(false); }   //!< Make control visible if hidden.
 
             // Skin
             virtual void              SetSkin(Skin::Base* skin, bool doChildren = false);
@@ -337,13 +262,9 @@ namespace Gwen
 
             virtual void OnMouseMoved(int x, int y, int deltaX, int deltaY);
             virtual bool OnMouseWheeled(int iDelta);
-            virtual void OnMouseClickLeft(int /*x*/, int /*y*/, bool /*bDown*/)
-            {
-            }
-
-            virtual void OnMouseClickRight(int /*x*/, int /*y*/, bool /*bDown*/)
-            {
-            }
+            
+            virtual void OnMouseClickLeft(int /*x*/, int /*y*/, bool /*bDown*/)     {}
+            virtual void OnMouseClickRight(int /*x*/, int /*y*/, bool /*bDown*/)    {}
 
             virtual void OnMouseDoubleClickLeft(int x, int y)
             {
@@ -355,119 +276,40 @@ namespace Gwen
                 OnMouseClickRight(x, y, true);
             }
 
-            virtual void OnLostKeyboardFocus()
-            {
-            }
+            virtual void OnLostKeyboardFocus()              {}
+            virtual void OnKeyboardFocus()                  {}
 
-            virtual void OnKeyboardFocus()
-            {
-            }
+            virtual void SetMouseInputEnabled(bool b)       { m_bMouseInputEnabled = b; }
+            virtual bool GetMouseInputEnabled()             { return m_bMouseInputEnabled; }
+            
+            virtual void SetKeyboardInputEnabled(bool b)    { m_bKeyboardInputEnabled = b; }
+            virtual bool GetKeyboardInputEnabled() const    { return m_bKeyboardInputEnabled; }
 
-            virtual void SetMouseInputEnabled(bool b)
-            {
-                m_bMouseInputEnabled = b;
-            }
+            virtual bool NeedsInputChars()                  { return false; }
 
-            virtual bool GetMouseInputEnabled()
-            {
-                return m_bMouseInputEnabled;
-            }
-
-            virtual void SetKeyboardInputEnabled(bool b)
-            {
-                m_bKeyboardInputEnabled = b;
-            }
-
-            virtual bool GetKeyboardInputEnabled() const
-            {
-                return m_bKeyboardInputEnabled;
-            }
-
-            virtual bool NeedsInputChars()
-            {
-                return false;
-            }
-
-            virtual bool OnChar(Gwen::UnicodeChar /*c*/)
-            {
-                return false;
-            }
+            virtual bool OnChar(Gwen::UnicodeChar /*c*/)    { return false; }
 
             virtual bool OnKeyPress(int iKey, bool bPress = true);
             virtual bool OnKeyRelease(int iKey);
 
-            virtual void OnPaste(Controls::Base* /*pFrom*/)
-            {
-            }
-
-            virtual void OnCopy(Controls::Base* /*pFrom*/)
-            {
-            }
-
-            virtual void OnCut(Controls::Base* /*pFrom*/)
-            {
-            }
-
-            virtual void OnSelectAll(Controls::Base* /*pFrom*/)
-            {
-            }
+            virtual void OnPaste(Controls::Base* /*pFrom*/)         {}
+            virtual void OnCopy(Controls::Base* /*pFrom*/)          {}
+            virtual void OnCut(Controls::Base* /*pFrom*/)           {}
+            virtual void OnSelectAll(Controls::Base* /*pFrom*/)     {}
 
             virtual bool OnKeyTab(bool bDown);
-            virtual bool OnKeySpace(bool /*bDown*/)
-            {
-                return false;
-            }
-
-            virtual bool OnKeyReturn(bool /*bDown*/)
-            {
-                return false;
-            }
-
-            virtual bool OnKeyBackspace(bool /*bDown*/)
-            {
-                return false;
-            }
-
-            virtual bool OnKeyDelete(bool /*bDown*/)
-            {
-                return false;
-            }
-
-            virtual bool OnKeyRight(bool /*bDown*/)
-            {
-                return false;
-            }
-
-            virtual bool OnKeyLeft(bool /*bDown*/)
-            {
-                return false;
-            }
-
-            virtual bool OnKeyHome(bool /*bDown*/)
-            {
-                return false;
-            }
-
-            virtual bool OnKeyEnd(bool /*bDown*/)
-            {
-                return false;
-            }
-
-            virtual bool OnKeyUp(bool /*bDown*/)
-            {
-                return false;
-            }
-
-            virtual bool OnKeyDown(bool /*bDown*/)
-            {
-                return false;
-            }
-
-            virtual bool OnKeyEscape(bool /*bDown*/)
-            {
-                return false;
-            }
-
+            virtual bool OnKeySpace(bool /*bDown*/)         { return false; }
+            virtual bool OnKeyReturn(bool /*bDown*/)        { return false; }
+            virtual bool OnKeyBackspace(bool /*bDown*/)     { return false; }
+            virtual bool OnKeyDelete(bool /*bDown*/)        { return false; }
+            virtual bool OnKeyRight(bool /*bDown*/)         { return false; }
+            virtual bool OnKeyLeft(bool /*bDown*/)          { return false; }
+            virtual bool OnKeyHome(bool /*bDown*/)          { return false; }
+            virtual bool OnKeyEnd(bool /*bDown*/)           { return false; }
+            virtual bool OnKeyUp(bool /*bDown*/)            { return false; }
+            virtual bool OnKeyDown(bool /*bDown*/)          { return false; }
+            virtual bool OnKeyEscape(bool /*bDown*/)        { return false; }
+            
             virtual void OnMouseEnter();
             virtual void OnMouseLeave();
             virtual bool IsHovered();
@@ -505,24 +347,12 @@ namespace Gwen
                     m_Parent->Redraw();
             }
 
-            virtual void UpdateColours()
-            {
-            }
+            virtual void UpdateColours()    {}
 
-            virtual void SetCacheToTexture()
-            {
-                m_bCacheToTexture = true;
-            }
+            virtual void SetCacheToTexture()        { m_bCacheToTexture = true; }
+            virtual bool ShouldCacheToTexture()     { return m_bCacheToTexture; }
 
-            virtual bool ShouldCacheToTexture()
-            {
-                return m_bCacheToTexture;
-            }
-
-            virtual void SetCursor(unsigned char c)
-            {
-                m_Cursor = c;
-            }
+            virtual void SetCursor(unsigned char c) { m_Cursor = c; }
 
             virtual void UpdateCursor();
 
@@ -555,15 +385,8 @@ namespace Gwen
             virtual bool IsMenuComponent();
             virtual void CloseMenus();
 
-            virtual bool IsTabable()
-            {
-                return m_Tabable;
-            }
-
-            virtual void SetTabable(bool isTabable)
-            {
-                m_Tabable = isTabable;
-            }
+            virtual bool IsTabable()                    { return m_Tabable; }
+            virtual void SetTabable(bool isTabable)     { m_Tabable = isTabable; }
 
             // Accelerator functionality
             void DefaultAccel(Gwen::Controls::Base* /*pCtrl*/)
@@ -571,14 +394,8 @@ namespace Gwen
                 AcceleratePressed();
             }
 
-            virtual void AcceleratePressed()
-            {
-            }
-
-            virtual bool AccelOnlyFocus()
-            {
-                return false;
-            }
+            virtual void AcceleratePressed()    {}
+            virtual bool AccelOnlyFocus()       { return false; }
 
             virtual bool HandleAccelerator(Gwen::UnicodeString& accelerator);
 
@@ -623,14 +440,11 @@ namespace Gwen
             //! become children of that instead of us - allowing us to move
             //! them all around by moving that panel (useful for scrolling etc).
             Base* m_InnerPanel;
-            virtual Base* Inner()
-            {
-                return m_InnerPanel;
-            }
+            
+            virtual Base* Inner()   { return m_InnerPanel; }
 
             //! This is the panel's actual parent - most likely the logical
-            //! parent's InnerPanel (if it has one). You should rarely need
-            //! this.
+            //! parent's InnerPanel (if it has one). You should rarely need this.
             Base* m_ActualParent;
 
             Base* m_ToolTip;
@@ -697,18 +511,11 @@ namespace Gwen
             virtual void DragAndDrop_SetPackage(bool bDraggable, const String& strName = "",
                                                 void* pUserData = NULL);
             virtual bool DragAndDrop_Draggable();
-            virtual bool DragAndDrop_ShouldStartDrag()
-            {
-                return true;
-            }
+            virtual bool DragAndDrop_ShouldStartDrag()  { return true; }
 
-            virtual void DragAndDrop_StartDragging(
-                Gwen::DragAndDrop::Package* pPackage, int x, int y);
+            virtual void DragAndDrop_StartDragging(Gwen::DragAndDrop::Package* pPackage, int x, int y);
             virtual Gwen::DragAndDrop::Package* DragAndDrop_GetPackage(int x, int y);
-            virtual void                        DragAndDrop_EndDragging(bool /*bSuccess*/,
-                                                                        int /*x*/, int /*y*/)
-            {
-            }
+            virtual void DragAndDrop_EndDragging(bool /*bSuccess*/, int /*x*/, int /*y*/) {}
 
         protected:
 
@@ -773,15 +580,8 @@ namespace Gwen
 
         public:
 
-            void DoNotIncludeInSize()
-            {
-                m_bIncludeInSize = false;
-            }
-
-            bool ShouldIncludeInSize()
-            {
-                return m_bIncludeInSize;
-            }
+            void DoNotIncludeInSize()       { m_bIncludeInSize = false; }
+            bool ShouldIncludeInSize()      { return m_bIncludeInSize; }
 
         protected:
 

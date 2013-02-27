@@ -41,7 +41,9 @@ namespace Gwen
             virtual void ZoomChanged();
             virtual void CenterPanels()
             {
-                m_fHVal = 0.5f; m_fVVal = 0.5f; Invalidate();
+                m_fHVal = 0.5f;
+                m_fVVal = 0.5f;
+                Invalidate();
             }
 
             virtual void SetSplitterSize(int size)

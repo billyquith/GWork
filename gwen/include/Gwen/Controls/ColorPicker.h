@@ -60,6 +60,32 @@ namespace Gwen
 
             GWEN_CONTROL(ColorPicker, Base);
 
+            virtual void SetAlphaVisible(bool visible);
+
+            virtual void        SetColor(Gwen::Color color);
+            virtual Gwen::Color GetColor()      { return m_Color; }
+
+            /// \sect{By name}
+            ///     Set colour channel value. Range: 0-255.
+            //
+            int          GetColorByName(Gwen::String colorName);
+            void         SetColorByName(Gwen::String colorName, int colorValue);
+            Gwen::String GetColorFromName(Gwen::String name);
+            // \}
+
+            /// \sect{Set by value}
+            ///     Set colour channel value. Range: 0-255.
+            //
+            virtual void SetRed(int red)        { m_Color.r = red; }
+            virtual void SetGreen(int green)    { m_Color.g = green; }
+            virtual void SetBlue(int blue)      { m_Color.b = blue; }
+            virtual void SetAlpha(int alpha)    { m_Color.a = alpha; }
+            // \}
+
+            Event::Caller onColorChanged;
+
+        protected:
+
             virtual void Layout(Skin::Base* skin);
             virtual void CreateControls();
             virtual void SlidersMoved(Gwen::Controls::Base* control);
@@ -67,27 +93,7 @@ namespace Gwen
             virtual void UpdateControls();
             virtual void UpdateColorControls(Gwen::String name, Gwen::Color col, int sliderVal);
             virtual void CreateColorControl(Gwen::String name, int y);
-
-            virtual void        SetColor(Gwen::Color color);
-            virtual Gwen::Color GetColor()
-            {
-                return m_Color;
-            }
-
-            int          GetColorByName(Gwen::String colorName);
-            void         SetColorByName(Gwen::String colorName, int colorValue);
-            Gwen::String GetColorFromName(Gwen::String name);
-            virtual void SetAlphaVisible(bool visible);
-
-            virtual void SetRed(int red)        { m_Color.r = red; }
-            virtual void SetGreen(int green)    { m_Color.g = green; }
-            virtual void SetBlue(int blue)      { m_Color.b = blue; }
-            virtual void SetAlpha(int alpha)    { m_Color.a = alpha; }
-
-            Event::Caller onColorChanged;
-
-        protected:
-
+            
             Gwen::Color m_Color;
         };
 

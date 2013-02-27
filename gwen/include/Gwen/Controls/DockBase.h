@@ -30,31 +30,13 @@ namespace Gwen
 
             virtual TabControl* GetTabControl();
 
-            virtual DockBase* GetRight()
-            {
-                return GetChildDock(Pos::Right);
-            }
-
-            virtual DockBase* GetLeft()
-            {
-                return GetChildDock(Pos::Left);
-            }
-
-            virtual DockBase* GetTop()
-            {
-                return GetChildDock(Pos::Top);
-            }
-
-            virtual DockBase* GetBottom()
-            {
-                return GetChildDock(Pos::Bottom);
-            }
+            virtual DockBase* GetRight()    { return GetChildDock(Pos::Right); }
+            virtual DockBase* GetLeft()     { return GetChildDock(Pos::Left); }
+            virtual DockBase* GetTop()      { return GetChildDock(Pos::Top); }
+            virtual DockBase* GetBottom()   { return GetChildDock(Pos::Bottom); }
 
             // No action on space (default button action is to press)
-            virtual bool OnKeySpace(bool /*bDown*/)
-            {
-                return false;
-            }
+            virtual bool OnKeySpace(bool /*bDown*/)     { return false; }
 
         private:
 

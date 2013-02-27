@@ -20,25 +20,25 @@ namespace Gwen
         typedef std::list<Font*> List;
 
         Font()
+        :   data(NULL)
+        ,   facename(L"Arial")
+        ,   size(10)
+        ,   realsize(0)
+        ,   bold(false)
         {
-            data = NULL;
-            facename = L"Arial";
-            size = 10;
-            realsize = 0;
-            bold = false;
         }
 
         UnicodeString facename;
         float size;
         bool bold;
 
-        // This should be set by the renderer
-        // if it tries to use a font where it's
-        // NULL.
+        /// This should be set by the renderer
+        /// if it tries to use a font where it's
+        /// NULL.
         void*   data;
 
-        // This is the real font size, after it's
-        // been scaled by Render->Scale()
+        /// This is the real font size, after it's
+        /// been scaled by Render->Scale()
         float realsize;
 
     };

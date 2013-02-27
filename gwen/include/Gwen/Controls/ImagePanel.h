@@ -74,15 +74,15 @@ namespace Gwen
                 if (m_bStretch)
                 {
                     skin->GetRender()->DrawTexturedRect(&m_Texture,
-                                                        GetRenderBounds(), m_uv[0], m_uv[1], m_uv[2],
-                                                        m_uv[3]);
+                                                        GetRenderBounds(),
+                                                        m_uv[0], m_uv[1], m_uv[2], m_uv[3]);
                 }
                 else
                 {
                     skin->GetRender()->DrawTexturedRect(&m_Texture,
-                                                        Gwen::Rect(0, 0, m_Texture.width,
-                                                                   m_Texture.height), m_uv[0],
-                                                        m_uv[1], m_uv[2], m_uv[3]);
+                                                        Gwen::Rect(0, 0,
+                                                                   m_Texture.width,m_Texture.height),
+                                                        m_uv[0], m_uv[1], m_uv[2], m_uv[3]);
                 }
             }
 

@@ -133,7 +133,9 @@ namespace Gwen
                             && bPressed
                             && event.keyboard.keycode >= 'a'
                             && event.keyboard.keycode <= 'z')
+                        {
                             return m_Canvas->InputCharacter(event.keyboard.keycode);
+                        }
 
                         unsigned char iKey = TranslateKeyCode(event.keyboard.keycode);
                         return m_Canvas->InputKey(iKey, bPressed);

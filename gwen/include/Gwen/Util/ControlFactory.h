@@ -115,16 +115,16 @@ namespace Gwen
                 return m_Properties;
             }
 
-            // Called when the control is drag and dropped onto the parent, even
-            // when just moving in the designer
+            /// Called when the control is drag and dropped onto the parent, even
+            /// when just moving in the designer
             virtual void AddChild(Gwen::Controls::Base* ctrl, Gwen::Controls::Base* child,
                                   const Gwen::Point& pos);
 
-            // Called when creating the control - param might be empty
+            /// Called when creating the control - param might be empty
             virtual void AddChild(Gwen::Controls::Base* ctrl, Gwen::Controls::Base* child,
                                   int iPage = 0);
 
-            // Called when a child is clicked on in an editor
+            /// Called when a child is clicked on in an editor
             virtual bool ChildTouched(Gwen::Controls::Base* ctrl,
                                       Gwen::Controls::Base* pChildControl)
             {
@@ -132,10 +132,9 @@ namespace Gwen
             }
 
             //
-            // If a control is parented to a control with multiple sections, or
-            // pages
-            // these functions are used to store which page they're on - on the
-            // child control
+            /// If a control is parented to a control with multiple sections, or
+            /// pages these functions are used to store which page they're on - on the
+            /// child control
             //
             virtual void SetParentPage(Gwen::Controls::Base* ctrl, int i);
             virtual int  GetParentPage(Gwen::Controls::Base* ctrl);
