@@ -38,35 +38,33 @@ int main(int argc, char** argv)
     al_register_event_source(event_queue, al_get_display_event_source(display));
     al_register_event_source(event_queue, al_get_mouse_event_source());
     al_register_event_source(event_queue, al_get_keyboard_event_source());
-    //
-    // Create a GWEN OpenGL Renderer
-    //
+    
+    // Create a GWEN Allegro Renderer
     Gwen::Renderer::Allegro* pRenderer = new Gwen::Renderer::Allegro();
-    //
+
     // Create a GWEN skin
-    //
     Gwen::Skin::TexturedBase skin(pRenderer);
     skin.SetRender(pRenderer);
     skin.Init("DefaultSkin.png");
+    
     // The fonts work differently in Allegro - it can't use
     // system fonts. So force the skin to use a local one.
+    // Note, you can get fonts that cover many languages/locales to do Chinese,
+    //       Arabic, Korean, etc. e.g. "Arial Unicode" (but it's 23MB!).
     skin.SetDefaultFont(L"OpenSans.ttf", 11);
-    //
+    
     // Create a Canvas (it's root, on which all other GWEN panels are created)
-    //
     Gwen::Controls::Canvas* pCanvas = new Gwen::Controls::Canvas(&skin);
     pCanvas->SetSize(1024, 768);
     pCanvas->SetDrawBackground(true);
     pCanvas->SetBackgroundColor(Gwen::Color(150, 170, 170, 255));
-    //
+
     // Create our unittest control (which is a Window with controls in it)
-    //
     UnitTest* pUnit = new UnitTest(pCanvas);
     pUnit->SetPos(10, 10);
-    //
+
     // Create a Windows Control helper
     // (Processes Windows MSG's and fires input at GWEN)
-    //
     Gwen::Input::Allegro GwenInput;
     GwenInput.Initialize(pCanvas);
     ALLEGRO_EVENT ev;
@@ -84,6 +82,8 @@ int main(int argc, char** argv)
 
         pCanvas->RenderCanvas();
         al_flip_display();
+        
+        al_rest(0.001);
     }
 
     al_destroy_display(display);

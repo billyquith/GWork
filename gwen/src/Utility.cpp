@@ -12,20 +12,52 @@
 using namespace Gwen;
 
 #ifdef _MSC_VER
-#pragma warning(disable:4267)    // conversion from 'size_t' to 'int', possible
-                                 // loss of data
+#   pragma warning(disable:4267)    // conversion from 'size_t' to 'int', possible loss of data
 #endif
 
 #ifdef __MINGW32__
-#undef vswprintf
-#define vswprintf _vsnwprintf
+#   undef vswprintf
+#   define vswprintf _vsnwprintf
 #endif
 
 #ifdef _MSC_VER
-#define GWEN_FNULL "NUL"
+#   define GWEN_FNULL "NUL"
 #else
-#define GWEN_FNULL "/dev/null"
+#   define GWEN_FNULL "/dev/null"
 #endif
+
+
+Gwen::String Gwen::Utility::UnicodeToString(const UnicodeString& strIn)
+{
+    if (!strIn.length())
+        return "";
+    
+    const size_t ssz = strIn.length();
+    const wchar_t *wstr = strIn.c_str();
+    String ret(ssz, (char)0);
+    
+    // Convert the wide string to a C string, replacing chars we cannot match with "_".
+    // Note: This will mangle most non-European Unicode strings as the range of
+    //       characters required don't fit in a byte.
+    std::use_facet< std::ctype<wchar_t> >(std::locale("")).narrow(wstr, wstr+ssz, '_', &ret[0]);
+    
+    return ret;
+}
+
+Gwen::UnicodeString Gwen::Utility::StringToUnicode(const String& strIn)
+{
+    if (!strIn.length())
+        return L"";
+    
+    const size_t ssz = strIn.length();
+    const char *str = strIn.c_str();    
+    UnicodeString ret(ssz, (wchar_t)0);
+    
+    // Create a wide string, encoding each character of the C string in current locale.
+    std::use_facet<std::ctype<wchar_t> >(std::locale()).widen(str, str+ssz, &ret[0] );
+    
+    return ret;
+}
 
 UnicodeString Gwen::Utility::Format(const wchar_t* fmt, ...)
 {
@@ -206,3 +238,34 @@ void Gwen::Utility::Strings::Strip(Gwen::UnicodeString& str, const Gwen::Unicode
         str += Source[i];
     }
 }
+
+
+Gwen::Rect Gwen::Utility::ClampRectToRect(Gwen::Rect inside, Gwen::Rect outside, bool clampSize)
+{
+    if (inside.x < outside.x)
+        inside.x = outside.x;
+        
+    if (inside.y  < outside.y)
+        inside.y = outside.y;
+
+    if (inside.x+inside.w > outside.x+outside.w)
+    {
+        if (clampSize)
+            inside.w = outside.w;
+        else
+            inside.x = outside.x+outside.w-inside.w;
+    }
+
+    if (inside.y+inside.h > outside.y+outside.h)
+    {
+        if (clampSize)
+            inside.h = outside.h;
+        else
+            inside.y = outside.w+outside.h-inside.h;
+    }
+    
+    return inside;
+}
+
+
+

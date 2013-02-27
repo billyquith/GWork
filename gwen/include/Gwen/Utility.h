@@ -23,30 +23,11 @@ namespace Gwen
 #pragma warning( disable : 4996 )
 #endif
 
-        inline String UnicodeToString(const UnicodeString& strIn)
-        {
-            if (!strIn.length())
-                return "";
-
-            String temp(strIn.length(), (char)0);
-            std::use_facet<std::ctype<wchar_t> >(std::locale()). \
-            narrow(&strIn[0], &strIn[0]+strIn.length(), ' ', &temp[0]);
-            return temp;
-        }
-
-        inline UnicodeString StringToUnicode(const String& strIn)
-        {
-            if (!strIn.length())
-                return L"";
-
-            UnicodeString temp(strIn.length(), (wchar_t)0);
-            std::use_facet<std::ctype<wchar_t> >(std::locale()). \
-            widen(&strIn[0], &strIn[0]+strIn.length(), &temp[0]);
-            return temp;
-        }
+        String UnicodeToString(const UnicodeString& strIn);        
+        UnicodeString StringToUnicode(const String& strIn);
 
         template <typename T>
-        void Replace(T& str, const T& strFind, const T& strReplace)
+        inline void Replace(T& str, const T& strFind, const T& strReplace)
         {
             size_t pos = 0;
 
@@ -62,39 +43,11 @@ namespace Gwen
 #endif
 
         template <class T>
-        String ToString(const T& object)
+        inline String ToString(const T& object)
         {
             std::ostringstream os;
-            os<<object;
+            os << object;
             return os.str();
-        }
-
-        inline Gwen::Rect ClampRectToRect(Gwen::Rect inside, Gwen::Rect outside,
-                                          bool clampSize = false)
-        {
-            if (inside.x < outside.x)
-                inside.x = outside.x;
-
-            if (inside.y  < outside.y)
-                inside.y = outside.y;
-
-            if (inside.x+inside.w > outside.x+outside.w)
-            {
-                if (clampSize)
-                    inside.w = outside.w;
-                else
-                    inside.x = outside.x+outside.w-inside.w;
-            }
-
-            if (inside.y+inside.h > outside.y+outside.h)
-            {
-                if (clampSize)
-                    inside.h = outside.h;
-                else
-                    inside.y = outside.w+outside.h-inside.h;
-            }
-
-            return inside;
         }
 
         GWEN_EXPORT UnicodeString Format(const wchar_t* fmt, ...);
@@ -132,8 +85,10 @@ namespace Gwen
                 GWEN_EXPORT bool  Floats(const Gwen::String& str, float* f, size_t iCount);
             }
         }
+        
+        Gwen::Rect ClampRectToRect(Gwen::Rect inside, Gwen::Rect outside, bool clampSize = false);
+
     }
-
-
 }
+
 #endif // ifndef GWEN_UTILITY_H
