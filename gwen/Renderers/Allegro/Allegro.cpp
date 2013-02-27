@@ -5,7 +5,6 @@
 #include "Gwen/Texture.h"
 #include "Gwen/Renderers/Allegro.h"
 
-// #include <allegro5/allegro_image.h>
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_ttf.h>
 #include <allegro5/allegro_primitives.h>
@@ -13,7 +12,7 @@
 namespace Gwen
 {
     namespace Renderer
-    {
+    {        
         Allegro::Allegro()
         {
         }
@@ -35,8 +34,9 @@ namespace Gwen
             if (fontName.find(".ttf") == std::string::npos)
                 fontName += ".ttf";
 
-            ALLEGRO_FONT* afont = al_load_font(
-                fontName.c_str(), font->realsize, ALLEGRO_TTF_NO_KERNING);
+            ALLEGRO_FONT* afont = al_load_font(fontName.c_str(),
+                                               font->realsize,
+                                               ALLEGRO_TTF_NO_KERNING);
             font->data = afont;
         }
 
@@ -52,10 +52,25 @@ namespace Gwen
         void Allegro::RenderText(Gwen::Font* pFont, Gwen::Point pos,
                                  const Gwen::UnicodeString& text)
         {
+            //! @todo Be nice not to have to reencode text every render.
+            //! @todo Text rendering needs dynamic sized buffer.
+            
+            // Reencode the Unicode UTF-16 string as UTF-8, which Allegro requires.
+            char buff[1024];
+            char *buffEnd = buff + sizeof(buff)-1;
+            char *p = buff;
+            for (std::wstring::const_iterator it=text.begin(), itEnd=text.end();
+                 it != itEnd && p < buffEnd;
+                 ++it)
+            {
+                size_t sz = al_utf8_encode(p, *it);
+                p += sz;
+            }
+            *p = '\0';
+            
+            ALLEGRO_FONT *afont = (ALLEGRO_FONT*)pFont->data;
             Translate(pos.x, pos.y);
-            ALLEGRO_FONT* afont = (ALLEGRO_FONT*)pFont->data;
-            al_draw_text(afont, m_Color, pos.x, pos.y, ALLEGRO_ALIGN_LEFT,
-                         Utility::UnicodeToString(text).c_str());
+            al_draw_text(afont, m_Color, pos.x, pos.y, ALLEGRO_ALIGN_LEFT, buff);
         }
 
         Gwen::Point Allegro::MeasureText(Gwen::Font* pFont, const Gwen::UnicodeString& text)
