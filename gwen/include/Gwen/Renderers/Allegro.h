@@ -46,6 +46,7 @@ namespace Gwen
                                     const Gwen::Color& col_default);
 
             void DrawLinedRect(Gwen::Rect rect);
+            void DrawShavedCornerRect(Gwen::Rect rect, bool bSlight = false);
             // void DrawPixel(int x, int y);
 
             bool BeginContext(Gwen::WindowProvider* pWindow);
