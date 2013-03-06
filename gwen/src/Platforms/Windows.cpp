@@ -95,7 +95,7 @@ bool Gwen::Platform::SetClipboardText(const Gwen::UnicodeString& str)
     HGLOBAL clipbuffer = GlobalAlloc(GMEM_DDESHARE, iDataSize);
     // Copy the string into the buffer
     wchar_t* buffer = (wchar_t*)GlobalLock(clipbuffer);
-    wcscpy_s(buffer, str.c_str());
+    wcscpy_s(buffer, iDataSize, str.c_str());
     GlobalUnlock(clipbuffer);
     // Place it on the clipboard
     SetClipboardData(CF_UNICODETEXT, clipbuffer);

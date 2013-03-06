@@ -3,10 +3,10 @@
 //
 
 #include "GwenUtil.h"
-#include <iostream>
 
 #include <fstream>
 #include <iostream>
+#include <stdarg.h>
 
 #include "rapidjson/rapidjson.h"
 #include "rapidjson/document.h"
@@ -14,6 +14,11 @@
 #include "rapidjson/filestream.h"
 #include "rapidjson/prettywriter.h"
 #include "rapidjson/writer.h"
+
+#ifdef _MSC_VER
+#   define vsnprintf vsnprintf_s
+#   define sscanf sscanf_s
+#endif
 
 
 namespace GwenUtil {
@@ -23,9 +28,8 @@ namespace GwenUtil {
         {
             BString FromWide(const WString& strIn)
             {
-                BString temp(strIn.length(), ' ');
-                std::copy(strIn.begin(), strIn.end(), temp.begin());
-                return temp;
+                const BString nstr(strIn.begin(), strIn.end());
+                return nstr;
             }
 
             WString ToWide(const BString& strIn)
@@ -427,7 +431,7 @@ namespace GwenUtil {
                         if (it->IsNumber())
                         {
                             GwenUtil::Data::Tree& child = tree.AddChild();
-                            child.Var<float>(it->GetDouble());
+                            child.Var<float>( static_cast<float>(it->GetDouble()) );
                         }
 
                         ++it;
@@ -452,7 +456,7 @@ namespace GwenUtil {
                         else if (it->value.IsInt())
                             tree.SetChildVar<int>(it->name.GetString(), it->value.GetInt());
                         else if (it->value.IsNumber())
-                            tree.SetChildVar<float>(it->name.GetString(), it->value.GetDouble());
+                            tree.SetChildVar<float>(it->name.GetString(), static_cast<float>( it->value.GetDouble() ));
 
                         ++it;
                     }
