@@ -39,6 +39,7 @@ namespace Gwen
     {
         struct ValueBase
         {
+            virtual ~ValueBase() {}
             virtual void DeleteThis() = 0;
         };
 
