@@ -92,7 +92,7 @@ namespace Gwen
             Gwen::String converted_string = Gwen::Utility::UnicodeToString(text);
             float yOffset = 0.0f;
 
-            for (int i = 0; i < text.length(); i++)
+            for (unsigned int i = 0; i < text.length(); i++)
             {
                 char ch = converted_string[i];
                 float curSpacing = sGwenDebugFontSpacing[ch]*m_fLetterSpacing*fSize*m_fFontScale[0];
@@ -133,7 +133,7 @@ namespace Gwen
             Gwen::String converted_string = Gwen::Utility::UnicodeToString(text);
             float spacing = 0.0f;
 
-            for (int i = 0; i < text.length(); i++)
+            for (unsigned int i = 0; i < text.length(); i++)
             {
                 char ch = converted_string[i];
                 spacing += sGwenDebugFontSpacing[ch];
