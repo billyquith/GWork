@@ -81,10 +81,12 @@ GWEN_CONTROL_CONSTRUCTOR(UnitTest)
         ADD_UNIT_TEST(ColorPicker);
     }
     m_StatusBar->SendToBack();
-    PrintText(L"Unit Test Started.\n");
+    PrintText(L"Unit Test Started.");
     m_fLastSecond = Gwen::Platform::GetTimeInSeconds();
     m_iFrames = 0;
     pList->GetNamedChildren("MenuStrip").DoAction();
+
+    PrintText(Utility::Format(L"Size of Button = %lu bytes.", sizeof(Gwen::Controls::Button)));
 }
 
 void UnitTest::OnCategorySelect(Gwen::Event::Info info)
