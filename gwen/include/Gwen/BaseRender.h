@@ -37,13 +37,19 @@ namespace Gwen
 
         };
 
-        //! Base class for all renderer implementations.
+        //
+        /// Base class for all renderer implementations.
+        ///
+        /// @note We never instance this directly, only the derived implementations.
         //
         class GWEN_EXPORT Base
         {
+        protected:
+            
+            Base(); // We only instance subclasses of this.
+
         public:
 
-            Base();
             virtual ~Base();
 
             virtual void Init()         {}
@@ -189,9 +195,8 @@ namespace Gwen
             }
             
         protected:
-
-            float m_fScale;
             
+            float m_fScale;            
         };
 
 

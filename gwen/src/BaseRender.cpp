@@ -65,17 +65,18 @@ namespace Gwen
                 DrawFilledRect(Gwen::Rect(rect.x+1, rect.y+rect.h, rect.w-1, 1));
                 DrawFilledRect(Gwen::Rect(rect.x, rect.y+1, 1, rect.h-1));
                 DrawFilledRect(Gwen::Rect(rect.x+rect.w, rect.y+1, 1, rect.h-1));
-                return;
             }
-
-            DrawPixel(rect.x+1, rect.y+1);
-            DrawPixel(rect.x+rect.w-1, rect.y+1);
-            DrawPixel(rect.x+1, rect.y+rect.h-1);
-            DrawPixel(rect.x+rect.w-1, rect.y+rect.h-1);
-            DrawFilledRect(Gwen::Rect(rect.x+2, rect.y, rect.w-3, 1));
-            DrawFilledRect(Gwen::Rect(rect.x+2, rect.y+rect.h, rect.w-3, 1));
-            DrawFilledRect(Gwen::Rect(rect.x, rect.y+2, 1, rect.h-3));
-            DrawFilledRect(Gwen::Rect(rect.x+rect.w, rect.y+2, 1, rect.h-3));
+            else
+            {
+                DrawPixel(rect.x+1, rect.y+1);
+                DrawPixel(rect.x+rect.w-1, rect.y+1);
+                DrawPixel(rect.x+1, rect.y+rect.h-1);
+                DrawPixel(rect.x+rect.w-1, rect.y+rect.h-1);
+                DrawFilledRect(Gwen::Rect(rect.x+2, rect.y, rect.w-3, 1));
+                DrawFilledRect(Gwen::Rect(rect.x+2, rect.y+rect.h, rect.w-3, 1));
+                DrawFilledRect(Gwen::Rect(rect.x, rect.y+2, 1, rect.h-3));
+                DrawFilledRect(Gwen::Rect(rect.x+rect.w, rect.y+2, 1, rect.h-3));
+            }
         }
 
         void Base::Translate(int& x, int& y)
@@ -144,9 +145,9 @@ namespace Gwen
             DrawFilledRect(pTargetRect);
         }
 
-        //  If they haven't defined these font functions in their renderer code
-        //  we just draw some rects where the letters would be to give them an
-        //  idea.
+        ///  If they haven't defined these font functions in their renderer code
+        ///  we just draw some rects where the letters would be to give them an
+        ///  idea.
 
         void Base::RenderText(Gwen::Font* pFont, Gwen::Point pos, const Gwen::UnicodeString& text)
         {

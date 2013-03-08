@@ -42,11 +42,11 @@ namespace Gwen
 
         void Allegro::FreeFont(Gwen::Font* pFont)
         {
-            if (!pFont->data)
-                return;
-
-            al_destroy_font((ALLEGRO_FONT*)pFont->data);
-            pFont->data = NULL;
+            if (pFont->data)
+            {
+                al_destroy_font((ALLEGRO_FONT*)pFont->data);
+                pFont->data = NULL;
+            }
         }
 
         void Allegro::RenderText(Gwen::Font* pFont, Gwen::Point pos,
@@ -89,8 +89,8 @@ namespace Gwen
                 return Gwen::Point(0, 0);
 
             int bx, by, tw, th;
-            al_get_text_dimensions(afont, Utility::UnicodeToString(text).c_str(), &bx, &by, &tw,
-                                   &th);
+            al_get_text_dimensions(afont, Utility::UnicodeToString(text).c_str(),
+                                   &bx, &by, &tw, &th);
             return Gwen::Point(tw, th);
         }
 
@@ -103,8 +103,8 @@ namespace Gwen
         void Allegro::EndClip()
         {
             ALLEGRO_BITMAP* targ = al_get_target_bitmap();
-            al_set_clipping_rectangle(0, 0, al_get_bitmap_width(targ),
-                                      al_get_bitmap_height(targ));
+            al_set_clipping_rectangle(0, 0,
+                                      al_get_bitmap_width(targ), al_get_bitmap_height(targ));
         }
 
         void Allegro::LoadTexture(Gwen::Texture* pTexture)
@@ -137,7 +137,8 @@ namespace Gwen
             pTexture->data = NULL;
         }
 
-        void Allegro::DrawTexturedRect(Gwen::Texture* pTexture, Gwen::Rect rect, float u1, float v1,
+        void Allegro::DrawTexturedRect(Gwen::Texture* pTexture, Gwen::Rect rect,
+                                       float u1, float v1,
                                        float u2, float v2)
         {
             ALLEGRO_BITMAP* bmp = (ALLEGRO_BITMAP*)pTexture->data;
@@ -171,18 +172,65 @@ namespace Gwen
         void Allegro::DrawFilledRect(Gwen::Rect rect)
         {
             Translate(rect);
-            rect.x += 0.5f; // Draw at pixel centre.
-            rect.y += 0.5f;
-            al_draw_filled_rectangle(rect.x, rect.y, rect.x+rect.w, rect.y+rect.h, m_Color);
+            const float fx = rect.x+0.5f, fy = rect.y+0.5f;
+            al_draw_filled_rectangle(fx, fy, fx+rect.w, fy+rect.h, m_Color);
         }
 
         void Allegro::DrawLinedRect(Gwen::Rect rect)
         {
             Translate(rect);
-            rect.x += 0.5f; // Draw at pixel centre.
-            rect.y += 0.5f;
             // Width of 0 draws a line, not a rect of width 1.
-            al_draw_rectangle(rect.x, rect.y, rect.x+rect.w, rect.y+rect.h, m_Color, 0.f);
+            const float fx = rect.x+0.5f, fy = rect.y+0.5f;
+            al_draw_rectangle(fx, fy, fx+rect.w, fy+rect.h, m_Color, 0.f);
+        }
+
+        void Allegro::DrawShavedCornerRect(Gwen::Rect rect, bool bSlight)
+        {
+            // Draw INSIDE the w/h.
+            rect.w -= 1;
+            rect.h -= 1;
+            
+#define SET_VERT(I, X,Y)            vtx[I].x = (X), vtx[I].y = (Y), vtx[I].color = m_Color
+#define ADD_LINE(I, X0,Y0, X1,Y1)   SET_VERT(I, X0,Y0); SET_VERT(I+1, X1,Y1)
+
+            const float fx = rect.x+0.5f, fy = rect.y+0.5f;
+            const float fw = rect.w, fh = rect.h;
+
+            if (bSlight)
+            {
+                //    DrawFilledRect(Gwen::Rect(rect.x+1, rect.y, rect.w-1, 1));
+                //    DrawFilledRect(Gwen::Rect(rect.x+1, rect.y+rect.h, rect.w-1, 1));
+                //    DrawFilledRect(Gwen::Rect(rect.x, rect.y+1, 1, rect.h-1));
+                //    DrawFilledRect(Gwen::Rect(rect.x+rect.w, rect.y+1, 1, rect.h-1));
+                
+                ALLEGRO_VERTEX vtx[4*2];
+                ADD_LINE(0, fx+1.f,fy,         fx+fw-1.f,fy   ); // top
+                ADD_LINE(2, fx+fw,fy+1.f,        fx+fw,fy+fh-1.f); // right
+                ADD_LINE(4, fx+fw-1.f,fy+fh,   fx+1.f,fy+fh   ); // bottom
+                ADD_LINE(6, fx,fy+fh-1.f,      fx,fy+1.f      ); // left
+                al_draw_prim(vtx, NULL, NULL, 0, 7, ALLEGRO_PRIM_LINE_LOOP);
+            }
+            else
+            {
+                //    DrawPixel(rect.x+1, rect.y+1);
+                //    DrawPixel(rect.x+rect.w-1, rect.y+1);
+                //    DrawPixel(rect.x+1, rect.y+rect.h-1);
+                //    DrawPixel(rect.x+rect.w-1, rect.y+rect.h-1);
+                //    DrawFilledRect(Gwen::Rect(rect.x+2, rect.y, rect.w-3, 1));
+                //    DrawFilledRect(Gwen::Rect(rect.x+2, rect.y+rect.h, rect.w-3, 1));
+                //    DrawFilledRect(Gwen::Rect(rect.x, rect.y+2, 1, rect.h-3));
+                //    DrawFilledRect(Gwen::Rect(rect.x+rect.w, rect.y+2, 1, rect.h-3));
+                
+                ALLEGRO_VERTEX vtx[4*2];
+                ADD_LINE(0, fx+2.f,fy,          fx+fw-2.f,fy    ); // top
+                ADD_LINE(2, fx+fw,fy+2.f,       fx+fw,fy+fh-2.f ); // right
+                ADD_LINE(4, fx+fw-2.f,fy+fh,    fx+2.f,fy+fh    ); // bottom
+                ADD_LINE(6, fx,fy+fh-2.f,       fx,fy+2.f       ); // left
+                al_draw_prim(vtx, NULL, NULL, 0, 7, ALLEGRO_PRIM_LINE_LOOP);
+            }
+            
+#undef SET_VERT
+#undef ADD_LINE
         }
 
         //  Unfortunately I think we need to lock the target texture to use this. The default
