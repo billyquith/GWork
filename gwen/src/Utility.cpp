@@ -22,6 +22,7 @@ using namespace Gwen;
 
 #ifdef _MSC_VER
 #   define GWEN_FNULL "NUL"
+#   define va_copy(c, s)   (c) = (s)       // MSVC does not implement C99.
 #else
 #   define GWEN_FNULL "/dev/null"
 #endif
@@ -69,7 +70,12 @@ UnicodeString Gwen::Utility::Format(const wchar_t* fmt, ...)
     // Determine the length of the resulting string, this method is much faster
     // than looping and reallocating a bigger buffer size.
     {
+#ifdef WIN32
+        FILE* fnull = NULL;
+        fopen_s(&fnull, GWEN_FNULL, "wb");
+#else
         FILE* fnull = fopen(GWEN_FNULL, "wb");
+#endif
         va_list c;
         va_copy(c, s);
         len = vfwprintf(fnull, fmt, c);
