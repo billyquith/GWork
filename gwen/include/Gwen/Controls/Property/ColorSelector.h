@@ -56,15 +56,16 @@ namespace Gwen
                     pMenu->SetSize(256, 180);
                     pMenu->SetDeleteOnClose(true);
                     pMenu->SetDisableIconMargin(true);
-                    Gwen::Controls::HSVColorPicker* picker = new Gwen::Controls::HSVColorPicker(
-                        pMenu);
+                    
+                    Gwen::Controls::HSVColorPicker* picker = new Gwen::Controls::HSVColorPicker(pMenu);
                     picker->Dock(Pos::Fill);
                     picker->SetSize(256, 128);
                     float defaultColor[3];
                     Gwen::Utility::Strings::To::Floats(m_TextBox->GetText().Get(), defaultColor, 3);
-                    picker->SetColor(Gwen::Color(defaultColor[0], defaultColor[1], defaultColor[2],
-                                                 255), false, true);
+                    picker->SetColor(Gwen::Color(defaultColor[0], defaultColor[1], defaultColor[2], 255),
+                                     false, true);
                     picker->onColorChanged.Add(this, &ThisClass::ColorChanged);
+                    
                     pMenu->Open(Pos::Right|Pos::Top);
                 }
 
@@ -72,11 +73,10 @@ namespace Gwen
                 {
                     Gwen::Controls::HSVColorPicker* picker =
                         gwen_cast<Gwen::Controls::HSVColorPicker>(control);
-                    Gwen::String colorStr;
-                    colorStr += Gwen::Utility::ToString((int)picker->GetColor().r)+" ";
-                    colorStr += Gwen::Utility::ToString((int)picker->GetColor().g)+" ";
-                    colorStr += Gwen::Utility::ToString((int)picker->GetColor().b);
-                    m_TextBox->SetText(colorStr);
+                    Color col = picker->GetColor();
+                    char str[128];
+                    sprintf(str, "%d %d %d", col.r, col.g, col.b);
+                    m_TextBox->SetText(TextObject(str));
                     DoChanged();
                 }
 

@@ -127,8 +127,8 @@ GWEN_CONTROL_CONSTRUCTOR(PropertyRow)
     PropertyRowLabel* pLabel = new PropertyRowLabel(this);
     pLabel->SetPropertyRow(this);
     pLabel->Dock(Pos::Left);
-    pLabel->SetAlignment(Pos::Left|Pos::Top);
-    pLabel->SetMargin(Margin(2, 2, 0, 0));
+    pLabel->SetAlignment(Pos::Left|Pos::CenterV);
+    pLabel->SetMargin(Margin(2, 0, 0, 0));
     m_Label = pLabel;
 }
 
@@ -162,7 +162,7 @@ void PropertyRow::Layout(Gwen::Skin::Base* /*skin*/)
     m_Label->SetWidth(pParent->GetSplitWidth());
 
     if (m_Property)
-        SetHeight(m_Property->Height());
+        SetHeight( Max(m_Label->Height(), m_Property->Height()) );
 }
 
 void PropertyRow::SetProperty(Property::Base* prop)
