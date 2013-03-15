@@ -88,10 +88,20 @@ namespace Gwen
             if (!afont)
                 return Gwen::Point(0, 0);
 
-            int bx, by, tw, th;
-            al_get_text_dimensions(afont, Utility::UnicodeToString(text).c_str(),
-                                   &bx, &by, &tw, &th);
-            return Gwen::Point(tw, th);
+            // Reencode the Unicode UTF-16 string as UTF-8, which Allegro requires.
+            char buff[1024];
+            char *buffEnd = buff + sizeof(buff)-1;
+            char *p = buff;
+            for (std::wstring::const_iterator it=text.begin(), itEnd=text.end();
+                 it != itEnd && p < buffEnd;
+                 ++it)
+            {
+                size_t sz = al_utf8_encode(p, *it);
+                p += sz;
+            }
+            *p = '\0';
+
+            return Point(al_get_text_width(afont, buff), al_get_font_line_height(afont));
         }
 
         void Allegro::StartClip()
