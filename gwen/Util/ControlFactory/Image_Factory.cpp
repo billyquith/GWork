@@ -15,7 +15,7 @@ namespace Gwen
 
                 UnicodeString GetValue(Controls::Base* ctrl)
                 {
-                    return gwen_cast<Controls::ImagePanel>(ctrl)->GetImage();
+                    return gwen_cast<Controls::ImagePanel>(ctrl)->GetImage().GetUnicode();
                 }
 
                 void SetValue(Controls::Base* ctrl, const UnicodeString& str)
