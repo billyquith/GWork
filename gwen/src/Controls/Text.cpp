@@ -91,7 +91,7 @@ void Text::Render(Skin::Base* skin)
                                   m_String.GetUnicode());
 }
 
-Gwen::Rect Text::GetCharacterPosition(int iChar)
+Gwen::Rect Text::GetCharacterPosition(unsigned int iChar)
 {
     if (!m_Lines.empty())
     {
@@ -159,7 +159,7 @@ int Text::GetClosestCharacter(Gwen::Point p)
     int iDistance = 4096;
     int iChar = 0;
 
-    for (size_t i = 0; i < m_String.GetUnicode().length()+1; i++)
+    for (unsigned i = 0; i < m_String.GetUnicode().length()+1; i++)
     {
         Gwen::Rect cp = GetCharacterPosition(i);
         int iDist = abs(cp.x-p.x)+abs(cp.y-p.y);             // this isn't
@@ -320,9 +320,9 @@ void Text::RefreshSizeWrap()
     Invalidate();
 }
 
-int Text::NumLines()
+unsigned int Text::NumLines()
 {
-    return m_Lines.size();
+    return (unsigned int)m_Lines.size();
 }
 
 Text* Text::GetLine(int i)

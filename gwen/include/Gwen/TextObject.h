@@ -94,9 +94,9 @@ namespace Gwen
             return m_Unicode;
         }
 
-        int length() const
+        unsigned int length() const
         {
-            return m_Unicode.length();
+            return (unsigned int)m_Unicode.length();
         }
 
     private:

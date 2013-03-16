@@ -38,7 +38,7 @@ namespace Gwen
                 return m_String;
             }
 
-            Gwen::Rect GetCharacterPosition(int iChar);
+            Gwen::Rect GetCharacterPosition(unsigned int iChar);
             int        GetClosestCharacter(Gwen::Point p);
 
             int Length() const
@@ -86,7 +86,7 @@ namespace Gwen
             virtual int   GetStartCharFromLine(int i);
             virtual int   GetEndCharFromLine(int i);
             virtual int   GetCharPosOnLine(int i);
-            virtual int   NumLines();
+            virtual unsigned NumLines();
 
         private:
 
