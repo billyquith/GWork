@@ -50,17 +50,17 @@ namespace Gwen
             T val;
 
             Value(const T& v)
-            {
-                val = v;
-            }
+            :   val(v)
+            {}
 
             virtual void DeleteThis()
             {
                 delete this;
             }
-
         };
 
+        typedef std::map<Gwen::String, ValueBase*> Container;
+        Container m_List;
 
     public:
 
@@ -70,12 +70,11 @@ namespace Gwen
 
         ~UserDataStorage()
         {
-            std::map<Gwen::String, void*>::iterator it = m_List.begin();
-            std::map<Gwen::String, void*>::iterator itEnd = m_List.end();
+            Container::iterator it = m_List.begin(), itEnd = m_List.end();
 
             while (it != itEnd)
             {
-                ((ValueBase*)it->second)->DeleteThis();
+                it->second->DeleteThis();
                 ++it;
             }
         }
@@ -83,21 +82,21 @@ namespace Gwen
         template <typename T>
         void Set(const Gwen::String& str, const T& var)
         {
-            Value<T>* val = NULL;
-            std::map<Gwen::String, void*>::iterator it = m_List.find(str);
+            Value<T> *val = NULL;
+            Container::iterator it = m_List.find(str);
 
             if (it != m_List.end())
             {
-                ((Value<T>*)it->second)->val = var;
+                static_cast< Value<T>* >(it->second)->val = var;
             }
             else
             {
                 val = new Value<T>(var);
-                m_List[ str ] = (void*)val;
+                m_List[str] = val;
             }
         }
 
-        bool Exists(const Gwen::String& str)
+        bool Exists(const Gwen::String& str) const
         {
             return m_List.find(str) != m_List.end();
         }
@@ -105,11 +104,8 @@ namespace Gwen
         template <typename T>
         T& Get(const Gwen::String& str)
         {
-            Value<T>* v = (Value<T>*)m_List[ str ];
-            return v->val;
-        }
-
-        std::map<Gwen::String, void*> m_List;
+            Value<T> *v = static_cast< Value<T>* >(m_List[str]);
+            return v->val;        }
     };
 
 
