@@ -295,7 +295,7 @@ namespace Gwen
             {
                 Gwen::Rect rect = control->GetRenderBounds();
                 bool bHasFocus = control->HasFocus();
-                
+
                 // Box inside
                 m_Render->SetDrawColor(Gwen::Color(255, 255, 255, 255));
                 m_Render->DrawFilledRect(Gwen::Rect(1, 1, rect.w-2, rect.h-2));
@@ -520,7 +520,7 @@ namespace Gwen
                 rect.y += iOffset;
                 rect.w -= iOffset*2;
                 rect.h -= iOffset*2;
-                
+
                 //draw the top and bottom
                 bool skip = true;
 
