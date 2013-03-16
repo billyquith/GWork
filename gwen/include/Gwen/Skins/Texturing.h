@@ -11,29 +11,31 @@ namespace Gwen
 	{
 		namespace Texturing
 		{
+            //! Handle drawing a single textured rectangle.
+            //
 			struct Single
 			{
 				Single()
-				{
-					texture = NULL;
-				}
-
+                :   texture(NULL)
+				{}
+                
 				void Init( Texture* pTexture, float x, float y, float w, float h )
 				{
 					texture = pTexture;
-					float texw = texture->width;
-					float texh = texture->height;
+					float const texw = texture->width;
+					float const texh = texture->height;
 					uv[0] = x / texw;
 					uv[1] = y / texh;
 					uv[2] = ( x + w ) / texw;
 					uv[3] = ( y + h ) / texh;
-					this->iWidth = w;
-					this->iHeight = h;
+					iWidth = w;
+					iHeight = h;
 				}
 
 				void Draw( Gwen::Renderer::Base* render, Gwen::Rect r, const Gwen::Color & col = Gwen::Colors::White )
 				{
-					if ( !texture ) { return; }
+					if ( !texture )
+                        return;
 
 					render->SetDrawColor( col );
 					render->DrawTexturedRect( texture, r, uv[0], uv[1], uv[2], uv[3] );
@@ -41,7 +43,8 @@ namespace Gwen
 
 				void DrawCenter( Gwen::Renderer::Base* render, Gwen::Rect r, const Gwen::Color & col = Gwen::Colors::White )
 				{
-					if ( !texture ) { return; }
+					if ( !texture )
+                        return;
 
 					r.x += ( r.w - iWidth )/2;
 					r.y += ( r.h - iHeight )/2;
@@ -51,12 +54,21 @@ namespace Gwen
 				}
 
 
-				Texture*	texture;
-				float		uv[4];
-				int			iWidth;
-				int			iHeight;
+				Texture*	texture;    //!< Texture to use.
+				float		uv[4];      //!< Rectangle texture UVs: (TL.xy, BR.xy).
+				int			iWidth;     //!< Width of draw rectangle.
+				int			iHeight;    //!< Height of draw rectangle.
 			};
 
+            //! Handle drawing a skinned textured rectangle. This consists of nine areas:
+            //!
+            //!  || Areas: ||
+            //!  | :-: | :-: | :-: |
+            //!  |  0  |  1  |  2  |
+            //!  |  3  |  4  |  5  |
+            //!  |  6  |  7  |  8  |
+            //!
+            //
 			struct Bordered
 			{
 				Bordered()
@@ -87,49 +99,55 @@ namespace Gwen
 
 				void SetRect( int iNum, float x, float y, float w, float h )
 				{
-					float texw = texture->width;
-					float texh = texture->height;
-					//x -= 1.0f;
-					//y -= 1.0f;
+					float const texw = texture->width;
+					float const texh = texture->height;
 					rects[iNum].uv[0] = x / texw;
 					rects[iNum].uv[1] = y / texh;
 					rects[iNum].uv[2] = ( x + w ) / texw;
 					rects[iNum].uv[3] = ( y + h ) / texh;
-					//	rects[iNum].uv[0] += 1.0f / texture->width;
-					//	rects[iNum].uv[1] += 1.0f / texture->width;
 				}
 
-				void Draw( Gwen::Renderer::Base* render, Gwen::Rect r, const Gwen::Color & col = Gwen::Colors::White, bool b1 = true, bool b2 = true, bool b3 = true, bool b4 = true, bool b5 = true, bool b6 = true, bool b7 = true, bool b8 = true, bool b9 = true )
+                //
+                //! Draw a segmented, textured rectangle for skinning.
+                //!
+                //! \param render - Renderer to use.
+                //! \param r - Rectangle to draw; outer edge.
+                //! \param col - Color. Tint?
+                //! \param draw - Bitfield specifying segments to draw.
+                //
+				void Draw( Gwen::Renderer::Base* render, Gwen::Rect r,
+                           const Gwen::Color & col = Gwen::Colors::White, unsigned int draw = ~0 )
 				{
-					if ( !texture ) { return; }
+					if (!texture)
+                        return;
 
 					render->SetDrawColor( col );
 
-					if ( r.w < width && r.h < height )
+					if (r.w < width && r.h < height)
 					{
-						render->DrawTexturedRect( texture,
-												  r,
-												  rects[0].uv[0], rects[0].uv[1], rects[8].uv[2], rects[8].uv[3] );
+						render->DrawTexturedRect(texture,
+												 r,
+												 rects[0].uv[0], rects[0].uv[1], rects[8].uv[2], rects[8].uv[3]);
 						return;
 					}
 
-					if ( b1 ) { DrawRect( render, 0, r.x, r.y, margin.left, margin.top ); }
+					if (draw & (1<<0)) { DrawRect( render, 0, r.x, r.y, margin.left, margin.top ); }
 
-					if ( b2 ) { DrawRect( render, 1, r.x + margin.left, r.y, r.w - margin.left - margin.right, margin.top ); }
+					if (draw & (1<<1)) { DrawRect( render, 1, r.x + margin.left, r.y, r.w - margin.left - margin.right, margin.top ); }
 
-					if ( b3 ) { DrawRect( render, 2, ( r.x + r.w ) - margin.right, r.y, margin.right, margin.top ); }
+					if (draw & (1<<2)) { DrawRect( render, 2, ( r.x + r.w ) - margin.right, r.y, margin.right, margin.top ); }
 
-					if ( b4 ) { DrawRect( render, 3, r.x, r.y + margin.top, margin.left, r.h - margin.top - margin.bottom ); }
+					if (draw & (1<<3)) { DrawRect( render, 3, r.x, r.y + margin.top, margin.left, r.h - margin.top - margin.bottom ); }
 
-					if ( b5 ) { DrawRect( render, 4, r.x + margin.left, r.y + margin.top, r.w - margin.left - margin.right, r.h - margin.top - margin.bottom ); }
+					if (draw & (1<<4)) { DrawRect( render, 4, r.x + margin.left, r.y + margin.top, r.w - margin.left - margin.right, r.h - margin.top - margin.bottom ); }
 
-					if ( b6 ) { DrawRect( render, 5, ( r.x + r.w ) - margin.right, r.y + margin.top, margin.right, r.h - margin.top - margin.bottom ); }
+					if (draw & (1<<5)) { DrawRect( render, 5, ( r.x + r.w ) - margin.right, r.y + margin.top, margin.right, r.h - margin.top - margin.bottom ); }
 
-					if ( b7 ) { DrawRect( render, 6, r.x, ( r.y + r.h ) - margin.bottom, margin.left, margin.bottom ); }
+					if (draw & (1<<6)) { DrawRect( render, 6, r.x, ( r.y + r.h ) - margin.bottom, margin.left, margin.bottom ); }
 
-					if ( b8 ) { DrawRect( render, 7, r.x + margin.left, ( r.y + r.h ) - margin.bottom, r.w - margin.left - margin.right, margin.bottom ); }
+					if (draw & (1<<7)) { DrawRect( render, 7, r.x + margin.left, ( r.y + r.h ) - margin.bottom, r.w - margin.left - margin.right, margin.bottom ); }
 
-					if ( b9 ) { DrawRect( render, 8, ( r.x + r.w ) - margin.right, ( r.y + r.h ) - margin.bottom, margin.right, margin.bottom ); }
+					if (draw & (1<<8)) { DrawRect( render, 8, ( r.x + r.w ) - margin.right, ( r.y + r.h ) - margin.bottom, margin.right, margin.bottom ); }
 				}
 
 				void DrawRect( Gwen::Renderer::Base* render, int i, int x, int y, int w, int h )
