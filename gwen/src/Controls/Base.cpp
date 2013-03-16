@@ -331,7 +331,7 @@ void Base::RemoveAllChildren()
 unsigned int Base::NumChildren()
 {
     // Include m_InnerPanel's children here?
-    return Children.size();
+    return (unsigned int)Children.size();
 }
 
 Controls::Base* Base::GetChild(unsigned int i)
