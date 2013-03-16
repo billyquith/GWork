@@ -549,10 +549,10 @@ namespace Gwen
 					Gwen::Rect rect = control->GetRenderBounds();
 					rect.y += textHeight/2;
 					rect.h -= textHeight/2;
-					Textures.GroupBox.Draw( GetRender(), rect, Gwen::Colors::White, true, false );
+					Textures.GroupBox.Draw( GetRender(), rect, Gwen::Colors::White, ~(1<<1) );                    
 					rect.x += textStart + textWidth - 4;
 					rect.w -= textStart + textWidth - 4;
-					Textures.GroupBox.Draw( GetRender(), rect, Gwen::Colors::White, false, true, false, false, false, false, false, false, false );
+					Textures.GroupBox.Draw( GetRender(), rect, Gwen::Colors::White, (1<<1) );
 				}
 
 				virtual void DrawTextBox( Gwen::Controls::Base* control )
@@ -753,14 +753,14 @@ namespace Gwen
 
 				virtual void DrawComboBox( Gwen::Controls::Base* control, bool bDown, bool bMenuOpen )
 				{
-					if ( control->IsDisabled() )
-					{ return Textures.Input.ComboBox.Disabled.Draw( GetRender(), control->GetRenderBounds() ); }
+					if (control->IsDisabled())
+                        return Textures.Input.ComboBox.Disabled.Draw( GetRender(), control->GetRenderBounds() );
 
-					if ( bDown || bMenuOpen )
-					{ return Textures.Input.ComboBox.Down.Draw( GetRender(), control->GetRenderBounds() ); }
+					if (bDown || bMenuOpen)
+                        return Textures.Input.ComboBox.Down.Draw( GetRender(), control->GetRenderBounds() );
 
-					if ( control->IsHovered() )
-					{ return Textures.Input.ComboBox.Hover.Draw( GetRender(), control->GetRenderBounds() ); }
+					if (control->IsHovered())
+                        return Textures.Input.ComboBox.Hover.Draw( GetRender(), control->GetRenderBounds() );
 
 					Textures.Input.ComboBox.Normal.Draw( GetRender(), control->GetRenderBounds() );
 				}
