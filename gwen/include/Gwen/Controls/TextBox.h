@@ -72,7 +72,8 @@ namespace Gwen
 
             virtual void SetSelectAllOnFocus(bool b)
             {
-                m_bSelectAll = b; if (b)
+                m_bSelectAll = b;
+                if (b)
                     OnSelectAll(this);
             }
 
