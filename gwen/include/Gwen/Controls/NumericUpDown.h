@@ -54,7 +54,7 @@ namespace Gwen
 
             virtual void SetMin(int i);
             virtual void SetMax(int i);
-            virtual void SetValue(int i);
+            virtual void SetIntValue(int i);
 
             Event::Caller onChanged;
 

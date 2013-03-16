@@ -39,13 +39,13 @@ GWEN_CONTROL_CONSTRUCTOR(NumericUpDown)
 void NumericUpDown::OnButtonUp(Base* /*control*/)
 {
     SyncNumberFromText();
-    SetValue(m_iNumber+1);
+    SetIntValue(m_iNumber+1);
 }
 
 void NumericUpDown::OnButtonDown(Base* /*control*/)
 {
     SyncNumberFromText();
-    SetValue(m_iNumber-1);
+    SetIntValue(m_iNumber-1);
 }
 
 void NumericUpDown::SyncTextFromNumber()
@@ -55,7 +55,7 @@ void NumericUpDown::SyncTextFromNumber()
 
 void NumericUpDown::SyncNumberFromText()
 {
-    SetValue((int)GetFloatFromText());
+    SetIntValue((int)GetFloatFromText());
 }
 
 void NumericUpDown::SetMin(int i)
@@ -68,13 +68,9 @@ void NumericUpDown::SetMax(int i)
     m_iMax = i;
 }
 
-void NumericUpDown::SetValue(int i)
+void NumericUpDown::SetIntValue(int i)
 {
-    if (i > m_iMax)
-        i = m_iMax;
-
-    if (i < m_iMin)
-        i = m_iMin;
+    i = Clamp(i, m_iMin, m_iMax);
 
     if (m_iNumber == i)
         return;

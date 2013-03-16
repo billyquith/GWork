@@ -11,7 +11,7 @@ public:
     {
         Controls::NumericUpDown* pCtrl = new Controls::NumericUpDown(this);
         pCtrl->SetBounds(10, 10, 50, 20);
-        pCtrl->SetValue(50);
+        pCtrl->SetIntValue(50);
         pCtrl->SetMax(1000);
         pCtrl->SetMin(-1000);
         //	pCtrl->onPress.Add( this, &ThisClass::onButtonA );
