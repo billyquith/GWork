@@ -45,21 +45,25 @@ void Menu::Layout(Skin::Base* skin)
          ++it)
     {
         Base* pChild = (*it);
-
+        
         if (!pChild)
             continue;
-
+        
         childrenHeight += pChild->Height();
     }
 
     if (Y()+childrenHeight > GetCanvas()->Height())
-        childrenHeight = GetCanvas()->Height()-Y();
+    {
+        childrenHeight = GetCanvas()->Height() - Y();
+    }
 
     SetSize(Width(), childrenHeight);
+    
     BaseClass::Layout(skin);
 }
 
-MenuItem* Menu::AddItem(const TextObject& strName, const TextObject& strIconName,
+MenuItem* Menu::AddItem(const TextObject& strName,
+                        const TextObject& strIconName,
                         const TextObject& strAccelerator)
 {
     MenuItem* pItem = new MenuItem(this);
@@ -78,11 +82,9 @@ void Menu::OnAddItem(MenuItem* item)
     item->SizeToContents();
     item->SetAlignment(Pos::CenterV|Pos::Left);
     item->onHoverEnter.Add(this, &Menu::OnHoverItem);
+    
     // Do this here - after Top Docking these values mean nothing in layout
-    int w = item->Width()+10+32;
-
-    if (w < Width())
-        w = Width();
+    const int w = Max(item->Width()+10+32, Width());
 
     SetSize(w, Height());
 }

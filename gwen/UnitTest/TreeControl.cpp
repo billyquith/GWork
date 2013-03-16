@@ -15,8 +15,10 @@ public:
             Gwen::Controls::TreeNode* pNode = ctrl->AddNode(L"Node Two");
             pNode->AddNode(L"Node Two Inside");
             pNode->AddNode(L"Eyes");
-            pNode->AddNode(L"Brown")->AddNode(L"Node Two Inside")->AddNode(L"Eyes")->AddNode(
-                L"Brown");
+            pNode->AddNode(L"Brown")
+                ->AddNode(L"Node Two Inside")
+                ->AddNode(L"Eyes")
+                ->AddNode(L"Brown");
             pNode->AddNode(L"More");
             pNode->AddNode(L"Nodes");
             ctrl->AddNode(L"Node Three");
@@ -30,8 +32,9 @@ public:
             Gwen::Controls::TreeNode* pNode = ctrl->AddNode(L"Node Two");
             pNode->AddNode(L"Node Two Inside");
             pNode->AddNode(L"Eyes");
-            Gwen::Controls::TreeNode* pNodeTwo = pNode->AddNode(L"Brown")->AddNode(
-                L"Node Two Inside")->AddNode(L"Eyes");
+            Gwen::Controls::TreeNode* pNodeTwo = pNode->AddNode(L"Brown")
+                ->AddNode(L"Node Two Inside")
+                ->AddNode(L"Eyes");
             pNodeTwo->AddNode(L"Brown");
             pNodeTwo->AddNode(L"Green");
             pNodeTwo->AddNode(L"Slime");

@@ -47,14 +47,18 @@ protected:
 GWEN_CONTROL_CONSTRUCTOR(ComboBox)
 {
     SetSize(100, 20);
+    
     m_Menu = new Menu(this);
     m_Menu->SetHidden(true);
     m_Menu->SetDisableIconMargin(true);
     m_Menu->SetTabable(false);
+    
     DownArrow* pArrow = new DownArrow(this);
     pArrow->SetComboBox(this);
+    
     m_Button = pArrow;
     m_SelectedItem = NULL;
+    
     SetAlignment(Gwen::Pos::Left|Gwen::Pos::CenterV);
     SetText(L"");
     SetMargin(Margin(3, 0, 0, 0));

@@ -796,46 +796,52 @@ void Base::RecurseLayout(Skin::Base* skin)
 
         int iDock = pChild->GetDock();
 
-        if (iDock&Pos::Fill)
+        if (iDock & Pos::Fill)
             continue;
 
-        if (iDock&Pos::Top)
+        if (iDock & Pos::Top)
         {
             const Margin& margin = pChild->GetMargin();
-            pChild->SetBounds(rBounds.x+margin.left, rBounds.y+margin.top,
-                              rBounds.w-margin.left-margin.right, pChild->Height());
+            pChild->SetBounds(rBounds.x+margin.left,
+                              rBounds.y+margin.top,
+                              rBounds.w-margin.left-margin.right,
+                              pChild->Height());
             int iHeight = margin.top+margin.bottom+pChild->Height();
             rBounds.y += iHeight;
             rBounds.h -= iHeight;
         }
 
-        if (iDock&Pos::Left)
+        if (iDock & Pos::Left)
         {
             const Margin& margin = pChild->GetMargin();
-            pChild->SetBounds(rBounds.x+margin.left, rBounds.y+margin.top,
-                              pChild->Width(), rBounds.h-margin.top-margin.bottom);
+            pChild->SetBounds(rBounds.x+margin.left,
+                              rBounds.y+margin.top,
+                              pChild->Width(),
+                              rBounds.h-margin.top-margin.bottom);
             int iWidth = margin.left+margin.right+pChild->Width();
             rBounds.x += iWidth;
             rBounds.w -= iWidth;
         }
 
-        if (iDock&Pos::Right)
+        if (iDock & Pos::Right)
         {
             // TODO: THIS MARGIN CODE MIGHT NOT BE FULLY FUNCTIONAL
             const Margin& margin = pChild->GetMargin();
-            pChild->SetBounds(
-                (rBounds.x+rBounds.w)-pChild->Width()-margin.right, rBounds.y+margin.top,
-                pChild->Width(), rBounds.h-margin.top-margin.bottom);
+            pChild->SetBounds((rBounds.x+rBounds.w)-pChild->Width()-margin.right,
+                              rBounds.y+margin.top,
+                              pChild->Width(),
+                              rBounds.h-margin.top-margin.bottom);
             int iWidth = margin.left+margin.right+pChild->Width();
             rBounds.w -= iWidth;
         }
 
-        if (iDock&Pos::Bottom)
+        if (iDock & Pos::Bottom)
         {
             // TODO: THIS MARGIN CODE MIGHT NOT BE FULLY FUNCTIONAL
             const Margin& margin = pChild->GetMargin();
             pChild->SetBounds(rBounds.x+margin.left,
-                              (rBounds.y+rBounds.h)-pChild->Height()-margin.bottom, rBounds.w-margin.left-margin.right,
+                              (rBounds.y+rBounds.h)-pChild->Height()-margin.bottom,
+                              rBounds.w-margin.left-margin.right,
                               pChild->Height());
             rBounds.h -= pChild->Height()+margin.bottom+margin.top;
         }

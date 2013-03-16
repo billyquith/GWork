@@ -104,8 +104,7 @@ void ScrollControl::Render(Skin::Base* skin)
     render->SetDrawColor(Gwen::Color(255, 0, 0, 100));
     render->DrawFilledRect(m_InnerPanel->GetBounds());
     render->RenderText(skin->GetDefaultFont(),
-                       Gwen::Point(0,
-                                   0),
+                       Gwen::Point(0,0),
                        Utility::Format(L"Offset: %i %i", m_InnerPanel->X(), m_InnerPanel->Y()));
 #else // 0
     (void)skin;
@@ -135,14 +134,17 @@ void ScrollControl::UpdateScrollBars()
     if (!m_InnerPanel)
         return;
 
-    if (ContentsAreDocked())
-    {
-        m_VerticalScrollBar->SetHidden(true);
-        m_HorizontalScrollBar->SetHidden(true);
-        m_InnerPanel->SetSize(GetSize());
-        m_InnerPanel->SetPos(0, 0);
-        return;
-    }
+    // Not sure what this is here to fix/change. Adding it breaks auto-scrollbars for
+    // menus, controls, etc. -- BQ
+    //
+    //    if (ContentsAreDocked())
+    //    {
+    //        m_VerticalScrollBar->SetHidden(false);
+    //        m_HorizontalScrollBar->SetHidden(false);
+    //        m_InnerPanel->SetSize(GetSize());
+    //        m_InnerPanel->SetPos(0, 0);
+    //        return;
+    //    }
 
     int childrenWidth = 0;
     int childrenHeight = 0;
@@ -159,23 +161,23 @@ void ScrollControl::UpdateScrollBars()
 
     if (m_bCanScrollH)
     {
-        m_InnerPanel->SetSize(Gwen::Max(Width(),
-                                        childrenWidth),
-                              Gwen::Max(Height(), childrenHeight));
+        m_InnerPanel->SetSize(Gwen::Max( Width(), childrenWidth ),
+                              Gwen::Max( Height(), childrenHeight ));
     }
     else
     {
-        m_InnerPanel->SetSize(Width()-
-                              (m_VerticalScrollBar->Hidden() ? 0 : m_VerticalScrollBar->Width()-1),
+        m_InnerPanel->SetSize(Width() - (m_VerticalScrollBar->Hidden()
+                                         ? 0 : m_VerticalScrollBar->Width()-1),
                               Gwen::Max(Height(), childrenHeight));
     }
 
-    float wPercent = (float)Width()/
-                     (float)(childrenWidth+
-                             (m_VerticalScrollBar->Hidden() ? 0 : m_VerticalScrollBar->Width()));
-    float hPercent = (float)Height()/
-                     (float)(childrenHeight+
-                             (m_HorizontalScrollBar->Hidden() ? 0 : m_HorizontalScrollBar->Height()));
+    float wPercent =
+        (float)Width() / (float)(childrenWidth + (m_VerticalScrollBar->Hidden()
+                                                  ? 0 : m_VerticalScrollBar->Width()));
+    
+    float hPercent =
+        (float)Height() / (float)(childrenHeight + (m_HorizontalScrollBar->Hidden()
+                                                    ? 0 : m_HorizontalScrollBar->Height()));
 
     if (m_bCanScrollV)
         SetVScrollRequired(hPercent >= 1);
@@ -188,30 +190,28 @@ void ScrollControl::UpdateScrollBars()
         m_HorizontalScrollBar->SetHidden(true);
 
     m_VerticalScrollBar->SetContentSize(m_InnerPanel->Height());
-    m_VerticalScrollBar->SetViewableContentSize(Height()-
-                                                (m_HorizontalScrollBar->Hidden() ? 0 :
-                                                 m_HorizontalScrollBar->Height()));
+    m_VerticalScrollBar->SetViewableContentSize(Height() - (m_HorizontalScrollBar->Hidden()
+                                                            ? 0 : m_HorizontalScrollBar->Height()));
     m_HorizontalScrollBar->SetContentSize(m_InnerPanel->Width());
-    m_HorizontalScrollBar->SetViewableContentSize(Width()-
-                                                  (m_VerticalScrollBar->Hidden() ? 0 :
-                                                   m_VerticalScrollBar->Width()));
+    m_HorizontalScrollBar->SetViewableContentSize(Width() - (m_VerticalScrollBar->Hidden()
+                                                             ? 0 : m_VerticalScrollBar->Width()));
     int newInnerPanelPosX = 0;
     int newInnerPanelPosY = 0;
 
     if (CanScrollV() && !m_VerticalScrollBar->Hidden())
     {
         newInnerPanelPosY =
-            -((m_InnerPanel->Height())-Height()+
-              (m_HorizontalScrollBar->Hidden() ? 0 : m_HorizontalScrollBar->Height()))*
-            m_VerticalScrollBar->GetScrolledAmount();
+            -( m_InnerPanel->Height() - Height() +
+               (m_HorizontalScrollBar->Hidden() ? 0 : m_HorizontalScrollBar->Height()) )
+            * m_VerticalScrollBar->GetScrolledAmount();
     }
 
     if (CanScrollH() && !m_HorizontalScrollBar->Hidden())
     {
         newInnerPanelPosX =
-            -((m_InnerPanel->Width())-Width()+
-              (m_VerticalScrollBar->Hidden() ? 0 : m_VerticalScrollBar->Width()))*
-            m_HorizontalScrollBar->GetScrolledAmount();
+            -( m_InnerPanel->Width() - Width() +
+               (m_VerticalScrollBar->Hidden() ? 0 : m_VerticalScrollBar->Width()) )
+            * m_HorizontalScrollBar->GetScrolledAmount();
     }
 
     m_InnerPanel->SetPos(newInnerPanelPosX, newInnerPanelPosY);
