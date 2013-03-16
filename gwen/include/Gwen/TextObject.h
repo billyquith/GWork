@@ -50,9 +50,6 @@ namespace Gwen
             *this = unicode;
         }
 
-        operator const Gwen::String&()          { return m_String; }
-        operator const Gwen::UnicodeString&()   { return m_Unicode; }
-
         void operator = (const char* str)
         {
             m_String = str;
@@ -63,6 +60,12 @@ namespace Gwen
         {
             m_String = str;
             m_Unicode = Gwen::Utility::StringToUnicode(m_String);
+        }
+
+        void operator = (const wchar_t* text)
+        {
+            m_Unicode = text;
+            m_String = Gwen::Utility::UnicodeToString(m_Unicode);
         }
 
         void operator = (const Gwen::UnicodeString& unicodeStr)
@@ -96,8 +99,9 @@ namespace Gwen
             return m_Unicode.length();
         }
 
-        Gwen::UnicodeString m_Unicode;
-        Gwen::String m_String;
+    private:
+        Gwen::UnicodeString     m_Unicode;
+        Gwen::String            m_String;
     };
 
 
