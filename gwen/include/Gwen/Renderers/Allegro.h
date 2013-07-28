@@ -17,6 +17,8 @@ namespace Gwen
 {
     namespace Renderer
     {
+        class AllegroCTT;
+        
         class Allegro : public Gwen::Renderer::Base
         {
         public:
@@ -53,10 +55,13 @@ namespace Gwen
             bool EndContext(Gwen::WindowProvider* pWindow);
             bool PresentContext(Gwen::WindowProvider* pWindow);
 
+            // Cache to texture.
+            ICacheToTexture* GetCTT();
+
         protected:
 
             ALLEGRO_COLOR m_Color;
-            
+            AllegroCTT *m_ctt;
         };
 
 
