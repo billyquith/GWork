@@ -349,8 +349,12 @@ namespace Gwen
 
             virtual void UpdateColours()    {}
 
-            virtual void SetCacheToTexture()        { m_bCacheToTexture = true; }
-            virtual bool ShouldCacheToTexture()     { return m_bCacheToTexture; }
+            //! Enable caching to texture optimisation for this control.
+            //! @Note Must have GetCTT() implemented in the Renderer.
+            virtual void EnableCacheToTexture()     { m_bCacheToTexture = true; }
+            
+            //! Query if this control is cached to a texture.
+            virtual bool IsCachedToTexture() const  { return m_bCacheToTexture; }
 
             virtual void SetCursor(unsigned char c) { m_Cursor = c; }
 

@@ -20,7 +20,7 @@ GWEN_CONTROL_CONSTRUCTOR(HSVColorPicker)
 {
     SetMouseInputEnabled(true);
     SetSize(256, 64);
-    SetCacheToTexture();
+    EnableCacheToTexture();
     
     m_LerpBox = new Gwen::Controls::ColorLerpBox(this);
     m_LerpBox->onSelectionChanged.Add(this, &HSVColorPicker::ColorBoxChanged);

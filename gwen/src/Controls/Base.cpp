@@ -495,7 +495,7 @@ void Base::DoCacheRender(Gwen::Skin::Base* skin, Gwen::Controls::Base* pMaster)
     {
         render->StartClip();
         {
-            if (ShouldCacheToTexture())
+            if (IsCachedToTexture())
                 cache->SetupCacheTexture(this);
 
             // Render myself first
@@ -517,7 +517,7 @@ void Base::DoCacheRender(Gwen::Skin::Base* skin, Gwen::Controls::Base* pMaster)
                 }
             }
 
-            if (ShouldCacheToTexture())
+            if (IsCachedToTexture())
             {
                 cache->FinishCacheTexture(this);
                 m_bCacheTextureDirty = false;
@@ -547,7 +547,7 @@ void Base::DoRender(Gwen::Skin::Base* skin)
     Think();
     Gwen::Renderer::Base* render = skin->GetRender();
 
-    if (render->GetCTT() && ShouldCacheToTexture())
+    if (render->GetCTT() && IsCachedToTexture())
     {
         DoCacheRender(skin, this);
         return;
@@ -766,7 +766,7 @@ Base* Base::GetControlAt(int x, int y, bool bOnlyIfMouseEnabled)
 
 void Base::Layout(Skin::Base* skin)
 {
-    if (skin->GetRender()->GetCTT() && ShouldCacheToTexture())
+    if (skin->GetRender()->GetCTT() && IsCachedToTexture())
         skin->GetRender()->GetCTT()->CreateControlCacheTexture(this);
 }
 
