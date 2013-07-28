@@ -6,6 +6,8 @@
 #include "Gwen/Controls/Menu.h"
 #include "Gwen/Controls/HSVColorPicker.h"
 
+#include <stdio.h>
+
 namespace Gwen
 {
     namespace Controls
@@ -75,7 +77,7 @@ namespace Gwen
                         gwen_cast<Gwen::Controls::HSVColorPicker>(control);
                     Color col = picker->GetColor();
                     char str[128];
-                    sprintf(str, "%d %d %d", col.r, col.g, col.b);
+                    sprintf(str, "%u,%u,%u", col.r, col.g, col.b);
                     m_TextBox->SetText(TextObject(str));
                     DoChanged();
                 }
@@ -98,9 +100,11 @@ namespace Gwen
                 virtual void DoChanged()
                 {
                     BaseClass::DoChanged();
-                    float col[3];
-                    Gwen::Utility::Strings::To::Floats(m_TextBox->GetText().Get(), col, 3);
-                    m_Button->SetColor(Gwen::Color(col[0], col[1], col[2]));
+                    unsigned int r,g,b;
+                    if (sscanf(m_TextBox->GetText().c_str(), "%u,%u,%u", &r, &g, &b) == 3)
+                    {
+                        m_Button->SetColor(Gwen::Color(r,g,b));
+                    }
                 }
 
                 Controls::Internal::ColourButton*       m_Button;
