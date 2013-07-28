@@ -2,6 +2,10 @@
  *  GWEN
  *  Copyright (c) 2010 Facepunch Studios
  *  See license in Gwen.h
+ *
+ *  The colourspace conversion functions al_color_hsv_to_rgb & al_color_rgb_to_hsv are
+ *  from the Allegro 5 colour library.
+ *  License: http://alleg.sourceforge.net/license.html
  */
 
 
@@ -11,121 +15,82 @@
 using namespace Gwen;
 using namespace Gwen::Controls;
 
-// Find a place to put these...
-Color HSVToColor(float h, float s, float v)
+
+static void al_color_hsv_to_rgb(float hue, float saturation, float value,
+                                float *red, float *green, float *blue)
 {
-    if (h < 0.0f)
-        h += 360.0f;
-
-    if (h > 360.0f)
-        h -= 360.0f;
-
-    s *= 255.0f;
-    v *= 255.0f;
-    float r, g, b;
-
-    if (!h && !s)
-        r = g = b = v;
-
-    double min, max, delta, hue;
-    max = v;
-    delta = (max*s)/255.0;
-    min = max-delta;
-    hue = h;
-
-    if (h > 300 || h <= 60)
-    {
-        r = (int)max;
-
-        if (h > 300)
-        {
-            g = (int)min;
-            hue = (hue-360.0)/60.0;
-            b = (int)((hue*delta-min)* -1);
-        }
-        else
-        {
-            b = (int)min;
-            hue = hue/60.0;
-            g = (int)(hue*delta+min);
-        }
+    int d;
+    float e, a, b, c;
+    hue = fmodf(hue, 360);
+    if (hue < 0) hue += 360;
+    d = hue / 60;
+    e = hue / 60 - d;
+    a = value * (1 - saturation);
+    b = value * (1 - e * saturation);
+    c = value * (1 - (1 - e) * saturation);
+    switch (d) {
+        default:
+        case 0: *red = value, *green = c,     *blue = a;     return;
+        case 1: *red = b,     *green = value, *blue = a;     return;
+        case 2: *red = a,     *green = value, *blue = c;     return;
+        case 3: *red = a,     *green = b,     *blue = value; return;
+        case 4: *red = c,     *green = a,     *blue = value; return;
+        case 5: *red = value, *green = a,     *blue = b;     return;
     }
-    else if (h > 60 && h < 180)
-    {
-        g = (int)max;
-
-        if (h < 120)
-        {
-            b = (int)min;
-            hue = (hue/60.0-2.0)*delta;
-            r = (int)(min-hue);
-        }
-        else
-        {
-            r = (int)min;
-            hue = (hue/60-2.0)*delta;
-            b = (int)(min+hue);
-        }
-    }
-    else
-    {
-        b = (int)max;
-
-        if (h < 240)
-        {
-            r = (int)min;
-            hue = (hue/60.0-4.0)*delta;
-            g = (int)(min-hue);
-        }
-        else
-        {
-            g = (int)min;
-            hue = (hue/60-4.0)*delta;
-            r = (int)(min+hue);
-        }
-    }
-
-    return Color(r, g, b, 255);
 }
 
-HSV RGBtoHSV(int r, int g, int b)
+static void al_color_rgb_to_hsv(float red, float green, float blue,
+                                float *hue, float *saturation, float *value)
 {
-    double min, max, delta, temp;
-    min = Gwen::Min(r, Gwen::Min(g, b));
-    max = Gwen::Max(r, Gwen::Max(g, b));
-    delta = max-min;
-    HSV hsv;
-    hsv.v = (int)max;
-
-    if (!delta)
-    {
-        hsv.h = hsv.s = 0;
-    }
+    float a, b, c, d;
+    if (red > green)
+        if (red > blue)
+            if (green > blue)
+                a = red, b = green - blue, c = blue, d = 0;
+            else
+                a = red, b = green - blue, c = green, d = 0;
+            else
+                a = blue, b = red - green, c = green, d = 4;
+            else
+            {
+                if (red > blue)
+                    a = green, b = blue - red, c = blue, d = 2;
+                else
+                {
+                    if (green > blue)
+                        a = green, b = blue - red, c = red, d = 2;
+                    else
+                        a = blue, b = red - green, c = red, d = 4;
+                }
+            }
+    
+    if (a == c)
+        *hue = 0;
     else
-    {
-        temp = delta/max;
-        hsv.s = (int)(temp*255);
+        *hue = 60 * (d + b / (a - c));
+    if (*hue < 0)
+        *hue += 360;
+    if (*hue > 360)
+        *hue -= 360;
+    
+    if (a == 0)
+        *saturation = 0;
+    else
+        *saturation = (a - c) / a;
+    *value = a;
+}
 
-        if (r == (int)max)
-            temp = (double)(g-b)/delta;
-        else if (g == (int)max)
-            temp = 2.0+((double)(b-r)/delta);
-        else
-            temp = 4.0+((double)(r-g)/delta);
+static inline Color HSVToColor(float h, float s, float v)
+{
+    float r,g,b;
+    al_color_hsv_to_rgb(h,s,v, &r,&g,&b);
+    return Color(r*255.f, g*255.f, b*255.f, 255);
+}
 
-        temp *= 60;
-
-        if (temp < 0)
-            temp += 360;
-
-        if (temp == 360)
-            temp = 0;
-
-        hsv.h = (int)temp;
-    }
-
-    hsv.s /= 255.0f;
-    hsv.v /= 255.0f;
+static inline HSV RGBtoHSV(int r, int g, int b)
+{
+    HSV hsv;
+    al_color_rgb_to_hsv(r,g,b, &hsv.h,&hsv.s,&hsv.v);    
     return hsv;
 }
 
