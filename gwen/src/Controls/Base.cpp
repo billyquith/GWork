@@ -490,6 +490,7 @@ void Base::DoCacheRender(Gwen::Skin::Base* skin, Gwen::Controls::Base* pMaster)
         render->SetClipRegion(GetBounds());
     }
 
+    // See if we need to update the cached texture. Dirty?
     if (m_bCacheTextureDirty && render->ClipRegionVisible())
     {
         render->StartClip();
@@ -507,10 +508,12 @@ void Base::DoCacheRender(Gwen::Skin::Base* skin, Gwen::Controls::Base* pMaster)
                 {
                     Base* pChild = *iter;
 
-                    if (pChild->Hidden())
-                        continue;
-
-                    pChild->DoCacheRender(skin, pMaster);
+                    if (!pChild->Hidden())
+                    {
+                        // Draw child control using normal render. If it is cached it will
+                        // be handled in the same way as this one.
+                        pChild->DoRender(skin);
+                    }
                 }
             }
 
@@ -523,6 +526,7 @@ void Base::DoCacheRender(Gwen::Skin::Base* skin, Gwen::Controls::Base* pMaster)
         render->EndClip();
     }
 
+    // Draw the cached texture.
     render->SetClipRegion(rOldRegion);
     render->StartClip();
     {

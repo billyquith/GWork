@@ -12,9 +12,106 @@
 namespace Gwen
 {
     namespace Renderer
-    {        
-        Allegro::Allegro()
+    {
+        //
+        // Allegro texture cache.
+        //
+        class AllegroCTT : public ICacheToTexture
         {
+        public:
+            
+            AllegroCTT() : m_oldTarget(NULL) {}
+            ~AllegroCTT() {}
+            
+            void Initialize() {}
+            void ShutDown();
+            void SetRenderer(Gwen::Renderer::Base* renderer) { m_renderer = renderer; }
+            
+            void SetupCacheTexture(Gwen::Controls::Base* control);
+            void FinishCacheTexture(Gwen::Controls::Base* control);
+            
+            void DrawCachedControlTexture(Gwen::Controls::Base* control);
+            void CreateControlCacheTexture(Gwen::Controls::Base* control);
+            void UpdateControlCacheTexture(Gwen::Controls::Base* control) {}
+            
+            // TODO What destroys the cached textures? Does this assume they always exist?
+            
+        private:
+            
+            Gwen::Renderer::Base *m_renderer;
+            
+            struct CacheEntry
+            {
+                ALLEGRO_BITMAP *m_bitmap;
+            };
+            
+            typedef Gwen::Controls::Base* Key;
+            typedef std::map< Key, CacheEntry > CacheMap;
+            CacheMap m_cache;
+            
+            ALLEGRO_BITMAP *m_oldTarget;
+        };
+
+        void AllegroCTT::ShutDown()
+        {
+            // TODO - Delete the cached textures we created.
+            // Note: This doesn't get called at the moment because Gwen currently crashes
+            //       if we delete the renderer on clean up.
+        }
+        
+        void AllegroCTT::CreateControlCacheTexture(Gwen::Controls::Base* control)
+        {
+            // If we haven't seen this control before, create a new entry.
+            if (m_cache.find(control) == m_cache.end())
+            {
+                const Gwen::Rect &bounds = control->GetBounds();
+                const int w = bounds.w, h = bounds.h;
+                
+                CacheEntry newEntry = { al_create_bitmap(w, h) };
+                m_cache.insert(std::pair<Key,CacheEntry>(control, newEntry));
+            }
+        }
+
+        void AllegroCTT::SetupCacheTexture(Gwen::Controls::Base* control)
+        {
+            CacheMap::iterator it = m_cache.find(control);
+            assert(it != m_cache.end());
+            if (it != m_cache.end())
+            {
+                // Prepare for rendering.
+                assert(m_oldTarget==NULL);
+                m_oldTarget = al_get_target_bitmap();
+                al_set_target_bitmap((*it).second.m_bitmap);
+                al_clear_to_color(al_map_rgb_f(1.f,1.f,1.f));
+            }
+        }
+
+        void AllegroCTT::FinishCacheTexture(Gwen::Controls::Base* control)
+        {
+            // Prepare for rendering.
+            al_set_target_bitmap(m_oldTarget);
+            m_oldTarget = NULL;
+        }
+        
+        void AllegroCTT::DrawCachedControlTexture(Gwen::Controls::Base* control)
+        {
+            CacheMap::iterator it = m_cache.find(control);
+            assert(it != m_cache.end());
+            if (it != m_cache.end())
+            {
+                ALLEGRO_BITMAP *bmp = (*it).second.m_bitmap;                
+                const Gwen::Point &pos = m_renderer->GetRenderOffset();
+                al_draw_bitmap(bmp, pos.x, pos.y, 0);
+            }
+        }
+
+        //-------------------------------------------------------------------------------
+
+        Allegro::Allegro()
+        :   m_ctt(new AllegroCTT)
+        {
+            m_ctt->SetRenderer(this);
+            m_ctt->Initialize();
         }
 
         Allegro::~Allegro()
@@ -215,7 +312,7 @@ namespace Gwen
                 
                 ALLEGRO_VERTEX vtx[4*2];
                 ADD_LINE(0, fx+1.f,fy,         fx+fw-1.f,fy   ); // top
-                ADD_LINE(2, fx+fw,fy+1.f,        fx+fw,fy+fh-1.f); // right
+                ADD_LINE(2, fx+fw,fy+1.f,      fx+fw,fy+fh-1.f); // right
                 ADD_LINE(4, fx+fw-1.f,fy+fh,   fx+1.f,fy+fh   ); // bottom
                 ADD_LINE(6, fx,fy+fh-1.f,      fx,fy+1.f      ); // left
                 al_draw_prim(vtx, NULL, NULL, 0, 7, ALLEGRO_PRIM_LINE_LOOP);
@@ -267,6 +364,12 @@ namespace Gwen
             al_flip_display();
             return true;
         }
+        
+        ICacheToTexture* Allegro::GetCTT()
+        {
+            return m_ctt;
+        }
 
-    }
-}
+        
+    } // Renderer
+} // Gwen
