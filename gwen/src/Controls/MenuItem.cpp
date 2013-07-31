@@ -156,7 +156,7 @@ void MenuItem::CloseMenu()
     m_Menu->CloseAll();
 }
 
-void MenuItem::SetAccelerator(const TextObject& strAccelerator)
+void MenuItem::SetAccelerator(const String& strAccelerator)
 {
     if (m_Accelerator)
     {
@@ -164,7 +164,7 @@ void MenuItem::SetAccelerator(const TextObject& strAccelerator)
         m_Accelerator = NULL;
     }
 
-    if (strAccelerator.GetUnicode() == "")
+    if (strAccelerator.empty())
         return;
 
     m_Accelerator = new Controls::Label(this);

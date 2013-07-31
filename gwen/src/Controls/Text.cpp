@@ -63,12 +63,12 @@ void Text::SetFont(Gwen::Font* pFont)
     Invalidate();
 }
 
-void Text::SetString(const TextObject& str)
+void Text::SetString(const String& str)
 {
     if (m_String == str)
         return;
 
-    m_String = str.GetUnicode();
+    m_String = str;
     m_bTextChanged = true;
     Invalidate();
 }
@@ -86,9 +86,9 @@ void Text::Render(Skin::Base* skin)
     else
         skin->GetRender()->SetDrawColor(m_ColorOverride);
 
-    skin->GetRender()->RenderText(GetFont(), Gwen::Point(GetPadding().left,
-                                                         GetPadding().top),
-                                  m_String.GetUnicode());
+    skin->GetRender()->RenderText(GetFont(),
+                                  Gwen::Point(GetPadding().left, GetPadding().top),
+                                  m_String);
 }
 
 Gwen::Rect Text::GetCharacterPosition(unsigned int iChar)
@@ -122,7 +122,7 @@ Gwen::Rect Text::GetCharacterPosition(unsigned int iChar)
         return Gwen::Rect(1, 0, 0, p.y);
     }
 
-    String sub = m_String.GetUnicode().substr(0, iChar);
+    String sub = m_String.substr(0, iChar);
     Gwen::Point p = GetSkin()->GetRender()->MeasureText(GetFont(), sub);
     return Rect(p.x, 0, 0, p.y);
 }
@@ -159,7 +159,7 @@ int Text::GetClosestCharacter(Gwen::Point p)
     int iDistance = 4096;
     int iChar = 0;
 
-    for (unsigned i = 0; i < m_String.GetUnicode().length()+1; i++)
+    for (unsigned i = 0; i < m_String.size()+1; i++)
     {
         Gwen::Rect cp = GetCharacterPosition(i);
         int iDist = abs(cp.x-p.x)+abs(cp.y-p.y);             // this isn't
@@ -194,7 +194,7 @@ void Text::RefreshSize()
     Gwen::Point p(1, GetFont()->size);
 
     if (Length() > 0)
-        p = GetSkin()->GetRender()->MeasureText(GetFont(), m_String.GetUnicode());
+        p = GetSkin()->GetRender()->MeasureText(GetFont(), m_String);
 
     p.x += GetPadding().left+GetPadding().right;
     p.y += GetPadding().top+GetPadding().bottom;
@@ -217,7 +217,7 @@ void SplitWords(const Gwen::String& s, wchar_t delim,
 
     for (unsigned int i = 0; i < s.length(); i++)
     {
-        if (s[i] == L'\n')
+        if (s[i] == '\n')
         {
             if (!str.empty())
                 elems.push_back(str);
@@ -227,7 +227,7 @@ void SplitWords(const Gwen::String& s, wchar_t delim,
             continue;
         }
 
-        if (s[i] == L' ')
+        if (s[i] == ' ')
         {
             str += s[i];
             elems.push_back(str);
@@ -253,8 +253,9 @@ void Text::RefreshSizeWrap()
 
     m_Lines.clear();
     std::vector<Gwen::String> words;
-    SplitWords(GetText().GetUnicode(), L' ', words);
-    // Adding a bullshit word to the end simplifies the code below
+    SplitWords(GetText(), ' ', words);
+    
+    // Adding a word to the end simplifies the code below
     // which is anything but simple.
     words.push_back("");
 
@@ -276,7 +277,7 @@ void Text::RefreshSizeWrap()
 
         // If this word is a newline - make a newline (we still add it to the
         // text)
-        if ((*it).c_str() [0] == L'\n')
+        if ((*it).c_str() [0] == '\n')
             bFinishLine = true;
 
         // Does adding this word drive us over the width?
@@ -307,7 +308,7 @@ void Text::RefreshSizeWrap()
             // Position the newline
             y += pFontSize.y;
             x = 0;
-            // if ( strLine[0] == L' ' ) x -= pFontSize.x;
+            // if ( strLine[0] == ' ' ) x -= pFontSize.x;
         }
     }
 

@@ -11,7 +11,6 @@
 #include <list>
 #include "Gwen/Exports.h"
 #include "Gwen/Structures.h"
-#include "Gwen/TextObject.h"
 #include "Gwen/ControlList.h"
 
 namespace Gwen
@@ -88,7 +87,7 @@ namespace Gwen
             Gwen::Controls::Base* Control;
 
             Gwen::ControlList ControlList;
-            Gwen::TextObject String;
+            Gwen::String String;
             Gwen::Point Point;
             int Integer;
 

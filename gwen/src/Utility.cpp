@@ -200,10 +200,10 @@ bool Gwen::Utility::Strings::To::Floats(const Gwen::String& str, float* f, size_
     return true;
 }
 
-bool Gwen::Utility::Strings::Wildcard(const TextObject& strWildcard, const TextObject& strHaystack)
+bool Gwen::Utility::Strings::Wildcard(const String& strWildcard, const String& strHaystack)
 {
-    const String& W = strWildcard.GetUnicode();
-    const String& H = strHaystack.GetUnicode();
+    const String& W = strWildcard;
+    const String& H = strHaystack;
 
     if (strWildcard == "*")
         return true;
@@ -231,7 +231,7 @@ bool Gwen::Utility::Strings::Wildcard(const TextObject& strWildcard, const TextO
 
 void Gwen::Utility::Strings::ToUpper(Gwen::String& str)
 {
-    transform(str.begin(), str.end(), str.begin(), towupper);
+    transform(str.begin(), str.end(), str.begin(), toupper);
 }
 
 void Gwen::Utility::Strings::Strip(Gwen::String& str, const Gwen::String& chars)

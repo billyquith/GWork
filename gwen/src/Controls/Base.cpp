@@ -1177,7 +1177,7 @@ void Base::RenderFocus(Gwen::Skin::Base* skin)
     skin->DrawKeyboardHighlight(this, GetRenderBounds(), 3);
 }
 
-void Base::SetToolTip(const TextObject& strText)
+void Base::SetToolTip(const String& strText)
 {
     Label* tooltip = new Label(this);
     tooltip->SetText(strText);
@@ -1187,7 +1187,7 @@ void Base::SetToolTip(const TextObject& strText)
     SetToolTip(tooltip);
 }
 
-TextObject Base::GetChildValue(const Gwen::String& strName)
+String Base::GetChildValue(const Gwen::String& strName)
 {
     Base* pChild = FindChildByName(strName, true);
 
@@ -1197,13 +1197,13 @@ TextObject Base::GetChildValue(const Gwen::String& strName)
     return pChild->GetValue();
 }
 
-TextObject Base::GetValue()
+String Base::GetValue()
 {
     // Generic value accessor should be filled in if we have a value to give.
     return "";
 }
 
-void Base::SetValue(const TextObject& strValue)
+void Base::SetValue(const String& strValue)
 {
 }
 

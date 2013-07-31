@@ -24,7 +24,7 @@ namespace Gwen
             virtual ~Text();
             Gwen::Font* GetFont();
 
-            void SetString(const TextObject& str);
+            void SetString(const String& str);
 
             void Render(Skin::Base* skin);
             void Layout(Skin::Base* skin);
@@ -33,7 +33,7 @@ namespace Gwen
 
             void SetFont(Gwen::Font* pFont);
 
-            const TextObject& GetText() const
+            const String& GetText() const
             {
                 return m_String;
             }
@@ -43,7 +43,7 @@ namespace Gwen
 
             int Length() const
             {
-                return (int)m_String.GetUnicode().size();
+                return (int)m_String.size();
             }
 
             virtual void SetTextColor(const Gwen::Color& col)
@@ -92,7 +92,7 @@ namespace Gwen
 
             virtual void RefreshSizeWrap();
 
-            Gwen::TextObject m_String;
+            Gwen::String m_String;
             Gwen::Font*         m_Font;
             Gwen::Color m_Color;
             Gwen::Color m_ColorOverride;

@@ -28,13 +28,13 @@ void RichLabel::AddLineBreak()
     m_TextBlocks.push_back(t);
 }
 
-void RichLabel::AddText(const Gwen::TextObject& text, Gwen::Color color, Gwen::Font* font)
+void RichLabel::AddText(const Gwen::String& text, Gwen::Color color, Gwen::Font* font)
 {
     if (text.length() == 0)
         return;
 
     Gwen::Utility::Strings::List lst;
-    Gwen::Utility::Strings::Split(text.Get(), "\n", lst, false);
+    Gwen::Utility::Strings::Split(text, "\n", lst, false);
 
     for (size_t i = 0; i < lst.size(); i++)
     {

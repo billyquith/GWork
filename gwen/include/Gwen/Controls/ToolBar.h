@@ -45,7 +45,7 @@ namespace Gwen
                 skin->DrawMenuStrip(this);
             }
 
-            virtual ToolBarButton* Add(const TextObject& Text, const TextObject& Icon)
+            virtual ToolBarButton* Add(const String& Text, const String& Icon)
             {
                 ToolBarButton* pButton = new ToolBarButton(this);
                 pButton->SetToolTip(Text);

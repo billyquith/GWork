@@ -66,7 +66,7 @@ namespace Gwen
                 SetToggleState(!GetToggleState());
             }
 
-            virtual void SetImage(const TextObject& strName, bool bCenter = false);
+            virtual void SetImage(const String& strName, bool bCenter = false);
 
             virtual void SizeToContents();
             virtual void PostLayout(Skin::Base* pSkin);

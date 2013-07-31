@@ -72,7 +72,7 @@ namespace Gwen
                 return this;
             }
 
-            void SetAccelerator(const TextObject& strAccelerator);
+            void SetAccelerator(const String& strAccelerator);
 
             Gwen::Event::Caller onMenuItemSelected;
             Gwen::Event::Caller onChecked;

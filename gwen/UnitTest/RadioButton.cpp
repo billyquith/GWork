@@ -24,8 +24,8 @@ public:
             (Gwen::Controls::RadioButtonController*)pControl;
         Gwen::Controls::LabeledRadioButton* pSelected = rc->GetSelected();
         UnitPrint(Utility::Format(
-                      "RadioButton changed (using 'OnChange' event)\n Chosen Item: '%ls'",
-                      pSelected->GetLabel()->GetText().GetUnicode().c_str()));
+                      "RadioButton changed (using 'OnChange' event)\n Chosen Item: '%s'",
+                      pSelected->GetLabel()->GetText().c_str()));
     }
 
 };

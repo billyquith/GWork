@@ -109,9 +109,9 @@ void Button::OnPress()
     onPress.Call(this);
 }
 
-void Button::SetImage(const TextObject& strName, bool bCenter)
+void Button::SetImage(const String& strName, bool bCenter)
 {
-    if (strName.GetUnicode() == "")
+    if (strName.empty())
     {
         if (m_Image)
         {

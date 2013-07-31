@@ -14,14 +14,12 @@
 
 namespace Gwen
 {
-    class TextObject;
-
     namespace Utility
     {
-#ifdef _MSC_VER
-#pragma warning( push )
-#pragma warning( disable : 4996 )
-#endif
+//#ifdef _MSC_VER
+//#pragma warning( push )
+//#pragma warning( disable : 4996 )
+//#endif
 
         String UnicodeToString(const String& strIn);        
         String StringToUnicode(const String& strIn);
@@ -38,9 +36,9 @@ namespace Gwen
             }
         }
 
-#ifdef _MSC_VER
-#pragma warning( pop )
-#endif
+//#ifdef _MSC_VER
+//#pragma warning( pop )
+//#endif
 
         template <class T>
         inline String ToString(const T& object)
@@ -58,8 +56,8 @@ namespace Gwen
 
             GWEN_EXPORT void Split(const Gwen::String& str, const Gwen::String& seperator,
                                    Strings::List& outbits, bool bLeaveSeperators = false);
-            GWEN_EXPORT bool Wildcard(const Gwen::TextObject& strWildcard,
-                                      const Gwen::TextObject& strHaystack);
+            GWEN_EXPORT bool Wildcard(const Gwen::String& strWildcard,
+                                      const Gwen::String& strHaystack);
 
             GWEN_EXPORT void ToUpper(Gwen::String& str);
             GWEN_EXPORT void Strip(Gwen::String& str, const Gwen::String& chars);

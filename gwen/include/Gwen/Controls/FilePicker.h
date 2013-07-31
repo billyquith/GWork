@@ -45,14 +45,14 @@ namespace Gwen
                 return m_FileType;
             }
 
-            void SetFileName(const TextObject& strValue)
+            void SetFileName(const String& strValue)
             {
                 m_TextBox->SetText(strValue);
                 m_TextBox->MoveCaretToEnd();
                 onFileChanged.Call(this);
             }
 
-            const Gwen::TextObject& GetFileName()
+            const Gwen::String& GetFileName()
             {
                 return m_TextBox->GetText();
             }
@@ -63,12 +63,12 @@ namespace Gwen
                                         &FilePicker::SetFileNameEvent);
             }
 
-            virtual TextObject GetValue()
+            virtual String GetValue()
             {
                 return GetFileName();
             }
 
-            virtual void SetValue(const TextObject& strValue)
+            virtual void SetValue(const String& strValue)
             {
                 return SetFileName(strValue);
             }

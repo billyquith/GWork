@@ -36,14 +36,14 @@ namespace Gwen
             }
 
 
-            void SetFolder(const TextObject& strValue)
+            void SetFolder(const String& strValue)
             {
                 m_TextBox->SetText(strValue);
                 m_TextBox->MoveCaretToEnd();
                 onFolderChanged.Call(this);
             }
 
-            const Gwen::TextObject& GetFolder()
+            const Gwen::String& GetFolder()
             {
                 return m_TextBox->GetText();
             }
@@ -51,16 +51,16 @@ namespace Gwen
             void OnBrowse()
             {
                 Gwen::Dialogs::FolderOpen(true, "Name",
-                                          GetFolder().Get(), this,
+                                          GetFolder(), this,
                                           &FolderPicker::SetFolderCallback);
             }
 
-            virtual TextObject GetValue()
+            virtual String GetValue()
             {
                 return GetFolder();
             }
 
-            virtual void SetValue(const TextObject& strValue)
+            virtual void SetValue(const String& strValue)
             {
                 return SetFolder(strValue);
             }

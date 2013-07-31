@@ -96,8 +96,7 @@ public:
     void MenuItemSelect(Base* pControl)
     {
         Gwen::Controls::MenuItem* pMenuItem = (Gwen::Controls::MenuItem*)pControl;
-        UnitPrint(Utility::Format("Menu Selected: %ls",
-                                  pMenuItem->GetText().GetUnicode().c_str()));
+        UnitPrint(Utility::Format("Menu Selected: %s", pMenuItem->GetText().c_str()));
     }
 
 };

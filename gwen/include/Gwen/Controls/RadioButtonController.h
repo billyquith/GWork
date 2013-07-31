@@ -44,7 +44,7 @@ namespace Gwen
                 return m_Selected->GetName();
             }
 
-            virtual const TextObject& GetSelectedLabel()
+            virtual const String& GetSelectedLabel()
             {
                 return m_Selected->GetLabel()->GetText();
             }
