@@ -60,7 +60,7 @@ void Gwen::Renderer::SFML2::StartClip()
 	Flush();
 
 	Gwen::Rect rect = ClipRegion();
-	float x = rect.x-1, y = rect.y, w = rect.w+1, h = rect.h+1;
+	float x = rect.x, y = rect.y, w = rect.w, h = rect.h;
 
 	// OpenGL's coords are from the bottom left
 	// so we need to translate them here.
@@ -221,13 +221,15 @@ Gwen::Point Gwen::Renderer::SFML2::MeasureText( Gwen::Font* pFont, const Gwen::U
 
 	const sf::Font* pSFFont = reinterpret_cast<sf::Font*>( pFont->data );
 
-	sf::Text sfStr;
-	sfStr.setString( text );
-	sfStr.setFont( *pSFFont );
-	sfStr.setScale( Scale(), Scale() );
-	sfStr.setCharacterSize( pFont->realsize );
-	sf::FloatRect sz = sfStr.getLocalBounds();
-	return Gwen::Point( sz.left + sz.width, sz.top + sz.height );
+    if ( pSFFont ) {
+        sf::Text sfStr;
+        sfStr.setString( text );
+        sfStr.setFont( *pSFFont );
+        sfStr.setCharacterSize( pFont->realsize );
+        return Gwen::Point( sfStr.getLocalBounds().width, pSFFont->getLineSpacing( pFont->realsize ) );
+    }
+
+    return Gwen::Point();
 }
 
 void Gwen::Renderer::SFML2::LoadTexture( Gwen::Texture* pTexture )
