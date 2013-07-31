@@ -25,7 +25,7 @@ namespace Gwen
                 {
                     int num;
 
-                    if (swscanf(str.c_str(), "%i", &num) != 1)
+                    if (sscanf(str.c_str(), "%i", &num) != 1)
                         return;
 
                     gwen_cast<Controls::PageControl>(ctrl)->SetPageCount(num);
@@ -42,14 +42,14 @@ namespace Gwen
                 {
                     Gwen::Controls::PageControl* pControl =
                         gwen_cast<Gwen::Controls::PageControl>(ctrl);
-                    return Utility::StringToUnicode(pControl->FinishButton()->GetName());
+                    return pControl->FinishButton()->GetName();
                 }
 
                 void SetValue(Controls::Base* ctrl, const String& str)
                 {
                     Gwen::Controls::PageControl* pControl =
                         gwen_cast<Gwen::Controls::PageControl>(ctrl);
-                    pControl->FinishButton()->SetName(Utility::UnicodeToString(str));
+                    pControl->FinishButton()->SetName(str);
                 }
 
             };

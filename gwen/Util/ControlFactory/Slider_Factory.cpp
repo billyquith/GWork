@@ -25,7 +25,7 @@ namespace Gwen
                 {
                     float val;
 
-                    if (swscanf(str.c_str(), "%f", &val) != 1)
+                    if (sscanf(str.c_str(), "%f", &val) != 1)
                         return;
 
                     if (val == gwen_cast<Controls::Slider>(ctrl)->GetMin())
@@ -52,7 +52,7 @@ namespace Gwen
                 {
                     float val;
 
-                    if (swscanf(str.c_str(), "%f", &val) != 1)
+                    if (sscanf(str.c_str(), "%f", &val) != 1)
                         return;
 
                     if (val == gwen_cast<Controls::Slider>(ctrl)->GetMax())
