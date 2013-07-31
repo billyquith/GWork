@@ -21,7 +21,7 @@ namespace Gwen
 
                 void SetValue(Controls::Base* ctrl, const String& str)
                 {
-                    ctrl->SetName(Gwen::Utility::UnicodeToString(str));
+                    ctrl->SetName(str);
                 }
 
             };
@@ -40,7 +40,7 @@ namespace Gwen
                 {
                     int x, y;
 
-                    if (swscanf(str.c_str(), "%i %i", &x, &y) != 2)
+                    if (sscanf(str.c_str(), "%i %i", &x, &y) != 2)
                         return;
 
                     ctrl->SetPos(x, y);
@@ -92,7 +92,7 @@ namespace Gwen
                 {
                     Gwen::Margin m;
 
-                    if (swscanf(str.c_str(), "%i %i %i %i", &m.left, &m.top, &m.right,
+                    if (sscanf(str.c_str(), "%i %i %i %i", &m.left, &m.top, &m.right,
                                 &m.bottom) != 4)
                         return;
 
@@ -169,7 +169,7 @@ namespace Gwen
                 {
                     int w, h;
 
-                    if (swscanf(str.c_str(), "%i %i", &w, &h) != 2)
+                    if (sscanf(str.c_str(), "%i %i", &w, &h) != 2)
                         return;
 
                     ctrl->SetSize(w, h);

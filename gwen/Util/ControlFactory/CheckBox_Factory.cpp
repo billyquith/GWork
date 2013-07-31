@@ -44,8 +44,7 @@ namespace Gwen
 
                 String GetValue(Controls::Base* ctrl)
                 {
-                    return gwen_cast<Controls::CheckBoxWithLabel>(ctrl)->Label()->GetText().
-                           GetUnicode();
+                    return gwen_cast<Controls::CheckBoxWithLabel>(ctrl)->Label()->GetText();
                 }
 
                 void SetValue(Controls::Base* ctrl, const String& str)

@@ -24,7 +24,7 @@ namespace Gwen
                 {
                     float num;
 
-                    if (swscanf(str.c_str(), "%f", &num) != 1)
+                    if (sscanf(str.c_str(), "%f", &num) != 1)
                         return;
 
                     gwen_cast<Controls::ProgressBar>(ctrl)->SetCycleSpeed(num);

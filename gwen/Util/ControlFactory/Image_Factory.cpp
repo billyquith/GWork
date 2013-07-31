@@ -15,7 +15,7 @@ namespace Gwen
 
                 String GetValue(Controls::Base* ctrl)
                 {
-                    return gwen_cast<Controls::ImagePanel>(ctrl)->GetImage().GetUnicode();
+                    return gwen_cast<Controls::ImagePanel>(ctrl)->GetImage();
                 }
 
                 void SetValue(Controls::Base* ctrl, const String& str)

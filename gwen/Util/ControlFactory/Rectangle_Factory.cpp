@@ -27,7 +27,7 @@ namespace Gwen
                     Controls::Rectangle* pRect = gwen_cast<Controls::Rectangle>(ctrl);
                     int r, g, b, a;
 
-                    if (swscanf(str.c_str(), "%i %i %i %i", &r, &g, &b, &a) != 4)
+                    if (sscanf(str.c_str(), "%i %i %i %i", &r, &g, &b, &a) != 4)
                         return;
 
                     pRect->SetColor(Gwen::Color(r, g, b, a));

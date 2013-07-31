@@ -18,14 +18,12 @@ namespace Gwen
 
                 String GetValue(Controls::Base* ctrl)
                 {
-                    return Utility::StringToUnicode(gwen_cast<Controls::FilePicker>(
-                                                        ctrl)->GetFileType());
+                    return gwen_cast<Controls::FilePicker>(ctrl)->GetFileType();
                 }
 
                 void SetValue(Controls::Base* ctrl, const String& str)
                 {
-                    gwen_cast<Controls::FilePicker>(ctrl)->SetFileType(Utility::UnicodeToString(
-                                                                           str));
+                    gwen_cast<Controls::FilePicker>(ctrl)->SetFileType(str);
                 }
 
             };

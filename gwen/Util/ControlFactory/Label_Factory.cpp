@@ -16,17 +16,17 @@ namespace Gwen
 
                 String GetValue(Controls::Base* ctrl)
                 {
-                    String str = gwen_cast<Controls::Label>(ctrl)->GetText().GetUnicode();
-                    Gwen::Utility::Replace<String>(str, "\n", "\\n");
-                    Gwen::Utility::Replace<String>(str, "\t", "\\t");
+                    String str = gwen_cast<Controls::Label>(ctrl)->GetText();
+                    Gwen::Utility::Replace(str, "\n", "\\n");
+                    Gwen::Utility::Replace(str, "\t", "\\t");
                     return str;
                 }
 
                 void SetValue(Controls::Base* ctrl, const String& str)
                 {
                     String strOut = str;
-                    Gwen::Utility::Replace<String>(strOut, "\\n", "\n");
-                    Gwen::Utility::Replace<String>(strOut, "\\t", "\t");
+                    Gwen::Utility::Replace(strOut, "\\n", "\n");
+                    Gwen::Utility::Replace(strOut, "\\t", "\t");
                     gwen_cast<Controls::Label>(ctrl)->SetText(strOut);
                 }
 
@@ -68,7 +68,7 @@ namespace Gwen
                 {
                     int size;
 
-                    if (swscanf(str.c_str(), "%i", &size) != 1)
+                    if (sscanf(str.c_str(), "%i", &size) != 1)
                         return;
 
                     Gwen::Font* pFont = gwen_cast<Controls::Label>(ctrl)->GetFont();
