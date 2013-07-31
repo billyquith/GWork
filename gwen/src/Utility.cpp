@@ -27,41 +27,15 @@ using namespace Gwen;
 #   define GWEN_FNULL "/dev/null"
 #endif
 
-
-Gwen::String Gwen::Utility::UnicodeToString(const String& strIn)    // TODO_UNICODE
+void Gwen::Utility::Replace(String& str, const String& strFind, const String& strReplace)
 {
-//    if (!strIn.length())
-//        return "";
-//    
-//    const size_t ssz = strIn.length();
-//    const wchar_t *wstr = strIn.c_str();
-//    String ret(ssz, (char)0);
-//    
-//    // Convert the wide string to a C string, replacing chars we cannot match with "_".
-//    // Note: This will mangle most non-European Unicode strings as the range of
-//    //       characters required don't fit in a byte.
-//    std::use_facet< std::ctype<wchar_t> >(std::locale("")).narrow(wstr, wstr+ssz, '_', &ret[0]);
-//    
-//    return ret;
+    size_t pos = 0;
     
-    return strIn;
-}
-
-Gwen::String Gwen::Utility::StringToUnicode(const String& strIn)    // TODO_UNICODE
-{
-//    if (!strIn.length())
-//        return "";
-//    
-//    const size_t ssz = strIn.length();
-//    const char *str = strIn.c_str();    
-//    String ret(ssz, (wchar_t)0);
-//    
-//    // Create a wide string, encoding each character of the C string in current locale.
-//    std::use_facet<std::ctype<wchar_t> >(std::locale()).widen(str, str+ssz, &ret[0] );
-//    
-//    return ret;
-    
-    return strIn;
+    while ((pos = str.find(strFind, pos)) != String::npos)
+    {
+        str.replace(pos, strFind.length(), strReplace);
+        pos += strReplace.length();
+    }
 }
 
 String Gwen::Utility::Format(const char* fmt, ...)
@@ -128,28 +102,6 @@ void Gwen::Utility::Strings::Split(const Gwen::String& str, const Gwen::String& 
 
     outbits.push_back(str.substr(iOffset, iLength-iOffset));
 }
-
-//void Gwen::Utility::Strings::Split(const Gwen::String& str,
-//                                   const Gwen::String& seperator,
-//                                   Strings::UnicodeList& outbits, bool bLeave)
-//{
-//    size_t iOffset = 0;
-//    size_t iLength = str.length();
-//    size_t iSepLen = seperator.length();
-//    size_t i = str.find(seperator, 0);
-//
-//    while (i != std::wstring::npos)
-//    {
-//        outbits.push_back(str.substr(iOffset, i-iOffset));
-//        iOffset = i+iSepLen;
-//        i = str.find(seperator, iOffset);
-//
-//        if (bLeave)
-//            iOffset -= iSepLen;
-//    }
-//
-//    outbits.push_back(str.substr(iOffset, iLength-iOffset));
-//}
 
 int Gwen::Utility::Strings::To::Int(const Gwen::String& str)
 {

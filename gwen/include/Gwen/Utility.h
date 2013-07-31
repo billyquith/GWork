@@ -16,38 +16,15 @@ namespace Gwen
 {
     namespace Utility
     {
-//#ifdef _MSC_VER
-//#pragma warning( push )
-//#pragma warning( disable : 4996 )
-//#endif
-
-        String UnicodeToString(const String& strIn);        
-        String StringToUnicode(const String& strIn);
-
-        template <typename T>
-        inline void Replace(T& str, const T& strFind, const T& strReplace)
-        {
-            size_t pos = 0;
-
-            while ((pos = str.find(strFind, pos)) != T::npos)
-            {
-                str.replace(pos, strFind.length(), strReplace);
-                pos += strReplace.length();
-            }
-        }
-
-//#ifdef _MSC_VER
-//#pragma warning( pop )
-//#endif
-
-        template <class T>
-        inline String ToString(const T& object)
+        template <typename TYPE>
+        inline String ToString(const TYPE& object)
         {
             std::ostringstream os;
             os << object;
             return os.str();
         }
 
+        GWEN_EXPORT void Replace(String& str, const String& strFind, const String& strReplace);
         GWEN_EXPORT String Format(const char* fmt, ...);
 
         namespace Strings
