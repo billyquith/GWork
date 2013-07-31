@@ -26,9 +26,9 @@ namespace Gwen
             GWEN_CONTROL(Label, Controls::Base);
             virtual void PreDelete(Gwen::Skin::Base* skin);
 
-            virtual void SetText(const TextObject& str, bool bDoEvents = true);
+            virtual void SetText(const String& str, bool bDoEvents = true);
 
-            virtual const TextObject& GetText() const
+            virtual const String& GetText() const
             {
                 return m_Text->GetText();
             }
@@ -120,12 +120,12 @@ namespace Gwen
                 SetTextColor(GetSkin()->Colors.Label.Highlight);
             }
 
-            virtual TextObject GetValue()
+            virtual String GetValue()
             {
                 return GetText();
             }
 
-            virtual void SetValue(const TextObject& strValue)
+            virtual void SetValue(const String& strValue)
             {
                 return SetText(strValue);
             }

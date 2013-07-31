@@ -72,7 +72,7 @@ GWEN_CONTROL_CONSTRUCTOR(ListBox)
     m_bMultiSelect = false;
 }
 
-Layout::TableRow* ListBox::AddItem(const TextObject& strLabel, const String& strName)
+Layout::TableRow* ListBox::AddItem(const String& strLabel, const String& strName)
 {
     ListBoxRow* pRow = new ListBoxRow(this);
     m_Table->AddRow(pRow);
@@ -165,7 +165,7 @@ void ListBox::SetSelectedRow(Gwen::Controls::Base* pControl, bool bClearOthers)
     onRowSelected.Call(this);
 }
 
-void ListBox::SelectByString(const TextObject& strName, bool bClearOthers)
+void ListBox::SelectByString(const String& strName, bool bClearOthers)
 {
     if (bClearOthers)
         UnselectAll();

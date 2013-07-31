@@ -28,9 +28,9 @@ namespace Gwen
 
             virtual void Render(Skin::Base* skin);
 
-            virtual void SetText(const TextObject& text);
+            virtual void SetText(const String& text);
 
-            virtual Button* Add(const TextObject& name);
+            virtual Button* Add(const String& name);
 
             virtual void PostLayout(Skin::Base* /*skin*/);
 

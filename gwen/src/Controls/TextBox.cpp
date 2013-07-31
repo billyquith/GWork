@@ -76,7 +76,7 @@ void TextBox::InsertText(const Gwen::String& strInsert)
     if (!IsTextAllowed(strInsert, m_iCursorPos))
         return;
 
-    String str = GetText().GetUnicode();
+    String str = GetText();
     str.insert(m_iCursorPos, strInsert);
     SetText(str);
     m_iCursorPos += (int)strInsert.size();
@@ -188,7 +188,7 @@ String TextBox::GetSelection()
 
     int iStart = Gwen::Min(m_iCursorPos, m_iCursorEnd);
     int iEnd = Gwen::Max(m_iCursorPos, m_iCursorEnd);
-    const String& str = GetText().GetUnicode();
+    const String& str = GetText();
     return str.substr(iStart, iEnd-iStart);
 }
 
@@ -322,7 +322,7 @@ void TextBox::SetCursorEnd(int i)
 
 void TextBox::DeleteText(int iStartPos, int iLength)
 {
-    String str = GetText().GetUnicode();
+    String str = GetText();
     str.erase(iStartPos, iLength);
     SetText(str);
 

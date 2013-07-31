@@ -45,8 +45,8 @@ namespace Gwen
             {
             }
 
-            Properties* Add(const TextObject& text);
-            Properties* Find(const TextObject& text);
+            Properties* Add(const String& text);
+            Properties* Find(const String& text);
         };
 
 

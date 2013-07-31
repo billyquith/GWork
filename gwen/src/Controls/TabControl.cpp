@@ -53,7 +53,7 @@ GWEN_CONTROL_CONSTRUCTOR(TabControl)
     SetTabable(false);
 }
 
-TabButton* TabControl::AddPage(TextObject strText, Controls::Base* pPage)
+TabButton* TabControl::AddPage(String strText, Controls::Base* pPage)
 {
     if (!pPage)
         pPage = new Base(this);

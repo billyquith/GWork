@@ -41,12 +41,12 @@ int Properties::GetSplitWidth()
     return m_SplitterBar->X();
 }
 
-PropertyRow* Properties::Add(const TextObject& text, const TextObject& value)
+PropertyRow* Properties::Add(const String& text, const String& value)
 {
     return Add(text, new Property::Text(this), value);
 }
 
-PropertyRow* Properties::Add(const TextObject& text, Property::Base* pProp, const TextObject& value)
+PropertyRow* Properties::Add(const String& text, Property::Base* pProp, const String& value)
 {
     PropertyRow* row = new PropertyRow(this);
     row->Dock(Pos::Top);
@@ -57,7 +57,7 @@ PropertyRow* Properties::Add(const TextObject& text, Property::Base* pProp, cons
     return row;
 }
 
-PropertyRow* Properties::Find(const TextObject& text)
+PropertyRow* Properties::Find(const String& text)
 {
     for (Base::List::iterator it = GetChildren().begin(); it != GetChildren().end(); ++it)
     {

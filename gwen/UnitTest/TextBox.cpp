@@ -60,15 +60,15 @@ public:
     void OnEdit(Gwen::Controls::Base* pControl)
     {
         Gwen::Controls::TextBox* textbox = (Gwen::Controls::TextBox*)(pControl);
-        UnitPrint(Utility::Format("Textbox Edit: [%ls]\n",
-                                  textbox->GetText().GetUnicode().c_str()));
+        UnitPrint(Utility::Format("Textbox Edit: [%s]\n",
+                                  textbox->GetText().c_str()));
     }
 
     void OnSubmit(Gwen::Controls::Base* pControl)
     {
         Gwen::Controls::TextBox* textbox = (Gwen::Controls::TextBox*)(pControl);
-        UnitPrint(Utility::Format("Textbox Submit: [%ls]\n",
-                                  textbox->GetText().GetUnicode().c_str()));
+        UnitPrint(Utility::Format("Textbox Submit: [%s]\n",
+                                  textbox->GetText().c_str()));
     }
 
     Gwen::Font m_Font;

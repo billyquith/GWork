@@ -24,7 +24,7 @@ namespace Gwen
             GWEN_CONTROL(RichLabel, Gwen::Controls::Base);
 
             void AddLineBreak();
-            void AddText(const Gwen::TextObject& text, Gwen::Color color, Gwen::Font* font = NULL);
+            void AddText(const Gwen::String& text, Gwen::Color color, Gwen::Font* font = NULL);
 
             virtual bool SizeToChildren(bool w = true, bool h = true);
 

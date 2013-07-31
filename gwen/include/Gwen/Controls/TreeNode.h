@@ -25,11 +25,11 @@ namespace Gwen
 
             GWEN_CONTROL(TreeNode, Base);
 
-            virtual TreeNode* AddNode(const TextObject& strLabel);
+            virtual TreeNode* AddNode(const String& strLabel);
 
-            virtual void              SetText(const TextObject& text);
-            virtual const TextObject& GetText();
-            virtual void              SetImage(const TextObject& text);
+            virtual void              SetText(const String& text);
+            virtual const String& GetText();
+            virtual void              SetImage(const String& text);
 
             virtual void Open();
             virtual void Close();

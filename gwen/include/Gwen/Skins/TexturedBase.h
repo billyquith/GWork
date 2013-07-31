@@ -289,7 +289,7 @@ namespace Gwen
                 } Textures;
 
 
-                virtual void Init( const TextObject & TextureName )
+                virtual void Init( const String & TextureName )
                 {
                     m_DefaultFont.facename  = "Microsoft Sans Serif";
                     m_DefaultFont.size      = 11;

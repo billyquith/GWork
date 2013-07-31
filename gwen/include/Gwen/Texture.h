@@ -21,11 +21,11 @@ namespace Gwen
     {
         typedef std::list<Texture*> List;
 
-        TextObject name;
+        String  name;
         void*   data;
-        bool failed;
-        int width;
-        int height;
+        bool    failed;
+        int     width;
+        int     height;
 
         Texture()
         :   data(NULL)
@@ -39,7 +39,7 @@ namespace Gwen
         {
         }
 
-        void Load(const TextObject& str, Gwen::Renderer::Base* render)
+        void Load(const String& str, Gwen::Renderer::Base* render)
         {
             name = str;
             Gwen::Debug::AssertCheck(render != NULL, "No renderer!");

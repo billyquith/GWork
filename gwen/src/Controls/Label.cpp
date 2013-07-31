@@ -52,9 +52,9 @@ int Label::GetAlignment()
     return m_iAlign;
 }
 
-void Label::SetText(const TextObject& str, bool bDoEvents)
+void Label::SetText(const String& str, bool bDoEvents)
 {
-    if (m_Text->GetText() == str.GetUnicode())
+    if (m_Text->GetText() == str)
         return;
 
     m_Text->SetString(str);

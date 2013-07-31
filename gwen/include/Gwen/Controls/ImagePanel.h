@@ -42,12 +42,12 @@ namespace Gwen
                 m_uv[3] = v2;
             }
 
-            virtual void SetImage(const TextObject& imageName)
+            virtual void SetImage(const String& imageName)
             {
                 m_Texture.Load(imageName, GetSkin()->GetRender());
             }
 
-            virtual TextObject& GetImage()
+            virtual String& GetImage()
             {
                 return m_Texture.name;
             }
@@ -62,7 +62,7 @@ namespace Gwen
                 return m_Texture.height;
             }
 
-            virtual const TextObject& GetImageName()
+            virtual const String& GetImageName()
             {
                 return m_Texture.name;
             }

@@ -6,7 +6,6 @@
 namespace Gwen
 {
     struct Point;
-    class TextObject;
 
     namespace Controls
     {
@@ -80,8 +79,8 @@ namespace Gwen
         void Show();
         void Hide();
 
-        Gwen::TextObject GetValue();
-        void             SetValue(const Gwen::TextObject& value);
+        Gwen::String GetValue();
+        void             SetValue(const Gwen::String& value);
 
         template <typename T>
         void SetAction(Gwen::Event::Handler* ob,

@@ -36,11 +36,11 @@ namespace Gwen
                 void OnButtonPress(Controls::Base* control)
                 {
                     Gwen::Dialogs::FileOpen(true, m_strDialogName,
-                                            m_TextBox->GetText().Get(), m_strFileExtension, this,
+                                            m_TextBox->GetText(), m_strFileExtension, this,
                                             &Folder::EventFilePicked);
                 }
 
-                void EventFilePicked(const Gwen::TextObject& string)
+                void EventFilePicked(const Gwen::String& string)
                 {
                     m_TextBox->SetText(string);
                 }

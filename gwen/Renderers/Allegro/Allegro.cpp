@@ -222,7 +222,7 @@ namespace Gwen
             if (pTexture->data)
                 FreeTexture(pTexture);
 
-            ALLEGRO_BITMAP* bmp = al_load_bitmap(pTexture->name.Get().c_str());
+            ALLEGRO_BITMAP* bmp = al_load_bitmap(pTexture->name.c_str());
 
             if (bmp)
             {

@@ -342,25 +342,25 @@ bool Gwen::Input::DoSpecialKeys(Controls::Base* pCanvas, Gwen::UnicodeChar chr)
     if (!Gwen::Input::IsControlDown())
         return false;
 
-    if (chr == L'C' || chr == L'c')
+    if (chr == 'C' || chr == 'c')
     {
         Gwen::KeyboardFocus->OnCopy(NULL);
         return true;
     }
 
-    if (chr == L'V' || chr == L'v')
+    if (chr == 'V' || chr == 'v')
     {
         Gwen::KeyboardFocus->OnPaste(NULL);
         return true;
     }
 
-    if (chr == L'X' || chr == L'x')
+    if (chr == 'X' || chr == 'x')
     {
         Gwen::KeyboardFocus->OnCut(NULL);
         return true;
     }
 
-    if (chr == L'A' || chr == L'a')
+    if (chr == 'A' || chr == 'a')
     {
         Gwen::KeyboardFocus->OnSelectAll(NULL);
         return true;

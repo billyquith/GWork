@@ -99,7 +99,7 @@ GWEN_CONTROL_CONSTRUCTOR(CollapsibleCategory)
     SetSize(512, 512);
 }
 
-Button* CollapsibleCategory::Add(const TextObject& name)
+Button* CollapsibleCategory::Add(const String& name)
 {
     CategoryButton* pButton = new CategoryButton(this);
     pButton->SetText(name);
@@ -132,7 +132,7 @@ void CollapsibleCategory::Render(Skin::Base* skin)
     skin->DrawCategoryInner(this, m_pButton->GetToggleState());
 }
 
-void CollapsibleCategory::SetText(const TextObject& text)
+void CollapsibleCategory::SetText(const String& text)
 {
     m_pButton->SetText(text);
 }

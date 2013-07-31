@@ -19,7 +19,7 @@ namespace Gwen
         {
         public:
 
-            static inline FieldLabel* Setup(Controls::Base* pControl, const Gwen::TextObject& text)
+            static inline FieldLabel* Setup(Controls::Base* pControl, const Gwen::String& text)
             {
                 FieldLabel* plbl = new FieldLabel(pControl->GetParent());
                 plbl->SetText(text);

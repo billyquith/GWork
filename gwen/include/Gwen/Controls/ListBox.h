@@ -27,7 +27,7 @@ namespace Gwen
 
             typedef std::list<Layout::TableRow*> Rows;
 
-            Layout::TableRow* AddItem(const TextObject& strLabel, const String& strName = "");
+            Layout::TableRow* AddItem(const String& strLabel, const String& strName = "");
 
             void RemoveItem(Layout::TableRow* row);
 
@@ -55,7 +55,7 @@ namespace Gwen
             virtual Gwen::String      GetSelectedRowName();
 
             virtual void SetSelectedRow(Gwen::Controls::Base* pRow, bool bClearOthers = true);
-            virtual void SelectByString(const TextObject& string, bool bClearOthers = true);
+            virtual void SelectByString(const String& string, bool bClearOthers = true);
 
             Gwen::Event::Caller onRowSelected;
 

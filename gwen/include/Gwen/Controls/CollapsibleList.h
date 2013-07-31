@@ -43,7 +43,7 @@ namespace Gwen
                 pCategory->onSelection.Add(this, &ThisClass::OnSelectionEvent);
             }
 
-            virtual Gwen::Controls::CollapsibleCategory* Add(const TextObject& name)
+            virtual Gwen::Controls::CollapsibleCategory* Add(const String& name)
             {
                 Gwen::Controls::CollapsibleCategory* pCategory = new CollapsibleCategory(this);
                 pCategory->SetText(name);

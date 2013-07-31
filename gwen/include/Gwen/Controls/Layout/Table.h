@@ -75,7 +75,7 @@ namespace Gwen
                     m_Columns[i]->SetWidth(iWidth);
                 }
 
-                void SetCellText(int i, const TextObject& strString)
+                void SetCellText(int i, const String& strString)
                 {
                     if (!m_Columns[i])
                         return;
@@ -131,7 +131,7 @@ namespace Gwen
                 }
 
                 // You might hate this. Actually I know you will
-                virtual const TextObject& GetText(int i)
+                virtual const String& GetText(int i)
                 {
                     return m_Columns[i]->GetText();
                 }

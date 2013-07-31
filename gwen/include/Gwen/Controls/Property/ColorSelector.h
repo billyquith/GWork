@@ -63,7 +63,7 @@ namespace Gwen
                     picker->Dock(Pos::Fill);
                     picker->SetSize(256, 128);
                     float defaultColor[3];
-                    Gwen::Utility::Strings::To::Floats(m_TextBox->GetText().Get(), defaultColor, 3);
+                    Gwen::Utility::Strings::To::Floats(m_TextBox->GetText(), defaultColor, 3);
                     picker->SetColor(Gwen::Color(defaultColor[0], defaultColor[1], defaultColor[2], 255),
                                      false, true);
                     picker->onColorChanged.Add(this, &ThisClass::ColorChanged);
@@ -78,16 +78,16 @@ namespace Gwen
                     Color col = picker->GetColor();
                     char str[128];
                     sprintf(str, "%u,%u,%u", col.r, col.g, col.b);
-                    m_TextBox->SetText(TextObject(str));
+                    m_TextBox->SetText(String(str));
                     DoChanged();
                 }
 
-                virtual TextObject GetPropertyValue()
+                virtual String GetPropertyValue()
                 {
                     return m_TextBox->GetText();
                 }
 
-                virtual void SetPropertyValue(const TextObject& v, bool bFireChangeEvents)
+                virtual void SetPropertyValue(const String& v, bool bFireChangeEvents)
                 {
                     m_TextBox->SetText(v, bFireChangeEvents);
                 }

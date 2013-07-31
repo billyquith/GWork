@@ -62,9 +62,9 @@ void Menu::Layout(Skin::Base* skin)
     BaseClass::Layout(skin);
 }
 
-MenuItem* Menu::AddItem(const TextObject& strName,
-                        const TextObject& strIconName,
-                        const TextObject& strAccelerator)
+MenuItem* Menu::AddItem(const String& strName,
+                        const String& strIconName,
+                        const String& strAccelerator)
 {
     MenuItem* pItem = new MenuItem(this);
     pItem->SetPadding(Padding(2, 4, 4, 4));

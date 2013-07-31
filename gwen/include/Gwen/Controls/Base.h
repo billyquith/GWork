@@ -17,7 +17,6 @@
 #include "Gwen/BaseRender.h"
 #include "Gwen/Events.h"
 #include "Gwen/Utility.h"
-#include "Gwen/TextObject.h"
 #include "Gwen/Skin.h"
 #include "Gwen/ControlList.h"
 #include "Gwen/UserData.h"
@@ -370,7 +369,7 @@ namespace Gwen
                 return Gwen::Point(4096, 4096);
             }
 
-            virtual void SetToolTip(const Gwen::TextObject& strText);
+            virtual void SetToolTip(const Gwen::String& strText);
             virtual void SetToolTip(Base* tooltip)
             {
                 m_ToolTip = tooltip;
@@ -404,7 +403,7 @@ namespace Gwen
             virtual bool HandleAccelerator(Gwen::String& accelerator);
 
             template <typename T>
-            void AddAccelerator(const TextObject& accelerator, T func,
+            void AddAccelerator(const String& accelerator, T func,
                                 Gwen::Event::Handler* handler = NULL)
             {
                 if (handler == NULL)
@@ -412,13 +411,13 @@ namespace Gwen
 
                 Gwen::Event::Caller* caller = new Gwen::Event::Caller();
                 caller->Add(handler, func);
-                Gwen::String str = accelerator.GetUnicode();
+                Gwen::String str = accelerator;
                 Gwen::Utility::Strings::ToUpper(str);
                 Gwen::Utility::Strings::Strip(str, " ");
                 m_Accelerators[ str ] = caller;
             }
 
-            void AddAccelerator(const TextObject& accelerator)
+            void AddAccelerator(const String& accelerator)
             {
                 AddAccelerator(accelerator, &Base::DefaultAccel, this);
             }
@@ -593,9 +592,9 @@ namespace Gwen
 
         public:
 
-            virtual TextObject GetChildValue(const Gwen::String& strName);
-            virtual TextObject GetValue();
-            virtual void       SetValue(const TextObject& strValue);
+            virtual String GetChildValue(const Gwen::String& strName);
+            virtual String GetValue();
+            virtual void       SetValue(const String& strValue);
             virtual void       DoAction()
             {
             }

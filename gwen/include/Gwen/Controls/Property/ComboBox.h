@@ -32,7 +32,7 @@ namespace Gwen
                     SetHeight(18);
                 }
 
-                virtual TextObject GetPropertyValue()
+                virtual String GetPropertyValue()
                 {
                     Gwen::Controls::Label* pControl = m_ComboBox->GetSelectedItem();
 
@@ -42,9 +42,9 @@ namespace Gwen
                     return pControl->GetName();
                 }
 
-                virtual void SetPropertyValue(const TextObject& v, bool bFireChangeEvents)
+                virtual void SetPropertyValue(const String& val, bool bFireChangeEvents)
                 {
-                    m_ComboBox->SelectItemByName(v.Get(), bFireChangeEvents);
+                    m_ComboBox->SelectItemByName(val, bFireChangeEvents);
                 }
 
                 virtual bool IsEditing()

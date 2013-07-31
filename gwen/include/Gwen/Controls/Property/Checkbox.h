@@ -32,12 +32,12 @@ namespace Gwen
                     SetHeight(18);
                 }
 
-                virtual TextObject GetPropertyValue()
+                virtual String GetPropertyValue()
                 {
                     return m_Checkbox->IsChecked() ? "1" : "0";
                 }
 
-                virtual void SetPropertyValue(const TextObject& v, bool bFireChangeEvents)
+                virtual void SetPropertyValue(const String& v, bool bFireChangeEvents)
                 {
                     if (v == "1" || v == "true" || v == "TRUE" || v == "yes" || v == "YES")
                         return m_Checkbox->SetChecked(true);

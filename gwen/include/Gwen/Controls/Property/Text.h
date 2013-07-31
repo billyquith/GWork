@@ -29,12 +29,12 @@ namespace Gwen
                     m_TextBox->onTextChanged.Add(this, &BaseClass::OnPropertyValueChanged);
                 }
 
-                virtual TextObject GetPropertyValue()
+                virtual String GetPropertyValue()
                 {
                     return m_TextBox->GetText();
                 }
 
-                virtual void SetPropertyValue(const TextObject& v, bool bFireChangeEvents)
+                virtual void SetPropertyValue(const String& v, bool bFireChangeEvents)
                 {
                     m_TextBox->SetText(v, bFireChangeEvents);
                 }

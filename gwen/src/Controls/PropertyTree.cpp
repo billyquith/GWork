@@ -13,7 +13,7 @@ namespace Gwen
 {
     namespace Controls
     {
-        Properties* PropertyTree::Add(const TextObject& text)
+        Properties* PropertyTree::Add(const String& text)
         {
             TreeNode* node = new PropertyTreeNode(this);
             node->SetText(text);
@@ -23,7 +23,7 @@ namespace Gwen
             return props;
         }
 
-        Properties* PropertyTree::Find(const TextObject& text)
+        Properties* PropertyTree::Find(const String& text)
         {
             Controls::Base::List& children = GetChildNodes();
 

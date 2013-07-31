@@ -43,7 +43,7 @@ void ControlList::Hide()
     }
 }
 
-Gwen::TextObject ControlList::GetValue()
+Gwen::String ControlList::GetValue()
 {
     for (List::const_iterator it = list.begin(); it != list.end(); ++it)
     {
@@ -53,7 +53,7 @@ Gwen::TextObject ControlList::GetValue()
     return "";
 }
 
-void ControlList::SetValue(const Gwen::TextObject& value)
+void ControlList::SetValue(const Gwen::String& value)
 {
     for (List::const_iterator it = list.begin(); it != list.end(); ++it)
     {

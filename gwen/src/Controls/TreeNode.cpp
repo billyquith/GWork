@@ -99,7 +99,7 @@ void TreeNode::Render(Skin::Base* skin)
                        GetParent() == m_TreeControl);
 }
 
-TreeNode* TreeNode::AddNode(const TextObject& strLabel)
+TreeNode* TreeNode::AddNode(const String& strLabel)
 {
     TreeNode* node = new TreeNode(this);
     node->SetText(strLabel);
@@ -142,17 +142,17 @@ void TreeNode::PostLayout(Skin::Base* /*skin*/)
         InvalidateParent();
 }
 
-void TreeNode::SetText(const TextObject& text)
+void TreeNode::SetText(const String& text)
 {
     m_Title->SetText(text);
 }
 
-const TextObject& TreeNode::GetText()
+const String& TreeNode::GetText()
 {
     return m_Title->GetText();
 }
 
-void TreeNode::SetImage(const TextObject& text)
+void TreeNode::SetImage(const String& text)
 {
     m_Title->SetImage(text);
 }
