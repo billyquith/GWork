@@ -32,7 +32,7 @@ int main()
 
     // The fonts work differently in SFML - it can't use
     // system fonts. So force the skin to use a local one.
-    skin.SetDefaultFont(L"OpenSans.ttf", 11);
+    skin.SetDefaultFont("OpenSans.ttf", 11);
 
 
     //

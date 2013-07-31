@@ -17,12 +17,12 @@ using namespace Gwen::Controls;
 
 GWEN_CONTROL_CONSTRUCTOR(TextBoxNumeric)
 {
-    SetText(L"0");
+    SetText("0");
 }
 
-bool TextBoxNumeric::IsTextAllowed(const Gwen::UnicodeString& str, int iPos)
+bool TextBoxNumeric::IsTextAllowed(const Gwen::String& str, int iPos)
 {
-    const UnicodeString& strString = GetText().GetUnicode();
+    const String& strString = GetText().GetUnicode();
 
     if (str.length() == 0)
         return true;

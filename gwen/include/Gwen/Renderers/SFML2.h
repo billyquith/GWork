@@ -79,8 +79,8 @@ namespace Gwen
                                           float v1, float u2, float v2);
 
             virtual void RenderText(Gwen::Font* pFont, Gwen::Point pos,
-                                    const Gwen::UnicodeString& text);
-            virtual Gwen::Point MeasureText(Gwen::Font* pFont, const Gwen::UnicodeString& text);
+                                    const Gwen::String& text);
+            virtual Gwen::Point MeasureText(Gwen::Font* pFont, const Gwen::String& text);
             virtual void        LoadFont(Gwen::Font* font);
             virtual void        FreeFont(Gwen::Font* pFont);
 

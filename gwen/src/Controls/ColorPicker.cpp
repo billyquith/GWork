@@ -62,7 +62,7 @@ void ColorPicker::NumericTyped(Gwen::Controls::Base* control)
     if (!box)
         return;
 
-    if (box->GetText() == L"")
+    if (box->GetText() == "")
         return;
 
     const int textValue = Clamp( atoi(box->GetText().c_str()), 0, 255 );

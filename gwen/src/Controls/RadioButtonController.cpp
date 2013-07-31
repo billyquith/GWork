@@ -52,12 +52,6 @@ void RadioButtonController::OnChange()
 LabeledRadioButton* RadioButtonController::AddOption(const Gwen::String& strText,
                                                      const Gwen::String& strOptionName)
 {
-    return AddOption(Gwen::Utility::StringToUnicode(strText), strOptionName);
-}
-
-LabeledRadioButton* RadioButtonController::AddOption(const Gwen::UnicodeString& strText,
-                                                     const Gwen::String& strOptionName)
-{
     LabeledRadioButton* lrb = new LabeledRadioButton(this);
     lrb->SetName(strOptionName);
     lrb->GetLabel()->SetText(strText);

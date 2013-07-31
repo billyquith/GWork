@@ -52,10 +52,10 @@ public:
     void SliderMoved(Base* pControl)
     {
         Gwen::Controls::Slider* pSlider = (Gwen::Controls::Slider*)pControl;
-        UnitPrint(Utility::Format(L"Slider Value: %.2f", (float)pSlider->GetFloatValue()));
+        UnitPrint(Utility::Format("Slider Value: %.2f", (float)pSlider->GetFloatValue()));
     }
 
 };
 
 
-DEFINE_UNIT_TEST(Slider, L"Slider");
+DEFINE_UNIT_TEST(Slider, "Slider");

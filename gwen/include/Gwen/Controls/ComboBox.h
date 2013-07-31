@@ -43,7 +43,7 @@ namespace Gwen
 
             virtual void ClearItems();
 
-            virtual MenuItem* AddItem(const UnicodeString& strLabel, const String& strName = "");
+            virtual MenuItem* AddItem(const String& strLabel, const String& strName = "");
             virtual bool      OnKeyUp(bool bDown);
             virtual bool      OnKeyDown(bool bDown);
 

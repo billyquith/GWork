@@ -13,7 +13,7 @@ public:
         Dock(Pos::Fill);
         Gwen::Controls::StatusBar* pStatus = new Gwen::Controls::StatusBar(this);
         Gwen::Controls::Label* pRight = new Gwen::Controls::Label(pStatus);
-        pRight->SetText(L"Label Added to Right");
+        pRight->SetText("Label Added to Right");
         pStatus->AddControl(pRight, true);
     }
 
@@ -24,4 +24,4 @@ public:
 };
 
 
-DEFINE_UNIT_TEST(StatusBar, L"StatusBar");
+DEFINE_UNIT_TEST(StatusBar, "StatusBar");

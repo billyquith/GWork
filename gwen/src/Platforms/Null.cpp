@@ -11,7 +11,7 @@
 
 #include <time.h>
 
-static Gwen::UnicodeString gs_ClipboardEmulator;
+static Gwen::String gs_ClipboardEmulator;
 
 void Gwen::Platform::Sleep(unsigned int iMS)
 {
@@ -23,12 +23,12 @@ void Gwen::Platform::SetCursor(unsigned char iCursor)
     // No platform independent way to do this
 }
 
-Gwen::UnicodeString Gwen::Platform::GetClipboardText()
+Gwen::String Gwen::Platform::GetClipboardText()
 {
     return gs_ClipboardEmulator;
 }
 
-bool Gwen::Platform::SetClipboardText(const Gwen::UnicodeString& str)
+bool Gwen::Platform::SetClipboardText(const Gwen::String& str)
 {
     gs_ClipboardEmulator = str;
     return true;

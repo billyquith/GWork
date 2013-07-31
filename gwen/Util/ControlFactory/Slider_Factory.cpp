@@ -15,17 +15,17 @@ namespace Gwen
             {
                 GWEN_CONTROL_FACTORY_PROPERTY(Min, "The minimum value");
 
-                UnicodeString GetValue(Controls::Base* ctrl)
+                String GetValue(Controls::Base* ctrl)
                 {
-                    return Gwen::Utility::Format(L"%f", (int)gwen_cast<Controls::Slider>(
+                    return Gwen::Utility::Format("%f", (int)gwen_cast<Controls::Slider>(
                                                      ctrl)->GetMin());
                 }
 
-                void SetValue(Controls::Base* ctrl, const UnicodeString& str)
+                void SetValue(Controls::Base* ctrl, const String& str)
                 {
                     float val;
 
-                    if (swscanf(str.c_str(), L"%f", &val) != 1)
+                    if (swscanf(str.c_str(), "%f", &val) != 1)
                         return;
 
                     if (val == gwen_cast<Controls::Slider>(ctrl)->GetMin())
@@ -42,17 +42,17 @@ namespace Gwen
             {
                 GWEN_CONTROL_FACTORY_PROPERTY(Max, "The max value");
 
-                UnicodeString GetValue(Controls::Base* ctrl)
+                String GetValue(Controls::Base* ctrl)
                 {
-                    return Gwen::Utility::Format(L"%f", (int)gwen_cast<Controls::Slider>(
+                    return Gwen::Utility::Format("%f", (int)gwen_cast<Controls::Slider>(
                                                      ctrl)->GetMax());
                 }
 
-                void SetValue(Controls::Base* ctrl, const UnicodeString& str)
+                void SetValue(Controls::Base* ctrl, const String& str)
                 {
                     float val;
 
-                    if (swscanf(str.c_str(), L"%f", &val) != 1)
+                    if (swscanf(str.c_str(), "%f", &val) != 1)
                         return;
 
                     if (val == gwen_cast<Controls::Slider>(ctrl)->GetMax())

@@ -118,7 +118,7 @@ void WindowControl::RenderUnder(Skin::Base* skin)
     skin->DrawShadow(this);
 }
 
-void WindowControl::SetTitle(Gwen::UnicodeString title)
+void WindowControl::SetTitle(Gwen::String title)
 {
     m_Title->SetText(title);
 }

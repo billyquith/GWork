@@ -16,4 +16,4 @@ public:
 };
 
 
-DEFINE_UNIT_TEST(GroupBox, L"GroupBox");
+DEFINE_UNIT_TEST(GroupBox, "GroupBox");

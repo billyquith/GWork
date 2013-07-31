@@ -91,7 +91,7 @@ void Label::OnBoundsChanged(Gwen::Rect oldChildBounds)
     }
 }
 
-void Label::SetFont(Gwen::UnicodeString strFacename, int iSize, bool bBold)
+void Label::SetFont(Gwen::String strFacename, int iSize, bool bBold)
 {
     if (m_CreatedFont)
     {

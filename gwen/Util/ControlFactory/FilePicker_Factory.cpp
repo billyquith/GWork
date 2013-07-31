@@ -16,13 +16,13 @@ namespace Gwen
             {
                 GWEN_CONTROL_FACTORY_PROPERTY(FileType, "In the format \"PNG file | *.png\"");
 
-                UnicodeString GetValue(Controls::Base* ctrl)
+                String GetValue(Controls::Base* ctrl)
                 {
                     return Utility::StringToUnicode(gwen_cast<Controls::FilePicker>(
                                                         ctrl)->GetFileType());
                 }
 
-                void SetValue(Controls::Base* ctrl, const UnicodeString& str)
+                void SetValue(Controls::Base* ctrl, const String& str)
                 {
                     gwen_cast<Controls::FilePicker>(ctrl)->SetFileType(Utility::UnicodeToString(
                                                                            str));

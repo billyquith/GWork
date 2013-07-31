@@ -40,8 +40,8 @@ namespace Gwen
             virtual void LoadFont(Gwen::Font* pFont);
             virtual void FreeFont(Gwen::Font* pFont);
             virtual void RenderText(Gwen::Font* pFont, Gwen::Point pos,
-                                    const Gwen::UnicodeString& text);
-            virtual Gwen::Point MeasureText(Gwen::Font* pFont, const Gwen::UnicodeString& text);
+                                    const Gwen::String& text);
+            virtual Gwen::Point MeasureText(Gwen::Font* pFont, const Gwen::String& text);
 
             virtual void DeviceLost();
             virtual void DeviceAcquired(ID2D1RenderTarget* pRT);

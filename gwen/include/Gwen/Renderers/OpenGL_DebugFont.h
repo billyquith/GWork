@@ -24,8 +24,8 @@ namespace Gwen
             void Init();
 
             void RenderText(Gwen::Font* pFont, Gwen::Point pos,
-                            const Gwen::UnicodeString& text);
-            Gwen::Point MeasureText(Gwen::Font* pFont, const Gwen::UnicodeString& text);
+                            const Gwen::String& text);
+            Gwen::Point MeasureText(Gwen::Font* pFont, const Gwen::String& text);
 
         protected:
 

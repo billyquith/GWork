@@ -62,7 +62,7 @@ namespace Gwen
 
             typedef std::list<Base*> List;
 
-            typedef std::map<Gwen::UnicodeString, Gwen::Event::Caller*> AccelMap;
+            typedef std::map<Gwen::String, Gwen::Event::Caller*> AccelMap;
 
             Base(Base* pParent, const Gwen::String& Name = "");
             virtual ~Base();
@@ -401,7 +401,7 @@ namespace Gwen
             virtual void AcceleratePressed()    {}
             virtual bool AccelOnlyFocus()       { return false; }
 
-            virtual bool HandleAccelerator(Gwen::UnicodeString& accelerator);
+            virtual bool HandleAccelerator(Gwen::String& accelerator);
 
             template <typename T>
             void AddAccelerator(const TextObject& accelerator, T func,
@@ -412,9 +412,9 @@ namespace Gwen
 
                 Gwen::Event::Caller* caller = new Gwen::Event::Caller();
                 caller->Add(handler, func);
-                Gwen::UnicodeString str = accelerator.GetUnicode();
+                Gwen::String str = accelerator.GetUnicode();
                 Gwen::Utility::Strings::ToUpper(str);
-                Gwen::Utility::Strings::Strip(str, L" ");
+                Gwen::Utility::Strings::Strip(str, " ");
                 m_Accelerators[ str ] = caller;
             }
 

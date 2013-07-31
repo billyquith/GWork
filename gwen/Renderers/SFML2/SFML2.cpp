@@ -203,7 +203,7 @@ void Gwen::Renderer::SFML2::FreeFont(Gwen::Font* pFont)
 }
 
 void Gwen::Renderer::SFML2::RenderText(Gwen::Font* pFont, Gwen::Point pos,
-                                       const Gwen::UnicodeString& text)
+                                       const Gwen::String& text)
 {
     Flush();
 
@@ -227,7 +227,7 @@ void Gwen::Renderer::SFML2::RenderText(Gwen::Font* pFont, Gwen::Point pos,
     m_Target.draw(sfStr);
 }
 
-Gwen::Point Gwen::Renderer::SFML2::MeasureText(Gwen::Font* pFont, const Gwen::UnicodeString& text)
+Gwen::Point Gwen::Renderer::SFML2::MeasureText(Gwen::Font* pFont, const Gwen::String& text)
 {
     // If the font doesn't exist, or the font size should be changed
     if (!pFont->data || fabs(pFont->realsize-pFont->size*Scale()) > 2)

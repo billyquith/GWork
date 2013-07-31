@@ -29,21 +29,21 @@ public:
         }
         {
             Gwen::Controls::TextBox* label = new Gwen::Controls::TextBox(this);
-            label->SetText(L"Different Coloured Text, for some reason");
+            label->SetText("Different Coloured Text, for some reason");
             label->SetTextColor(Gwen::Color(255, 0, 255, 255));
             label->SetPos(10, 10+25*3);
         }
         {
             Gwen::Controls::TextBoxNumeric* label = new Gwen::Controls::TextBoxNumeric(this);
-            label->SetText(L"2004");
+            label->SetText("2004");
             label->SetTextColor(Gwen::Color(255, 0, 255, 255));
             label->SetPos(10, 10+25*4);
         }
         {
-            m_Font.facename = L"Impact";
+            m_Font.facename = "Impact";
             m_Font.size = 50;
             Gwen::Controls::TextBox* label = new Gwen::Controls::TextBox(this);
-            label->SetText(L"Different Font");
+            label->SetText("Different Font");
             label->SetPos(10, 10+25*5);
             label->SetFont(&m_Font);
             label->SetSize(200, 55);
@@ -60,14 +60,14 @@ public:
     void OnEdit(Gwen::Controls::Base* pControl)
     {
         Gwen::Controls::TextBox* textbox = (Gwen::Controls::TextBox*)(pControl);
-        UnitPrint(Utility::Format(L"Textbox Edit: [%ls]\n",
+        UnitPrint(Utility::Format("Textbox Edit: [%ls]\n",
                                   textbox->GetText().GetUnicode().c_str()));
     }
 
     void OnSubmit(Gwen::Controls::Base* pControl)
     {
         Gwen::Controls::TextBox* textbox = (Gwen::Controls::TextBox*)(pControl);
-        UnitPrint(Utility::Format(L"Textbox Submit: [%ls]\n",
+        UnitPrint(Utility::Format("Textbox Submit: [%ls]\n",
                                   textbox->GetText().GetUnicode().c_str()));
     }
 
@@ -75,4 +75,4 @@ public:
 };
 
 
-DEFINE_UNIT_TEST(TextBox, L"TextBox");
+DEFINE_UNIT_TEST(TextBox, "TextBox");

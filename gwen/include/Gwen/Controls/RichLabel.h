@@ -40,17 +40,17 @@ namespace Gwen
                 }
 
                 unsigned char       type;
-                Gwen::UnicodeString text;
+                Gwen::String text;
                 Gwen::Color         color;
                 Gwen::Font        * font;
             };
 
 
             void Layout(Gwen::Skin::Base* skin);
-            void SplitLabel(const Gwen::UnicodeString& text, Gwen::Font* pFont,
+            void SplitLabel(const Gwen::String& text, Gwen::Font* pFont,
                             const DividedText& txt, int& x, int& y, int& lineheight);
             void CreateNewline(int& x, int& y, int& lineheight);
-            void CreateLabel(const Gwen::UnicodeString& text, const DividedText& txt, int& x,
+            void CreateLabel(const Gwen::String& text, const DividedText& txt, int& x,
                              int& y, int& lineheight, bool NoSplit);
             void Rebuild();
 

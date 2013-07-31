@@ -33,8 +33,8 @@ void RichLabel::AddText(const Gwen::TextObject& text, Gwen::Color color, Gwen::F
     if (text.length() == 0)
         return;
 
-    Gwen::Utility::Strings::UnicodeList lst;
-    Gwen::Utility::Strings::Split(text.GetUnicode(), L"\n", lst, false);
+    Gwen::Utility::Strings::List lst;
+    Gwen::Utility::Strings::Split(text.Get(), "\n", lst, false);
 
     for (size_t i = 0; i < lst.size(); i++)
     {
@@ -58,11 +58,11 @@ bool RichLabel::SizeToChildren(bool w, bool h)
     return BaseClass::SizeToChildren(w, h);
 }
 
-void RichLabel::SplitLabel(const Gwen::UnicodeString& text, Gwen::Font* pFont,
+void RichLabel::SplitLabel(const Gwen::String& text, Gwen::Font* pFont,
                            const DividedText& txt, int& x, int& y, int& lineheight)
 {
-    Gwen::Utility::Strings::UnicodeList lst;
-    Gwen::Utility::Strings::Split(text, L" ", lst, true);
+    Gwen::Utility::Strings::List lst;
+    Gwen::Utility::Strings::Split(text, " ", lst, true);
 
     if (lst.size() == 0)
         return;
@@ -86,11 +86,11 @@ void RichLabel::SplitLabel(const Gwen::UnicodeString& text, Gwen::Font* pFont,
             if (lst[0].size() >= text.size())
                 return;
 
-            Gwen::UnicodeString LeftOver = text.substr(lst[0].size()+1);
+            Gwen::String LeftOver = text.substr(lst[0].size()+1);
             return SplitLabel(LeftOver, pFont, txt, x, y, lineheight);
         }
     }
-    Gwen::UnicodeString strNewString = L"";
+    Gwen::String strNewString = "";
 
     for (size_t i = 0; i < lst.size(); i++)
     {
@@ -107,11 +107,11 @@ void RichLabel::SplitLabel(const Gwen::UnicodeString& text, Gwen::Font* pFont,
         strNewString += lst[i];
     }
 
-    Gwen::UnicodeString LeftOver = text.substr(strNewString.size()+1);
+    Gwen::String LeftOver = text.substr(strNewString.size()+1);
     return SplitLabel(LeftOver, pFont, txt, x, y, lineheight);
 }
 
-void RichLabel::CreateLabel(const Gwen::UnicodeString& text, const DividedText& txt, int& x, int& y,
+void RichLabel::CreateLabel(const Gwen::String& text, const DividedText& txt, int& x, int& y,
                             int& lineheight, bool NoSplit)
 {
     //
@@ -143,8 +143,8 @@ void RichLabel::CreateLabel(const Gwen::UnicodeString& text, const DividedText& 
         CreateNewline(x, y, lineheight);
 
     Gwen::Controls::Label*  pLabel = new Gwen::Controls::Label(this);
-    pLabel->SetText(x == 0 ? Gwen::Utility::Strings::TrimLeft<Gwen::UnicodeString>(text,
-                                                                                   L" ") : text);
+    pLabel->SetText(x == 0 ? Gwen::Utility::Strings::TrimLeft<Gwen::String>(text,
+                                                                                   " ") : text);
     pLabel->SetTextColor(txt.color);
     pLabel->SetFont(pFont);
     pLabel->SizeToContents();

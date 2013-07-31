@@ -23,8 +23,8 @@ namespace Gwen
 #pragma warning( disable : 4996 )
 #endif
 
-        String UnicodeToString(const UnicodeString& strIn);        
-        UnicodeString StringToUnicode(const String& strIn);
+        String UnicodeToString(const String& strIn);        
+        String StringToUnicode(const String& strIn);
 
         template <typename T>
         inline void Replace(T& str, const T& strFind, const T& strReplace)
@@ -50,23 +50,19 @@ namespace Gwen
             return os.str();
         }
 
-        GWEN_EXPORT UnicodeString Format(const wchar_t* fmt, ...);
+        GWEN_EXPORT String Format(const char* fmt, ...);
 
         namespace Strings
         {
             typedef std::vector<Gwen::String> List;
-            typedef std::vector<Gwen::UnicodeString> UnicodeList;
 
             GWEN_EXPORT void Split(const Gwen::String& str, const Gwen::String& seperator,
                                    Strings::List& outbits, bool bLeaveSeperators = false);
-            GWEN_EXPORT void Split(const Gwen::UnicodeString& str,
-                                   const Gwen::UnicodeString& seperator,
-                                   Strings::UnicodeList& outbits, bool bLeaveSeperators = false);
             GWEN_EXPORT bool Wildcard(const Gwen::TextObject& strWildcard,
                                       const Gwen::TextObject& strHaystack);
 
-            GWEN_EXPORT void ToUpper(Gwen::UnicodeString& str);
-            GWEN_EXPORT void Strip(Gwen::UnicodeString& str, const Gwen::UnicodeString& chars);
+            GWEN_EXPORT void ToUpper(Gwen::String& str);
+            GWEN_EXPORT void Strip(Gwen::String& str, const Gwen::String& chars);
 
             template <typename T>
             T TrimLeft(const T& str, const T& strChars)
@@ -81,7 +77,7 @@ namespace Gwen
                 GWEN_EXPORT bool  Bool(const Gwen::String& str);
                 GWEN_EXPORT int   Int(const Gwen::String& str);
                 GWEN_EXPORT float Float(const Gwen::String& str);
-                GWEN_EXPORT float Float(const Gwen::UnicodeString& str);
+                GWEN_EXPORT float Float(const Gwen::String& str);
                 GWEN_EXPORT bool  Floats(const Gwen::String& str, float* f, size_t iCount);
             }
         }

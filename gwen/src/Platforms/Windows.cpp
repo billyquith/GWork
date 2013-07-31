@@ -64,27 +64,27 @@ void Gwen::Platform::GetDesktopSize(int& w, int& h)
     h = GetSystemMetrics(SM_CYFULLSCREEN);
 }
 
-Gwen::UnicodeString Gwen::Platform::GetClipboardText()
+Gwen::String Gwen::Platform::GetClipboardText()
 {
     if (!OpenClipboard(NULL))
-        return L"";
+        return "";
 
     HANDLE hData = GetClipboardData(CF_UNICODETEXT);
 
     if (hData == NULL)
     {
         CloseClipboard();
-        return L"";
+        return "";
     }
 
     wchar_t* buffer = (wchar_t*)GlobalLock(hData);
-    UnicodeString str = buffer;
+    String str = buffer;
     GlobalUnlock(hData);
     CloseClipboard();
     return str;
 }
 
-bool Gwen::Platform::SetClipboardText(const Gwen::UnicodeString& str)
+bool Gwen::Platform::SetClipboardText(const Gwen::String& str)
 {
     if (!OpenClipboard(NULL))
         return false;

@@ -33,8 +33,6 @@ namespace Gwen
 
             virtual LabeledRadioButton* AddOption(const Gwen::String& strText,
                                                   const Gwen::String& strOptionName = "");
-            virtual LabeledRadioButton* AddOption(const Gwen::UnicodeString& strText,
-                                                  const Gwen::String& strOptionName = "");
 
             virtual LabeledRadioButton* GetSelected()
             {

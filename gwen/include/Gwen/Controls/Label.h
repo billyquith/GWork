@@ -45,7 +45,7 @@ namespace Gwen
             virtual int  GetAlignment();
 
 
-            virtual void SetFont(Gwen::UnicodeString strFacename, int iSize, bool bBold);
+            virtual void SetFont(Gwen::String strFacename, int iSize, bool bBold);
 
             virtual void SetFont(Gwen::Font* pFont)
             {

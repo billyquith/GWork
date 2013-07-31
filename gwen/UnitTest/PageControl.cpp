@@ -37,15 +37,15 @@ public:
 
     void OnPageChanged(Event::Info info)
     {
-        UnitPrint(Utility::Format(L"PageControl Changed Page: %i", info.Integer));
+        UnitPrint(Utility::Format("PageControl Changed Page: %i", info.Integer));
     }
 
     void OnFinish(Event::Info info)
     {
-        UnitPrint(L"Finish Pressed");
+        UnitPrint("Finish Pressed");
     }
 
 };
 
 
-DEFINE_UNIT_TEST(PageControl, L"PageControl");
+DEFINE_UNIT_TEST(PageControl, "PageControl");

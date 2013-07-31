@@ -40,10 +40,9 @@ namespace Gwen
 
             Gwen::Controls::Base   *Control;
             Gwen::String String;
-            Gwen::UnicodeString UnicodeString;
             int Integer;
             float Float;
-            unsigned long long UnsignedLongLong;
+            uint64_t UnsignedLongLong;
         };
 
 

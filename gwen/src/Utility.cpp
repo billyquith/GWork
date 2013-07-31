@@ -28,39 +28,43 @@ using namespace Gwen;
 #endif
 
 
-Gwen::String Gwen::Utility::UnicodeToString(const UnicodeString& strIn)
+Gwen::String Gwen::Utility::UnicodeToString(const String& strIn)    // TODO_UNICODE
 {
-    if (!strIn.length())
-        return "";
+//    if (!strIn.length())
+//        return "";
+//    
+//    const size_t ssz = strIn.length();
+//    const wchar_t *wstr = strIn.c_str();
+//    String ret(ssz, (char)0);
+//    
+//    // Convert the wide string to a C string, replacing chars we cannot match with "_".
+//    // Note: This will mangle most non-European Unicode strings as the range of
+//    //       characters required don't fit in a byte.
+//    std::use_facet< std::ctype<wchar_t> >(std::locale("")).narrow(wstr, wstr+ssz, '_', &ret[0]);
+//    
+//    return ret;
     
-    const size_t ssz = strIn.length();
-    const wchar_t *wstr = strIn.c_str();
-    String ret(ssz, (char)0);
-    
-    // Convert the wide string to a C string, replacing chars we cannot match with "_".
-    // Note: This will mangle most non-European Unicode strings as the range of
-    //       characters required don't fit in a byte.
-    std::use_facet< std::ctype<wchar_t> >(std::locale("")).narrow(wstr, wstr+ssz, '_', &ret[0]);
-    
-    return ret;
+    return strIn;
 }
 
-Gwen::UnicodeString Gwen::Utility::StringToUnicode(const String& strIn)
+Gwen::String Gwen::Utility::StringToUnicode(const String& strIn)    // TODO_UNICODE
 {
-    if (!strIn.length())
-        return L"";
+//    if (!strIn.length())
+//        return "";
+//    
+//    const size_t ssz = strIn.length();
+//    const char *str = strIn.c_str();    
+//    String ret(ssz, (wchar_t)0);
+//    
+//    // Create a wide string, encoding each character of the C string in current locale.
+//    std::use_facet<std::ctype<wchar_t> >(std::locale()).widen(str, str+ssz, &ret[0] );
+//    
+//    return ret;
     
-    const size_t ssz = strIn.length();
-    const char *str = strIn.c_str();    
-    UnicodeString ret(ssz, (wchar_t)0);
-    
-    // Create a wide string, encoding each character of the C string in current locale.
-    std::use_facet<std::ctype<wchar_t> >(std::locale()).widen(str, str+ssz, &ret[0] );
-    
-    return ret;
+    return strIn;
 }
 
-UnicodeString Gwen::Utility::Format(const wchar_t* fmt, ...)
+String Gwen::Utility::Format(const char* fmt, ...)
 {
     va_list s;
     int len = 0;
@@ -78,19 +82,23 @@ UnicodeString Gwen::Utility::Format(const wchar_t* fmt, ...)
 #endif
         va_list c;
         va_copy(c, s);
-        len = vfwprintf(fnull, fmt, c);
+        len = vfprintf(fnull, fmt, c);
         va_end(c);
         fclose(fnull);
     }
 
-    UnicodeString strOut;
+    String strOut;
 
     if (len > 0)
     {
         strOut.resize(len+1);
         va_list c;
         va_copy(c, s);
-        len = vswprintf(&strOut[0], strOut.size(), fmt, c);
+#ifdef _MSC_VER
+        len = vsprintf(&strOut[0], strOut.size(), fmt, c);
+#else
+        len = vsprintf(&strOut[0], fmt, c);
+#endif
         va_end(c);
         strOut.resize(len);
     }
@@ -121,27 +129,27 @@ void Gwen::Utility::Strings::Split(const Gwen::String& str, const Gwen::String& 
     outbits.push_back(str.substr(iOffset, iLength-iOffset));
 }
 
-void Gwen::Utility::Strings::Split(const Gwen::UnicodeString& str,
-                                   const Gwen::UnicodeString& seperator,
-                                   Strings::UnicodeList& outbits, bool bLeave)
-{
-    size_t iOffset = 0;
-    size_t iLength = str.length();
-    size_t iSepLen = seperator.length();
-    size_t i = str.find(seperator, 0);
-
-    while (i != std::wstring::npos)
-    {
-        outbits.push_back(str.substr(iOffset, i-iOffset));
-        iOffset = i+iSepLen;
-        i = str.find(seperator, iOffset);
-
-        if (bLeave)
-            iOffset -= iSepLen;
-    }
-
-    outbits.push_back(str.substr(iOffset, iLength-iOffset));
-}
+//void Gwen::Utility::Strings::Split(const Gwen::String& str,
+//                                   const Gwen::String& seperator,
+//                                   Strings::UnicodeList& outbits, bool bLeave)
+//{
+//    size_t iOffset = 0;
+//    size_t iLength = str.length();
+//    size_t iSepLen = seperator.length();
+//    size_t i = str.find(seperator, 0);
+//
+//    while (i != std::wstring::npos)
+//    {
+//        outbits.push_back(str.substr(iOffset, i-iOffset));
+//        iOffset = i+iSepLen;
+//        i = str.find(seperator, iOffset);
+//
+//        if (bLeave)
+//            iOffset -= iSepLen;
+//    }
+//
+//    outbits.push_back(str.substr(iOffset, iLength-iOffset));
+//}
 
 int Gwen::Utility::Strings::To::Int(const Gwen::String& str)
 {
@@ -156,12 +164,7 @@ float Gwen::Utility::Strings::To::Float(const Gwen::String& str)
     if (str == "")
         return 0.0f;
 
-    return (float)atof(str.c_str());
-}
-
-float Gwen::Utility::Strings::To::Float(const Gwen::UnicodeString& str)
-{
-    return wcstod(str.c_str(), NULL);
+    return static_cast<float>( atof(str.c_str()) );
 }
 
 bool Gwen::Utility::Strings::To::Bool(const Gwen::String& str)
@@ -199,15 +202,15 @@ bool Gwen::Utility::Strings::To::Floats(const Gwen::String& str, float* f, size_
 
 bool Gwen::Utility::Strings::Wildcard(const TextObject& strWildcard, const TextObject& strHaystack)
 {
-    const UnicodeString& W = strWildcard.GetUnicode();
-    const UnicodeString& H = strHaystack.GetUnicode();
+    const String& W = strWildcard.GetUnicode();
+    const String& H = strHaystack.GetUnicode();
 
     if (strWildcard == "*")
         return true;
 
-    size_t iPos = W.find(L"*", 0);
+    size_t iPos = W.find("*", 0);
 
-    if (iPos == UnicodeString::npos)
+    if (iPos == String::npos)
         return strWildcard == strHaystack;
 
     // First half matches
@@ -217,7 +220,7 @@ bool Gwen::Utility::Strings::Wildcard(const TextObject& strWildcard, const TextO
     // Second half matches
     if (iPos != W.length()-1)
     {
-        UnicodeString strEnd = W.substr(iPos+1, W.length());
+        String strEnd = W.substr(iPos+1, W.length());
 
         if (strEnd != H.substr(H.length()-strEnd.length(), H.length()))
             return false;
@@ -226,19 +229,19 @@ bool Gwen::Utility::Strings::Wildcard(const TextObject& strWildcard, const TextO
     return true;
 }
 
-void Gwen::Utility::Strings::ToUpper(Gwen::UnicodeString& str)
+void Gwen::Utility::Strings::ToUpper(Gwen::String& str)
 {
     transform(str.begin(), str.end(), str.begin(), towupper);
 }
 
-void Gwen::Utility::Strings::Strip(Gwen::UnicodeString& str, const Gwen::UnicodeString& chars)
+void Gwen::Utility::Strings::Strip(Gwen::String& str, const Gwen::String& chars)
 {
-    Gwen::UnicodeString Source = str;
-    str = L"";
+    Gwen::String Source = str;
+    str = "";
 
     for (unsigned int i = 0; i < Source.length(); i++)
     {
-        if (chars.find(Source[i]) != Gwen::UnicodeString::npos)
+        if (chars.find(Source[i]) != Gwen::String::npos)
             continue;
 
         str += Source[i];

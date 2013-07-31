@@ -21,14 +21,14 @@ namespace Gwen
 
         Font()
         :   data(NULL)
-        ,   facename(L"Arial")
+        ,   facename("Arial")
         ,   size(10)
         ,   realsize(0)
         ,   bold(false)
         {
         }
 
-        UnicodeString facename;
+        String facename;
         float size;
         bool bold;
 

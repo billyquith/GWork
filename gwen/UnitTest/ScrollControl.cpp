@@ -13,28 +13,28 @@ public:
             Gwen::Controls::ScrollControl* pCtrl = new Gwen::Controls::ScrollControl(this);
             pCtrl->SetBounds(10, 10, 100, 100);
             Controls::Button* pTestButton = new Controls::Button(pCtrl);
-            pTestButton->SetText(L"Twice As Big");
+            pTestButton->SetText("Twice As Big");
             pTestButton->SetBounds(0, 0, 200, 200);
         }
         {
             Gwen::Controls::ScrollControl* pCtrl = new Gwen::Controls::ScrollControl(this);
             pCtrl->SetBounds(110, 10, 100, 100);
             Controls::Button* pTestButton = new Controls::Button(pCtrl);
-            pTestButton->SetText(L"Same Size");
+            pTestButton->SetText("Same Size");
             pTestButton->SetBounds(0, 0, 100, 100);
         }
         {
             Gwen::Controls::ScrollControl* pCtrl = new Gwen::Controls::ScrollControl(this);
             pCtrl->SetBounds(210, 10, 100, 100);
             Controls::Button* pTestButton = new Controls::Button(pCtrl);
-            pTestButton->SetText(L"Wide");
+            pTestButton->SetText("Wide");
             pTestButton->SetBounds(0, 0, 200, 50);
         }
         {
             Gwen::Controls::ScrollControl* pCtrl = new Gwen::Controls::ScrollControl(this);
             pCtrl->SetBounds(310, 10, 100, 100);
             Controls::Button* pTestButton = new Controls::Button(pCtrl);
-            pTestButton->SetText(L"Tall");
+            pTestButton->SetText("Tall");
             pTestButton->SetBounds(0, 0, 50, 200);
         }
         {
@@ -42,7 +42,7 @@ public:
             pCtrl->SetBounds(410, 10, 100, 100);
             pCtrl->SetScroll(false, true);
             Controls::Button* pTestButton = new Controls::Button(pCtrl);
-            pTestButton->SetText(L"Vertical");
+            pTestButton->SetText("Vertical");
             pTestButton->SetBounds(0, 0, 200, 200);
         }
         {
@@ -50,7 +50,7 @@ public:
             pCtrl->SetBounds(510, 10, 100, 100);
             pCtrl->SetScroll(true, false);
             Controls::Button* pTestButton = new Controls::Button(pCtrl);
-            pTestButton->SetText(L"Horinzontal");
+            pTestButton->SetText("Horinzontal");
             pTestButton->SetBounds(0, 0, 200, 200);
         }
         // Bottom Row
@@ -59,7 +59,7 @@ public:
             pCtrl->SetBounds(10, 110, 100, 100);
             pCtrl->SetAutoHideBars(true);
             Controls::Button* pTestButton = new Controls::Button(pCtrl);
-            pTestButton->SetText(L"Twice As Big");
+            pTestButton->SetText("Twice As Big");
             pTestButton->SetBounds(0, 0, 200, 200);
         }
         {
@@ -67,7 +67,7 @@ public:
             pCtrl->SetBounds(110, 110, 100, 100);
             pCtrl->SetAutoHideBars(true);
             Controls::Button* pTestButton = new Controls::Button(pCtrl);
-            pTestButton->SetText(L"Same Size");
+            pTestButton->SetText("Same Size");
             pTestButton->SetBounds(0, 0, 100, 100);
         }
         {
@@ -75,7 +75,7 @@ public:
             pCtrl->SetBounds(210, 110, 100, 100);
             pCtrl->SetAutoHideBars(true);
             Controls::Button* pTestButton = new Controls::Button(pCtrl);
-            pTestButton->SetText(L"Wide");
+            pTestButton->SetText("Wide");
             pTestButton->SetBounds(0, 0, 200, 50);
         }
         {
@@ -83,7 +83,7 @@ public:
             pCtrl->SetBounds(310, 110, 100, 100);
             pCtrl->SetAutoHideBars(true);
             Controls::Button* pTestButton = new Controls::Button(pCtrl);
-            pTestButton->SetText(L"Tall");
+            pTestButton->SetText("Tall");
             pTestButton->SetBounds(0, 0, 50, 200);
         }
         {
@@ -92,7 +92,7 @@ public:
             pCtrl->SetAutoHideBars(true);
             pCtrl->SetScroll(false, true);
             Controls::Button* pTestButton = new Controls::Button(pCtrl);
-            pTestButton->SetText(L"Vertical");
+            pTestButton->SetText("Vertical");
             pTestButton->SetBounds(0, 0, 200, 200);
         }
         {
@@ -101,7 +101,7 @@ public:
             pCtrl->SetAutoHideBars(true);
             pCtrl->SetScroll(true, false);
             Controls::Button* pTestButton = new Controls::Button(pCtrl);
-            pTestButton->SetText(L"Horinzontal");
+            pTestButton->SetText("Horinzontal");
             pTestButton->SetBounds(0, 0, 200, 200);
         }
     }
@@ -109,4 +109,4 @@ public:
 };
 
 
-DEFINE_UNIT_TEST(ScrollControl, L"Scroll");
+DEFINE_UNIT_TEST(ScrollControl, "Scroll");
