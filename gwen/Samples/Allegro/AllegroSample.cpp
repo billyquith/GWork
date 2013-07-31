@@ -51,7 +51,7 @@ int main(int argc, char** argv)
     // system fonts. So force the skin to use a local one.
     // Note, you can get fonts that cover many languages/locales to do Chinese,
     //       Arabic, Korean, etc. e.g. "Arial Unicode" (but it's 23MB!).
-    skin.SetDefaultFont(L"OpenSans.ttf", 11);
+    skin.SetDefaultFont("OpenSans.ttf", 11);
     
     // Create a Canvas (it's root, on which all other GWEN panels are created)
     Gwen::Controls::Canvas* pCanvas = new Gwen::Controls::Canvas(&skin);

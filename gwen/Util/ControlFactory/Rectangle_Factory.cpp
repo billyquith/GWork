@@ -14,20 +14,20 @@ namespace Gwen
             {
                 GWEN_CONTROL_FACTORY_PROPERTY(Color, "Rectangle's Background Color");
 
-                UnicodeString GetValue(Controls::Base* ctrl)
+                String GetValue(Controls::Base* ctrl)
                 {
                     Controls::Rectangle* pRect = gwen_cast<Controls::Rectangle>(ctrl);
-                    return Utility::Format(L"%i %i %i %i", pRect->GetColor().r,
+                    return Utility::Format("%i %i %i %i", pRect->GetColor().r,
                                            pRect->GetColor().g,
                                            pRect->GetColor().b, pRect->GetColor().a);
                 }
 
-                void SetValue(Controls::Base* ctrl, const UnicodeString& str)
+                void SetValue(Controls::Base* ctrl, const String& str)
                 {
                     Controls::Rectangle* pRect = gwen_cast<Controls::Rectangle>(ctrl);
                     int r, g, b, a;
 
-                    if (swscanf(str.c_str(), L"%i %i %i %i", &r, &g, &b, &a) != 4)
+                    if (swscanf(str.c_str(), "%i %i %i %i", &r, &g, &b, &a) != 4)
                         return;
 
                     pRect->SetColor(Gwen::Color(r, g, b, a));

@@ -118,11 +118,11 @@ Gwen::Rect Text::GetCharacterPosition(unsigned int iChar)
 
     if (Length() == 0 || iChar == 0)
     {
-        Gwen::Point p = GetSkin()->GetRender()->MeasureText(GetFont(), L" ");
+        Gwen::Point p = GetSkin()->GetRender()->MeasureText(GetFont(), " ");
         return Gwen::Rect(1, 0, 0, p.y);
     }
 
-    UnicodeString sub = m_String.GetUnicode().substr(0, iChar);
+    String sub = m_String.GetUnicode().substr(0, iChar);
     Gwen::Point p = GetSkin()->GetRender()->MeasureText(GetFont(), sub);
     return Rect(p.x, 0, 0, p.y);
 }
@@ -210,10 +210,10 @@ void Text::RefreshSize()
     Invalidate();
 }
 
-void SplitWords(const Gwen::UnicodeString& s, wchar_t delim,
-                std::vector<Gwen::UnicodeString>& elems)
+void SplitWords(const Gwen::String& s, wchar_t delim,
+                std::vector<Gwen::String>& elems)
 {
-    Gwen::UnicodeString str;
+    Gwen::String str;
 
     for (unsigned int i = 0; i < s.length(); i++)
     {
@@ -222,7 +222,7 @@ void SplitWords(const Gwen::UnicodeString& s, wchar_t delim,
             if (!str.empty())
                 elems.push_back(str);
 
-            elems.push_back(L"\n");
+            elems.push_back("\n");
             str.clear();
             continue;
         }
@@ -252,11 +252,11 @@ void Text::RefreshSizeWrap()
     }
 
     m_Lines.clear();
-    std::vector<Gwen::UnicodeString> words;
+    std::vector<Gwen::String> words;
     SplitWords(GetText().GetUnicode(), L' ', words);
     // Adding a bullshit word to the end simplifies the code below
     // which is anything but simple.
-    words.push_back(L"");
+    words.push_back("");
 
     if (!GetFont())
     {
@@ -264,12 +264,12 @@ void Text::RefreshSizeWrap()
         return;
     }
 
-    Point pFontSize = GetSkin()->GetRender()->MeasureText(GetFont(), L" ");
+    Point pFontSize = GetSkin()->GetRender()->MeasureText(GetFont(), " ");
     int w = GetParent()->Width();
     int x = 0, y = 0;
-    Gwen::UnicodeString strLine;
+    Gwen::String strLine;
 
-    for (std::vector<Gwen::UnicodeString>::iterator it = words.begin(); it != words.end(); ++it)
+    for (std::vector<Gwen::String>::iterator it = words.begin(); it != words.end(); ++it)
     {
         bool bFinishLine = false;
         bool bWrapped = false;

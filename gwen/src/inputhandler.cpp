@@ -303,13 +303,13 @@ bool Gwen::Input::OnMouseClicked(Controls::Base* pCanvas, int iMouseButton, bool
 bool Gwen::Input::HandleAccelerator(Controls::Base* pCanvas, Gwen::UnicodeChar chr)
 {
     // Build the accelerator search string
-    Gwen::UnicodeString accelString;
+    Gwen::String accelString;
 
     if (Gwen::Input::IsControlDown())
-        accelString += L"CTRL+";
+        accelString += "CTRL+";
 
     if (Gwen::Input::IsShiftDown())
-        accelString += L"SHIFT+";
+        accelString += "SHIFT+";
 
     chr = towupper(chr);
     accelString += chr;

@@ -13,11 +13,11 @@ public:
             Gwen::Controls::ComboBox* combo = new Gwen::Controls::ComboBox(this);
             combo->SetPos(50, 50);
             combo->SetWidth(200);
-            combo->AddItem(L"Option One", "one");
-            combo->AddItem(L"Number Two", "two");
-            combo->AddItem(L"Door Three", "three");
-            combo->AddItem(L"Four Legs", "four");
-            combo->AddItem(L"Five Birds", "five");
+            combo->AddItem("Option One", "one");
+            combo->AddItem("Number Two", "two");
+            combo->AddItem("Door Three", "three");
+            combo->AddItem("Four Legs", "four");
+            combo->AddItem("Five Birds", "five");
             combo->onSelection.Add(this, &ComboBox::OnComboSelect);
         }
         {
@@ -34,7 +34,7 @@ public:
 
             for (int i = 0; i < 500; i++)
             {
-                combo->AddItem(L"Lots Of Options");
+                combo->AddItem("Lots Of Options");
             }
         }
     }
@@ -42,11 +42,11 @@ public:
     void OnComboSelect(Gwen::Controls::Base* pControl)
     {
         Gwen::Controls::ComboBox* combo = (Gwen::Controls::ComboBox*)pControl;
-        UnitPrint(Utility::Format(L"Combo Changed: %ls",
-                                  combo->GetSelectedItem()->GetText().GetUnicode().c_str()));
+        UnitPrint(Utility::Format("Combo Changed: %s",
+                                  combo->GetSelectedItem()->GetText().c_str()));
     }
 
 };
 
 
-DEFINE_UNIT_TEST(ComboBox, L"ComboBox");
+DEFINE_UNIT_TEST(ComboBox, "ComboBox");

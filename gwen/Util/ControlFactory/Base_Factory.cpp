@@ -14,12 +14,12 @@ namespace Gwen
             {
                 GWEN_CONTROL_FACTORY_PROPERTY(ControlName, "The control's name");
 
-                UnicodeString GetValue(Controls::Base* ctrl)
+                String GetValue(Controls::Base* ctrl)
                 {
-                    return Utility::Format(L"%S", ctrl->GetName().c_str());
+                    return Utility::Format("%S", ctrl->GetName().c_str());
                 }
 
-                void SetValue(Controls::Base* ctrl, const UnicodeString& str)
+                void SetValue(Controls::Base* ctrl, const String& str)
                 {
                     ctrl->SetName(Gwen::Utility::UnicodeToString(str));
                 }
@@ -31,16 +31,16 @@ namespace Gwen
             {
                 GWEN_CONTROL_FACTORY_PROPERTY(Position, "Sets the position of the control");
 
-                UnicodeString GetValue(Controls::Base* ctrl)
+                String GetValue(Controls::Base* ctrl)
                 {
-                    return Utility::Format(L"%i %i", ctrl->X(), ctrl->Y());
+                    return Utility::Format("%i %i", ctrl->X(), ctrl->Y());
                 }
 
-                void SetValue(Controls::Base* ctrl, const UnicodeString& str)
+                void SetValue(Controls::Base* ctrl, const String& str)
                 {
                     int x, y;
 
-                    if (swscanf(str.c_str(), L"%i %i", &x, &y) != 2)
+                    if (swscanf(str.c_str(), "%i %i", &x, &y) != 2)
                         return;
 
                     ctrl->SetPos(x, y);
@@ -82,17 +82,17 @@ namespace Gwen
             {
                 GWEN_CONTROL_FACTORY_PROPERTY(Margin, "Sets the margin of a docked control");
 
-                UnicodeString GetValue(Controls::Base* ctrl)
+                String GetValue(Controls::Base* ctrl)
                 {
                     Gwen::Margin m = ctrl->GetMargin();
-                    return Utility::Format(L"%i %i %i %i", m.left, m.top, m.right, m.bottom);
+                    return Utility::Format("%i %i %i %i", m.left, m.top, m.right, m.bottom);
                 }
 
-                void SetValue(Controls::Base* ctrl, const UnicodeString& str)
+                void SetValue(Controls::Base* ctrl, const String& str)
                 {
                     Gwen::Margin m;
 
-                    if (swscanf(str.c_str(), L"%i %i %i %i", &m.left, &m.top, &m.right,
+                    if (swscanf(str.c_str(), "%i %i %i %i", &m.left, &m.top, &m.right,
                                 &m.bottom) != 4)
                         return;
 
@@ -160,16 +160,16 @@ namespace Gwen
             {
                 GWEN_CONTROL_FACTORY_PROPERTY(Size, "The with and height of the control");
 
-                UnicodeString GetValue(Controls::Base* ctrl)
+                String GetValue(Controls::Base* ctrl)
                 {
-                    return Utility::Format(L"%i %i", ctrl->Width(), ctrl->Height());
+                    return Utility::Format("%i %i", ctrl->Width(), ctrl->Height());
                 }
 
-                void SetValue(Controls::Base* ctrl, const UnicodeString& str)
+                void SetValue(Controls::Base* ctrl, const String& str)
                 {
                     int w, h;
 
-                    if (swscanf(str.c_str(), L"%i %i", &w, &h) != 2)
+                    if (swscanf(str.c_str(), "%i %i", &w, &h) != 2)
                         return;
 
                     ctrl->SetSize(w, h);
@@ -211,47 +211,47 @@ namespace Gwen
             {
                 GWEN_CONTROL_FACTORY_PROPERTY(Dock, "How the control is to be docked");
 
-                UnicodeString GetValue(Controls::Base* ctrl)
+                String GetValue(Controls::Base* ctrl)
                 {
                     switch (ctrl->GetDock())
                     {
                     case Pos::Left:
-                        return L"Left";
+                        return "Left";
 
                     case Pos::Fill:
-                        return L"Fill";
+                        return "Fill";
 
                     case Pos::Right:
-                        return L"Right";
+                        return "Right";
 
                     case Pos::Top:
-                        return L"Top";
+                        return "Top";
 
                     case Pos::Bottom:
-                        return L"Bottom";
+                        return "Bottom";
                     }
 
-                    return L"None";
+                    return "None";
                 }
 
-                void SetValue(Controls::Base* ctrl, const UnicodeString& str)
+                void SetValue(Controls::Base* ctrl, const String& str)
                 {
-                    if (str == L"Fill")
+                    if (str == "Fill")
                         ctrl->Dock(Pos::Fill);
 
-                    if (str == L"Left")
+                    if (str == "Left")
                         ctrl->Dock(Pos::Left);
 
-                    if (str == L"Right")
+                    if (str == "Right")
                         ctrl->Dock(Pos::Right);
 
-                    if (str == L"Top")
+                    if (str == "Top")
                         ctrl->Dock(Pos::Top);
 
-                    if (str == L"Bottom")
+                    if (str == "Bottom")
                         ctrl->Dock(Pos::Bottom);
 
-                    if (str == L"None")
+                    if (str == "None")
                         ctrl->Dock(Pos::None);
                 }
 
@@ -260,24 +260,24 @@ namespace Gwen
                     return 6;
                 }
 
-                Gwen::UnicodeString OptionGet(int i)
+                Gwen::String OptionGet(int i)
                 {
                     if (i == 0)
-                        return L"None";
+                        return "None";
 
                     if (i == 1)
-                        return L"Left";
+                        return "Left";
 
                     if (i == 2)
-                        return L"Right";
+                        return "Right";
 
                     if (i == 3)
-                        return L"Top";
+                        return "Top";
 
                     if (i == 4)
-                        return L"Bottom";
+                        return "Bottom";
 
-                    return L"Fill";
+                    return "Fill";
                 }
 
             };

@@ -22,7 +22,7 @@
 static Gwen::Input::Allegro g_GwenInput;
 static ALLEGRO_EVENT_QUEUE*     g_event_queue = NULL;
 static ALLEGRO_DISPLAY*         g_display = NULL;
-static Gwen::UnicodeString gs_ClipboardEmulator;
+static Gwen::String gs_ClipboardEmulator;
 
 static const ALLEGRO_SYSTEM_MOUSE_CURSOR g_CursorConversion[] =
 {
@@ -49,12 +49,12 @@ void Gwen::Platform::SetCursor(unsigned char iCursor)
     al_set_system_mouse_cursor(g_display, g_CursorConversion[iCursor]);
 }
 
-Gwen::UnicodeString Gwen::Platform::GetClipboardText()
+Gwen::String Gwen::Platform::GetClipboardText()
 {
     return gs_ClipboardEmulator;
 }
 
-bool Gwen::Platform::SetClipboardText(const Gwen::UnicodeString& str)
+bool Gwen::Platform::SetClipboardText(const Gwen::String& str)
 {
     gs_ClipboardEmulator = str;
     return true;

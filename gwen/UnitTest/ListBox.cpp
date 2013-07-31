@@ -12,19 +12,19 @@ public:
         {
             Gwen::Controls::ListBox* ctrl = new Gwen::Controls::ListBox(this);
             ctrl->SetBounds(10, 10, 100, 200);
-            ctrl->AddItem(L"First");
-            ctrl->AddItem(L"Blue");
-            ctrl->AddItem(L"Yellow");
-            ctrl->AddItem(L"Orange");
-            ctrl->AddItem(L"Brown");
-            ctrl->AddItem(L"Black");
-            ctrl->AddItem(L"Green");
-            ctrl->AddItem(L"Dog");
-            ctrl->AddItem(L"Cat Blue");
-            ctrl->AddItem(L"Shoes");
-            ctrl->AddItem(L"Shirts");
-            ctrl->AddItem(L"Chair");
-            ctrl->AddItem(L"Last");
+            ctrl->AddItem("First");
+            ctrl->AddItem("Blue");
+            ctrl->AddItem("Yellow");
+            ctrl->AddItem("Orange");
+            ctrl->AddItem("Brown");
+            ctrl->AddItem("Black");
+            ctrl->AddItem("Green");
+            ctrl->AddItem("Dog");
+            ctrl->AddItem("Cat Blue");
+            ctrl->AddItem("Shoes");
+            ctrl->AddItem("Shirts");
+            ctrl->AddItem("Chair");
+            ctrl->AddItem("Last");
             ctrl->SelectByString("Bl*", true);
             ctrl->SetAllowMultiSelect(true);
             ctrl->SetKeyboardInputEnabled(true);
@@ -37,19 +37,19 @@ public:
             ctrl->SetAllowMultiSelect(true);
             ctrl->onRowSelected.Add(this, &ThisClass::RowSelected);
             {
-                Gwen::Controls::Layout::TableRow* pRow = ctrl->AddItem(L"Baked Beans");
-                pRow->SetCellText(1, L"Heinz");
+                Gwen::Controls::Layout::TableRow* pRow = ctrl->AddItem("Baked Beans");
+                pRow->SetCellText(1, "Heinz");
                 pRow->SetCellText(2, "£3.50");
             }
             {
-                Gwen::Controls::Layout::TableRow* pRow = ctrl->AddItem(L"Bananas");
-                pRow->SetCellText(1, L"Trees");
-                pRow->SetCellText(2, L"$1.27");
+                Gwen::Controls::Layout::TableRow* pRow = ctrl->AddItem("Bananas");
+                pRow->SetCellText(1, "Trees");
+                pRow->SetCellText(2, "$1.27");
             }
             {
-                Gwen::Controls::Layout::TableRow* pRow = ctrl->AddItem(L"Chicken");
-                pRow->SetCellText(1, L"\u5355\u5143\u6D4B\u8BD5");
-                pRow->SetCellText(2, L"\u20AC8.95");
+                Gwen::Controls::Layout::TableRow* pRow = ctrl->AddItem("Chicken");
+                pRow->SetCellText(1, "\u5355\u5143\u6D4B\u8BD5");
+                pRow->SetCellText(2, "\u20AC8.95");
             }
         }
     }
@@ -58,7 +58,7 @@ public:
     void RowSelected(Gwen::Controls::Base* pControl)
     {
         Gwen::Controls::ListBox* ctrl = (Gwen::Controls::ListBox*)pControl;
-        UnitPrint(Utility::Format(L"Listbox Item Selected: %ls",
+        UnitPrint(Utility::Format("Listbox Item Selected: %ls",
                                   ctrl->GetSelectedRow()->GetText(0).GetUnicode().c_str()));
     }
 
@@ -66,4 +66,4 @@ public:
 };
 
 
-DEFINE_UNIT_TEST(ListBox, L"ListBox");
+DEFINE_UNIT_TEST(ListBox, "ListBox");

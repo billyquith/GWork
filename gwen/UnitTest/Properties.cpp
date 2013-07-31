@@ -18,40 +18,40 @@ public:
             props->SetBounds(10, 10, 150, 300);
             {
                 {
-                    Gwen::Controls::PropertyRow* pRow = props->Add(L"First Name");
+                    Gwen::Controls::PropertyRow* pRow = props->Add("First Name");
                     pRow->onChange.Add(this, &Properties::OnFirstNameChanged);
                 }
-                props->Add(L"Middle Name");
-                props->Add(L"Last Name");
+                props->Add("Middle Name");
+                props->Add("Last Name");
             }
         }
         {
             Gwen::Controls::PropertyTree* ptree = new Gwen::Controls::PropertyTree(this);
             ptree->SetBounds(200, 10, 200, 200);
             {
-                Gwen::Controls::Properties* props = ptree->Add(L"Item One");
-                props->Add(L"Middle Name");
-                props->Add(L"Last Name");
-                props->Add(L"Four");
+                Gwen::Controls::Properties* props = ptree->Add("Item One");
+                props->Add("Middle Name");
+                props->Add("Last Name");
+                props->Add("Four");
             }
             {
-                Gwen::Controls::Properties* props = ptree->Add(L"Item Two");
-                props->Add(L"More Items");
-                props->Add(L"Checkbox", new Gwen::Controls::Property::Checkbox(props), L"1");
-                props->Add(L"To Fill");
-                props->Add(L"ColorSelector", new Gwen::Controls::Property::ColorSelector(
-                               props), L"255 0 0");
-                props->Add(L"Out Here");
+                Gwen::Controls::Properties* props = ptree->Add("Item Two");
+                props->Add("More Items");
+                props->Add("Checkbox", new Gwen::Controls::Property::Checkbox(props), "1");
+                props->Add("To Fill");
+                props->Add("ColorSelector", new Gwen::Controls::Property::ColorSelector(
+                               props), "255 0 0");
+                props->Add("Out Here");
                 // Combo Box Test
                 {
                     Gwen::Controls::Property::ComboBox* pCombo =
                         new Gwen::Controls::Property::ComboBox(props);
-                    pCombo->GetComboBox()->AddItem(L"Option One", "one");
-                    pCombo->GetComboBox()->AddItem(L"Number Two", "two");
-                    pCombo->GetComboBox()->AddItem(L"Door Three", "three");
-                    pCombo->GetComboBox()->AddItem(L"Four Legs", "four");
-                    pCombo->GetComboBox()->AddItem(L"Five Birds", "five");
-                    Gwen::Controls::PropertyRow* pRow = props->Add(L"ComboBox", pCombo, L"1");
+                    pCombo->GetComboBox()->AddItem("Option One", "one");
+                    pCombo->GetComboBox()->AddItem("Number Two", "two");
+                    pCombo->GetComboBox()->AddItem("Door Three", "three");
+                    pCombo->GetComboBox()->AddItem("Four Legs", "four");
+                    pCombo->GetComboBox()->AddItem("Five Birds", "five");
+                    Gwen::Controls::PropertyRow* pRow = props->Add("ComboBox", pCombo, "1");
                     pRow->onChange.Add(this, &Properties::OnFirstNameChanged);
                 }
             }
@@ -62,11 +62,11 @@ public:
     void OnFirstNameChanged(Controls::Base* pControl)
     {
         Gwen::Controls::PropertyRow* pRow = (Gwen::Controls::PropertyRow*)pControl;
-        UnitPrint(Utility::Format(L"First Name Changed: %ls",
+        UnitPrint(Utility::Format("First Name Changed: %ls",
                                   pRow->GetProperty()->GetPropertyValue().GetUnicode().c_str()));
     }
 
 };
 
 
-DEFINE_UNIT_TEST(Properties, L"Properties");
+DEFINE_UNIT_TEST(Properties, "Properties");

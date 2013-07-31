@@ -12,13 +12,13 @@ public:
         // Normal
         {
             Controls::ImagePanel* img = new Controls::ImagePanel(this);
-            img->SetImage(L"gwen.png");
+            img->SetImage("gwen.png");
             img->SetBounds(10, 10, 100, 100);
         }
         // Missing
         {
             Controls::ImagePanel* img = new Controls::ImagePanel(this);
-            img->SetImage(L"missingimage.png");
+            img->SetImage("missingimage.png");
             img->SetBounds(120, 10, 100, 100);
         }
     }
@@ -26,4 +26,4 @@ public:
 };
 
 
-DEFINE_UNIT_TEST(ImagePanel, L"ImagePanel");
+DEFINE_UNIT_TEST(ImagePanel, "ImagePanel");

@@ -35,8 +35,8 @@ namespace Gwen
         //
         // Used by copy/paste
         //
-        GWEN_EXPORT UnicodeString GetClipboardText();
-        GWEN_EXPORT bool          SetClipboardText(const UnicodeString& str);
+        GWEN_EXPORT String GetClipboardText();
+        GWEN_EXPORT bool          SetClipboardText(const String& str);
 
         //
         // Needed for things like double click

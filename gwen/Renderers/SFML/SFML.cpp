@@ -99,7 +99,7 @@ namespace Gwen
             pFont->data = NULL;
         }
 
-        void SFML::RenderText(Gwen::Font* pFont, Gwen::Point pos, const Gwen::UnicodeString& text)
+        void SFML::RenderText(Gwen::Font* pFont, Gwen::Point pos, const Gwen::String& text)
         {
             Translate(pos.x, pos.y);
 
@@ -127,7 +127,7 @@ namespace Gwen
 
         }
 
-        Gwen::Point SFML::MeasureText(Gwen::Font* pFont, const Gwen::UnicodeString& text)
+        Gwen::Point SFML::MeasureText(Gwen::Font* pFont, const Gwen::String& text)
         {
             // If the font doesn't exist, or the font size should be changed
             if (!pFont->data || fabs(pFont->realsize-pFont->size*Scale()) > 2)

@@ -39,11 +39,13 @@ namespace Gwen
         static const unsigned char Count    = 10;
     }
 
-    typedef std::wstring    UnicodeString;
+    //
+    // All strings are UTF-8 for Unicode. This is backwards compatible with ASCII.
+    // See: http://www.utf8everywhere.org
+    //
     typedef std::string     String;
-
-    typedef wchar_t         UnicodeChar; // Portability??
-
+//    typedef wchar_t         UnicodeChar;
+    typedef char            UnicodeChar;
     
     struct GWEN_EXPORT Margin
     {

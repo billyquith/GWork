@@ -60,15 +60,15 @@ GWEN_CONTROL_CONSTRUCTOR(ComboBox)
     m_SelectedItem = NULL;
     
     SetAlignment(Gwen::Pos::Left|Gwen::Pos::CenterV);
-    SetText(L"");
+    SetText("");
     SetMargin(Margin(3, 0, 0, 0));
     SetTabable(true);
     SetKeyboardInputEnabled(true);
 }
 
-MenuItem* ComboBox::AddItem(const UnicodeString& strLabel, const String& strName)
+MenuItem* ComboBox::AddItem(const String& strLabel, const String& strName)
 {
-    MenuItem* pItem = m_Menu->AddItem(strLabel, L"");
+    MenuItem* pItem = m_Menu->AddItem(strLabel, "");
     pItem->SetName(strName);
     pItem->onMenuItemSelected.Add(this, &ComboBox::OnItemSelected);
 

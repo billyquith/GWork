@@ -5,8 +5,8 @@ namespace Gwen
 {
     namespace ControlFactory
     {
-        const Gwen::UnicodeString PropertyBool::True    = L"true";
-        const Gwen::UnicodeString PropertyBool::False   = L"false";
+        const Gwen::String PropertyBool::True    = "true";
+        const Gwen::String PropertyBool::False   = "false";
 
         void InitializeControls()
         {
@@ -108,7 +108,7 @@ namespace Gwen
         }
 
         void Base::SetControlValue(Gwen::Controls::Base* ctrl, const Gwen::String& name,
-                                   const Gwen::UnicodeString& str)
+                                   const Gwen::String& str)
         {
             Property* pProp = GetProperty(name);
 

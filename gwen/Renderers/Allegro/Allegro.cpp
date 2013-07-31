@@ -147,30 +147,30 @@ namespace Gwen
         }
 
         void Allegro::RenderText(Gwen::Font* pFont, Gwen::Point pos,
-                                 const Gwen::UnicodeString& text)
+                                 const Gwen::String& text)
         {
             //! @todo Be nice not to have to reencode text every render.
             //! @todo Text rendering needs dynamic sized buffer.
             
             // Reencode the Unicode UTF-16 string as UTF-8, which Allegro requires.
-            char buff[1024];
-            char *buffEnd = buff + sizeof(buff)-1;
-            char *p = buff;
-            for (std::wstring::const_iterator it=text.begin(), itEnd=text.end();
-                 it != itEnd && p < buffEnd;
-                 ++it)
-            {
-                size_t sz = al_utf8_encode(p, *it);
-                p += sz;
-            }
-            *p = '\0';
+//            char buff[1024];
+//            char *buffEnd = buff + sizeof(buff)-1;
+//            char *p = buff;
+//            for (std::wstring::const_iterator it=text.begin(), itEnd=text.end();
+//                 it != itEnd && p < buffEnd;
+//                 ++it)
+//            {
+//                size_t sz = al_utf8_encode(p, *it);
+//                p += sz;
+//            }
+//            *p = '\0';
             
             ALLEGRO_FONT *afont = (ALLEGRO_FONT*)pFont->data;
             Translate(pos.x, pos.y);
-            al_draw_text(afont, m_Color, pos.x, pos.y, ALLEGRO_ALIGN_LEFT, buff);
+            al_draw_text(afont, m_Color, pos.x, pos.y, ALLEGRO_ALIGN_LEFT, text.c_str());
         }
 
-        Gwen::Point Allegro::MeasureText(Gwen::Font* pFont, const Gwen::UnicodeString& text)
+        Gwen::Point Allegro::MeasureText(Gwen::Font* pFont, const Gwen::String& text)
         {
             ALLEGRO_FONT* afont = (ALLEGRO_FONT*)pFont->data;
 
@@ -186,19 +186,19 @@ namespace Gwen
                 return Gwen::Point(0, 0);
 
             // Reencode the Unicode UTF-16 string as UTF-8, which Allegro requires.
-            char buff[1024];
-            char *buffEnd = buff + sizeof(buff)-1;
-            char *p = buff;
-            for (std::wstring::const_iterator it=text.begin(), itEnd=text.end();
-                 it != itEnd && p < buffEnd;
-                 ++it)
-            {
-                size_t sz = al_utf8_encode(p, *it);
-                p += sz;
-            }
-            *p = '\0';
+//            char buff[1024];
+//            char *buffEnd = buff + sizeof(buff)-1;
+//            char *p = buff;
+//            for (std::wstring::const_iterator it=text.begin(), itEnd=text.end();
+//                 it != itEnd && p < buffEnd;
+//                 ++it)
+//            {
+//                size_t sz = al_utf8_encode(p, *it);
+//                p += sz;
+//            }
+//            *p = '\0';
 
-            return Point(al_get_text_width(afont, buff), al_get_font_line_height(afont));
+            return Point(al_get_text_width(afont, text.c_str()), al_get_font_line_height(afont));
         }
 
         void Allegro::StartClip()

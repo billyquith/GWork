@@ -1061,7 +1061,7 @@ void Base::SetMargin(const Margin& margin)
     InvalidateParent();
 }
 
-bool Base::HandleAccelerator(Gwen::UnicodeString& accelerator)
+bool Base::HandleAccelerator(Gwen::String& accelerator)
 {
     if (Gwen::KeyboardFocus == this || !AccelOnlyFocus())
     {

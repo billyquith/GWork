@@ -33,7 +33,7 @@ public:
             pb->SetAutoLabel(false);
             pb->SetValue(0.20f);
             pb->SetAlignment(Pos::Right|Pos::CenterV);
-            pb->SetText(L"40,245 MB");
+            pb->SetText("40,245 MB");
         }
         {
             Gwen::Controls::ProgressBar* pb = new Gwen::Controls::ProgressBar(this);
@@ -78,4 +78,4 @@ public:
 };
 
 
-DEFINE_UNIT_TEST(ProgressBar, L"ProgressBar");
+DEFINE_UNIT_TEST(ProgressBar, "ProgressBar");

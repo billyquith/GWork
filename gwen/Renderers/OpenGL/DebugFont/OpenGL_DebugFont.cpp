@@ -82,7 +82,7 @@ namespace Gwen
         }
 
         void OpenGL_DebugFont::RenderText(Gwen::Font* pFont, Gwen::Point pos,
-                                          const Gwen::UnicodeString& text)
+                                          const Gwen::String& text)
         {
             float fSize = pFont->size*Scale();
 
@@ -126,7 +126,7 @@ namespace Gwen
         }
 
         Gwen::Point OpenGL_DebugFont::MeasureText(Gwen::Font* pFont,
-                                                  const Gwen::UnicodeString& text)
+                                                  const Gwen::String& text)
         {
             Gwen::Point p;
             float fSize = pFont->size*Scale();

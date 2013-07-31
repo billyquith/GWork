@@ -35,7 +35,7 @@ namespace Gwen
 
             virtual bool OnChar(Gwen::UnicodeChar c);
 
-            virtual void InsertText(const Gwen::UnicodeString& str);
+            virtual void InsertText(const Gwen::String& str);
             virtual void DeleteText(int iStartPos, int iLength);
 
             virtual void RefreshCursorBounds();
@@ -62,7 +62,7 @@ namespace Gwen
 
             virtual void          EraseSelection();
             virtual bool          HasSelection();
-            virtual UnicodeString GetSelection();
+            virtual String GetSelection();
 
             virtual void SetCursorPos(int i);
             virtual void SetCursorEnd(int i);
@@ -95,7 +95,7 @@ namespace Gwen
         protected:
 
             virtual void OnTextChanged();
-            virtual bool IsTextAllowed(const Gwen::UnicodeString& /*str*/, int /*iPos*/)
+            virtual bool IsTextAllowed(const Gwen::String& /*str*/, int /*iPos*/)
             {
                 return true;
             }
@@ -124,7 +124,7 @@ namespace Gwen
 
         private:
 
-            virtual bool IsTextAllowed(const Gwen::UnicodeString& str, int iPos);
+            virtual bool IsTextAllowed(const Gwen::String& str, int iPos);
 
         };
 

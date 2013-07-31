@@ -14,7 +14,7 @@ namespace Gwen
 {
     /**
      *
-     *  TextObjects can be either a UnicodeString or a String
+     *  TextObjects can be either a String or a String
      *
      *  Just makes things easier instead of having a function taking both.
      *
@@ -41,14 +41,14 @@ namespace Gwen
 
         TextObject(const wchar_t* text)
         {
-            m_Unicode = text;
+//            m_Unicode = text;
             m_String = Gwen::Utility::UnicodeToString(m_Unicode);
         }
 
-        TextObject(const Gwen::UnicodeString& unicode)
-        {
-            *this = unicode;
-        }
+//        TextObject(const Gwen::String& unicode)
+//        {
+//            *this = unicode;
+//        }
 
         void operator = (const char* str)
         {
@@ -62,17 +62,17 @@ namespace Gwen
             m_Unicode = Gwen::Utility::StringToUnicode(m_String);
         }
 
-        void operator = (const wchar_t* text)
-        {
-            m_Unicode = text;
-            m_String = Gwen::Utility::UnicodeToString(m_Unicode);
-        }
+//        void operator = (const wchar_t* text)
+//        {
+//            m_Unicode = text;
+//            m_String = Gwen::Utility::UnicodeToString(m_Unicode);
+//        }
 
-        void operator = (const Gwen::UnicodeString& unicodeStr)
-        {
-            m_Unicode = unicodeStr;
-            m_String = Gwen::Utility::UnicodeToString(m_Unicode);
-        }
+//        void operator = (const Gwen::String& unicodeStr)
+//        {
+//            m_Unicode = unicodeStr;
+//            m_String = Gwen::Utility::UnicodeToString(m_Unicode);
+//        }
 
         bool operator == (const TextObject& to) const
         {
@@ -89,7 +89,7 @@ namespace Gwen
             return m_String.c_str();
         }
 
-        const Gwen::UnicodeString& GetUnicode() const
+        const Gwen::String& GetUnicode() const
         {
             return m_Unicode;
         }
@@ -100,8 +100,8 @@ namespace Gwen
         }
 
     private:
-        Gwen::UnicodeString     m_Unicode;
-        Gwen::String            m_String;
+        Gwen::String    m_Unicode;
+        Gwen::String    m_String;
     };
 
 

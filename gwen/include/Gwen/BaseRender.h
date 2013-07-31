@@ -91,10 +91,10 @@ namespace Gwen
 
             virtual void RenderText(Gwen::Font* pFont,
                                     Gwen::Point pos,
-                                    const Gwen::UnicodeString& text);
+                                    const Gwen::String& text);
             
             virtual Gwen::Point MeasureText(Gwen::Font* pFont,
-                                            const Gwen::UnicodeString& text);
+                                            const Gwen::String& text);
 
             /// \sect{Render Specialisation}
             ///     No need to implement these functions in your derived class, but
@@ -104,8 +104,6 @@ namespace Gwen
             virtual void    DrawLinedRect(Gwen::Rect rect);
             virtual void    DrawPixel(int x, int y);
             virtual void    DrawShavedCornerRect(Gwen::Rect rect, bool bSlight = false);
-            virtual Gwen::Point MeasureText(Gwen::Font* pFont, const Gwen::String& text);
-            virtual void    RenderText(Gwen::Font* pFont, Gwen::Point pos, const Gwen::String& text);
             /// \}
 
         public:

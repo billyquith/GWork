@@ -81,12 +81,12 @@ GWEN_CONTROL_CONSTRUCTOR(UnitTest)
         ADD_UNIT_TEST(ColorPicker);
     }
     m_StatusBar->SendToBack();
-    PrintText(L"Unit Test Started.");
+    PrintText("Unit Test Started.");
     m_fLastSecond = Gwen::Platform::GetTimeInSeconds();
     m_iFrames = 0;
     pList->GetNamedChildren("MenuStrip").DoAction();
 
-    PrintText(Utility::Format(L"Size of Button = %lu bytes.", sizeof(Gwen::Controls::Button)));
+    PrintText(Utility::Format("Size of Button = %lu bytes.", sizeof(Gwen::Controls::Button)));
 }
 
 void UnitTest::OnCategorySelect(Gwen::Event::Info info)
@@ -98,7 +98,7 @@ void UnitTest::OnCategorySelect(Gwen::Event::Info info)
     m_pLastControl = info.Packet->Control;
 }
 
-void UnitTest::PrintText(const Gwen::UnicodeString& str)
+void UnitTest::PrintText(const Gwen::String& str)
 {
     m_TextOutput->AddItem(str);
     m_TextOutput->ScrollToBottom();
@@ -110,7 +110,7 @@ void UnitTest::Render(Gwen::Skin::Base* skin)
 
     if (m_fLastSecond < Gwen::Platform::GetTimeInSeconds())
     {
-        m_StatusBar->SetText(Gwen::Utility::Format(L"GWEN Unit Test - %i fps", m_iFrames*2));
+        m_StatusBar->SetText(Gwen::Utility::Format("GWEN Unit Test - %i fps", m_iFrames*2));
         m_fLastSecond = Gwen::Platform::GetTimeInSeconds()+0.5f;
         m_iFrames = 0;
     }
@@ -118,12 +118,8 @@ void UnitTest::Render(Gwen::Skin::Base* skin)
     BaseClass::Render(skin);
 }
 
-void GUnit::UnitPrint(Gwen::UnicodeString str)
+void GUnit::UnitPrint(Gwen::String str)
 {
     m_pUnitTest->PrintText(str);
 }
 
-void GUnit::UnitPrint(Gwen::String str)
-{
-    UnitPrint(Utility::StringToUnicode(str));
-}

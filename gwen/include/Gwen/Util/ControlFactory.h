@@ -24,18 +24,18 @@ namespace Gwen
             virtual Gwen::String Name() = 0;
             virtual Gwen::String Description() = 0;
 
-            virtual Gwen::UnicodeString GetValue(Gwen::Controls::Base* ctrl) = 0;
+            virtual Gwen::String GetValue(Gwen::Controls::Base* ctrl) = 0;
             virtual void                SetValue(Gwen::Controls::Base* ctrl,
-                                                 const Gwen::UnicodeString& str) = 0;
+                                                 const Gwen::String& str) = 0;
 
             virtual int OptionNum()
             {
                 return 0;
             }
 
-            virtual Gwen::UnicodeString OptionGet(int i)
+            virtual Gwen::String OptionGet(int i)
             {
-                return L"";
+                return "";
             }
 
             virtual int NumCount()
@@ -73,15 +73,15 @@ namespace Gwen
         {
         public:
 
-            static const Gwen::UnicodeString True;
-            static const Gwen::UnicodeString False;
+            static const Gwen::String True;
+            static const Gwen::String False;
 
             virtual int OptionNum()
             {
                 return 2;
             }
 
-            virtual Gwen::UnicodeString OptionGet(int i)
+            virtual Gwen::String OptionGet(int i)
             {
                 if (i == 0)
                     return False;
@@ -108,7 +108,7 @@ namespace Gwen
 
             Property* GetProperty(const Gwen::String& name);
             void      SetControlValue(Gwen::Controls::Base* ctrl, const Gwen::String& name,
-                                      const Gwen::UnicodeString& str);
+                                      const Gwen::String& str);
 
             const Property::List& Properties()
             {

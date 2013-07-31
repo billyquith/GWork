@@ -19,10 +19,10 @@ public:
 
     void onButtonA(Controls::Base* pControl)
     {
-        //	UnitPrint( L"Button Pressed (using 'OnPress' event)" );
+        //	UnitPrint( "Button Pressed (using 'OnPress' event)" );
     }
 
 };
 
 
-DEFINE_UNIT_TEST(Numeric, L"Numeric");
+DEFINE_UNIT_TEST(Numeric, "Numeric");

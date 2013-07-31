@@ -16,7 +16,7 @@ public:
             m_pDockControlLeft = new Controls::TabControl(this);
             m_pDockControlLeft->SetBounds(10, 10, 200, 200);
             {
-                Controls::TabButton* pButton = m_pDockControlLeft->AddPage(L"Controls");
+                Controls::TabButton* pButton = m_pDockControlLeft->AddPage("Controls");
                 Base* pPage = pButton->GetPage();
                 {
                     Controls::RadioButtonController* pRadio = new Controls::RadioButtonController(
@@ -29,18 +29,18 @@ public:
                     pRadio->onSelectionChange.Add(this, &ThisClass::OnDockChange);
                 }
             }
-            m_pDockControlLeft->AddPage(L"Red");
-            m_pDockControlLeft->AddPage(L"Green");
-            m_pDockControlLeft->AddPage(L"Blue");
+            m_pDockControlLeft->AddPage("Red");
+            m_pDockControlLeft->AddPage("Green");
+            m_pDockControlLeft->AddPage("Blue");
         }
         {
             Controls::TabControl* pDragMe = new Controls::TabControl(this);
             pDragMe->SetBounds(220, 10, 200, 200);
-            pDragMe->AddPage(L"You");
-            pDragMe->AddPage(L"Can");
-            pDragMe->AddPage(L"Reorder")->SetImage(L"test16.png");
-            pDragMe->AddPage(L"These");
-            pDragMe->AddPage(L"Tabs");
+            pDragMe->AddPage("You");
+            pDragMe->AddPage("Can");
+            pDragMe->AddPage("Reorder")->SetImage("test16.png");
+            pDragMe->AddPage("These");
+            pDragMe->AddPage("Tabs");
             pDragMe->SetAllowReorder(true);
         }
     }
@@ -50,16 +50,16 @@ public:
         Gwen::Controls::RadioButtonController* rc =
             (Gwen::Controls::RadioButtonController*)pControl;
 
-        if (rc->GetSelectedLabel() == L"Top")
+        if (rc->GetSelectedLabel() == "Top")
             m_pDockControlLeft->SetTabStripPosition(Pos::Top);
 
-        if (rc->GetSelectedLabel() == L"Bottom")
+        if (rc->GetSelectedLabel() == "Bottom")
             m_pDockControlLeft->SetTabStripPosition(Pos::Bottom);
 
-        if (rc->GetSelectedLabel() == L"Left")
+        if (rc->GetSelectedLabel() == "Left")
             m_pDockControlLeft->SetTabStripPosition(Pos::Left);
 
-        if (rc->GetSelectedLabel() == L"Right")
+        if (rc->GetSelectedLabel() == "Right")
             m_pDockControlLeft->SetTabStripPosition(Pos::Right);
     }
 
@@ -67,4 +67,4 @@ public:
 };
 
 
-DEFINE_UNIT_TEST(TabControl, L"TabControl");
+DEFINE_UNIT_TEST(TabControl, "TabControl");

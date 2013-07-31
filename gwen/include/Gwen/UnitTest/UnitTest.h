@@ -34,7 +34,6 @@ public:
         m_pUnitTest = u;
     }
 
-    void UnitPrint(Gwen::UnicodeString str);
     void UnitPrint(Gwen::String str);
 
     void Layout(Gwen::Skin::Base* skin)
@@ -55,7 +54,7 @@ public:
 
     GWEN_CONTROL(UnitTest, Gwen::Controls::DockBase);
 
-    void PrintText(const Gwen::UnicodeString& str);
+    void PrintText(const Gwen::String& str);
 
     void Render(Gwen::Skin::Base* skin);
 

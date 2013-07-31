@@ -14,17 +14,17 @@ namespace Gwen
             {
                 GWEN_CONTROL_FACTORY_PROPERTY(CycleSpeed, "");
 
-                UnicodeString GetValue(Controls::Base* ctrl)
+                String GetValue(Controls::Base* ctrl)
                 {
-                    return Utility::Format(L"%f", (float)gwen_cast<Controls::ProgressBar>(
+                    return Utility::Format("%f", (float)gwen_cast<Controls::ProgressBar>(
                                                ctrl)->GetCycleSpeed());
                 }
 
-                void SetValue(Controls::Base* ctrl, const UnicodeString& str)
+                void SetValue(Controls::Base* ctrl, const String& str)
                 {
                     float num;
 
-                    if (swscanf(str.c_str(), L"%f", &num) != 1)
+                    if (swscanf(str.c_str(), "%f", &num) != 1)
                         return;
 
                     gwen_cast<Controls::ProgressBar>(ctrl)->SetCycleSpeed(num);

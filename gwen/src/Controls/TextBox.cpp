@@ -46,10 +46,10 @@ GWEN_CONTROL_CONSTRUCTOR(TextBox)
     m_bSelectAll = false;
     SetTextColor(Gwen::Color(50, 50, 50, 255));         // TODO: From Skin
     SetTabable(true);
-    AddAccelerator(L"Ctrl + C", &TextBox::OnCopy);
-    AddAccelerator(L"Ctrl + X", &TextBox::OnCut);
-    AddAccelerator(L"Ctrl + V", &TextBox::OnPaste);
-    AddAccelerator(L"Ctrl + A", &TextBox::OnSelectAll);
+    AddAccelerator("Ctrl + C", &TextBox::OnCopy);
+    AddAccelerator("Ctrl + X", &TextBox::OnCut);
+    AddAccelerator("Ctrl + V", &TextBox::OnPaste);
+    AddAccelerator("Ctrl + A", &TextBox::OnSelectAll);
     Gwen::Anim::Add(this, new ChangeCaretColor());
 }
 
@@ -58,13 +58,13 @@ bool TextBox::OnChar(Gwen::UnicodeChar c)
     if (c == '\t')
         return false;
 
-    Gwen::UnicodeString str;
+    Gwen::String str;
     str += c;
     InsertText(str);
     return true;
 }
 
-void TextBox::InsertText(const Gwen::UnicodeString& strInsert)
+void TextBox::InsertText(const Gwen::String& strInsert)
 {
     // TODO: Make sure fits (implement maxlength)
     if (HasSelection())
@@ -76,7 +76,7 @@ void TextBox::InsertText(const Gwen::UnicodeString& strInsert)
     if (!IsTextAllowed(strInsert, m_iCursorPos))
         return;
 
-    UnicodeString str = GetText().GetUnicode();
+    String str = GetText().GetUnicode();
     str.insert(m_iCursorPos, strInsert);
     SetText(str);
     m_iCursorPos += (int)strInsert.size();
@@ -181,14 +181,14 @@ void TextBox::OnMouseDoubleClickLeft(int /*x*/, int /*y*/)
     OnSelectAll(this);
 }
 
-UnicodeString TextBox::GetSelection()
+String TextBox::GetSelection()
 {
     if (!HasSelection())
-        return L"";
+        return "";
 
     int iStart = Gwen::Min(m_iCursorPos, m_iCursorEnd);
     int iEnd = Gwen::Max(m_iCursorPos, m_iCursorEnd);
-    const UnicodeString& str = GetText().GetUnicode();
+    const String& str = GetText().GetUnicode();
     return str.substr(iStart, iEnd-iStart);
 }
 
@@ -322,7 +322,7 @@ void TextBox::SetCursorEnd(int i)
 
 void TextBox::DeleteText(int iStartPos, int iLength)
 {
-    UnicodeString str = GetText().GetUnicode();
+    String str = GetText().GetUnicode();
     str.erase(iStartPos, iLength);
     SetText(str);
 
@@ -483,7 +483,7 @@ GWEN_CONTROL_CONSTRUCTOR(TextBoxMultiline)
 bool TextBoxMultiline::OnKeyReturn(bool bDown)
 {
     if (bDown)
-        InsertText(L"\n");
+        InsertText("\n");
 
     return true;
 }

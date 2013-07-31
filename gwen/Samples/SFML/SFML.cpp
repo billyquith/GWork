@@ -28,7 +28,7 @@ int main()
     skin.Init("DefaultSkin.png");
     // The fonts work differently in SFML - it can't use
     // system fonts. So force the skin to use a local one.
-    skin.SetDefaultFont(L"OpenSans.ttf", 11);
+    skin.SetDefaultFont("OpenSans.ttf", 11);
     //
     // Create a Canvas (it's root, on which all other GWEN panels are created)
     //
