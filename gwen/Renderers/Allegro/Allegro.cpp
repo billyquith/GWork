@@ -126,7 +126,7 @@ namespace Gwen
         void Allegro::LoadFont(Gwen::Font* font)
         {
             font->realsize = font->size*Scale();
-            std::string fontName = Utility::UnicodeToString(font->facename);
+            std::string fontName(font->facename);
 
             if (fontName.find(".ttf") == std::string::npos)
                 fontName += ".ttf";
@@ -149,22 +149,6 @@ namespace Gwen
         void Allegro::RenderText(Gwen::Font* pFont, Gwen::Point pos,
                                  const Gwen::String& text)
         {
-            //! @todo Be nice not to have to reencode text every render.
-            //! @todo Text rendering needs dynamic sized buffer.
-            
-            // Reencode the Unicode UTF-16 string as UTF-8, which Allegro requires.
-//            char buff[1024];
-//            char *buffEnd = buff + sizeof(buff)-1;
-//            char *p = buff;
-//            for (std::wstring::const_iterator it=text.begin(), itEnd=text.end();
-//                 it != itEnd && p < buffEnd;
-//                 ++it)
-//            {
-//                size_t sz = al_utf8_encode(p, *it);
-//                p += sz;
-//            }
-//            *p = '\0';
-            
             ALLEGRO_FONT *afont = (ALLEGRO_FONT*)pFont->data;
             Translate(pos.x, pos.y);
             al_draw_text(afont, m_Color, pos.x, pos.y, ALLEGRO_ALIGN_LEFT, text.c_str());
@@ -184,19 +168,6 @@ namespace Gwen
 
             if (!afont)
                 return Gwen::Point(0, 0);
-
-            // Reencode the Unicode UTF-16 string as UTF-8, which Allegro requires.
-//            char buff[1024];
-//            char *buffEnd = buff + sizeof(buff)-1;
-//            char *p = buff;
-//            for (std::wstring::const_iterator it=text.begin(), itEnd=text.end();
-//                 it != itEnd && p < buffEnd;
-//                 ++it)
-//            {
-//                size_t sz = al_utf8_encode(p, *it);
-//                p += sz;
-//            }
-//            *p = '\0';
 
             return Point(al_get_text_width(afont, text.c_str()), al_get_font_line_height(afont));
         }
