@@ -65,8 +65,8 @@ namespace Gwen
         {
             Gdiplus::FontStyle fs = Gdiplus::FontStyleRegular;
             font->realsize = font->size*Scale();
-            Gdiplus::Font* pFont = new Gdiplus::Font(
-                font->facename.c_str(), font->realsize, fs, Gdiplus::UnitPixel, NULL);
+            Gdiplus::Font* pFont = new Gdiplus::Font(Utility::Widen(font->facename).c_str(),
+                                                     font->realsize, fs, Gdiplus::UnitPixel, NULL);
             font->data = pFont;
         }
 
@@ -81,7 +81,7 @@ namespace Gwen
         }
 
         void GDIPlus::RenderText(Gwen::Font* pFont, Gwen::Point pos,
-                                 const Gwen::UnicodeString& text)
+                                 const Gwen::String& text)
         {
             Translate(pos.x, pos.y);
 
@@ -96,11 +96,12 @@ namespace Gwen
             Gdiplus::SolidBrush solidBrush(m_Colour);
             Gdiplus::RectF r(pos.x, pos.y, 1000, 1000);
             Gdiplus::Font* pGDIFont = (Gdiplus::Font*)pFont->data;
-            graphics->DrawString(text.c_str(), text.length()+1, pGDIFont, r, &strFormat,
-                                 &solidBrush);
+            const std::wstring wtext( Utility::Widen(text) );
+            graphics->DrawString(wtext.c_str(), wtext.length()+1,
+                                 pGDIFont, r, &strFormat, &solidBrush);
         }
 
-        Gwen::Point GDIPlus::MeasureText(Gwen::Font* pFont, const Gwen::UnicodeString& text)
+        Gwen::Point GDIPlus::MeasureText(Gwen::Font* pFont, const Gwen::String& text)
         {
             Gwen::Point p(1, 1);
 
@@ -116,8 +117,9 @@ namespace Gwen
             Gdiplus::SizeF size;
             Gdiplus::Graphics g(m_HWND);
             Gdiplus::Font* pGDIFont = (Gdiplus::Font*)pFont->data;
-            g.MeasureString(text.c_str(), -1, pGDIFont, Gdiplus::SizeF(10000,
-                                                                       10000), &strFormat, &size);
+            const std::wstring wtext( Utility::Widen(text) );
+            g.MeasureString(wtext.c_str(), -1, pGDIFont, Gdiplus::SizeF(10000, 10000),
+                            &strFormat, &size);
             return Gwen::Point(size.Width+1, size.Height+1);
         }
 
@@ -125,7 +127,7 @@ namespace Gwen
         {
             const Gwen::Rect& rect = ClipRegion();
             graphics->SetClip(Gdiplus::Rect(rect.x*Scale(), rect.y*Scale(), rect.w*Scale(), rect.h*
-                                            Scale()), Gdiplus::CombineMode::CombineModeReplace);
+                                            Scale()), Gdiplus::CombineModeReplace);
         }
 
         void GDIPlus::EndClip()
@@ -158,7 +160,7 @@ namespace Gwen
 
         void GDIPlus::LoadTexture(Gwen::Texture* pTexture)
         {
-            Gdiplus::Bitmap* pImage = new Gdiplus::Bitmap(pTexture->name.GetUnicode().c_str());
+            Gdiplus::Bitmap* pImage = new Gdiplus::Bitmap(Utility::Widen(pTexture->name).c_str());
             pTexture->data = pImage;
             pTexture->width = pImage->GetWidth();
             pTexture->height = pImage->GetHeight();
