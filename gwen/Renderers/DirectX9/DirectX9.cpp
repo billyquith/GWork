@@ -125,7 +125,8 @@ namespace Gwen
             font->realsize = font->size*Scale();
             D3DXFONT_DESC fd;
             memset(&fd, 0, sizeof(fd));
-            wcscpy_s(fd.FaceName, LF_FACESIZE, font->facename.c_str());
+            const std::wstring wfontname( Utility::Widen(font->facename) );
+            wcscpy_s(fd.FaceName, LF_FACESIZE, wfontname.c_str());
             fd.Width = 0;
             fd.MipLevels = 1;
             fd.CharSet = DEFAULT_CHARSET;
@@ -179,7 +180,7 @@ namespace Gwen
         }
 
         void DirectX9::RenderText(Gwen::Font* pFont, Gwen::Point pos,
-                                  const Gwen::UnicodeString& text)
+                                  const Gwen::String& text)
         {
             Flush();
 
@@ -190,15 +191,17 @@ namespace Gwen
                 LoadFont(pFont);
             }
 
+            const std::wstring wideText(Utility::Widen(text));
+
             FontData* pFontData = (FontData*)pFont->data;
             Translate(pos.x, pos.y);
             RECT ClipRect = { pos.x, pos.y, 0, 0 };
             pFontData->pFont->DrawTextW(NULL,
-                                        text.c_str(), -1, &ClipRect, DT_LEFT|DT_TOP|DT_NOCLIP|DT_SINGLELINE,
+                                        wideText.c_str(), -1, &ClipRect, DT_LEFT|DT_TOP|DT_NOCLIP|DT_SINGLELINE,
                                         m_Color);
         }
 
-        Gwen::Point DirectX9::MeasureText(Gwen::Font* pFont, const Gwen::UnicodeString& text)
+        Gwen::Point DirectX9::MeasureText(Gwen::Font* pFont, const Gwen::String& text)
         {
             // If the font doesn't exist, or the font size should be changed
             if (!pFont->data || fabs(pFont->realsize-pFont->size*Scale()) > 2)
@@ -217,12 +220,14 @@ namespace Gwen
                 return Gwen::Point(0, rct.bottom);
             }
 
+            const std::wstring wideText(Utility::Widen(text));
+
             RECT rct = {0, 0, 0, 0};
             pFontData->pFont->DrawTextW(NULL,
-                                        text.c_str(), -1, &rct, DT_CALCRECT|DT_LEFT|DT_TOP|DT_SINGLELINE,
+                                        wideText.c_str(), -1, &rct, DT_CALCRECT|DT_LEFT|DT_TOP|DT_SINGLELINE,
                                         0);
 
-            for (int i = text.length()-1; i >= 0 && text[i] == L' '; i--)
+            for (int i = wideText.length()-1; i >= 0 && wideText[i] == L' '; i--)
             {
                 rct.right += pFontData->iSpaceWidth;
             }
@@ -279,8 +284,11 @@ namespace Gwen
         {
             IDirect3DTexture9* ptr = NULL;
             D3DXIMAGE_INFO ImageInfo;
+            const std::wstring wtexName( Utility::Widen(pTexture->name) );
             HRESULT hr = D3DXCreateTextureFromFileExW(m_pDevice,
-                                                      pTexture->name.GetUnicode().c_str(), 0, 0, D3DX_DEFAULT, 0, D3DFMT_UNKNOWN, D3DPOOL_MANAGED, D3DX_DEFAULT, D3DX_DEFAULT, 0, &ImageInfo, NULL,
+                                                      wtexName.c_str(),
+                                                      0, 0, D3DX_DEFAULT, 0, D3DFMT_UNKNOWN,
+                                                      D3DPOOL_MANAGED, D3DX_DEFAULT, D3DX_DEFAULT, 0, &ImageInfo, NULL,
                                                       &ptr);
 
             if (hr != S_OK)
