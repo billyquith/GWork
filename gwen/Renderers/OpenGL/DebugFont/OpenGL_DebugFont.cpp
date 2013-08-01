@@ -89,12 +89,11 @@ namespace Gwen
             if (!text.length())
                 return;
 
-            Gwen::String converted_string = Gwen::Utility::UnicodeToString(text);
             float yOffset = 0.0f;
 
             for (unsigned int i = 0; i < text.length(); i++)
             {
-                char ch = converted_string[i];
+                char ch = text[i];
                 float curSpacing = sGwenDebugFontSpacing[ch]*m_fLetterSpacing*fSize*m_fFontScale[0];
                 Gwen::Rect r(pos.x+yOffset, pos.y-fSize*0.5, (fSize*m_fFontScale[0]),
                              fSize*m_fFontScale[1]);
@@ -130,12 +129,11 @@ namespace Gwen
         {
             Gwen::Point p;
             float fSize = pFont->size*Scale();
-            Gwen::String converted_string = Gwen::Utility::UnicodeToString(text);
             float spacing = 0.0f;
 
             for (unsigned int i = 0; i < text.length(); i++)
             {
-                char ch = converted_string[i];
+                char ch = text[i];
                 spacing += sGwenDebugFontSpacing[ch];
             }
 
