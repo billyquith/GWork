@@ -16,6 +16,9 @@ namespace Gwen
 {
     namespace Utility
     {
+        GWEN_EXPORT std::wstring Widen(const String &nstr);
+        GWEN_EXPORT String Narrow(const std::wstring &wstr);
+
         template <typename TYPE>
         inline String ToString(const TYPE& object)
         {
