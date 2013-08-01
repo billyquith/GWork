@@ -26,11 +26,13 @@ public:
         }
         {
             Gwen::Controls::MenuItem* pRoot = menu->AddItem(
-                "\u043F\u0438\u0440\u0430\u0442\u0441\u0442\u0432\u043E");
-            pRoot->GetMenu()->AddItem("\u5355\u5143\u6D4B\u8BD5")->SetAction(this,
-                                                                              &ThisClass::MenuItemSelect);
-            pRoot->GetMenu()->AddItem("\u0111\u01A1n v\u1ECB th\u1EED nghi\u1EC7m")->SetAction(
-                this, &ThisClass::MenuItemSelect);
+                Utility::Narrow(L"\u043F\u0438\u0440\u0430\u0442\u0441\u0442\u0432\u043E"));
+            pRoot->GetMenu()
+                ->AddItem(Utility::Narrow(L"\u5355\u5143\u6D4B\u8BD5"))
+                ->SetAction(this, &ThisClass::MenuItemSelect);
+            pRoot->GetMenu()
+                ->AddItem(Utility::Narrow(L"\u0111\u01A1n v\u1ECB th\u1EED nghi\u1EC7m"))
+                ->SetAction(this, &ThisClass::MenuItemSelect);
         }
         {
             Gwen::Controls::MenuItem* pRoot = menu->AddItem("Submenu");
