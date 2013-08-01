@@ -8,6 +8,8 @@
 #include "Gwen/Utility.h"
 
 #include <cstdio>
+#include <locale>       // Narrow/widen
+#include <codecvt>      // Narrow/widen
 
 using namespace Gwen;
 
@@ -26,6 +28,30 @@ using namespace Gwen;
 #else
 #   define GWEN_FNULL "/dev/null"
 #endif
+
+
+std::wstring Gwen::Utility::Widen(const Gwen::String &nstr)
+{
+    // UTF-8 to UTF-16 (C++11)
+    // See: http://en.cppreference.com/w/cpp/locale/codecvt_utf8_utf16
+    // See: http://www.cplusplus.com/reference/codecvt/codecvt_utf8_utf16/
+
+    std::wstring_convert< std::codecvt_utf8_utf16<wchar_t>, wchar_t > conversion;
+    const std::wstring wstr( conversion.from_bytes( nstr.c_str() ) );
+
+    return wstr;
+}
+
+Gwen::String Gwen::Utility::Narrow(const std::wstring &wstr)
+{
+    // wide to UTF-8 (C++11)
+    // See: http://en.cppreference.com/w/cpp/locale/wstring_convert/to_bytes
+
+    std::wstring_convert< std::codecvt_utf8<wchar_t> > conv1;
+    Gwen::String u8str = conv1.to_bytes(wstr);
+
+    return u8str;
+}
 
 void Gwen::Utility::Replace(String& str, const String& strFind, const String& strReplace)
 {

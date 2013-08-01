@@ -15,15 +15,13 @@
 #endif
 
 #include "Gwen/Macros.h"
+#include "Gwen/Utility.h"
 #include "Gwen/Platform.h"
 #include "Gwen/Input/Windows.h"
 
 #include <windows.h>
 #include <ShlObj.h>
 #include <Shobjidl.h>
-
-#include <locale>
-#include <codecvt>
 
 using namespace Gwen;
 using namespace Gwen::Platform;
@@ -32,31 +30,6 @@ static const size_t FILESTRING_SIZE = 256;
 static const size_t FILTERBUFFER_SIZE = 512;
 
 static Gwen::Input::Windows GwenInput;
-
-
-std::wstring Widen(const std::string &nstr)
-{
-    // UTF-8 to UTF-16 (C++11)
-    // See: http://en.cppreference.com/w/cpp/locale/codecvt_utf8_utf16
-    // See: http://www.cplusplus.com/reference/codecvt/codecvt_utf8_utf16/
-
-    std::wstring_convert< std::codecvt_utf8_utf16<wchar_t>, wchar_t > conversion;
-    const std::wstring wstr( conversion.from_bytes( nstr.c_str() ) );
-
-    return wstr;
-}
-
-std::string Narrow(const std::wstring &wstr)
-{
-    // wide to UTF-8 (C++11)
-    // See: http://en.cppreference.com/w/cpp/locale/wstring_convert/to_bytes
-
-    std::wstring_convert< std::codecvt_utf8<wchar_t> > conv1;
-    std::string u8str = conv1.to_bytes(wstr);
-
-    return u8str;
-}
-
 
 static LPCTSTR iCursorConversion[] =
 {
@@ -106,7 +79,7 @@ Gwen::String Gwen::Platform::GetClipboardText()
     }
 
     std::wstring buffer( static_cast<wchar_t*>(GlobalLock(hData)) );
-    const String str = Narrow(buffer);
+    const String str = Utility::Narrow(buffer);
     GlobalUnlock(hData);
     CloseClipboard();
 
@@ -122,7 +95,7 @@ bool Gwen::Platform::SetClipboardText(const Gwen::String& str)
 
 
     // Create a buffer to hold the string
-    const std::wstring wstr( Widen(str) );
+    const std::wstring wstr( Utility::Widen(str) );
     const size_t dataSize = (wstr.length()+1)*sizeof(wchar_t);    
     HGLOBAL clipbuffer = GlobalAlloc(GMEM_DDESHARE, dataSize);
 
@@ -267,7 +240,7 @@ bool Gwen::Platform::FolderOpen(const String& Name, const String& StartPath,
                 Gwen::Event::Information info;
                 info.Control        = NULL;
                 info.ControlCaller  = NULL;
-                info.String         = Narrow(strOut);
+                info.String         = Utility::Narrow(strOut);
                 (pHandler->*fnCallback)(info);
             }
 
