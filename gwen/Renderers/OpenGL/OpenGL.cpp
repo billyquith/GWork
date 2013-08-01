@@ -159,11 +159,11 @@ namespace Gwen
 
         void OpenGL::LoadTexture(Gwen::Texture* pTexture)
         {
-            const wchar_t* wFileName = pTexture->name.GetUnicode().c_str();
-            FREE_IMAGE_FORMAT imageFormat = FreeImage_GetFileTypeU(wFileName);
+            const std::string &fileName = pTexture->name;
+            FREE_IMAGE_FORMAT imageFormat = FreeImage_GetFileType(fileName.c_str());
 
             if (imageFormat == FIF_UNKNOWN)
-                imageFormat = FreeImage_GetFIFFromFilenameU(wFileName);
+                imageFormat = FreeImage_GetFIFFromFilename(fileName.c_str());
 
             // Image failed to load..
             if (imageFormat == FIF_UNKNOWN)
@@ -173,7 +173,7 @@ namespace Gwen
             }
 
             // Try to load the image..
-            FIBITMAP* bits = FreeImage_LoadU(imageFormat, wFileName);
+            FIBITMAP* bits = FreeImage_Load(imageFormat, fileName.c_str());
 
             if (!bits)
             {
@@ -193,12 +193,15 @@ namespace Gwen
 
             // Flip
             ::FreeImage_FlipVertical(bits32);
+
             // Create a little texture pointer..
             GLuint* pglTexture = new GLuint;
+
             // Sort out our GWEN texture
             pTexture->data = pglTexture;
             pTexture->width = FreeImage_GetWidth(bits32);
             pTexture->height = FreeImage_GetHeight(bits32);
+
             // Create the opengl texture
             glGenTextures(1, pglTexture);
             glBindTexture(GL_TEXTURE_2D, *pglTexture);

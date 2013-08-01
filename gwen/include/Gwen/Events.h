@@ -41,7 +41,7 @@ namespace Gwen
             Gwen::String String;
             int Integer;
             float Float;
-            uint64_t UnsignedLongLong;
+            unsigned long long UnsignedLongLong;
         };
 
 

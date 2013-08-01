@@ -22,13 +22,41 @@
 #include <ShlObj.h>
 #include <Shobjidl.h>
 
+#include <locale>
+#include <codecvt>
+
 using namespace Gwen;
 using namespace Gwen::Platform;
 
-#define FILESTRING_SIZE         256
-#define FILTERBUFFER_SIZE       512
+static const size_t FILESTRING_SIZE = 256;
+static const size_t FILTERBUFFER_SIZE = 512;
 
 static Gwen::Input::Windows GwenInput;
+
+
+std::wstring Widen(const std::string &nstr)
+{
+    // UTF-8 to UTF-16 (C++11)
+    // See: http://en.cppreference.com/w/cpp/locale/codecvt_utf8_utf16
+    // See: http://www.cplusplus.com/reference/codecvt/codecvt_utf8_utf16/
+
+    std::wstring_convert< std::codecvt_utf8_utf16<wchar_t>, wchar_t > conversion;
+    const std::wstring wstr( conversion.from_bytes( nstr.c_str() ) );
+
+    return wstr;
+}
+
+std::string Narrow(const std::wstring &wstr)
+{
+    // wide to UTF-8 (C++11)
+    // See: http://en.cppreference.com/w/cpp/locale/wstring_convert/to_bytes
+
+    std::wstring_convert< std::codecvt_utf8<wchar_t> > conv1;
+    std::string u8str = conv1.to_bytes(wstr);
+
+    return u8str;
+}
+
 
 static LPCTSTR iCursorConversion[] =
 {
@@ -77,10 +105,11 @@ Gwen::String Gwen::Platform::GetClipboardText()
         return "";
     }
 
-    wchar_t* buffer = (wchar_t*)GlobalLock(hData);
-    String str = buffer;
+    std::wstring buffer( static_cast<wchar_t*>(GlobalLock(hData)) );
+    const String str = Narrow(buffer);
     GlobalUnlock(hData);
     CloseClipboard();
+
     return str;
 }
 
@@ -90,16 +119,22 @@ bool Gwen::Platform::SetClipboardText(const Gwen::String& str)
         return false;
 
     EmptyClipboard();
+
+
     // Create a buffer to hold the string
-    size_t iDataSize = (str.length()+1)*sizeof(wchar_t);
-    HGLOBAL clipbuffer = GlobalAlloc(GMEM_DDESHARE, iDataSize);
+    const std::wstring wstr( Widen(str) );
+    const size_t dataSize = (wstr.length()+1)*sizeof(wchar_t);    
+    HGLOBAL clipbuffer = GlobalAlloc(GMEM_DDESHARE, dataSize);
+
     // Copy the string into the buffer
-    wchar_t* buffer = (wchar_t*)GlobalLock(clipbuffer);
-    wcscpy_s(buffer, iDataSize, str.c_str());
+    wchar_t* buffer = static_cast<wchar_t*>(GlobalLock(clipbuffer));
+    wcscpy_s(buffer, dataSize, wstr.c_str());
     GlobalUnlock(clipbuffer);
+
     // Place it on the clipboard
     SetClipboardData(CF_UNICODETEXT, clipbuffer);
     CloseClipboard();
+
     return true;
 }
 
@@ -122,11 +157,12 @@ float Gwen::Platform::GetTimeInSeconds()
     static float fCurrentTime = 0.0f;
     static __int64 iLastTime = 0;
     __int64 thistime;
-    QueryPerformanceCounter((LARGE_INTEGER*)&thistime);
-    float fSecondsDifference = (double)(thistime-iLastTime)*GetPerformanceFrequency();
 
-    if (fSecondsDifference > 0.1f)
-        fSecondsDifference = 0.1f;
+    QueryPerformanceCounter((LARGE_INTEGER*)&thistime);
+    double fSecondsDifference = (thistime-iLastTime)*GetPerformanceFrequency();
+
+    if (fSecondsDifference > 0.1)
+        fSecondsDifference = 0.1;
 
     fCurrentTime += fSecondsDifference;
     iLastTime = thistime;
@@ -231,7 +267,7 @@ bool Gwen::Platform::FolderOpen(const String& Name, const String& StartPath,
                 Gwen::Event::Information info;
                 info.Control        = NULL;
                 info.ControlCaller  = NULL;
-                info.String         = Gwen::Utility::UnicodeToString(strOut);
+                info.String         = Narrow(strOut);
                 (pHandler->*fnCallback)(info);
             }
 
@@ -281,7 +317,7 @@ bool Gwen::Platform::FileSave(const String& Name, const String& StartPath, const
     opf.lpstrDefExt = "*.*";
     opf.lpfnHook = NULL;
     opf.lCustData = 0;
-    opf.Flags = (OFN_PATHMUSTEXIST|OFN_OVERWRITEPROMPT|OFN_NOCHANGEDIR)&~OFN_ALLOWMULTISELECT;
+    opf.Flags = (OFN_PATHMUSTEXIST|OFN_OVERWRITEPROMPT|OFN_NOCHANGEDIR) & ~OFN_ALLOWMULTISELECT;
     opf.lStructSize = sizeof(OPENFILENAME);
 
     if (GetSaveFileNameA(&opf))
@@ -312,8 +348,8 @@ void* Gwen::Platform::CreatePlatformWindow(int x, int y, int w, int h,
     wc.hCursor          = LoadCursor(NULL, IDC_ARROW);
     RegisterClassA(&wc);
     HWND hWindow = CreateWindowExA(WS_EX_APPWINDOW|WS_EX_ACCEPTFILES, wc.lpszClassName,
-                                   strWindowTitle.c_str(), WS_POPUP|WS_VISIBLE, x, y, w, h, NULL, NULL, GetModuleHandle(
-                                       NULL), NULL);
+                                   strWindowTitle.c_str(), WS_POPUP|WS_VISIBLE, x, y, w, h, NULL, NULL,
+                                   GetModuleHandle(NULL), NULL);
     ShowWindow(hWindow, SW_SHOW);
     SetForegroundWindow(hWindow);
     SetFocus(hWindow);

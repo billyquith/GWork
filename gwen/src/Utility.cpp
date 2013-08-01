@@ -69,7 +69,7 @@ String Gwen::Utility::Format(const char* fmt, ...)
         va_list c;
         va_copy(c, s);
 #ifdef _MSC_VER
-        len = vsprintf(&strOut[0], strOut.size(), fmt, c);
+        len = vsprintf_s(&strOut[0], strOut.size(), fmt, c);
 #else
         len = vsprintf(&strOut[0], fmt, c);
 #endif
