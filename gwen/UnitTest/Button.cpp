@@ -20,8 +20,7 @@ public:
         }
         // Unicode test
         Controls::Button* pButtonB = new Controls::Button(this);
-        pButtonB->SetText(
-            "\u0417\u0430\u043C\u0435\u0436\u043D\u0430\u044F \u043C\u043E\u0432\u0430");
+        pButtonB->SetText(Utility::Narrow(L"\u0417\u0430\u043C\u0435\u0436\u043D\u0430\u044F \u043C\u043E\u0432\u0430"));
         Gwen::Align::PlaceBelow(pButtonB, pButtonA, 10);
         // Image with text
         Controls::Button* pButtonC = new Controls::Button(this);

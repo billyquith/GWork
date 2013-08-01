@@ -48,8 +48,8 @@ public:
             }
             {
                 Gwen::Controls::Layout::TableRow* pRow = ctrl->AddItem("Chicken");
-                pRow->SetCellText(1, "\u5355\u5143\u6D4B\u8BD5");
-                pRow->SetCellText(2, "\u20AC8.95");
+                pRow->SetCellText(1, Gwen::Utility::Narrow(L"\u5355\u5143\u6D4B\u8BD5"));
+                pRow->SetCellText(2, Gwen::Utility::Narrow(L"\u20AC8.95"));
             }
         }
     }

@@ -13,7 +13,7 @@ public:
         rc->AddOption("Option 1");
         rc->AddOption("Option 2");
         rc->AddOption("Option 3");
-        rc->AddOption("\u0627\u0644\u0622\u0646 \u0644\u062D\u0636\u0648\u0631");
+        rc->AddOption(Utility::Narrow(L"\u0627\u0644\u0622\u0646 \u0644\u062D\u0636\u0648\u0631"));
         rc->SetBounds(30, 30, 200, 200);
         rc->onSelectionChange.Add(this, &RadioButton::OnChange);
     }
