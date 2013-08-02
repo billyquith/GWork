@@ -8,8 +8,11 @@
 #include "Gwen/Utility.h"
 
 #include <cstdio>
+
+// For Unicode support.
+// Note: <codecvt> is C++11 and in Xcode you'll need to use lib++ (LLVM), not libstc++ (GNU).
 #include <locale>       // Narrow/widen
-#include <codecvt>      // Narrow/widen
+#include <codecvt>      // Narrow/widen - C++11
 
 using namespace Gwen;
 
