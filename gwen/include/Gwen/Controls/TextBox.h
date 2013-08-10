@@ -22,9 +22,7 @@ namespace Gwen
             GWEN_CONTROL(TextBox, Label);
 
             virtual void Render(Skin::Base* skin);
-            virtual void RenderFocus(Gwen::Skin::Base* /*skin*/)
-            {
-            }
+            virtual void RenderFocus(Gwen::Skin::Base* /*skin*/) {}
 
             virtual void Layout(Skin::Base* skin);
             virtual void PostLayout(Skin::Base* skin);
@@ -48,10 +46,7 @@ namespace Gwen
             virtual bool OnKeyHome(bool bDown);
             virtual bool OnKeyEnd(bool bDown);
 
-            virtual bool AccelOnlyFocus()
-            {
-                return true;
-            }
+            virtual bool AccelOnlyFocus() { return true; }
 
             virtual void OnPaste(Gwen::Controls::Base* pCtrl);
             virtual void OnCopy(Gwen::Controls::Base* pCtrl);
@@ -70,6 +65,8 @@ namespace Gwen
             virtual void OnMouseClickLeft(int x, int y, bool bDown);
             virtual void OnMouseMoved(int x, int y, int deltaX, int deltaY);
 
+            virtual void SetEditable(bool b) { m_bEditable = b; }
+
             virtual void SetSelectAllOnFocus(bool b)
             {
                 m_bSelectAll = b;
@@ -81,10 +78,7 @@ namespace Gwen
 
             virtual void OnEnter();
 
-            virtual bool NeedsInputChars()
-            {
-                return true;
-            }
+            virtual bool NeedsInputChars() { return true; }
 
             virtual void MoveCaretToEnd();
             virtual void MoveCaretToStart();
@@ -100,6 +94,7 @@ namespace Gwen
                 return true;
             }
 
+            bool m_bEditable;
             bool m_bSelectAll;
 
             int m_iCursorPos;
@@ -136,6 +131,7 @@ namespace Gwen
             GWEN_CONTROL(TextBoxMultiline, TextBox);
 
             virtual bool OnKeyReturn(bool bDown);
+            virtual void Render(Skin::Base* skin);
             virtual void MakeCaratVisible();
 
             virtual bool OnKeyHome(bool bDown);
@@ -147,6 +143,24 @@ namespace Gwen
 
         protected:
 
+        };
+
+
+        class GWEN_EXPORT PasswordTextBox : public TextBox
+        {
+        public:
+
+            GWEN_CONTROL(PasswordTextBox, TextBox);
+
+            virtual void SetText(const String& str, bool bDoEvents = true);
+            virtual void SetPasswordChar(const char c);
+
+            virtual const String& GetText() const { return m_realText; }
+
+        protected:
+
+            char m_passwordChar;
+            String m_realText;
         };
 
 
