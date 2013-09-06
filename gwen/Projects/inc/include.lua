@@ -1,5 +1,8 @@
 
-dofile( os.get() .. ".lua" )
+local c_platform = os.get()
+print("Platform: " .. c_platform)
+dofile( c_platform .. ".lua" )
+
 
 function DefineRenderer( name, filetable )
 
@@ -7,38 +10,59 @@ function DefineRenderer( name, filetable )
 	files( filetable )
 	flags( { "Symbols" } )
 	kind( "StaticLib" )
-	
+
 	configuration( "Release" )
 		targetname( "GWEN-Renderer-"..name )
-		
+
 	configuration( "Debug" )
 		targetname( "GWEND-Renderer-"..name )
 
 end
 
-function DefineSample( name, filetable, linktable, linktabled, definestable )
+function DefineSample(opt)
+    -- options:  name, files, links(d), defs
 
-	if ( linktabled == nil ) then linktabled = linktable end
-	
-	project( "Sample-" .. name )
+    local prjname = "Sample-" .. opt.name
+    print("Adding " .. prjname)
+
+	project( prjname )
 	targetdir ( "../bin" )
-	
-	if ( debugdir) then
+
+	if ( debugdir ) then
 		debugdir ( "../bin" )
 	end
-	
-	if ( definestable ) then defines( definestable ) end
-	files { filetable }
-	
+
+	if ( opt.defs ) then defines( opt.defs ) end
+	files { opt.files }
+
 	kind "WindowedApp"
-		
+
 	configuration( "Release" )
-		targetname( name .. "Sample" )
-		links( linktable )
-		
+		targetname( opt.name .. "Sample" )
+		links( opt.links )
+
 	configuration "Debug"
-		targetname( name .. "Sample_D" )
-		links( linktabled )
+		targetname( opt.name .. "Sample_D" )
+		links( opt.linksd or opt.links )
+
+    if ( os.get() == "macosx" ) then
+        -- C++11 libs
+        linkoptions { "-stdlib=libc++" }
+
+        if user.macports then
+            -- Add Macports for dependencies
+            includedirs { "/opt/local/include" }
+            libdirs { "/opt/local/lib" }
+        end
+    end
+
+    if ( user.includes ) then
+        includedirs(user.includes)
+    end
+    if ( user.libs ) then
+        libdirs(user.libs)
+    end
 
 end
+
 
