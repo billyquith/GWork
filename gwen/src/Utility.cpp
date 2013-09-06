@@ -10,7 +10,7 @@
 #include <cstdio>
 
 // For Unicode support.
-// Note: <codecvt> is C++11 and in Xcode you'll need to use lib++ (LLVM), not libstc++ (GNU).
+// Note: <codecvt> is C++11 and in Xcode you'll need to use libc++ (LLVM), not libstdc++ (GNU).
 #include <locale>       // Narrow/widen
 #include <codecvt>      // Narrow/widen - C++11
 
