@@ -10,6 +10,7 @@
 #include <Gwen/Renderers/SDL2.h>
 
 #include <SDL2/SDL_image.h>
+#include <SDL2/SDL_ttf.h>
 
 namespace Gwen
 {
@@ -138,65 +139,79 @@ namespace Gwen
 
         void SDL2::LoadFont(Gwen::Font* font)
         {
-//            font->realsize = font->size*Scale();
-//            std::string fontName(font->facename);
-//
-//            if (fontName.find(".ttf") == std::string::npos)
-//                fontName += ".ttf";
-//
-//            ALLEGRO_FONT* afont = al_load_font(fontName.c_str(),
-//                                               font->realsize,
-//                                               ALLEGRO_TTF_NO_KERNING);
-//            font->data = afont;
+            font->realsize = font->size*Scale();
+            std::string fontFile(font->facename);
+
+            if (fontFile.find(".ttf") == std::string::npos)
+                fontFile += ".ttf";
+
+            TTF_Font *tfont = TTF_OpenFont(fontFile.c_str(), font->realsize);
+            if (!tfont)
+            {
+                printf("Font load error: %s\n", TTF_GetError());
+            }
+            
+            
+            font->data = tfont;
         }
 
         void SDL2::FreeFont(Gwen::Font* pFont)
         {
-//            if (pFont->data)
-//            {
-//                al_destroy_font((ALLEGRO_FONT*)pFont->data);
-//                pFont->data = NULL;
-//            }
+            if (pFont->data)
+            {
+                TTF_CloseFont(static_cast<TTF_Font*>(pFont->data));
+                pFont->data = NULL;
+            }
         }
 
         void SDL2::RenderText(Gwen::Font* pFont, Gwen::Point pos,
                                  const Gwen::String& text)
         {
-//            ALLEGRO_FONT *afont = (ALLEGRO_FONT*)pFont->data;
-//            Translate(pos.x, pos.y);
-//            al_draw_text(afont, m_Color, pos.x, pos.y, ALLEGRO_ALIGN_LEFT, text.c_str());
+            TTF_Font *tfont = static_cast<TTF_Font*>(pFont->data);
+            Translate(pos.x, pos.y);
+            
+            SDL_Surface *surf = TTF_RenderUTF8_Blended(tfont, text.c_str(), m_color);
+            SDL_Texture *texture = SDL_CreateTextureFromSurface(m_renderer, surf);
+            SDL_FreeSurface(surf);
+            
+            int w, h;
+            SDL_QueryTexture(texture, NULL, NULL, &w, &h);
+            const SDL_Rect dest = { pos.x,pos.y, w,h };
+            
+            SDL_RenderCopy(m_renderer, texture, NULL, &dest);
         }
 
         Gwen::Point SDL2::MeasureText(Gwen::Font* pFont, const Gwen::String& text)
         {
-//            ALLEGRO_FONT* afont = (ALLEGRO_FONT*)pFont->data;
-//
-//            // If the font doesn't exist, or the font size should be changed
-//            if (!afont || pFont->realsize != pFont->size*Scale())
-//            {
-//                FreeFont(pFont);
-//                LoadFont(pFont);
-//                afont = (ALLEGRO_FONT*)pFont->data;
-//            }
-//
-//            if (!afont)
-//                return Gwen::Point(0, 0);
-//
-//            return Point(al_get_text_width(afont, text.c_str()), al_get_font_line_height(afont));
-            return Point(0,0);
+            TTF_Font *tfont = static_cast<TTF_Font*>(pFont->data);
+
+            // If the font doesn't exist, or the font size should be changed
+            if (!tfont || pFont->realsize != pFont->size*Scale())
+            {
+                FreeFont(pFont);
+                LoadFont(pFont);
+                tfont = static_cast<TTF_Font*>(pFont->data);
+            }
+
+            if (!tfont)
+                return Gwen::Point(0, 0);
+
+            int w,h;
+            TTF_SizeUTF8(tfont, text.c_str(), &w,&h);
+            
+            return Point(w,h);
         }
 
         void SDL2::StartClip()
         {
-//            Gwen::Rect rect = ClipRegion();
-//            al_set_clipping_rectangle(rect.x, rect.y, rect.w, rect.h);
+            const Gwen::Rect &rect = ClipRegion();
+            const SDL_Rect clip = { rect.x,rect.y, rect.w,rect.h };
+            SDL_RenderSetClipRect(m_renderer, &clip);
         }
 
         void SDL2::EndClip()
         {
-//            ALLEGRO_BITMAP* targ = al_get_target_bitmap();
-//            al_set_clipping_rectangle(0, 0,
-//                                      al_get_bitmap_width(targ), al_get_bitmap_height(targ));
+            SDL_RenderSetClipRect(m_renderer, NULL);
         }
 
         void SDL2::LoadTexture(Gwen::Texture* pTexture)
