@@ -179,6 +179,8 @@ namespace Gwen
             const SDL_Rect dest = { pos.x,pos.y, w,h };
             
             SDL_RenderCopy(m_renderer, texture, NULL, &dest);
+            
+            SDL_DestroyTexture(texture);
         }
 
         Gwen::Point SDL2::MeasureText(Gwen::Font* pFont, const Gwen::String& text)
