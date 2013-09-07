@@ -149,8 +149,7 @@ namespace Gwen
             if (!tfont)
             {
                 printf("Font load error: %s\n", TTF_GetError());
-            }
-            
+            }            
             
             font->data = tfont;
         }
@@ -164,8 +163,7 @@ namespace Gwen
             }
         }
 
-        void SDL2::RenderText(Gwen::Font* pFont, Gwen::Point pos,
-                                 const Gwen::String& text)
+        void SDL2::RenderText(Gwen::Font* pFont, Gwen::Point pos, const Gwen::String& text)
         {
             TTF_Font *tfont = static_cast<TTF_Font*>(pFont->data);
             Translate(pos.x, pos.y);
@@ -187,7 +185,7 @@ namespace Gwen
         {
             TTF_Font *tfont = static_cast<TTF_Font*>(pFont->data);
 
-            // If the font doesn't exist, or the font size should be changed
+            // If the font doesn't exist, or the font size should be changed.
             if (!tfont || pFont->realsize != pFont->size*Scale())
             {
                 FreeFont(pFont);
@@ -223,15 +221,28 @@ namespace Gwen
 
             if (pTexture->data)
                 FreeTexture(pTexture);
-
-            SDL_Texture *bmp = IMG_LoadTexture(m_renderer, pTexture->name.c_str());
             
-            if (bmp)
+            SDL_Texture *tex = NULL;
+            if (pTexture->readable)
+            {
+                // You cannot find the format of a texture once loaded to read from it
+                // in SDL2 so we have to keep the surface to read from.
+                SDL_Surface *surf = IMG_Load(pTexture->name.c_str());
+                tex = SDL_CreateTextureFromSurface(m_renderer, surf);
+                pTexture->surface = surf;
+            }
+            else
+            {
+                // Don't need to read. Just load straight into render format.
+                tex = IMG_LoadTexture(m_renderer, pTexture->name.c_str());
+            }
+
+            if (tex)
             {
                 int w, h;
-                SDL_QueryTexture(bmp, NULL, NULL, &w, &h);
+                SDL_QueryTexture(tex, NULL, NULL, &w, &h);
                 
-                pTexture->data = bmp;
+                pTexture->data = tex;
                 pTexture->width = w;
                 pTexture->height = h;
                 pTexture->failed = false;
@@ -247,15 +258,21 @@ namespace Gwen
         {
             SDL_DestroyTexture(static_cast<SDL_Texture*>(pTexture->data));
             pTexture->data = NULL;
+            
+            if (pTexture->surface)
+            {
+                SDL_FreeSurface(static_cast<SDL_Surface*>(pTexture->surface));
+                pTexture->surface = NULL;
+                pTexture->readable = false;
+            }
         }
 
         void SDL2::DrawTexturedRect(Gwen::Texture* pTexture, Gwen::Rect rect,
-                                       float u1, float v1,
-                                       float u2, float v2)
+                                    float u1, float v1, float u2, float v2)
         {
-            SDL_Texture *bmp = static_cast<SDL_Texture*>(pTexture->data);
+            SDL_Texture *tex = static_cast<SDL_Texture*>(pTexture->data);
 
-            if (!bmp)
+            if (!tex)
                 return DrawMissingImage(rect);
 
             Translate(rect);
@@ -266,22 +283,30 @@ namespace Gwen
             const SDL_Rect source = { int(u1*w), int(v1*h), int((u2-u1)*w), int((v2-v1)*h) },
                              dest = { rect.x, rect.y, rect.w, rect.h };
 
-            SDL_RenderCopy(m_renderer, bmp, &source, &dest);
+            SDL_RenderCopy(m_renderer, tex, &source, &dest);
         }
 
         Gwen::Color SDL2::PixelColour(Gwen::Texture* pTexture, unsigned int x, unsigned int y,
-                                         const Gwen::Color& col_default)
+                                      const Gwen::Color& col_default)
         {
-//            ALLEGRO_BITMAP* bmp = (ALLEGRO_BITMAP*)pTexture->data;
-//
-//            if (!bmp)
-//                return col_default;
-//
-//            ALLEGRO_COLOR col = al_get_pixel(bmp, x, y);
-//            Gwen::Color gcol;
-//            al_unmap_rgba(col, &gcol.r, &gcol.g, &gcol.b, &gcol.a);
-//            return gcol;
-            return Color(128,128,128,255);
+            SDL_Surface *surf = static_cast<SDL_Surface*>(pTexture->surface);
+
+            if (!pTexture->readable || !surf)
+                return col_default;
+            
+            if (SDL_MUSTLOCK(surf) != 0)
+                SDL_LockSurface(surf);
+
+            const char *mem = static_cast<char*>(surf->pixels) + y*surf->pitch + x*sizeof(Uint32);
+            const Uint32 pix = *reinterpret_cast<const Uint32*>(mem);
+
+            Gwen::Color col;
+            SDL_GetRGBA(pix, surf->format, &col.r, &col.g, &col.b, &col.a);
+
+            if (SDL_MUSTLOCK(surf) != 0)
+                SDL_UnlockSurface(surf);
+
+            return col;
         }
 
         void SDL2::DrawFilledRect(Gwen::Rect rect)
@@ -299,60 +324,6 @@ namespace Gwen
             const SDL_Rect srect = { rect.x, rect.y, rect.w, rect.h };
             SDL_RenderDrawRect(m_renderer, &srect);
         }
-
-//        void SDL2::DrawShavedCornerRect(Gwen::Rect rect, bool bSlight)
-//        {
-//            // Draw INSIDE the w/h.
-//            rect.w -= 1;
-//            rect.h -= 1;
-//            
-//#define SET_VERT(I, X,Y)            vtx[I].x = (X), vtx[I].y = (Y), vtx[I].color = m_Color
-//#define ADD_LINE(I, X0,Y0, X1,Y1)   SET_VERT(I, X0,Y0); SET_VERT(I+1, X1,Y1)
-//
-//            const float fx = rect.x+0.5f, fy = rect.y+0.5f;
-//            const float fw = rect.w, fh = rect.h;
-//
-//            if (bSlight)
-//            {
-//                //    DrawFilledRect(Gwen::Rect(rect.x+1, rect.y, rect.w-1, 1));
-//                //    DrawFilledRect(Gwen::Rect(rect.x+1, rect.y+rect.h, rect.w-1, 1));
-//                //    DrawFilledRect(Gwen::Rect(rect.x, rect.y+1, 1, rect.h-1));
-//                //    DrawFilledRect(Gwen::Rect(rect.x+rect.w, rect.y+1, 1, rect.h-1));
-//                
-//                ALLEGRO_VERTEX vtx[4*2];
-//                ADD_LINE(0, fx+1.f,fy,         fx+fw-1.f,fy   ); // top
-//                ADD_LINE(2, fx+fw,fy+1.f,      fx+fw,fy+fh-1.f); // right
-//                ADD_LINE(4, fx+fw-1.f,fy+fh,   fx+1.f,fy+fh   ); // bottom
-//                ADD_LINE(6, fx,fy+fh-1.f,      fx,fy+1.f      ); // left
-//                al_draw_prim(vtx, NULL, NULL, 0, 7, ALLEGRO_PRIM_LINE_LOOP);
-//            }
-//            else
-//            {
-//                //    DrawPixel(rect.x+1, rect.y+1);
-//                //    DrawPixel(rect.x+rect.w-1, rect.y+1);
-//                //    DrawPixel(rect.x+1, rect.y+rect.h-1);
-//                //    DrawPixel(rect.x+rect.w-1, rect.y+rect.h-1);
-//                //    DrawFilledRect(Gwen::Rect(rect.x+2, rect.y, rect.w-3, 1));
-//                //    DrawFilledRect(Gwen::Rect(rect.x+2, rect.y+rect.h, rect.w-3, 1));
-//                //    DrawFilledRect(Gwen::Rect(rect.x, rect.y+2, 1, rect.h-3));
-//                //    DrawFilledRect(Gwen::Rect(rect.x+rect.w, rect.y+2, 1, rect.h-3));
-//                
-//                ALLEGRO_VERTEX vtx[4*2];
-//                ADD_LINE(0, fx+2.f,fy,          fx+fw-2.f,fy    ); // top
-//                ADD_LINE(2, fx+fw,fy+2.f,       fx+fw,fy+fh-2.f ); // right
-//                ADD_LINE(4, fx+fw-2.f,fy+fh,    fx+2.f,fy+fh    ); // bottom
-//                ADD_LINE(6, fx,fy+fh-2.f,       fx,fy+2.f       ); // left
-//                al_draw_prim(vtx, NULL, NULL, 0, 7, ALLEGRO_PRIM_LINE_LOOP);
-//            }
-//            
-//#undef SET_VERT
-//#undef ADD_LINE
-//        }
-
-        //    void SDL2::DrawPixel(int x, int y)
-        //    {
-        //        al_put_pixel(x+0.5f, y+0.5f, m_Color);
-        //    }
 
         bool SDL2::BeginContext(Gwen::WindowProvider* )
         {
