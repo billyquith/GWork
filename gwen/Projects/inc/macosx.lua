@@ -41,10 +41,13 @@ SDL2_LIBS = {
         -- See: http://blog.wwwjfy.net/2011/03/02/compile-vim-7-3-in-mac-os-x-10-6-6/
         "iconv",
 
-        "SDL2", "SDL2_image",
+        -- SDL2 libraries.
+        -- You can get these from Macports:
+        --  port install libsdl2 libsdl2_image libsdl2_ttf
+        -- Add "+universal" if you'd like 32/64 bit versions.
+        "SDL2", "SDL2_image", "SDL2_ttf",
 
-        "Renderer-SDL2", "GWEN-Static",
-        "UnitTest"
+        "Renderer-SDL2", "GWEN-Static", "UnitTest"
         }
 
 SFML_LIBS		= { "GL",

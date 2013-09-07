@@ -8,6 +8,7 @@
 #include <Gwen/Renderers/SDL2.h>
 
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_ttf.h>
 
 
 int main(int argc, char** argv)
@@ -15,6 +16,9 @@ int main(int argc, char** argv)
     if(SDL_Init(SDL_INIT_EVERYTHING) != 0)
         return -1;
     
+    if (TTF_Init() != 0)
+        return -1;
+        
     //Setup our window and renderer
     const int SCREEN_WIDTH = 1024, SCREEN_HEIGHT = 768;
 	SDL_Window *window = SDL_CreateWindow("Lesson 2", 100, 100,
@@ -65,6 +69,7 @@ int main(int argc, char** argv)
         pRenderer->EndContext(NULL);
     }
 
+    //TTF_Quit();   TODO: Currently crashes. GWEN needs work.
     SDL_DestroyWindow(window);
     SDL_Quit();
     
