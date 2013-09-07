@@ -99,9 +99,10 @@ Gwen::Rect Text::GetCharacterPosition(unsigned int iChar)
         TextLines::iterator itEnd = m_Lines.end();
         int iChars = 0;
 
+        Text* pLine;
         while (it != itEnd)
         {
-            Text* pLine = *it;
+            pLine = *it;
             ++it;
             iChars += pLine->Length();
 
@@ -114,17 +115,38 @@ Gwen::Rect Text::GetCharacterPosition(unsigned int iChar)
             rect.y += pLine->Y();
             return rect;
         }
+
+        //manage special case of the last character
+        Gwen::Rect rect = pLine->GetCharacterPosition(pLine->Length());
+        rect.x += pLine->X();
+        rect.y += pLine->Y();
+        return rect;
     }
 
     if (Length() == 0 || iChar == 0)
     {
         Gwen::Point p = GetSkin()->GetRender()->MeasureText(GetFont(), " ");
-        return Gwen::Rect(1, 0, 0, p.y);
+        return Gwen::Rect(0, 0, 0, p.y);
     }
 
     String sub = m_String.substr(0, iChar);
     Gwen::Point p = GetSkin()->GetRender()->MeasureText(GetFont(), sub);
     return Rect(p.x, 0, 0, p.y);
+}
+
+Gwen::Rect Text::GetLineBox(int i)
+{
+    Text* line = GetLine(i);
+    if (line != NULL)
+    {
+        Gwen::Point p = GetSkin()->GetRender()->MeasureText(GetFont(), line->m_String);
+        return Gwen::Rect(line->X(), line->Y(), Clamp(p.x, 1,p.x), Clamp(p.y, 1,p.y));
+    }
+    else
+    {
+        Gwen::Point p = GetSkin()->GetRender()->MeasureText(GetFont(), m_String);
+        return Gwen::Rect(0, 0, Clamp(p.x, 1,p.x), Clamp(p.y, 1,p.y));
+    }
 }
 
 int Text::GetClosestCharacter(Gwen::Point p)
@@ -135,35 +157,33 @@ int Text::GetClosestCharacter(Gwen::Point p)
         TextLines::iterator itEnd = m_Lines.end();
         int iChars = 0;
 
+        Text *pLine = NULL;
         while (it != itEnd)
         {
-            Text* pLine = *it;
+            pLine = *it;
             ++it;
             iChars += pLine->Length();
 
             if (p.y < pLine->Y())
                 continue;
-
             if (p.y > pLine->Bottom())
                 continue;
-
-            iChars -= pLine->Length();
-            int iLinePos =
-                pLine->GetClosestCharacter(Gwen::Point(p.x-pLine->X(), p.y-pLine->Y()));
-            // if ( iLinePos > 0 && iLinePos == pLine->Length() ) iLinePos--;
-            iLinePos--;
-            return iChars+iLinePos;
+            if (p.y < pLine->Bottom())
+                break;
         }
+
+        iChars -= pLine->Length();
+        int iLinePos = pLine->GetClosestCharacter(Gwen::Point(p.x-pLine->X(), p.y-pLine->Y()));        
+        return iChars+iLinePos;
     }
 
     int iDistance = 4096;
     int iChar = 0;
 
-    for (unsigned i = 0; i < m_String.size()+1; i++)
+    for (unsigned i = 0; i < m_String.length()+1; i++)
     {
         Gwen::Rect cp = GetCharacterPosition(i);
-        int iDist = abs(cp.x-p.x)+abs(cp.y-p.y);             // this isn't
-                                                             // proper
+        int iDist = abs(cp.x-p.x) + abs(cp.y-p.y);             // this isn't proper
 
         if (iDist > iDistance)
             continue;
@@ -210,12 +230,13 @@ void Text::RefreshSize()
     Invalidate();
 }
 
-void SplitWords(const Gwen::String& s, wchar_t delim,
-                std::vector<Gwen::String>& elems)
+void Text::SplitWords(const Gwen::String& s, std::vector<Gwen::String>& elems)
 {
     Gwen::String str;
 
-    for (unsigned int i = 0; i < s.length(); i++)
+    int w = GetParent()->Width()-GetParent()->GetPadding().left-GetParent()->GetPadding().right;
+    
+    for (int i = 0; i < (int)s.length(); i++)
     {
         if (s[i] == '\n')
         {
@@ -236,6 +257,19 @@ void SplitWords(const Gwen::String& s, wchar_t delim,
         }
 
         str += s[i];
+
+        // if adding character makes the word bigger than the textbox size
+        Gwen::Point p = GetSkin()->GetRender()->MeasureText(GetFont(), str);
+        if (p.x > w)
+        {
+            int addSum = GetPadding().left+GetPadding().right;
+            //split words
+            str.pop_back();
+            elems.push_back(str);
+            str.clear();
+            --i;
+            continue;
+        }
     }
 
     if (!str.empty())
@@ -253,7 +287,7 @@ void Text::RefreshSizeWrap()
 
     m_Lines.clear();
     std::vector<Gwen::String> words;
-    SplitWords(GetText(), ' ', words);
+    SplitWords(GetText(), words);
     
     // Adding a word to the end simplifies the code below
     // which is anything but simple.
@@ -266,7 +300,7 @@ void Text::RefreshSizeWrap()
     }
 
     Point pFontSize = GetSkin()->GetRender()->MeasureText(GetFont(), " ");
-    int w = GetParent()->Width();
+    int w = GetParent()->Width() - GetParent()->GetPadding().left - GetParent()->GetPadding().right;
     int x = 0, y = 0;
     Gwen::String strLine;
 
@@ -286,6 +320,7 @@ void Text::RefreshSizeWrap()
             Gwen::Point p = GetSkin()->GetRender()->MeasureText(GetFont(), strLine);
 
             if (p.x > Width())
+            if (p.x > w)
             {
                 bFinishLine = true; bWrapped = true;
             }
@@ -299,12 +334,24 @@ void Text::RefreshSizeWrap()
         {
             Text* t = new Text(this);
             t->SetFont(GetFont());
-            t->SetString(strLine.substr(0, strLine.length()-(*it).length()));
+            if (bWrapped)
+            {
+                t->SetString(strLine.substr(0, strLine.length()-(*it).length()));
+                // newline should start with the word that was too big
+                strLine = *it;
+            }
+            else
+            {
+                t->SetString(strLine.substr(0, strLine.length()));
+                //new line is empty
+                strLine.clear();
+            }
             t->RefreshSize();
             t->SetPos(x, y);
             m_Lines.push_back(t);
             // newline should start with the word that was too big
-            strLine = *it;
+            // strLine = *it;
+
             // Position the newline
             y += pFontSize.y;
             x = 0;
@@ -362,6 +409,8 @@ int Text::GetLineFromChar(int i)
         iLine++;
     }
 
+    if (iLine > 0)
+        return iLine-1;
     return iLine;
 }
 

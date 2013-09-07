@@ -41,6 +41,10 @@ namespace Gwen
             Gwen::Rect GetCharacterPosition(unsigned int iChar);
             int        GetClosestCharacter(Gwen::Point p);
 
+            //! Return the encapsulating box of the given line.
+            //! @remark This function is necessary to implement multiline selection.
+            virtual Gwen::Rect GetLineBox(int i);
+
             int Length() const
             {
                 return (int)m_String.size();
@@ -87,6 +91,10 @@ namespace Gwen
             virtual int   GetEndCharFromLine(int i);
             virtual int   GetCharPosOnLine(int i);
             virtual unsigned NumLines();
+
+        protected:
+
+            virtual void SplitWords(const Gwen::String& s, std::vector<Gwen::String>& elems);
 
         private:
 
