@@ -9,6 +9,7 @@
 #include <Gwen/Texture.h>
 #include <Gwen/Renderers/SDL2.h>
 
+#include <SDL2/SDL_image.h>
 
 namespace Gwen
 {
@@ -200,50 +201,55 @@ namespace Gwen
 
         void SDL2::LoadTexture(Gwen::Texture* pTexture)
         {
-//            if (!pTexture)
-//                return;
-//
-//            if (pTexture->data)
-//                FreeTexture(pTexture);
-//
-//            ALLEGRO_BITMAP* bmp = al_load_bitmap(pTexture->name.c_str());
-//
-//            if (bmp)
-//            {
-//                pTexture->data = bmp;
-//                pTexture->width = al_get_bitmap_width(bmp);
-//                pTexture->height = al_get_bitmap_height(bmp);
-//                pTexture->failed = false;
-//            }
-//            else
-//            {
-//                pTexture->data = NULL;
-//                pTexture->failed = true;
-//            }
+            if (!pTexture)
+                return;
+
+            if (pTexture->data)
+                FreeTexture(pTexture);
+
+            SDL_Texture *bmp = IMG_LoadTexture(m_renderer, pTexture->name.c_str());
+            
+            if (bmp)
+            {
+                int w, h;
+                SDL_QueryTexture(bmp, NULL, NULL, &w, &h);
+                
+                pTexture->data = bmp;
+                pTexture->width = w;
+                pTexture->height = h;
+                pTexture->failed = false;
+            }
+            else
+            {
+                pTexture->data = NULL;
+                pTexture->failed = true;
+            }
         }
 
         void SDL2::FreeTexture(Gwen::Texture* pTexture)
         {
-//            al_destroy_bitmap((ALLEGRO_BITMAP*)pTexture->data);
-//            pTexture->data = NULL;
+            SDL_DestroyTexture(static_cast<SDL_Texture*>(pTexture->data));
+            pTexture->data = NULL;
         }
 
         void SDL2::DrawTexturedRect(Gwen::Texture* pTexture, Gwen::Rect rect,
                                        float u1, float v1,
                                        float u2, float v2)
         {
-//            ALLEGRO_BITMAP* bmp = (ALLEGRO_BITMAP*)pTexture->data;
-//
-//            if (!bmp)
-//                return DrawMissingImage(rect);
-//
-//            Translate(rect);
-//            const unsigned int w = pTexture->width;
-//            const unsigned int h = pTexture->height;
-//            al_draw_scaled_bitmap(bmp,
-//                                  u1*w, v1*h, (u2-u1)*w, (v2-v1)*h,  // source
-//                                  rect.x, rect.y, rect.w, rect.h,    // destination
-//                                  0);
+            SDL_Texture *bmp = static_cast<SDL_Texture*>(pTexture->data);
+
+            if (!bmp)
+                return DrawMissingImage(rect);
+
+            Translate(rect);
+            
+            const unsigned int w = pTexture->width;
+            const unsigned int h = pTexture->height;
+            
+            const SDL_Rect source = { int(u1*w), int(v1*h), int((u2-u1)*w), int((v2-v1)*h) },
+                             dest = { rect.x, rect.y, rect.w, rect.h };
+
+            SDL_RenderCopy(m_renderer, bmp, &source, &dest);
         }
 
         Gwen::Color SDL2::PixelColour(Gwen::Texture* pTexture, unsigned int x, unsigned int y,

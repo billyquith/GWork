@@ -45,6 +45,12 @@ function DefineRenderer( name, filetable )
 	flags( { "Symbols" } )
 	kind( "StaticLib" )
 
+    if ( os.get() == "macosx" ) then
+        if user.macports then
+            includedirs { "/opt/local/include" }
+        end
+    end
+
     if ( user.includes ) then
         includedirs(user.includes)
     end
