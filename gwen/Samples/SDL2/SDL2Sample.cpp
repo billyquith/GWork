@@ -21,7 +21,7 @@ int main(int argc, char** argv)
         
     //Setup our window and renderer
     const int SCREEN_WIDTH = 1024, SCREEN_HEIGHT = 768;
-	SDL_Window *window = SDL_CreateWindow("Lesson 2", 100, 100,
+	SDL_Window *window = SDL_CreateWindow("SDL2", 100, 100,
                                           SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
 	if (!window)
 		return -1;
