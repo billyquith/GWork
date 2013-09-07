@@ -122,6 +122,7 @@ namespace Gwen
 
         SDL2::~SDL2()
         {
+            SDL_DestroyRenderer(m_renderer);
         }
 
         void SDL2::SetDrawColor(Gwen::Color color)
@@ -130,6 +131,8 @@ namespace Gwen
             m_color.g = color.g;
             m_color.b = color.b;
             m_color.a = color.a;
+            
+            SDL_SetRenderDrawColor(m_renderer, color.r, color.g, color.b, color.a);
         }
 
         void SDL2::LoadFont(Gwen::Font* font)
@@ -260,17 +263,18 @@ namespace Gwen
 
         void SDL2::DrawFilledRect(Gwen::Rect rect)
         {
-//            Translate(rect);
-//            const float fx = rect.x+0.5f, fy = rect.y+0.5f;
-//            al_draw_filled_rectangle(fx, fy, fx+rect.w, fy+rect.h, m_Color);
+            Translate(rect);
+            
+            const SDL_Rect srect = { rect.x, rect.y, rect.w, rect.h };
+            SDL_RenderFillRect(m_renderer, &srect);
         }
 
         void SDL2::DrawLinedRect(Gwen::Rect rect)
         {
-//            Translate(rect);
-//            // Width of 0 draws a line, not a rect of width 1.
-//            const float fx = rect.x+0.5f, fy = rect.y+0.5f;
-//            al_draw_rectangle(fx, fy, fx+rect.w, fy+rect.h, m_Color, 0.f);
+            Translate(rect);
+            
+            const SDL_Rect srect = { rect.x, rect.y, rect.w, rect.h };
+            SDL_RenderDrawRect(m_renderer, &srect);
         }
 
 //        void SDL2::DrawShavedCornerRect(Gwen::Rect rect, bool bSlight)

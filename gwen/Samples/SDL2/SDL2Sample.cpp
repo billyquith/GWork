@@ -30,8 +30,6 @@ int main(int argc, char** argv)
     skin.SetRender(pRenderer);
     skin.Init("DefaultSkin.png");
     
-    // The fonts work differently in Allegro - it can't use
-    // system fonts. So force the skin to use a local one.
     // Note, you can get fonts that cover many languages/locales to do Chinese,
     //       Arabic, Korean, etc. e.g. "Arial Unicode" (but it's 23MB!).
     skin.SetDefaultFont("OpenSans.ttf", 11);
@@ -63,10 +61,12 @@ int main(int argc, char** argv)
         
         pRenderer->BeginContext(NULL);
         pCanvas->RenderCanvas();
+        pRenderer->PresentContext(NULL);
         pRenderer->EndContext(NULL);
-        
-//        al_rest(0.001);
     }
 
+    SDL_DestroyWindow(window);
+    SDL_Quit();
+    
     return 0;
 }
