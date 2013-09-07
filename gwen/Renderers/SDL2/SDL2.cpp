@@ -231,6 +231,7 @@ namespace Gwen
         bool SDL2::BeginContext(Gwen::WindowProvider* )
         {
             SDL_RenderClear(m_renderer);
+            SDL_SetRenderDrawBlendMode(m_renderer, SDL_BLENDMODE_BLEND);
             return true;
         }
 
