@@ -48,22 +48,16 @@ namespace Gwen
                                     const Gwen::Color& col_default) override;
 
             void DrawLinedRect(Gwen::Rect rect) override;
-//            void DrawShavedCornerRect(Gwen::Rect rect, bool bSlight = false) override;
-            // void DrawPixel(int x, int y);
 
             bool BeginContext(Gwen::WindowProvider* pWindow) override;
             bool EndContext(Gwen::WindowProvider* pWindow) override;
             bool PresentContext(Gwen::WindowProvider* pWindow) override;
-
-            // Cache to texture.
-//            ICacheToTexture* GetCTT();
 
         protected:
 
             SDL_Window      *m_window;
             SDL_Renderer    *m_renderer;
             SDL_Color        m_color;
-//            SDL2CTT *m_ctt;
         };
 
 
