@@ -26,12 +26,17 @@ namespace Gwen
         bool    failed;
         int     width;
         int     height;
+        
+        bool    readable;
+        void*   surface;
 
         Texture()
         :   data(NULL)
         ,   width(4)
         ,   height(4)
         ,   failed(false)
+        ,   readable(false)
+        ,   surface(NULL)
         {
         }
 
@@ -39,10 +44,12 @@ namespace Gwen
         {
         }
 
-        void Load(const String& str, Gwen::Renderer::Base* render)
+        void Load(const String& str, Gwen::Renderer::Base* render, bool needReadable=false)
         {
             name = str;
             Gwen::Debug::AssertCheck(render != NULL, "No renderer!");
+            
+            readable = needReadable;
             render->LoadTexture(this);
         }
 
