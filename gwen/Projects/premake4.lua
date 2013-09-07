@@ -1,28 +1,7 @@
 print("Generating project files for GWEN")
 print("Premake version: " .. (_PREMAKE_VERSION or "<4.4"))
 
---
--- Try to read the options user options.
--- This contains a table "user":
---  * includes = <table>    - User include paths
---  * libs = <table>        - User lib paths
---  * macports = <bool>     - Use Macports on OSX.
---
-local user_config_options = 'user.lua'
-if ( io.open(user_config_options) ) then
-    print("Reading user options")
-    dofile("user.lua")
-else
-    print("No user options")
-    user = {}
-end
-
 dofile( "inc/include.lua" )
-
-if not _ACTION then
-    -- Docs: http://industriousone.com/command-line-arguments
-    error("No target specified, e.g. vs2010 or xcode4")
-end
 
 
 solution "GWEN"
@@ -95,6 +74,9 @@ DefineRenderer( "SFML2",
 DefineRenderer( "Allegro",
                 { "../Renderers/Allegro/Allegro.cpp" } )
 
+DefineRenderer( "SDL2",
+                { "../Renderers/SDL2/SDL2.cpp" } )
+
 if ( os.get() == "windows" ) then
     DefineRenderer( "DirectX9",
                     { "../Renderers/DirectX9/DirectX9.cpp" } )
@@ -134,6 +116,11 @@ DefineSample{ name = "Allegro",
               files = { "../Samples/Allegro/AllegroSample.cpp" },
               links = ALLEGRO_LIBS,
               linksd = ALLEGRO_LIBS_D }
+
+DefineSample{ name = "SDL2",
+              files = { "../Samples/SDL2/SDL2Sample.cpp" },
+              links = SDL2_LIBS,
+              linksd = SDL2_LIBS_D }
 
 if ( os.get() == "windows" ) then
 
