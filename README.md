@@ -1,12 +1,13 @@
 GWork
 =====
 
-A *GWen fORK* ("gw-orc"), to fix issues with GWEN and add new features.
+GWork ("gw-orc") is a GWen fork to fix issues with GWEN and add new features.
 
-*Note*: this is a *fork* from mainline, but not a rewrite. This was done to make the 
-source code more consistent with other C++ projects and [how I like it][1]. It is 
-intended that mainline will still be cherry picked. I mainly develop using 
-[Allegro](http://alleg.sourceforge.net) on a Mac, but everything else should still work.
+*Note*: this is a *fork* from mainline, but not a rewrite. This was done to make
+the source code more consistent with other C++ projects and [how I like it][1]. 
+It is intended that mainline will still be cherry picked. I mainly develop using 
+[Allegro](http://alleg.sourceforge.net) on a Mac, but everything else should 
+still work. Changes summarised below.
 
 Thanks to Garry for open sourcing GWEN.
 
@@ -15,13 +16,17 @@ Thanks to Garry for open sourcing GWEN.
 ### Features
 
 * [UTF-8 everywhere][5]. Unicode support simplified.
-  * `Gwen::UnicodeString` removed. This assumed that all Unicode was best as a wide encoding. This is not the case on all platforms.
-  * `Gwen::TextObject` removed. This stored two copies of each string, one as ASCII and one in wide Unicode.
-    This is no longer necessary as all Unicode is dealt with as UTF-8, which is backwards compatible with `std::string`.
+  * `Gwen::UnicodeString` removed. This assumed that all Unicode was best as a 
+    wide encoding. This is not the case on all platforms.
+  * `Gwen::TextObject` removed. This stored two copies of each string, one as 
+    ASCII and one in wide Unicode. This is no longer necessary as all Unicode 
+    is dealt with as UTF-8, which is backwards compatible with `std::string`.
 * Cache to texture implemented (Allegro only).
-  * Controls render to a texture, which when nothing changing is a lot more efficient.
+  * Controls render to a texture, which when nothing changing is a lot more 
+    efficient.
 * No dependency on Bootil.
-  * The experimental Designer had a dependency on Bootil. A new library in Gwen replaces the subset of code used.  
+  * The experimental Designer had a dependency on Bootil. A new library in Gwen 
+    replaces the subset of code used.  
 
 ### C++11
 
@@ -31,19 +36,21 @@ Thanks to Garry for open sourcing GWEN.
 ### Fixes
 
 * Warnings fixed:
-  * In GWEN, warnings are removed through pragmas. This is fine if you compile it standalone, but where you 
-    include it in your own code, and you don't use pragmas, many warnings will show up.
+  * In GWEN, warnings are removed through pragmas. This is fine if you compile 
+    it standalone, but where you include it in your own code, and you don't use 
+    pragmas, many warnings will show up.
   * Many warnings appear on compilers/platforms that aren't MSVC.
   * 64-bit warnings fixed. GWEN assumed 32-bit compilation.
 * Fixes for [Allegro][4].
-  * Various fixes, e.g. text rendering. See Github issues and commits for more details.
+  * Various fixes, e.g. text rendering. See Github issues and commits for more 
+    details.
   
 ### Format
   
 * Indentation:
   * [Spaces instead of tabs](http://www.jwz.org/doc/tabs-vs-spaces.html).
-  * Github, Google Code, etc use 8 space tabs. GWEN uses 4 space tabs. This messes up 
-    the indentation when reading code on Github.
+  * Github, Google Code, etc use 8 space tabs. GWEN uses 4 space tabs. This 
+    messes up the indentation when reading code on Github.
 * Brackets:
   * [Allman][2]/BSD indentation.
 * Line length ~100 chars.
@@ -54,7 +61,8 @@ Thanks to Garry for open sourcing GWEN.
 ### Docs
 
 * Doxygen docs:
-  * Any existing GWEN comments and docs formatted for [doxygen](http://doxygen.org).
+  * Any existing GWEN comments and docs formatted 
+    for [doxygen](http://doxygen.org).
   * Docs currently very minimal as GWEN has almost no documentation.
 
 
