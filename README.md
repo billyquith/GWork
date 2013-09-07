@@ -15,6 +15,8 @@ Thanks to Garry for open sourcing GWEN.
 
 ### Features
 
+* [SDL2][8] renderer added.
+  * *Currently only tested on Mac*.
 * [UTF-8 everywhere][5]. Unicode support simplified.
   * `Gwen::UnicodeString` removed. This assumed that all Unicode was best as a 
     wide encoding. This is not the case on all platforms.
@@ -87,6 +89,7 @@ Please [report problems to Github][7] or they'll get lost.
 [5]: http://www.utf8everywhere.org "Why you should use UTF8 everywhere."
 [6]: http://industriousone.com/premake
 [7]: https://github.com/billyquith/GWEN/issues "Bugs/Issues"
+[8]: http://www.libsdl.org "SDL2"
 
 
 BQ
