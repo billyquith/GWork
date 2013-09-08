@@ -133,7 +133,7 @@ namespace Gwen
                             return false;
                         }
 
-                        return m_Canvas->InputKey(iKey, ke->state);
+                        return m_Canvas->InputKey(iKey, ke->state != 0);
                     }
 
                 case SDL_TEXTINPUT:
@@ -176,7 +176,7 @@ namespace Gwen
                             return false;
                         }
 
-                        return m_Canvas->InputMouseButton(Button, E->state);
+                        return m_Canvas->InputMouseButton(Button, E->state != 0);
                     }
 
                 case SDL_MOUSEWHEEL:
