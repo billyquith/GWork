@@ -8,8 +8,15 @@ solution "GWEN"
 
     language "C++"
     location ( os.get() .. "/" .. _ACTION )
-    flags { "Unicode", "Symbols", "NoEditAndContinue", "NoPCH",
-            "No64BitChecks", "StaticRuntime", "EnableSSE" }
+    flags { "Unicode", "Symbols",
+            "NoEditAndContinue", "NoMinimalRebuild",
+            "NoPCH", "EnableSSE",
+            "No64BitChecks",
+            
+            -- Use DLL runtime libraries by default. This is preferred,
+            -- and may be used by dependencies you link to. 
+            --"StaticRuntime",
+        }
 
     targetdir ( "../lib/" .. os.get() .. "/" .. _ACTION )
     libdirs { "../lib/", "../lib/" .. os.get() }
@@ -17,7 +24,9 @@ solution "GWEN"
     configurations { "Release", "Debug" }
 
     if ( _ACTION == "vs2010" or _ACTION=="vs2008" ) then
-        buildoptions { "/MP"  }
+        buildoptions {
+            "/MP",  -- multi-processor compile
+        }
     end
 
     if ( _ACTION == "xcode4" ) then
