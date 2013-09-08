@@ -11,7 +11,13 @@
 
 #include "Gwen/Gwen.h"
 #include "Gwen/BaseRender.h"
-#include <SDL2/SDL.h>
+
+#ifdef _WIN32
+#   include <SDL.h>
+#else
+#   include <SDL2/SDL.h>
+#endif
+
 
 namespace Gwen
 {

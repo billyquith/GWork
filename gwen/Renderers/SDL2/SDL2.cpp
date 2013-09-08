@@ -9,8 +9,13 @@
 #include <Gwen/Texture.h>
 #include <Gwen/Renderers/SDL2.h>
 
-#include <SDL2/SDL_image.h>
-#include <SDL2/SDL_ttf.h>
+#ifdef _WIN32
+#   include <SDL_image.h>
+#   include <SDL_ttf.h>
+#else
+#   include <SDL2/SDL_image.h>
+#   include <SDL2/SDL_ttf.h>
+#endif
 
 namespace Gwen
 {
