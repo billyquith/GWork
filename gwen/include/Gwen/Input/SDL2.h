@@ -57,80 +57,25 @@ namespace Gwen
 
                         switch (scancode)
                         {
-                        case SDL_SCANCODE_RETURN:
-                            iKey = Gwen::Key::Return;
-                            break;
-
-                        case SDL_SCANCODE_BACKSPACE:
-                            iKey = Gwen::Key::Backspace;
-                            break;
-
-                        case SDL_SCANCODE_DELETE:
-                            iKey = Gwen::Key::Delete;
-                            break;
-
-                        case SDL_SCANCODE_LEFT:
-                            iKey = Gwen::Key::Left;
-                            break;
-
-                        case SDL_SCANCODE_RIGHT:
-                            iKey = Gwen::Key::Right;
-                            break;
-
-                        case SDL_SCANCODE_LSHIFT:
-                            iKey = Gwen::Key::Shift;
-                            break;
-
-                        case SDL_SCANCODE_RSHIFT:
-                            iKey = Gwen::Key::Shift;
-                            break;
-
-                        case SDL_SCANCODE_TAB:
-                            iKey = Gwen::Key::Tab;
-                            break;
-
-                        case SDL_SCANCODE_SPACE:
-                            iKey = Gwen::Key::Space;
-                            break;
-
-                        case SDL_SCANCODE_HOME:
-                            iKey = Gwen::Key::Home;
-                            break;
-
-                        case SDL_SCANCODE_END:
-                            iKey = Gwen::Key::End;
-                            break;
-
-                        case SDL_SCANCODE_LCTRL:
-                            iKey = Gwen::Key::Control;
-                            break;
-
-                        case SDL_SCANCODE_RCTRL:
-                            iKey = Gwen::Key::Control;
-                            break;
-
-                        case SDL_SCANCODE_UP:
-                            iKey = Gwen::Key::Up;
-                            break;
-
-                        case SDL_SCANCODE_DOWN:
-                            iKey = Gwen::Key::Down;
-                            break;
-
-                        case SDL_SCANCODE_ESCAPE:
-                            iKey = Gwen::Key::Escape;
-                            break;
-
-                        case SDL_SCANCODE_LALT:
-                            iKey = Gwen::Key::Alt;
-                            break;
-
-                        case SDL_SCANCODE_RALT:
-                            iKey = Gwen::Key::Alt;
-                            break;
-
-                        default:
-                            return false;
+                        case SDL_SCANCODE_RETURN:       iKey = Gwen::Key::Return; break;
+                        case SDL_SCANCODE_BACKSPACE:    iKey = Gwen::Key::Backspace; break;
+                        case SDL_SCANCODE_DELETE:       iKey = Gwen::Key::Delete; break;
+                        case SDL_SCANCODE_LEFT:         iKey = Gwen::Key::Left; break;
+                        case SDL_SCANCODE_RIGHT:        iKey = Gwen::Key::Right; break;
+                        case SDL_SCANCODE_LSHIFT:       iKey = Gwen::Key::Shift; break;
+                        case SDL_SCANCODE_RSHIFT:       iKey = Gwen::Key::Shift; break;
+                        case SDL_SCANCODE_TAB:          iKey = Gwen::Key::Tab; break;
+                        case SDL_SCANCODE_SPACE:        iKey = Gwen::Key::Space; break;
+                        case SDL_SCANCODE_HOME:         iKey = Gwen::Key::Home; break;
+                        case SDL_SCANCODE_END:          iKey = Gwen::Key::End; break;
+                        case SDL_SCANCODE_LCTRL:        iKey = Gwen::Key::Control; break;
+                        case SDL_SCANCODE_RCTRL:        iKey = Gwen::Key::Control; break;
+                        case SDL_SCANCODE_UP:           iKey = Gwen::Key::Up; break;
+                        case SDL_SCANCODE_DOWN:         iKey = Gwen::Key::Down; break;
+                        case SDL_SCANCODE_ESCAPE:       iKey = Gwen::Key::Escape; break;
+                        case SDL_SCANCODE_LALT:         iKey = Gwen::Key::Alt; break;
+                        case SDL_SCANCODE_RALT:         iKey = Gwen::Key::Alt; break;
+                        default:                        return false;
                         }
 
                         return m_Canvas->InputKey(iKey, ke->state != 0);
@@ -138,12 +83,8 @@ namespace Gwen
 
                 case SDL_TEXTINPUT:
                     {
-                        SDL_TextInputEvent* E = &event->text;
-                        wchar_t* widechar = (wchar_t*)SDL_iconv_string(UCS_STRING, "UTF-8", E->text, SDL_strlen(
-                                                                           E->text)+1);
-                        bool ret = m_Canvas->InputCharacter(*widechar);
-                        SDL_free(widechar);
-                        return ret;
+                        // TODO: This will probably need fixing for UTF-8.
+                        return m_Canvas->InputCharacter(event->text.text[0]);
                     }
 
                 case SDL_MOUSEMOTION:
