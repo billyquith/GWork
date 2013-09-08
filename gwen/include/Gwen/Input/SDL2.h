@@ -17,11 +17,6 @@
 #   include <SDL2/SDL.h>
 #endif
 
-#ifdef _WIN32
-#define UCS_STRING "UCS-2"
-#else
-#define UCS_STRING "UCS-4"
-#endif
 
 namespace Gwen
 {
@@ -140,4 +135,4 @@ namespace Gwen
 
     }
 }
-#endif // ifndef GWEN_INPUT_SDL13_H
+#endif // GWEN_INPUT_SDL2_H
