@@ -76,9 +76,7 @@ namespace Gwen
                     Gwen::Controls::HSVColorPicker* picker =
                         gwen_cast<Gwen::Controls::HSVColorPicker>(control);
                     Color col = picker->GetColor();
-                    char str[128];
-                    sprintf(str, "%u,%u,%u", col.r, col.g, col.b);
-                    m_TextBox->SetText(String(str));
+                    m_TextBox->SetText(Utility::Format("%u,%u,%u", col.r, col.g, col.b));
                     DoChanged();
                 }
 
@@ -101,7 +99,11 @@ namespace Gwen
                 {
                     BaseClass::DoChanged();
                     unsigned int r,g,b;
+#ifdef _WIN32
+                    if (sscanf_s(m_TextBox->GetText().c_str(), "%u,%u,%u", &r, &g, &b) == 3)
+#else
                     if (sscanf(m_TextBox->GetText().c_str(), "%u,%u,%u", &r, &g, &b) == 3)
+#endif
                     {
                         m_Button->SetColor(Gwen::Color(r,g,b));
                     }
