@@ -14,248 +14,274 @@
 #include <locale>       // Narrow/widen
 #include <codecvt>      // Narrow/widen - C++11
 
-using namespace Gwen;
+namespace Gwen {
+namespace Utility {
 
-#ifdef _MSC_VER
-#   pragma warning(disable:4267)    // conversion from 'size_t' to 'int', possible loss of data
-#endif
+        //  This section from: https://github.com/bkaradzic/bx/blob/master/include/bx/string.h
+        //
+        //  Copyright 2010-2013 Branimir Karadzic. All rights reserved.
+        //  License: http://www.opensource.org/licenses/BSD-2-Clause
+        //
 
-#ifdef __MINGW32__
-#   undef vswprintf
-#   define vswprintf _vsnwprintf
-#endif
-
-#ifdef _MSC_VER
-#   define GWEN_FNULL "NUL"
-#   define va_copy(c, s)   (c) = (s)       // MSVC does not implement C99.
+        /// Cross platform implementation of vsnprintf that returns number of
+        /// characters which would have been written to the final string if
+        /// enough space had been available.
+        int vsnprintf(char* _str, size_t _count, const char* _format, va_list _argList)
+        {
+#if defined(_MSC_VER)
+            int len = ::vsnprintf_s(_str, _count, _count, _format, _argList);
+            return -1 == len ? ::_vscprintf(_format, _argList) : len;
 #else
-#   define GWEN_FNULL "/dev/null"
+            return ::vsnprintf(_str, _count, _format, _argList);
 #endif
+        }
 
-
-std::wstring Gwen::Utility::Widen(const Gwen::String &nstr)
-{
-    // UTF-8 to UTF-16 (C++11)
-    // See: http://en.cppreference.com/w/cpp/locale/codecvt_utf8_utf16
-    // See: http://www.cplusplus.com/reference/codecvt/codecvt_utf8_utf16/
-
-    std::wstring_convert< std::codecvt_utf8_utf16<wchar_t>, wchar_t > conversion;
-    const std::wstring wstr( conversion.from_bytes( nstr.c_str() ) );
-
-    return wstr;
-}
-
-Gwen::String Gwen::Utility::Narrow(const std::wstring &wstr)
-{
-    // wide to UTF-8 (C++11)
-    // See: http://en.cppreference.com/w/cpp/locale/wstring_convert/to_bytes
-
-    std::wstring_convert< std::codecvt_utf8<wchar_t> > conv1;
-    Gwen::String u8str = conv1.to_bytes(wstr);
-
-    return u8str;
-}
-
-void Gwen::Utility::Replace(String& str, const String& strFind, const String& strReplace)
-{
-    size_t pos = 0;
-    
-    while ((pos = str.find(strFind, pos)) != String::npos)
-    {
-        str.replace(pos, strFind.length(), strReplace);
-        pos += strReplace.length();
-    }
-}
-
-String Gwen::Utility::Format(const char* fmt, ...)
-{
-    va_list s;
-    int len = 0;
-
-    va_start(s, fmt);
-
-    // Determine the length of the resulting string, this method is much faster
-    // than looping and reallocating a bigger buffer size.
-    {
-#ifdef WIN32
-        FILE* fnull = NULL;
-        fopen_s(&fnull, GWEN_FNULL, "wb");
+        /// Cross platform implementation of vsnwprintf that returns number of
+        /// characters which would have been written to the final string if
+        /// enough space had been available.
+        int vsnwprintf(wchar_t* _str, size_t _count, const wchar_t* _format, va_list _argList)
+        {
+#if defined(_MSC_VER)
+            int len = ::_vsnwprintf_s(_str, _count, _count, _format, _argList);
+            return -1 == len ? ::_vscwprintf(_format, _argList) : len;
+#elif defined(__MINGW32__)
+            return ::vsnwprintf(_str, _count, _format, _argList);
 #else
-        FILE* fnull = fopen(GWEN_FNULL, "wb");
+            return ::vswprintf(_str, _count, _format, _argList);
 #endif
-        va_list c;
-        va_copy(c, s);
-        len = vfprintf(fnull, fmt, c);
-        va_end(c);
-        fclose(fnull);
-    }
+        }
 
-    String strOut;
+        int snprintf(char* _str, size_t _count, const char* _format, ...)
+        {
+            va_list argList;
+            va_start(argList, _format);
+            int len = vsnprintf(_str, _count, _format, argList);
+            va_end(argList);
+            return len;
+        }
 
-    if (len > 0)
-    {
-        strOut.resize(len+1);
-        va_list c;
-        va_copy(c, s);
-#ifdef _MSC_VER
-        len = vsprintf_s(&strOut[0], strOut.size(), fmt, c);
-#else
-        len = vsprintf(&strOut[0], fmt, c);
-#endif
-        va_end(c);
-        strOut.resize(len);
-    }
+        int swnprintf(wchar_t* _out, size_t _count, const wchar_t* _format, ...)
+        {
+            va_list argList;
+            va_start(argList, _format);
+            int len = vsnwprintf(_out, _count, _format, argList);
+            va_end(argList);
+            return len;
+        }
 
-    va_end(s);
+        void PrintfVargs(std::string& _out, const char* _format, va_list _argList)
+        {
+            char temp[2048];
 
-    return strOut;
-}
+            char* out = temp;
+            int len = Utility::vsnprintf(out, sizeof(temp), _format, _argList);
+            if ( int(sizeof(temp)) < len)
+            {
+                out = (char*)alloca(len+1);
+                len = Utility::vsnprintf(out, len, _format, _argList);
+            }
+            out[len] = '\0';
+            _out.append(out);
+        }
 
-void Gwen::Utility::Strings::Split(const Gwen::String& str, const Gwen::String& seperator,
-                                   Strings::List& outbits, bool bLeave)
-{
-    size_t iOffset = 0;
-    size_t iLength = str.length();
-    size_t iSepLen = seperator.length();
-    size_t i = str.find(seperator, 0);
+        void Printf(std::string& _out, const char* _format, ...)
+        {
+            va_list argList;
+            va_start(argList, _format);
+            PrintfVargs(_out, _format, argList);
+            va_end(argList);
+        }
 
-    while (i != std::string::npos)
-    {
-        outbits.push_back(str.substr(iOffset, i-iOffset));
-        iOffset = i+iSepLen;
-        i = str.find(seperator, iOffset);
+        String Format(const char* _format, ...)        
+        {
+            va_list argList;
+            va_start(argList, _format);
+            String out;
+            PrintfVargs(out, _format, argList);
+            va_end(argList);
+            return out;
+        }
 
-        if (bLeave)
-            iOffset -= iSepLen;
-    }
+        std::wstring Widen(const Gwen::String &nstr)
+        {
+            // UTF-8 to UTF-16 (C++11)
+            // See: http://en.cppreference.com/w/cpp/locale/codecvt_utf8_utf16
+            // See: http://www.cplusplus.com/reference/codecvt/codecvt_utf8_utf16/
 
-    outbits.push_back(str.substr(iOffset, iLength-iOffset));
-}
+            std::wstring_convert< std::codecvt_utf8_utf16<wchar_t>, wchar_t > conversion;
+            const std::wstring wstr( conversion.from_bytes( nstr.c_str() ) );
 
-int Gwen::Utility::Strings::To::Int(const Gwen::String& str)
-{
-    if (str == "")
-        return 0;
+            return wstr;
+        }
 
-    return atoi(str.c_str());
-}
+        Gwen::String Narrow(const std::wstring &wstr)
+        {
+            // wide to UTF-8 (C++11)
+            // See: http://en.cppreference.com/w/cpp/locale/wstring_convert/to_bytes
 
-float Gwen::Utility::Strings::To::Float(const Gwen::String& str)
-{
-    if (str == "")
-        return 0.0f;
+            std::wstring_convert< std::codecvt_utf8<wchar_t> > conv1;
+            Gwen::String u8str = conv1.to_bytes(wstr);
 
-    return static_cast<float>( atof(str.c_str()) );
-}
+            return u8str;
+        }
 
-bool Gwen::Utility::Strings::To::Bool(const Gwen::String& str)
-{
-    if (str.size() == 0)
-        return false;
+        void Replace(String& str, const String& strFind, const String& strReplace)
+        {
+            size_t pos = 0;
 
-    if (str[0] == 'T' || str[0] == 't' || str[0] == 'y' || str[0] == 'Y')
-        return true;
+            while ((pos = str.find(strFind, pos)) != String::npos)
+            {
+                str.replace(pos, strFind.length(), strReplace);
+                pos += strReplace.length();
+            }
+        }
 
-    if (str[0] == 'F' || str[0] == 'f' || str[0] == 'n' || str[0] == 'N')
-        return false;
+        void Strings::Split(const Gwen::String& str, const Gwen::String& seperator,
+            Strings::List& outbits, bool bLeave)
+        {
+            size_t iOffset = 0;
+            size_t iLength = str.length();
+            size_t iSepLen = seperator.length();
+            size_t i = str.find(seperator, 0);
 
-    if (str[0] == '0')
-        return false;
+            while (i != std::string::npos)
+            {
+                outbits.push_back(str.substr(iOffset, i-iOffset));
+                iOffset = i+iSepLen;
+                i = str.find(seperator, iOffset);
 
-    return true;
-}
+                if (bLeave)
+                    iOffset -= iSepLen;
+            }
 
-bool Gwen::Utility::Strings::To::Floats(const Gwen::String& str, float* f, size_t iCount)
-{
-    Strings::List lst;
-    Strings::Split(str, " ", lst);
+            outbits.push_back(str.substr(iOffset, iLength-iOffset));
+        }
 
-    if (lst.size() != iCount)
-        return false;
+        int Strings::To::Int(const Gwen::String& str)
+        {
+            if (str == "")
+                return 0;
 
-    for (size_t i = 0; i < iCount; i++)
-    {
-        f[i] = Strings::To::Float(lst[i]);
-    }
+            return atoi(str.c_str());
+        }
 
-    return true;
-}
+        float Strings::To::Float(const Gwen::String& str)
+        {
+            if (str == "")
+                return 0.0f;
 
-bool Gwen::Utility::Strings::Wildcard(const String& strWildcard, const String& strHaystack)
-{
-    const String& W = strWildcard;
-    const String& H = strHaystack;
+            return static_cast<float>( atof(str.c_str()) );
+        }
 
-    if (strWildcard == "*")
-        return true;
+        bool Strings::To::Bool(const Gwen::String& str)
+        {
+            if (str.size() == 0)
+                return false;
 
-    size_t iPos = W.find("*", 0);
+            if (str[0] == 'T' || str[0] == 't' || str[0] == 'y' || str[0] == 'Y')
+                return true;
 
-    if (iPos == String::npos)
-        return strWildcard == strHaystack;
+            if (str[0] == 'F' || str[0] == 'f' || str[0] == 'n' || str[0] == 'N')
+                return false;
 
-    // First half matches
-    if (iPos > 0 && W.substr(0, iPos) != H.substr(0, iPos))
-        return false;
+            if (str[0] == '0')
+                return false;
 
-    // Second half matches
-    if (iPos != W.length()-1)
-    {
-        String strEnd = W.substr(iPos+1, W.length());
+            return true;
+        }
 
-        if (strEnd != H.substr(H.length()-strEnd.length(), H.length()))
-            return false;
-    }
+        bool Strings::To::Floats(const Gwen::String& str, float* f, size_t iCount)
+        {
+            Strings::List lst;
+            Strings::Split(str, " ", lst);
 
-    return true;
-}
+            if (lst.size() != iCount)
+                return false;
 
-void Gwen::Utility::Strings::ToUpper(Gwen::String& str)
-{
-    transform(str.begin(), str.end(), str.begin(), toupper);
-}
+            for (size_t i = 0; i < iCount; i++)
+            {
+                f[i] = Strings::To::Float(lst[i]);
+            }
 
-void Gwen::Utility::Strings::Strip(Gwen::String& str, const Gwen::String& chars)
-{
-    Gwen::String Source = str;
-    str = "";
+            return true;
+        }
 
-    for (unsigned int i = 0; i < Source.length(); i++)
-    {
-        if (chars.find(Source[i]) != Gwen::String::npos)
-            continue;
+        bool Strings::Wildcard(const String& strWildcard, const String& strHaystack)
+        {
+            const String& W = strWildcard;
+            const String& H = strHaystack;
 
-        str += Source[i];
-    }
-}
+            if (strWildcard == "*")
+                return true;
+
+            size_t iPos = W.find("*", 0);
+
+            if (iPos == String::npos)
+                return strWildcard == strHaystack;
+
+            // First half matches
+            if (iPos > 0 && W.substr(0, iPos) != H.substr(0, iPos))
+                return false;
+
+            // Second half matches
+            if (iPos != W.length()-1)
+            {
+                String strEnd = W.substr(iPos+1, W.length());
+
+                if (strEnd != H.substr(H.length()-strEnd.length(), H.length()))
+                    return false;
+            }
+
+            return true;
+        }
+
+        void Strings::ToUpper(Gwen::String& str)
+        {
+            transform(str.begin(), str.end(), str.begin(), toupper);
+        }
+
+        void Strings::Strip(Gwen::String& str, const Gwen::String& chars)
+        {
+            Gwen::String Source = str;
+            str = "";
+
+            for (unsigned int i = 0; i < Source.length(); i++)
+            {
+                if (chars.find(Source[i]) != Gwen::String::npos)
+                    continue;
+
+                str += Source[i];
+            }
+        }
 
 
-Gwen::Rect Gwen::Utility::ClampRectToRect(Gwen::Rect inside, Gwen::Rect outside, bool clampSize)
-{
-    if (inside.x < outside.x)
-        inside.x = outside.x;
-        
-    if (inside.y  < outside.y)
-        inside.y = outside.y;
+        Gwen::Rect ClampRectToRect(Gwen::Rect inside, Gwen::Rect outside, bool clampSize)
+        {
+            if (inside.x < outside.x)
+                inside.x = outside.x;
 
-    if (inside.x+inside.w > outside.x+outside.w)
-    {
-        if (clampSize)
-            inside.w = outside.w;
-        else
-            inside.x = outside.x+outside.w-inside.w;
-    }
+            if (inside.y  < outside.y)
+                inside.y = outside.y;
 
-    if (inside.y+inside.h > outside.y+outside.h)
-    {
-        if (clampSize)
-            inside.h = outside.h;
-        else
-            inside.y = outside.w+outside.h-inside.h;
-    }
-    
-    return inside;
-}
+            if (inside.x+inside.w > outside.x+outside.w)
+            {
+                if (clampSize)
+                    inside.w = outside.w;
+                else
+                    inside.x = outside.x+outside.w-inside.w;
+            }
+
+            if (inside.y+inside.h > outside.y+outside.h)
+            {
+                if (clampSize)
+                    inside.h = outside.h;
+                else
+                    inside.y = outside.w+outside.h-inside.h;
+            }
+
+            return inside;
+        }
 
 
+} }
 

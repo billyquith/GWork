@@ -12,10 +12,21 @@
 #include <vector>
 #include "Gwen/Structures.h"
 
+#include <stdarg.h>
+
 namespace Gwen
 {
     namespace Utility
     {
+     
+        GWEN_EXPORT int vsnprintf(char* _str, size_t _count, const char* _format, va_list _argList);
+        GWEN_EXPORT int vsnwprintf(wchar_t* _str, size_t _count, const wchar_t* _format, va_list _argList);
+        GWEN_EXPORT int snprintf(char* _str, size_t _count, const char* _format, ...);
+        GWEN_EXPORT int swnprintf(wchar_t* _out, size_t _count, const wchar_t* _format, ...);
+        GWEN_EXPORT void PrintfVargs(String& _out, const char* _format, va_list _argList);
+        GWEN_EXPORT void Printf(String& _out, const char* _format, ...);
+        GWEN_EXPORT String Format(const char* fmt, ...);
+
         GWEN_EXPORT std::wstring Widen(const String &nstr);
         GWEN_EXPORT String Narrow(const std::wstring &wstr);
 
@@ -28,7 +39,6 @@ namespace Gwen
         }
 
         GWEN_EXPORT void Replace(String& str, const String& strFind, const String& strReplace);
-        GWEN_EXPORT String Format(const char* fmt, ...);
 
         namespace Strings
         {
