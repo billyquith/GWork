@@ -20,8 +20,8 @@ else
 -- User overrides. Comment in to use, otherwise ignored.
 user = {
     -- User include/lib paths. E.g. look for dependencies
-    --includes = { "/my/path" }     -- User include paths.
-    --libs = { "/my/path" }         -- User lib paths.
+    --includes = { "/my/path" },    -- User include paths.
+    --libs = { "/my/path" },        -- User lib paths.
 
     -- Options. These are ignored if not applicable.
     --macports = true,       -- Use Macports on OSX.
