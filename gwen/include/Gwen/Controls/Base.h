@@ -490,7 +490,7 @@ namespace Gwen
             }
 
             void InvalidateChildren(bool bRecursive = false);
-            void Position(int pos, int xpadding = 0, int ypadding = 0);
+            void Position(unsigned int pos, int xpadding = 0, int ypadding = 0);
 
         protected:
 
