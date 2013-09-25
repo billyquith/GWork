@@ -192,7 +192,7 @@ void Base::InvalidateChildren(bool bRecursive)
     }
 }
 
-void Base::Position(int pos, int xpadding, int ypadding)
+void Base::Position(unsigned int pos, int xpadding, int ypadding)
 {
     const Rect& bounds = GetParent()->GetInnerBounds();
     const Margin& margin = GetMargin();
@@ -200,22 +200,22 @@ void Base::Position(int pos, int xpadding, int ypadding)
     int y = Y();
 
     if (pos & Pos::Left)
-        x = bounds.x + xpadding+margin.left;
+        x = bounds.x + xpadding + margin.left;
 
     if (pos & Pos::Right)
-        x = bounds.x + (bounds.w-Width()-xpadding-margin.right);
+        x = bounds.x + (bounds.w - Width() - xpadding - margin.right);
 
     if (pos & Pos::CenterH)
-        x = bounds.x + (bounds.w-Width())/2;
+        x = bounds.x + (bounds.w - Width())/2;
 
     if (pos & Pos::Top)
         y = bounds.y + ypadding;
 
     if (pos & Pos::Bottom)
-        y = bounds.y + (bounds.h-Height()-ypadding);
+        y = bounds.y + (bounds.h - Height() - ypadding);
 
     if (pos & Pos::CenterV)
-        y = bounds.y + (bounds.h-Height())/2;
+        y = bounds.y + (bounds.h - Height())/2 + ypadding;
 
     SetPos(x, y);
 }
@@ -779,11 +779,12 @@ void Base::RecurseLayout(Skin::Base* skin)
     }
 
     Gwen::Rect rBounds = GetRenderBounds();
+
     // Adjust bounds for padding
     rBounds.x += m_Padding.left;
-    rBounds.w -= m_Padding.left+m_Padding.right;
+    rBounds.w -= m_Padding.left + m_Padding.right;
     rBounds.y += m_Padding.top;
-    rBounds.h -= m_Padding.top+m_Padding.bottom;
+    rBounds.h -= m_Padding.top + m_Padding.bottom;
 
     for (Base::List::iterator iter = Children.begin(); iter != Children.end(); ++iter)
     {
@@ -847,7 +848,7 @@ void Base::RecurseLayout(Skin::Base* skin)
         pChild->RecurseLayout(skin);
     }
 
-    m_InnerBounds = rBounds;
+    m_InnerBounds = rBounds; 
 
     //
     // Fill uses the left over space, so do that now.
