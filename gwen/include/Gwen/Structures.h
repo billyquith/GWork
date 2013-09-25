@@ -76,11 +76,13 @@ namespace Gwen
     struct GWEN_EXPORT Rect
     {
         Rect(int x_ = 0, int y_ = 0, int w_ = 0, int h_ = 0)
-        :   x(x_)
-        ,   y(y_)
-        ,   w(w_)
-        ,   h(h_)
+        :   x(x_), y(y_), w(w_), h(h_)
         {}
+        
+        bool operator == (const Rect &other) const
+        {
+            return x == other.x && y == other.y && w == other.w && h == other.h;
+        }
 
         Rect operator + (const Rect& rct) const
         {

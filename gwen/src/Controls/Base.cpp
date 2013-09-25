@@ -417,24 +417,18 @@ bool Base::SetSize(const Point& p)
 
 bool Base::SetBounds(const Gwen::Rect& bounds)
 {
-    return SetBounds(bounds.x, bounds.y, bounds.w, bounds.h);
+    if (m_Bounds == bounds)
+        return false;
+    
+    const Gwen::Rect oldBounds = GetBounds();
+    m_Bounds = bounds;
+    OnBoundsChanged(oldBounds);
+    return true;
 }
 
 bool Base::SetBounds(int x, int y, int w, int h)
 {
-    if (m_Bounds.x == x &&
-        m_Bounds.y == y &&
-        m_Bounds.w == w &&
-        m_Bounds.h == h)
-        return false;
-
-    Gwen::Rect oldBounds = GetBounds();
-    m_Bounds.x = x;
-    m_Bounds.y = y;
-    m_Bounds.w = w;
-    m_Bounds.h = h;
-    OnBoundsChanged(oldBounds);
-    return true;
+    return SetBounds(Rect(x,y,w,h));
 }
 
 void Base::OnBoundsChanged(Gwen::Rect oldBounds)
