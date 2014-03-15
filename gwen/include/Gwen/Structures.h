@@ -44,7 +44,6 @@ namespace Gwen
     // See: http://www.utf8everywhere.org
     //
     typedef std::string     String;
-//    typedef wchar_t         UnicodeChar;
     typedef char            UnicodeChar;
     
     struct GWEN_EXPORT Margin
