@@ -49,16 +49,13 @@ Thanks to Garry for open sourcing GWEN.
   
 ### Format
   
-* Indentation:
-  * [Spaces instead of tabs](http://www.jwz.org/doc/tabs-vs-spaces.html).
-  * Github, Google Code, etc use 8 space tabs. GWEN uses 4 space tabs. This 
-    messes up the indentation when reading code on Github.
-* Brackets:
-  * [Allman][2]/BSD indentation.
-* Line length ~100 chars.
-  * Github has width around 100. [Example][3].
-  * Easier for 3 way merge. Everything on screen.
-  * Works better for editing on laptop with a smaller screen.
+* Indentation: [Spaces instead of tabs](http://www.jwz.org/doc/tabs-vs-spaces.html).
+  Github, Google Code, etc use 8 space tabs. GWEN uses 4 space tabs. This 
+  messes up the indentation when reading code on Github.
+* Brackets: [Allman][2]/BSD indentation.
+* Line length ~100 chars. Github has width around 100. [Example][3]. Easier for 
+  3 way merge. Everything on screen. Works better for editing on laptop with 
+  a smaller screen.
   
 ### Docs
 
