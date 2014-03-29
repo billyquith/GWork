@@ -84,8 +84,7 @@ void DesignerFormat::ImportFromTree(Gwen::Controls::Base* pRoot, GwenUtil::Data:
             }
             else
             {
-                pRootFactory->SetControlValue(pRoot, p->Name(),
-                                              GwenUtil::String::Convert::ToWide(p->Value()));
+                pRootFactory->SetControlValue(pRoot, p->Name(), p->Value());
             }
         }
     }
@@ -172,8 +171,7 @@ void DesignerFormat::ExportToTree(Gwen::Controls::Base* pRoot, GwenUtil::Data::T
                     continue;
                 }
 
-                props.SetChild((*it)->Name(), Gwen::Utility::UnicodeToString((*it)->GetValue(
-                                                                                 pRoot)).c_str());
+                props.SetChild((*it)->Name(), (*it)->GetValue(pRoot));
             }
 
             pCF = pCF->GetBaseFactory();
