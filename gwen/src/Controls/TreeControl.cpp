@@ -50,12 +50,12 @@ void TreeControl::Clear()
 
 void TreeControl::Layout(Skin::Base* skin)
 {
-    BaseClass::BaseClass::Layout(skin);
+    ParentClass::ParentClass::Layout(skin);
 }
 
 void TreeControl::PostLayout(Skin::Base* skin)
 {
-    BaseClass::BaseClass::PostLayout(skin);
+    ParentClass::ParentClass::PostLayout(skin);
 }
 
 void TreeControl::OnNodeAdded(TreeNode* pNode)

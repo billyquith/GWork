@@ -68,7 +68,7 @@ void ScrollControl::OnChildBoundsChanged(Gwen::Rect /*oldChildBounds*/, Base* /*
 void ScrollControl::Layout(Skin::Base* skin)
 {
     UpdateScrollBars();
-    BaseClass::Layout(skin);
+    ParentClass::Layout(skin);
 }
 
 bool ScrollControl::OnMouseWheeled(int iDelta)

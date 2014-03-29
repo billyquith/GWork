@@ -26,7 +26,7 @@ namespace Gwen
                     m_TextBox = new TextBox(this);
                     m_TextBox->Dock(Pos::Fill);
                     m_TextBox->SetShouldDrawBackground(false);
-                    m_TextBox->onTextChanged.Add(this, &BaseClass::OnPropertyValueChanged);
+                    m_TextBox->onTextChanged.Add(this, &ParentClass::OnPropertyValueChanged);
                 }
 
                 virtual String GetPropertyValue()
@@ -46,7 +46,7 @@ namespace Gwen
 
                 virtual bool IsHovered()
                 {
-                    return BaseClass::IsHovered() || m_TextBox->IsHovered();
+                    return ParentClass::IsHovered() || m_TextBox->IsHovered();
                 }
 
                 TextBox* m_TextBox;

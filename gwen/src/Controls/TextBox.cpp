@@ -443,7 +443,7 @@ void TextBox::MakeCaratVisible()
 
 void TextBox::Layout(Skin::Base* skin)
 {
-    BaseClass::Layout(skin);
+    ParentClass::Layout(skin);
     RefreshCursorBounds();
 }
 

@@ -19,7 +19,7 @@
 using namespace Gwen::Controls;
 
 
-Canvas::Canvas(Gwen::Skin::Base* pSkin) : BaseClass(NULL), m_bAnyDelete(false)
+Canvas::Canvas(Gwen::Skin::Base* pSkin) : ParentClass(NULL), m_bAnyDelete(false)
 {
     SetBounds(0, 0, 10000, 10000);
     SetScale(1.0f);
@@ -64,7 +64,7 @@ void Canvas::Render(Gwen::Skin::Base* /*pRender*/)
 
 void Canvas::OnBoundsChanged(Gwen::Rect oldBounds)
 {
-    BaseClass::OnBoundsChanged(oldBounds);
+    ParentClass::OnBoundsChanged(oldBounds);
     InvalidateChildren(true);
 }
 

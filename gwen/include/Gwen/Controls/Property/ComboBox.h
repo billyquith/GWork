@@ -25,7 +25,7 @@ namespace Gwen
                 {
                     m_ComboBox = new Gwen::Controls::ComboBox(this);
                     m_ComboBox->Dock(Pos::Fill);
-                    m_ComboBox->onSelection.Add(this, &BaseClass::OnPropertyValueChanged);
+                    m_ComboBox->onSelection.Add(this, &ParentClass::OnPropertyValueChanged);
                     m_ComboBox->SetTabable(true);
                     m_ComboBox->SetKeyboardInputEnabled(true);
                     m_ComboBox->SetShouldDrawBackground(false);
@@ -54,7 +54,7 @@ namespace Gwen
 
                 virtual bool IsHovered()
                 {
-                    return BaseClass::IsHovered() || m_ComboBox->IsHovered();
+                    return ParentClass::IsHovered() || m_ComboBox->IsHovered();
                 }
 
                 Gwen::Controls::ComboBox* GetComboBox()

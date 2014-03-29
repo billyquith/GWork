@@ -36,7 +36,7 @@ void TabButton::Layout(Skin::Base* skin)
     else
         SetPadding(Padding(3, 2, 5, 2));
 
-    BaseClass::Layout(skin);
+    ParentClass::Layout(skin);
 }
 
 void TabButton::Render(Skin::Base* skin)

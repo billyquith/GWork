@@ -95,12 +95,12 @@ void ListBox::Render(Skin::Base* skin)
 
 void ListBox::Layout(Skin::Base* skin)
 {
-    BaseClass::Layout(skin);
+    ParentClass::Layout(skin);
     const Gwen::Rect& inner = m_InnerPanel->GetInnerBounds();
     m_Table->SetPos(inner.x, inner.y);
     m_Table->SetWidth(inner.w);
     m_Table->SizeToChildren(false, true);
-    BaseClass::Layout(skin);
+    ParentClass::Layout(skin);
 }
 
 void ListBox::UnselectAll()

@@ -34,8 +34,6 @@ namespace Gwen
 
         };
 
-
         GWEN_CONTROL_FACTORY(Button_Factory);
-
     }
 }

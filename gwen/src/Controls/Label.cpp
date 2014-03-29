@@ -82,7 +82,7 @@ Gwen::Rect Label::GetCharacterPosition(int iChar)
 
 void Label::OnBoundsChanged(Gwen::Rect oldChildBounds)
 {
-    BaseClass::OnBoundsChanged(oldChildBounds);
+    ParentClass::OnBoundsChanged(oldChildBounds);
 
     if (m_Text->Wrap())
     {

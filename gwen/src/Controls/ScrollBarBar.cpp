@@ -23,12 +23,12 @@ GWEN_CONTROL_CONSTRUCTOR(ScrollBarBar)
 void ScrollBarBar::Render(Skin::Base* skin)
 {
     skin->DrawScrollBarBar(this, m_bDepressed, IsHovered(), m_bHorizontal);
-    BaseClass::Render(skin);
+    ParentClass::Render(skin);
 }
 
 void ScrollBarBar::OnMouseMoved(int x, int y, int deltaX, int deltaY)
 {
-    BaseClass::OnMouseMoved(x, y, deltaX, deltaY);
+    ParentClass::OnMouseMoved(x, y, deltaX, deltaY);
 
     if (!m_bDepressed)
         return;
@@ -38,7 +38,7 @@ void ScrollBarBar::OnMouseMoved(int x, int y, int deltaX, int deltaY)
 
 void ScrollBarBar::OnMouseClickLeft(int x, int y, bool bDown)
 {
-    BaseClass::OnMouseClickLeft(x, y, bDown);
+    ParentClass::OnMouseClickLeft(x, y, bDown);
     InvalidateParent();
 }
 
@@ -53,5 +53,5 @@ void ScrollBarBar::Layout(Skin::Base* /*skin*/)
 
 void ScrollBarBar::MoveTo(int x, int y)
 {
-    BaseClass::MoveTo(x, y);
+    ParentClass::MoveTo(x, y);
 }

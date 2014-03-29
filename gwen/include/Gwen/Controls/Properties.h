@@ -76,7 +76,7 @@ namespace Gwen
 
             virtual bool IsHovered()
             {
-                return BaseClass::IsHovered() || (m_Property && m_Property->IsHovered());
+                return ParentClass::IsHovered() || (m_Property && m_Property->IsHovered());
             }
 
             virtual void OnEditingChanged();

@@ -29,7 +29,7 @@ void DockedTabControl::Layout(Skin::Base* skin)
 {
     GetTabStrip()->SetHidden(TabCount() <= 1);
     UpdateTitleBar();
-    BaseClass::Layout(skin);
+    ParentClass::Layout(skin);
 }
 
 void DockedTabControl::UpdateTitleBar()
@@ -42,7 +42,7 @@ void DockedTabControl::UpdateTitleBar()
 
 void DockedTabControl::DragAndDrop_StartDragging(Gwen::DragAndDrop::Package* pPackage, int x, int y)
 {
-    BaseClass::DragAndDrop_StartDragging(pPackage, x, y);
+    ParentClass::DragAndDrop_StartDragging(pPackage, x, y);
     SetHidden(true);
     // This hiding our parent thing is kind of lousy.
     GetParent()->SetHidden(true);
