@@ -53,7 +53,7 @@ void Cage::Setup( Controls::Base* pControl )
 
 void Cage::SetDepressed( bool b )
 {
-	BaseClass::SetDepressed( b );
+	ParentClass::SetDepressed( b );
 
 	m_DragPoint = m_Control->GetPos();
 	m_bDragged = false;

@@ -69,7 +69,7 @@ void DesignerBase::CreateDocumentHolder()
 
 void DesignerBase::NewDocument()
 {
-	Controls::TabButton* pButton = m_DocumentHolder->AddPage( L"Untitled Design" );
+	Controls::TabButton* pButton = m_DocumentHolder->AddPage( "Untitled Design" );
 	pButton->SetImage( "img/document_normal.png" );
 
 	Document* doc = new Document( pButton->GetPage(), "Document" );
@@ -99,12 +99,12 @@ void DesignerBase::OpenDocument()
 
 void DesignerBase::DoOpenDocument( Event::Info info )
 {
-	Controls::TabButton* pButton = m_DocumentHolder->AddPage( L"Loaded" );
+	Controls::TabButton* pButton = m_DocumentHolder->AddPage( "Loaded" );
 	pButton->SetImage( "img/document_normal.png" );
 
 	Document* doc = new Document( pButton->GetPage(), "Document" );
 	doc->Initialize( pButton );
-	doc->LoadFromFile( info.String.Get(), ImportExport::Find( "Designer" ) );
+	doc->LoadFromFile( info.String, ImportExport::Find( "Designer" ) );
 
 	pButton->OnPress();
 }

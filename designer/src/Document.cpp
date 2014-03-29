@@ -75,10 +75,10 @@ void Document::Initialize( Controls::TabButton* pTab )
 
 void Document::DoSaveFromDialog( Event::Info info )
 {
-	if ( info.String.Get() == "" ) return;
+	if ( info.String == "" ) return;
 	if ( !m_Exporter ) return;
 
-	m_strFilename = info.String.Get();
+	m_strFilename = info.String;
 	
 	m_Exporter->Export( m_pCanvas, m_strFilename );
 	m_Exporter = NULL;

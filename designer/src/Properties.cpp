@@ -62,7 +62,7 @@ void Properties::AddPropertiesFromControl( Controls::Base* pControl, bool bAllow
 		for ( ; it != itEnd; ++it )
 		{
 			Gwen::String strPropertyName = (*it)->Name();
-			Gwen::UnicodeString strValue = (*it)->GetValue( pControl );
+			Gwen::String strValue = (*it)->GetValue( pControl );
 
 			//
 			// Add a property row to our control
@@ -78,7 +78,7 @@ void Properties::AddPropertiesFromControl( Controls::Base* pControl, bool bAllow
 
 					for ( int i=0; i<(*it)->OptionNum(); i++ )
 					{
-						dd->GetComboBox()->AddItem( (*it)->OptionGet(i), Gwen::Utility::UnicodeToString( (*it)->OptionGet(i) ) );
+						dd->GetComboBox()->AddItem( (*it)->OptionGet(i), (*it)->OptionGet(i) );
 					}
 
 					row = properties->Add( strPropertyName, dd, strValue );
@@ -93,7 +93,7 @@ void Properties::AddPropertiesFromControl( Controls::Base* pControl, bool bAllow
 			}
 			else
 			{
-				if ( bAllowDifferent && row->GetProperty()->GetPropertyValue().GetUnicode() != strValue )
+				if ( bAllowDifferent && row->GetProperty()->GetPropertyValue() != strValue )
 				{
 					row->GetProperty()->SetPropertyValue( "different" );
 				}
@@ -117,7 +117,7 @@ void Properties::OnPropertyChanged( Event::Info info )
 
 		while ( cf )
 		{
-			cf->SetControlValue( pControl, info.ControlCaller->GetName(), info.String.GetUnicode() );
+			cf->SetControlValue( pControl, info.ControlCaller->GetName(), info.String );
 			cf = cf->GetBaseFactory();
 		}
 	}

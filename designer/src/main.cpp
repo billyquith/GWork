@@ -22,7 +22,7 @@ int main(int, char **)
 	Gwen::Controls::WindowCanvas window_canvas( -1, -1, 1024, 600, &skin, "GWEN Designer" );
 	skin.Init( "img/DesignerSkin.png" );
 
-	skin.SetDefaultFont( L"OpenSans.ttf", 11 );
+	skin.SetDefaultFont( "OpenSans.ttf", 11 );
 
 	DesignerBase* pDesignerBase = new DesignerBase( &window_canvas );
 
