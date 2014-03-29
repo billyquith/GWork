@@ -159,7 +159,7 @@ void ColorPicker::SlidersMoved(Gwen::Controls::Base* control)
 
 void ColorPicker::Layout(Skin::Base* skin)
 {
-    BaseClass::Layout(skin);
+    ParentClass::Layout(skin);
     SizeToChildren(false, true);
     SetSize(Width(), Height()+5);
     GroupBox* groupBox = gwen_cast<GroupBox>(FindChildByName("ResultGroupBox", true));

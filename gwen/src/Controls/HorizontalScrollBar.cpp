@@ -23,7 +23,7 @@ GWEN_CONTROL_CONSTRUCTOR(HorizontalScrollBar)
 
 void HorizontalScrollBar::Layout(Skin::Base* skin)
 {
-    BaseClass::Layout(skin);
+    ParentClass::Layout(skin);
     m_ScrollButton[SCROLL_BUTTON_LEFT]->SetWidth(Height());
     m_ScrollButton[SCROLL_BUTTON_LEFT]->Dock(Pos::Left);
     m_ScrollButton[SCROLL_BUTTON_RIGHT]->SetWidth(Height());
@@ -70,7 +70,7 @@ float HorizontalScrollBar::GetNudgeAmount()
     if (m_bDepressed)
         return m_fViewableContentSize/m_fContentSize;
     else
-        return BaseClass::GetNudgeAmount();
+        return ParentClass::GetNudgeAmount();
 }
 
 void HorizontalScrollBar::OnMouseClickLeft(int x, int y, bool bDown)
@@ -104,7 +104,7 @@ bool HorizontalScrollBar::SetScrolledAmount(float amount, bool forceUpdate)
 {
     amount = Gwen::Clamp(amount, 0.f, 1.f);
 
-    if (!BaseClass::SetScrolledAmount(amount, forceUpdate))
+    if (!ParentClass::SetScrolledAmount(amount, forceUpdate))
         return false;
 
     if (forceUpdate)
@@ -121,7 +121,7 @@ void HorizontalScrollBar::OnBarMoved(Controls::Base* control)
     if (m_Bar->IsDepressed())
     {
         SetScrolledAmount(CalculateScrolledAmount(), false);
-        BaseClass::OnBarMoved(control);
+        ParentClass::OnBarMoved(control);
     }
     else
     {

@@ -114,7 +114,7 @@ void WindowControl::Render(Skin::Base* skin)
 
 void WindowControl::RenderUnder(Skin::Base* skin)
 {
-    BaseClass::RenderUnder(skin);
+    ParentClass::RenderUnder(skin);
     skin->DrawShadow(this);
 }
 
@@ -133,12 +133,12 @@ void WindowControl::SetHidden(bool hidden)
     if (!hidden)
         BringToFront();
 
-    BaseClass::SetHidden(hidden);
+    ParentClass::SetHidden(hidden);
 }
 
 void WindowControl::Touch()
 {
-    BaseClass::Touch();
+    ParentClass::Touch();
     BringToFront();
 }
 

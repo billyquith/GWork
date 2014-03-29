@@ -23,7 +23,7 @@ GWEN_CONTROL_CONSTRUCTOR(VerticalScrollBar)
 
 void VerticalScrollBar::Layout(Skin::Base* skin)
 {
-    BaseClass::Layout(skin);
+    ParentClass::Layout(skin);
     m_ScrollButton[SCROLL_BUTTON_UP]->Dock(Pos::Top);
     m_ScrollButton[SCROLL_BUTTON_UP]->SetHeight(Width());
     m_ScrollButton[SCROLL_BUTTON_DOWN]->Dock(Pos::Bottom);
@@ -75,7 +75,7 @@ float VerticalScrollBar::GetNudgeAmount()
     if (m_bDepressed)
         return m_fViewableContentSize/m_fContentSize;
     else
-        return BaseClass::GetNudgeAmount();
+        return ParentClass::GetNudgeAmount();
 }
 
 void VerticalScrollBar::OnMouseClickLeft(int x, int y, bool bDown)
@@ -109,7 +109,7 @@ bool VerticalScrollBar::SetScrolledAmount(float amount, bool forceUpdate)
 {
     amount = Gwen::Clamp(amount, 0.f, 1.f);
 
-    if (!BaseClass::SetScrolledAmount(amount, forceUpdate))
+    if (!ParentClass::SetScrolledAmount(amount, forceUpdate))
         return false;
 
     if (forceUpdate)
@@ -126,7 +126,7 @@ void VerticalScrollBar::OnBarMoved(Controls::Base* control)
     if (m_Bar->IsDepressed())
     {
         SetScrolledAmount(CalculateScrolledAmount(), false);
-        BaseClass::OnBarMoved(control);
+        ParentClass::OnBarMoved(control);
     }
     else
     {

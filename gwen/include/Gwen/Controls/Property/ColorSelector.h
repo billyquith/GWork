@@ -97,7 +97,7 @@ namespace Gwen
 
                 virtual void DoChanged()
                 {
-                    BaseClass::DoChanged();
+                    ParentClass::DoChanged();
                     unsigned int r,g,b;
 #ifdef _WIN32
                     if (sscanf_s(m_TextBox->GetText().c_str(), "%u,%u,%u", &r, &g, &b) == 3)

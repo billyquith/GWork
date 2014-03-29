@@ -25,7 +25,7 @@ namespace Gwen
                 {
                     m_Checkbox = new Gwen::Controls::CheckBox(this);
                     m_Checkbox->SetShouldDrawBackground(false);
-                    m_Checkbox->onCheckChanged.Add(this, &BaseClass::OnPropertyValueChanged);
+                    m_Checkbox->onCheckChanged.Add(this, &ParentClass::OnPropertyValueChanged);
                     m_Checkbox->SetTabable(true);
                     m_Checkbox->SetKeyboardInputEnabled(true);
                     m_Checkbox->SetPos(2, 1);
@@ -52,7 +52,7 @@ namespace Gwen
 
                 virtual bool IsHovered()
                 {
-                    return BaseClass::IsHovered() || m_Checkbox->IsHovered();
+                    return ParentClass::IsHovered() || m_Checkbox->IsHovered();
                 }
 
                 Gwen::Controls::CheckBox* m_Checkbox;

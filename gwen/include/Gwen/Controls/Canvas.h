@@ -20,7 +20,7 @@ namespace Gwen
         {
         public:
 
-            typedef Controls::Base BaseClass;
+            typedef Controls::Base ParentClass;
 
             Canvas(Skin::Base* pSkin);
             virtual ~Canvas();

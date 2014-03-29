@@ -29,7 +29,7 @@ void GroupBox::Layout(Skin::Base* skin)
 {
 	m_InnerPanel->SetMargin( Margin(m_InnerMargin, TextHeight()/2 + m_InnerMargin,
                                     m_InnerMargin, m_InnerMargin) );
-    BaseClass::Layout(skin);
+    ParentClass::Layout(skin);
 }
 
 void GroupBox::Render(Skin::Base* skin)

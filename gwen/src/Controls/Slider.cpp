@@ -43,7 +43,7 @@ void Slider::OnMoved(Controls::Base* /*control*/)
 
 void Slider::Layout(Skin::Base* skin)
 {
-    BaseClass::Layout(skin);
+    ParentClass::Layout(skin);
 }
 
 float Slider::CalculateValue()

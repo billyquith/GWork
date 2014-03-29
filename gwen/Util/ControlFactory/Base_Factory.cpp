@@ -6,10 +6,9 @@ namespace Gwen
 {
     namespace ControlFactory
     {
-        using namespace Gwen;
-
         namespace Properties
         {
+            
             class ControlName : public Gwen::ControlFactory::Property
             {
                 GWEN_CONTROL_FACTORY_PROPERTY(ControlName, "The control's name");

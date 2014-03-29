@@ -116,7 +116,7 @@ void TabStrip::Layout(Skin::Base* skin)
     if (m_iDock == Pos::Left || m_iDock == Pos::Right)
         SetSize(pLargestTab.x, Height());
 
-    BaseClass::Layout(skin);
+    ParentClass::Layout(skin);
 }
 
 void TabStrip::DragAndDrop_HoverEnter(Gwen::DragAndDrop::Package* /*pPackage*/, int /*x*/,

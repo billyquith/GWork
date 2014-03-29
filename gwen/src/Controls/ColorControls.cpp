@@ -171,7 +171,7 @@ void ColorLerpBox::Render(Gwen::Skin::Base* skin)
 {
     // Is there any way to move this into skin? Not for now, no idea how we'll
     // "actually" render these
-    BaseClass::Render(skin);
+    ParentClass::Render(skin);
 
     for (int x = 0; x < Width(); x++)
     {

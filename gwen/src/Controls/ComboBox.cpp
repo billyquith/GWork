@@ -90,7 +90,7 @@ void ComboBox::Render(Skin::Base* skin)
 void ComboBox::Layout(Skin::Base* skin)
 {
     m_Button->Position(Pos::Right|Pos::CenterV, 4, 0);
-    BaseClass::Layout(skin);
+    ParentClass::Layout(skin);
 }
 
 void ComboBox::UpdateColours()
@@ -98,7 +98,7 @@ void ComboBox::UpdateColours()
     if (!ShouldDrawBackground())
         return SetTextColor(GetSkin()->Colors.Button.Normal);
 
-    BaseClass::UpdateColours();
+    ParentClass::UpdateColours();
 }
 
 void ComboBox::OnPress()

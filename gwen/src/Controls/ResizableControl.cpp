@@ -104,7 +104,7 @@ bool ResizableControl::SetBounds(int x, int y, int w, int h)
             y = 0;
     }
 
-    return BaseClass::SetBounds(x, y, w, h);
+    return ParentClass::SetBounds(x, y, w, h);
 }
 
 void ResizableControl::OnResizedInternal(Controls::Base* /*pControl*/)

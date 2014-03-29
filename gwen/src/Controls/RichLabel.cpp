@@ -55,7 +55,7 @@ void RichLabel::AddText(const Gwen::String& text, Gwen::Color color, Gwen::Font*
 bool RichLabel::SizeToChildren(bool w, bool h)
 {
     Rebuild();
-    return BaseClass::SizeToChildren(w, h);
+    return ParentClass::SizeToChildren(w, h);
 }
 
 void RichLabel::SplitLabel(const Gwen::String& text, Gwen::Font* pFont,
@@ -189,13 +189,13 @@ void RichLabel::Rebuild()
 
 void RichLabel::OnBoundsChanged(Gwen::Rect oldBounds)
 {
-    BaseClass::OnBoundsChanged(oldBounds);
+    ParentClass::OnBoundsChanged(oldBounds);
     Rebuild();
 }
 
 void RichLabel::Layout(Gwen::Skin::Base* skin)
 {
-    BaseClass::Layout(skin);
+    ParentClass::Layout(skin);
 
     if (m_bNeedsRebuild)
         Rebuild();

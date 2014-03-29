@@ -92,6 +92,8 @@ namespace Gwen
         };
 
 
+        /// Base class for ControlFactorys.
+        //
         class Base
         {
         public:
@@ -117,11 +119,13 @@ namespace Gwen
 
             /// Called when the control is drag and dropped onto the parent, even
             /// when just moving in the designer
-            virtual void AddChild(Gwen::Controls::Base* ctrl, Gwen::Controls::Base* child,
+            virtual void AddChild(Gwen::Controls::Base* ctrl,
+                                  Gwen::Controls::Base* child,
                                   const Gwen::Point& pos);
 
             /// Called when creating the control - param might be empty
-            virtual void AddChild(Gwen::Controls::Base* ctrl, Gwen::Controls::Base* child,
+            virtual void AddChild(Gwen::Controls::Base* ctrl,
+                                  Gwen::Controls::Base* child,
                                   int iPage = 0);
 
             /// Called when a child is clicked on in an editor
@@ -145,26 +149,33 @@ namespace Gwen
         };
 
 
-    }
+    } // ControlFactory
 
-}
+} // Gwen
 
-#define GWEN_CONTROL_FACTORY_CONSTRUCTOR(ThisName, BaseName) \
-    typedef BaseName BaseClass; \
-    typedef ThisName ThisClass; \
-    ThisName() : BaseClass()
 
-#define GWEN_CONTROL_FACTORY(ThisName) \
-    void GWENCONTROLFACTORY##ThisName() \
+/// Declare a ControlFactory constructor.
+#define GWEN_CONTROL_FACTORY_CONSTRUCTOR(CLASS_NAME, PARENT_CLASS) \
+    typedef PARENT_CLASS ParentClass; \
+    typedef CLASS_NAME ThisClass; \
+    CLASS_NAME() : ParentClass()
+
+/// Instance a ControlFactory.
+/// @param FACTORY_CLASS - The name of the factory.
+#define GWEN_CONTROL_FACTORY(FACTORY_CLASS) \
+    void GWENCONTROLFACTORY##FACTORY_CLASS() \
     { \
-        new ThisName(); \
+        new FACTORY_CLASS(); \
     }
 
-#define DECLARE_GWEN_CONTROL_FACTORY(ThisName) \
-    extern void GWENCONTROLFACTORY##ThisName(); \
-    GWENCONTROLFACTORY##ThisName();
+/// Declare a ControlFactory factory so that it can be called.
+#define DECLARE_GWEN_CONTROL_FACTORY(FACTORY_CLASS) \
+    extern void GWENCONTROLFACTORY##FACTORY_CLASS(); \
+    GWENCONTROLFACTORY##FACTORY_CLASS();
 
-#define GWEN_CONTROL_FACTORY_PROPERTY(_name_, _description_) \
+#define GWEN_CONTROL_FACTORY_PROPERTY(PROP_NAME, DESCRIPTION) \
 public: \
-    Gwen::String Name() { return #_name_; } \
-    Gwen::String Description() { return _description_; }
+    Gwen::String Name()         { return #PROP_NAME; } \
+    Gwen::String Description()  { return DESCRIPTION; }
+
+

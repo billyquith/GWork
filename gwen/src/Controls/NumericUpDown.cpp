@@ -92,7 +92,7 @@ void NumericUpDown::OnChange()
 
 void NumericUpDown::OnTextChanged()
 {
-    BaseClass::OnTextChanged();
+    ParentClass::OnTextChanged();
     SyncNumberFromText();
 }
 
@@ -100,5 +100,5 @@ void NumericUpDown::OnEnter()
 {
     SyncNumberFromText();
     SyncTextFromNumber();
-    BaseClass::OnEnter();
+    ParentClass::OnEnter();
 }

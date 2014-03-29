@@ -257,7 +257,7 @@ namespace Gwen
 
                 void Layout(Skin::Base* skin)
                 {
-                    BaseClass::Layout(skin);
+                    ParentClass::Layout(skin);
 
                     if (m_bSizeToContents)
                         DoSizeToContents();

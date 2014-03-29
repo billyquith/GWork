@@ -153,7 +153,7 @@ void Button::SetToggleState(bool b)
 
 void Button::SizeToContents()
 {
-    BaseClass::SizeToContents();
+    ParentClass::SizeToContents();
 
     if (m_Image)
     {
@@ -193,7 +193,7 @@ void Button::UpdateColours()
 
 void Button::PostLayout(Skin::Base* pSkin)
 {
-    BaseClass::PostLayout(pSkin);
+    ParentClass::PostLayout(pSkin);
 
     if (m_Image)
     {

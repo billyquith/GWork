@@ -681,11 +681,11 @@ namespace Gwen
         if (GetIdentifier() == Variable)                                \
             return this;                                                \
                                                                         \
-        return BaseClass::DynamicCast(Variable);                        \
+        return ParentClass::DynamicCast(Variable);                        \
     }
 
 #define GWEN_CLASS(THISNAME, BASENAME) \
-    typedef BASENAME BaseClass; \
+    typedef BASENAME ParentClass; \
     typedef THISNAME ThisClass;
 
 // To be placed in the controls .h definition.
@@ -694,15 +694,15 @@ public: \
     GWEN_CLASS(THISNAME, BASENAME)  \
     GWEN_DYNAMIC(THISNAME, BASENAME) \
     virtual const char* GetTypeName()       { return #THISNAME; } \
-    virtual const char* GetBaseTypeName()   { return BaseClass::GetTypeName(); } \
+    virtual const char* GetBaseTypeName()   { return ParentClass::GetTypeName(); } \
     THISNAME(Gwen::Controls::Base*pParent, const Gwen::String&pName = "")
 
 #define GWEN_CONTROL_INLINE(THISNAME, BASENAME) \
-    GWEN_CONTROL(THISNAME, BASENAME) : BaseClass(pParent, pName)
+    GWEN_CONTROL(THISNAME, BASENAME) : ParentClass(pParent, pName)
 
 #define GWEN_CONTROL_CONSTRUCTOR(THISNAME) \
     THISNAME::THISNAME(Gwen::Controls::Base* pParent, const Gwen::String& pName) \
-        : BaseClass(pParent, pName)
+        : ParentClass(pParent, pName)
 
 } // namespace Gwen
 

@@ -32,7 +32,7 @@ void Menu::Render(Skin::Base* skin)
 
 void Menu::RenderUnder(Skin::Base* skin)
 {
-    BaseClass::RenderUnder(skin);
+    ParentClass::RenderUnder(skin);
     skin->DrawShadow(this);
 }
 
@@ -59,7 +59,7 @@ void Menu::Layout(Skin::Base* skin)
 
     SetSize(Width(), childrenHeight);
     
-    BaseClass::Layout(skin);
+    ParentClass::Layout(skin);
 }
 
 MenuItem* Menu::AddItem(const String& strName,
@@ -174,7 +174,7 @@ void Menu::Close()
 
 void Menu::CloseMenus()
 {
-    BaseClass::CloseMenus();
+    ParentClass::CloseMenus();
     CloseAll();
     Close();
 }

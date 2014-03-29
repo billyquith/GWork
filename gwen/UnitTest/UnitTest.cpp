@@ -115,7 +115,7 @@ void UnitTest::Render(Gwen::Skin::Base* skin)
         m_iFrames = 0;
     }
 
-    BaseClass::Render(skin);
+    ParentClass::Render(skin);
 }
 
 void GUnit::UnitPrint(Gwen::String str)

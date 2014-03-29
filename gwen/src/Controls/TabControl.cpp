@@ -132,7 +132,7 @@ void TabControl::OnTabPressed(Controls::Base* control)
 
 void TabControl::PostLayout(Skin::Base* skin)
 {
-    BaseClass::PostLayout(skin);
+    ParentClass::PostLayout(skin);
     HandleOverflow();
 }
 

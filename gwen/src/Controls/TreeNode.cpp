@@ -133,7 +133,7 @@ void TreeNode::Layout(Skin::Base* skin)
         }
     }
 
-    BaseClass::Layout(skin);
+    ParentClass::Layout(skin);
 }
 
 void TreeNode::PostLayout(Skin::Base* /*skin*/)

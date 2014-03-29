@@ -21,7 +21,7 @@ using namespace Gwen::Controls;
 
 WindowCanvas::WindowCanvas(int x, int y, int w, int h, Gwen::Skin::Base* pSkin,
                            const Gwen::String& strWindowTitle)
-: BaseClass(NULL)
+: ParentClass(NULL)
 {
     m_bQuit = false;
     m_bCanMaximize = true;
@@ -114,13 +114,13 @@ void WindowCanvas::Layout(Skin::Base* skin)
 {
     m_Sizer->BringToFront();
     m_Sizer->Position(Pos::Right|Pos::Bottom);
-    BaseClass::Layout(skin);
+    ParentClass::Layout(skin);
 }
 
 void WindowCanvas::DoThink()
 {
     Platform::MessagePump(m_pOSWindow, this);
-    BaseClass::DoThink();
+    ParentClass::DoThink();
     RenderCanvas();
 }
 
@@ -201,7 +201,7 @@ Skin::Base* WindowCanvas::GetSkin(void)
         m_pSkinChange = NULL;
     }
 
-    return BaseClass::GetSkin();
+    return ParentClass::GetSkin();
 }
 
 void WindowCanvas::Dragger_Start()
@@ -263,7 +263,7 @@ void WindowCanvas::Sizer_Moved()
     Gwen::Platform::SetBoundsPlatformWindow(m_pOSWindow, m_WindowPos.x, m_WindowPos.y, w, h);
     GetSkin()->GetRender()->ResizedContext(this, w, h);
     this->SetSize(w, h);
-    BaseClass::DoThink();
+    ParentClass::DoThink();
     RenderCanvas();
 }
 
@@ -284,7 +284,7 @@ void WindowCanvas::SetMaximize(bool b)
     SetSize(pSize.x, pSize.y);
     m_WindowPos = pPos;
     GetSkin()->GetRender()->ResizedContext(this, pSize.x, pSize.y);
-    BaseClass::DoThink();
+    ParentClass::DoThink();
     RenderCanvas();
 }
 

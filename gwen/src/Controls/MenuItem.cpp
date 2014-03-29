@@ -58,7 +58,7 @@ void MenuItem::Layout(Skin::Base* skin)
     if (m_SubmenuArrow)
         m_SubmenuArrow->Position(Pos::Right|Pos::CenterV, 4, 0);
 
-    BaseClass::Layout(skin);
+    ParentClass::Layout(skin);
 }
 
 Menu* MenuItem::GetMenu()
@@ -107,7 +107,7 @@ void MenuItem::OnPress()
         GetCanvas()->CloseMenus();
     }
 
-    BaseClass::OnPress();
+    ParentClass::OnPress();
 }
 
 void MenuItem::ToggleMenu()
@@ -177,7 +177,7 @@ void MenuItem::SetAccelerator(const String& strAccelerator)
 
 void MenuItem::SizeToContents()
 {
-    BaseClass::SizeToContents();
+    ParentClass::SizeToContents();
 
     if (m_Accelerator)
     {

@@ -244,6 +244,7 @@ namespace Gwen
 
         } // namespace Properties
 
+        
         class Label_Factory : public Gwen::ControlFactory::Base
         {
         public:
@@ -279,9 +280,12 @@ namespace Gwen
 
         };
 
-
         GWEN_CONTROL_FACTORY(Label_Factory);
+        
+        
+        
 
+        
         class LabelClickable_Factory : public Gwen::ControlFactory::Base
         {
         public:
