@@ -152,10 +152,36 @@ bool Gwen::Platform::FolderOpen(const String& Name, const String& StartPath,
     return true;
 }
 
+static bool InitAllegro()
+{
+    if (al_is_system_installed())
+        return true;
+    
+	if (!al_init())
+        return false;
+	
+    ALLEGRO_EVENT_QUEUE* event_queue = al_create_event_queue();
+    if (!event_queue)
+        return false;
+	
+    al_init_image_addon();
+    al_init_font_addon();
+    al_init_primitives_addon();
+    al_init_ttf_addon();
+    al_install_mouse();
+    al_install_keyboard();
+    al_register_event_source(event_queue, al_get_display_event_source(display));
+    al_register_event_source(event_queue, al_get_mouse_event_source());
+    al_register_event_source(event_queue, al_get_keyboard_event_source());
+    
+    return true;
+}
+
 void* Gwen::Platform::CreatePlatformWindow(int x, int y, int w, int h,
                                            const Gwen::String& strWindowTitle)
 {
-    if (!al_is_system_installed() && !al_init())
+    // Check Allegro has been initialised.
+    if (!InitAllegro())
         return NULL;
 
     al_set_new_window_position(x, y);
@@ -182,6 +208,7 @@ void* Gwen::Platform::CreatePlatformWindow(int x, int y, int w, int h,
     al_register_event_source(g_event_queue, al_get_display_event_source(display));
     al_register_event_source(g_event_queue, al_get_mouse_event_source());
     al_register_event_source(g_event_queue, al_get_keyboard_event_source());
+    
     return display;
 }
 
