@@ -91,4 +91,4 @@ public:
 };
 
 
-DEFINE_UNIT_TEST(CrossSplitter, "CrossSplitter");
+DEFINE_UNIT_TEST(CrossSplitter);

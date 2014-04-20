@@ -87,4 +87,4 @@ public:
 };
 
 
-DEFINE_UNIT_TEST(Label, "Label");
+DEFINE_UNIT_TEST(Label);

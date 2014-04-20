@@ -69,4 +69,4 @@ public:
 };
 
 
-DEFINE_UNIT_TEST(Properties, "Properties");
+DEFINE_UNIT_TEST(Properties);

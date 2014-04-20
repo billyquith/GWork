@@ -78,4 +78,4 @@ public:
 };
 
 
-DEFINE_UNIT_TEST(ProgressBar, "ProgressBar");
+DEFINE_UNIT_TEST(ProgressBar);

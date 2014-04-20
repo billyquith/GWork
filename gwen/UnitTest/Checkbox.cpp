@@ -45,4 +45,4 @@ public:
 };
 
 
-DEFINE_UNIT_TEST(Checkbox, "Checkbox");
+DEFINE_UNIT_TEST(Checkbox);

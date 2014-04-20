@@ -51,4 +51,4 @@ public:
 };
 
 
-DEFINE_UNIT_TEST(TreeControl, "TreeControl");
+DEFINE_UNIT_TEST(TreeControl);

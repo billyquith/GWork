@@ -48,4 +48,4 @@ public:
 };
 
 
-DEFINE_UNIT_TEST(CollapsibleList, "CollapsibleList");
+DEFINE_UNIT_TEST(CollapsibleList);

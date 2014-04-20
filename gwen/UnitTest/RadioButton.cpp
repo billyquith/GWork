@@ -31,4 +31,4 @@ public:
 };
 
 
-DEFINE_UNIT_TEST(RadioButton, "RadioButton");
+DEFINE_UNIT_TEST(RadioButton);

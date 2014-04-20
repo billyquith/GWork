@@ -25,4 +25,4 @@ public:
 };
 
 
-DEFINE_UNIT_TEST(Numeric, "Numeric");
+DEFINE_UNIT_TEST(Numeric);

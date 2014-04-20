@@ -109,4 +109,4 @@ public:
 };
 
 
-DEFINE_UNIT_TEST(ScrollControl, "Scroll");
+DEFINE_UNIT_TEST(ScrollControl);

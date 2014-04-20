@@ -58,4 +58,4 @@ public:
 };
 
 
-DEFINE_UNIT_TEST(Slider, "Slider");
+DEFINE_UNIT_TEST(Slider);

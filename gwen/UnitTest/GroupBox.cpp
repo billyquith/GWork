@@ -43,4 +43,4 @@ public:
 };
 
 
-DEFINE_UNIT_TEST(GroupBox, "GroupBox");
+DEFINE_UNIT_TEST(GroupBox);

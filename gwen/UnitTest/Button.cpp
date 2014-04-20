@@ -76,4 +76,4 @@ public:
 };
 
 
-DEFINE_UNIT_TEST(Button, "Button");
+DEFINE_UNIT_TEST(Button);

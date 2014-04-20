@@ -26,4 +26,4 @@ public:
 };
 
 
-DEFINE_UNIT_TEST(ImagePanel, "ImagePanel");
+DEFINE_UNIT_TEST(ImagePanel);
