@@ -67,4 +67,4 @@ public:
 };
 
 
-DEFINE_UNIT_TEST(TabControl, "TabControl");
+DEFINE_UNIT_TEST(TabControl);

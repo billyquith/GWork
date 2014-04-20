@@ -104,4 +104,4 @@ public:
 };
 
 
-DEFINE_UNIT_TEST(MenuStrip, "MenuStrip");
+DEFINE_UNIT_TEST(MenuStrip);

@@ -48,4 +48,4 @@ public:
 };
 
 
-DEFINE_UNIT_TEST(PageControl, "PageControl");
+DEFINE_UNIT_TEST(PageControl);

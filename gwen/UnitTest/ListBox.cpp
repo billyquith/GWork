@@ -66,4 +66,4 @@ public:
 };
 
 
-DEFINE_UNIT_TEST(ListBox, "ListBox");
+DEFINE_UNIT_TEST(ListBox);

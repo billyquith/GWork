@@ -48,4 +48,4 @@ public:
 };
 
 
-DEFINE_UNIT_TEST(LabelMultiline, "LabelMultiline");
+DEFINE_UNIT_TEST(LabelMultiline);

@@ -75,4 +75,4 @@ public:
 };
 
 
-DEFINE_UNIT_TEST(TextBox, "TextBox");
+DEFINE_UNIT_TEST(TextBox);

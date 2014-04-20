@@ -18,4 +18,4 @@ public:
 };
 
 
-DEFINE_UNIT_TEST(ColorPicker, "ColorPicker");
+DEFINE_UNIT_TEST(ColorPicker);

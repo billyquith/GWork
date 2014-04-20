@@ -24,4 +24,4 @@ public:
 };
 
 
-DEFINE_UNIT_TEST(StatusBar, "StatusBar");
+DEFINE_UNIT_TEST(StatusBar);

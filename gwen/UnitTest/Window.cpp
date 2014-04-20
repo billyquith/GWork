@@ -50,4 +50,4 @@ public:
 };
 
 
-DEFINE_UNIT_TEST(Window, "Window");
+DEFINE_UNIT_TEST(Window);

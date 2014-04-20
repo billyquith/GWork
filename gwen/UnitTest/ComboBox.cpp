@@ -49,4 +49,4 @@ public:
 };
 
 
-DEFINE_UNIT_TEST(ComboBox, "ComboBox");
+DEFINE_UNIT_TEST(ComboBox);
