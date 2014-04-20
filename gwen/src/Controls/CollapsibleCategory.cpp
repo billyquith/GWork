@@ -7,9 +7,12 @@
 #include "Gwen/Controls/CollapsibleCategory.h"
 #include "Gwen/Controls/CollapsibleList.h"
 
-using namespace Gwen;
+
+namespace Gwen {
+    
 using namespace Gwen::Controls;
 
+    
 class CategoryButton : public Button
 {
     GWEN_CONTROL_INLINE(CategoryButton, Button)
@@ -17,7 +20,7 @@ class CategoryButton : public Button
         SetAlignment(Pos::Left|Pos::CenterV);
         m_bAlt = false;
     }
-
+    
     virtual void Render(Skin::Base* skin)
     {
         if (m_bAlt)
@@ -38,32 +41,32 @@ class CategoryButton : public Button
             else
                 skin->GetRender()->SetDrawColor(skin->Colors.Category.Line.Button);
         }
-
+        
         skin->GetRender()->DrawFilledRect(this->GetRenderBounds());
     }
-
+    
     void UpdateColours()
     {
         if (m_bAlt)
         {
             if (IsDepressed() || GetToggleState())
                 return SetTextColor(GetSkin()->Colors.Category.LineAlt.Text_Selected);
-
+            
             if (IsHovered())
                 return SetTextColor(GetSkin()->Colors.Category.LineAlt.Text_Hover);
-
+            
             return SetTextColor(GetSkin()->Colors.Category.LineAlt.Text);
         }
-
+        
         if (IsDepressed() || GetToggleState())
             return SetTextColor(GetSkin()->Colors.Category.Line.Text_Selected);
-
+        
         if (IsHovered())
             return SetTextColor(GetSkin()->Colors.Category.Line.Text_Hover);
-
+        
         return SetTextColor(GetSkin()->Colors.Category.Line.Text);
     }
-
+    
     bool m_bAlt;
 };
 
@@ -76,15 +79,15 @@ class CategoryHeaderButton : public Button
         SetIsToggle(true);
         SetAlignment(Pos::Center);
     }
-
+    
     void UpdateColours()
     {
         if (IsDepressed() || GetToggleState())
             return SetTextColor(GetSkin()->Colors.Category.Header_Closed);
-
+        
         return SetTextColor(GetSkin()->Colors.Category.Header);
     }
-
+    
 };
 
 
@@ -114,15 +117,15 @@ Button* CollapsibleCategory::Add(const String& name)
 void CollapsibleCategory::OnSelection(Controls::Base* control)
 {
     CategoryButton* pChild = gwen_cast<CategoryButton>(control);
-
+    
     if (!pChild)
         return;
-
+    
     if (m_pList)
         m_pList->UnselectAll();
     else
         UnselectAll();
-
+    
     pChild->SetToggleState(true);
     onSelection.Call(this);
 }
@@ -140,14 +143,14 @@ void CollapsibleCategory::SetText(const String& text)
 void CollapsibleCategory::UnselectAll()
 {
     Base::List& children = GetChildren();
-
+    
     for (Base::List::iterator iter = children.begin(); iter != children.end(); ++iter)
     {
         CategoryButton* pChild = gwen_cast<CategoryButton>(*iter);
-
+        
         if (!pChild)
             continue;
-
+        
         pChild->SetToggleState(false);
     }
 }
@@ -158,17 +161,17 @@ void CollapsibleCategory::PostLayout(Skin::Base* /*skin*/)
         SetHeight(m_pButton->Height());
     else
         SizeToChildren(false, true);
-
+    
     Base::List& children = GetChildren();
     bool b = true;
-
+    
     for (Base::List::iterator iter = children.begin(); iter != children.end(); ++iter)
     {
         CategoryButton* pChild = gwen_cast<CategoryButton>(*iter);
-
+        
         if (!pChild)
             continue;
-
+        
         pChild->m_bAlt = b;
         pChild->UpdateColours();
         b = !b;
@@ -178,17 +181,31 @@ void CollapsibleCategory::PostLayout(Skin::Base* /*skin*/)
 Button* CollapsibleCategory::GetSelected()
 {
     Base::List& children = GetChildren();
-
+    
     for (Base::List::iterator iter = children.begin(); iter != children.end(); ++iter)
     {
         CategoryButton* pChild = gwen_cast<CategoryButton>(*iter);
-
+        
         if (!pChild)
             continue;
-
+        
         if (pChild->GetToggleState())
             return pChild;
     }
-
+    
     return NULL;
 }
+
+
+void CollapsibleCategory::SetExpanded(bool expanded)
+{
+    m_pButton->SetToggleState(!expanded);
+}
+
+bool CollapsibleCategory::IsExpanded() const
+{
+    return !m_pButton->GetToggleState();
+}
+    
+} // namespace Gwen
+
