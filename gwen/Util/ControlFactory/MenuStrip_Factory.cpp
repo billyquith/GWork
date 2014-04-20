@@ -1,5 +1,5 @@
 
-#include "Gwen/Util/ControlFactory.h"
+#include "ControlFactory.h"
 #include "Gwen/Controls.h"
 
 namespace Gwen
