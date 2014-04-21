@@ -14,6 +14,7 @@ namespace Gwen
         List&                 GetList();
         ControlFactory::Base* Find(const Gwen::String& name);
         Controls::Base*       Clone(Controls::Base* pEnt, ControlFactory::Base* pFactory);
+        
 
         class Property
         {
@@ -25,8 +26,7 @@ namespace Gwen
             virtual Gwen::String Description() = 0;
 
             virtual Gwen::String GetValue(Gwen::Controls::Base* ctrl) = 0;
-            virtual void                SetValue(Gwen::Controls::Base* ctrl,
-                                                 const Gwen::String& str) = 0;
+            virtual void         SetValue(Gwen::Controls::Base* ctrl, const Gwen::String& str) = 0;
 
             virtual int OptionNum()
             {

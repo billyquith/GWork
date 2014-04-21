@@ -6,8 +6,6 @@ namespace Gwen
 {
     namespace ControlFactory
     {
-        using namespace Gwen;
-
         namespace Properties
         {
             class Text : public ControlFactory::Property
@@ -140,13 +138,13 @@ namespace Gwen
 
                 String GetValue(Controls::Base* ctrl)
                 {
-                    if (gwen_cast<Controls::Label>(ctrl)->GetAlignment()&Pos::Top)
+                    if (gwen_cast<Controls::Label>(ctrl)->GetAlignment() & Pos::Top)
                         return "Top";
 
-                    if (gwen_cast<Controls::Label>(ctrl)->GetAlignment()&Pos::CenterV)
+                    if (gwen_cast<Controls::Label>(ctrl)->GetAlignment() & Pos::CenterV)
                         return "Center";
 
-                    if (gwen_cast<Controls::Label>(ctrl)->GetAlignment()&Pos::Bottom)
+                    if (gwen_cast<Controls::Label>(ctrl)->GetAlignment() & Pos::Bottom)
                         return "Bottom";
 
                     return "Top";
@@ -194,13 +192,13 @@ namespace Gwen
 
                 String GetValue(Controls::Base* ctrl)
                 {
-                    if (gwen_cast<Controls::Label>(ctrl)->GetAlignment()&Pos::Left)
+                    if (gwen_cast<Controls::Label>(ctrl)->GetAlignment() & Pos::Left)
                         return "Left";
 
-                    if (gwen_cast<Controls::Label>(ctrl)->GetAlignment()&Pos::CenterH)
+                    if (gwen_cast<Controls::Label>(ctrl)->GetAlignment() & Pos::CenterH)
                         return "Center";
 
-                    if (gwen_cast<Controls::Label>(ctrl)->GetAlignment()&Pos::Right)
+                    if (gwen_cast<Controls::Label>(ctrl)->GetAlignment() & Pos::Right)
                         return "Right";
 
                     return "Left";

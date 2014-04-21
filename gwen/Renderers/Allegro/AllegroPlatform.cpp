@@ -19,10 +19,10 @@
 #include "Gwen/Input/Allegro.h"
 
 
-static Gwen::Input::Allegro g_GwenInput;
+static Gwen::Input::Allegro     g_GwenInput;
 static ALLEGRO_EVENT_QUEUE*     g_event_queue = NULL;
 static ALLEGRO_DISPLAY*         g_display = NULL;
-static Gwen::String gs_ClipboardEmulator;
+static Gwen::String             gs_ClipboardEmulator;
 
 static const ALLEGRO_SYSTEM_MOUSE_CURSOR g_CursorConversion[] =
 {
@@ -170,7 +170,7 @@ static bool InitAllegro()
     al_init_ttf_addon();
     al_install_mouse();
     al_install_keyboard();
-    al_register_event_source(event_queue, al_get_display_event_source(display));
+//    al_register_event_source(event_queue, al_get_display_event_source(display));
     al_register_event_source(event_queue, al_get_mouse_event_source());
     al_register_event_source(event_queue, al_get_keyboard_event_source());
     
