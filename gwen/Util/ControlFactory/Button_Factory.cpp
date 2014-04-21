@@ -19,7 +19,7 @@ namespace Gwen
                 return "Button";
             }
 
-            virtual Gwen::String BaseName()
+            virtual Gwen::String ParentName()
             {
                 return "Label";
             }

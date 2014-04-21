@@ -80,7 +80,7 @@ namespace Gwen
                  it != ControlFactory::GetList().end();
                  ++it)
             {
-                if ((*it)->Name() == BaseName())
+                if ((*it)->Name() == ParentName())
                     return *it;
             }
 

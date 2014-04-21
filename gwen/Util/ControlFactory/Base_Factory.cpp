@@ -1,6 +1,7 @@
 
-#include "GwenUtil/ControlFactory.h"
-#include "Gwen/Controls.h"
+#include <GwenUtil/ControlFactory.h>
+#include <Gwen/Controls.h>
+#include "ControlProperty.h"
 
 namespace Gwen
 {
@@ -303,7 +304,7 @@ namespace Gwen
                 return "Base";
             }
 
-            virtual Gwen::String BaseName()
+            virtual Gwen::String ParentName()
             {
                 return "";
             }
@@ -314,7 +315,6 @@ namespace Gwen
                 pControl->SetSize(100, 100);
                 return pControl;
             }
-
         };
 
 

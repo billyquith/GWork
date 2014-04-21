@@ -138,13 +138,15 @@ namespace Gwen
 
                 String GetValue(Controls::Base* ctrl)
                 {
-                    if (gwen_cast<Controls::Label>(ctrl)->GetAlignment() & Pos::Top)
+                    const int align = gwen_cast<Controls::Label>(ctrl)->GetAlignment();
+                    
+                    if (align & Pos::Top)
                         return "Top";
 
-                    if (gwen_cast<Controls::Label>(ctrl)->GetAlignment() & Pos::CenterV)
+                    if (align & Pos::CenterV)
                         return "Center";
 
-                    if (gwen_cast<Controls::Label>(ctrl)->GetAlignment() & Pos::Bottom)
+                    if (align & Pos::Bottom)
                         return "Bottom";
 
                     return "Top";
@@ -152,19 +154,17 @@ namespace Gwen
 
                 void SetValue(Controls::Base* ctrl, const String& str)
                 {
-                    int iAlign = gwen_cast<Controls::Label>(ctrl)->GetAlignment();
-                    iAlign &= ~Pos::Top;
-                    iAlign &= ~Pos::CenterV;
-                    iAlign &= ~Pos::Bottom;
+                    int align = gwen_cast<Controls::Label>(ctrl)->GetAlignment();
+                    align &= ~Pos::Top;
+                    align &= ~Pos::CenterV;
+                    align &= ~Pos::Bottom;
 
                     if (str == "Top")
-                        gwen_cast<Controls::Label>(ctrl)->SetAlignment(iAlign|Pos::Top);
-
-                    if (str == "Center")
-                        gwen_cast<Controls::Label>(ctrl)->SetAlignment(iAlign|Pos::CenterV);
-
-                    if (str == "Bottom")
-                        gwen_cast<Controls::Label>(ctrl)->SetAlignment(iAlign|Pos::Bottom);
+                        gwen_cast<Controls::Label>(ctrl)->SetAlignment(align|Pos::Top);
+                    else if (str == "Center")
+                        gwen_cast<Controls::Label>(ctrl)->SetAlignment(align|Pos::CenterV);
+                    else if (str == "Bottom")
+                        gwen_cast<Controls::Label>(ctrl)->SetAlignment(align|Pos::Bottom);
                 }
 
                 int OptionNum()
@@ -263,7 +263,7 @@ namespace Gwen
                 return "Label";
             }
 
-            virtual Gwen::String BaseName()
+            virtual Gwen::String ParentName()
             {
                 return "Base";
             }
@@ -297,7 +297,7 @@ namespace Gwen
                 return "LabelClickable";
             }
 
-            virtual Gwen::String BaseName()
+            virtual Gwen::String ParentName()
             {
                 return "Label";
             }
