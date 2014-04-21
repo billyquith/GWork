@@ -7,8 +7,6 @@
 #include "Gwen/Macros.h"
 #include "Gwen/Platform.h"
 
-#ifdef GWEN_ALLEGRO_PLATFORM
-
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_image.h>
 #include <allegro5/allegro_font.h>
@@ -170,6 +168,7 @@ static bool InitAllegro()
     al_init_ttf_addon();
     al_install_mouse();
     al_install_keyboard();
+    al_init_native_dialog_addon();
 //    al_register_event_source(event_queue, al_get_display_event_source(display));
     al_register_event_source(event_queue, al_get_mouse_event_source());
     al_register_event_source(event_queue, al_get_keyboard_event_source());
@@ -312,4 +311,3 @@ void Gwen::Platform::GetCursorPos(Gwen::Point& po)
     po.y = mouse.y+wy;
 }
 
-#endif // GWEN_ALLEGRO_PLATFORM

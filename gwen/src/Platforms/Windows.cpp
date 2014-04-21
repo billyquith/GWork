@@ -4,7 +4,7 @@
  *  See license in Gwen.h
  */
 
-#ifdef _WIN32
+#ifdef GWEN_PLATFORM_WINDOWS
 
 #ifndef _WIN32_WINNT
 #define _WIN32_WINNT 0x06000000
@@ -436,4 +436,4 @@ void Gwen::Platform::Sleep(unsigned int iMS)
     ::Sleep(iMS);
 }
 
-#endif // WIN32
+#endif // GWEN_PLATFORM_WINDOWS
