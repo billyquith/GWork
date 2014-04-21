@@ -27,9 +27,11 @@ namespace Gwen
             va_start(s, str);
 #ifdef WIN32
             vsnprintf_s(strOut, sizeof(strOut), str, s);
+            va_end(s);
             OutputDebugStringA(strOut);
 #else
             vsnprintf(strOut, sizeof(strOut), str, s);
+            va_end(s);
             puts(strOut);
 #endif
         }
