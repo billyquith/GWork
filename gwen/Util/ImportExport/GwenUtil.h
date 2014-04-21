@@ -65,8 +65,90 @@ namespace GwenUtil
 
     namespace Data
     {
+        namespace Value
+        {
+            template <typename TValue>
+            inline BString ToString(TValue var);
+            
+            template <typename TValue>
+            inline TValue ToValue(const BString& str);
+            
+            //! Get Value id for type.
+            //! @Note Changing these could break saved data.
+            template <typename TValue>
+            inline unsigned char ValueId();
+            
+            // String (generic value)
+            template <>
+            inline unsigned char ValueId<GwenUtil::BString>() { return 1; }
+            
+            // Float
+            template <>
+            inline unsigned char ValueId<float>() { return 2; }
+            
+            template <>
+            inline GwenUtil::BString ToString(float var)
+            {
+                return GwenUtil::String::Format::NiceFloat(var);
+            }
+            
+            template <>
+            inline float ToValue(const GwenUtil::BString& var)
+            {
+                return GwenUtil::String::To::Float(var);
+            }
+            
+            // int
+            template <>
+            inline unsigned char ValueId<int>() { return 3; }
+            
+            template <>
+            inline GwenUtil::BString ToString(int var)
+            {
+                return GwenUtil::String::Format::Int(var);
+            }
+            
+            template <>
+            inline int ToValue(const GwenUtil::BString& var)
+            {
+                return GwenUtil::String::To::Int(var);
+            }
+            
+            // Bool
+            template <>
+            inline unsigned char ValueId<bool>() { return 4; }
+            
+            template <>
+            inline GwenUtil::BString ToString(bool var)
+            {
+                return var ? "true" : "false";
+            }
+            
+            template <>
+            inline bool ToValue(const GwenUtil::BString& var)
+            {
+                return GwenUtil::String::To::Bool(var);
+            }
+            
+            // Double
+            template <>
+            inline unsigned char ValueId<double>() { return 5; }
+            
+            template <>
+            inline GwenUtil::BString ToString(double var)
+            {
+                return GwenUtil::String::Format::NiceDouble(var);
+            }
+            
+            template <>
+            inline double ToValue(const GwenUtil::BString& var)
+            {
+                return GwenUtil::String::To::Double(var);
+            }
+        }
+        
         //! The tree is a simple recursive Name-Value data structure.
-        //! Each node can have a key, a value and multiple children nodes
+        //! Each node can have a key, a value and multiple child nodes.
         class Tree
         {
         public:
@@ -122,7 +204,6 @@ namespace GwenUtil
             //!     value = Value( "Name", "Default" );     // returns "Default" if "Name" isn't found.
             BString ChildValue(const BString& name, const BString& Default = "") const;
 
-
             //
             // Setting non-string values
             //
@@ -140,17 +221,6 @@ namespace GwenUtil
             
             template <typename TValue>
             bool IsVar() const;
-
-            // Utility methods
-            //
-            template <typename TValue>
-            BString VarToString(TValue var) const;
-            
-            template <typename TValue>
-            TValue StringToVar(const BString& str) const;
-            
-            template <typename TValue>
-            unsigned char VarID() const;
             
             bool IsBranch() const
             {
@@ -167,9 +237,6 @@ namespace GwenUtil
         };
 
 
-        //
-        // Template function definitions
-        //
         inline const BString& Tree::Name() const
         {
             return m_Name;
@@ -187,19 +254,17 @@ namespace GwenUtil
 
         inline void Tree::Value(const BString& value)
         {
-            m_Info = 1;
+            m_Info = Value::ValueId<BString>();
             m_Value = value;
         }
 
         inline Tree& Tree::AddChild()
         {
-            {
-                Tree t;
-                m_Children.push_back(t);
-            }
+            Tree t;
+            m_Children.push_back(t);
 
-            Tree& t = m_Children.back();
-            return t;
+            Tree& back = m_Children.back();
+            return back;
         }
 
         inline Tree& Tree::AddChild(BString name)
@@ -277,20 +342,20 @@ namespace GwenUtil
         template <typename TValue>
         inline void Tree::Var(TValue var)
         {
-            m_Info = VarID<TValue>();
-            m_Value = VarToString<TValue>(var);
+            m_Info = Value::ValueId<TValue>();
+            m_Value = Value::ToString<TValue>(var);
         }
 
         template <typename TValue>
         inline TValue Tree::Var() const
         {
-            return StringToVar<TValue>(Value());
+            return Value::ToValue<TValue>(Value());
         }
 
         template <typename TValue>
         inline bool Tree::IsVar() const
         {
-            return m_Info == VarID<TValue>();
+            return m_Info == Value::ValueId<TValue>();
         }
 
         namespace Json
