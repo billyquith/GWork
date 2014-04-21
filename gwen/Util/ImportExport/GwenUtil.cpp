@@ -189,7 +189,6 @@ namespace GwenUtil {
     {
         // String (generic value)
         template <>
-        template <>
         unsigned char Tree::VarID<GwenUtil::BString>() const
         {
             return 1;
@@ -197,20 +196,17 @@ namespace GwenUtil {
 
         // Float
         template <>
-        template <>
         unsigned char Tree::VarID<float>() const
         {
             return 2;
         }
 
         template <>
-        template <>
         GwenUtil::BString Tree::VarToString(float var) const
         {
             return GwenUtil::String::Format::NiceFloat(var);
         }
 
-        template <>
         template <>
         float Tree::StringToVar(const GwenUtil::BString& var) const
         {
@@ -219,7 +215,6 @@ namespace GwenUtil {
 
         // int
         template <>
-        template <>
         unsigned char Tree::VarID<int>() const
         {
             return 3;
@@ -227,13 +222,11 @@ namespace GwenUtil {
         }
 
         template <>
-        template <>
         GwenUtil::BString Tree::VarToString(int var) const
         {
             return GwenUtil::String::Format::Int(var);
         }
 
-        template <>
         template <>
         int Tree::StringToVar(const GwenUtil::BString& var) const
         {
@@ -242,20 +235,17 @@ namespace GwenUtil {
 
         // Bool
         template <>
-        template <>
         unsigned char Tree::VarID<bool>() const
         {
             return 4;
         }
 
         template <>
-        template <>
         GwenUtil::BString Tree::VarToString(bool var) const
         {
             return var ? "true" : "false";
         }
 
-        template <>
         template <>
         bool Tree::StringToVar(const GwenUtil::BString& var) const
         {
@@ -264,20 +254,17 @@ namespace GwenUtil {
 
         // Double
         template <>
-        template <>
         unsigned char Tree::VarID<double>() const
         {
             return 5;
         }
 
         template <>
-        template <>
         GwenUtil::BString Tree::VarToString(double var) const
         {
             return GwenUtil::String::Format::NiceDouble(var);
         }
 
-        template <>
         template <>
         double Tree::StringToVar(const GwenUtil::BString& var) const
         {

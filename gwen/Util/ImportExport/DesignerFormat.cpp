@@ -61,49 +61,49 @@ void DesignerFormat::Import(Gwen::Controls::Base* pRoot, const Gwen::String& str
     ImportFromTree(pRoot, tree.GetChild("Controls"));
 }
 
-void DesignerFormat::ImportFromTree(Gwen::Controls::Base* pRoot, GwenUtil::Data::Tree& tree)
+void DesignerFormat::ImportFromTree(Gwen::Controls::Base* root, GwenUtil::Data::Tree& tree)
 {
-    ControlFactory::Base* pRootFactory = ControlFactory::Find("Base");
+    ControlFactory::Base* rootFactory = ControlFactory::Find("Base");
 
-    if (pRoot->UserData.Exists("ControlFactory"))
-        pRootFactory = pRoot->UserData.Get<ControlFactory::Base*>("ControlFactory");
+    if (root->UserData.Exists("ControlFactory"))
+        rootFactory = root->UserData.Get<ControlFactory::Base*>("ControlFactory");
 
     if (tree.HasChild("Properties"))
     {
-        GwenUtil::Data::Tree& Properties = tree.GetChild("Properties");
-        GWENUTIL_FOREACH(p, Properties.Children(), GwenUtil::Data::Tree::List)
+        GwenUtil::Data::Tree& props = tree.GetChild("Properties");
+        
+        GWENUTIL_FOREACH(p, props.Children(), GwenUtil::Data::Tree::List)
         {
-            ControlFactory::Property* prop = pRootFactory->GetProperty(p->Name());
-
-            if (!prop)
-                continue;
-
-            if (p->HasChildren())
+            ControlFactory::Property *prop = rootFactory->GetProperty(p->Name());
+            if (prop)
             {
-                GWENUTIL_FOREACH(pc, p->Children(), GwenUtil::Data::Tree::List)
+                if (p->HasChildren())
                 {
-                    prop->NumSet(pRoot, pc->Name(), pc->Var<float>());
+                    GWENUTIL_FOREACH(pc, p->Children(), GwenUtil::Data::Tree::List)
+                    {
+                        prop->NumSet(root, pc->Name(), pc->Var<float>());
+                    }
                 }
-            }
-            else
-            {
-                pRootFactory->SetControlValue(pRoot, p->Name(), p->Value());
+                else
+                {
+                    rootFactory->SetControlValue(root, p->Name(), p->Value());
+                }
             }
         }
     }
 
     if (tree.HasChild("Children"))
     {
-        GwenUtil::Data::Tree& ChildrenObject = tree.GetChild("Children");
-        GWENUTIL_FOREACH(c, ChildrenObject.Children(), GwenUtil::Data::Tree::List)
+        GwenUtil::Data::Tree& childObject = tree.GetChild("Children");
+        GWENUTIL_FOREACH(c, childObject.Children(), GwenUtil::Data::Tree::List)
         {
             GwenUtil::BString strType = c->ChildValue("Type");
-            ControlFactory::Base* pFactory = ControlFactory::Find(strType);
+            ControlFactory::Base* factory = ControlFactory::Find(strType);
 
-            if (!pFactory)
+            if (!factory)
                 continue;
 
-            Gwen::Controls::Base* pControl = pFactory->CreateInstance(pRoot);
+            Gwen::Controls::Base* pControl = factory->CreateInstance(root);
 
             if (!pControl)
                 continue;
@@ -111,10 +111,10 @@ void DesignerFormat::ImportFromTree(Gwen::Controls::Base* pRoot, GwenUtil::Data:
             // Tell the control we're here and we're queer
             {
                 int iPage = c->ChildVar<int>("Page", 0);
-                pRootFactory->AddChild(pRoot, pControl, iPage);
+                rootFactory->AddChild(root, pControl, iPage);
             }
             pControl->SetMouseInputEnabled(true);
-            pControl->UserData.Set("ControlFactory", pFactory);
+            pControl->UserData.Set("ControlFactory", factory);
             ImportFromTree(pControl, *c);
         }
     }
@@ -130,27 +130,27 @@ void DesignerFormat::Export(Gwen::Controls::Base* pRoot, const Gwen::String& str
         GwenUtil::File::Write(strFilename, strOutput);
 }
 
-void DesignerFormat::ExportToTree(Gwen::Controls::Base* pRoot, GwenUtil::Data::Tree& tree)
+void DesignerFormat::ExportToTree(Gwen::Controls::Base* root, GwenUtil::Data::Tree& tree)
 {
     GwenUtil::Data::Tree* me = &tree;
 
-    if (strcmp(pRoot->GetTypeName(), "DocumentCanvas") == 0)
+    if (strcmp(root->GetTypeName(), "DocumentCanvas") == 0)
         me = &tree.AddChild("Controls");
     else
         me = &tree.AddChild();
 
-    me->SetChild("Type", pRoot->GetTypeName());
+    me->SetChild("Type", root->GetTypeName());
 
     //
     // Set properties from the control factory
     //
-    if (pRoot->UserData.Exists("ControlFactory"))
+    if (root->UserData.Exists("ControlFactory"))
     {
         GwenUtil::Data::Tree& props = me->AddChild("Properties");
-        ControlFactory::Base* pCF = pRoot->UserData.Get<ControlFactory::Base*>("ControlFactory");
+        ControlFactory::Base* pCF = root->UserData.Get<ControlFactory::Base*>("ControlFactory");
         // Save the ParentPage
         {
-            int iParentPage = pCF->GetParentPage(pRoot);
+            int iParentPage = pCF->GetParentPage(root);
 
             if (iParentPage != 0)
                 me->SetChildVar("Page", iParentPage);
@@ -168,20 +168,20 @@ void DesignerFormat::ExportToTree(Gwen::Controls::Base* pRoot, GwenUtil::Data::T
 
                     for (int i = 0; i < (*it)->NumCount(); i++)
                     {
-                        prop.SetChildVar<float>((*it)->NumName(i), (*it)->NumGet(pRoot, i));
+                        prop.SetChildVar<float>((*it)->NumName(i), (*it)->NumGet(root, i));
                     }
-
-                    continue;
                 }
-
-                props.SetChild((*it)->Name(), (*it)->GetValue(pRoot));
+                else
+                {
+                    props.SetChild((*it)->Name(), (*it)->GetValue(root));
+                }
             }
 
             pCF = pCF->GetBaseFactory();
         }
     }
 
-    ControlList list = ImportExport::Tools::GetExportableChildren(pRoot);
+    ControlList list = ImportExport::Tools::GetExportableChildren(root);
 
     if (!list.list.empty())
     {
