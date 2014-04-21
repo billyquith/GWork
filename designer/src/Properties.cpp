@@ -1,6 +1,6 @@
 #include "Properties.h"
 #include "DocumentCanvas.h"
-#include "Gwen/Util/ControlFactory.h"
+#include "GwenUtil/ControlFactory.h"
 
 GWEN_CONTROL_CONSTRUCTOR( Properties )
 {

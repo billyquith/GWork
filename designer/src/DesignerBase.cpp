@@ -1,7 +1,7 @@
 #include "DesignerBase.h"
 #include "Document.h"
 #include "ControlToolbox.h"
-#include "Gwen/Util/ImportExport.h"
+#include "GwenUtil/ImportExport.h"
 
 GWEN_CONTROL_CONSTRUCTOR( DesignerBase )
 {
