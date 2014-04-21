@@ -19,7 +19,7 @@ namespace Gwen
                 return "TextBox";
             }
 
-            virtual Gwen::String BaseName()
+            virtual Gwen::String ParentName()
             {
                 return "Label";
             }
@@ -48,7 +48,7 @@ namespace Gwen
                 return "TextBoxMultiline";
             }
 
-            virtual Gwen::String BaseName()
+            virtual Gwen::String ParentName()
             {
                 return "TextBox";
             }

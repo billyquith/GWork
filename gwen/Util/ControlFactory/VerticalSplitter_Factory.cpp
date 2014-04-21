@@ -21,7 +21,7 @@ namespace Gwen
                 return "VerticalSplitter";
             }
 
-            virtual Gwen::String BaseName()
+            virtual Gwen::String ParentName()
             {
                 return "Base";
             }

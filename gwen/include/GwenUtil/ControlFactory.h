@@ -1,14 +1,14 @@
 
 #pragma once
 
-#include "Gwen/Gwen.h"
-#include "ControlFactory.h"
+#include <Gwen/Gwen.h>
 
 namespace Gwen
 {
     namespace ControlFactory
     {
         class Base;
+        
         typedef std::list<ControlFactory::Base*> List;
 
         List&                 GetList();
@@ -101,7 +101,7 @@ namespace Gwen
             Base();
 
             virtual Gwen::String Name() = 0;
-            virtual Gwen::String BaseName() = 0;
+            virtual Gwen::String ParentName() = 0;
 
             virtual Gwen::Controls::Base* CreateInstance(Gwen::Controls::Base* parent) = 0;
 

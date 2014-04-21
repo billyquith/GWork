@@ -55,8 +55,7 @@ void DesignerFormat::Import(Gwen::Controls::Base* pRoot, const Gwen::String& str
     GwenUtil::Data::Json::Import(tree, strContents);
 
     if (!tree.HasChild("Controls"))
-        return;                                      // false
-
+        return;
 
     ImportFromTree(pRoot, tree.GetChild("Controls"));
 }

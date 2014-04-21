@@ -72,7 +72,7 @@ namespace Gwen
                 return "PageControl";
             }
 
-            virtual Gwen::String BaseName()
+            virtual Gwen::String ParentName()
             {
                 return "Base";
             }

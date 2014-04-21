@@ -19,7 +19,7 @@ namespace Gwen
                 return "CheckBox";
             }
 
-            virtual Gwen::String BaseName()
+            virtual Gwen::String ParentName()
             {
                 return "Base";
             }
@@ -71,7 +71,7 @@ namespace Gwen
                 return "CheckBoxWithLabel";
             }
 
-            virtual Gwen::String BaseName()
+            virtual Gwen::String ParentName()
             {
                 return "Base";
             }

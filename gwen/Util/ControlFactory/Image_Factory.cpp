@@ -64,7 +64,7 @@ namespace Gwen
                 return "ImagePanel";
             }
 
-            virtual Gwen::String BaseName()
+            virtual Gwen::String ParentName()
             {
                 return "Base";
             }

@@ -108,7 +108,7 @@ namespace Gwen
                 return "Rectangle";
             }
 
-            virtual Gwen::String BaseName()
+            virtual Gwen::String ParentName()
             {
                 return "Base";
             }

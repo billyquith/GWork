@@ -19,7 +19,7 @@ namespace Gwen
                 return "ListBox";
             }
 
-            virtual Gwen::String BaseName()
+            virtual Gwen::String ParentName()
             {
                 return "Base";
             }
