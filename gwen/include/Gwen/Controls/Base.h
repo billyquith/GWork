@@ -694,7 +694,7 @@ public: \
     GWEN_CLASS(THISNAME, BASENAME)  \
     GWEN_DYNAMIC(THISNAME, BASENAME) \
     virtual const char* GetTypeName()       { return #THISNAME; } \
-    virtual const char* GetBaseTypeName()   { return ParentClass::GetTypeName(); } \
+    virtual const char* GetParentTypeName() { return ParentClass::GetTypeName(); } \
     THISNAME(Gwen::Controls::Base*pParent, const Gwen::String&pName = "")
 
 #define GWEN_CONTROL_INLINE(THISNAME, BASENAME) \
