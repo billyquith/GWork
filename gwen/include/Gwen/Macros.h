@@ -1,7 +1,8 @@
 
-// C RunTime Header Files
 #ifndef GWEN_MACROS_H
 #define GWEN_MACROS_H
+
+// C RunTime Header Files
 #include <stdlib.h>
 #include <stdarg.h>
 #include <memory.h>
@@ -9,36 +10,20 @@
 
 #ifdef _WIN32
 
-#ifndef NOMINMAX
-#define NOMINMAX
-#endif
-#include <windows.h>
-
-
-#define GwenUtil_OutputDebugCharString(lpOutputString) OutputDebugStringA(lpOutputString)
-#define GwenUtil_OutputDebugWideString(lpOutputString) OutputDebugStringW(lpOutputString)
-// #define GwenUtil_WideStringToFloat( _Str ) _wtof( _Str )
+#   ifndef NOMINMAX
+#       define NOMINMAX
+#   endif
+#   include <windows.h>
 
 #elif defined (__APPLE__)
 
-#include <CoreFoundation/CoreFoundation.h>
-#define GwenUtil_OutputDebugCharString(lpOutputString)    // printf(
-                                                          // lpOutputString )
-#define GwenUtil_OutputDebugWideString(lpOutputString)    // wprintf(
-                                                          // lpOutputString  )
-// #define GwenUtil_WideStringToFloat( _Str ) wcstof(_Str, NULL)
+#   include <CoreFoundation/CoreFoundation.h>
 
 #elif defined (__linux__)
 
-#define GwenUtil_OutputDebugCharString(lpOutputString)    // printf(
-                                                          // lpOutputString )
-#define GwenUtil_OutputDebugWideString(lpOutputString)    // wprintf(
-                                                          // lpOutputString  )
-// #define GwenUtil_WideStringToFloat( _Str ) wcstof(_Str, NULL)
-
 #else // ifdef _WIN32
 
-#error MUST_IMPLEMENT_PLATFORM
+#   error MUST_IMPLEMENT_PLATFORM
 
 #endif // ifdef _WIN32
 
