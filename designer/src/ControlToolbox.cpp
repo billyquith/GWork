@@ -1,6 +1,6 @@
 
 #include "ControlToolbox.h"
-#include "Gwen/Util/ControlFactory.h"
+#include "ControlFactory.h"
 
 GWEN_CONTROL_CONSTRUCTOR( ControlToolbox )
 {
@@ -11,11 +11,14 @@ GWEN_CONTROL_CONSTRUCTOR( ControlToolbox )
 	Controls::Layout::Tile* pTileLayout = new Controls::Layout::Tile( this );
 	pTileLayout->SetTileSize( 22, 22 );
 
-	for ( ControlFactory::List::iterator it = ControlFactory::GetList().begin(); it != ControlFactory::GetList().end(); ++it )
+	for (ControlFactory::List::iterator it = ControlFactory::GetList().begin();
+		 it != ControlFactory::GetList().end();
+		 ++it)
 	{
 		ControlFactory::Base* pControlFactory = *it;
 
-		if ( pControlFactory->Name() == "DesignerCanvas" ) continue;
+		if ( pControlFactory->Name() == "DesignerCanvas" )
+			continue;
 
 		Controls::Button* pButton = new Controls::Button( pTileLayout );
 		pButton->SetSize( 20, 20 );
@@ -23,9 +26,7 @@ GWEN_CONTROL_CONSTRUCTOR( ControlToolbox )
 		pButton->SetImage( "img/controls/" + pControlFactory->Name() + ".png" );
 		pButton->SetShouldDrawBackground( false );
 
-		//
 		// Make drag and droppable. Pass the ControlFactory as the userdata
-		//
 		pButton->DragAndDrop_SetPackage( true, "ControlSpawn", pControlFactory );
 	}
 

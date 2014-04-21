@@ -2,8 +2,11 @@
 #include "ImportExport.h"
 #include "GwenUtil.h"
 
+namespace Gwen {
+namespace ImportExport {
 
-class DesignerFormat : public Gwen::ImportExport::Base
+
+class DesignerFormat : public ImportExport::Base
 {
 public:
 
@@ -193,3 +196,7 @@ void DesignerFormat::ExportToTree(Gwen::Controls::Base* pRoot, GwenUtil::Data::T
         }
     }
 }
+
+
+} // namespace ImportExport
+} // namespace Gwen
