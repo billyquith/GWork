@@ -7,7 +7,7 @@
 #include "Gwen/Macros.h"
 #include "Gwen/Platform.h"
 
-#if !defined (_WIN32) && !defined (GWEN_ALLEGRO_PLATFORM)
+#ifdef GWEN_PLATFORM_NULL
 
 #include <time.h>
 
@@ -107,4 +107,4 @@ void Gwen::Platform::GetCursorPos(Gwen::Point& po)
 {
 }
 
-#endif // ndef WIN32
+#endif // GWEN_PLATFORM_NULL
