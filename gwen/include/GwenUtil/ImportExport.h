@@ -3,7 +3,7 @@
 
 #include "Gwen/Gwen.h"
 #include "Gwen/Controls.h"
-#include "../ControlFactory/ControlFactory.h"
+#include "GwenUtil/ControlFactory.h"
 
 using namespace Gwen;
 

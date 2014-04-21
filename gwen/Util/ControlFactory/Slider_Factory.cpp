@@ -1,5 +1,5 @@
 
-#include "ControlFactory.h"
+#include "GwenUtil/ControlFactory.h"
 #include "Gwen/Controls.h"
 
 

@@ -1,5 +1,5 @@
 #include "DocumentCanvas.h"
-#include "Gwen/Util/ControlFactory.h"
+#include "GwenUtil/ControlFactory.h"
 #include "SelectionLayer.h"
 #include "Utility.h"
 

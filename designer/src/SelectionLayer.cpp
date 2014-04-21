@@ -1,6 +1,6 @@
 #include "SelectionLayer.h"
 #include "Cage.h"
-#include "Gwen/Util/ControlFactory.h"
+#include "GwenUtil/ControlFactory.h"
 #include "Utility.h"
 
 GWEN_CONTROL_CONSTRUCTOR( SelectionLayer )
