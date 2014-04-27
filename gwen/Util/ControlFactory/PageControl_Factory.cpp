@@ -15,13 +15,13 @@ namespace Gwen
             {
                 GWEN_CONTROL_FACTORY_PROPERTY(NumPages, "The number of pages we have");
 
-                String GetValueAsString(Controls::Base* ctrl)
+                String GetValueAsString(Controls::Base* ctrl) override
                 {
                     return Utility::Format("%i", (int)gwen_cast<Controls::PageControl>(
                                                ctrl)->GetPageCount());
                 }
 
-                void SetValueFromString(Controls::Base* ctrl, const String& str)
+                void SetValueFromString(Controls::Base* ctrl, const String& str) override
                 {
                     int num;
 
@@ -38,14 +38,14 @@ namespace Gwen
             {
                 GWEN_CONTROL_FACTORY_PROPERTY(FinishName, "The name of the finish button");
 
-                String GetValueAsString(Controls::Base* ctrl)
+                String GetValueAsString(Controls::Base* ctrl) override
                 {
                     Gwen::Controls::PageControl* pControl =
                         gwen_cast<Gwen::Controls::PageControl>(ctrl);
                     return pControl->FinishButton()->GetName();
                 }
 
-                void SetValueFromString(Controls::Base* ctrl, const String& str)
+                void SetValueFromString(Controls::Base* ctrl, const String& str) override
                 {
                     Gwen::Controls::PageControl* pControl =
                         gwen_cast<Gwen::Controls::PageControl>(ctrl);
@@ -67,7 +67,7 @@ namespace Gwen
                 AddProperty(new Properties::FinishName());
             }
 
-            virtual Gwen::Controls::Base* CreateInstance(Gwen::Controls::Base* parent)
+            virtual Gwen::Controls::Base* CreateInstance(Gwen::Controls::Base* parent) override
             {
                 Gwen::Controls::PageControl* pControl = new Gwen::Controls::PageControl(parent);
                 pControl->SetSize(300, 300);

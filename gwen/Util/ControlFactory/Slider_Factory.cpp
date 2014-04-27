@@ -15,13 +15,13 @@ namespace Gwen
             {
                 GWEN_CONTROL_FACTORY_PROPERTY(Min, "The minimum value");
 
-                String GetValueAsString(Controls::Base* ctrl)
+                String GetValueAsString(Controls::Base* ctrl) override
                 {
                     return Gwen::Utility::Format("%f", (int)gwen_cast<Controls::Slider>(
                                                      ctrl)->GetMin());
                 }
 
-                void SetValueFromString(Controls::Base* ctrl, const String& str)
+                void SetValueFromString(Controls::Base* ctrl, const String& str) override
                 {
                     float val;
 
@@ -42,13 +42,13 @@ namespace Gwen
             {
                 GWEN_CONTROL_FACTORY_PROPERTY(Max, "The max value");
 
-                String GetValueAsString(Controls::Base* ctrl)
+                String GetValueAsString(Controls::Base* ctrl) override
                 {
                     return Gwen::Utility::Format("%f", (int)gwen_cast<Controls::Slider>(
                                                      ctrl)->GetMax());
                 }
 
-                void SetValueFromString(Controls::Base* ctrl, const String& str)
+                void SetValueFromString(Controls::Base* ctrl, const String& str) override
                 {
                     float val;
 
@@ -77,7 +77,7 @@ namespace Gwen
                 AddProperty(new Properties::Max());
             }
 
-            virtual Gwen::Controls::Base* CreateInstance(Gwen::Controls::Base* parent)
+            virtual Gwen::Controls::Base* CreateInstance(Gwen::Controls::Base* parent) override
             {
                 Gwen::Controls::HorizontalSlider* pControl =
                     new Gwen::Controls::HorizontalSlider(parent);

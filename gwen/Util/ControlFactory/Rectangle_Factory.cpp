@@ -14,7 +14,7 @@ namespace Gwen
             {
                 GWEN_CONTROL_FACTORY_PROPERTY(Color, "Rectangle's Background Color");
 
-                String GetValueAsString(Controls::Base* ctrl)
+                String GetValueAsString(Controls::Base* ctrl) override
                 {
                     Controls::Rectangle* pRect = gwen_cast<Controls::Rectangle>(ctrl);
                     return Utility::Format("%i %i %i %i", pRect->GetColor().r,
@@ -22,7 +22,7 @@ namespace Gwen
                                            pRect->GetColor().b, pRect->GetColor().a);
                 }
 
-                void SetValueFromString(Controls::Base* ctrl, const String& str)
+                void SetValueFromString(Controls::Base* ctrl, const String& str) override
                 {
                     Controls::Rectangle* pRect = gwen_cast<Controls::Rectangle>(ctrl);
                     int r, g, b, a;
@@ -33,12 +33,12 @@ namespace Gwen
                     pRect->SetColor(Gwen::Color(r, g, b, a));
                 }
 
-                size_t NumCount() const
+                size_t NumCount() const override
                 {
                     return 4;
                 }
 
-                Gwen::String NumName(size_t i) const
+                Gwen::String NumName(size_t i) const override
                 {
                     if (i == 0)
                         return "r";
@@ -52,7 +52,7 @@ namespace Gwen
                     return "a";
                 }
 
-                float NumGet(Controls::Base* ctrl, int i)
+                float NumGet(Controls::Base* ctrl, int i) override
                 {
                     Controls::Rectangle* pRect = gwen_cast<Controls::Rectangle>(ctrl);
 
@@ -68,7 +68,7 @@ namespace Gwen
                     return pRect->GetColor().a;
                 }
 
-                void NumSet(Controls::Base* ctrl, int i, float f)
+                void NumSet(Controls::Base* ctrl, int i, float f) override
                 {
                     Controls::Rectangle* pRect = gwen_cast<Controls::Rectangle>(ctrl);
                     Gwen::Color c = pRect->GetColor();
@@ -103,7 +103,7 @@ namespace Gwen
                 AddProperty(new Properties::Color());
             }
 
-            virtual Gwen::Controls::Base* CreateInstance(Gwen::Controls::Base* parent)
+            virtual Gwen::Controls::Base* CreateInstance(Gwen::Controls::Base* parent) override
             {
                 Gwen::Controls::Rectangle* pControl = new Gwen::Controls::Rectangle(parent);
                 pControl->SetSize(100, 100);

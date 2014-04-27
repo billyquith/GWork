@@ -13,12 +13,12 @@ namespace Gwen
                 GWEN_CONTROL_FACTORY_PROPERTY(ImageName,
                                               "The path to the image (relative to .exe)");
 
-                String GetValueAsString(Controls::Base* ctrl)
+                String GetValueAsString(Controls::Base* ctrl) override
                 {
                     return gwen_cast<Controls::ImagePanel>(ctrl)->GetImage();
                 }
 
-                void SetValueFromString(Controls::Base* ctrl, const String& str)
+                void SetValueFromString(Controls::Base* ctrl, const String& str) override
                 {
                     gwen_cast<Controls::ImagePanel>(ctrl)->SetImage(str);
                 }
@@ -30,7 +30,7 @@ namespace Gwen
             {
                 GWEN_CONTROL_FACTORY_PROPERTY(Stretch, "The path to the image (relative to .exe)");
 
-                String GetValueAsString(Controls::Base* ctrl)
+                String GetValueAsString(Controls::Base* ctrl) override
                 {
                     if (gwen_cast<Controls::ImagePanel>(ctrl)->GetStretch())
                         return True;
@@ -38,7 +38,7 @@ namespace Gwen
                     return False;
                 }
 
-                void SetValueFromString(Controls::Base* ctrl, const String& str)
+                void SetValueFromString(Controls::Base* ctrl, const String& str) override
                 {
                     bool bTrue = (str == True);
                     gwen_cast<Controls::ImagePanel>(ctrl)->SetStretch(bTrue);
@@ -59,7 +59,7 @@ namespace Gwen
                 AddProperty(new Properties::Stretch());
             }
 
-            virtual Gwen::Controls::Base* CreateInstance(Gwen::Controls::Base* parent)
+            virtual Gwen::Controls::Base* CreateInstance(Gwen::Controls::Base* parent) override
             {
                 Gwen::Controls::ImagePanel* pControl = new Gwen::Controls::ImagePanel(parent);
                 pControl->SetSize(100, 20);
