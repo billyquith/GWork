@@ -33,12 +33,12 @@ namespace Gwen
                     pRect->SetColor(Gwen::Color(r, g, b, a));
                 }
 
-                int NumCount()
+                size_t NumCount() const
                 {
                     return 4;
                 }
 
-                Gwen::String NumName(int i)
+                Gwen::String NumName(size_t i) const
                 {
                     if (i == 0)
                         return "r";

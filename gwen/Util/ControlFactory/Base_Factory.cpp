@@ -46,12 +46,12 @@ namespace Gwen
                     ctrl->SetPos(x, y);
                 }
 
-                int NumCount()
+                size_t NumCount() const
                 {
                     return 2;
                 }
 
-                Gwen::String NumName(int i)
+                Gwen::String NumName(size_t i) const
                 {
                     if (i == 0)
                         return "x";
@@ -99,12 +99,12 @@ namespace Gwen
                     ctrl->SetMargin(m);
                 }
 
-                int NumCount()
+                size_t NumCount() const
                 {
                     return 4;
                 }
 
-                Gwen::String NumName(int i)
+                Gwen::String NumName(size_t i) const
                 {
                     if (i == 0)
                         return "left";
@@ -175,12 +175,12 @@ namespace Gwen
                     ctrl->SetSize(w, h);
                 }
 
-                int NumCount()
+                size_t NumCount() const
                 {
                     return 2;
                 }
 
-                Gwen::String NumName(int i)
+                Gwen::String NumName(size_t i) const
                 {
                     if (i == 0)
                         return "w";
@@ -240,7 +240,7 @@ namespace Gwen
                     ctrl->Dock(dock);
                 }
 
-                int OptionNum()
+                size_t OptionCount() const
                 {
                     return m_EnumMap.GetNumEnums();
                 }

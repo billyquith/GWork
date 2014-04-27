@@ -50,8 +50,7 @@ namespace Gwen
             {
                 for (Count_t i=0; i < m_EnumCount; ++i)
                 {
-                    const Enum &item = m_Enums[i];
-                    if (strcmp(item.name, name)==0)
+                    if (strcmp(m_Enums[i].name, name)==0)
                         return i;
                 }
                 return Undefined;
@@ -69,7 +68,7 @@ namespace Gwen
                 {
                     const Enum &item = m_Enums[i];
                     if (item.value == value)
-                        return item.name;       // We found the item.
+                        return item.name;   // We found the item.
                 }
                 return m_Enums[defaultIndex].name;   // Not found. Return default indexed.
             }
@@ -96,7 +95,7 @@ namespace Gwen
             virtual Gwen::String GetValueAsString(Gwen::Controls::Base* ctrl) = 0;
             virtual void SetValueFromString(Gwen::Controls::Base* ctrl, const Gwen::String& str) = 0;
 
-            virtual int OptionNum()
+            virtual size_t OptionCount() const
             {
                 return 0;
             }
@@ -106,12 +105,12 @@ namespace Gwen
                 return "";
             }
 
-            virtual int NumCount()
+            virtual size_t NumCount() const
             {
                 return 0;
             }
 
-            virtual Gwen::String NumName(int i)
+            virtual Gwen::String NumName(size_t i) const
             {
                 return "unknown";
             }
@@ -127,10 +126,13 @@ namespace Gwen
 
             inline void NumSet(Gwen::Controls::Base* ctrl, const Gwen::String& str, float f)
             {
-                for (int i = 0; i < NumCount(); i++)
+                for (size_t i = 0; i < NumCount(); i++)
                 {
                     if (NumName(i) == str)
+                    {
                         NumSet(ctrl, i, f);
+                        break;
+                    }
                 }
             }
 
@@ -144,7 +146,7 @@ namespace Gwen
             static const Gwen::String True;
             static const Gwen::String False;
 
-            virtual int OptionNum()
+            virtual size_t OptionCount() const
             {
                 return 2;
             }

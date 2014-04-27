@@ -70,13 +70,13 @@ void Properties::AddPropertiesFromControl( Controls::Base* pControl, bool bAllow
 			Controls::PropertyRow* row = properties->Find( strPropertyName );
 			if ( !row )
 			{
-				if ( (*it)->OptionNum() > 0 )
+				if ( (*it)->OptionCount() > 0 )
 				{
 					//row = properties->Add( strPropertyName, new Gwen::Controls::Property::Checkbox( properties ), strValue );
 
 					Gwen::Controls::Property::ComboBox* dd = new Gwen::Controls::Property::ComboBox( properties );
 
-					for ( int i=0; i<(*it)->OptionNum(); i++ )
+					for (size_t i = 0, nb = (*it)->OptionCount(); i < nb; i++)
 					{
 						dd->GetComboBox()->AddItem( (*it)->OptionGet(i), (*it)->OptionGet(i) );
 					}
