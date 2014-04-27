@@ -22,8 +22,8 @@ namespace Gwen
 
             typedef std::list<Property*> List;
 
-            virtual Gwen::String Name() = 0;
-            virtual Gwen::String Description() = 0;
+            virtual Gwen::String Name() const = 0;
+            virtual Gwen::String Description() const = 0;
 
             virtual Gwen::String GetValue(Gwen::Controls::Base* ctrl) = 0;
             virtual void         SetValue(Gwen::Controls::Base* ctrl, const Gwen::String& str) = 0;
@@ -183,7 +183,7 @@ namespace Gwen
 #define GWEN_CONTROL_FACTORY(FACTORY_CLASS) \
     void GWENCONTROLFACTORY##FACTORY_CLASS() \
     { \
-        new FACTORY_CLASS(); \
+        static FACTORY_CLASS instance; \
     }
 
 //! Declare a ControlFactory factory so that it can be called.
@@ -194,7 +194,7 @@ namespace Gwen
 
 #define GWEN_CONTROL_FACTORY_PROPERTY(PROP_NAME, DESCRIPTION) \
 public: \
-    Gwen::String Name()         { return #PROP_NAME; } \
-    Gwen::String Description()  { return DESCRIPTION; }
+    Gwen::String Name() const { return #PROP_NAME; } \
+    Gwen::String Description() const { return DESCRIPTION; }
 
 
