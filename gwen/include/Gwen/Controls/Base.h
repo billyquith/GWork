@@ -693,7 +693,8 @@ namespace Gwen
 public: \
     GWEN_CLASS(THISNAME, BASENAME)  \
     GWEN_DYNAMIC(THISNAME, BASENAME) \
-    virtual const char* GetTypeName()       { return #THISNAME; } \
+    static  const char* GetTypeNameStatic() { return #THISNAME; } \
+    virtual const char* GetTypeName()       { return GetTypeNameStatic(); } \
     virtual const char* GetParentTypeName() { return ParentClass::GetTypeName(); } \
     THISNAME(Gwen::Controls::Base*pParent, const Gwen::String&pName = "")
 
