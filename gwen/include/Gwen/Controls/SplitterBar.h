@@ -22,4 +22,5 @@ namespace Gwen
 
     }
 }
+
 #endif // ifndef GWEN_CONTROLS_SPLITTERBAR_H

@@ -100,8 +100,8 @@ namespace Gwen
 
             Base();
 
-            virtual Gwen::String Name() = 0;
-            virtual Gwen::String ParentName() = 0;
+            virtual Gwen::String Name() const = 0;
+            virtual Gwen::String ParentFactory() const = 0;
 
             virtual Gwen::Controls::Base* CreateInstance(Gwen::Controls::Base* parent) = 0;
 
@@ -154,24 +154,42 @@ namespace Gwen
 } // Gwen
 
 
-/// Declare a ControlFactory constructor.
-#define GWEN_CONTROL_FACTORY_CONSTRUCTOR(CLASS_NAME, PARENT_CLASS) \
-    typedef PARENT_CLASS ParentClass; \
-    typedef CLASS_NAME ThisClass; \
-    CLASS_NAME() : ParentClass()
+//! Information about the ControlFactory.
+//! @param CONTROL : Name of the control factory class.
+//! @param INHERITS : Name of the factory class we inherit properties from.
+#define GWEN_CONTROL_FACTORY_DETAILS(CONTROL, INHERITS) \
+    typedef Gwen::Controls::CONTROL FactoryFor; \
+    virtual Gwen::String Name() const { return #CONTROL; } \
+    virtual Gwen::String ParentFactory() const { return #INHERITS; }
 
-/// Instance a ControlFactory.
-/// @param FACTORY_CLASS - The name of the factory.
+//! Information about the ControlFactory.
+//! @param FACTORY : Name of the control factory class.
+#define GWEN_CONTROL_FACTORY_CONSTRUCTOR(FACTORY, FACTORY_PARENT) \
+    typedef Gwen::ControlFactory::FACTORY ThisClass; \
+    typedef FACTORY_PARENT ParentClass; \
+    FACTORY() : ParentClass()
+
+//! Standard declaration for a control factory. This can be overridden for unusal cases
+//! and the other macros used.
+//! @param CONTROL : Name of the control we are creating a factory for.
+//! @param INHERITS : Name of the factory class we inherit properties from.
+#define GWEN_CONTROL_FACTORY_FOR(CONTROL, INHERITS) \
+    GWEN_CONTROL_FACTORY_DETAILS(CONTROL, INHERITS) \
+    GWEN_CONTROL_FACTORY_CONSTRUCTOR(CONTROL##_Factory, Gwen::ControlFactory::Base)
+
+//! Instance a ControlFactory.
+//! @param FACTORY_CLASS - The name of the factory.
 #define GWEN_CONTROL_FACTORY(FACTORY_CLASS) \
     void GWENCONTROLFACTORY##FACTORY_CLASS() \
     { \
         new FACTORY_CLASS(); \
     }
 
-/// Declare a ControlFactory factory so that it can be called.
-#define DECLARE_GWEN_CONTROL_FACTORY(FACTORY_CLASS) \
-    extern void GWENCONTROLFACTORY##FACTORY_CLASS(); \
-    GWENCONTROLFACTORY##FACTORY_CLASS();
+//! Declare a ControlFactory factory so that it can be called.
+//! @param FACTORY : Name of the control factory class.
+#define DECLARE_GWEN_CONTROL_FACTORY(FACTORY) \
+    extern void GWENCONTROLFACTORY##FACTORY(); \
+    GWENCONTROLFACTORY##FACTORY();
 
 #define GWEN_CONTROL_FACTORY_PROPERTY(PROP_NAME, DESCRIPTION) \
 public: \

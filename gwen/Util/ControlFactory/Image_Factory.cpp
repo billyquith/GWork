@@ -49,24 +49,14 @@ namespace Gwen
 
         }
 
-        class Image_Factory : public Gwen::ControlFactory::Base
+        class ImagePanel_Factory : public Gwen::ControlFactory::Base
         {
         public:
 
-            GWEN_CONTROL_FACTORY_CONSTRUCTOR(Image_Factory, ControlFactory::Base)
+            GWEN_CONTROL_FACTORY_FOR(ImagePanel, Base)
             {
                 AddProperty(new Properties::ImageName());
                 AddProperty(new Properties::Stretch());
-            }
-
-            virtual Gwen::String Name()
-            {
-                return "ImagePanel";
-            }
-
-            virtual Gwen::String ParentName()
-            {
-                return "Base";
             }
 
             virtual Gwen::Controls::Base* CreateInstance(Gwen::Controls::Base* parent)
@@ -79,7 +69,7 @@ namespace Gwen
         };
 
 
-        GWEN_CONTROL_FACTORY(Image_Factory);
+        GWEN_CONTROL_FACTORY(ImagePanel_Factory);
 
     }
 }

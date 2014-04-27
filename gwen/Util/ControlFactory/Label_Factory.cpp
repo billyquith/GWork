@@ -247,7 +247,7 @@ namespace Gwen
         {
         public:
 
-            GWEN_CONTROL_FACTORY_CONSTRUCTOR(Label_Factory, ControlFactory::Base)
+            GWEN_CONTROL_FACTORY_FOR(Label, Base)
             {
                 AddProperty(new Properties::Text());
                 AddProperty(new Properties::Wrap());
@@ -256,16 +256,6 @@ namespace Gwen
                 AddProperty(new Properties::FontBold());
                 AddProperty(new Properties::VerticalAlign());
                 AddProperty(new Properties::HorizontalAlign());
-            }
-
-            virtual Gwen::String Name()
-            {
-                return "Label";
-            }
-
-            virtual Gwen::String ParentName()
-            {
-                return "Base";
             }
 
             virtual Gwen::Controls::Base* CreateInstance(Gwen::Controls::Base* parent)
@@ -281,25 +271,12 @@ namespace Gwen
         GWEN_CONTROL_FACTORY(Label_Factory);
         
         
-        
-
-        
         class LabelClickable_Factory : public Gwen::ControlFactory::Base
         {
         public:
 
-            GWEN_CONTROL_FACTORY_CONSTRUCTOR(LabelClickable_Factory, ControlFactory::Base)
+            GWEN_CONTROL_FACTORY_FOR(LabelClickable, Label)
             {
-            }
-
-            virtual Gwen::String Name()
-            {
-                return "LabelClickable";
-            }
-
-            virtual Gwen::String ParentName()
-            {
-                return "Label";
             }
 
             virtual Gwen::Controls::Base* CreateInstance(Gwen::Controls::Base* parent)

@@ -20,6 +20,7 @@
 
 class UnitTest;
 
+
 class GUnit : public Gwen::Controls::Base
 {
 public:
@@ -76,5 +77,6 @@ private:
 #define DEFINE_UNIT_TEST(NAME) \
     GUnit* RegisterUnitTest_##NAME(Gwen::Controls::Base *tab) \
     { return new NAME(tab); }
+
 
 #endif // ifndef GWEN_UNITTEST_UNITTEST_H

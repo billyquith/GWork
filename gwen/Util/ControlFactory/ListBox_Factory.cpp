@@ -10,18 +10,8 @@ namespace Gwen
         {
         public:
 
-            GWEN_CONTROL_FACTORY_CONSTRUCTOR(ListBox_Factory, Gwen::ControlFactory::Base)
+            GWEN_CONTROL_FACTORY_FOR(ListBox, Base)
             {
-            }
-
-            virtual Gwen::String Name()
-            {
-                return "ListBox";
-            }
-
-            virtual Gwen::String ParentName()
-            {
-                return "Base";
             }
 
             virtual Gwen::Controls::Base* CreateInstance(Gwen::Controls::Base* parent)

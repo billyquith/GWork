@@ -290,23 +290,13 @@ namespace Gwen
         {
         public:
 
-            GWEN_CONTROL_FACTORY_CONSTRUCTOR(Base_Factory, Gwen::ControlFactory::Base)
+            GWEN_CONTROL_FACTORY_FOR(Base,)
             {
                 AddProperty(new Properties::ControlName());
                 AddProperty(new Properties::Dock());
                 AddProperty(new Properties::Position());
                 AddProperty(new Properties::Size());
                 AddProperty(new Properties::Margin());
-            }
-
-            virtual Gwen::String Name()
-            {
-                return "Base";
-            }
-
-            virtual Gwen::String ParentName()
-            {
-                return "";
             }
 
             virtual Gwen::Controls::Base* CreateInstance(Gwen::Controls::Base* parent)

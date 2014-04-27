@@ -9,21 +9,11 @@ namespace Gwen
         class ComboBox_Factory : public Gwen::ControlFactory::Base
         {
         public:
-
-            GWEN_CONTROL_FACTORY_CONSTRUCTOR(ComboBox_Factory, Gwen::ControlFactory::Base)
+            
+            GWEN_CONTROL_FACTORY_FOR(ComboBox, Base)
             {
             }
-
-            virtual Gwen::String Name()
-            {
-                return "ComboBox";
-            }
-
-            virtual Gwen::String ParentName()
-            {
-                return "Base";
-            }
-
+            
             virtual Gwen::Controls::Base* CreateInstance(Gwen::Controls::Base* parent)
             {
                 Gwen::Controls::ComboBox* pControl = new Gwen::Controls::ComboBox(parent);

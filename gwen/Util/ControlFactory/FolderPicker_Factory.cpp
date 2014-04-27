@@ -12,18 +12,8 @@ namespace Gwen
         {
         public:
 
-            GWEN_CONTROL_FACTORY_CONSTRUCTOR(FolderPicker_Factory, ControlFactory::Base)
+            GWEN_CONTROL_FACTORY_FOR(FolderPicker, Base)
             {
-            }
-
-            virtual Gwen::String Name()
-            {
-                return "FolderPicker";
-            }
-
-            virtual Gwen::String ParentName()
-            {
-                return "Base";
             }
 
             virtual Gwen::Controls::Base* CreateInstance(Gwen::Controls::Base* parent)

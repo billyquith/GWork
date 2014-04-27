@@ -61,20 +61,10 @@ namespace Gwen
         {
         public:
 
-            GWEN_CONTROL_FACTORY_CONSTRUCTOR(PageControl_Factory, Gwen::ControlFactory::Base)
+            GWEN_CONTROL_FACTORY_FOR(PageControl, Base)
             {
                 AddProperty(new Properties::NumPages());
                 AddProperty(new Properties::FinishName());
-            }
-
-            virtual Gwen::String Name()
-            {
-                return "PageControl";
-            }
-
-            virtual Gwen::String ParentName()
-            {
-                return "Base";
             }
 
             virtual Gwen::Controls::Base* CreateInstance(Gwen::Controls::Base* parent)

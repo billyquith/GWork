@@ -39,19 +39,9 @@ namespace Gwen
         {
         public:
 
-            GWEN_CONTROL_FACTORY_CONSTRUCTOR(ProgressBar_Factory, Gwen::ControlFactory::Base)
+            GWEN_CONTROL_FACTORY_FOR(ProgressBar, Base)
             {
                 AddProperty(new Properties::CycleSpeed());
-            }
-
-            virtual Gwen::String Name()
-            {
-                return "ProgressBar";
-            }
-
-            virtual Gwen::String ParentName()
-            {
-                return "Base";
             }
 
             virtual Gwen::Controls::Base* CreateInstance(Gwen::Controls::Base* parent)
