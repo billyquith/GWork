@@ -10,18 +10,8 @@ namespace Gwen
         {
         public:
 
-            GWEN_CONTROL_FACTORY_CONSTRUCTOR(TextBox_Factory, Gwen::ControlFactory::Base)
+            GWEN_CONTROL_FACTORY_FOR(TextBox, Label)
             {
-            }
-
-            virtual Gwen::String Name()
-            {
-                return "TextBox";
-            }
-
-            virtual Gwen::String ParentName()
-            {
-                return "Label";
             }
 
             virtual Gwen::Controls::Base* CreateInstance(Gwen::Controls::Base* parent)
@@ -35,28 +25,18 @@ namespace Gwen
         };
 
 
-        class TextBoxMultiLine_Factory : public Gwen::ControlFactory::Base
+        class TextBoxMultiline_Factory : public Gwen::ControlFactory::Base
         {
         public:
 
-            GWEN_CONTROL_FACTORY_CONSTRUCTOR(TextBoxMultiLine_Factory, Gwen::ControlFactory::Base)
+            GWEN_CONTROL_FACTORY_FOR(TextBoxMultiline, TextBox)
             {
-            }
-
-            virtual Gwen::String Name()
-            {
-                return "TextBoxMultiline";
-            }
-
-            virtual Gwen::String ParentName()
-            {
-                return "TextBox";
             }
 
             virtual Gwen::Controls::Base* CreateInstance(Gwen::Controls::Base* parent)
             {
-                Gwen::Controls::TextBoxMultiline* pControl = new Gwen::Controls::TextBoxMultiline(
-                    parent);
+                Gwen::Controls::TextBoxMultiline* pControl =
+                    new Gwen::Controls::TextBoxMultiline(parent);
                 pControl->SetSize(100, 50);
                 pControl->SetText("");
                 return pControl;
@@ -66,7 +46,7 @@ namespace Gwen
 
 
         GWEN_CONTROL_FACTORY(TextBox_Factory);
-        GWEN_CONTROL_FACTORY(TextBoxMultiLine_Factory);
+        GWEN_CONTROL_FACTORY(TextBoxMultiline_Factory);
 
     }
 }

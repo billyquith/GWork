@@ -10,18 +10,8 @@ namespace Gwen
         {
         public:
 
-            GWEN_CONTROL_FACTORY_CONSTRUCTOR(CheckBox_Factory, Gwen::ControlFactory::Base)
+            GWEN_CONTROL_FACTORY_FOR(CheckBox, Base)
             {
-            }
-
-            virtual Gwen::String Name()
-            {
-                return "CheckBox";
-            }
-
-            virtual Gwen::String ParentName()
-            {
-                return "Base";
             }
 
             virtual Gwen::Controls::Base* CreateInstance(Gwen::Controls::Base* parent)
@@ -31,7 +21,6 @@ namespace Gwen
             }
 
         };
-
 
         GWEN_CONTROL_FACTORY(CheckBox_Factory);
 
@@ -53,33 +42,21 @@ namespace Gwen
                 }
 
             };
-
-
         }
 
         class CheckBoxWithLabel_Factory : public Gwen::ControlFactory::Base
         {
         public:
 
-            GWEN_CONTROL_FACTORY_CONSTRUCTOR(CheckBoxWithLabel_Factory, Gwen::ControlFactory::Base)
+            GWEN_CONTROL_FACTORY_FOR(CheckBoxWithLabel, Base)
             {
                 AddProperty(new Properties::CheckboxText());
             }
 
-            virtual Gwen::String Name()
-            {
-                return "CheckBoxWithLabel";
-            }
-
-            virtual Gwen::String ParentName()
-            {
-                return "Base";
-            }
-
             virtual Gwen::Controls::Base* CreateInstance(Gwen::Controls::Base* parent)
             {
-                Gwen::Controls::CheckBoxWithLabel* pControl = new Gwen::Controls::CheckBoxWithLabel(
-                    parent);
+                Gwen::Controls::CheckBoxWithLabel* pControl =
+                    new Gwen::Controls::CheckBoxWithLabel(parent);
                 return pControl;
             }
 

@@ -9,21 +9,11 @@ namespace Gwen
         class Button_Factory : public Gwen::ControlFactory::Base
         {
         public:
-
-            GWEN_CONTROL_FACTORY_CONSTRUCTOR(Button_Factory, Gwen::ControlFactory::Base)
+            
+            GWEN_CONTROL_FACTORY_FOR(Button, Label)
             {
             }
-
-            virtual Gwen::String Name()
-            {
-                return "Button";
-            }
-
-            virtual Gwen::String ParentName()
-            {
-                return "Label";
-            }
-
+            
             virtual Gwen::Controls::Base* CreateInstance(Gwen::Controls::Base* parent)
             {
                 Gwen::Controls::Button* pControl = new Gwen::Controls::Button(parent);

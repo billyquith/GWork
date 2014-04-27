@@ -6,33 +6,23 @@ namespace Gwen
 {
     namespace ControlFactory
     {
-        class DesignerCanvas_Factory : public Gwen::ControlFactory::Base
-        {
-        public:
-
-            GWEN_CONTROL_FACTORY_CONSTRUCTOR(DesignerCanvas_Factory, Gwen::ControlFactory::Base)
-            {
-            }
-
-            virtual Gwen::String Name()
-            {
-                return "DesignerCanvas";
-            }
-
-            virtual Gwen::String ParentName()
-            {
-                return "Base";
-            }
-
-            virtual Gwen::Controls::Base* CreateInstance(Gwen::Controls::Base* parent)
-            {
-                return NULL;
-            }
-
-        };
-
-
-        GWEN_CONTROL_FACTORY(DesignerCanvas_Factory);
-
+//        class DesignerCanvas_Factory : public Gwen::ControlFactory::Base
+//        {
+//        public:
+//
+//            GWEN_CONTROL_FACTORY_FOR(DesignerCanvas, Base)
+//            {
+//            }
+//
+//            virtual Gwen::Controls::Base* CreateInstance(Gwen::Controls::Base* parent)
+//            {
+//                return NULL;
+//            }
+//
+//        };
+//
+//
+//        GWEN_CONTROL_FACTORY(DesignerCanvas_Factory);
+//
     }
 }

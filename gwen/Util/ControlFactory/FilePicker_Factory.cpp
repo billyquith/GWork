@@ -35,19 +35,9 @@ namespace Gwen
         {
         public:
 
-            GWEN_CONTROL_FACTORY_CONSTRUCTOR(FilePicker_Factory, ControlFactory::Base)
+            GWEN_CONTROL_FACTORY_FOR(FilePicker, Base)
             {
                 AddProperty(new Properties::FileType());
-            }
-
-            virtual Gwen::String Name()
-            {
-                return "FilePicker";
-            }
-
-            virtual Gwen::String ParentName()
-            {
-                return "Base";
             }
 
             virtual Gwen::Controls::Base* CreateInstance(Gwen::Controls::Base* parent)

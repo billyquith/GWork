@@ -71,26 +71,16 @@ namespace Gwen
         {
         public:
 
-            GWEN_CONTROL_FACTORY_CONSTRUCTOR(HorizontalSlider_Factory, Gwen::ControlFactory::Base)
+            GWEN_CONTROL_FACTORY_FOR(HorizontalSlider, Base)
             {
                 AddProperty(new Properties::Min());
                 AddProperty(new Properties::Max());
             }
 
-            virtual Gwen::String Name()
-            {
-                return "HorizontalSlider";
-            }
-
-            virtual Gwen::String ParentName()
-            {
-                return "Base";
-            }
-
             virtual Gwen::Controls::Base* CreateInstance(Gwen::Controls::Base* parent)
             {
-                Gwen::Controls::HorizontalSlider* pControl = new Gwen::Controls::HorizontalSlider(
-                    parent);
+                Gwen::Controls::HorizontalSlider* pControl =
+                    new Gwen::Controls::HorizontalSlider(parent);
                 pControl->SetSize(100, 20);
                 pControl->SetRange(0, 1);
                 return pControl;

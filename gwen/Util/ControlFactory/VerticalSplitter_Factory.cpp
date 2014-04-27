@@ -8,28 +8,18 @@ namespace Gwen
     {
         using namespace Gwen;
 
-        class VerticalSplitter_Factory : public Gwen::ControlFactory::Base
+        class SplitterVertical_Factory : public Gwen::ControlFactory::Base
         {
         public:
 
-            GWEN_CONTROL_FACTORY_CONSTRUCTOR(VerticalSplitter_Factory, Gwen::ControlFactory::Base)
+            GWEN_CONTROL_FACTORY_FOR(SplitterVertical, Base)
             {
-            }
-
-            virtual Gwen::String Name()
-            {
-                return "VerticalSplitter";
-            }
-
-            virtual Gwen::String ParentName()
-            {
-                return "Base";
             }
 
             virtual Gwen::Controls::Base* CreateInstance(Gwen::Controls::Base* parent)
             {
-                Gwen::Controls::SplitterVertical* pControl = new Gwen::Controls::SplitterVertical(
-                    parent);
+                Gwen::Controls::SplitterVertical* pControl =
+                    new Gwen::Controls::SplitterVertical(parent);
                 pControl->SetSize(200, 200);
                 return pControl;
             }
@@ -54,7 +44,7 @@ namespace Gwen
         };
 
 
-        GWEN_CONTROL_FACTORY(VerticalSplitter_Factory);
+        GWEN_CONTROL_FACTORY(SplitterVertical_Factory);
 
     }
 }
