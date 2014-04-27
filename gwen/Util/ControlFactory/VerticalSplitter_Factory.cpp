@@ -16,7 +16,7 @@ namespace Gwen
             {
             }
 
-            virtual Gwen::Controls::Base* CreateInstance(Gwen::Controls::Base* parent)
+            virtual Gwen::Controls::Base* CreateInstance(Gwen::Controls::Base* parent) override
             {
                 Gwen::Controls::SplitterVertical* pControl =
                     new Gwen::Controls::SplitterVertical(parent);

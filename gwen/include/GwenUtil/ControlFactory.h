@@ -39,7 +39,7 @@ namespace Gwen
             ,   m_EnumCount(count)
             {}
             
-            size_t GetNumEnums() const { return m_EnumCount; }
+            size_t GetEnumCount() const { return m_EnumCount; }
             
             const char* GetNameByIndex(Count_t index) const
             {
@@ -146,12 +146,12 @@ namespace Gwen
             static const Gwen::String True;
             static const Gwen::String False;
 
-            virtual size_t OptionCount() const
+            virtual size_t OptionCount() const override
             {
                 return 2;
             }
 
-            virtual Gwen::String OptionGet(int i)
+            virtual Gwen::String OptionGet(int i) override
             {
                 if (i == 0)
                     return False;

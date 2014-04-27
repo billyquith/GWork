@@ -14,7 +14,7 @@ namespace Gwen
             {
             }
 
-            virtual Gwen::Controls::Base* CreateInstance(Gwen::Controls::Base* parent)
+            virtual Gwen::Controls::Base* CreateInstance(Gwen::Controls::Base* parent) override
             {
                 Gwen::Controls::ListBox* pControl = new Gwen::Controls::ListBox(parent);
                 pControl->SetSize(100, 100);

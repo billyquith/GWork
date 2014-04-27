@@ -14,67 +14,73 @@ namespace Gwen
             {
                 GWEN_CONTROL_FACTORY_PROPERTY(ControlName, "The control's name");
 
-                String GetValueAsString(Controls::Base* ctrl)
+                String GetValueAsString(Controls::Base* ctrl) override
                 {
                     return Utility::Format("%S", ctrl->GetName().c_str());
                 }
 
-                void SetValueFromString(Controls::Base* ctrl, const String& str)
+                void SetValueFromString(Controls::Base* ctrl, const String& str) override
                 {
                     ctrl->SetName(str);
                 }
 
             };
+            
+            enum PositionEnum { X, Y };
 
+            static const ValueEnumMapItem<PositionEnum> g_posEnums[] = {
+                { "x", X },
+                { "y", Y }
+            };
 
             class Position : public Gwen::ControlFactory::Property
             {
+                typedef ValueEnumMap<PositionEnum> EnumMap;
+                EnumMap m_EnumMap;
+                
+            public:
                 GWEN_CONTROL_FACTORY_PROPERTY(Position, "Sets the position of the control");
+                
+                Position()
+                :   m_EnumMap(g_posEnums, GWEN_ARRAY_COUNT(g_posEnums))
+                {}
 
-                String GetValueAsString(Controls::Base* ctrl)
+                String GetValueAsString(Controls::Base* ctrl) override
                 {
                     return Utility::Format("%i %i", ctrl->X(), ctrl->Y());
                 }
 
-                void SetValueFromString(Controls::Base* ctrl, const String& str)
+                void SetValueFromString(Controls::Base* ctrl, const String& str) override
                 {
                     int x, y;
 
-                    if (sscanf(str.c_str(), "%i %i", &x, &y) != 2)
-                        return;
-
-                    ctrl->SetPos(x, y);
+                    if (sscanf(str.c_str(), "%i %i", &x, &y) == 2)
+                    {
+                        ctrl->SetPos(x, y);
+                    }
                 }
 
-                size_t NumCount() const
+                size_t NumCount() const override
                 {
-                    return 2;
+                    return m_EnumMap.GetEnumCount();
                 }
 
-                Gwen::String NumName(size_t i) const
+                Gwen::String NumName(size_t i) const override
                 {
-                    if (i == 0)
-                        return "x";
-
-                    return "y";
+                    return m_EnumMap.GetNameByIndex(i);
                 }
 
-                float NumGet(Controls::Base* ctrl, int i)
+                float NumGet(Controls::Base* ctrl, int i) override
                 {
-                    if (i == 0)
-                        return ctrl->X();
-
-                    return ctrl->Y();
+                    return i == 0 ? ctrl->X() : ctrl->Y();
                 }
 
-                void NumSet(Controls::Base* ctrl, int i, float f)
+                void NumSet(Controls::Base* ctrl, int i, float f) override
                 {
-                    if (i == 0)
-                        ctrl->SetPos(f, ctrl->Y());
-                    else
-                        ctrl->SetPos(ctrl->X(), f);
+                    return i == 0
+                        ? ctrl->SetPos(f, ctrl->Y())
+                        : ctrl->SetPos(ctrl->X(), f);
                 }
-
             };
 
 
@@ -88,7 +94,7 @@ namespace Gwen
                     return Utility::Format("%i %i %i %i", m.left, m.top, m.right, m.bottom);
                 }
 
-                void SetValueFromString(Controls::Base* ctrl, const String& str)
+                void SetValueFromString(Controls::Base* ctrl, const String& str) override
                 {
                     Gwen::Margin m;
 
@@ -99,12 +105,12 @@ namespace Gwen
                     ctrl->SetMargin(m);
                 }
 
-                size_t NumCount() const
+                size_t NumCount() const override
                 {
                     return 4;
                 }
 
-                Gwen::String NumName(size_t i) const
+                Gwen::String NumName(size_t i) const override
                 {
                     if (i == 0)
                         return "left";
@@ -118,7 +124,7 @@ namespace Gwen
                     return "bottom";
                 }
 
-                float NumGet(Controls::Base* ctrl, int i)
+                float NumGet(Controls::Base* ctrl, int i) override
                 {
                     Gwen::Margin m = ctrl->GetMargin();
 
@@ -134,7 +140,7 @@ namespace Gwen
                     return m.bottom;
                 }
 
-                void NumSet(Controls::Base* ctrl, int i, float f)
+                void NumSet(Controls::Base* ctrl, int i, float f) override
                 {
                     Gwen::Margin m = ctrl->GetMargin();
 
@@ -160,12 +166,12 @@ namespace Gwen
             {
                 GWEN_CONTROL_FACTORY_PROPERTY(Size, "The with and height of the control");
 
-                String GetValueAsString(Controls::Base* ctrl)
+                String GetValueAsString(Controls::Base* ctrl) override
                 {
                     return Utility::Format("%i %i", ctrl->Width(), ctrl->Height());
                 }
 
-                void SetValueFromString(Controls::Base* ctrl, const String& str)
+                void SetValueFromString(Controls::Base* ctrl, const String& str) override
                 {
                     int w, h;
 
@@ -175,12 +181,12 @@ namespace Gwen
                     ctrl->SetSize(w, h);
                 }
 
-                size_t NumCount() const
+                size_t NumCount() const override
                 {
                     return 2;
                 }
 
-                Gwen::String NumName(size_t i) const
+                Gwen::String NumName(size_t i) const override
                 {
                     if (i == 0)
                         return "w";
@@ -188,7 +194,7 @@ namespace Gwen
                     return "h";
                 }
 
-                float NumGet(Controls::Base* ctrl, int i)
+                float NumGet(Controls::Base* ctrl, int i) override
                 {
                     if (i == 0)
                         return ctrl->Width();
@@ -196,7 +202,7 @@ namespace Gwen
                     return ctrl->Height();
                 }
 
-                void NumSet(Controls::Base* ctrl, int i, float f)
+                void NumSet(Controls::Base* ctrl, int i, float f) override
                 {
                     if (i == 0)
                         ctrl->SetSize(f, ctrl->Height());
@@ -215,12 +221,11 @@ namespace Gwen
                 { "Top",    Gwen::Docking::Top },
                 { "Bottom", Gwen::Docking::Bottom },
             };
-
+            
             class Dock : public Gwen::ControlFactory::Property
             {
                 typedef ValueEnumMap<Gwen::Docking::Area> EnumMap;
                 EnumMap m_EnumMap;
-                static EnumMap::Enum m_DockEnums[];
                 
             public:
                 GWEN_CONTROL_FACTORY_PROPERTY(Dock, "How the control is to be docked");
@@ -229,23 +234,23 @@ namespace Gwen
                 :   m_EnumMap(g_DockEnums, GWEN_ARRAY_COUNT(g_DockEnums))
                 {}
 
-                String GetValueAsString(Controls::Base* ctrl)
+                String GetValueAsString(Controls::Base* ctrl) override
                 {
                     return m_EnumMap.GetNameByValue(ctrl->GetDock());
                 }
 
-                void SetValueFromString(Controls::Base* ctrl, const String& str)
+                void SetValueFromString(Controls::Base* ctrl, const String& str) override
                 {
                     Docking::Area dock = m_EnumMap.GetValueByName(str.c_str(), Docking::None);
                     ctrl->Dock(dock);
                 }
 
-                size_t OptionCount() const
+                size_t OptionCount() const override
                 {
-                    return m_EnumMap.GetNumEnums();
+                    return m_EnumMap.GetEnumCount();
                 }
 
-                Gwen::String OptionGet(int i)
+                Gwen::String OptionGet(int i) override
                 {
                     return m_EnumMap.GetNameByIndex(i);
                 }

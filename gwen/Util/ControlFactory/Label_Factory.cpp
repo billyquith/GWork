@@ -12,7 +12,7 @@ namespace Gwen
             {
                 GWEN_CONTROL_FACTORY_PROPERTY(Text, "The text, or label of the control");
 
-                String GetValueAsString(Controls::Base* ctrl)
+                String GetValueAsString(Controls::Base* ctrl) override
                 {
                     String str = gwen_cast<Controls::Label>(ctrl)->GetText();
                     Gwen::Utility::Replace(str, "\n", "\\n");
@@ -20,7 +20,7 @@ namespace Gwen
                     return str;
                 }
 
-                void SetValueFromString(Controls::Base* ctrl, const String& str)
+                void SetValueFromString(Controls::Base* ctrl, const String& str) override
                 {
                     String strOut = str;
                     Gwen::Utility::Replace(strOut, "\\n", "\n");
@@ -35,12 +35,12 @@ namespace Gwen
             {
                 GWEN_CONTROL_FACTORY_PROPERTY(Font, "The font name");
 
-                String GetValueAsString(Controls::Base* ctrl)
+                String GetValueAsString(Controls::Base* ctrl) override
                 {
                     return gwen_cast<Controls::Label>(ctrl)->GetFont()->facename;
                 }
 
-                void SetValueFromString(Controls::Base* ctrl, const String& str)
+                void SetValueFromString(Controls::Base* ctrl, const String& str) override
                 {
                     if (str == "")
                         return;
@@ -56,13 +56,13 @@ namespace Gwen
             {
                 GWEN_CONTROL_FACTORY_PROPERTY(FontSize, "The font size");
 
-                String GetValueAsString(Controls::Base* ctrl)
+                String GetValueAsString(Controls::Base* ctrl) override
                 {
                     return Gwen::Utility::Format("%i", (int)gwen_cast<Controls::Label>(
                                                      ctrl)->GetFont()->size);
                 }
 
-                void SetValueFromString(Controls::Base* ctrl, const String& str)
+                void SetValueFromString(Controls::Base* ctrl, const String& str) override
                 {
                     int size;
 
@@ -84,7 +84,7 @@ namespace Gwen
             {
                 GWEN_CONTROL_FACTORY_PROPERTY(FontBold, "The font bold");
 
-                String GetValueAsString(Controls::Base* ctrl)
+                String GetValueAsString(Controls::Base* ctrl) override
                 {
                     if (gwen_cast<Controls::Label>(ctrl)->GetFont()->bold)
                         return True;
@@ -92,7 +92,7 @@ namespace Gwen
                     return False;
                 }
 
-                void SetValueFromString(Controls::Base* ctrl, const String& str)
+                void SetValueFromString(Controls::Base* ctrl, const String& str) override
                 {
                     bool bTrue = (str == True);
                     Gwen::Font* pFont = gwen_cast<Controls::Label>(ctrl)->GetFont();
@@ -111,7 +111,7 @@ namespace Gwen
             {
                 GWEN_CONTROL_FACTORY_PROPERTY(Wrap, "Wrap the text");
 
-                String GetValueAsString(Controls::Base* ctrl)
+                String GetValueAsString(Controls::Base* ctrl) override
                 {
                     if (gwen_cast<Controls::Label>(ctrl)->Wrap())
                         return True;
@@ -119,7 +119,7 @@ namespace Gwen
                     return False;
                 }
 
-                void SetValueFromString(Controls::Base* ctrl, const String& str)
+                void SetValueFromString(Controls::Base* ctrl, const String& str) override
                 {
                     bool bTrue = (str == True);
 
@@ -136,7 +136,7 @@ namespace Gwen
             {
                 GWEN_CONTROL_FACTORY_PROPERTY(VerticalAlign, "VerticalAlign");
 
-                String GetValueAsString(Controls::Base* ctrl)
+                String GetValueAsString(Controls::Base* ctrl) override
                 {
                     const int align = gwen_cast<Controls::Label>(ctrl)->GetAlignment();
                     
@@ -152,7 +152,7 @@ namespace Gwen
                     return "Top";
                 }
 
-                void SetValueFromString(Controls::Base* ctrl, const String& str)
+                void SetValueFromString(Controls::Base* ctrl, const String& str) override
                 {
                     int align = gwen_cast<Controls::Label>(ctrl)->GetAlignment();
                     align &= ~Docking::Top;
@@ -167,12 +167,12 @@ namespace Gwen
                         gwen_cast<Controls::Label>(ctrl)->SetAlignment(align|Docking::Bottom);
                 }
 
-                size_t OptionCount() const
+                size_t OptionCount() const override
                 {
                     return 3;
                 }
 
-                Gwen::String OptionGet(int i)
+                Gwen::String OptionGet(int i) override
                 {
                     if (i == 0)
                         return "Top";
@@ -190,7 +190,7 @@ namespace Gwen
             {
                 GWEN_CONTROL_FACTORY_PROPERTY(HorizontalAlign, "HorizontalAlign");
 
-                String GetValueAsString(Controls::Base* ctrl)
+                String GetValueAsString(Controls::Base* ctrl) override
                 {
                     if (gwen_cast<Controls::Label>(ctrl)->GetAlignment() & Docking::Left)
                         return "Left";
@@ -204,7 +204,7 @@ namespace Gwen
                     return "Left";
                 }
 
-                void SetValueFromString(Controls::Base* ctrl, const String& str)
+                void SetValueFromString(Controls::Base* ctrl, const String& str) override
                 {
                     int iAlign = gwen_cast<Controls::Label>(ctrl)->GetAlignment();
                     iAlign &= ~Docking::Left;
@@ -221,12 +221,12 @@ namespace Gwen
                         gwen_cast<Controls::Label>(ctrl)->SetAlignment(iAlign|Docking::Right);
                 }
 
-                size_t OptionCount() const
+                size_t OptionCount() const override
                 {
                     return 3;
                 }
 
-                Gwen::String OptionGet(int i)
+                Gwen::String OptionGet(int i) override
                 {
                     if (i == 0)
                         return "Left";
@@ -258,7 +258,7 @@ namespace Gwen
                 AddProperty(new Properties::HorizontalAlign());
             }
 
-            virtual Gwen::Controls::Base* CreateInstance(Gwen::Controls::Base* parent)
+            virtual Gwen::Controls::Base* CreateInstance(Gwen::Controls::Base* parent) override
             {
                 Gwen::Controls::Label* pControl = new Gwen::Controls::Label(parent);
                 pControl->SetSize(100, 20);
@@ -279,7 +279,7 @@ namespace Gwen
             {
             }
 
-            virtual Gwen::Controls::Base* CreateInstance(Gwen::Controls::Base* parent)
+            virtual Gwen::Controls::Base* CreateInstance(Gwen::Controls::Base* parent) override
             {
                 Gwen::Controls::Label* pControl = new Gwen::Controls::LabelClickable(parent);
                 pControl->SetSize(100, 20);
@@ -288,7 +288,6 @@ namespace Gwen
             }
 
         };
-
 
         GWEN_CONTROL_FACTORY(LabelClickable_Factory);
 

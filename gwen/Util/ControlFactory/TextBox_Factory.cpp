@@ -14,7 +14,7 @@ namespace Gwen
             {
             }
 
-            virtual Gwen::Controls::Base* CreateInstance(Gwen::Controls::Base* parent)
+            virtual Gwen::Controls::Base* CreateInstance(Gwen::Controls::Base* parent) override
             {
                 Gwen::Controls::TextBox* pControl = new Gwen::Controls::TextBox(parent);
                 pControl->SetSize(100, 20);
@@ -33,7 +33,7 @@ namespace Gwen
             {
             }
 
-            virtual Gwen::Controls::Base* CreateInstance(Gwen::Controls::Base* parent)
+            virtual Gwen::Controls::Base* CreateInstance(Gwen::Controls::Base* parent) override
             {
                 Gwen::Controls::TextBoxMultiline* pControl =
                     new Gwen::Controls::TextBoxMultiline(parent);
