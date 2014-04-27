@@ -38,7 +38,7 @@ public:
 		Gwen::Controls::Label* label = new Gwen::Controls::Label( pGroup );
 		label->SetText(c_text);
 		label->SetWrap( true );
-		label->Dock(Pos::Fill);
+		label->Dock(Docking::Fill);
     }
 };
 

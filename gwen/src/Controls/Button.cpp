@@ -22,7 +22,7 @@ GWEN_CONTROL_CONSTRUCTOR(Button)
     SetSize(100, 20);
     SetMouseInputEnabled(true);
     SetIsToggle(false);
-    SetAlignment(Gwen::Pos::Center);
+    SetAlignment(Gwen::Docking::Center);
     SetTextPadding(Padding(3, 0, 3, 0));
     m_bToggleStatus = false;
     SetKeyboardInputEnabled(false);
@@ -198,9 +198,9 @@ void Button::PostLayout(Skin::Base* pSkin)
     if (m_Image)
     {
         if (m_bCenterImage)
-            m_Image->Position(Pos::Center);
+            m_Image->Position(Docking::Center);
         else
-            m_Image->Position(Pos::Left|Pos::CenterV);
+            m_Image->Position(Docking::Left|Docking::CenterV);
     }
 }
 

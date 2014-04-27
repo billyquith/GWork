@@ -19,7 +19,7 @@ GWEN_CONTROL_CONSTRUCTOR(Label)
     m_Text->SetFont(GetSkin()->GetDefaultFont());
     SetMouseInputEnabled(false);
     SetBounds(0, 0, 100, 10);
-    SetAlignment(Gwen::Pos::Left|Gwen::Pos::Top);
+    SetAlignment(Gwen::Docking::Left|Gwen::Docking::Top);
 }
 
 void Label::PreDelete(Gwen::Skin::Base* skin)

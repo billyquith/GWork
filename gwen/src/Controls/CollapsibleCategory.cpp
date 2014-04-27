@@ -17,7 +17,7 @@ class CategoryButton : public Button
 {
     GWEN_CONTROL_INLINE(CategoryButton, Button)
     {
-        SetAlignment(Pos::Left|Pos::CenterV);
+        SetAlignment(Docking::Left|Docking::CenterV);
         m_bAlt = false;
     }
     
@@ -77,7 +77,7 @@ class CategoryHeaderButton : public Button
     {
         SetShouldDrawBackground(false);
         SetIsToggle(true);
-        SetAlignment(Pos::Center);
+        SetAlignment(Docking::Center);
     }
     
     void UpdateColours()
@@ -96,7 +96,7 @@ GWEN_CONTROL_CONSTRUCTOR(CollapsibleCategory)
     m_pList = NULL;
     m_pButton = new CategoryHeaderButton(this);
     m_pButton->SetText("Category Title");
-    m_pButton->Dock(Pos::Top);
+    m_pButton->Dock(Docking::Top);
     m_pButton->SetHeight(20);
     SetPadding(Padding(1, 0, 1, 5));
     SetSize(512, 512);
@@ -106,7 +106,7 @@ Button* CollapsibleCategory::Add(const String& name)
 {
     CategoryButton* pButton = new CategoryButton(this);
     pButton->SetText(name);
-    pButton->Dock(Pos::Top);
+    pButton->Dock(Docking::Top);
     pButton->SizeToContents();
     pButton->SetSize(pButton->Width()+4, pButton->Height()+4);
     pButton->SetPadding(Padding(5, 2, 2, 2));

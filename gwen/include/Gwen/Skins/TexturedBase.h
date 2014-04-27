@@ -568,13 +568,13 @@ namespace Gwen
 
                 virtual void DrawActiveTabButton( Gwen::Controls::Base* control, int dir )
                 {
-                    if ( dir == Pos::Bottom )   { return Textures.Tab.Bottom.Active.Draw( GetRender(), control->GetRenderBounds() + Rect( 0, -8, 0, 8 ) ); }
+                    if ( dir == Docking::Bottom )   { return Textures.Tab.Bottom.Active.Draw( GetRender(), control->GetRenderBounds() + Rect( 0, -8, 0, 8 ) ); }
 
-                    if ( dir == Pos::Top )      { return Textures.Tab.Top.Active.Draw( GetRender(), control->GetRenderBounds() + Rect( 0, 0, 0, 8 ) ); }
+                    if ( dir == Docking::Top )      { return Textures.Tab.Top.Active.Draw( GetRender(), control->GetRenderBounds() + Rect( 0, 0, 0, 8 ) ); }
 
-                    if ( dir == Pos::Left )     { return Textures.Tab.Left.Active.Draw( GetRender(), control->GetRenderBounds() + Rect( 0, 0, 8, 0 ) ); }
+                    if ( dir == Docking::Left )     { return Textures.Tab.Left.Active.Draw( GetRender(), control->GetRenderBounds() + Rect( 0, 0, 8, 0 ) ); }
 
-                    if ( dir == Pos::Right )    { return Textures.Tab.Right.Active.Draw( GetRender(), control->GetRenderBounds() + Rect( -8, 0, 8, 0 ) ); }
+                    if ( dir == Docking::Right )    { return Textures.Tab.Right.Active.Draw( GetRender(), control->GetRenderBounds() + Rect( -8, 0, 8, 0 ) ); }
                 }
 
                 virtual void DrawTabButton( Gwen::Controls::Base* control, bool bActive, int dir )
@@ -582,13 +582,13 @@ namespace Gwen
                     if ( bActive )
                     { return DrawActiveTabButton( control, dir ); }
 
-                    if ( dir == Pos::Bottom )   { return Textures.Tab.Bottom.Inactive.Draw( GetRender(), control->GetRenderBounds() ); }
+                    if ( dir == Docking::Bottom )   { return Textures.Tab.Bottom.Inactive.Draw( GetRender(), control->GetRenderBounds() ); }
 
-                    if ( dir == Pos::Top )      { return Textures.Tab.Top.Inactive.Draw( GetRender(), control->GetRenderBounds() ); }
+                    if ( dir == Docking::Top )      { return Textures.Tab.Top.Inactive.Draw( GetRender(), control->GetRenderBounds() ); }
 
-                    if ( dir == Pos::Left )     { return Textures.Tab.Left.Inactive.Draw( GetRender(), control->GetRenderBounds() ); }
+                    if ( dir == Docking::Left )     { return Textures.Tab.Left.Inactive.Draw( GetRender(), control->GetRenderBounds() ); }
 
-                    if ( dir == Pos::Right )    { return Textures.Tab.Right.Inactive.Draw( GetRender(), control->GetRenderBounds() ); }
+                    if ( dir == Docking::Right )    { return Textures.Tab.Right.Inactive.Draw( GetRender(), control->GetRenderBounds() ); }
                 }
 
                 virtual void DrawTabControl( Gwen::Controls::Base* control )
@@ -813,11 +813,11 @@ namespace Gwen
                 {
                     int i = 0;
 
-                    if ( iDirection == Pos::Top ) { i = 1; }
+                    if ( iDirection == Docking::Top ) { i = 1; }
 
-                    if ( iDirection == Pos::Right ) { i = 2; }
+                    if ( iDirection == Docking::Right ) { i = 2; }
 
-                    if ( iDirection == Pos::Bottom ) { i = 3; }
+                    if ( iDirection == Docking::Bottom ) { i = 3; }
 
                     if ( bDisabled )
                     { return Textures.Scroller.Button.Disabled[i].Draw( GetRender(), control->GetRenderBounds() ); }

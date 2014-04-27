@@ -577,11 +577,11 @@ namespace Gwen
                 m_Render->SetDrawColor(Gwen::Color(0, 0, 0, 240));
                 Gwen::Rect r(control->Width()/2-2, control->Height()/2-2, 5, 5);
 
-                if (iDirection == Gwen::Pos::Top)
+                if (iDirection == Gwen::Docking::Top)
                     DrawArrowUp(r);
-                else if (iDirection == Gwen::Pos::Bottom)
+                else if (iDirection == Gwen::Docking::Bottom)
                     DrawArrowDown(r);
-                else if (iDirection == Gwen::Pos::Left)
+                else if (iDirection == Gwen::Docking::Left)
                     DrawArrowLeft(r);
                 else
                     DrawArrowRight(r);

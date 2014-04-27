@@ -7,7 +7,7 @@ GWEN_CONTROL_CONSTRUCTOR( Properties )
 	SetSize( 200, 200 );
 
 	m_Props = new Controls::PropertyTree( this );
-	m_Props->Dock( Pos::Fill );
+	m_Props->Dock( Docking::Fill );
 
 
 }

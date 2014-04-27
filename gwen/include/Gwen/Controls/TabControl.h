@@ -47,7 +47,7 @@ namespace Gwen
                 return m_TabStrip;
             }
 
-            virtual void SetTabStripPosition(int iDock);
+            virtual void SetTabStripPosition(Docking::Area dockSide);
 
             virtual bool DoesAllowDrag();
 

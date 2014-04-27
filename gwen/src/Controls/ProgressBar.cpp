@@ -39,7 +39,7 @@ GWEN_CONTROL_CONSTRUCTOR(ProgressBar)
     SetBounds(Gwen::Rect(0, 0, 128, 32));
     SetTextPadding(Padding(3, 3, 3, 3));
     SetHorizontal();
-    SetAlignment(Gwen::Pos::Center);
+    SetAlignment(Gwen::Docking::Center);
     m_fProgress = 0.0f;
     m_bAutoLabel = true;
     m_fCycleSpeed = 0.0f;

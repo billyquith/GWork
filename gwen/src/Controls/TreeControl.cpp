@@ -23,7 +23,7 @@ GWEN_CONTROL_CONSTRUCTOR(TreeControl)
     m_InnerPanel = NULL;
     m_bAllowMultipleSelection = false;
     m_ScrollControl = new ScrollControl(this);
-    m_ScrollControl->Dock(Pos::Fill);
+    m_ScrollControl->Dock(Docking::Fill);
     m_ScrollControl->SetScroll(false, true);
     m_ScrollControl->SetAutoHideBars(true);
     m_ScrollControl->SetMargin(Margin(1, 1, 1, 1));

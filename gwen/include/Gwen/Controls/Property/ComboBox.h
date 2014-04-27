@@ -24,7 +24,7 @@ namespace Gwen
                 GWEN_CONTROL_INLINE(ComboBox, Property::Base)
                 {
                     m_ComboBox = new Gwen::Controls::ComboBox(this);
-                    m_ComboBox->Dock(Pos::Fill);
+                    m_ComboBox->Dock(Docking::Fill);
                     m_ComboBox->onSelection.Add(this, &ParentClass::OnPropertyValueChanged);
                     m_ComboBox->SetTabable(true);
                     m_ComboBox->SetKeyboardInputEnabled(true);

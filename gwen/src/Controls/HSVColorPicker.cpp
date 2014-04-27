@@ -24,12 +24,12 @@ GWEN_CONTROL_CONSTRUCTOR(HSVColorPicker)
     
     m_LerpBox = new Gwen::Controls::ColorLerpBox(this);
     m_LerpBox->onSelectionChanged.Add(this, &HSVColorPicker::ColorBoxChanged);
-    m_LerpBox->Dock(Pos::Left);
+    m_LerpBox->Dock(Docking::Left);
     
     m_ColorSlider = new Gwen::Controls::ColorSlider(this);
     m_ColorSlider->SetPos(m_LerpBox->Width()+15, 5);
     m_ColorSlider->onSelectionChanged.Add(this, &HSVColorPicker::ColorSliderChanged);
-    m_ColorSlider->Dock(Pos::Left);
+    m_ColorSlider->Dock(Docking::Left);
     
     m_After = new Gwen::ControlsInternal::ColorDisplay(this);
     m_After->SetSize(48, 24);

@@ -36,7 +36,7 @@ class TreeNodeText : public Button
 {
     GWEN_CONTROL_INLINE(TreeNodeText, Button)
     {
-        SetAlignment(Pos::Left|Pos::CenterV);
+        SetAlignment(Docking::Left|Docking::CenterV);
         SetShouldDrawBackground(false);
         SetHeight(16);
     }
@@ -67,13 +67,13 @@ GWEN_CONTROL_CONSTRUCTOR(TreeNode)
     m_ToggleButton->SetBounds(0, 0, 15, 15);
     m_ToggleButton->onToggle.Add(this, &TreeNode::OnToggleButtonPress);
     m_Title = new TreeNodeText(this);
-    m_Title->Dock(Pos::Top);
+    m_Title->Dock(Docking::Top);
     m_Title->SetMargin(Margin(16, 0, 0, 0));
     m_Title->onDoubleClick.Add(this, &TreeNode::OnDoubleClickName);
     m_Title->onDown.Add(this, &TreeNode::OnClickName);
     m_Title->onRightPress.Add(this, &TreeNode::OnRightPress);
     m_InnerPanel = new Base(this);
-    m_InnerPanel->Dock(Pos::Top);
+    m_InnerPanel->Dock(Docking::Top);
     m_InnerPanel->SetHeight(100);
     m_InnerPanel->SetMargin(Margin(TreeIndentation, 1, 0, 0));
     m_InnerPanel->Hide();
@@ -103,7 +103,7 @@ TreeNode* TreeNode::AddNode(const String& strLabel)
 {
     TreeNode* node = new TreeNode(this);
     node->SetText(strLabel);
-    node->Dock(Pos::Top);
+    node->Dock(Docking::Top);
     node->SetRoot(gwen_cast<TreeControl>(this) != NULL);
     node->SetTreeControl(m_TreeControl);
 

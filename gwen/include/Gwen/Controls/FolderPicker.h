@@ -24,13 +24,13 @@ namespace Gwen
             GWEN_CONTROL_INLINE(FolderPicker, Controls::Base)
             {
                 m_Button = new Controls::Button(this);
-                m_Button->Dock(Pos::Right);
+                m_Button->Dock(Docking::Right);
                 m_Button->SetMargin(Margin(2, 0, 0, 0));
                 m_Button->SetText("..");
                 m_Button->SetSize(20, 20);
                 m_Button->onPress.Add(this, &FolderPicker::OnBrowse);
                 m_TextBox = new Controls::TextBox(this);
-                m_TextBox->Dock(Pos::Fill);
+                m_TextBox->Dock(Docking::Fill);
                 this->SetSize(100, 20);
                 m_BrowseName = "Find Folder";
             }

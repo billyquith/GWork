@@ -7,7 +7,7 @@ GWEN_CONTROL_CONSTRUCTOR( Hierarchy )
 	SetSize( 200, 200 );
 
 	m_Tree = new Controls::TreeControl( this );
-	m_Tree->Dock( Pos::Fill );
+	m_Tree->Dock( Docking::Fill );
 }
 
 void Hierarchy::WatchCanvas( DocumentCanvas* pCanvas )

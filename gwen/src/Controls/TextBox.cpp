@@ -38,7 +38,7 @@ GWEN_CONTROL_CONSTRUCTOR(TextBox)
     SetSize(200, 20);
     SetMouseInputEnabled(true);
     SetKeyboardInputEnabled(true);
-    SetAlignment(Pos::Left|Pos::CenterV);
+    SetAlignment(Docking::Left|Docking::CenterV);
     SetPadding(Padding(4, 2, 4, 2));
     m_iCursorPos = 0;
     m_iCursorEnd = 0;
@@ -428,13 +428,13 @@ void TextBox::MakeCaratVisible()
 
         int y = 0;
 
-        if (m_iAlign&Pos::Top)
+        if (m_iAlign&Docking::Top)
             y = GetPadding().top;
 
-        if (m_iAlign&Pos::Bottom)
+        if (m_iAlign&Docking::Bottom)
             y = Height()-m_Text->Height()-GetPadding().bottom;
 
-        if (m_iAlign&Pos::CenterV)
+        if (m_iAlign&Docking::CenterV)
             y = (Height()-m_Text->Height()) / 2;
 
         m_Text->SetPos(x, y);
@@ -484,7 +484,7 @@ void TextBox::MoveCaretToStart()
 GWEN_CONTROL_CONSTRUCTOR(TextBoxMultiline)
 {
     SetWrap(true);
-    SetAlignment(Pos::Left|Pos::Top);
+    SetAlignment(Docking::Left|Docking::Top);
 }
 
 bool TextBoxMultiline::OnKeyReturn(bool bDown)
@@ -581,9 +581,9 @@ void TextBoxMultiline::MakeCaratVisible()
     {
         //const Rect& bounds = GetInnerBounds();
 
-        //if ( pos & Pos::Top ) y = bounds.y + ypadding;
-        //if ( pos & Pos::Bottom ) y = bounds.y + ( bounds.h - Height() - ypadding );
-        //if ( pos & Pos::CenterV ) y = bounds.y + ( bounds.h - Height() )  * 0.5;
+        //if ( pos & Docking::Top ) y = bounds.y + ypadding;
+        //if ( pos & Docking::Bottom ) y = bounds.y + ( bounds.h - Height() - ypadding );
+        //if ( pos & Docking::CenterV ) y = bounds.y + ( bounds.h - Height() )  * 0.5;
 
         Rect pos = m_Text->GetCharacterPosition(m_iCursorPos);
         int iCaratPos = pos.y; // + pos.h;
@@ -619,11 +619,11 @@ void TextBoxMultiline::MakeCaratVisible()
             y = GetPadding().top;
 
         int x = 0;
-        if (m_iAlign&Pos::Left)
+        if (m_iAlign&Docking::Left)
             x = GetPadding().left;
-        if (m_iAlign&Pos::Right)
+        if (m_iAlign&Docking::Right)
             x = Width()-m_Text->Width()-GetPadding().right;
-        if (m_iAlign&Pos::CenterH)
+        if (m_iAlign&Docking::CenterH)
             x = (Width()-m_Text->Width())*0.5;
 
         m_Text->SetPos(x, y);

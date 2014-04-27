@@ -10,7 +10,7 @@ public:
 
     GWEN_CONTROL_INLINE(StatusBar, GUnit)
     {
-        Dock(Pos::Fill);
+        Dock(Docking::Fill);
         Gwen::Controls::StatusBar* pStatus = new Gwen::Controls::StatusBar(this);
         Gwen::Controls::Label* pRight = new Gwen::Controls::Label(pStatus);
         pRight->SetText("Label Added to Right");

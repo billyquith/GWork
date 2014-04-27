@@ -44,14 +44,14 @@ namespace Gwen
             {
                 SetSize(200, 19);
                 m_RadioButton = new RadioButton(this);
-                m_RadioButton->Dock(Pos::Left);
+                m_RadioButton->Dock(Docking::Left);
                 m_RadioButton->SetMargin(Margin(0, 2, 2, 2));
                 m_RadioButton->SetTabable(false);
                 m_RadioButton->SetKeyboardInputEnabled(false);
                 m_Label = new LabelClickable(this);
-                m_Label->SetAlignment(Pos::CenterV|Pos::Left);
+                m_Label->SetAlignment(Docking::CenterV | Docking::Left);
                 m_Label->SetText("Radio Button");
-                m_Label->Dock(Pos::Fill);
+                m_Label->Dock(Docking::Fill);
                 m_Label->onPress.Add(m_RadioButton, &CheckBox::OnPress);
                 m_Label->SetTabable(false);
                 m_Label->SetKeyboardInputEnabled(false);

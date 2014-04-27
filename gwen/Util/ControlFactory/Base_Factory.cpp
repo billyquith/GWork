@@ -207,18 +207,18 @@ namespace Gwen
             };
             
             
-            static ValueEnumMapItem<Pos::Enum> g_DockEnums[] = {
-                { "None",   Gwen::Pos::None },
-                { "Fill",   Gwen::Pos::Fill },
-                { "Left",   Gwen::Pos::Left },
-                { "Right",  Gwen::Pos::Right },
-                { "Top",    Gwen::Pos::Top },
-                { "Bottom", Gwen::Pos::Bottom },
+            static const ValueEnumMapItem<Docking::Area> g_DockEnums[] = {
+                { "None",   Gwen::Docking::None },
+                { "Fill",   Gwen::Docking::Fill },
+                { "Left",   Gwen::Docking::Left },
+                { "Right",  Gwen::Docking::Right },
+                { "Top",    Gwen::Docking::Top },
+                { "Bottom", Gwen::Docking::Bottom },
             };
 
             class Dock : public Gwen::ControlFactory::Property
             {
-                typedef ValueEnumMap<Gwen::Pos::Enum> EnumMap;
+                typedef ValueEnumMap<Gwen::Docking::Area> EnumMap;
                 EnumMap m_EnumMap;
                 static EnumMap::Enum m_DockEnums[];
                 
@@ -231,13 +231,12 @@ namespace Gwen
 
                 String GetValueAsString(Controls::Base* ctrl)
                 {
-                    // TODO - Why is Pos an int in GWEN?? --BQ
-                    return m_EnumMap.GetNameByValue(static_cast<Pos::Enum>(ctrl->GetDock()));
+                    return m_EnumMap.GetNameByValue(ctrl->GetDock());
                 }
 
                 void SetValueFromString(Controls::Base* ctrl, const String& str)
                 {
-                    Pos::Enum dock = m_EnumMap.GetValueByName(str.c_str(), Pos::None);
+                    Docking::Area dock = m_EnumMap.GetValueByName(str.c_str(), Docking::None);
                     ctrl->Dock(dock);
                 }
 

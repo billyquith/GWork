@@ -34,27 +34,27 @@ TabControl* DockBase::GetTabControl()
     return m_DockedTabControl;
 }
 
-void DockBase::SetupChildDock(int iPos)
+void DockBase::SetupChildDock(Docking::Area pos)
 {
     if (!m_DockedTabControl)
     {
         m_DockedTabControl = new DockedTabControl(this);
         m_DockedTabControl->onLoseTab.Add(this, &DockBase::OnTabRemoved);
-        m_DockedTabControl->SetTabStripPosition(Pos::Bottom);
+        m_DockedTabControl->SetTabStripPosition(Docking::Bottom);
         m_DockedTabControl->SetShowTitlebar(true);
     }
 
-    Dock(iPos);
-    int iSizeDirection = Pos::Left;
+    Dock(pos);
+    Docking::Area iSizeDirection = Docking::Left;
 
-    if (iPos == Pos::Left)
-        iSizeDirection = Pos::Right;
+    if (pos == Docking::Left)
+        iSizeDirection = Docking::Right;
 
-    if (iPos == Pos::Top)
-        iSizeDirection = Pos::Bottom;
+    if (pos == Docking::Top)
+        iSizeDirection = Docking::Bottom;
 
-    if (iPos == Pos::Bottom)
-        iSizeDirection = Pos::Top;
+    if (pos == Docking::Bottom)
+        iSizeDirection = Docking::Top;
 
     ControlsInternal::Resizer* sizer = new ControlsInternal::Resizer(this);
     sizer->Dock(iSizeDirection);
@@ -69,31 +69,31 @@ void DockBase::Render(Skin::Base* /*skin*/)
     // Gwen::Render->DrawLinedRect( GetRenderBounds() );
 }
 
-DockBase** DockBase::GetChildDockPtr(int iPos)
+DockBase** DockBase::GetChildDockPtr(Docking::Area pos)
 {
-    if (iPos == Pos::Left)
+    if (pos == Docking::Left)
         return &m_Left;
 
-    if (iPos == Pos::Right)
+    if (pos == Docking::Right)
         return &m_Right;
 
-    if (iPos == Pos::Top)
+    if (pos == Docking::Top)
         return &m_Top;
 
-    if (iPos == Pos::Bottom)
+    if (pos == Docking::Bottom)
         return &m_Bottom;
 
     return NULL;
 }
 
-DockBase* DockBase::GetChildDock(int iPos)
+DockBase* DockBase::GetChildDock(Docking::Area pos)
 {
-    DockBase** pDock = GetChildDockPtr(iPos);
+    DockBase** pDock = GetChildDockPtr(pos);
 
     if (!(*pDock))
     {
         (*pDock) = new DockBase(this);
-        (*pDock)->SetupChildDock(iPos);
+        (*pDock)->SetupChildDock(pos);
     }
     else
     {
@@ -103,7 +103,7 @@ DockBase* DockBase::GetChildDock(int iPos)
     return *pDock;
 }
 
-int DockBase::GetDroppedTabDirection(int x, int y)
+Docking::Area DockBase::GetDroppedTabDirection(int x, int y)
 {
     int w = Width();
     int h = Height();
@@ -115,21 +115,21 @@ int DockBase::GetDroppedTabDirection(int x, int y)
     m_bDropFar = (minimum < 0.2f);
 
     if (minimum > 0.3)
-        return Pos::Fill;
+        return Docking::Fill;
 
     if (top == minimum && (!m_Top || m_Top->Hidden()))
-        return Pos::Top;
+        return Docking::Top;
 
     if (left == minimum && (!m_Left || m_Left->Hidden()))
-        return Pos::Left;
+        return Docking::Left;
 
     if (right == minimum && (!m_Right || m_Right->Hidden()))
-        return Pos::Right;
+        return Docking::Right;
 
     if (bottom == minimum && (!m_Bottom || m_Bottom->Hidden()))
-        return Pos::Bottom;
+        return Docking::Bottom;
 
-    return Pos::Fill;
+    return Docking::Fill;
 }
 
 bool DockBase::DragAndDrop_CanAcceptPackage(Gwen::DragAndDrop::Package* pPackage)
@@ -148,13 +148,13 @@ bool DockBase::DragAndDrop_CanAcceptPackage(Gwen::DragAndDrop::Package* pPackage
 bool DockBase::DragAndDrop_HandleDrop(Gwen::DragAndDrop::Package* pPackage, int x, int y)
 {
     Gwen::Point pPos = CanvasPosToLocal(Gwen::Point(x, y));
-    int dir = GetDroppedTabDirection(pPos.x, pPos.y);
+    Docking::Area dir = GetDroppedTabDirection(pPos.x, pPos.y);
     DockedTabControl* pAddTo = m_DockedTabControl;
 
-    if (dir == Pos::Fill && pAddTo == NULL)
+    if (dir == Docking::Fill && pAddTo == NULL)
         return false;
 
-    if (dir != Pos::Fill)
+    if (dir != Docking::Fill)
     {
         DockBase* pDock = GetChildDock(dir);
         pAddTo = pDock->m_DockedTabControl;
@@ -290,7 +290,7 @@ void DockBase::DragAndDrop_Hover(Gwen::DragAndDrop::Package* /*pPackage*/, int x
     Gwen::Point pPos = CanvasPosToLocal(Gwen::Point(x, y));
     int dir = GetDroppedTabDirection(pPos.x, pPos.y);
 
-    if (dir == Pos::Fill)
+    if (dir == Docking::Fill)
     {
         if (!m_DockedTabControl)
         {
@@ -305,33 +305,33 @@ void DockBase::DragAndDrop_Hover(Gwen::DragAndDrop::Package* /*pPackage*/, int x
     m_HoverRect = GetRenderBounds();
     int HelpBarWidth = 0;
 
-    if (dir == Pos::Left)
+    if (dir == Docking::Left)
     {
         HelpBarWidth = m_HoverRect.w/4;
         m_HoverRect.w = HelpBarWidth;
     }
 
-    if (dir == Pos::Right)
+    if (dir == Docking::Right)
     {
         HelpBarWidth = m_HoverRect.w/4;
         m_HoverRect.x = m_HoverRect.w-HelpBarWidth;
         m_HoverRect.w = HelpBarWidth;
     }
 
-    if (dir == Pos::Top)
+    if (dir == Docking::Top)
     {
         HelpBarWidth = m_HoverRect.h/4;
         m_HoverRect.h = HelpBarWidth;
     }
 
-    if (dir == Pos::Bottom)
+    if (dir == Docking::Bottom)
     {
         HelpBarWidth = m_HoverRect.h/4;
         m_HoverRect.y = m_HoverRect.h-HelpBarWidth;
         m_HoverRect.h = HelpBarWidth;
     }
 
-    if ((dir == Pos::Top || dir == Pos::Bottom) && !m_bDropFar)
+    if ((dir == Docking::Top || dir == Docking::Bottom) && !m_bDropFar)
     {
         if (m_Left && m_Left->Visible())
         {
@@ -343,7 +343,7 @@ void DockBase::DragAndDrop_Hover(Gwen::DragAndDrop::Package* /*pPackage*/, int x
             m_HoverRect.w -= m_Right->Width();
     }
 
-    if ((dir == Pos::Left || dir == Pos::Right) && !m_bDropFar)
+    if ((dir == Docking::Left || dir == Docking::Right) && !m_bDropFar)
     {
         if (m_Top && m_Top->Visible())
         {

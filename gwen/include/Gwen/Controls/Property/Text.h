@@ -24,7 +24,7 @@ namespace Gwen
                 GWEN_CONTROL_INLINE(Text, Property::Base)
                 {
                     m_TextBox = new TextBox(this);
-                    m_TextBox->Dock(Pos::Fill);
+                    m_TextBox->Dock(Docking::Fill);
                     m_TextBox->SetShouldDrawBackground(false);
                     m_TextBox->onTextChanged.Add(this, &ParentClass::OnPropertyValueChanged);
                 }

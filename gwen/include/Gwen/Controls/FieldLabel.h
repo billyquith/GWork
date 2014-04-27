@@ -35,13 +35,13 @@ namespace Gwen
             {
                 m_pField = NULL;
                 SetMargin(Margin(0, 1, 0, 1));
-                SetAlignment(Pos::CenterV|Pos::Left);
+                SetAlignment(Docking::CenterV|Docking::Left);
             }
 
             void SetField(Controls::Base* pField)
             {
                 pField->SetParent(this);
-                pField->Dock(Pos::Right);
+                pField->Dock(Docking::Right);
                 m_pField = pField;
             }
 

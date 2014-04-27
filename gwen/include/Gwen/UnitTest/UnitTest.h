@@ -39,7 +39,7 @@ public:
 
     void Layout(Gwen::Skin::Base* skin)
     {
-        if (GetDock() != Gwen::Pos::None)
+        if (GetDock() != Gwen::Docking::None)
             return;
 
         SizeToChildren(true, true);

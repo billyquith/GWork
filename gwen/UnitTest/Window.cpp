@@ -40,7 +40,7 @@ public:
         pWindow->SetTitle(Utility::Format("Window %i", m_iWindowCount));
         pWindow->SetSize(200+rand()%100, 200+rand()%100);
         pWindow->MakeModal(true);
-        pWindow->Position(Pos::Center);
+        pWindow->Position(Docking::Center);
         pWindow->SetDeleteOnClose(true);
         m_iWindowCount++;
     }

@@ -18,17 +18,17 @@ GWEN_CONTROL_CONSTRUCTOR(NumericUpDown)
 {
     SetSize(100, 20);
     Controls::Base* pSplitter = new Controls::Base(this);
-    pSplitter->Dock(Pos::Right);
+    pSplitter->Dock(Docking::Right);
     pSplitter->SetWidth(13);
     NumericUpDownButton_Up* pButtonUp = new NumericUpDownButton_Up(pSplitter);
     pButtonUp->onPress.Add(this, &NumericUpDown::OnButtonUp);
     pButtonUp->SetTabable(false);
-    pButtonUp->Dock(Pos::Top);
+    pButtonUp->Dock(Docking::Top);
     pButtonUp->SetHeight(10);
     NumericUpDownButton_Down* pButtonDown = new NumericUpDownButton_Down(pSplitter);
     pButtonDown->onPress.Add(this, &NumericUpDown::OnButtonDown);
     pButtonDown->SetTabable(false);
-    pButtonDown->Dock(Pos::Fill);
+    pButtonDown->Dock(Docking::Fill);
     pButtonUp->SetPadding(Padding(0, 1, 1, 0));
     m_iMax = 100;
     m_iMin = 0;

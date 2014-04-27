@@ -19,12 +19,12 @@ GWEN_CONTROL_CONSTRUCTOR(ScrollControl)
 {
     SetMouseInputEnabled(false);
     m_VerticalScrollBar = new VerticalScrollBar(this);
-    m_VerticalScrollBar->Dock(Pos::Right);
+    m_VerticalScrollBar->Dock(Docking::Right);
     m_VerticalScrollBar->onBarMoved.Add(this, &ScrollControl::VBarMoved);
     m_VerticalScrollBar->SetNudgeAmount(30);
     m_bCanScrollV = true;
     m_HorizontalScrollBar = new HorizontalScrollBar(this);
-    m_HorizontalScrollBar->Dock(Pos::Bottom);
+    m_HorizontalScrollBar->Dock(Docking::Bottom);
     m_HorizontalScrollBar->onBarMoved.Add(this, &ScrollControl::HBarMoved);
     m_bCanScrollH = true;
     m_HorizontalScrollBar->SetNudgeAmount(30);
@@ -122,7 +122,7 @@ bool ScrollControl::ContentsAreDocked()
     {
         Base* pChild = *iter;
 
-        if (pChild->GetDock() == Pos::None)
+        if (pChild->GetDock() == Docking::None)
             return false;
     }
 

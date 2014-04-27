@@ -24,9 +24,9 @@ GWEN_CONTROL_CONSTRUCTOR(VerticalScrollBar)
 void VerticalScrollBar::Layout(Skin::Base* skin)
 {
     ParentClass::Layout(skin);
-    m_ScrollButton[SCROLL_BUTTON_UP]->Dock(Pos::Top);
+    m_ScrollButton[SCROLL_BUTTON_UP]->Dock(Docking::Top);
     m_ScrollButton[SCROLL_BUTTON_UP]->SetHeight(Width());
-    m_ScrollButton[SCROLL_BUTTON_DOWN]->Dock(Pos::Bottom);
+    m_ScrollButton[SCROLL_BUTTON_DOWN]->Dock(Docking::Bottom);
     m_ScrollButton[SCROLL_BUTTON_DOWN]->SetHeight(Width());
     m_Bar->SetWidth(GetButtonSize());
     // Add padding

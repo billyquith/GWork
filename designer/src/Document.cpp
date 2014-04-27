@@ -24,21 +24,21 @@ class DocumentInner : public Gwen::Controls::ScrollControl
 
 GWEN_CONTROL_CONSTRUCTOR( Document )
 {
-	Dock( Pos::Fill );
+	Dock( Docking::Fill );
 	SetPadding( Padding( 1, 1, 1, 1 ) );
 
 	// The main horizontal splitter separates the document from the tree/properties
 	Controls::SplitterHorizontal* pSplitter = new Controls::SplitterHorizontal( this );
-	pSplitter->Dock( Pos::Fill );
+	pSplitter->Dock( Docking::Fill );
 	pSplitter->SetScaling( true, 200 );
 
 	// The white background
 	DocumentInner* pInner = new DocumentInner( this );
-	pInner->Dock( Pos::Fill );
+	pInner->Dock( Docking::Fill );
 
 	// The vertical splitter on the right containing the tree/properties
 	Controls::SplitterVertical* pRightSplitter = new Controls::SplitterVertical( this );
-	pRightSplitter->Dock( Pos::Fill );
+	pRightSplitter->Dock( Docking::Fill );
 	pRightSplitter->SetSize( 200, 200 );
 	pRightSplitter->SetScaling( false, 200 );
 
@@ -48,7 +48,7 @@ GWEN_CONTROL_CONSTRUCTOR( Document )
 	// The actual canvas onto which we drop controls
 	{
 		m_pCanvas = new DocumentCanvas( pInner );
-		m_pCanvas->Dock( Pos::Fill );
+		m_pCanvas->Dock( Docking::Fill );
 		m_pCanvas->onHierachyChanged.Add( this, &ThisClass::OnHierachyChanged );
 	}
 
@@ -57,11 +57,11 @@ GWEN_CONTROL_CONSTRUCTOR( Document )
 	{
 		m_pHierarchy = new Hierarchy( pRightSplitter );
 		m_pHierarchy->WatchCanvas( m_pCanvas );
-		m_pHierarchy->Dock( Pos::Fill );
+		m_pHierarchy->Dock( Docking::Fill );
 
 		Properties* pProperties = new Properties( pRightSplitter );
 		pProperties->WatchCanvas( m_pCanvas );
-		pProperties->Dock( Pos::Fill );
+		pProperties->Dock( Docking::Fill );
 
 		pRightSplitter->SetPanels( m_pHierarchy, pProperties );
 	}

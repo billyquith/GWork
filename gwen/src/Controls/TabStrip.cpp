@@ -80,28 +80,28 @@ void TabStrip::Layout(Skin::Base* skin)
         Margin m;
         int iNotFirst = iNum > 0 ? -1 : 0;
 
-        if (m_iDock == Pos::Top)
+        if (m_iDock == Docking::Top)
         {
             m.left = iNotFirst;
-            pButton->Dock(Pos::Left);
+            pButton->Dock(Docking::Left);
         }
 
-        if (m_iDock == Pos::Left)
+        if (m_iDock == Docking::Left)
         {
             m.top = iNotFirst;
-            pButton->Dock(Pos::Top);
+            pButton->Dock(Docking::Top);
         }
 
-        if (m_iDock == Pos::Right)
+        if (m_iDock == Docking::Right)
         {
             m.top = iNotFirst;
-            pButton->Dock(Pos::Top);
+            pButton->Dock(Docking::Top);
         }
 
-        if (m_iDock == Pos::Bottom)
+        if (m_iDock == Docking::Bottom)
         {
             m.left = iNotFirst;
-            pButton->Dock(Pos::Left);
+            pButton->Dock(Docking::Left);
         }
 
         pLargestTab.x = Gwen::Max(pLargestTab.x, pButton->Width());
@@ -110,10 +110,10 @@ void TabStrip::Layout(Skin::Base* skin)
         iNum++;
     }
 
-    if (m_iDock == Pos::Top || m_iDock == Pos::Bottom)
+    if (m_iDock == Docking::Top || m_iDock == Docking::Bottom)
         SetSize(Width(), pLargestTab.y);
 
-    if (m_iDock == Pos::Left || m_iDock == Pos::Right)
+    if (m_iDock == Docking::Left || m_iDock == Docking::Right)
         SetSize(pLargestTab.x, Height());
 
     ParentClass::Layout(skin);
@@ -151,29 +151,29 @@ void TabStrip::DragAndDrop_Hover(Gwen::DragAndDrop::Package* /*pPackage*/, int x
         if (DropPos.x > DroppedOn->Width()/2)
             m_TabDragControl->MoveBy(DroppedOn->Width()-1, 0);
 
-        m_TabDragControl->Dock(Pos::None);
+        m_TabDragControl->Dock(Docking::None);
     }
     else
     {
-        m_TabDragControl->Dock(Pos::Left);
+        m_TabDragControl->Dock(Docking::Left);
         m_TabDragControl->BringToFront();
     }
 }
 
-void TabStrip::SetTabPosition(int iPos)
+void TabStrip::SetTabPosition(Docking::Area pos)
 {
-    Dock(iPos);
+    Dock(pos);
 
-    if (m_iDock == Pos::Top)
+    if (m_iDock == Docking::Top)
         SetPadding(Padding(5, 0, 0, 0));
 
-    if (m_iDock == Pos::Left)
+    if (m_iDock == Docking::Left)
         SetPadding(Padding(0, 5, 0, 0));
 
-    if (m_iDock == Pos::Right)
+    if (m_iDock == Docking::Right)
         SetPadding(Padding(0, 5, 0, 0));
 
-    if (m_iDock == Pos::Bottom)
+    if (m_iDock == Docking::Bottom)
         SetPadding(Padding(5, 0, 0, 0));
 
     InvalidateChildren(true);

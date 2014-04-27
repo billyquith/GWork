@@ -20,22 +20,22 @@ GWEN_CONTROL_CONSTRUCTOR(ScrollBarButton)
 
 void ScrollBarButton::SetDirectionUp()
 {
-    m_iDirection = Pos::Top;
+    m_iDirection = Docking::Top;
 }
 
 void ScrollBarButton::SetDirectionDown()
 {
-    m_iDirection = Pos::Bottom;
+    m_iDirection = Docking::Bottom;
 }
 
 void ScrollBarButton::SetDirectionLeft()
 {
-    m_iDirection = Pos::Left;
+    m_iDirection = Docking::Left;
 }
 
 void ScrollBarButton::SetDirectionRight()
 {
-    m_iDirection = Pos::Right;
+    m_iDirection = Docking::Right;
 }
 
 void ScrollBarButton::Render(Skin::Base* skin)

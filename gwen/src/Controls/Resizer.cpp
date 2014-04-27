@@ -13,7 +13,7 @@ using namespace Gwen::ControlsInternal;
 
 GWEN_CONTROL_CONSTRUCTOR(Resizer)
 {
-    m_iResizeDir = Pos::Left;
+    m_iResizeDir = Docking::Left;
     SetMouseInputEnabled(true);
     SetSize(6, 6);
 }
@@ -33,7 +33,7 @@ void Resizer::OnMouseMoved(int x, int y, int /*deltaX*/, int /*deltaY*/)
     pDelta.x -= x;
     pDelta.y -= y;
 
-    if (m_iResizeDir&Pos::Left)
+    if (m_iResizeDir&Docking::Left)
     {
         pBounds.x -= pDelta.x;
         pBounds.w += pDelta.x;
@@ -49,7 +49,7 @@ void Resizer::OnMouseMoved(int x, int y, int /*deltaX*/, int /*deltaY*/)
         }
     }
 
-    if (m_iResizeDir&Pos::Top)
+    if (m_iResizeDir&Docking::Top)
     {
         pBounds.y -= pDelta.y;
         pBounds.h += pDelta.y;
@@ -65,7 +65,7 @@ void Resizer::OnMouseMoved(int x, int y, int /*deltaX*/, int /*deltaY*/)
         }
     }
 
-    if (m_iResizeDir&Pos::Right)
+    if (m_iResizeDir&Docking::Right)
     {
         // This is complicated.
         // Basically we want to use the HoldPos, so it doesn't snap to the edge
@@ -85,7 +85,7 @@ void Resizer::OnMouseMoved(int x, int y, int /*deltaX*/, int /*deltaY*/)
         m_HoldPos.x -= diff;
     }
 
-    if (m_iResizeDir&Pos::Bottom)
+    if (m_iResizeDir&Docking::Bottom)
     {
         int hoff = pBounds.h-m_HoldPos.y;
         int diff = pBounds.h;
@@ -106,15 +106,15 @@ void Resizer::SetResizeDir(int dir)
 {
     m_iResizeDir = dir;
 
-    if ((dir&Pos::Left && dir&Pos::Top) || (dir&Pos::Right && dir&Pos::Bottom))
+    if ((dir&Docking::Left && dir&Docking::Top) || (dir&Docking::Right && dir&Docking::Bottom))
         return SetCursor(Gwen::CursorType::SizeNWSE);
 
-    if ((dir&Pos::Right && dir&Pos::Top) || (dir&Pos::Left && dir&Pos::Bottom))
+    if ((dir&Docking::Right && dir&Docking::Top) || (dir&Docking::Left && dir&Docking::Bottom))
         return SetCursor(Gwen::CursorType::SizeNESW);
 
-    if (dir&Pos::Right || dir&Pos::Left)
+    if (dir&Docking::Right || dir&Docking::Left)
         return SetCursor(Gwen::CursorType::SizeWE);
 
-    if (dir&Pos::Top || dir&Pos::Bottom)
+    if (dir&Docking::Top || dir&Docking::Bottom)
         return SetCursor(Gwen::CursorType::SizeNS);
 }

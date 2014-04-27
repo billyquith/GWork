@@ -24,7 +24,7 @@ namespace Gwen
 
                 GWEN_CONTROL_INLINE(Position, Base)
                 {
-                    SetPosition(Pos::Left|Pos::Top);
+                    SetPosition(Docking::Left|Docking::Top);
                 }
 
                 void PostLayout(Skin::Base* skin)
@@ -33,7 +33,7 @@ namespace Gwen
                     {
                         Base* pChild = *it;
 
-                        if (pChild->GetDock() != Pos::None)
+                        if (pChild->GetDock() != Docking::None)
                             continue;
 
                         pChild->Position(m_iPosition);
@@ -59,7 +59,7 @@ namespace Gwen
             {
                 GWEN_CONTROL_INLINE(Center, Position)
                 {
-                    SetPosition(Pos::Center);
+                    SetPosition(Docking::Center);
                 }
             };
 

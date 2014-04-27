@@ -24,9 +24,9 @@
 
 namespace Gwen
 {
-    namespace Pos
+    namespace Docking
     {
-        enum Enum
+        enum Area
         {
             None        = 0,
             Left        = (1<<1),
@@ -126,8 +126,8 @@ namespace Gwen
             virtual Gwen::Point LocalPosToCanvas(const Gwen::Point& in = Point(0, 0));
             virtual Gwen::Point CanvasPosToLocal(const Gwen::Point& in);
 
-            virtual void Dock(int iDock);
-            virtual int  GetDock();
+            virtual void Dock(Docking::Area dock);
+            virtual Docking::Area GetDock() const;
 
             virtual void RestrictToParent(bool restrict)    { m_bRestrictToParent = restrict; }
             virtual bool ShouldRestrictToParent()           { return m_bRestrictToParent; }
@@ -469,7 +469,7 @@ namespace Gwen
             bool m_bKeyboardInputEnabled;
             bool m_bDrawBackground;
 
-            int m_iDock;
+            Docking::Area m_iDock;
 
             unsigned char m_Cursor;
 

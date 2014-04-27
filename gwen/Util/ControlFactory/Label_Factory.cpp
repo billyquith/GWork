@@ -140,13 +140,13 @@ namespace Gwen
                 {
                     const int align = gwen_cast<Controls::Label>(ctrl)->GetAlignment();
                     
-                    if (align & Pos::Top)
+                    if (align & Docking::Top)
                         return "Top";
 
-                    if (align & Pos::CenterV)
+                    if (align & Docking::CenterV)
                         return "Center";
 
-                    if (align & Pos::Bottom)
+                    if (align & Docking::Bottom)
                         return "Bottom";
 
                     return "Top";
@@ -155,16 +155,16 @@ namespace Gwen
                 void SetValueFromString(Controls::Base* ctrl, const String& str)
                 {
                     int align = gwen_cast<Controls::Label>(ctrl)->GetAlignment();
-                    align &= ~Pos::Top;
-                    align &= ~Pos::CenterV;
-                    align &= ~Pos::Bottom;
+                    align &= ~Docking::Top;
+                    align &= ~Docking::CenterV;
+                    align &= ~Docking::Bottom;
 
                     if (str == "Top")
-                        gwen_cast<Controls::Label>(ctrl)->SetAlignment(align|Pos::Top);
+                        gwen_cast<Controls::Label>(ctrl)->SetAlignment(align|Docking::Top);
                     else if (str == "Center")
-                        gwen_cast<Controls::Label>(ctrl)->SetAlignment(align|Pos::CenterV);
+                        gwen_cast<Controls::Label>(ctrl)->SetAlignment(align|Docking::CenterV);
                     else if (str == "Bottom")
-                        gwen_cast<Controls::Label>(ctrl)->SetAlignment(align|Pos::Bottom);
+                        gwen_cast<Controls::Label>(ctrl)->SetAlignment(align|Docking::Bottom);
                 }
 
                 int OptionNum()
@@ -192,13 +192,13 @@ namespace Gwen
 
                 String GetValueAsString(Controls::Base* ctrl)
                 {
-                    if (gwen_cast<Controls::Label>(ctrl)->GetAlignment() & Pos::Left)
+                    if (gwen_cast<Controls::Label>(ctrl)->GetAlignment() & Docking::Left)
                         return "Left";
 
-                    if (gwen_cast<Controls::Label>(ctrl)->GetAlignment() & Pos::CenterH)
+                    if (gwen_cast<Controls::Label>(ctrl)->GetAlignment() & Docking::CenterH)
                         return "Center";
 
-                    if (gwen_cast<Controls::Label>(ctrl)->GetAlignment() & Pos::Right)
+                    if (gwen_cast<Controls::Label>(ctrl)->GetAlignment() & Docking::Right)
                         return "Right";
 
                     return "Left";
@@ -207,18 +207,18 @@ namespace Gwen
                 void SetValueFromString(Controls::Base* ctrl, const String& str)
                 {
                     int iAlign = gwen_cast<Controls::Label>(ctrl)->GetAlignment();
-                    iAlign &= ~Pos::Left;
-                    iAlign &= ~Pos::CenterH;
-                    iAlign &= ~Pos::Right;
+                    iAlign &= ~Docking::Left;
+                    iAlign &= ~Docking::CenterH;
+                    iAlign &= ~Docking::Right;
 
                     if (str == "Left")
-                        gwen_cast<Controls::Label>(ctrl)->SetAlignment(iAlign|Pos::Left);
+                        gwen_cast<Controls::Label>(ctrl)->SetAlignment(iAlign|Docking::Left);
 
                     if (str == "Center")
-                        gwen_cast<Controls::Label>(ctrl)->SetAlignment(iAlign|Pos::CenterH);
+                        gwen_cast<Controls::Label>(ctrl)->SetAlignment(iAlign|Docking::CenterH);
 
                     if (str == "Right")
-                        gwen_cast<Controls::Label>(ctrl)->SetAlignment(iAlign|Pos::Right);
+                        gwen_cast<Controls::Label>(ctrl)->SetAlignment(iAlign|Docking::Right);
                 }
 
                 int OptionNum()

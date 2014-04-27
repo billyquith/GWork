@@ -64,11 +64,11 @@ namespace Gwen
             {
                 SetSize(200, 19);
                 m_Checkbox = new CheckBox(this);
-                m_Checkbox->Dock(Pos::Left);
+                m_Checkbox->Dock(Docking::Left);
                 m_Checkbox->SetMargin(Margin(0, 2, 2, 2));
                 m_Checkbox->SetTabable(false);
                 m_Label = new LabelClickable(this);
-                m_Label->Dock(Pos::Fill);
+                m_Label->Dock(Docking::Fill);
                 m_Label->onPress.Add(m_Checkbox, &CheckBox::OnPress);
                 m_Label->SetTabable(false);
                 SetTabable(false);

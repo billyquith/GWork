@@ -1,4 +1,4 @@
-﻿/*
+/*
  *  GWEN
  *  Copyright (c) 2010 Facepunch Studios
  *  See license in Gwen.h
@@ -13,49 +13,60 @@
 
 using namespace Gwen;
 
-#define ADD_UNIT_TEST(name) \
-    GUnit*RegisterUnitTest_##name(Gwen::Controls::Base*tab); \
+#define ADD_UNIT_TEST(NAME) \
+    GUnit* RegisterUnitTest_##NAME(Gwen::Controls::Base *tab); \
     { \
-        Controls::Button* pButton = cat->Add( #name); \
-        pButton->SetName( #name); \
-        GUnit* test = RegisterUnitTest_##name(pCenter); \
+        Controls::Button* pButton = cat->Add(#NAME); \
+        pButton->SetName(#NAME); \
+        GUnit* test = RegisterUnitTest_##NAME(pCenter); \
         test->Hide(); \
         test->SetUnitTest(this); \
         pButton->onPress.Add(this, &ThisClass::OnCategorySelect, Gwen::Event::Packet(test)); \
-    } \
+    }
 
 Gwen::Controls::TabButton* pButton = NULL;
 
 GWEN_CONTROL_CONSTRUCTOR(UnitTest)
 {
     m_pLastControl = NULL;
-    Dock(Pos::Fill);
+    Dock(Docking::Fill);
     SetSize(1024, 768);
-    Controls::CollapsibleList* pList = new Controls::CollapsibleList(this);
-    GetLeft()->GetTabControl()->AddPage("CollapsibleList", pList);
+
+    Controls::CollapsibleList* scriptList = new Controls::CollapsibleList(this);
+    GetLeft()->GetTabControl()->AddPage("Script", scriptList);
+    
+    Controls::CollapsibleList* apiList = new Controls::CollapsibleList(this);
+    GetLeft()->GetTabControl()->AddPage("API", apiList);
+
     GetLeft()->SetWidth(150);
+
+    // Create output log and status bar.
     m_TextOutput = new Controls::ListBox(GetBottom());
     pButton = GetBottom()->GetTabControl()->AddPage("Output", m_TextOutput);
     GetBottom()->SetHeight(200);
     m_StatusBar = new Controls::StatusBar(this);
-    m_StatusBar->Dock(Pos::Bottom);
+    m_StatusBar->Dock(Docking::Bottom);
+    
+    // Where to put the demo controls.
     Controls::Layout::Center* pCenter = new Controls::Layout::Center(this);
-    pCenter->Dock(Pos::Fill);
+    pCenter->Dock(Docking::Fill);
+
+    // Create Controls using GWEN API.
     {
-        Controls::CollapsibleCategory* cat = pList->Add("Basic");
+        Controls::CollapsibleCategory* cat = apiList->Add("Basic");
         ADD_UNIT_TEST(Button);
         ADD_UNIT_TEST(Label);
         ADD_UNIT_TEST(LabelMultiline);
     }
     {
-        Controls::CollapsibleCategory* cat = pList->Add("Non-Interactive");
+        Controls::CollapsibleCategory* cat = apiList->Add("Non-Interactive");
         ADD_UNIT_TEST(ProgressBar);
         ADD_UNIT_TEST(GroupBox);
         ADD_UNIT_TEST(ImagePanel);
         ADD_UNIT_TEST(StatusBar);
     }
     {
-        Controls::CollapsibleCategory* cat = pList->Add("Controls");
+        Controls::CollapsibleCategory* cat = apiList->Add("Controls");
         ADD_UNIT_TEST(ComboBox);
         ADD_UNIT_TEST(TextBox);
         ADD_UNIT_TEST(ListBox);
@@ -67,7 +78,7 @@ GWEN_CONTROL_CONSTRUCTOR(UnitTest)
         ADD_UNIT_TEST(MenuStrip);
     }
     {
-        Controls::CollapsibleCategory* cat = pList->Add("Containers");
+        Controls::CollapsibleCategory* cat = apiList->Add("Containers");
         ADD_UNIT_TEST(Window);
         ADD_UNIT_TEST(TreeControl);
         ADD_UNIT_TEST(Properties);
@@ -76,15 +87,25 @@ GWEN_CONTROL_CONSTRUCTOR(UnitTest)
         ADD_UNIT_TEST(PageControl);
     }
     {
-        Controls::CollapsibleCategory* cat = pList->Add("Non-Standard");
+        Controls::CollapsibleCategory* cat = apiList->Add("Non-Standard");
         ADD_UNIT_TEST(CollapsibleList);
         ADD_UNIT_TEST(ColorPicker);
     }
+
+    // Create Controls using script.
+    {
+        Controls::CollapsibleCategory* cat = scriptList->Add("Basic");
+        ADD_UNIT_TEST(Button);
+//        ADD_UNIT_TEST(Label);
+//        ADD_UNIT_TEST(LabelMultiline);
+    }
+    
     m_StatusBar->SendToBack();
     PrintText("Unit Test Started.");
     m_fLastSecond = Gwen::Platform::GetTimeInSeconds();
     m_iFrames = 0;
-    pList->GetNamedChildren("MenuStrip").DoAction();
+    
+    apiList->GetNamedChildren("MenuStrip").DoAction();
 
     PrintText(Utility::Format("Size of Button = %lu bytes.", sizeof(Gwen::Controls::Button)));
 }

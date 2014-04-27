@@ -37,7 +37,7 @@ GWEN_CONTROL_CONSTRUCTOR(TabControl)
     m_iScrollOffset = 0;
     m_pCurrentButton = NULL;
     m_TabStrip = new TabStrip(this);
-    m_TabStrip->SetTabPosition(Pos::Top);
+    m_TabStrip->SetTabPosition(Docking::Top);
     // Make this some special control?
     m_pScroll[0] = new ControlsInternal::ScrollBarButton(this);
     m_pScroll[0]->SetDirectionLeft();
@@ -48,7 +48,7 @@ GWEN_CONTROL_CONSTRUCTOR(TabControl)
     m_pScroll[1]->onPress.Add(this, &TabControl::ScrollPressRight);
     m_pScroll[1]->SetSize(14, 14);
     m_InnerPanel = new TabControlInner(this);
-    m_InnerPanel->Dock(Pos::Fill);
+    m_InnerPanel->Dock(Docking::Fill);
     m_InnerPanel->SendToBack();
     SetTabable(false);
 }
@@ -80,9 +80,9 @@ void TabControl::AddPage(TabButton* pButton)
     pPage->SetParent(this);
     pPage->SetHidden(true);
     pPage->SetMargin(Margin(6, 6, 6, 6));
-    pPage->Dock(Pos::Fill);
+    pPage->Dock(Docking::Fill);
     pButton->SetParent(m_TabStrip);
-    pButton->Dock(Pos::Left);
+    pButton->Dock(Docking::Left);
     pButton->SizeToContents();
 
     if (pButton->GetTabControl())
@@ -156,9 +156,9 @@ TabButton* TabControl::GetTab(int iNum)
     return gwen_cast<TabButton>(m_TabStrip->GetChild(iNum));
 }
 
-void TabControl::SetTabStripPosition(int iDock)
+void TabControl::SetTabStripPosition(Docking::Area dock)
 {
-    m_TabStrip->SetTabPosition(iDock);
+    m_TabStrip->SetTabPosition(dock);
 }
 
 bool TabControl::DoesAllowDrag()
@@ -174,7 +174,7 @@ void TabControl::HandleOverflow()
     // Really TabControl should have derivitives for tabs placed elsewhere where
     // we could specialize
     // some functions like this for each direction.
-    bool bNeeded = TabsSize.x > Width() && m_TabStrip->GetDock() == Pos::Top;
+    bool bNeeded = TabsSize.x > Width() && m_TabStrip->GetDock() == Docking::Top;
     m_pScroll[0]->SetHidden(!bNeeded);
     m_pScroll[1]->SetHidden(!bNeeded);
 

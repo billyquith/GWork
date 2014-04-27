@@ -18,9 +18,9 @@ using namespace Gwen::Controls;
 GWEN_CONTROL_CONSTRUCTOR(DockedTabControl)
 {
     m_WindowControl = NULL;
-    Dock(Pos::Fill);
+    Dock(Docking::Fill);
     m_pTitleBar = new TabTitleBar(this);
-    m_pTitleBar->Dock(Pos::Top);
+    m_pTitleBar->Dock(Docking::Top);
     m_pTitleBar->SetHidden(true);
     SetAllowReorder(true);
 }
@@ -68,7 +68,7 @@ void DockedTabControl::DragAndDrop_EndDragging(bool bSuccess, int /*x*/, int /*y
      *      m_WindowControl->SetPosition( x, y );
      *      SetParent( m_WindowControl );
      *      SetPosition( 0, 0 );
-     *      Dock( Pos::Fill );
+     *      Dock( Docking::Fill );
      *  }
      */
 }
