@@ -26,7 +26,7 @@ namespace Gwen
 {
     namespace Pos
     {
-        enum
+        enum Enum
         {
             None        = 0,
             Left        = (1<<1),
@@ -36,7 +36,7 @@ namespace Gwen
             CenterV     = (1<<5),
             CenterH     = (1<<6),
             Fill        = (1<<7),
-            Center      = CenterV|CenterH,
+            Center      = CenterV | CenterH
         };
         
     } // Pos
@@ -65,7 +65,7 @@ namespace Gwen
 
             Base(Base* pParent, const Gwen::String& Name = "");
             virtual ~Base();
-
+            
             virtual const char* GetTypeName()
             {
                 return "Base";

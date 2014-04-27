@@ -16,12 +16,12 @@ namespace Gwen
             {
                 GWEN_CONTROL_FACTORY_PROPERTY(FileType, "In the format \"PNG file | *.png\"");
 
-                String GetValue(Controls::Base* ctrl)
+                String GetValueAsString(Controls::Base* ctrl)
                 {
                     return gwen_cast<Controls::FilePicker>(ctrl)->GetFileType();
                 }
 
-                void SetValue(Controls::Base* ctrl, const String& str)
+                void SetValueFromString(Controls::Base* ctrl, const String& str)
                 {
                     gwen_cast<Controls::FilePicker>(ctrl)->SetFileType(str);
                 }

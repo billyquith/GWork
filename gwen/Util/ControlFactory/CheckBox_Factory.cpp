@@ -31,12 +31,12 @@ namespace Gwen
             {
                 GWEN_CONTROL_FACTORY_PROPERTY(CheckboxText, "The text, or label of the control");
 
-                String GetValue(Controls::Base* ctrl)
+                String GetValueAsString(Controls::Base* ctrl)
                 {
                     return gwen_cast<Controls::CheckBoxWithLabel>(ctrl)->Label()->GetText();
                 }
 
-                void SetValue(Controls::Base* ctrl, const String& str)
+                void SetValueFromString(Controls::Base* ctrl, const String& str)
                 {
                     gwen_cast<Controls::CheckBoxWithLabel>(ctrl)->Label()->SetText(str);
                 }

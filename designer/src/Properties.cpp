@@ -62,7 +62,7 @@ void Properties::AddPropertiesFromControl( Controls::Base* pControl, bool bAllow
 		for ( ; it != itEnd; ++it )
 		{
 			Gwen::String strPropertyName = (*it)->Name();
-			Gwen::String strValue = (*it)->GetValue( pControl );
+			Gwen::String strValue = (*it)->GetValueAsString(pControl);
 
 			//
 			// Add a property row to our control
