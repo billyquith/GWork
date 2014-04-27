@@ -15,13 +15,13 @@ namespace Gwen
             {
                 GWEN_CONTROL_FACTORY_PROPERTY(NumPages, "The number of pages we have");
 
-                String GetValue(Controls::Base* ctrl)
+                String GetValueAsString(Controls::Base* ctrl)
                 {
                     return Utility::Format("%i", (int)gwen_cast<Controls::PageControl>(
                                                ctrl)->GetPageCount());
                 }
 
-                void SetValue(Controls::Base* ctrl, const String& str)
+                void SetValueFromString(Controls::Base* ctrl, const String& str)
                 {
                     int num;
 
@@ -38,14 +38,14 @@ namespace Gwen
             {
                 GWEN_CONTROL_FACTORY_PROPERTY(FinishName, "The name of the finish button");
 
-                String GetValue(Controls::Base* ctrl)
+                String GetValueAsString(Controls::Base* ctrl)
                 {
                     Gwen::Controls::PageControl* pControl =
                         gwen_cast<Gwen::Controls::PageControl>(ctrl);
                     return pControl->FinishButton()->GetName();
                 }
 
-                void SetValue(Controls::Base* ctrl, const String& str)
+                void SetValueFromString(Controls::Base* ctrl, const String& str)
                 {
                     Gwen::Controls::PageControl* pControl =
                         gwen_cast<Gwen::Controls::PageControl>(ctrl);

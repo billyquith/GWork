@@ -14,12 +14,12 @@ namespace Gwen
             {
                 GWEN_CONTROL_FACTORY_PROPERTY(ControlName, "The control's name");
 
-                String GetValue(Controls::Base* ctrl)
+                String GetValueAsString(Controls::Base* ctrl)
                 {
                     return Utility::Format("%S", ctrl->GetName().c_str());
                 }
 
-                void SetValue(Controls::Base* ctrl, const String& str)
+                void SetValueFromString(Controls::Base* ctrl, const String& str)
                 {
                     ctrl->SetName(str);
                 }
@@ -31,12 +31,12 @@ namespace Gwen
             {
                 GWEN_CONTROL_FACTORY_PROPERTY(Position, "Sets the position of the control");
 
-                String GetValue(Controls::Base* ctrl)
+                String GetValueAsString(Controls::Base* ctrl)
                 {
                     return Utility::Format("%i %i", ctrl->X(), ctrl->Y());
                 }
 
-                void SetValue(Controls::Base* ctrl, const String& str)
+                void SetValueFromString(Controls::Base* ctrl, const String& str)
                 {
                     int x, y;
 
@@ -82,13 +82,13 @@ namespace Gwen
             {
                 GWEN_CONTROL_FACTORY_PROPERTY(Margin, "Sets the margin of a docked control");
 
-                String GetValue(Controls::Base* ctrl)
+                String GetValueAsString(Controls::Base* ctrl)
                 {
                     Gwen::Margin m = ctrl->GetMargin();
                     return Utility::Format("%i %i %i %i", m.left, m.top, m.right, m.bottom);
                 }
 
-                void SetValue(Controls::Base* ctrl, const String& str)
+                void SetValueFromString(Controls::Base* ctrl, const String& str)
                 {
                     Gwen::Margin m;
 
@@ -160,12 +160,12 @@ namespace Gwen
             {
                 GWEN_CONTROL_FACTORY_PROPERTY(Size, "The with and height of the control");
 
-                String GetValue(Controls::Base* ctrl)
+                String GetValueAsString(Controls::Base* ctrl)
                 {
                     return Utility::Format("%i %i", ctrl->Width(), ctrl->Height());
                 }
 
-                void SetValue(Controls::Base* ctrl, const String& str)
+                void SetValueFromString(Controls::Base* ctrl, const String& str)
                 {
                     int w, h;
 
@@ -206,53 +206,69 @@ namespace Gwen
 
             };
 
+#define GWEN_ARRAY_SIZE(A) (sizeof(A)/sizeof(A[0]))
 
             class Dock : public Gwen::ControlFactory::Property
             {
+                typedef ValueEnumMap<Gwen::Pos::Enum> EnumMap;
+                EnumMap m_EnumMap;
+                static EnumMap::Enum m_DockEnums[];
+                
+            public:
                 GWEN_CONTROL_FACTORY_PROPERTY(Dock, "How the control is to be docked");
+                
+                Dock();
+//                :   m_EnumMap(m_DockEnums, GWEN_ARRAY_SIZE(m_DockEnums))
+//                {}
 
-                String GetValue(Controls::Base* ctrl)
+                String GetValueAsString(Controls::Base* ctrl)
                 {
-                    switch (ctrl->GetDock())
-                    {
-                    case Pos::Left:
-                        return "Left";
-
-                    case Pos::Fill:
-                        return "Fill";
-
-                    case Pos::Right:
-                        return "Right";
-
-                    case Pos::Top:
-                        return "Top";
-
-                    case Pos::Bottom:
-                        return "Bottom";
-                    }
-
-                    return "None";
+                    // TODO - Why is Pos an int in GWEN?? --BQ
+                    return m_EnumMap.GetNameByValue(static_cast<Pos::Enum>(ctrl->GetDock()));
+                    
+//                    switch (ctrl->GetDock())
+//                    {
+//                    case Pos::Left:
+//                        return "Left";
+//
+//                    case Pos::Fill:
+//                        return "Fill";
+//
+//                    case Pos::Right:
+//                        return "Right";
+//
+//                    case Pos::Top:
+//                        return "Top";
+//
+//                    case Pos::Bottom:
+//                        return "Bottom";
+//                    }
+//
+//                    return "None";
                 }
 
-                void SetValue(Controls::Base* ctrl, const String& str)
+                void SetValueFromString(Controls::Base* ctrl, const String& str)
                 {
-                    if (str == "Fill")
-                        ctrl->Dock(Pos::Fill);
-
-                    if (str == "Left")
-                        ctrl->Dock(Pos::Left);
-
-                    if (str == "Right")
-                        ctrl->Dock(Pos::Right);
-
-                    if (str == "Top")
-                        ctrl->Dock(Pos::Top);
-
-                    if (str == "Bottom")
-                        ctrl->Dock(Pos::Bottom);
-
-                    if (str == "None")
-                        ctrl->Dock(Pos::None);
+                    Pos::Enum dock = m_EnumMap.GetValueByName(str.c_str(), Pos::None);
+                    ctrl->Dock(dock);
+                    
+//                    if (str == "Fill")
+//                        ctrl->Dock(Pos::Fill);
+//
+//                    if (str == "Left")
+//                        ctrl->Dock(Pos::Left);
+//
+//                    if (str == "Right")
+//                        ctrl->Dock(Pos::Right);
+//
+//                    if (str == "Top")
+//                        ctrl->Dock(Pos::Top);
+//
+//                    if (str == "Bottom")
+//                        ctrl->Dock(Pos::Bottom);
+//
+//                    if (str == "None")
+//                        ctrl->Dock(Pos::None);
                 }
 
                 int OptionNum()
@@ -262,25 +278,40 @@ namespace Gwen
 
                 Gwen::String OptionGet(int i)
                 {
-                    if (i == 0)
-                        return "None";
-
-                    if (i == 1)
-                        return "Left";
-
-                    if (i == 2)
-                        return "Right";
-
-                    if (i == 3)
-                        return "Top";
-
-                    if (i == 4)
-                        return "Bottom";
-
-                    return "Fill";
+                    return m_EnumMap.GetNameByValue(static_cast<Pos::Enum>(i), 0);
+                    
+//                    if (i == 0)
+//                        return "None";
+//
+//                    if (i == 1)
+//                        return "Left";
+//
+//                    if (i == 2)
+//                        return "Right";
+//
+//                    if (i == 3)
+//                        return "Top";
+//
+//                    if (i == 4)
+//                        return "Bottom";
+//
+//                    return "Fill";
                 }
-
+                
             };
+
+            Dock::EnumMap::Enum Dock::m_DockEnums[] = {
+                { "Fill",   Gwen::Pos::Fill },
+                { "Left",   Gwen::Pos::Left },
+                { "Right",  Gwen::Pos::Right },
+                { "Top",    Gwen::Pos::Top },
+                { "Bottom", Gwen::Pos::Bottom },
+                { "None",   Gwen::Pos::None },
+            };
+            
+            Dock::Dock()
+            :   m_EnumMap(m_DockEnums, GWEN_ARRAY_SIZE(m_DockEnums))
+            {}
 
 
         } // namespace Properties

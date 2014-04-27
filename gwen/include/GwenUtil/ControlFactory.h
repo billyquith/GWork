@@ -15,6 +15,56 @@ namespace Gwen
         ControlFactory::Base* Find(const Gwen::String& name);
         Controls::Base*       Clone(Controls::Base* pEnt, ControlFactory::Base* pFactory);
         
+        
+        //! Class to allow mapping from enums to strings and back.
+        //! @param TYPE : The enum type we are mapping.
+        template <typename ENUM>
+        class ValueEnumMap
+        {
+        public:
+            typedef ENUM EnumType;
+            typedef unsigned int Count_t;
+            struct Enum { const char *name; EnumType value; };
+            static const int Undefined = -1;
+            
+            ValueEnumMap(const Enum *pairs, Count_t count)
+            :   m_Enums(pairs)
+            ,   m_EnumCount(count)
+            {}
+
+            size_t GetIndexByName(const char *name)
+            {
+                for (Count_t i=0; i < m_EnumCount; ++i)
+                {
+                    const Enum &item = m_Enums[i];
+                    if (strcmp(item.name, name)==0)
+                        return i;
+                }
+                return Undefined;
+            }
+
+            ENUM GetValueByName(const char *name, EnumType defaultValue = Undefined)
+            {
+                const size_t i = GetIndexByName(name);
+                return i!=Undefined ? m_Enums[i].value : defaultValue;
+            }
+
+            const char* GetNameByValue(EnumType value, Count_t defaultIndex=0)
+            {
+                for (size_t i=0; i < m_EnumCount; ++i)
+                {
+                    const Enum &item = m_Enums[i];
+                    if (item.value == value)
+                        return item.name;       // We found the item.
+                }
+                return m_Enums[defaultIndex].name;   // Not found. Return default indexed.
+            }
+
+        private:
+            const Enum     *m_Enums;
+            const Count_t   m_EnumCount;
+        };
+        
 
         class Property
         {
@@ -22,11 +72,15 @@ namespace Gwen
 
             typedef std::list<Property*> List;
 
+            // For serialisation.
             virtual Gwen::String Name() const = 0;
+            
+            // Help.
             virtual Gwen::String Description() const = 0;
 
-            virtual Gwen::String GetValue(Gwen::Controls::Base* ctrl) = 0;
-            virtual void         SetValue(Gwen::Controls::Base* ctrl, const Gwen::String& str) = 0;
+            // For the property editor.
+            virtual Gwen::String GetValueAsString(Gwen::Controls::Base* ctrl) = 0;
+            virtual void SetValueFromString(Gwen::Controls::Base* ctrl, const Gwen::String& str) = 0;
 
             virtual int OptionNum()
             {
@@ -165,6 +219,7 @@ namespace Gwen
 
 //! Information about the ControlFactory.
 //! @param FACTORY : Name of the control factory class.
+//! @param FACTORY_PARENT :  The factory class (not Control) that this factory derives from.
 #define GWEN_CONTROL_FACTORY_CONSTRUCTOR(FACTORY, FACTORY_PARENT) \
     typedef Gwen::ControlFactory::FACTORY ThisClass; \
     typedef FACTORY_PARENT ParentClass; \

@@ -172,7 +172,7 @@ void DesignerFormat::ExportToTree(Gwen::Controls::Base* root, GwenUtil::Data::Tr
                 }
                 else
                 {
-                    props.SetChild((*it)->Name(), (*it)->GetValue(root));
+                    props.SetChild((*it)->Name(), (*it)->GetValueAsString(root));
                 }
             }
 

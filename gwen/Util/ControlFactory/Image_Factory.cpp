@@ -13,12 +13,12 @@ namespace Gwen
                 GWEN_CONTROL_FACTORY_PROPERTY(ImageName,
                                               "The path to the image (relative to .exe)");
 
-                String GetValue(Controls::Base* ctrl)
+                String GetValueAsString(Controls::Base* ctrl)
                 {
                     return gwen_cast<Controls::ImagePanel>(ctrl)->GetImage();
                 }
 
-                void SetValue(Controls::Base* ctrl, const String& str)
+                void SetValueFromString(Controls::Base* ctrl, const String& str)
                 {
                     gwen_cast<Controls::ImagePanel>(ctrl)->SetImage(str);
                 }
@@ -30,7 +30,7 @@ namespace Gwen
             {
                 GWEN_CONTROL_FACTORY_PROPERTY(Stretch, "The path to the image (relative to .exe)");
 
-                String GetValue(Controls::Base* ctrl)
+                String GetValueAsString(Controls::Base* ctrl)
                 {
                     if (gwen_cast<Controls::ImagePanel>(ctrl)->GetStretch())
                         return True;
@@ -38,7 +38,7 @@ namespace Gwen
                     return False;
                 }
 
-                void SetValue(Controls::Base* ctrl, const String& str)
+                void SetValueFromString(Controls::Base* ctrl, const String& str)
                 {
                     bool bTrue = (str == True);
                     gwen_cast<Controls::ImagePanel>(ctrl)->SetStretch(bTrue);

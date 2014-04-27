@@ -122,7 +122,7 @@ namespace Gwen
                 return pBase->SetControlValue(ctrl, name, str);
             }
 
-            pProp->SetValue(ctrl, str);
+            pProp->SetValueFromString(ctrl, str);
         }
 
         void Base::AddChild(Gwen::Controls::Base* ctrl, Gwen::Controls::Base* child,
@@ -146,7 +146,7 @@ namespace Gwen
                      it = pFactory->Properties().begin(), itEnd = pFactory->Properties().end();
                      it != itEnd; ++it)
                 {
-                    (*it)->SetValue(pControl, (*it)->GetValue(pSource));
+                    (*it)->SetValueFromString(pControl, (*it)->GetValueAsString(pSource));
                 }
 
                 pFactory = pFactory->GetBaseFactory();
