@@ -167,7 +167,7 @@ namespace Gwen
                         gwen_cast<Controls::Label>(ctrl)->SetAlignment(align|Docking::Bottom);
                 }
 
-                int OptionNum()
+                size_t OptionCount() const
                 {
                     return 3;
                 }
@@ -221,7 +221,7 @@ namespace Gwen
                         gwen_cast<Controls::Label>(ctrl)->SetAlignment(iAlign|Docking::Right);
                 }
 
-                int OptionNum()
+                size_t OptionCount() const
                 {
                     return 3;
                 }
