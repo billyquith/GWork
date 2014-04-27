@@ -46,7 +46,7 @@ namespace Gwen
                 GWEN_CONTROL_INLINE(ColorSelector, Property::Text)
                 {
                     m_Button = new Controls::Internal::ColourButton(m_TextBox);
-                    m_Button->Dock(Pos::Right);
+                    m_Button->Dock(Docking::Right);
                     m_Button->SetWidth(20);
                     m_Button->onPress.Add(this, &ThisClass::OnButtonPress);
                     m_Button->SetMargin(Margin(1, 1, 1, 2));
@@ -60,7 +60,7 @@ namespace Gwen
                     pMenu->SetDisableIconMargin(true);
                     
                     Gwen::Controls::HSVColorPicker* picker = new Gwen::Controls::HSVColorPicker(pMenu);
-                    picker->Dock(Pos::Fill);
+                    picker->Dock(Docking::Fill);
                     picker->SetSize(256, 128);
                     float defaultColor[3];
                     Gwen::Utility::Strings::To::Floats(m_TextBox->GetText(), defaultColor, 3);
@@ -68,7 +68,7 @@ namespace Gwen
                                      false, true);
                     picker->onColorChanged.Add(this, &ThisClass::ColorChanged);
                     
-                    pMenu->Open(Pos::Right|Pos::Top);
+                    pMenu->Open(Docking::Right|Docking::Top);
                 }
 
                 void ColorChanged(Controls::Base* control)

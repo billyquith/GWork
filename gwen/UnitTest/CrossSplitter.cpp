@@ -11,12 +11,12 @@ public:
 
     GWEN_CONTROL_INLINE(CrossSplitter, GUnit)
     {
-        Dock(Pos::Fill);
+        Dock(Docking::Fill);
         m_bSplittersVisible = false;
         m_iCurZoom = 0;
         m_Splitter = new Gwen::Controls::CrossSplitter(this);
         m_Splitter->SetPos(0, 0);
-        m_Splitter->Dock(Pos::Fill);
+        m_Splitter->Dock(Docking::Fill);
         {
             Gwen::Controls::Button* testButton =  new Gwen::Controls::Button(m_Splitter);
             testButton->SetText("TOPLEFT");
@@ -39,7 +39,7 @@ public:
         }
         // Status bar to hold unit testing buttons
         Gwen::Controls::StatusBar* pStatus = new Gwen::Controls::StatusBar(this);
-        pStatus->Dock(Pos::Bottom);
+        pStatus->Dock(Docking::Bottom);
         {
             Gwen::Controls::Button* pButton = new Gwen::Controls::Button(pStatus);
             pButton->SetText("Zoom");

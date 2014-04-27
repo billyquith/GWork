@@ -16,16 +16,16 @@ namespace Gwen
             GWEN_CONTROL_INLINE(StatusBar, Controls::Label)
             {
                 SetHeight(22);
-                Dock(Pos::Bottom);
+                Dock(Docking::Bottom);
                 SetPadding(Padding(2, 2, 2, 2));
                 SetText("");
-                SetAlignment(Pos::Left|Pos::CenterV);
+                SetAlignment(Docking::Left|Docking::CenterV);
             }
 
             virtual void AddControl(Controls::Base* pCtrl, bool bRight)
             {
                 pCtrl->SetParent(this);
-                pCtrl->Dock(bRight ? Pos::Right : Pos::Left);
+                pCtrl->Dock(bRight ? Docking::Right : Docking::Left);
             }
 
             virtual void Render(Skin::Base* skin)

@@ -17,9 +17,9 @@ namespace Gwen
         {
             TreeNode* node = new PropertyTreeNode(this);
             node->SetText(text);
-            node->Dock(Pos::Top);
+            node->Dock(Docking::Top);
             Properties* props = new Properties(node);
-            props->Dock(Pos::Top);
+            props->Dock(Docking::Top);
             return props;
         }
 

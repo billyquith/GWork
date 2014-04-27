@@ -50,7 +50,7 @@ namespace Gwen
                             if (!m_Columns[i])
                             {
                                 m_Columns[i] = new Label(this);
-                                m_Columns[i]->Dock(Pos::Left);
+                                m_Columns[i]->Dock(Docking::Left);
                                 m_Columns[i]->SetPadding(Padding(3, 3, 3, 3));
                             }
                         }
@@ -223,7 +223,7 @@ namespace Gwen
                     pRow->SetParent(this);
                     pRow->SetColumnCount(m_iColumnCount);
                     pRow->SetHeight(m_iDefaultRowHeight);
-                    pRow->Dock(Pos::Top);
+                    pRow->Dock(Docking::Top);
                     Invalidate();
                 }
 

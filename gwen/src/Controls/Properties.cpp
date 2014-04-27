@@ -49,7 +49,7 @@ PropertyRow* Properties::Add(const String& text, const String& value)
 PropertyRow* Properties::Add(const String& text, Property::Base* pProp, const String& value)
 {
     PropertyRow* row = new PropertyRow(this);
-    row->Dock(Pos::Top);
+    row->Dock(Docking::Top);
     row->GetLabel()->SetText(text);
     row->SetProperty(pProp);
     pProp->SetPropertyValue(value, true);
@@ -92,7 +92,7 @@ class PropertyRowLabel : public Label
 {
     GWEN_CONTROL_INLINE(PropertyRowLabel, Label)
     {
-        SetAlignment(Pos::Left|Pos::CenterV);
+        SetAlignment(Docking::Left|Docking::CenterV);
         m_pPropertyRow = NULL;
     }
 
@@ -126,8 +126,8 @@ GWEN_CONTROL_CONSTRUCTOR(PropertyRow)
     m_Property = NULL;
     PropertyRowLabel* pLabel = new PropertyRowLabel(this);
     pLabel->SetPropertyRow(this);
-    pLabel->Dock(Pos::Left);
-    pLabel->SetAlignment(Pos::Left|Pos::CenterV);
+    pLabel->Dock(Docking::Left);
+    pLabel->SetAlignment(Docking::Left|Docking::CenterV);
     pLabel->SetMargin(Margin(2, 0, 0, 0));
     m_Label = pLabel;
 }
@@ -169,7 +169,7 @@ void PropertyRow::SetProperty(Property::Base* prop)
 {
     m_Property = prop;
     m_Property->SetParent(this);
-    m_Property->Dock(Pos::Fill);
+    m_Property->Dock(Docking::Fill);
     m_Property->onChange.Add(this, &ThisClass::OnPropertyValueChanged);
 }
 

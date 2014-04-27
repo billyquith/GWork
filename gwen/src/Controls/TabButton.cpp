@@ -21,7 +21,7 @@ GWEN_CONTROL_CONSTRUCTOR(TabButton)
     m_Page = NULL;
     m_Control = NULL;
     DragAndDrop_SetPackage(true, "TabButtonMove");
-    SetAlignment(Pos::Top|Pos::Left);
+    SetAlignment(Docking::Top|Docking::Left);
     SetTextPadding(Padding(2, 2, 2, 2));
 }
 
@@ -29,9 +29,9 @@ void TabButton::Layout(Skin::Base* skin)
 {
     int iParentDock = m_Control->GetTabStrip()->GetDock();
 
-    if (iParentDock == Pos::Bottom)
+    if (iParentDock == Docking::Bottom)
         SetPadding(Padding(3, 1, 5, 4));
-    else if (iParentDock == Pos::Top)
+    else if (iParentDock == Docking::Top)
         SetPadding(Padding(3, 3, 5, 2));
     else
         SetPadding(Padding(3, 2, 5, 2));

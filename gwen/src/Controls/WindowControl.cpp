@@ -25,16 +25,16 @@ GWEN_CONTROL_CONSTRUCTOR(WindowControl)
     m_TitleBar->SetPadding(Padding(0, 0, 0, 0));
     m_TitleBar->SetMargin(Margin(0, 0, 0, 4));
     m_TitleBar->SetTarget(this);
-    m_TitleBar->Dock(Pos::Top);
+    m_TitleBar->Dock(Docking::Top);
     m_Title = new Label(m_TitleBar);
-    m_Title->SetAlignment(Pos::Left|Pos::CenterV);
+    m_Title->SetAlignment(Docking::Left|Docking::CenterV);
     m_Title->SetText("Window");
-    m_Title->Dock(Pos::Fill);
+    m_Title->Dock(Docking::Fill);
     m_Title->SetPadding(Padding(8, 0, 0, 0));
     m_Title->SetTextColor(GetSkin()->Colors.Window.TitleInactive);
     m_CloseButton = new Gwen::Controls::WindowCloseButton(m_TitleBar);
     m_CloseButton->SetText("");
-    m_CloseButton->Dock(Pos::Right);
+    m_CloseButton->Dock(Docking::Right);
     m_CloseButton->onPress.Add(this, &WindowControl::CloseButtonPressed);
     m_CloseButton->SetTabable(false);
     m_CloseButton->SetName("closeButton");
@@ -42,7 +42,7 @@ GWEN_CONTROL_CONSTRUCTOR(WindowControl)
     // Create a blank content control, dock it to the top - Should this be a
     // ScrollControl?
     m_InnerPanel = new Base(this);
-    m_InnerPanel->Dock(Pos::Fill);
+    m_InnerPanel->Dock(Docking::Fill);
     GetResizer(8)->Hide();
     BringToFront();
     SetTabable(false);

@@ -21,7 +21,7 @@ namespace Gwen
             GWEN_CONTROL_INLINE(ToolBarButton, Gwen::Controls::Button)
             {
                 SetSize(20, 20);
-                Dock(Pos::Left);
+                Dock(Docking::Left);
             }
 
             virtual bool ShouldDrawBackground()

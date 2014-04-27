@@ -9,7 +9,7 @@ public:
 
     GWEN_CONTROL_INLINE(MenuStrip, GUnit)
     {
-        Dock(Pos::Fill);
+        Dock(Docking::Fill);
         Gwen::Controls::MenuStrip* menu = new Gwen::Controls::MenuStrip(this);
         {
             Gwen::Controls::MenuItem* pRoot = menu->AddItem("File");

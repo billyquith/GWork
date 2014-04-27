@@ -37,7 +37,7 @@ namespace Gwen
             virtual void Add(Gwen::Controls::CollapsibleCategory* pCategory)
             {
                 pCategory->SetParent(this);
-                pCategory->Dock(Pos::Top);
+                pCategory->Dock(Docking::Top);
                 pCategory->SetMargin(Margin(1, 0, 1, 1));
                 pCategory->SetList(this);
                 pCategory->onSelection.Add(this, &ThisClass::OnSelectionEvent);

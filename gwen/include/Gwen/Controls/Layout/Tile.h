@@ -22,7 +22,7 @@ namespace Gwen
 
                 GWEN_CONTROL_INLINE(Tile, Base)
                 {
-                    Dock(Pos::Fill);
+                    Dock(Docking::Fill);
                     SetTileSize(22, 22);
                 }
 
@@ -35,7 +35,7 @@ namespace Gwen
                     {
                         Base* pChild = *it;
 
-                        if (pChild->GetDock() != Pos::None)
+                        if (pChild->GetDock() != Docking::None)
                             continue;
 
                         pChild->SetPos(pos.x+m_TileSize.x/2 - pChild->Width()/2,

@@ -27,30 +27,30 @@ GWEN_CONTROL_CONSTRUCTOR(PageControl)
     }
 
     Base* pControls = new Base(this);
-    pControls->Dock(Pos::Bottom);
+    pControls->Dock(Docking::Bottom);
     pControls->SetSize(24, 24);
     pControls->SetMargin(Margin(10, 10, 10, 10));
     m_Finish = new Controls::Button(pControls);
     m_Finish->SetText("Finish");
-    m_Finish->Dock(Pos::Right);
+    m_Finish->Dock(Docking::Right);
     m_Finish->onPress.Add(this, &ThisClass::Finish);
     m_Finish->SetSize(70);
     m_Finish->SetMargin(Margin(4, 0, 0, 0));
     m_Finish->Hide();
     m_Next = new Controls::Button(pControls);
     m_Next->SetText("Next >");
-    m_Next->Dock(Pos::Right);
+    m_Next->Dock(Docking::Right);
     m_Next->onPress.Add(this, &ThisClass::NextPage);
     m_Next->SetSize(70);
     m_Next->SetMargin(Margin(4, 0, 0, 0));
     m_Back = new Controls::Button(pControls);
     m_Back->SetText("< Back");
-    m_Back->Dock(Pos::Right);
+    m_Back->Dock(Docking::Right);
     m_Back->onPress.Add(this, &ThisClass::PreviousPage);
     m_Back->SetSize(70);
     m_Label = new Controls::Label(pControls);
-    m_Label->Dock(Pos::Fill);
-    m_Label->SetAlignment(Pos::Left|Pos::CenterV);
+    m_Label->Dock(Docking::Fill);
+    m_Label->SetAlignment(Docking::Left|Docking::CenterV);
     m_Label->SetText("Page 1 or 2");
 }
 
@@ -64,7 +64,7 @@ void PageControl::SetPageCount(unsigned int iNum)
         if (!m_pPages[i])
         {
             m_pPages[i] = new Controls::Base(this);
-            m_pPages[i]->Dock(Pos::Fill);
+            m_pPages[i]->Dock(Docking::Fill);
         }
     }
 
@@ -94,7 +94,7 @@ void PageControl::ShowPage(unsigned int i)
     if (m_pPages[i])
     {
         m_pPages[i]->Show();
-        m_pPages[i]->Dock(Pos::Fill);
+        m_pPages[i]->Dock(Docking::Fill);
     }
 
     m_iCurrentPage = i;
@@ -134,7 +134,7 @@ void PageControl::NextPage()
 
     if (m_pPages[m_iCurrentPage])
     {
-        m_pPages[m_iCurrentPage]->Dock(Pos::None);
+        m_pPages[m_iCurrentPage]->Dock(Docking::None);
         Anim::Add(m_pPages[m_iCurrentPage],
                   new Anim::Pos::X(m_pPages[m_iCurrentPage]->X(), Width()* -1, 0.2f, true, 0.0f,
                                    -1));
@@ -144,7 +144,7 @@ void PageControl::NextPage()
 
     if (m_pPages[m_iCurrentPage])
     {
-        m_pPages[m_iCurrentPage]->Dock(Pos::None);
+        m_pPages[m_iCurrentPage]->Dock(Docking::None);
         Anim::Add(m_pPages[m_iCurrentPage], new Anim::Pos::X(Width(), 0, 0.2f, false, 0.0f, -1));
     }
 }
@@ -156,7 +156,7 @@ void PageControl::PreviousPage()
 
     if (m_pPages[m_iCurrentPage])
     {
-        m_pPages[m_iCurrentPage]->Dock(Pos::None);
+        m_pPages[m_iCurrentPage]->Dock(Docking::None);
         Anim::Add(m_pPages[m_iCurrentPage],
                   new Anim::Pos::X(m_pPages[m_iCurrentPage]->X(), Width(), 0.3f, true, 0.0f, -1));
     }
@@ -165,7 +165,7 @@ void PageControl::PreviousPage()
 
     if (m_pPages[m_iCurrentPage])
     {
-        m_pPages[m_iCurrentPage]->Dock(Pos::None);
+        m_pPages[m_iCurrentPage]->Dock(Docking::None);
         Anim::Add(m_pPages[m_iCurrentPage],
                   new Anim::Pos::X(Width()* -1, 0, 0.3f, false, 0.0f, -1));
     }

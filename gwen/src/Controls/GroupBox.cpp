@@ -18,10 +18,10 @@ GWEN_CONTROL_CONSTRUCTOR(GroupBox)
     // can't get it without us..
     SetMouseInputEnabled(true);
     SetTextPadding(Padding(10, 0, 0, 0));
-    SetAlignment(Pos::Top|Pos::Left);
+    SetAlignment(Docking::Top|Docking::Left);
     Invalidate();
     m_InnerPanel = new Base(this);
-    m_InnerPanel->Dock(Pos::Fill);
+    m_InnerPanel->Dock(Docking::Fill);
     m_InnerMargin = 6;
 }
 

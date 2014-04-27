@@ -33,7 +33,7 @@ namespace Gwen
             virtual void DragAndDrop_HoverLeave(Gwen::DragAndDrop::Package* pPackage);
             virtual void DragAndDrop_Hover(Gwen::DragAndDrop::Package* pPackage, int x, int y);
 
-            virtual void SetTabPosition(int iPos);
+            virtual void SetTabPosition(Docking::Area pos);
 
             virtual void SetAllowReorder(bool b)
             {

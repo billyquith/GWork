@@ -51,16 +51,16 @@ public:
             (Gwen::Controls::RadioButtonController*)pControl;
 
         if (rc->GetSelectedLabel() == "Top")
-            m_pDockControlLeft->SetTabStripPosition(Pos::Top);
+            m_pDockControlLeft->SetTabStripPosition(Docking::Top);
 
         if (rc->GetSelectedLabel() == "Bottom")
-            m_pDockControlLeft->SetTabStripPosition(Pos::Bottom);
+            m_pDockControlLeft->SetTabStripPosition(Docking::Bottom);
 
         if (rc->GetSelectedLabel() == "Left")
-            m_pDockControlLeft->SetTabStripPosition(Pos::Left);
+            m_pDockControlLeft->SetTabStripPosition(Docking::Left);
 
         if (rc->GetSelectedLabel() == "Right")
-            m_pDockControlLeft->SetTabStripPosition(Pos::Right);
+            m_pDockControlLeft->SetTabStripPosition(Docking::Right);
     }
 
     Gwen::Font m_Font;

@@ -59,7 +59,7 @@ GWEN_CONTROL_CONSTRUCTOR(ComboBox)
     m_Button = pArrow;
     m_SelectedItem = NULL;
     
-    SetAlignment(Gwen::Pos::Left|Gwen::Pos::CenterV);
+    SetAlignment(Gwen::Docking::Left|Gwen::Docking::CenterV);
     SetText("");
     SetMargin(Margin(3, 0, 0, 0));
     SetTabable(true);
@@ -89,7 +89,7 @@ void ComboBox::Render(Skin::Base* skin)
 
 void ComboBox::Layout(Skin::Base* skin)
 {
-    m_Button->Position(Pos::Right|Pos::CenterV, 4, 0);
+    m_Button->Position(Docking::Right|Docking::CenterV, 4, 0);
     ParentClass::Layout(skin);
 }
 

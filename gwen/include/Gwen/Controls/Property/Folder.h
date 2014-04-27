@@ -18,7 +18,7 @@ namespace Gwen
                 GWEN_CONTROL_INLINE(Folder, Property::Text)
                 {
                     Controls::Button* pButton = new Controls::Button(this);
-                    pButton->Dock(Pos::Right);
+                    pButton->Dock(Docking::Right);
                     pButton->SetText("...");
                     pButton->SetWidth(20);
                     pButton->onPress.Add(this, &ThisClass::OnButtonPress);

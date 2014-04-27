@@ -15,7 +15,7 @@ using namespace Gwen::Controls;
 GWEN_CONTROL_CONSTRUCTOR(MenuStrip)
 {
     SetBounds(0, 0, 200, 22);
-    Dock(Pos::Top);
+    Dock(Docking::Top);
     m_InnerPanel->SetPadding(Padding(5, 0, 0, 0));
 }
 
@@ -32,7 +32,7 @@ void MenuStrip::Layout(Skin::Base* /*skin*/)
 
 void MenuStrip::OnAddItem(MenuItem* item)
 {
-    item->Dock(Pos::Left);
+    item->Dock(Docking::Left);
     item->SetTextPadding(Padding(5, 0, 5, 0));
     item->SetPadding(Padding(10, 0, 10, 0));
     item->SizeToContents();

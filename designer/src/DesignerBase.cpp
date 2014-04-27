@@ -5,7 +5,7 @@
 
 GWEN_CONTROL_CONSTRUCTOR( DesignerBase )
 {
-	Dock( Pos::Fill );
+	Dock( Docking::Fill );
 
 	CreateMenu();
 	CreateToolBar();
@@ -21,7 +21,7 @@ GWEN_CONTROL_CONSTRUCTOR( DesignerBase )
 void DesignerBase::CreateMenu()
 {
 	Controls::MenuStrip* pStrip = new Controls::MenuStrip( this );
-	pStrip->Dock( Pos::Top );
+	pStrip->Dock( Docking::Top );
 
 	// File
 	{
@@ -40,7 +40,7 @@ void DesignerBase::CreateMenu()
 void DesignerBase::CreateToolBar()
 {
 	Controls::ToolBarStrip* pStrip = new Controls::ToolBarStrip( this );
-	pStrip->Dock( Pos::Top );
+	pStrip->Dock( Docking::Top );
 
 	pStrip->Add( "New Document", "img/menu/new.png" )->onPress.Add( this, &ThisClass::NewDocument );
 
@@ -57,13 +57,13 @@ void DesignerBase::CreateToolBar()
 void DesignerBase::CreateControlToolbox()
 {
 	ControlToolbox* pControlBox = new ControlToolbox( this );
-	pControlBox->Dock( Pos::Left );
+	pControlBox->Dock( Docking::Left );
 }
 
 void DesignerBase::CreateDocumentHolder()
 {
 	m_DocumentHolder = new Controls::TabControl( this );
-	m_DocumentHolder->Dock( Pos::Fill );
+	m_DocumentHolder->Dock( Docking::Fill );
 	m_DocumentHolder->SetMargin( Margin( -1, 2, -1, -1 ) );
 }
 

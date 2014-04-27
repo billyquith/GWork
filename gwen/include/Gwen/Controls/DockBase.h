@@ -30,10 +30,10 @@ namespace Gwen
 
             virtual TabControl* GetTabControl();
 
-            virtual DockBase* GetRight()    { return GetChildDock(Pos::Right); }
-            virtual DockBase* GetLeft()     { return GetChildDock(Pos::Left); }
-            virtual DockBase* GetTop()      { return GetChildDock(Pos::Top); }
-            virtual DockBase* GetBottom()   { return GetChildDock(Pos::Bottom); }
+            virtual DockBase* GetRight()    { return GetChildDock(Docking::Right); }
+            virtual DockBase* GetLeft()     { return GetChildDock(Docking::Left); }
+            virtual DockBase* GetTop()      { return GetChildDock(Docking::Top); }
+            virtual DockBase* GetBottom()   { return GetChildDock(Docking::Bottom); }
 
             // No action on space (default button action is to press)
             virtual bool OnKeySpace(bool /*bDown*/)     { return false; }
@@ -47,17 +47,17 @@ namespace Gwen
             virtual void DragAndDrop_HoverLeave(Gwen::DragAndDrop::Package* pPackage);
             virtual void DragAndDrop_Hover(Gwen::DragAndDrop::Package* pPackage, int x, int y);
 
-            virtual void SetupChildDock(int iPos);
+            virtual void SetupChildDock(Docking::Area iPos);
 
             virtual void DoRedundancyCheck();
             virtual void DoConsolidateCheck();
             virtual void OnRedundantChildDock(DockBase* pDockBase);
 
-            virtual int  GetDroppedTabDirection(int x, int y);
+            virtual Docking::Area GetDroppedTabDirection(int x, int y);
             virtual void OnTabRemoved(Gwen::Controls::Base* pControl);
 
-            DockBase*  GetChildDock(int iPos);
-            DockBase** GetChildDockPtr(int iPos);
+            DockBase*  GetChildDock(Docking::Area iPos);
+            DockBase** GetChildDockPtr(Docking::Area iPos);
 
             DockBase*       m_Left;
             DockBase*       m_Right;

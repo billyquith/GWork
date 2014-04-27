@@ -19,20 +19,20 @@ public:
             Gwen::Controls::ProgressBar* pb = new Gwen::Controls::ProgressBar(this);
             pb->SetBounds(Gwen::Rect(110, 50, 200, 20));
             pb->SetValue(0.66f);
-            pb->SetAlignment(Pos::Right|Pos::CenterV);
+            pb->SetAlignment(Docking::Right|Docking::CenterV);
         }
         {
             Gwen::Controls::ProgressBar* pb = new Gwen::Controls::ProgressBar(this);
             pb->SetBounds(Gwen::Rect(110, 80, 200, 20));
             pb->SetValue(0.88f);
-            pb->SetAlignment(Pos::Left|Pos::CenterV);
+            pb->SetAlignment(Docking::Left|Docking::CenterV);
         }
         {
             Gwen::Controls::ProgressBar* pb = new Gwen::Controls::ProgressBar(this);
             pb->SetBounds(Gwen::Rect(110, 110, 200, 20));
             pb->SetAutoLabel(false);
             pb->SetValue(0.20f);
-            pb->SetAlignment(Pos::Right|Pos::CenterV);
+            pb->SetAlignment(Docking::Right|Docking::CenterV);
             pb->SetText("40,245 MB");
         }
         {
@@ -58,7 +58,7 @@ public:
             pb->SetBounds(Gwen::Rect(20, 20, 25, 200));
             pb->SetVertical();
             pb->SetValue(0.25f);
-            pb->SetAlignment(Pos::Top|Pos::CenterH);
+            pb->SetAlignment(Docking::Top|Docking::CenterH);
         }
         {
             Gwen::Controls::ProgressBar* pb = new Gwen::Controls::ProgressBar(this);
@@ -70,7 +70,7 @@ public:
             Gwen::Controls::ProgressBar* pb = new Gwen::Controls::ProgressBar(this);
             pb->SetBounds(Gwen::Rect(80, 20, 25, 200));
             pb->SetVertical();
-            pb->SetAlignment(Pos::Bottom|Pos::CenterH);
+            pb->SetAlignment(Docking::Bottom|Docking::CenterH);
             pb->SetValue(0.65f);
         }
     }

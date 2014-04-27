@@ -20,8 +20,8 @@
 #include "Gwen/Anim.h"
 #endif
 
-using namespace Gwen;
-using namespace Controls;
+namespace Gwen {
+namespace Controls {
 
 Base::Base(Base* pParent, const Gwen::String& Name)
 {
@@ -35,7 +35,7 @@ Base::Base(Base* pParent, const Gwen::String& Name)
     m_Bounds = Gwen::Rect(0, 0, 10, 10);
     m_Padding = Padding(0, 0, 0, 0);
     m_Margin = Margin(0, 0, 0, 0);
-    m_iDock = 0;
+    m_iDock = Docking::None;
     m_DragAndDrop_Package = NULL;
     RestrictToParent(false);
     SetMouseInputEnabled(true);
@@ -137,17 +137,17 @@ void Base::SetParent(Base* pParent)
         m_Parent->AddChild(this);
 }
 
-void Base::Dock(int iDock)
+    void Base::Dock(Docking::Area dock)
 {
-    if (m_iDock == iDock)
+    if (m_iDock == dock)
         return;
 
-    m_iDock = iDock;
+    m_iDock = dock;
     Invalidate();
     InvalidateParent();
 }
 
-int Base::GetDock()
+Docking::Area Base::GetDock() const
 {
     return m_iDock;
 }
@@ -199,22 +199,22 @@ void Base::Position(unsigned int pos, int xpadding, int ypadding)
     int x = X();
     int y = Y();
 
-    if (pos & Pos::Left)
+    if (pos & Docking::Left)
         x = bounds.x + xpadding + margin.left;
 
-    if (pos & Pos::Right)
+    if (pos & Docking::Right)
         x = bounds.x + (bounds.w - Width() - xpadding - margin.right);
 
-    if (pos & Pos::CenterH)
+    if (pos & Docking::CenterH)
         x = bounds.x + (bounds.w - Width())/2;
 
-    if (pos & Pos::Top)
+    if (pos & Docking::Top)
         y = bounds.y + ypadding;
 
-    if (pos & Pos::Bottom)
+    if (pos & Docking::Bottom)
         y = bounds.y + (bounds.h - Height() - ypadding);
 
-    if (pos & Pos::CenterV)
+    if (pos & Docking::CenterV)
         y = bounds.y + (bounds.h - Height())/2 + ypadding;
 
     SetPos(x, y);
@@ -795,10 +795,10 @@ void Base::RecurseLayout(Skin::Base* skin)
 
         int iDock = pChild->GetDock();
 
-        if (iDock & Pos::Fill)
+        if (iDock & Docking::Fill)
             continue;
 
-        if (iDock & Pos::Top)
+        if (iDock & Docking::Top)
         {
             const Margin& margin = pChild->GetMargin();
             pChild->SetBounds(rBounds.x+margin.left,
@@ -810,7 +810,7 @@ void Base::RecurseLayout(Skin::Base* skin)
             rBounds.h -= iHeight;
         }
 
-        if (iDock & Pos::Left)
+        if (iDock & Docking::Left)
         {
             const Margin& margin = pChild->GetMargin();
             pChild->SetBounds(rBounds.x+margin.left,
@@ -822,7 +822,7 @@ void Base::RecurseLayout(Skin::Base* skin)
             rBounds.w -= iWidth;
         }
 
-        if (iDock & Pos::Right)
+        if (iDock & Docking::Right)
         {
             // TODO: THIS MARGIN CODE MIGHT NOT BE FULLY FUNCTIONAL
             const Margin& margin = pChild->GetMargin();
@@ -834,7 +834,7 @@ void Base::RecurseLayout(Skin::Base* skin)
             rBounds.w -= iWidth;
         }
 
-        if (iDock & Pos::Bottom)
+        if (iDock & Docking::Bottom)
         {
             // TODO: THIS MARGIN CODE MIGHT NOT BE FULLY FUNCTIONAL
             const Margin& margin = pChild->GetMargin();
@@ -858,7 +858,7 @@ void Base::RecurseLayout(Skin::Base* skin)
         Base* pChild = *iter;
         int iDock = pChild->GetDock();
 
-        if (!(iDock&Pos::Fill))
+        if (!(iDock&Docking::Fill))
             continue;
 
         const Margin& margin = pChild->GetMargin();
@@ -1260,3 +1260,8 @@ void Base::Anim_HeightOut(float fLength, bool bHide, float fDelay, float fEase)
 }
 
 #endif // ifndef GWEN_NO_ANIMATION
+
+    
+} // namespace Gwen
+} // namespace Controls
+
