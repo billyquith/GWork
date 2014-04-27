@@ -205,8 +205,16 @@ namespace Gwen
                 }
 
             };
-
-#define GWEN_ARRAY_SIZE(A) (sizeof(A)/sizeof(A[0]))
+            
+            
+            static ValueEnumMapItem<Pos::Enum> g_DockEnums[] = {
+                { "None",   Gwen::Pos::None },
+                { "Fill",   Gwen::Pos::Fill },
+                { "Left",   Gwen::Pos::Left },
+                { "Right",  Gwen::Pos::Right },
+                { "Top",    Gwen::Pos::Top },
+                { "Bottom", Gwen::Pos::Bottom },
+            };
 
             class Dock : public Gwen::ControlFactory::Property
             {
@@ -217,103 +225,34 @@ namespace Gwen
             public:
                 GWEN_CONTROL_FACTORY_PROPERTY(Dock, "How the control is to be docked");
                 
-                Dock();
-//                :   m_EnumMap(m_DockEnums, GWEN_ARRAY_SIZE(m_DockEnums))
-//                {}
+                Dock()
+                :   m_EnumMap(g_DockEnums, GWEN_ARRAY_COUNT(g_DockEnums))
+                {}
 
                 String GetValueAsString(Controls::Base* ctrl)
                 {
                     // TODO - Why is Pos an int in GWEN?? --BQ
                     return m_EnumMap.GetNameByValue(static_cast<Pos::Enum>(ctrl->GetDock()));
-                    
-//                    switch (ctrl->GetDock())
-//                    {
-//                    case Pos::Left:
-//                        return "Left";
-//
-//                    case Pos::Fill:
-//                        return "Fill";
-//
-//                    case Pos::Right:
-//                        return "Right";
-//
-//                    case Pos::Top:
-//                        return "Top";
-//
-//                    case Pos::Bottom:
-//                        return "Bottom";
-//                    }
-//
-//                    return "None";
                 }
 
                 void SetValueFromString(Controls::Base* ctrl, const String& str)
                 {
                     Pos::Enum dock = m_EnumMap.GetValueByName(str.c_str(), Pos::None);
                     ctrl->Dock(dock);
-                    
-//                    if (str == "Fill")
-//                        ctrl->Dock(Pos::Fill);
-//
-//                    if (str == "Left")
-//                        ctrl->Dock(Pos::Left);
-//
-//                    if (str == "Right")
-//                        ctrl->Dock(Pos::Right);
-//
-//                    if (str == "Top")
-//                        ctrl->Dock(Pos::Top);
-//
-//                    if (str == "Bottom")
-//                        ctrl->Dock(Pos::Bottom);
-//
-//                    if (str == "None")
-//                        ctrl->Dock(Pos::None);
                 }
 
                 int OptionNum()
                 {
-                    return 6;
+                    return m_EnumMap.GetNumEnums();
                 }
 
                 Gwen::String OptionGet(int i)
                 {
-                    return m_EnumMap.GetNameByValue(static_cast<Pos::Enum>(i), 0);
-                    
-//                    if (i == 0)
-//                        return "None";
-//
-//                    if (i == 1)
-//                        return "Left";
-//
-//                    if (i == 2)
-//                        return "Right";
-//
-//                    if (i == 3)
-//                        return "Top";
-//
-//                    if (i == 4)
-//                        return "Bottom";
-//
-//                    return "Fill";
+                    return m_EnumMap.GetNameByIndex(i);
                 }
                 
             };
-
-            Dock::EnumMap::Enum Dock::m_DockEnums[] = {
-                { "Fill",   Gwen::Pos::Fill },
-                { "Left",   Gwen::Pos::Left },
-                { "Right",  Gwen::Pos::Right },
-                { "Top",    Gwen::Pos::Top },
-                { "Bottom", Gwen::Pos::Bottom },
-                { "None",   Gwen::Pos::None },
-            };
             
-            Dock::Dock()
-            :   m_EnumMap(m_DockEnums, GWEN_ARRAY_SIZE(m_DockEnums))
-            {}
-
-
         } // namespace Properties
 
 

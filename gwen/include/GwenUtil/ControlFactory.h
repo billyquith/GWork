@@ -15,6 +15,13 @@ namespace Gwen
         ControlFactory::Base* Find(const Gwen::String& name);
         Controls::Base*       Clone(Controls::Base* pEnt, ControlFactory::Base* pFactory);
         
+        template <typename ENUM>
+        struct ValueEnumMapItem
+        {
+            typedef ENUM EnumType;
+            const char *name;
+            EnumType value;
+        };
         
         //! Class to allow mapping from enums to strings and back.
         //! @param TYPE : The enum type we are mapping.
@@ -24,15 +31,22 @@ namespace Gwen
         public:
             typedef ENUM EnumType;
             typedef unsigned int Count_t;
-            struct Enum { const char *name; EnumType value; };
+            typedef ValueEnumMapItem<EnumType> Enum;
             static const int Undefined = -1;
             
             ValueEnumMap(const Enum *pairs, Count_t count)
             :   m_Enums(pairs)
             ,   m_EnumCount(count)
             {}
+            
+            size_t GetNumEnums() const { return m_EnumCount; }
+            
+            const char* GetNameByIndex(Count_t index) const
+            {
+                return m_Enums[index].name;
+            }
 
-            size_t GetIndexByName(const char *name)
+            size_t GetIndexByName(const char *name) const
             {
                 for (Count_t i=0; i < m_EnumCount; ++i)
                 {
@@ -43,13 +57,13 @@ namespace Gwen
                 return Undefined;
             }
 
-            ENUM GetValueByName(const char *name, EnumType defaultValue = Undefined)
+            ENUM GetValueByName(const char *name, EnumType defaultValue = Undefined) const
             {
                 const size_t i = GetIndexByName(name);
                 return i!=Undefined ? m_Enums[i].value : defaultValue;
             }
 
-            const char* GetNameByValue(EnumType value, Count_t defaultIndex=0)
+            const char* GetNameByValue(EnumType value, Count_t defaultIndex=0) const
             {
                 for (size_t i=0; i < m_EnumCount; ++i)
                 {

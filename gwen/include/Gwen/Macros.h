@@ -27,6 +27,9 @@
 
 #endif // ifdef _WIN32
 
+//! Get the number of items in a static array.
+//! @param A : The array.
+#define GWEN_ARRAY_COUNT(A) (sizeof(A)/sizeof(A[0]))
 
 namespace Gwen
 {
