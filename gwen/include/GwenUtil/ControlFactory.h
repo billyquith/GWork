@@ -156,9 +156,10 @@ namespace Gwen
 
 //! Information about the ControlFactory.
 //! @param CONTROL : Name of the control factory class.
+//! @param TYPE : The control type (including namespace) that this is factory for.
 //! @param INHERITS : Name of the factory class we inherit properties from.
-#define GWEN_CONTROL_FACTORY_DETAILS(CONTROL, INHERITS) \
-    typedef Gwen::Controls::CONTROL FactoryFor; \
+#define GWEN_CONTROL_FACTORY_DETAILS(CONTROL, TYPE, INHERITS) \
+    typedef TYPE FactoryFor; \
     virtual Gwen::String Name() const { return #CONTROL; } \
     virtual Gwen::String ParentFactory() const { return #INHERITS; }
 
@@ -174,7 +175,7 @@ namespace Gwen
 //! @param CONTROL : Name of the control we are creating a factory for.
 //! @param INHERITS : Name of the factory class we inherit properties from.
 #define GWEN_CONTROL_FACTORY_FOR(CONTROL, INHERITS) \
-    GWEN_CONTROL_FACTORY_DETAILS(CONTROL, INHERITS) \
+    GWEN_CONTROL_FACTORY_DETAILS(CONTROL, Gwen::Controls::CONTROL, INHERITS) \
     GWEN_CONTROL_FACTORY_CONSTRUCTOR(CONTROL##_Factory, Gwen::ControlFactory::Base)
 
 //! Instance a ControlFactory.

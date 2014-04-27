@@ -34,7 +34,7 @@ namespace Gwen
             DECLARE_GWEN_CONTROL_FACTORY(ProgressBar_Factory);
             DECLARE_GWEN_CONTROL_FACTORY(ComboBox_Factory);
             DECLARE_GWEN_CONTROL_FACTORY(HorizontalSlider_Factory);
-            //DECLARE_GWEN_CONTROL_FACTORY(DesignerCanvas_Factory);
+            DECLARE_GWEN_CONTROL_FACTORY(DesignerCanvas_Factory);
         }
 
         List& GetList()
