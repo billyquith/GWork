@@ -9,7 +9,11 @@
 #include <SFML/Graphics/Font.hpp>
 #include <SFML/Graphics/Text.hpp>
 
-#include <GL/gl.h>
+#ifdef __APPLE__
+# include <OpenGL/gl.h>
+#else
+# include <GL/gl.h>
+#endif
 
 #include <cmath>
 
@@ -181,7 +185,7 @@ void Gwen::Renderer::SFML2::LoadFont(Gwen::Font* font)
 
     sf::Font* pFont = new sf::Font();
 
-    if (!pFont->loadFromFile(Utility::UnicodeToString(font->facename)))
+    if (!pFont->loadFromFile(font->facename))
     {
         // Ideally here we should be setting the font to a system default font
         // here.
@@ -257,7 +261,7 @@ void Gwen::Renderer::SFML2::LoadTexture(Gwen::Texture* pTexture)
 
     sf::Texture* tex = new sf::Texture();
     tex->setSmooth(true);
-    if (!tex->loadFromFile(pTexture->name.Get()))
+    if (!tex->loadFromFile(pTexture->name))
     {
         delete(tex);
         pTexture->failed = true;

@@ -25,9 +25,9 @@
 //
 
 // Hardcode for now.
-#ifdef __APPLE__
-#   define GWEN_NOT_NATIVE_PLATFORM     // We don't have native support for this.
-#endif
+//#ifdef __APPLE__
+//#   define GWEN_NOT_NATIVE_PLATFORM     // We don't have native support for this.
+//#endif
 
 #if defined(GWEN_NOT_NATIVE_PLATFORM)
 #   define GWEN_PLATFORM_EXTERNAL       // Platform implemented outside Gwork.
