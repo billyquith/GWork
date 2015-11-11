@@ -26,8 +26,8 @@ namespace Gwen
 
             void SetString(const String& str);
 
-            void Render(Skin::Base* skin);
-            void Layout(Skin::Base* skin);
+            void Render(Skin::Base* skin) override;
+            void Layout(Skin::Base* skin) override;
 
             void RefreshSize();
 
@@ -60,7 +60,7 @@ namespace Gwen
                 m_ColorOverride = col;
             }
 
-            virtual void OnScaleChanged();
+            virtual void OnScaleChanged() override;
 
             inline const Gwen::Color& TextColor() const
             {

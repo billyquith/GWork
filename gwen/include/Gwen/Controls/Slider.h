@@ -22,7 +22,7 @@ namespace Gwen
         {
             GWEN_CONTROL(SliderBar, ControlsInternal::Dragger);
 
-            virtual void Render(Skin::Base* skin);
+            virtual void Render(Skin::Base* skin) override;
             virtual void SetHorizontal(bool b)
             {
                 m_bHorizontal = b;
@@ -47,8 +47,8 @@ namespace Gwen
         {
             GWEN_CONTROL(Slider, Base);
 
-            virtual void Render(Skin::Base* skin) = 0;
-            virtual void Layout(Skin::Base* skin);
+            virtual void Render(Skin::Base* skin) override = 0;
+            virtual void Layout(Skin::Base* skin) override;
 
             virtual void SetClampToNotches(bool bClamp)
             {
@@ -72,27 +72,11 @@ namespace Gwen
             virtual float CalculateValue();
             virtual void  OnMoved(Controls::Base* control);
 
-            virtual void OnMouseClickLeft(int /*x*/, int /*y*/, bool /*bDown*/)
+            virtual void OnMouseClickLeft(int /*x*/, int /*y*/, bool /*bDown*/) override
             {
             }
 
-            virtual bool OnKeyRight(bool bDown)
-            {
-                if (bDown)
-                    SetFloatValue(GetFloatValue()+1, true);
-
-                return true;
-            }
-
-            virtual bool OnKeyLeft(bool bDown)
-            {
-                if (bDown)
-                    SetFloatValue(GetFloatValue()-1, true);
-
-                return true;
-            }
-
-            virtual bool OnKeyUp(bool bDown)
+            virtual bool OnKeyRight(bool bDown) override
             {
                 if (bDown)
                     SetFloatValue(GetFloatValue()+1, true);
@@ -100,7 +84,7 @@ namespace Gwen
                 return true;
             }
 
-            virtual bool OnKeyDown(bool bDown)
+            virtual bool OnKeyLeft(bool bDown) override
             {
                 if (bDown)
                     SetFloatValue(GetFloatValue()-1, true);
@@ -108,7 +92,23 @@ namespace Gwen
                 return true;
             }
 
-            virtual void RenderFocus(Gwen::Skin::Base* skin);
+            virtual bool OnKeyUp(bool bDown) override
+            {
+                if (bDown)
+                    SetFloatValue(GetFloatValue()+1, true);
+
+                return true;
+            }
+
+            virtual bool OnKeyDown(bool bDown) override
+            {
+                if (bDown)
+                    SetFloatValue(GetFloatValue()-1, true);
+
+                return true;
+            }
+
+            virtual void RenderFocus(Gwen::Skin::Base* skin) override;
 
             Gwen::Event::Caller onValueChanged;
 

@@ -20,7 +20,7 @@ class ListBoxRow : public Layout::TableRow
         SetSelected(false);
     }
 
-    void Render(Skin::Base* skin)
+    void Render(Skin::Base* skin) override
     {
         skin->DrawListBoxLine(this, IsSelected(), GetEven());
     }
@@ -37,13 +37,13 @@ class ListBoxRow : public Layout::TableRow
         Redraw();
     }
 
-    void OnMouseClickLeft(int /*x*/, int /*y*/, bool bDown)
+    void OnMouseClickLeft(int /*x*/, int /*y*/, bool bDown) override
     {
         if (bDown)
             DoSelect();
     }
 
-    void SetSelected(bool b)
+    void SetSelected(bool b) override
     {
         m_bSelected = b;
 

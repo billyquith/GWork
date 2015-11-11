@@ -28,7 +28,7 @@ namespace Gwen
                 SetScaling(false, 100);
             }
 
-            virtual void PostLayout(Skin::Base* skin)
+            virtual void PostLayout(Skin::Base* skin) override
             {
                 RefreshContainers();
             }

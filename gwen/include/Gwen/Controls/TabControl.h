@@ -61,7 +61,7 @@ namespace Gwen
 
         private:
 
-            virtual void PostLayout(Skin::Base* skin);
+            virtual void PostLayout(Skin::Base* skin) override;
             void         HandleOverflow();
 
             void ScrollPressLeft(Base* pFrom);

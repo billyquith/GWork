@@ -28,7 +28,7 @@ namespace Gwen
                 m_DrawCheckers = true;
             }
 
-            virtual void Render(Gwen::Skin::Base* skin)
+            virtual void Render(Gwen::Skin::Base* skin) override
             {
                 skin->DrawColorDisplay(this, m_Color);
             }
@@ -86,7 +86,7 @@ namespace Gwen
 
         protected:
 
-            virtual void Layout(Skin::Base* skin);
+            virtual void Layout(Skin::Base* skin) override;
             virtual void CreateControls();
             virtual void SlidersMoved(Gwen::Controls::Base* control);
             virtual void NumericTyped(Gwen::Controls::Base* control);

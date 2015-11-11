@@ -23,10 +23,10 @@ namespace Gwen
 
             GWEN_CONTROL(Dragger, Controls::Base);
 
-            virtual void OnMouseMoved(int x, int y, int deltaX, int deltaY);
+            virtual void OnMouseMoved(int x, int y, int deltaX, int deltaY) override;
 
-            virtual void OnMouseClickLeft(int x, int y, bool bDown);
-            virtual void Render(Skin::Base* skin);
+            virtual void OnMouseClickLeft(int x, int y, bool bDown) override;
+            virtual void Render(Skin::Base* skin) override;
 
             virtual void SetTarget(Controls::Base* pBase)
             {
@@ -43,7 +43,7 @@ namespace Gwen
                 m_bDoMove = b;
             }
 
-            virtual void OnMouseDoubleClickLeft(int x, int y);
+            virtual void OnMouseDoubleClickLeft(int x, int y) override;
 
             Gwen::Event::Caller onDragged;
             Gwen::Event::Caller onDragStart;

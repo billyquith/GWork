@@ -26,12 +26,12 @@ namespace Gwen
                 m_pTitleBar->SetHidden(!bShow);
             }
 
-            void Layout(Skin::Base* skin);
+            void Layout(Skin::Base* skin) override;
             void UpdateTitleBar();
 
-            virtual void DragAndDrop_StartDragging(Gwen::DragAndDrop::Package* pPackage, int x,
-                                                   int y);
-            virtual void DragAndDrop_EndDragging(bool bSuccess, int x, int y);
+            virtual void DragAndDrop_StartDragging(Gwen::DragAndDrop::Package* pPackage,
+                                                   int x, int y) override;
+            virtual void DragAndDrop_EndDragging(bool bSuccess, int x, int y) override;
 
             void MoveTabsTo(DockedTabControl* pTarget);
 

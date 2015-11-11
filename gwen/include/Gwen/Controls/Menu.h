@@ -25,10 +25,10 @@ namespace Gwen
 
             GWEN_CONTROL(Menu, ScrollControl);
 
-            virtual void Render(Skin::Base* skin);
-            virtual void RenderUnder(Skin::Base* skin);
+            virtual void Render(Skin::Base* skin) override;
+            virtual void RenderUnder(Skin::Base* skin) override;
 
-            virtual void Layout(Skin::Base* skin);
+            virtual void Layout(Skin::Base* skin) override;
 
             virtual MenuItem* AddItem(const String& strName,
                                       const String& strIconName = "",
@@ -44,12 +44,12 @@ namespace Gwen
             virtual void Open(unsigned int iPos);
             virtual void Close();
 
-            virtual bool IsMenuComponent()
+            virtual bool IsMenuComponent() override
             {
                 return true;
             }
 
-            virtual void CloseMenus();
+            virtual void CloseMenus() override;
 
             bool IconMarginDisabled()
             {
@@ -94,7 +94,7 @@ namespace Gwen
                 SetHeight(1);
             }
 
-            void Render(Gwen::Skin::Base* skin);
+            void Render(Gwen::Skin::Base* skin) override;
         };
 
 

@@ -27,7 +27,7 @@ namespace Gwen
                     SetPosition(Docking::Left|Docking::Top);
                 }
 
-                void PostLayout(Skin::Base* skin)
+                void PostLayout(Skin::Base* skin) override
                 {
                     for (Base::List::iterator it = Children.begin(); it != Children.end(); ++it)
                     {

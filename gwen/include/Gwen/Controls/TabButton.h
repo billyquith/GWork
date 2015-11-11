@@ -22,8 +22,8 @@ namespace Gwen
         public:
 
             GWEN_CONTROL(TabButton, Button);
-            virtual void Render(Skin::Base* skin);
-            virtual void Layout(Skin::Base* skin);
+            virtual void Render(Skin::Base* skin) override;
+            virtual void Layout(Skin::Base* skin) override;
 
             void SetPage(Base* page)
             {
@@ -46,9 +46,9 @@ namespace Gwen
                 return m_Page && m_Page->Visible();
             }
 
-            virtual bool DragAndDrop_ShouldStartDrag();
+            virtual bool DragAndDrop_ShouldStartDrag() override;
             virtual void DragAndDrop_StartDragging(Gwen::DragAndDrop::Package* /*pPackage*/,
-                                                   int /*x*/, int /*y*/)
+                                                   int /*x*/, int /*y*/) override
             {
                 SetHidden(true);
             }
@@ -58,14 +58,14 @@ namespace Gwen
                 SetHidden(false); SetDepressed(false);
             }
 
-            virtual bool OnKeyLeft(bool bDown);
-            virtual bool OnKeyRight(bool bDown);
-            virtual bool OnKeyUp(bool bDown);
-            virtual bool OnKeyDown(bool bDown);
+            virtual bool OnKeyLeft(bool bDown) override;
+            virtual bool OnKeyRight(bool bDown) override;
+            virtual bool OnKeyUp(bool bDown) override;
+            virtual bool OnKeyDown(bool bDown) override;
 
-            virtual void UpdateColours();
+            virtual void UpdateColours() override;
 
-            virtual bool ShouldClip()
+            virtual bool ShouldClip() override
             {
                 return false;
             }

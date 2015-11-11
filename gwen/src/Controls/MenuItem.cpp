@@ -21,7 +21,7 @@ public:
         SetMouseInputEnabled(false);
     }
 
-    void Render(Skin::Base* skin)
+    void Render(Skin::Base* skin) override
     {
         skin->DrawMenuRightArrow(this);
     }
@@ -50,7 +50,7 @@ void MenuItem::Render(Skin::Base* skin)
 
     // HACK!
     if (m_Accelerator)
-        m_Accelerator->SetTextColorOverride(TextColor());
+        m_Accelerator->SetTextColorOverride(GetTextColor());
 }
 
 void MenuItem::Layout(Skin::Base* skin)

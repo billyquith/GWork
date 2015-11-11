@@ -22,9 +22,9 @@ namespace Gwen
         class GWEN_EXPORT Label : public Controls::Base
         {
         public:
-
             GWEN_CONTROL(Label, Controls::Base);
-            virtual void PreDelete(Gwen::Skin::Base* skin);
+            
+            virtual void PreDelete(Gwen::Skin::Base* skin) override;
 
             virtual void SetText(const String& str, bool bDoEvents = true);
 
@@ -33,11 +33,11 @@ namespace Gwen
                 return m_Text->GetText();
             }
 
-            virtual void Render(Skin::Base* /*skin*/)
+            virtual void Render(Skin::Base* /*skin*/) override
             {
             }
 
-            virtual void PostLayout(Skin::Base* skin);
+            virtual void PostLayout(Skin::Base* skin) override;
 
             virtual void SizeToContents();
 
@@ -67,7 +67,7 @@ namespace Gwen
                 m_Text->SetTextColorOverride(col);
             }
 
-            inline const Gwen::Color& TextColor() const
+            inline const Gwen::Color& GetTextColor() const
             {
                 return m_Text->TextColor();
             }
@@ -120,12 +120,12 @@ namespace Gwen
                 SetTextColor(GetSkin()->Colors.Label.Highlight);
             }
 
-            virtual String GetValue()
+            virtual String GetValue() override
             {
                 return GetText();
             }
 
-            virtual void SetValue(const String& strValue)
+            virtual void SetValue(const String& strValue) override
             {
                 return SetText(strValue);
             }
@@ -140,7 +140,7 @@ namespace Gwen
                 m_Text->SetWrap(b);
             }
 
-            virtual void OnBoundsChanged(Gwen::Rect oldChildBounds);
+            virtual void OnBoundsChanged(Gwen::Rect oldChildBounds) override;
 
         protected:
 

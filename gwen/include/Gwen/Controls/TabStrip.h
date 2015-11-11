@@ -24,14 +24,14 @@ namespace Gwen
 
             GWEN_CONTROL(TabStrip, Base);
 
-            virtual void Layout(Skin::Base* skin);
+            virtual void Layout(Skin::Base* skin) override;
 
-            virtual bool DragAndDrop_HandleDrop(Gwen::DragAndDrop::Package* pPackage, int x, int y);
-            virtual bool DragAndDrop_CanAcceptPackage(Gwen::DragAndDrop::Package* pPackage);
+            virtual bool DragAndDrop_HandleDrop(Gwen::DragAndDrop::Package* pPackage, int x, int y) override;
+            virtual bool DragAndDrop_CanAcceptPackage(Gwen::DragAndDrop::Package* pPackage) override;
 
-            virtual void DragAndDrop_HoverEnter(Gwen::DragAndDrop::Package* pPackage, int x, int y);
-            virtual void DragAndDrop_HoverLeave(Gwen::DragAndDrop::Package* pPackage);
-            virtual void DragAndDrop_Hover(Gwen::DragAndDrop::Package* pPackage, int x, int y);
+            virtual void DragAndDrop_HoverEnter(Gwen::DragAndDrop::Package* pPackage, int x, int y) override;
+            virtual void DragAndDrop_HoverLeave(Gwen::DragAndDrop::Package* pPackage) override;
+            virtual void DragAndDrop_Hover(Gwen::DragAndDrop::Package* pPackage, int x, int y) override;
 
             virtual void SetTabPosition(Docking::Area pos);
 
@@ -45,7 +45,7 @@ namespace Gwen
                 return m_bAllowReorder;
             }
 
-            virtual bool ShouldClip()
+            virtual bool ShouldClip() override
             {
                 return false;
             }

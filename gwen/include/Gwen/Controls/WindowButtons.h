@@ -26,7 +26,7 @@ namespace Gwen
                 SetText("");
             }
 
-            virtual void Render(Skin::Base* skin)
+            virtual void Render(Skin::Base* skin) override
             {
                 if (!m_pWindow)
                     return;
@@ -55,7 +55,7 @@ namespace Gwen
                 m_bMaximized = false;
             }
 
-            virtual void Render(Skin::Base* skin)
+            virtual void Render(Skin::Base* skin) override
             {
                 if (!m_pWindow)
                     return;

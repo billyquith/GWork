@@ -42,14 +42,14 @@ namespace Gwen
                 m_MinimumSize = minSize;
             }
 
-            virtual Gwen::Point GetMinimumSize()
+            virtual Gwen::Point GetMinimumSize() override
             {
                 return m_MinimumSize;
             }
 
             virtual void DisableResizing();
 
-            virtual bool SetBounds(int x, int y, int w, int h);
+            virtual bool SetBounds(int x, int y, int w, int h) override;
 
             virtual void OnResized()
             {

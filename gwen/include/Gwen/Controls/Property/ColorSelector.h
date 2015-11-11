@@ -22,7 +22,7 @@ namespace Gwen
                     SetText("");
                 }
 
-                void Render(Skin::Base* skin)
+                void Render(Skin::Base* skin) override
                 {
                     skin->GetRender()->SetDrawColor(m_Color);
                     skin->GetRender()->DrawFilledRect(GetRenderBounds());
@@ -80,22 +80,22 @@ namespace Gwen
                     DoChanged();
                 }
 
-                virtual String GetPropertyValue()
+                virtual String GetPropertyValue() override
                 {
                     return m_TextBox->GetText();
                 }
 
-                virtual void SetPropertyValue(const String& v, bool bFireChangeEvents)
+                virtual void SetPropertyValue(const String& v, bool bFireChangeEvents) override
                 {
                     m_TextBox->SetText(v, bFireChangeEvents);
                 }
 
-                virtual bool IsEditing()
+                virtual bool IsEditing() override
                 {
                     return m_TextBox == Gwen::KeyboardFocus;
                 }
 
-                virtual void DoChanged()
+                virtual void DoChanged() override
                 {
                     ParentClass::DoChanged();
                     unsigned int r,g,b;

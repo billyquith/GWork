@@ -63,12 +63,12 @@ namespace Gwen
                                         &FilePicker::SetFileNameEvent);
             }
 
-            virtual String GetValue()
+            virtual String GetValue() override
             {
                 return GetFileName();
             }
 
-            virtual void SetValue(const String& strValue)
+            virtual void SetValue(const String& strValue) override
             {
                 return SetFileName(strValue);
             }

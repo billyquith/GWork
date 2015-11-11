@@ -29,7 +29,7 @@ namespace Gwen
 
             GWEN_CONTROL(Properties, Base);
 
-            virtual void PostLayout(Gwen::Skin::Base* skin);
+            virtual void PostLayout(Gwen::Skin::Base* skin) override;
 
             PropertyRow* Add(const String& text, const String& value = "");
             PropertyRow* Add(const String& text, Property::Base* pProp,
@@ -66,15 +66,15 @@ namespace Gwen
                 return m_Property;
             }
 
-            virtual void Layout(Gwen::Skin::Base* skin);
-            virtual void Render(Gwen::Skin::Base* skin);
+            virtual void Layout(Gwen::Skin::Base* skin) override;
+            virtual void Render(Gwen::Skin::Base* skin) override;
 
             virtual bool IsEditing()
             {
                 return m_Property && m_Property->IsEditing();
             }
 
-            virtual bool IsHovered()
+            virtual bool IsHovered() override
             {
                 return ParentClass::IsHovered() || (m_Property && m_Property->IsHovered());
             }

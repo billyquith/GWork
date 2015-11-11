@@ -25,41 +25,41 @@ namespace Gwen
 
             GWEN_CONTROL(HorizontalScrollBar, BaseScrollBar);
 
-            virtual void Layout(Skin::Base* skin);
+            virtual void Layout(Skin::Base* skin) override;
 
-            virtual void OnMouseClickLeft(int x, int y, bool bDown);
-            virtual void OnBarMoved(Controls::Base* control);
+            virtual void OnMouseClickLeft(int x, int y, bool bDown) override;
+            virtual void OnBarMoved(Controls::Base* control) override;
 
-            virtual int GetBarSize()
+            virtual int GetBarSize() override
             {
                 return m_Bar->Width();
             }
 
-            virtual int GetBarPos()
+            virtual int GetBarPos() override
             {
                 return m_Bar->X()-Height();
             }
 
-            virtual void SetBarSize(int size)
+            virtual void SetBarSize(int size) override
             {
                 m_Bar->SetWidth(size);
             }
 
-            virtual int GetButtonSize()
+            virtual int GetButtonSize() override
             {
                 return Height();
             }
 
-            virtual void  ScrollToLeft();
-            virtual void  ScrollToRight();
+            virtual void  ScrollToLeft() override;
+            virtual void  ScrollToRight() override;
             virtual void  NudgeLeft(Base* control);
             virtual void  NudgeRight(Base* control);
-            virtual float GetNudgeAmount();
+            virtual float GetNudgeAmount() override;
 
-            virtual float CalculateScrolledAmount();
-            virtual bool  SetScrolledAmount(float amount, bool forceUpdate);
+            virtual float CalculateScrolledAmount() override;
+            virtual bool  SetScrolledAmount(float amount, bool forceUpdate) override;
 
-            virtual bool IsHorizontal()
+            virtual bool IsHorizontal() override
             {
                 return true;
             }

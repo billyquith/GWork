@@ -23,16 +23,16 @@ namespace Gwen
 
             GWEN_CONTROL(Button, Label);
 
-            virtual void Render(Skin::Base* skin);
-            virtual void OnMouseClickLeft(int x, int y, bool bDown);
-            virtual void OnMouseClickRight(int x, int y, bool bDown);
-            virtual void OnMouseDoubleClickLeft(int x, int y);
-            virtual bool OnKeySpace(bool bDown);
+            virtual void Render(Skin::Base* skin) override;
+            virtual void OnMouseClickLeft(int x, int y, bool bDown) override;
+            virtual void OnMouseClickRight(int x, int y, bool bDown) override;
+            virtual void OnMouseDoubleClickLeft(int x, int y) override;
+            virtual bool OnKeySpace(bool bDown) override;
 
             virtual void OnPress();
             virtual void OnRightPress();
 
-            virtual void AcceleratePressed();
+            virtual void AcceleratePressed() override;
 
             virtual bool IsDepressed() const
             {
@@ -68,20 +68,20 @@ namespace Gwen
 
             virtual void SetImage(const String& strName, bool bCenter = false);
 
-            virtual void SizeToContents();
-            virtual void PostLayout(Skin::Base* pSkin);
-            virtual void UpdateColours();
+            virtual void SizeToContents() override;
+            virtual void PostLayout(Skin::Base* pSkin) override;
+            virtual void UpdateColours() override;
 
             virtual void SetImageAlpha(float fMultiply);
 
-            virtual void DoAction()
+            virtual void DoAction() override
             {
                 OnPress();
             }
 
             virtual void SetAction(Event::Handler* pObject,
                                    Handler::FunctionWithInformation pFunction,
-                                   const Gwen::Event::Packet& packet);
+                                   const Gwen::Event::Packet& packet) override;
 
         public:
 
