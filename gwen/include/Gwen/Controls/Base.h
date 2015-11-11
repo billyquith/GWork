@@ -21,7 +21,6 @@
 #include "Gwen/ControlList.h"
 #include "Gwen/UserData.h"
 
-
 namespace Gwen
 {
     namespace Docking
@@ -68,8 +67,9 @@ namespace Gwen
             
             static const char* GetTypeNameStatic() { return "Base"; }
             
-            virtual const char* GetTypeName() { return GetTypeNameStatic(); }
-
+            virtual const char* GetTypeName() const { return GetTypeNameStatic(); }
+            virtual const char* GetParentTypeName() const { return NULL; }
+            
             virtual void DelayedDelete();
             virtual void PreDelete(Gwen::Skin::Base* skin) {}
 
@@ -271,6 +271,9 @@ namespace Gwen
             {
                 OnMouseClickRight(x, y, true);
             }
+            
+            virtual void OnMouseEnter();
+            virtual void OnMouseLeave();
 
             virtual void OnLostKeyboardFocus()              {}
             virtual void OnKeyboardFocus()                  {}
@@ -306,8 +309,6 @@ namespace Gwen
             virtual bool OnKeyDown(bool /*bDown*/)          { return false; }
             virtual bool OnKeyEscape(bool /*bDown*/)        { return false; }
             
-            virtual void OnMouseEnter();
-            virtual void OnMouseLeave();
             virtual bool IsHovered();
             virtual bool ShouldDrawHover();
 
@@ -569,8 +570,7 @@ namespace Gwen
 
             static const char* GetIdentifier()
             {
-                static const char* ident = "Base";
-                return ident;
+                return GetTypeNameStatic();
             }
 
             virtual Gwen::Controls::Base* DynamicCast(const char* Variable)
@@ -592,9 +592,7 @@ namespace Gwen
             virtual String GetChildValue(const Gwen::String& strName);
             virtual String GetValue();
             virtual void       SetValue(const String& strValue);
-            virtual void       DoAction()
-            {
-            }
+            virtual void       DoAction() {}
 
             virtual void SetAction(Event::Handler* pObject,
                                    Handler::FunctionWithInformation pFunction,
@@ -673,7 +671,7 @@ namespace Gwen
         static const char* ident = #BASENAME ":" #THISNAME;             \
         return ident;                                                   \
     }                                                                   \
-    virtual Gwen::Controls::Base* DynamicCast(const char* Variable)     \
+    virtual Gwen::Controls::Base* DynamicCast(const char* Variable) override \
     {                                                                   \
         if (GetIdentifier() == Variable)                                \
             return this;                                                \
@@ -691,8 +689,8 @@ public: \
     GWEN_CLASS(THISNAME, BASENAME)  \
     GWEN_DYNAMIC(THISNAME, BASENAME) \
     static  const char* GetTypeNameStatic() { return #THISNAME; } \
-    virtual const char* GetTypeName()       { return GetTypeNameStatic(); } \
-    virtual const char* GetParentTypeName() { return ParentClass::GetTypeNameStatic(); } \
+    virtual const char* GetTypeName() const override { return GetTypeNameStatic(); } \
+    virtual const char* GetParentTypeName() const override { return ParentClass::GetTypeNameStatic(); } \
     THISNAME(Gwen::Controls::Base* pParent, const Gwen::String& pName = "")
 
 #define GWEN_CONTROL_INLINE(THISNAME, BASENAME) \
