@@ -31,8 +31,8 @@ namespace Gwen
 
             void RemoveItem(Layout::TableRow* row);
 
-            void Render(Skin::Base* skin);
-            void Layout(Skin::Base* skin);
+            void Render(Skin::Base* skin) override;
+            void Layout(Skin::Base* skin) override;
 
             void UnselectAll();
 
@@ -64,7 +64,7 @@ namespace Gwen
                 return m_Table;
             }
 
-            virtual void Clear();
+            virtual void Clear() override;
 
             // Pass through, to embedded table
             void SetColumnCount(int iCount)
@@ -80,10 +80,10 @@ namespace Gwen
         protected:
 
             void OnRowSelected(Base* pControl);
-            bool OnKeyDown(bool bDown);
-            bool OnKeyUp(bool bDown);
+            bool OnKeyDown(bool bDown) override;
+            bool OnKeyUp(bool bDown) override;
 
-            Controls::Layout::Table*        m_Table;
+            Controls::Layout::Table* m_Table;
             ListBox::Rows m_SelectedRows;
 
             bool m_bMultiSelect;

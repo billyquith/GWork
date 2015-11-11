@@ -26,13 +26,13 @@ namespace Gwen
 
             GWEN_CONTROL(CollapsibleCategory, Gwen::Controls::Base);
 
-            virtual void Render(Skin::Base* skin);
+            virtual void Render(Skin::Base* skin) override;
 
             virtual void SetText(const String& text);
 
             virtual Button* Add(const String& name);
 
-            virtual void PostLayout(Skin::Base* /*skin*/);
+            virtual void PostLayout(Skin::Base* /*skin*/) override;
 
             virtual void SetList(Controls::CollapsibleList* p)
             {

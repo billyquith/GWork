@@ -27,12 +27,12 @@ namespace Gwen
 
             virtual ~MenuItem();
 
-            virtual void Render(Skin::Base* skin);
-            virtual void Layout(Skin::Base* skin);
+            virtual void Render(Skin::Base* skin) override;
+            virtual void Layout(Skin::Base* skin) override;
 
-            virtual void SizeToContents();
+            virtual void SizeToContents() override;
 
-            virtual void OnPress();
+            virtual void OnPress() override;
 
             Menu* GetMenu();
 

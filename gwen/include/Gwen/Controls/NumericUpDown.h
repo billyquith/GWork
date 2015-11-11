@@ -23,7 +23,7 @@ namespace Gwen
                 SetSize(7, 7);
             }
 
-            virtual void Render(Skin::Base* skin)
+            virtual void Render(Skin::Base* skin) override
             {
                 skin->DrawNumericUpDownButton(this, IsDepressed(), true);
             }
@@ -38,7 +38,7 @@ namespace Gwen
                 SetSize(7, 7);
             }
 
-            virtual void Render(Skin::Base* skin)
+            virtual void Render(Skin::Base* skin) override
             {
                 skin->DrawNumericUpDownButton(this, IsDepressed(), false);
             }
@@ -60,14 +60,14 @@ namespace Gwen
 
         private:
 
-            virtual void OnEnter();
+            virtual void OnEnter() override;
             virtual void OnChange();
-            virtual void OnTextChanged();
+            virtual void OnTextChanged() override;
 
             virtual void OnButtonUp(Base* control);
             virtual void OnButtonDown(Base* control);
 
-            virtual bool OnKeyUp(bool bDown)
+            virtual bool OnKeyUp(bool bDown) override
             {
                 if (bDown)
                     OnButtonUp(NULL);
@@ -75,7 +75,7 @@ namespace Gwen
                 return true;
             }
 
-            virtual bool OnKeyDown(bool bDown)
+            virtual bool OnKeyDown(bool bDown) override
             {
                 if (bDown)
                     OnButtonDown(NULL);

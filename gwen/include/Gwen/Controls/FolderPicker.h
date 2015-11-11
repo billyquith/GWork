@@ -55,12 +55,12 @@ namespace Gwen
                                           &FolderPicker::SetFolderCallback);
             }
 
-            virtual String GetValue()
+            virtual String GetValue() override
             {
                 return GetFolder();
             }
 
-            virtual void SetValue(const String& strValue)
+            virtual void SetValue(const String& strValue) override
             {
                 return SetFolder(strValue);
             }

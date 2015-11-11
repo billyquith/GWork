@@ -28,7 +28,7 @@ namespace Gwen
                 pCtrl->Dock(bRight ? Docking::Right : Docking::Left);
             }
 
-            virtual void Render(Skin::Base* skin)
+            virtual void Render(Skin::Base* skin) override
             {
                 skin->DrawStatusBar(this);
             }

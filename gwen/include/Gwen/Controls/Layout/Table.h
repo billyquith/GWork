@@ -255,7 +255,7 @@ namespace Gwen
                     }
                 }
 
-                void Layout(Skin::Base* skin)
+                void Layout(Skin::Base* skin) override
                 {
                     ParentClass::Layout(skin);
 

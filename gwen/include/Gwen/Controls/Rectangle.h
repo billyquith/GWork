@@ -24,7 +24,7 @@ namespace Gwen
 
             GWEN_CONTROL(Rectangle, Controls::Base);
 
-            virtual void Render(Skin::Base* skin);
+            virtual void Render(Skin::Base* skin) override;
 
             const Gwen::Color& GetColor()
             {

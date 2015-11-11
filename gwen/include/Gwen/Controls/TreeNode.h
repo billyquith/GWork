@@ -27,9 +27,9 @@ namespace Gwen
 
             virtual TreeNode* AddNode(const String& strLabel);
 
-            virtual void              SetText(const String& text);
-            virtual const String& GetText();
-            virtual void              SetImage(const String& text);
+            virtual void            SetText(const String& text);
+            virtual const String&   GetText();
+            virtual void            SetImage(const String& text);
 
             virtual void Open();
             virtual void Close();
@@ -38,9 +38,9 @@ namespace Gwen
 
             virtual Button* GetButton();
 
-            virtual void Render(Skin::Base* skin);
-            virtual void Layout(Skin::Base* skin);
-            virtual void PostLayout(Skin::Base* skin);
+            virtual void Render(Skin::Base* skin) override;
+            virtual void Layout(Skin::Base* skin) override;
+            virtual void PostLayout(Skin::Base* skin) override;
 
             virtual void SetRoot(bool b)
             {

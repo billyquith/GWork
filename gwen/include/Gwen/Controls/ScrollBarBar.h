@@ -22,13 +22,13 @@ namespace Gwen
 
             GWEN_CONTROL(ScrollBarBar, ControlsInternal::Dragger);
 
-            virtual void Render(Skin::Base* skin);
-            virtual void Layout(Skin::Base* skin);
+            virtual void Render(Skin::Base* skin) override;
+            virtual void Layout(Skin::Base* skin) override;
 
-            virtual void OnMouseMoved(int x, int y, int deltaX, int deltaY);
-            virtual void OnMouseClickLeft(int x, int y, bool bDown);
+            virtual void OnMouseMoved(int x, int y, int deltaX, int deltaY) override;
+            virtual void OnMouseClickLeft(int x, int y, bool bDown) override;
 
-            virtual void MoveTo(int x, int y);
+            virtual void MoveTo(int x, int y) override;
 
             virtual void SetHorizontal()
             {
