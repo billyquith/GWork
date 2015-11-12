@@ -259,14 +259,15 @@ bool Gwen::Input::OnMouseClicked(Controls::Base* pCanvas, int iMouseButton, bool
     if (bDown)
         Gwen::HoveredControl->Touch();
 
-#ifdef GWEN_HOOKSYSTEM
+#if GWEN_HOOKSYSTEM
 
     if (bDown)
     {
-        if (Hook::CallHook(&Hook::BaseHook::OnControlClicked, Gwen::HoveredControl,
+        if (Hook::CallHook(&Hook::BaseHook::OnControlClicked,
+                           Gwen::HoveredControl,
                            g_MousePosition.x,
                            g_MousePosition.y))
-            return true;
+        return true;
     }
 
 #endif

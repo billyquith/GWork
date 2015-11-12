@@ -8,10 +8,10 @@
 #ifndef GWEN_HOOK_H
 #define GWEN_HOOK_H
 
-#include "Gwen/Gwen.h"
+#include <Gwen/Gwen.h>
 #include <list>
 
-#ifdef GWEN_HOOKSYSTEM
+#if GWEN_HOOKSYSTEM
 
 namespace Gwen
 {
@@ -88,5 +88,5 @@ namespace Gwen
 
 }
 
-#endif // ifdef GWEN_HOOKSYSTEM
+#endif // if GWEN_HOOKSYSTEM
 #endif // ifndef GWEN_HOOK_H

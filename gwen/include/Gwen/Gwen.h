@@ -46,7 +46,7 @@
 #include "Gwen/Align.h"
 
 // Enable the hook system (se Hook.h)
-#define GWEN_HOOKSYSTEM
+#define GWEN_HOOKSYSTEM 1
 
 namespace Gwen
 {
