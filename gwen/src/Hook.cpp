@@ -5,9 +5,9 @@
  */
 
 
-#include "Gwen/Hook.h"
+#include <Gwen/Hook.h>
 
-#ifdef GWEN_HOOKSYSTEM
+#if GWEN_HOOKSYSTEM
 
 using namespace Gwen;
 using namespace Gwen::Hook;
@@ -29,4 +29,4 @@ HookList& Gwen::Hook::GetHookList()
     return g_HookList;
 }
 
-#endif // ifdef GWEN_HOOKSYSTEM
+#endif // if GWEN_HOOKSYSTEM
