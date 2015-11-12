@@ -154,14 +154,14 @@ namespace Gwen
 
             virtual void SetPos(int x, int y);
             virtual void SetPos(const Point& p)     { return SetPos(p.x, p.y); }
-            virtual Point GetPos()                  { return Point(X(), Y()); }
+            virtual Point GetPos() const            { return Point(X(), Y()); }
 
             virtual void SetWidth(int w)            { SetSize(w, Height()); }
             virtual void SetHeight(int h)           { SetSize(Width(), h); }
 
             virtual bool  SetSize(int w, int h);
             virtual bool  SetSize(const Point& p);
-            virtual Point GetSize()                 { return Point(Width(), Height()); }
+            virtual Point GetSize() const           { return Point(Width(), Height()); }
 
             virtual bool SetBounds(int x, int y, int w, int h);
             virtual bool SetBounds(const Gwen::Rect& bounds);

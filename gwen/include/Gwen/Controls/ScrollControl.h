@@ -36,12 +36,12 @@ namespace Gwen
                 m_bAutoHideBars = should;
             }
 
-            virtual bool CanScrollH()
+            virtual bool CanScrollH() const
             {
                 return m_bCanScrollH;
             }
 
-            virtual bool CanScrollV()
+            virtual bool CanScrollV() const
             {
                 return m_bCanScrollV;
             }
