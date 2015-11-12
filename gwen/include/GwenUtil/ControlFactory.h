@@ -2,6 +2,38 @@
 #pragma once
 
 #include <Gwen/Gwen.h>
+#include <Gwen/Controls.h>
+#include <camp/camptype.hpp>
+#include <camp/classbuilder.hpp>
+
+CAMP_TYPE(Gwen::Color)
+CAMP_TYPE(Gwen::Margin)
+CAMP_TYPE(Gwen::Point)
+CAMP_TYPE(Gwen::Docking::Area)
+
+CAMP_TYPE(Gwen::Controls::Base)
+CAMP_TYPE(Gwen::Controls::Label)
+CAMP_TYPE(Gwen::Controls::LabelClickable)
+CAMP_TYPE(Gwen::Controls::Button)
+CAMP_TYPE(Gwen::Controls::TextBox)
+CAMP_TYPE(Gwen::Controls::TextBoxMultiline)
+CAMP_TYPE(Gwen::Controls::CheckBox)
+CAMP_TYPE(Gwen::Controls::CheckBoxWithLabel)
+CAMP_TYPE(Gwen::Controls::ScrollControl)
+CAMP_TYPE(Gwen::Controls::Menu)
+CAMP_TYPE(Gwen::Controls::MenuItem)
+CAMP_TYPE(Gwen::Controls::MenuStrip)
+CAMP_TYPE(Gwen::Controls::ListBox)
+CAMP_TYPE(Gwen::Controls::ImagePanel)
+//CAMP_TYPE(Gwen::Controls::FilePicker)
+//CAMP_TYPE(Gwen::Controls::FolderPicker)
+//CAMP_TYPE(Gwen::Controls::PageControl)
+CAMP_TYPE(Gwen::Controls::Rectangle)
+CAMP_TYPE(Gwen::Controls::ProgressBar)
+CAMP_TYPE(Gwen::Controls::ComboBox)
+//CAMP_TYPE(Gwen::Controls::HorizontalSlider)
+//CAMP_TYPE(Gwen::Controls::DesignerCanvas)
+
 
 namespace Gwen
 {
@@ -230,8 +262,8 @@ namespace Gwen
 //! @param INHERITS : Name of the factory class we inherit properties from.
 #define GWEN_CONTROL_FACTORY_DETAILS(CONTROL, TYPE, INHERITS) \
     typedef TYPE FactoryFor; \
-    virtual Gwen::String Name() const { return #CONTROL; } \
-    virtual Gwen::String ParentFactory() const { return #INHERITS; }
+    virtual Gwen::String Name() const override { return #CONTROL; } \
+    virtual Gwen::String ParentFactory() const override { return #INHERITS; }
 
 //! Information about the ControlFactory.
 //! @param FACTORY : Name of the control factory class.
