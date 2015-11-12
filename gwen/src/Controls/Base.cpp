@@ -20,6 +20,8 @@
 #include "Gwen/Anim.h"
 #endif
 
+
+
 namespace Gwen {
 namespace Controls {
 
@@ -137,7 +139,7 @@ void Base::SetParent(Base* pParent)
         m_Parent->AddChild(this);
 }
 
-    void Base::Dock(Docking::Area dock)
+void Base::Dock(Docking::Area dock)
 {
     if (m_iDock == dock)
         return;
@@ -740,9 +742,7 @@ Base* Base::GetControlAt(int x, int y, bool bOnlyIfMouseEnabled)
     if (x < 0 || y < 0 || x >= Width() || y >= Height())
         return NULL;
 
-    Base::List::reverse_iterator iter;
-
-    for (iter = Children.rbegin(); iter != Children.rend(); ++iter)
+    for (Base::List::reverse_iterator iter = Children.rbegin(); iter != Children.rend(); ++iter)
     {
         Base* pChild = *iter;
         Base* pFound = NULL;

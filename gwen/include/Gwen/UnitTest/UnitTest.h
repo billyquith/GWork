@@ -17,6 +17,7 @@
 #include "Gwen/Controls/ListBox.h"
 #include "Gwen/Controls/DockBase.h"
 #include "Gwen/Controls/StatusBar.h"
+#include "Gwen/Controls/PropertyTree.h"
 
 class UnitTest;
 
@@ -65,6 +66,7 @@ private:
 
     Gwen::Controls::TabControl* m_TabControl;
     Gwen::Controls::ListBox*    m_TextOutput;
+    Gwen::Controls::PropertyTree* m_ControlProperties;
     Gwen::Controls::StatusBar*  m_StatusBar;
     unsigned int m_iFrames;
     float m_fLastSecond;
