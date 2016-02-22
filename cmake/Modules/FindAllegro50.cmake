@@ -1,7 +1,7 @@
 # Find Allegro 5.0
 
 # Find headers
-find_path(ALLEG_INCLUDE
+find_path(ALLEGRO_INCLUDE
     NAMES
         allegro5/allegro5.h
     PATHS
@@ -12,10 +12,10 @@ find_path(ALLEG_INCLUDE
     # PATH_SUFFIXES
     #     allegro5
 )
-# message("ALLEG_INCLUDE ${ALLEG_INCLUDE}")
+# message("ALLEGRO_INCLUDE ${ALLEGRO_INCLUDE}")
 
 # Components to find
-set(ALLEG_LIB_LIST
+set(ALLEGRO_LIB_LIST
     allegro
     allegro_dialog
     allegro_font
@@ -26,25 +26,25 @@ set(ALLEG_LIB_LIST
 )
 
 # Find components
-foreach(ALLEG_LIB_EACH ${ALLEG_LIB_LIST})    
-    find_library(ALLEG_LIBRARY
+foreach(ALLEGRO_LIB_EACH ${ALLEGRO_LIB_LIST})    
+    find_library(${ALLEGRO_LIB_EACH}_LIB
         NAMES
-            "${ALLEG_LIB_EACH}.5.0"
+            "${ALLEGRO_LIB_EACH}.5.0"
         PATHS
             /usr/lib
             /usr/local/lib
             /opt/local/lib
             /sw/lib
     )
-    message("Component: ${ALLEG_LIB_EACH} -> ${ALLEG_LIBRARY}")
-    list(APPEND ALLEG_LIBRARIES ${ALLEG_LIBRARY})
-    unset(ALLEG_LIBRARY CACHE) # need to reset or find_library fails
+    message("Component: ${ALLEGRO_LIB_EACH} -> ${${ALLEGRO_LIB_EACH}_LIB}")
+    list(APPEND ALLEGRO_LIBRARIES ${${ALLEGRO_LIB_EACH}_LIB})
+    mark_as_advanced(${ALLEGRO_LIB_EACH}_LIB)
 endforeach()
-# message("ALLEG_LIBRARIES ${ALLEG_LIBRARIES}")
+# message("ALLEGRO_LIBRARIES ${ALLEGRO_LIBRARIES}")
 
 # Return values
-set(ALLEGRO5_INCLUDE_DIRS ${ALLEG_INCLUDE})
-set(ALLEGRO5_LIBRARIES ${ALLEG_LIBRARIES})
+set(ALLEGRO5_INCLUDE_DIRS ${ALLEGRO_INCLUDE})
+set(ALLEGRO5_LIBRARIES ${ALLEGRO_LIBRARIES})
 
 # Check results
 if (ALLEGRO5_INCLUDE_DIRS AND ALLEGRO5_LIBRARIES)
@@ -62,5 +62,5 @@ else (ALLEGRO5_FOUND)
 endif (ALLEGRO5_FOUND)
 
 # show the ALLEGRO5_INCLUDE_DIRS and ALLEGRO5_LIBRARIES variables only in the advanced view
-mark_as_advanced(ALLEG_INCLUDE ALLEGRO5_LIBRARIES)
+mark_as_advanced(ALLEGRO_INCLUDE ALLEGRO_LIB_LIST)
 
