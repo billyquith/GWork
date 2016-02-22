@@ -104,13 +104,12 @@ set(GWORK_TEST_SOURCES
     UnitTest/TextBox.cpp
 )
 
-if(RENDER_SDL2)
-    set(GWORK_SOURCES ${GWORK_SOURCES}
-        Renderers/SDL2/SDL2.cpp
-    )
-endif()
-
-add_library(gwork STATIC ${GWORK_SOURCES})
+# renderer to use
+set(RENDER_SOURCES
+    "Renderers/${RENDERER_NAME}/${RENDERER_NAME}.cpp")
+    
+# gwork library
+add_library(gwork STATIC ${GWORK_SOURCES} ${RENDER_SOURCES})
 target_compile_features(gwork PUBLIC cxx_override)
 
 install(TARGETS gwork
@@ -132,5 +131,21 @@ if(BUILD_TEST)
             LIBRARY DESTINATION lib
             ARCHIVE DESTINATION lib)
 endif(BUILD_TEST)
+
+if(BUILD_SAMPLE)
+    set(SAMPLE_SOURCES
+        "Samples/${RENDERER_NAME}/${RENDERER_NAME}Sample.cpp")
+    
+    add_executable(gwork_sample ${SAMPLE_SOURCES})
+    target_compile_features(gwork_sample PRIVATE cxx_override)
+    target_link_libraries(gwork_sample gwork ${RENDERER_LIB})
+    
+    if(BUILD_TEST)
+        target_link_libraries(gwork_sample gwork_test)
+    endif(BUILD_TEST)
+    
+    install(TARGETS gwork_sample
+            RUNTIME DESTINATION bin)
+endif(BUILD_SAMPLE)
       
 
