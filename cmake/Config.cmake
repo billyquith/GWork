@@ -63,6 +63,16 @@ if(BUILD_SAMPLE)
     message("Including sample")
 endif(BUILD_SAMPLE)
 
+
+if(RENDER_ALLEGRO5)
+    # Use Allegro 5.0 as 5.1 is unstable.
+    find_package(Allegro50 REQUIRED)
+    set(RENDERER_NAME "Allegro5")
+    set(RENDERER_INC "${ALLEGRO5_INCLUDE_DIRS}")
+    set(RENDERER_LIB "${ALLEGRO5_LIBRARIES}")
+    set(BUILD_PLATFORM "AllegroPlatform")
+endif(RENDER_ALLEGRO5)
+
 if(RENDER_SDL2)
     find_package(SDL2 REQUIRED)
     find_package(SDL2_ttf REQUIRED)
@@ -80,3 +90,5 @@ if(RENDER_SFML2)
 endif(RENDER_SFML2)
 
 message("Using renderer ${RENDERER_NAME}")
+message("${RENDERER_NAME} includes: ${RENDERER_INC}")
+message("${RENDERER_NAME} libs: ${RENDERER_LIB}")
