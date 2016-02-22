@@ -104,7 +104,7 @@ set(GWORK_TEST_SOURCES
     UnitTest/TextBox.cpp
 )
 
-if(BUILD_RENDER_SDL2)
+if(RENDER_SDL2)
     set(GWORK_SOURCES ${GWORK_SOURCES}
         Renderers/SDL2/SDL2.cpp
     )
@@ -125,11 +125,12 @@ install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/gwen
 if(BUILD_TEST)
     add_library(gwork_test STATIC ${GWORK_TEST_SOURCES})
     target_compile_features(gwork_test PUBLIC cxx_override)
+    target_link_libraries(gwork_test gwork)
+    
     install(TARGETS gwork_test
             RUNTIME DESTINATION bin
             LIBRARY DESTINATION lib
             ARCHIVE DESTINATION lib)
-    target_link_libraries(gwork_test gwork)
 endif(BUILD_TEST)
       
 

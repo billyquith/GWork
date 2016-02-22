@@ -2,7 +2,11 @@ cmake_minimum_required(VERSION 3.0)
 
 project(gwork)
 
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/")
+
 set(GWORK_SOURCE_DIR ${PROJECT_SOURCE_DIR})
+
+# set(CMAKE_BINARY_DIR "${GWORK_SOURCE_DIR}/build")
 
 include(${CMAKE_SOURCE_DIR}/cmake/Config.cmake)
 
