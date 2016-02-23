@@ -24,7 +24,6 @@ endif()
 # Cross-platform
 option(RENDER_ALLEGRO5      "Renderer: Allegro5" OFF)
 option(RENDER_SDL2          "Renderer: SDL2" OFF)
-# TODO: option(RENDER_SFML          "Renderer: SFML" OFF)
 option(RENDER_SFML2         "Renderer: SFML2" OFF)
 
 option(BUILD_TEST           "Include unittests" ON)
