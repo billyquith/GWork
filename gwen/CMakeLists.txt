@@ -1,6 +1,6 @@
 
 include_directories(
-    ${GWORK_SOURCE_DIR}/gwen/include
+    ${CMAKE_SOURCE_DIR}/gwen/include
     ${RENDERER_INC}
 )
 
@@ -145,7 +145,9 @@ if(BUILD_SAMPLE)
     endif(BUILD_TEST)
     
     install(TARGETS gwork_sample
-            RUNTIME DESTINATION bin)
+            RUNTIME DESTINATION bin
+            LIBRARY DESTINATION lib
+            ARCHIVE DESTINATION lib)
 endif(BUILD_SAMPLE)
       
 
