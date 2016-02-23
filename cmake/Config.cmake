@@ -10,29 +10,25 @@ message("Project version: ${VERSION_STR}")
 
 ### User options
 
+set(BUILD_PLATFORM "Null")
+
 # Windows only
 if(WIN32)
     # TODO: option(RENDER_DIRECT2D  "Renderer: Direct2D" OFF)
-    option(RENDER_DIRECTX9  "Renderer: DirectX9" OFF)
-    option(RENDER_GDIPLUS   "Renderer: GDIPlus" OFF)
+    # TODO: option(RENDER_DIRECTX9  "Renderer: DirectX9" OFF)
+    # TODO: option(RENDER_GDIPLUS   "Renderer: GDIPlus" OFF)
+    # TODO: option(RENDER_OPENGL        "Renderer: OpenGL" OFF)
+    set(BUILD_PLATFORM "Windows")
 endif()
 
 # Cross-platform
 option(RENDER_ALLEGRO5      "Renderer: Allegro5" OFF)
-option(RENDER_OPENGL        "Renderer: OpenGL" OFF)
 option(RENDER_SDL2          "Renderer: SDL2" OFF)
 # TODO: option(RENDER_SFML          "Renderer: SFML" OFF)
 option(RENDER_SFML2         "Renderer: SFML2" OFF)
 
 option(BUILD_TEST           "Include unittests" ON)
 option(BUILD_SAMPLE         "Include sample" ON)
-
-
-if(WIN32)
-    set(BUILD_PLATFORM "Windows")
-else()
-    set(BUILD_PLATFORM "Null")
-endif()
 
 # Set the default build type to release with debug info
 if(NOT CMAKE_BUILD_TYPE)
@@ -47,6 +43,7 @@ endif()
 #         CACHE BOOL "TRUE to build Gwork as a shared library, FALSE to build it as a static library."
 #     )
 # endif()
+set(BUILD_SHARED_LIBS FALSE)
 
 # define install directory for miscelleneous files
 if(WIN32 AND NOT UNIX)
@@ -83,11 +80,20 @@ if(RENDER_SDL2)
 endif(RENDER_SDL2)
 
 if(RENDER_SFML2)
-    find_package(SFML2 REQUIRED)
+    set(SFML_STATIC_LIBRARIES FALSE)
+    find_package(SFML 2 COMPONENTS system window graphics REQUIRED)
+    if(NOT SFML_FOUND)
+        message(FATAL_ERROR "SFML2 is missing components")
+    endif()
     set(RENDERER_NAME "SFML2")
-    set(RENDERER_INC "${SFML2_INCLUDE_DIRS}")
-    set(RENDERER_LIB "${SFML2_LIBRARIES}")
+    set(RENDERER_INC "${SFML_INCLUDE_DIR}")
+    set(RENDERER_LIB ${SFML_LIBRARIES} ${SFML_DEPENDENCIES})
 endif(RENDER_SFML2)
+
+
+if(NOT RENDERER_NAME)
+    message(FATAL_ERROR "No renderer was specified. See RENDER_<name> options.")
+endif(NOT RENDERER_NAME)
 
 message("Using renderer ${RENDERER_NAME}")
 message("${RENDERER_NAME} includes: ${RENDERER_INC}")
