@@ -95,6 +95,9 @@ if(NOT RENDERER_NAME)
     message(FATAL_ERROR "No renderer was specified. See RENDER_<name> options.")
 endif(NOT RENDERER_NAME)
 
+list(REMOVE_DUPLICATES RENDERER_INC)
+list(REMOVE_DUPLICATES RENDERER_LIB)
+
 message("Using renderer ${RENDERER_NAME}")
 message("${RENDERER_NAME} includes: ${RENDERER_INC}")
 message("${RENDERER_NAME} libs: ${RENDERER_LIB}")

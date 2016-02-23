@@ -6,14 +6,8 @@
 #include <Gwen/UnitTest/UnitTest.h>
 #include <Gwen/Input/SDL2.h>
 #include <Gwen/Renderers/SDL2.h>
-
-#ifdef _WIN32
-#   include <SDL.h>
-#   include <SDL_ttf.h>
-#else
-#   include <SDL2/SDL.h>
-#   include <SDL2/SDL_ttf.h>
-#endif
+#include <SDL.h>
+#include <SDL_ttf.h>
 
 
 int main(int argc, char** argv)
