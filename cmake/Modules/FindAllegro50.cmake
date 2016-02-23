@@ -9,10 +9,7 @@ find_path(ALLEGRO_INCLUDE
         /usr/local/include
         /opt/local/include
         /sw/include
-    # PATH_SUFFIXES
-    #     allegro5
 )
-# message("ALLEGRO_INCLUDE ${ALLEGRO_INCLUDE}")
 
 # Components to find
 set(ALLEGRO_LIB_LIST
@@ -24,6 +21,8 @@ set(ALLEGRO_LIB_LIST
     allegro_primitives
     allegro_ttf
 )
+
+mark_as_advanced(ALLEGRO_INCLUDE ALLEGRO_LIB_LIST)
 
 # Find components
 foreach(ALLEGRO_LIB_EACH ${ALLEGRO_LIB_LIST})    
@@ -40,7 +39,6 @@ foreach(ALLEGRO_LIB_EACH ${ALLEGRO_LIB_LIST})
     list(APPEND ALLEGRO_LIBRARIES ${${ALLEGRO_LIB_EACH}_LIB})
     mark_as_advanced(${ALLEGRO_LIB_EACH}_LIB)
 endforeach()
-# message("ALLEGRO_LIBRARIES ${ALLEGRO_LIBRARIES}")
 
 # Return values
 set(ALLEGRO5_INCLUDE_DIRS ${ALLEGRO_INCLUDE})
@@ -61,6 +59,4 @@ else (ALLEGRO5_FOUND)
     endif (Allegro_FIND_REQUIRED)
 endif (ALLEGRO5_FOUND)
 
-# show the ALLEGRO5_INCLUDE_DIRS and ALLEGRO5_LIBRARIES variables only in the advanced view
-mark_as_advanced(ALLEGRO_INCLUDE ALLEGRO_LIB_LIST)
 
