@@ -3,6 +3,21 @@ gwen/docs/html/*
 gwen/include/allegro5/*
 
 #################
+## Cmake
+#################
+
+CMakeCache.txt
+CMakeFiles
+CMakeScripts
+Makefile
+cmake_install.cmake
+install_manifest.txt
+
+.ninja_deps
+.ninja_log
+*.ninja
+
+#################
 ## Eclipse
 #################
 
