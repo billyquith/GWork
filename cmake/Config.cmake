@@ -53,6 +53,7 @@ endif()
 
 if(BUILD_TEST)
     message("Including tests")
+    find_package(Ponder 1.0 REQUIRED)
 endif(BUILD_TEST)
     
 if(BUILD_SAMPLE)
