@@ -73,7 +73,7 @@ public:
             // around
             // for the lifetime of the label. Rethink, or is that ideal?
             //
-            m_Font.facename = "Comic Sans MS";
+            m_Font.facename = "OpenSans";// TODO: "Comic Sans MS";
             m_Font.size = 25;
             Gwen::Controls::Label* label = new Gwen::Controls::Label(this);
             label->SetText("Custom Font (Comic Sans 25)");
