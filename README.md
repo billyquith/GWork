@@ -1,13 +1,10 @@
 GWork
 =====
 
-GWork (pronounced "gw-orc") is a fork of the GUI library [GWEN][gwen]. It was forked 
-to fix issues with GWEN and add new features. 
+GWork is an embeddable GUI library with an extensive control set. Control rendering
+is abstracted, and can be implemented by any application wishing to use the library.
 
-## Build
-
-CMake is used to generate the project files. A number of rendering backends are
-provided:
+A number of rendering backends are provided for use, or as an example for your own:
  * [Allegro5][al5] (cross-platform).
  * Direct2D (Windows).
  * DirectX9 (Windows).
@@ -15,6 +12,12 @@ provided:
  * [SDL2][sdl2] (cross-platform).
  * [SFML2][sfml2] (cross-platform).
 
+GWork (pronounced "gw-orc") is a fork of the GUI library [GWEN][gwen]. It was forked 
+to fix issues with GWEN and add new features.
+
+## Build
+
+CMake is used to generate the project files. 
 ```bash
 git clone https://github.com/billyquith/GWork.git gwork
 cd gwork
@@ -22,10 +25,15 @@ cmake -G Ninja -DRENDER_SDL2  # create Ninja project files with SDL2 renderer
 ninja
 ```
 
+Providing the dependencies are present, this will create a sample executable. When run it will
+demonstrate all of the controls available.
+
 ## Changes from GWEN
 
 ### Features
 
+* CMake is used to generate project files instead of Premake. CMake is much more
+  comprehensive.
 * [SDL2][sdl2] renderer added. Tested on *OSX and Windows*.
 * [UTF-8 everywhere][5]. Unicode support simplified.
   * `Gwen::UnicodeString` removed. This assumed that all Unicode was best as a 
