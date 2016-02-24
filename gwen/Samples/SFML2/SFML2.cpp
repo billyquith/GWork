@@ -8,11 +8,13 @@
 #include "Gwen/Skins/TexturedBase.h"
 #include "Gwen/UnitTest/UnitTest.h"
 
+
+#include <GwenUtil/ControlFactory.h>
+
 ////////////////////////////////////////////////////////////
 /// Entry point of application
 ///
 /// \return Application exit code
-///
 ////////////////////////////////////////////////////////////
 int main()
 {
@@ -20,6 +22,8 @@ int main()
     sf::RenderWindow App(sf::VideoMode(1004, 650, 32), "GWEN: SFML2");
 
     Gwen::Renderer::SFML2 GwenRenderer(App);
+    
+    Gwen::ControlFactory::GetList();
 
     //
     // Create a GWEN skin
@@ -47,14 +51,14 @@ int main()
     //
     // Create our unittest control (which is a Window with controls in it)
     //
-    UnitTest* pUnit = new UnitTest(pCanvas);
+    new UnitTest(pCanvas);
 
     //
     // Create an input processor
     //
     Gwen::Input::SFML GwenInput;
     GwenInput.Initialize(pCanvas);
-
+    
     while (App.isOpen())
     {
         // Handle events
@@ -63,9 +67,8 @@ int main()
         while (App.pollEvent(Event))
         {
             // Window closed or escape key pressed : exit
-            if ((Event.type == sf::Event::Closed) ||
-                ((Event.type == sf::Event::KeyPressed) &&
-                 (Event.key.code == sf::Keyboard::Escape)))
+            if (Event.type == sf::Event::Closed
+                || (Event.type == sf::Event::KeyPressed && Event.key.code == sf::Keyboard::Escape))
             {
                 App.close();
                 break;
