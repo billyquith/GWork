@@ -3,36 +3,36 @@
 
 #include <Gwen/Gwen.h>
 #include <Gwen/Controls.h>
-#include <camp/camptype.hpp>
-#include <camp/classbuilder.hpp>
+#include <ponder/pondertype.hpp>
+#include <ponder/classbuilder.hpp>
 
-CAMP_TYPE(Gwen::Color)
-CAMP_TYPE(Gwen::Margin)
-CAMP_TYPE(Gwen::Point)
-CAMP_TYPE(Gwen::Docking::Area)
+PONDER_TYPE(Gwen::Color)
+PONDER_TYPE(Gwen::Margin)
+PONDER_TYPE(Gwen::Point)
+PONDER_TYPE(Gwen::Docking::Area)
 
-CAMP_TYPE(Gwen::Controls::Base)
-CAMP_TYPE(Gwen::Controls::Label)
-CAMP_TYPE(Gwen::Controls::LabelClickable)
-CAMP_TYPE(Gwen::Controls::Button)
-CAMP_TYPE(Gwen::Controls::TextBox)
-CAMP_TYPE(Gwen::Controls::TextBoxMultiline)
-CAMP_TYPE(Gwen::Controls::CheckBox)
-CAMP_TYPE(Gwen::Controls::CheckBoxWithLabel)
-CAMP_TYPE(Gwen::Controls::ScrollControl)
-CAMP_TYPE(Gwen::Controls::Menu)
-CAMP_TYPE(Gwen::Controls::MenuItem)
-CAMP_TYPE(Gwen::Controls::MenuStrip)
-CAMP_TYPE(Gwen::Controls::ListBox)
-CAMP_TYPE(Gwen::Controls::ImagePanel)
-//CAMP_TYPE(Gwen::Controls::FilePicker)
-//CAMP_TYPE(Gwen::Controls::FolderPicker)
-//CAMP_TYPE(Gwen::Controls::PageControl)
-CAMP_TYPE(Gwen::Controls::Rectangle)
-CAMP_TYPE(Gwen::Controls::ProgressBar)
-CAMP_TYPE(Gwen::Controls::ComboBox)
-//CAMP_TYPE(Gwen::Controls::HorizontalSlider)
-//CAMP_TYPE(Gwen::Controls::DesignerCanvas)
+PONDER_TYPE(Gwen::Controls::Base)
+PONDER_TYPE(Gwen::Controls::Label)
+PONDER_TYPE(Gwen::Controls::LabelClickable)
+PONDER_TYPE(Gwen::Controls::Button)
+PONDER_TYPE(Gwen::Controls::TextBox)
+PONDER_TYPE(Gwen::Controls::TextBoxMultiline)
+PONDER_TYPE(Gwen::Controls::CheckBox)
+PONDER_TYPE(Gwen::Controls::CheckBoxWithLabel)
+PONDER_TYPE(Gwen::Controls::ScrollControl)
+PONDER_TYPE(Gwen::Controls::Menu)
+PONDER_TYPE(Gwen::Controls::MenuItem)
+PONDER_TYPE(Gwen::Controls::MenuStrip)
+PONDER_TYPE(Gwen::Controls::ListBox)
+PONDER_TYPE(Gwen::Controls::ImagePanel)
+//PONDER_TYPE(Gwen::Controls::FilePicker)
+//PONDER_TYPE(Gwen::Controls::FolderPicker)
+//PONDER_TYPE(Gwen::Controls::PageControl)
+PONDER_TYPE(Gwen::Controls::Rectangle)
+PONDER_TYPE(Gwen::Controls::ProgressBar)
+PONDER_TYPE(Gwen::Controls::ComboBox)
+//PONDER_TYPE(Gwen::Controls::HorizontalSlider)
+//PONDER_TYPE(Gwen::Controls::DesignerCanvas)
 
 
 namespace Gwen
