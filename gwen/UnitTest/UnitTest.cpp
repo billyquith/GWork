@@ -13,46 +13,46 @@
 #include <Gwen/Hook.h>
 #include <GwenUtil/ControlFactory.h>
 
-#include <camp/class.hpp>
-#include <camp-xml/rapidxml.hpp>
-#include <camp/classvisitor.hpp>
-#include <camp/simpleproperty.hpp>
-#include <camp/enumproperty.hpp>
-#include <camp/userproperty.hpp>
-#include <camp/enum.hpp>
+#include <ponder/class.hpp>
+//#include <ponder-xml/rapidxml.hpp>
+#include <ponder/classvisitor.hpp>
+#include <ponder/simpleproperty.hpp>
+#include <ponder/enumproperty.hpp>
+#include <ponder/userproperty.hpp>
+#include <ponder/enum.hpp>
 
 using namespace Gwen;
 
 Gwen::Controls::TabButton* pButton = NULL;
 
 
-class MyVistor : public camp::ClassVisitor
+class MyVistor : public ponder::ClassVisitor
 {
     Controls::Properties *m_props;
 public:
     MyVistor(Controls::Properties *pt) : m_props(pt) {}
     
-    void visit(const camp::SimpleProperty& property) override
+    void visit(const ponder::SimpleProperty& property) override
     {
         m_props->Add("property", property.name());
     }
     
-    void visit(const camp::ArrayProperty& property) override
+    void visit(const ponder::ArrayProperty& property) override
     {
         m_props->Add("array", property.name());
     }
     
-    void visit(const camp::EnumProperty& property) override
+    void visit(const ponder::EnumProperty& property) override
     {
         m_props->Add("enum", property.name());
     }
     
-    void visit(const camp::UserProperty& property) override
+    void visit(const ponder::UserProperty& property) override
     {
         m_props->Add("user", property.name());
     }
     
-    void visit(const camp::Function& function) override
+    void visit(const ponder::Function& function) override
     {
         m_props->Add("function", function.name());
     }
@@ -60,9 +60,9 @@ public:
 
 static void PopulateClassInfo(Controls::PropertyTree *tree)
 {    
-    for (std::size_t clsi=0; clsi < camp::classCount(); ++clsi)
+    for (std::size_t clsi=0; clsi < ponder::classCount(); ++clsi)
     {
-        const camp::Class &c = camp::classByIndex(clsi);
+        const ponder::Class &c = ponder::classByIndex(clsi);
         auto props = tree->Add(c.name());
         MyVistor mv(props);
         c.visit(mv);
@@ -124,15 +124,15 @@ public:
     }
 };
 
-static std::string userToString(const camp::UserObject& obj, const camp::Property& prop)
+static std::string userToString(const ponder::UserObject& obj, const ponder::Property& prop)
 {
     std::string vstr;
 
     auto val = prop.get(obj);
-    if (val.type() == camp::userType)
+    if (val.type() == ponder::userType)
     {
-        const camp::UserObject& child = prop.get(obj).to<camp::UserObject>();
-        const camp::Class& ccls = child.getClass();
+        const ponder::UserObject& child = prop.get(obj).to<ponder::UserObject>();
+        const ponder::Class& ccls = child.getClass();
         for (std::size_t ci = 0, nb = ccls.propertyCount(); ci < nb; ++ci)
         {
             vstr += userToString(child, ccls.property(ci));
@@ -155,17 +155,17 @@ void ControlListener::updateProperties()
     printf("%s\n", m_lastOver->GetTypeName());
     
     try {
-        const camp::Class& cls = camp::classByName(std::string("Gwen::Controls::") + m_lastOver->GetTypeName());
+        const ponder::Class& cls = ponder::classByName(std::string("Gwen::Controls::") + m_lastOver->GetTypeName());
         auto props = m_props->Add(cls.name());
         
         for (auto i = 0; i < cls.propertyCount(); ++i)
         {
-            const camp::Property& prop = cls.property(i);
-            std::string vstr = userToString(camp::UserObject(*m_lastOver), prop);
+            const ponder::Property& prop = cls.property(i);
+            std::string vstr = userToString(ponder::UserObject(*m_lastOver), prop);
             props->Add(prop.name(), vstr);
         }
     }
-    catch (camp::ClassNotFound) {
+    catch (ponder::ClassNotFound) {
         m_props->Add(std::string("Unknown class: ") + m_lastOver->GetTypeName());
     }
     
