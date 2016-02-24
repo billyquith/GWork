@@ -49,16 +49,17 @@ void InitializeControls()
         ;
 
     camp::Class::declare<Controls::Label>()
-        .base<Controls::Label::ParentClass>()
-        .property("text", &Controls::Label::GetText, [] (Controls::Label& c, const Gwen::String& s) { c.SetText(s); })
-        .property("textColor", &Controls::Label::GetTextColor, &Controls::Label::SetTextColor)
+        .base<Controls::Base>()
+        .property("text", &Controls::Label::GetText,
+                          [] (Controls::Label& c, const Gwen::String& s) { c.SetText(s); })
+        .property("textColor",  &Controls::Label::GetTextColor, &Controls::Label::SetTextColor)
         ;
 
     camp::Class::declare<Controls::Button>()
         .base<Controls::Button::ParentClass>()
-        .property("depressed", &Controls::Button::IsDepressed, &Controls::Button::SetDepressed)
-        .property("isToggle", &Controls::Button::IsToggle, &Controls::Button::SetIsToggle)
-        .property("toggled", &Controls::Button::GetToggleState, &Controls::Button::SetToggleState)
+        .property("depressed",  &Controls::Button::IsDepressed, &Controls::Button::SetDepressed)
+        .property("isToggle",   &Controls::Button::IsToggle, &Controls::Button::SetIsToggle)
+        .property("toggled",    &Controls::Button::GetToggleState, &Controls::Button::SetToggleState)
         ;
 
     camp::Class::declare<Controls::LabelClickable>()
