@@ -69,29 +69,6 @@ static void PopulateClassInfo(Controls::PropertyTree *tree)
     }
 }
 
-
-//class ControlContainer : public Controls::Layout::Center
-//{
-//    Controls::Base *m_lastOver;
-//public:
-//    GWEN_CONTROL_INLINE(ControlContainer, Controls::Layout::Center), m_lastOver(NULL), m_props(NULL) {}
-//    void OnMouseEnter() override {}
-//    void OnMouseLeave() override {}
-//    void OnMouseMoved(int x, int y, int deltaX, int deltaY) override
-//    {
-//        auto ctrl = GetControlAt(x,y);
-//        if (ctrl && ctrl != m_lastOver)
-//        {
-//            m_lastOver = ctrl;
-//            updateProperties();
-//        }
-//    }
-//    
-//    void updateProperties();
-//    
-//    Controls::PropertyTree *m_props;
-//};
-
 class ControlListener : public Gwen::Hook::BaseHook
 {
     Controls::Base *m_lastOver;
@@ -128,6 +105,11 @@ static std::string userToString(const camp::UserObject& obj, const camp::Propert
 {
     std::string vstr;
 
+    if (obj.pointer() == NULL)
+        return vstr;
+    
+    printf("prop: %s %s", prop.name().c_str(), camp::util::typeAsString(prop.type()));
+    
     auto val = prop.get(obj);
     if (val.type() == camp::userType)
     {
@@ -152,16 +134,15 @@ void ControlListener::updateProperties()
 {
     m_props->Clear();
     
-    printf("%s\n", m_lastOver->GetTypeName());
-    
     try {
         const camp::Class& cls = camp::classByName(std::string("Gwen::Controls::") + m_lastOver->GetTypeName());
         auto props = m_props->Add(cls.name());
+        const camp::UserObject uobj(*m_lastOver);
         
-        for (auto i = 0; i < cls.propertyCount(); ++i)
+        for (auto i = 0u; i < cls.propertyCount(); ++i)
         {
             const camp::Property& prop = cls.property(i);
-            std::string vstr = userToString(camp::UserObject(*m_lastOver), prop);
+            std::string vstr = userToString(uobj, prop);
             props->Add(prop.name(), vstr);
         }
     }
