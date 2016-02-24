@@ -129,7 +129,7 @@ target_link_libraries(Gwork${RENDERER_NAME} Gwork)
 if(BUILD_TEST)
     add_library(GworkTest STATIC ${GWORK_TEST_SOURCES})
     target_compile_features(GworkTest PUBLIC cxx_override)
-    target_link_libraries(GworkTest Gwork Gwork${RENDERER_NAME})
+    target_link_libraries(GworkTest Gwork Gwork${RENDERER_NAME} ponder)
     
     install(TARGETS GworkTest
             RUNTIME DESTINATION bin
