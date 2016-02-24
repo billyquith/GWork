@@ -72,7 +72,11 @@ set(GWORK_SOURCES
     src/Controls/Dialog/FileSave.cpp
     src/Controls/Dialog/FolderOpen.cpp
     src/Controls/Dialog/Query.cpp
-    src/Platforms/${BUILD_PLATFORM}.cpp     # platform
+)
+
+set(GWORK_RENDER_SOURCES
+    Renderers/${RENDERER_NAME}/${RENDERER_NAME}.cpp     # renderer
+    src/Platforms/${BUILD_PLATFORM}.cpp                 # platform
 )
 
 set(GWORK_TEST_SOURCES
@@ -104,12 +108,8 @@ set(GWORK_TEST_SOURCES
     UnitTest/Window.cpp
 )
 
-# renderer to use
-set(RENDER_SOURCES
-    "Renderers/${RENDERER_NAME}/${RENDERER_NAME}.cpp")
-    
 # gwork library
-add_library(gwork STATIC ${GWORK_SOURCES} ${RENDER_SOURCES})
+add_library(gwork STATIC ${GWORK_SOURCES})
 target_compile_features(gwork PUBLIC cxx_override)
 
 install(TARGETS gwork
@@ -120,11 +120,16 @@ install(TARGETS gwork
 install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/Gwen
         DESTINATION include
 )
-    
+
+# gwork renderer & platform
+add_library(gwork_${RENDERER_NAME} STATIC ${GWORK_RENDER_SOURCES})
+target_compile_features(gwork_${RENDERER_NAME} PUBLIC cxx_override)
+target_link_libraries(gwork_${RENDERER_NAME} gwork)
+   
 if(BUILD_TEST)
     add_library(gwork_test STATIC ${GWORK_TEST_SOURCES})
     target_compile_features(gwork_test PUBLIC cxx_override)
-    target_link_libraries(gwork_test gwork)
+    target_link_libraries(gwork_test gwork gwork_${RENDERER_NAME})
     
     install(TARGETS gwork_test
             RUNTIME DESTINATION bin
@@ -138,7 +143,7 @@ if(BUILD_SAMPLE)
     
     add_executable(gwork_sample ${SAMPLE_SOURCES})
     target_compile_features(gwork_sample PRIVATE cxx_override)
-    target_link_libraries(gwork_sample gwork ${RENDERER_LIB})
+    target_link_libraries(gwork_sample gwork gwork_${RENDERER_NAME} ${RENDERER_LIB})
     
     if(BUILD_TEST)
         target_link_libraries(gwork_sample gwork_test)
