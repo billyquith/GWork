@@ -108,11 +108,11 @@ set(GWORK_TEST_SOURCES
     UnitTest/Window.cpp
 )
 
-# gwork library
-add_library(gwork STATIC ${GWORK_SOURCES})
-target_compile_features(gwork PUBLIC cxx_override)
+# Gwork library
+add_library(Gwork STATIC ${GWORK_SOURCES})
+target_compile_features(Gwork PUBLIC cxx_override)
 
-install(TARGETS gwork
+install(TARGETS Gwork
         RUNTIME DESTINATION bin
         LIBRARY DESTINATION lib
         ARCHIVE DESTINATION lib)
@@ -121,17 +121,17 @@ install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/Gwen
         DESTINATION include
 )
 
-# gwork renderer & platform
-add_library(gwork_${RENDERER_NAME} STATIC ${GWORK_RENDER_SOURCES})
-target_compile_features(gwork_${RENDERER_NAME} PUBLIC cxx_override)
-target_link_libraries(gwork_${RENDERER_NAME} gwork)
+# Gwork renderer & platform
+add_library(Gwork${RENDERER_NAME} STATIC ${GWORK_RENDER_SOURCES})
+target_compile_features(Gwork${RENDERER_NAME} PUBLIC cxx_override)
+target_link_libraries(Gwork${RENDERER_NAME} Gwork)
    
 if(BUILD_TEST)
-    add_library(gwork_test STATIC ${GWORK_TEST_SOURCES})
-    target_compile_features(gwork_test PUBLIC cxx_override)
-    target_link_libraries(gwork_test gwork gwork_${RENDERER_NAME})
+    add_library(GworkTest STATIC ${GWORK_TEST_SOURCES})
+    target_compile_features(GworkTest PUBLIC cxx_override)
+    target_link_libraries(GworkTest Gwork Gwork${RENDERER_NAME})
     
-    install(TARGETS gwork_test
+    install(TARGETS GworkTest
             RUNTIME DESTINATION bin
             LIBRARY DESTINATION lib
             ARCHIVE DESTINATION lib)
@@ -141,15 +141,15 @@ if(BUILD_SAMPLE)
     set(SAMPLE_SOURCES
         "Samples/${RENDERER_NAME}/${RENDERER_NAME}Sample.cpp")
     
-    add_executable(gwork_sample ${SAMPLE_SOURCES})
-    target_compile_features(gwork_sample PRIVATE cxx_override)
-    target_link_libraries(gwork_sample gwork gwork_${RENDERER_NAME} ${RENDERER_LIB})
+    add_executable(Gwork${RENDERER_NAME}Sample ${SAMPLE_SOURCES})
+    target_compile_features(Gwork${RENDERER_NAME}Sample PRIVATE cxx_override)
+    target_link_libraries(Gwork${RENDERER_NAME}Sample Gwork Gwork${RENDERER_NAME} ${RENDERER_LIB})
     
     if(BUILD_TEST)
-        target_link_libraries(gwork_sample gwork_test)
+        target_link_libraries(Gwork${RENDERER_NAME}Sample GworkTest)
     endif(BUILD_TEST)
     
-    install(TARGETS gwork_sample
+    install(TARGETS Gwork${RENDERER_NAME}Sample
             RUNTIME DESTINATION bin
             LIBRARY DESTINATION lib
             ARCHIVE DESTINATION lib)
