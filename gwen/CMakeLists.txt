@@ -129,7 +129,7 @@ target_link_libraries(Gwork${RENDERER_NAME} Gwork)
 if(BUILD_TEST)
     add_library(GworkTest STATIC ${GWORK_TEST_SOURCES})
     target_compile_features(GworkTest PUBLIC cxx_override)
-    target_link_libraries(GworkTest Gwork Gwork${RENDERER_NAME} ponder)
+    target_link_libraries(GworkTest Gwork Gwork${RENDERER_NAME})
     
     install(TARGETS GworkTest
             RUNTIME DESTINATION bin
@@ -143,7 +143,8 @@ if(BUILD_SAMPLE)
     
     add_executable(Gwork${RENDERER_NAME}Sample ${SAMPLE_SOURCES})
     target_compile_features(Gwork${RENDERER_NAME}Sample PRIVATE cxx_override)
-    target_link_libraries(Gwork${RENDERER_NAME}Sample Gwork Gwork${RENDERER_NAME} ${RENDERER_LIB})
+    target_link_libraries(Gwork${RENDERER_NAME}Sample
+                          Gwork Gwork${RENDERER_NAME} ${RENDERER_LIB} ${PONDER_LIBRARIES})
     
     if(BUILD_TEST)
         target_link_libraries(Gwork${RENDERER_NAME}Sample GworkTest)

@@ -108,7 +108,7 @@ static std::string userToString(const ponder::UserObject& obj, const ponder::Pro
     if (obj.pointer() == NULL)
         return vstr;
     
-    printf("prop: %s %s", prop.name().c_str(), camp::util::typeAsString(prop.type()));
+    printf("prop: %s %s", prop.name().c_str(), ponder::detail::typeAsString(prop.type()));
     
     auto val = prop.get(obj);
     if (val.type() == ponder::userType)
@@ -137,7 +137,7 @@ void ControlListener::updateProperties()
     try {
         const ponder::Class& cls = ponder::classByName(std::string("Gwen::Controls::") + m_lastOver->GetTypeName());
         auto props = m_props->Add(cls.name());
-        const camp::UserObject uobj(*m_lastOver);
+        const ponder::UserObject uobj(*m_lastOver);
         
         for (auto i = 0u; i < cls.propertyCount(); ++i)
         {
