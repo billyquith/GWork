@@ -12,7 +12,7 @@ namespace Gwen
 //            
 //            GWEN_CONTROL_FACTORY_FOR(ComboBox, Base)
 //            {
-//                camp::Class::declare<Controls::ComboBox>()
+//                ponder::Class::declare<Controls::ComboBox>()
 //                    .base<Controls::Button>()
 //                    ;
 //            }

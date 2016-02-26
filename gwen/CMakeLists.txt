@@ -108,6 +108,32 @@ set(GWORK_TEST_SOURCES
     UnitTest/Window.cpp
 )
 
+set(GWORK_UTIL_SOURCES
+    ../util/src/ControlFactory/Base_Factory.cpp
+    ../util/src/ControlFactory/Button_Factory.cpp
+    ../util/src/ControlFactory/CheckBox_Factory.cpp
+    ../util/src/ControlFactory/ComboBox_Factory.cpp
+    ../util/src/ControlFactory/ControlFactory.cpp
+    ../util/src/ControlFactory/DesignerCanvas_Factory.cpp
+    ../util/src/ControlFactory/FilePicker_Factory.cpp
+    ../util/src/ControlFactory/FolderPicker_Factory.cpp
+    ../util/src/ControlFactory/Image_Factory.cpp
+    ../util/src/ControlFactory/Label_Factory.cpp
+    ../util/src/ControlFactory/ListBox_Factory.cpp
+    ../util/src/ControlFactory/MenuStrip_Factory.cpp
+    ../util/src/ControlFactory/PageControl_Factory.cpp
+    ../util/src/ControlFactory/ProgressBar_Factory.cpp
+    ../util/src/ControlFactory/Rectangle_Factory.cpp
+    ../util/src/ControlFactory/Slider_Factory.cpp
+    ../util/src/ControlFactory/TextBox_Factory.cpp
+    ../util/src/ControlFactory/VerticalSplitter_Factory.cpp
+    ../util/src/ImportExport/Base.cpp            
+    ../util/src/ImportExport/DesignerFormat.cpp  
+    ../util/src/ImportExport/DesignerFormat.h
+    ../util/src/ImportExport/GwenUtil.cpp
+    ../util/src/ImportExport/GwenUtil.h
+)
+
 # Gwork library
 add_library(Gwork STATIC ${GWORK_SOURCES})
 target_compile_features(Gwork PUBLIC cxx_override)
@@ -118,14 +144,31 @@ install(TARGETS Gwork
         ARCHIVE DESTINATION lib)
 
 install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/Gwen
-        DESTINATION include
-)
+        DESTINATION include)
 
-# Gwork renderer & platform
+# Gwork renderer & platform library
 add_library(Gwork${RENDERER_NAME} STATIC ${GWORK_RENDER_SOURCES})
 target_compile_features(Gwork${RENDERER_NAME} PUBLIC cxx_override)
 target_link_libraries(Gwork${RENDERER_NAME} Gwork)
-   
+
+include_directories(
+    ${CMAKE_SOURCE_DIR}/util/include
+)
+
+# Gwork utils
+add_library(GworkUtil STATIC ${GWORK_UTIL_SOURCES})
+target_compile_features(GworkUtil PUBLIC cxx_override)
+target_link_libraries(GworkUtil Gwork)
+
+install(TARGETS GworkUtil
+        RUNTIME DESTINATION bin
+        LIBRARY DESTINATION lib
+        ARCHIVE DESTINATION lib)
+
+install(DIRECTORY ${CMAKE_SOURCE_DIR}/util/include/GwenUtil
+        DESTINATION include)
+
+# Test library   
 if(BUILD_TEST)
     add_library(GworkTest STATIC ${GWORK_TEST_SOURCES})
     target_compile_features(GworkTest PUBLIC cxx_override)
@@ -137,6 +180,7 @@ if(BUILD_TEST)
             ARCHIVE DESTINATION lib)
 endif(BUILD_TEST)
 
+# Sample executable
 if(BUILD_SAMPLE)
     set(SAMPLE_SOURCES
         "Samples/${RENDERER_NAME}/${RENDERER_NAME}Sample.cpp")
@@ -144,7 +188,7 @@ if(BUILD_SAMPLE)
     add_executable(Gwork${RENDERER_NAME}Sample ${SAMPLE_SOURCES})
     target_compile_features(Gwork${RENDERER_NAME}Sample PRIVATE cxx_override)
     target_link_libraries(Gwork${RENDERER_NAME}Sample
-                          Gwork Gwork${RENDERER_NAME} ${RENDERER_LIB} ${PONDER_LIBRARIES})
+                          Gwork Gwork${RENDERER_NAME} GworkUtil ${RENDERER_LIB} ${PONDER_LIBRARIES})
     
     if(BUILD_TEST)
         target_link_libraries(Gwork${RENDERER_NAME}Sample GworkTest)
