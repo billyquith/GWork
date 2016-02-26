@@ -9,26 +9,26 @@ const Gwen::String PropertyBool::False   = "false";
 
 void InitializeControls()
 {
-    camp::Class::declare<Gwen::Color>()
+    ponder::Class::declare<Gwen::Color>()
         .property("a", &Gwen::Color::a)
         .property("r", &Gwen::Color::r)
         .property("g", &Gwen::Color::g)
         .property("b", &Gwen::Color::b)
         ;
 
-    camp::Class::declare<Gwen::Margin>()
+    ponder::Class::declare<Gwen::Margin>()
         .property("top",    &Gwen::Margin::top)
         .property("bottom", &Gwen::Margin::bottom)
         .property("left",   &Gwen::Margin::left)
         .property("right",  &Gwen::Margin::right)
         ;
 
-    camp::Class::declare<Gwen::Point>()
+    ponder::Class::declare<Gwen::Point>()
         .property("x",  &Gwen::Point::x)
         .property("y",  &Gwen::Point::y)
         ;
     
-    camp::Enum::declare<Docking::Area>()
+    ponder::Enum::declare<Docking::Area>()
         .value("none",   Gwen::Docking::None)
         .value("fill",   Gwen::Docking::Fill)
         .value("left",   Gwen::Docking::Left)
@@ -37,7 +37,7 @@ void InitializeControls()
         .value("bottom", Gwen::Docking::Bottom)
         ;
 
-    camp::Class::declare<Controls::Base>()
+    ponder::Class::declare<Controls::Base>()
         .function("typename",   &Controls::Base::GetTypeName)
         .property("name",       &Controls::Base::GetName, &Controls::Base::SetName)
         .property("pos",        &Controls::Base::GetPos,
@@ -48,77 +48,77 @@ void InitializeControls()
         .property("dock",       &Controls::Base::GetDock, &Controls::Base::Dock)
         ;
 
-    camp::Class::declare<Controls::Label>()
+    ponder::Class::declare<Controls::Label>()
         .base<Controls::Base>()
         .property("text", &Controls::Label::GetText,
                           [] (Controls::Label& c, const Gwen::String& s) { c.SetText(s); })
         .property("textColor",  &Controls::Label::GetTextColor, &Controls::Label::SetTextColor)
         ;
 
-    camp::Class::declare<Controls::Button>()
+    ponder::Class::declare<Controls::Button>()
         .base<Controls::Button::ParentClass>()
         .property("depressed",  &Controls::Button::IsDepressed, &Controls::Button::SetDepressed)
         .property("isToggle",   &Controls::Button::IsToggle, &Controls::Button::SetIsToggle)
         .property("toggled",    &Controls::Button::GetToggleState, &Controls::Button::SetToggleState)
         ;
 
-    camp::Class::declare<Controls::LabelClickable>()
+    ponder::Class::declare<Controls::LabelClickable>()
         .base<Controls::LabelClickable::ParentClass>()
         ;
 
-    camp::Class::declare<Controls::TextBox>()
+    ponder::Class::declare<Controls::TextBox>()
         .base<Controls::TextBox::ParentClass>()
         ;
 
-    camp::Class::declare<Controls::TextBoxMultiline>()
+    ponder::Class::declare<Controls::TextBoxMultiline>()
         .base<Controls::TextBoxMultiline::ParentClass>()
         ;
 
-    camp::Class::declare<Controls::CheckBox>()
+    ponder::Class::declare<Controls::CheckBox>()
         .base<Controls::CheckBox::ParentClass>()
         ;
 
-    camp::Class::declare<Controls::CheckBoxWithLabel>()
+    ponder::Class::declare<Controls::CheckBoxWithLabel>()
         .base<Controls::CheckBoxWithLabel::ParentClass>()
         .property("label", &Controls::CheckBoxWithLabel::Label)
         ;
 
-    camp::Class::declare<Controls::ScrollControl>()
+    ponder::Class::declare<Controls::ScrollControl>()
         .base<Controls::ScrollControl::ParentClass>()
         .property("canHorizScroll", &Controls::ScrollControl::CanScrollH)
         .property("canVertScroll", &Controls::ScrollControl::CanScrollV)
         .function("setScroll", &Controls::ScrollControl::SetScroll)
         ;
 
-    camp::Class::declare<Controls::Menu>()
+    ponder::Class::declare<Controls::Menu>()
         .base<Controls::Menu::ParentClass>()
         .function("addItem", &Controls::Menu::AddItem)
         .function("addDivider", &Controls::Menu::AddDivider)
         ;
 
-    camp::Class::declare<Controls::MenuStrip>()
+    ponder::Class::declare<Controls::MenuStrip>()
         .base<Controls::MenuStrip::ParentClass>()
         ;
 
-    camp::Class::declare<Controls::ListBox>()
+    ponder::Class::declare<Controls::ListBox>()
         .base<Controls::ListBox::ParentClass>()
         ;
 
-    camp::Class::declare<Controls::ImagePanel>()
+    ponder::Class::declare<Controls::ImagePanel>()
         .base<Controls::ImagePanel::ParentClass>()
         ;
 
-    camp::Class::declare<Controls::Rectangle>()
+    ponder::Class::declare<Controls::Rectangle>()
         .base<Controls::Rectangle::ParentClass>()
         .property("backColor", &Controls::Rectangle::GetColor, &Controls::Rectangle::SetColor)
         ;
 
-    camp::Class::declare<Controls::ProgressBar>()
+    ponder::Class::declare<Controls::ProgressBar>()
         .base<Controls::Rectangle::ParentClass>()
         .property("cycleSpeed", &Controls::ProgressBar::GetCycleSpeed, &Controls::ProgressBar::SetCycleSpeed)
         ;
 
-    camp::Class::declare<Controls::ComboBox>()
+    ponder::Class::declare<Controls::ComboBox>()
         .base<Controls::ComboBox::ParentClass>()
         ;
 

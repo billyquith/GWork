@@ -2,13 +2,13 @@
 #include <GwenUtil/ControlFactory.h>
 #include <Gwen/Controls.h>
 
-namespace Gwen
-{
-    namespace ControlFactory
-    {
-        namespace Properties
-        {
-            
+//namespace Gwen
+//{
+//    namespace ControlFactory
+//    {
+//        namespace Properties
+//        {
+//            
 //            class ControlName : public Gwen::ControlFactory::Property
 //            {
 //                GWEN_CONTROL_FACTORY_PROPERTY(ControlName, "The control's name");
@@ -284,4 +284,4 @@ namespace Gwen
 //        GWEN_CONTROL_FACTORY(Base_Factory);
 //
 //    }
-}
+//}

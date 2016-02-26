@@ -35,7 +35,7 @@ namespace Gwen
 
             GWEN_CONTROL_FACTORY_FOR(FilePicker, Base)
             {
-//                camp::Class::declare<Controls::FilePicker>()
+//                ponder::Class::declare<Controls::FilePicker>()
 //                    .base<Controls::Base>()
 //                    ;
 
