@@ -8,7 +8,8 @@ project(gwork)
 # configure cmake
 set(CMAKE_FIND_FRAMEWORK LAST)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/")
-
+set_property(GLOBAL PROPERTY USE_FOLDERS ON)
+             
 # output directory
 set(CMAKE_BINARY_DIR "${CMAKE_HOME_DIRECTORY}/build")
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin) # exe
