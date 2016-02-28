@@ -1,3 +1,9 @@
+/*
+ *  Gwork
+ *  Copyright (c) 2012 Facepunch Studios
+ *  Copyright (c) 2013-2016 Billy Quith
+ *  See license in Gwork.h
+ */
 
 #include "Gwork/Gwork.h"
 #include "Gwork/BaseRender.h"

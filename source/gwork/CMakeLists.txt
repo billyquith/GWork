@@ -1,6 +1,7 @@
 # Gwork library
 
 include_directories(
+    ${CMAKE_SOURCE_DIR}/source/platform/include
     ${CMAKE_SOURCE_DIR}/source/gwork/include
     ${RENDERER_INC}
 )
@@ -20,7 +21,6 @@ set(GWK_HEADERS
     include/Gwork/Hook.h
     include/Gwork/InputHandler.h
     include/Gwork/Macros.h
-    include/Gwork/Platform.h
     include/Gwork/Skin.h
     include/Gwork/Structures.h
     include/Gwork/Texture.h
