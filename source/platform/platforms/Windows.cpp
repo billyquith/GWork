@@ -15,10 +15,10 @@
 #endif
 #endif
 
-#include "Gwork/Macros.h"
-#include "Gwork/Utility.h"
-#include "Gwork/Platform.h"
-#include "Gwork/Input/Windows.h"
+#include <Gwork/Macros.h>
+#include <Gwork/Utility.h>
+#include <Gwork/Platform.h>
+#include <Gwork/Input/Windows.h>
 
 #include <windows.h>
 #include <ShlObj.h>
