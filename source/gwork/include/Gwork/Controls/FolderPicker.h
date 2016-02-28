@@ -51,9 +51,11 @@ namespace Gwk
 
             void OnBrowse()
             {
-                Gwk::Dialogs::FolderOpen(true, "Name",
-                                          GetFolder(), this,
-                                          &FolderPicker::SetFolderCallback);
+                String folder;
+                if (Dialogs::FolderOpen(true, "Name", GetFolder(), folder))
+                {
+                    SetFolder(folder);
+                }
             }
 
             virtual String GetValue() override
@@ -70,15 +72,9 @@ namespace Gwk
 
         private:
 
-            void SetFolderCallback(Gwk::Event::Info info)
-            {
-                SetFolder(info.String);
-            }
-
             Controls::TextBox*  m_TextBox;
             Controls::Button*   m_Button;
-            Gwk::String m_BrowseName;
-
+            Gwk::String         m_BrowseName;
         };
 
 

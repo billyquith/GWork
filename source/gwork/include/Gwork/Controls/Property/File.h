@@ -41,19 +41,16 @@ namespace Gwk
 
                 void OnButtonPress(Controls::Base* control)
                 {
-                    Gwk::Dialogs::FileOpen(true, m_strDialogName,
-                                            m_TextBox->GetText(), m_strFileExtension, this,
-                                            &Folder::EventFilePicked);
-                }
-
-                void EventFilePicked(const Gwk::String& string)
-                {
-                    m_TextBox->SetText(string);
+                    String fileChosen;
+                    if (Dialogs::FileOpen(true, m_strDialogName,
+                                          m_TextBox->GetText(), m_strFileExtension, fileChosen))
+                    {
+                        m_TextBox->SetText(fileChosen);
+                    }
                 }
 
                 String m_strDialogName;
                 String m_strFileExtension;
-
             };
 
 

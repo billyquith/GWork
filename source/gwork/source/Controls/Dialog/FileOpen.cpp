@@ -9,17 +9,18 @@
 #include "Gwork/Platform.h"
 #include "Gwork/Controls/Dialogs/FileOpen.h"
 
-using namespace Gwk;
-using namespace Gwk::Dialogs;
 
-void Gwk::Dialogs::FileOpenEx(bool bUseSystem, const String& Name, const String& StartPath,
-                               const String& Extension, Gwk::Event::Handler* pHandler,
-                               Gwk::Event::Handler::FunctionWithInformation fnCallback)
+bool Gwk::Dialogs::FileOpen(bool bUseSystem, const String& Name, const String& StartPath,
+                            const String& Extension, String& fileOpenOut)
 {
-    if (bUseSystem && Gwk::Platform::FileOpen(Name, StartPath, Extension, pHandler, fnCallback))
-        return;
+    String fileOpened;
+    
+    if (bUseSystem)
+    {
+        return Gwk::Platform::FileOpen(Name, StartPath, Extension, fileOpened);
+    }
 
-    //
     // TODO: SHOW Gwork FILE SELECTION DIALOG
-    //
+    
+    return false;
 }

@@ -13,8 +13,7 @@
 #ifndef GWK_STRUCTURES_H
 #define GWK_STRUCTURES_H
 
-#include "Gwork/Exports.h"
-#include <string>
+#include "Gwork/Platform.h"
 
 namespace Gwk
 {
@@ -39,13 +38,6 @@ namespace Gwk
 
         static const unsigned char Count    = 10;
     }
-
-    //
-    // All strings are UTF-8 for Unicode. This is backwards compatible with ASCII.
-    // See: http://www.utf8everywhere.org
-    //
-    typedef std::string     String;
-    typedef char            UnicodeChar;
     
     struct GWK_EXPORT Margin
     {

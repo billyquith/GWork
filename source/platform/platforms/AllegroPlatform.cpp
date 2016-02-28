@@ -64,15 +64,17 @@ float Gwk::Platform::GetTimeInSeconds()
     return al_get_time();
 }
 
-bool Gwk::Platform::FileOpen(const String& Name, const String& StartPath,
-                              const String& Extension, Gwk::Event::Handler* pHandler,
-                              Event::Handler::FunctionWithInformation fnCallback)
+bool Gwk::Platform::FileOpen(const String& Name,
+                             const String& StartPath,
+                             const String& Extension,
+                             String& filePathOut)
 {
-    ALLEGRO_FILECHOOSER* chooser = al_create_native_file_dialog(StartPath.c_str(),
-                                                                Name.c_str(),
-                                                                "*.*",  //
-                                                                        // Extension.c_str(),
-                                                                ALLEGRO_FILECHOOSER_FILE_MUST_EXIST);
+    ALLEGRO_FILECHOOSER* chooser =
+        al_create_native_file_dialog(StartPath.c_str(),
+                                     Name.c_str(),
+                                     "*.*",  //
+                                     // Extension.c_str(),
+                                     ALLEGRO_FILECHOOSER_FILE_MUST_EXIST);
 
     if (al_show_native_file_dialog(g_display, chooser))
     {
@@ -93,9 +95,9 @@ bool Gwk::Platform::FileOpen(const String& Name, const String& StartPath,
     return true;
 }
 
-bool Gwk::Platform::FileSave(const String& Name, const String& StartPath,
-                              const String& Extension, Gwk::Event::Handler* pHandler,
-                              Gwk::Event::Handler::FunctionWithInformation fnCallback)
+bool Gwk::Platform::FileSave(const String& Name,
+                             const String& StartPath,
+                             String& filePathOut);
 {
     ALLEGRO_FILECHOOSER* chooser = al_create_native_file_dialog(StartPath.c_str(),
                                                                 Name.c_str(),
@@ -109,11 +111,7 @@ bool Gwk::Platform::FileSave(const String& Name, const String& StartPath,
         {
             if (pHandler && fnCallback)
             {
-                Gwk::Event::Information info;
-                info.Control        = NULL;
-                info.ControlCaller  = NULL;
-                info.String         = al_get_native_file_dialog_path(chooser, 0);
-                (pHandler->*fnCallback)(info);
+                filePathOut = al_get_native_file_dialog_path(chooser, 0);
             }
         }
     }
@@ -122,9 +120,9 @@ bool Gwk::Platform::FileSave(const String& Name, const String& StartPath,
     return true;
 }
 
-bool Gwk::Platform::FolderOpen(const String& Name, const String& StartPath,
-                                Gwk::Event::Handler* pHandler,
-                                Event::Handler::FunctionWithInformation fnCallback)
+bool Gwk::Platform::FolderOpen(const String& Name,
+                               const String& StartPath,
+                               String& filePathOut);                               
 {
     ALLEGRO_FILECHOOSER* chooser = al_create_native_file_dialog(StartPath.c_str(),
                                                                 Name.c_str(),
@@ -138,11 +136,7 @@ bool Gwk::Platform::FolderOpen(const String& Name, const String& StartPath,
         {
             if (pHandler && fnCallback)
             {
-                Gwk::Event::Information info;
-                info.Control        = NULL;
-                info.ControlCaller  = NULL;
-                info.String         = al_get_native_file_dialog_path(chooser, 0);
-                (pHandler->*fnCallback)(info);
+                filePathOut = al_get_native_file_dialog_path(chooser, 0);
             }
         }
     }
@@ -220,7 +214,7 @@ void Gwk::Platform::DestroyPlatformWindow(void* pPtr)
     g_event_queue = NULL;
 }
 
-void Gwk::Platform::MessagePump(void* pWindow, Gwk::Controls::Canvas* ptarget)
+bool Gwk::Platform::MessagePump(void* pWindow)
 {
     static bool firstCall = true;
 
@@ -231,11 +225,12 @@ void Gwk::Platform::MessagePump(void* pWindow, Gwk::Controls::Canvas* ptarget)
     }
 
     ALLEGRO_EVENT ev;
-
     while (al_get_next_event(g_event_queue, &ev))
     {
         g_GworkInput.ProcessMessage(ev);
     }
+    
+    return false;
 }
 
 void Gwk::Platform::SetBoundsPlatformWindow(void* pPtr, int x, int y, int w, int h)

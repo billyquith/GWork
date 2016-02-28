@@ -42,8 +42,7 @@ float Gwk::Platform::GetTimeInSeconds()
 }
 
 bool Gwk::Platform::FileOpen(const String& Name, const String& StartPath, const String& Extension,
-                              Gwk::Event::Handler* pHandler,
-                              Event::Handler::FunctionWithInformation fnCallback)
+                             String& filePathOut)
 {
     // No platform independent way to do this.
     // Ideally you would open a system dialog here
@@ -51,23 +50,22 @@ bool Gwk::Platform::FileOpen(const String& Name, const String& StartPath, const 
 }
 
 bool Gwk::Platform::FileSave(const String& Name, const String& StartPath, const String& Extension,
-                              Gwk::Event::Handler* pHandler,
-                              Gwk::Event::Handler::FunctionWithInformation fnCallback)
+                             String& filePathOut)
 {
     // No platform independent way to do this.
     // Ideally you would open a system dialog here
     return false;
 }
 
-bool Gwk::Platform::FolderOpen(const String& Name, const String& StartPath,
-                                Gwk::Event::Handler* pHandler,
-                                Event::Handler::FunctionWithInformation fnCallback)
+bool Gwk::Platform::FolderOpen(const String& Name, const String& StartPath, String& filePathOut)
 {
+    // No platform independent way to do this.
+    // Ideally you would open a system dialog here
     return false;
 }
 
 void* Gwk::Platform::CreatePlatformWindow(int x, int y, int w, int h,
-                                           const Gwk::String& strWindowTitle)
+                                          const Gwk::String& strWindowTitle)
 {
     return NULL;
 }
@@ -76,8 +74,9 @@ void Gwk::Platform::DestroyPlatformWindow(void* pPtr)
 {
 }
 
-void Gwk::Platform::MessagePump(void* pWindow, Gwk::Controls::Canvas* ptarget)
+bool Gwk::Platform::MessagePump(void* pWindow)
 {
+    return false;
 }
 
 void Gwk::Platform::SetBoundsPlatformWindow(void* pPtr, int x, int y, int w, int h)
