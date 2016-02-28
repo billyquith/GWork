@@ -9,17 +9,16 @@
 #include "Gwork/Platform.h"
 #include "Gwork/Controls/Dialogs/FileSave.h"
 
-using namespace Gwk;
-using namespace Gwk::Dialogs;
 
-void Gwk::Dialogs::FileSaveEx(bool bUseSystem, const String& Name, const String& StartPath,
-                               const String& Extension, Gwk::Event::Handler* pHandler,
-                               Gwk::Event::Handler::FunctionWithInformation fnCallback)
+bool Gwk::Dialogs::FileSave(bool bUseSystem, const String& Name, const String& StartPath,
+                            const String& Extension, String& fileOpenOut)
 {
-    if (bUseSystem && Gwk::Platform::FileSave(Name, StartPath, Extension, pHandler, fnCallback))
-        return;
-
-    //
+    if (bUseSystem)
+    {
+        return Gwk::Platform::FileSave(Name, StartPath, Extension, fileOpenOut);
+    }
+    
     // TODO: SHOW Gwork FILE SELECTION DIALOG
-    //
+    
+    return false;
 }

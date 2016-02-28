@@ -15,36 +15,23 @@ namespace Gwk
 {
     namespace Dialogs
     {
-        //
-        // The REAL function.
-        //
-        void GWK_EXPORT FileOpenEx(bool bUseSystem, const String& Name, const String& StartPath,
-                                    const String& Extension, Gwk::Event::Handler* pHandler = NULL,
-                                    Gwk::Event::Handler::FunctionWithInformation fnCallback =
-                                        NULL);
-
         //! Create a file open dialog box.
         //! @param bUseSystem : If true dialog may use the system's modal dialog - which
         //!                     will steal focus and pause the rest of Gwork until it's continued.
         //!
         //! Usage:
         //! ~~~~
-        //!     Gwk::Dialogs::FileOpen( true, "Open Map", "C:/my/folder/", "My Map Format|*.bmf",
-        //!                              this, &MyClass::OpenFilename );
+        //!     String fileOpenOut;
+        //!     if (Gwk::Dialogs::FileOpen( true, "Open Map", "C:/my/folder/", "My Map Format|*.bmf",
+        //!                                 fileOpenOut ))
+        //!     // .. do something with fileOpenOut ..
         //! ~~~~
         //!
         //! @note Templated function simply to avoid having to manually cast the
         //!       callback function.
         //!
-        template <typename A>
-        void FileOpen(bool bUseSystem, const String& Name, const String& StartPath,
-                      const String& Extension,
-                      Gwk::Event::Handler* pHandler = NULL, A fnCallback = NULL)
-        {
-            FileOpenEx(bUseSystem, Name, StartPath, Extension, pHandler,
-                       static_cast<Gwk::Event::Handler::FunctionWithInformation>(fnCallback));
-        }
-
+        bool FileOpen(bool bUseSystem, const String& Name, const String& StartPath,
+                      const String& Extension, String& fileOpenOut);
     }
 }
 

@@ -120,7 +120,10 @@ void WindowCanvas::Layout(Skin::Base* skin)
 
 void WindowCanvas::DoThink()
 {
-    Platform::MessagePump(m_pOSWindow, this);
+    if (Platform::MessagePump(m_pOSWindow))
+    {
+        Redraw();
+    }
     ParentClass::DoThink();
     RenderCanvas();
 }

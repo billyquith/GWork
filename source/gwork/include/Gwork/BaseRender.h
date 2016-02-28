@@ -12,7 +12,7 @@
 #include "Gwork/Structures.h"
 
 namespace Gwk
-{
+{    
     struct Font;
     struct Texture;
     class WindowProvider;
@@ -57,9 +57,9 @@ namespace Gwk
             virtual void Begin()        {}
             virtual void End()          {}
 
-            virtual void SetDrawColor(Color color)          {}
+            virtual void SetDrawColor(Color color) {}
 
-            virtual void DrawFilledRect(Gwk::Rect rect)    {}
+            virtual void DrawFilledRect(Gwk::Rect rect) {}
 
             virtual void StartClip()    {}
             virtual void EndClip()      {}
@@ -69,15 +69,14 @@ namespace Gwk
 
             virtual void DrawTexturedRect(Gwk::Texture* pTexture, Gwk::Rect pTargetRect,
                                           float u1 = 0.0f, float v1 = 0.0f,
-                                          float u2 = 1.0f, float v2 = 1.0f)
-            {}
+                                          float u2 = 1.0f, float v2 = 1.0f) {}
 
             virtual void DrawMissingImage(Gwk::Rect pTargetRect);
 
             virtual Gwk::Color PixelColour(Gwk::Texture* pTexture,
-                                            unsigned int x, unsigned int y,
-                                            const Gwk::Color& col_default =
-                                                                    Gwk::Color(255,255,255,255))
+                                           unsigned int x, unsigned int y,
+                                           const Gwk::Color& col_default =
+                                                                Gwk::Color(255,255,255,255))
             {
                 return col_default;
             }
@@ -95,7 +94,7 @@ namespace Gwk
                                     const Gwk::String& text);
             
             virtual Gwk::Point MeasureText(Gwk::Font* pFont,
-                                            const Gwk::String& text);
+                                           const Gwk::String& text);
 
             /// \sect{Render Specialisation}
             ///     No need to implement these functions in your derived class, but
@@ -106,8 +105,6 @@ namespace Gwk
             virtual void    DrawPixel(int x, int y);
             virtual void    DrawShavedCornerRect(Gwk::Rect rect, bool bSlight = false);
             /// \}
-
-        public:
 
             /// \sect{Translate}
             ///     Translate a panel's local drawing coordinate
@@ -136,33 +133,17 @@ namespace Gwk
                 return m_RenderOffset;
             }
 
-        private:
-
-            Gwk::Point m_RenderOffset;
-
-        public:
-
             void              SetClipRegion(Gwk::Rect rect);
             void              AddClipRegion(Gwk::Rect rect);
             bool              ClipRegionVisible();
             const Gwk::Rect& ClipRegion() const;
 
-        private:
-
-            Gwk::Rect m_rectClipRegion;
-            ICacheToTexture* m_RTT;
-
-        public:
-
             void SetScale(float fScale)     { m_fScale = fScale; }
             float Scale() const             { return m_fScale; }
-
-        public:
 
             //
             // Self Initialization, shutdown
             //
-
             virtual bool InitializeContext(Gwk::WindowProvider* pWindow)
             {
                 return false;
@@ -195,9 +176,15 @@ namespace Gwk
             
         protected:
             
-            float m_fScale;            
+            float m_fScale;
+            
+        private:
+            
+            Gwk::Point m_RenderOffset;
+            
+            Gwk::Rect m_rectClipRegion;
+            ICacheToTexture* m_RTT;            
         };
-
 
     }
 }

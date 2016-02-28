@@ -9,26 +9,8 @@
 #ifndef GWK_PLATFORM_H
 #define GWK_PLATFORM_H
 
-#include "Gwork/Structures.h"
-#include "Gwork/Events.h"
-
-// Decide which platform to use.
-//
-// Note that cross-platform APIs, like Allegro and SDL, are also supported. We don't want to
-// include their paths etc in the Gwork library, which should be library agnostic. We have a
-// define, GWK_NOT_NATIVE_PLATFORM, which if defined means that we expect to link to these
-// functions outside of the Gwork lib. Some basic implementations of platform functions are
-// provided to fall back on should this not be defined.
-//
-//  - This platform bit is a bit inconsistent. The rest of Gwork is abstracted through
-//    the Renderers, as Gwork is supposed to be embedded. Creating platform windows should probably
-//    be done elsewhere. --BQ
-//
-
-// Hardcode for now.
-//#ifdef __APPLE__
-//#   define GWK_NOT_NATIVE_PLATFORM     // We don't have native support for this.
-//#endif
+#include "Gwork/Exports.h"
+#include <string>
 
 #if defined(GWK_NOT_NATIVE_PLATFORM)
 #   define GWK_PLATFORM_EXTERNAL       // Platform implemented outside Gwork.
@@ -41,6 +23,15 @@
 
 namespace Gwk
 {
+    struct Point;
+    
+    //
+    // All strings are UTF-8 for Unicode. This is backwards compatible with ASCII.
+    // See: http://www.utf8everywhere.org
+    //
+    typedef std::string     String;
+    typedef char            UnicodeChar;
+
     namespace Platform
     {
         //! Go to sleep for a time. Stops CPU hogging.
@@ -62,17 +53,15 @@ namespace Gwk
         //! Set platform clipboard from a string.
         GWK_EXPORT bool   SetClipboardText(const String& str);
 
-        // System Dialogs ( Can return false if unhandled )
+        //
+        // System Dialogs (Can return false if unhandled)
         //
         GWK_EXPORT bool FileOpen(const String& Name, const String& StartPath,
-                                  const String& Extension, Gwk::Event::Handler* pHandler,
-                                  Event::Handler::FunctionWithInformation fnCallback);
+                                 const String& Extension, String& filePathOut);
         GWK_EXPORT bool FileSave(const String& Name, const String& StartPath,
-                                  const String& Extension, Gwk::Event::Handler* pHandler,
-                                  Event::Handler::FunctionWithInformation fnCallback);
+                                 const String& Extension, String& filePathOut);
         GWK_EXPORT bool FolderOpen(const String& Name, const String& StartPath,
-                                    Gwk::Event::Handler* pHandler,
-                                    Event::Handler::FunctionWithInformation fnCallback);
+                                   String& filePathOut);
 
         //
         // Window Creation
@@ -81,7 +70,8 @@ namespace Gwk
                                                const Gwk::String& strWindowTitle);
         GWK_EXPORT void DestroyPlatformWindow(void* pPtr);
         GWK_EXPORT void SetBoundsPlatformWindow(void* pPtr, int x, int y, int w, int h);
-        GWK_EXPORT void MessagePump(void* pWindow, Gwk::Controls::Canvas* ptarget);
+        // Returns true for redraw.
+        GWK_EXPORT bool MessagePump(void* pWindow);
         GWK_EXPORT bool HasFocusPlatformWindow(void* pPtr);
         GWK_EXPORT void SetWindowMaximized(void* pPtr, bool bMaximized, Gwk::Point& pNewPos,
                                             Gwk::Point& pNewSize);

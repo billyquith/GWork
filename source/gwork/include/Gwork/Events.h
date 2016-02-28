@@ -35,8 +35,7 @@ namespace Gwk
         {
             Packet(Gwk::Controls::Base* pControl = NULL)
                 :   Control(pControl)
-            {
-            }
+            {}
 
             Gwk::Controls::Base   *Control;
             Gwk::String String;
@@ -181,8 +180,7 @@ namespace Gwk
                     ,   fnFunctionInfo(NULL)
                     ,   fnFunctionBlank(NULL)
                     ,   pObject(NULL)
-                {
-                }
+                {}
 
                 Handler::Function fnFunction;
                 Handler::FunctionWithInformation fnFunctionInfo;

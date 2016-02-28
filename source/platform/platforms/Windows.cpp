@@ -112,7 +112,7 @@ bool Gwk::Platform::SetClipboardText(const Gwk::String& str)
     return true;
 }
 
-double GetPerformanceFrequency()
+static double GetPerformanceFrequency()
 {
     static double Frequency = 0.0f;
 
@@ -144,8 +144,7 @@ float Gwk::Platform::GetTimeInSeconds()
 }
 
 bool Gwk::Platform::FileOpen(const String& Name, const String& StartPath, const String& Extension,
-                              Gwk::Event::Handler* pHandler,
-                              Event::Handler::FunctionWithInformation fnCallback)
+                             String& filePathOut)
 {
     char Filestring[FILESTRING_SIZE];
     String returnstring;
@@ -186,11 +185,7 @@ bool Gwk::Platform::FileOpen(const String& Name, const String& StartPath, const 
     {
         if (pHandler && fnCallback)
         {
-            Gwk::Event::Information info;
-            info.Control        = NULL;
-            info.ControlCaller  = NULL;
-            info.String         = opf.lpstrFile;
-            (pHandler->*fnCallback)(info);
+            filePathOut = opf.lpstrFile;
         }
     }
 
@@ -198,8 +193,7 @@ bool Gwk::Platform::FileOpen(const String& Name, const String& StartPath, const 
 }
 
 bool Gwk::Platform::FolderOpen(const String& Name, const String& StartPath,
-                                Gwk::Event::Handler* pHandler,
-                                Event::Handler::FunctionWithInformation fnCallback)
+                               String& filePathOut)
 {
     IFileDialog* pfd = NULL;
     bool bSuccess = false;
@@ -233,16 +227,9 @@ bool Gwk::Platform::FolderOpen(const String& Name, const String& StartPath,
             if (psi->GetDisplayName(SIGDN_DESKTOPABSOLUTEPARSING, &strOut) != S_OK)
                 return bSuccess;
 
-            //
-            // Gwork callback - call it.
-            //
             if (pHandler && fnCallback)
             {
-                Gwk::Event::Information info;
-                info.Control        = NULL;
-                info.ControlCaller  = NULL;
-                info.String         = Utility::Narrow(strOut);
-                (pHandler->*fnCallback)(info);
+                filePathOut = Utility::Narrow(strOut); // set result
             }
 
             CoTaskMemFree(strOut);
@@ -256,8 +243,7 @@ bool Gwk::Platform::FolderOpen(const String& Name, const String& StartPath,
 }
 
 bool Gwk::Platform::FileSave(const String& Name, const String& StartPath, const String& Extension,
-                              Gwk::Event::Handler* pHandler,
-                              Gwk::Event::Handler::FunctionWithInformation fnCallback)
+                             String& filePathOut);
 {
     char Filestring[FILESTRING_SIZE];
     String returnstring;
@@ -298,11 +284,7 @@ bool Gwk::Platform::FileSave(const String& Name, const String& StartPath, const 
     {
         if (pHandler && fnCallback)
         {
-            Gwk::Event::Information info;
-            info.Control        = NULL;
-            info.ControlCaller  = NULL;
-            info.String         = opf.lpstrFile;
-            (pHandler->*fnCallback)(info);
+            filePathOut = opf.lpstrFile;
         }
     }
 
@@ -341,7 +323,7 @@ void Gwk::Platform::DestroyPlatformWindow(void* pPtr)
     CoUninitialize();
 }
 
-void Gwk::Platform::MessagePump(void* pWindow, Gwk::Controls::Canvas* ptarget)
+bool Gwk::Platform::MessagePump(void* pWindow)
 {
     GworkInput.Initialize(ptarget);
     MSG msg;
@@ -363,12 +345,14 @@ void Gwk::Platform::MessagePump(void* pWindow, Gwk::Controls::Canvas* ptarget)
     {
         static HWND g_LastFocus = NULL;
 
-        if (GetActiveWindow()  != g_LastFocus)
+        if (GetActiveWindow() != g_LastFocus)
         {
             g_LastFocus = GetActiveWindow();
-            ptarget->Redraw();
+            return true;
         }
     }
+    
+    return false;
 }
 
 void Gwk::Platform::SetBoundsPlatformWindow(void* pPtr, int x, int y, int w, int h)

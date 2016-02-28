@@ -15,7 +15,6 @@ set(GWK_HEADERS
     include/Gwork/Controls.h
     include/Gwork/DragAndDrop.h
     include/Gwork/Events.h
-    include/Gwork/Exports.h
     include/Gwork/Font.h
     include/Gwork/Gwork.h
     include/Gwork/Hook.h

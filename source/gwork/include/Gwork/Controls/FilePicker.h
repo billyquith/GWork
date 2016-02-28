@@ -60,8 +60,11 @@ namespace Gwk
 
             void OnBrowse()
             {
-                Gwk::Dialogs::FileOpen(true, "Name", "Start Path", m_FileType, this,
-                                        &FilePicker::SetFileNameEvent);
+                String fileChosen;
+                if (Dialogs::FileOpen(true, "Name", "Start Path", m_FileType, fileChosen))
+                {
+                    SetFileName(fileChosen);
+                }
             }
 
             virtual String GetValue() override
@@ -78,16 +81,10 @@ namespace Gwk
 
         private:
 
-            void SetFileNameEvent(Event::Info info)
-            {
-                SetFileName(info.String);
-            }
-
             Controls::TextBox*  m_TextBox;
             Controls::Button*   m_Button;
 
             String m_FileType;
-
         };
 
 
