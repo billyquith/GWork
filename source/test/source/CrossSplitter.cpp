@@ -5,10 +5,10 @@
  *  See license in Gwork.h
  */
 
-#include "Gwork/Test/Test.h"
-#include "Gwork/Controls/CrossSplitter.h"
-#include "Gwork/Controls/StatusBar.h"
-#include "Gwork/Controls/Button.h"
+#include <Gwork/Test/Test.h>
+#include <Gwork/Controls/CrossSplitter.h>
+#include <Gwork/Controls/StatusBar.h>
+#include <Gwork/Controls/Button.h>
 
 using namespace Gwk;
 

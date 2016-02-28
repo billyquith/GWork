@@ -9,12 +9,12 @@
 #ifndef GWK_CONTROLS_PROPERTYTREE_H
 #define GWK_CONTROLS_PROPERTYTREE_H
 
-#include "Gwork/Controls/Base.h"
-#include "Gwork/Controls/Label.h"
-#include "Gwork/Gwork.h"
-#include "Gwork/Skin.h"
-#include "Gwork/Controls/TreeControl.h"
-#include "Gwork/Controls/Properties.h"
+#include <Gwork/Controls/Base.h>
+#include <Gwork/Controls/Label.h>
+#include <Gwork/Gwork.h>
+#include <Gwork/Skin.h>
+#include <Gwork/Controls/TreeControl.h>
+#include <Gwork/Controls/Properties.h>
 
 
 namespace Gwk

@@ -6,12 +6,12 @@
  */
 
 
-#include "Gwork/Controls/HSVColorPicker.h"
-#include "Gwork/Controls/ColorControls.h"
-#include "Gwork/Controls/ColorPicker.h"
-#include "Gwork/Controls/TextBox.h"
-#include "Gwork/Controls/Label.h"
-#include "Gwork/Utility.h"
+#include <Gwork/Controls/HSVColorPicker.h>
+#include <Gwork/Controls/ColorControls.h>
+#include <Gwork/Controls/ColorPicker.h>
+#include <Gwork/Controls/TextBox.h>
+#include <Gwork/Controls/Label.h>
+#include <Gwork/Utility.h>
 
 using namespace Gwk;
 using namespace Gwk::Controls;

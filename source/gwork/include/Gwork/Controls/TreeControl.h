@@ -9,8 +9,8 @@
 #ifndef GWK_CONTROLS_TREECONTROL_H
 #define GWK_CONTROLS_TREECONTROL_H
 
-#include "Gwork/Controls/Base.h"
-#include "Gwork/Controls/TreeNode.h"
+#include <Gwork/Controls/Base.h>
+#include <Gwork/Controls/TreeNode.h>
 
 namespace Gwk
 {

@@ -9,11 +9,11 @@
 #ifndef GWK_SKINS_TEXTUREDBASE_H
 #define GWK_SKINS_TEXTUREDBASE_H
 
-#include "Gwork/Skin.h"
-#include "Gwork/Gwork.h"
-#include "Gwork/Controls/Base.h"
-#include "Gwork/Texture.h"
-#include "Gwork/Skins/Texturing.h"
+#include <Gwork/Skin.h>
+#include <Gwork/Gwork.h>
+#include <Gwork/Controls/Base.h>
+#include <Gwork/Texture.h>
+#include <Gwork/Skins/Texturing.h>
 
 namespace Gwk
 {

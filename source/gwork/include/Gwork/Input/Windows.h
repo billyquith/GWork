@@ -7,9 +7,9 @@
 #ifndef GWK_INPUT_WINDOWS_H
 #define GWK_INPUT_WINDOWS_H
 
-#include "Gwork/InputHandler.h"
-#include "Gwork/Gwork.h"
-#include "Gwork/Controls/Canvas.h"
+#include <Gwork/InputHandler.h>
+#include <Gwork/Gwork.h>
+#include <Gwork/Controls/Canvas.h>
 
 #include <windows.h>
 

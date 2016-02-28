@@ -6,19 +6,19 @@
  */
 
 
-#include "Gwork/Controls/Base.h"
-#include "Gwork/Controls/Label.h"
-#include "Gwork/Gwork.h"
-#include "Gwork/BaseRender.h"
-#include "Gwork/Skin.h"
-#include "Gwork/Platform.h"
-#include "Gwork/DragAndDrop.h"
-#include "Gwork/ToolTip.h"
-#include "Gwork/Utility.h"
+#include <Gwork/Controls/Base.h>
+#include <Gwork/Controls/Label.h>
+#include <Gwork/Gwork.h>
+#include <Gwork/BaseRender.h>
+#include <Gwork/Skin.h>
+#include <Gwork/Platform.h>
+#include <Gwork/DragAndDrop.h>
+#include <Gwork/ToolTip.h>
+#include <Gwork/Utility.h>
 #include <list>
 
 #ifndef GWK_NO_ANIMATION
-#include "Gwork/Anim.h"
+#include <Gwork/Anim.h>
 #endif
 
 

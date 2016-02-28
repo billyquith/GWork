@@ -9,7 +9,7 @@
 #ifndef GWK_CONTROLS_SPLITTERS_H
 #define GWK_CONTROLS_SPLITTERS_H
 
-#include "Gwork/Controls/Base.h"
+#include <Gwork/Controls/Base.h>
 
 namespace Gwk
 {

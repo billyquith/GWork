@@ -9,7 +9,7 @@
 #ifndef GWK_PLATFORM_H
 #define GWK_PLATFORM_H
 
-#include "Gwork/Exports.h"
+#include <Gwork/Exports.h>
 #include <string>
 
 #if defined(GWK_NOT_NATIVE_PLATFORM)

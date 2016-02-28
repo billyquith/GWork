@@ -9,9 +9,9 @@
 #ifndef GWK_INPUT_ALLEGRO_H
 #define GWK_INPUT_ALLEGRO_H
 
-#include "Gwork/InputHandler.h"
-#include "Gwork/Gwork.h"
-#include "Gwork/Controls/Canvas.h"
+#include <Gwork/InputHandler.h>
+#include <Gwork/Gwork.h>
+#include <Gwork/Controls/Canvas.h>
 
 #include <allegro5/allegro.h>
 

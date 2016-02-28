@@ -6,4 +6,4 @@
  */
 
 
-#include "Gwork/Controls/ImagePanel.h"
+#include <Gwork/Controls/ImagePanel.h>

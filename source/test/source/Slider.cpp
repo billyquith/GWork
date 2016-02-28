@@ -5,10 +5,10 @@
  *  See license in Gwork.h
  */
 
-#include "Gwork/Test/Test.h"
-#include "Gwork/Controls/RadioButtonController.h"
-#include "Gwork/Controls/VerticalSlider.h"
-#include "Gwork/Controls/HorizontalSlider.h"
+#include <Gwork/Test/Test.h>
+#include <Gwork/Controls/RadioButtonController.h>
+#include <Gwork/Controls/VerticalSlider.h>
+#include <Gwork/Controls/HorizontalSlider.h>
 
 using namespace Gwk;
 

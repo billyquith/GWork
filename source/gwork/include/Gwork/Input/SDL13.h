@@ -7,9 +7,9 @@
 #ifndef GWK_INPUT_SDL13_H
 #define GWK_INPUT_SDL13_H
 
-#include "Gwork/InputHandler.h"
-#include "Gwork/Gwork.h"
-#include "Gwork/Controls/Canvas.h"
+#include <Gwork/InputHandler.h>
+#include <Gwork/Gwork.h>
+#include <Gwork/Controls/Canvas.h>
 
 #ifdef _WIN32
 #define UCS_STRING "UCS-2"

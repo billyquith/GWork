@@ -9,8 +9,8 @@
 #ifndef GWK_CONTROLS_PROPERTY_COMBOBOX_H
 #define GWK_CONTROLS_PROPERTY_COMBOBOX_H
 
-#include "Gwork/Controls/Property/BaseProperty.h"
-#include "Gwork/Controls/ComboBox.h"
+#include <Gwork/Controls/Property/BaseProperty.h>
+#include <Gwork/Controls/ComboBox.h>
 
 namespace Gwk
 {

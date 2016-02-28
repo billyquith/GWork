@@ -5,9 +5,9 @@
  *  See license in Gwork.h
  */
 
-#include "Gwork/Gwork.h"
-#include "Gwork/Platform.h"
-#include "Gwork/Controls/Dialogs/FileOpen.h"
+#include <Gwork/Gwork.h>
+#include <Gwork/Platform.h>
+#include <Gwork/Controls/Dialogs/FileOpen.h>
 
 
 bool Gwk::Dialogs::FileOpen(bool bUseSystem, const String& Name, const String& StartPath,

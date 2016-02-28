@@ -35,14 +35,14 @@
 #include <list>
 #include <algorithm>
 
-#include "Gwork/Macros.h"
-#include "Gwork/Config.h"
-#include "Gwork/Exports.h"
-#include "Gwork/Structures.h"
-#include "Gwork/Skin.h"
-#include "Gwork/Controls/Base.h"
-#include "Gwork/Controls/Canvas.h"
-#include "Gwork/Align.h"
+#include <Gwork/Macros.h>
+#include <Gwork/Config.h>
+#include <Gwork/Exports.h>
+#include <Gwork/Structures.h>
+#include <Gwork/Skin.h>
+#include <Gwork/Controls/Base.h>
+#include <Gwork/Controls/Canvas.h>
+#include <Gwork/Align.h>
 
 // Enable the hook system (se Hook.h)
 #define GWK_HOOKSYSTEM 1

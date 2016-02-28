@@ -6,8 +6,8 @@
  */
 
 
-#include "Gwork/Controls/ScrollBar.h"
-#include "Gwork/Controls/ScrollBarBar.h"
+#include <Gwork/Controls/ScrollBar.h>
+#include <Gwork/Controls/ScrollBarBar.h>
 
 using namespace Gwk;
 using namespace Gwk::Controls;

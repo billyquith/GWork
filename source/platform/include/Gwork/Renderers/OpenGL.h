@@ -8,8 +8,8 @@
 #ifndef GWK_RENDERERS_OPENGL_H
 #define GWK_RENDERERS_OPENGL_H
 
-#include "Gwork/Gwork.h"
-#include "Gwork/BaseRender.h"
+#include <Gwork/Gwork.h>
+#include <Gwork/BaseRender.h>
 
 namespace Gwk
 {

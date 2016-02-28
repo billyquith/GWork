@@ -5,8 +5,8 @@
  *  See license in Gwork.h
  */
 
-#include "Gwork/Controls/CollapsibleCategory.h"
-#include "Gwork/Controls/CollapsibleList.h"
+#include <Gwork/Controls/CollapsibleCategory.h>
+#include <Gwork/Controls/CollapsibleList.h>
 
 
 namespace Gwk {

@@ -6,7 +6,7 @@
  */
 
 
-#include "Gwork/Controls/CheckBox.h"
+#include <Gwork/Controls/CheckBox.h>
 
 using namespace Gwk;
 using namespace Gwk::Controls;

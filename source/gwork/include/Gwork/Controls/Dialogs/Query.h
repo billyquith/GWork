@@ -9,7 +9,7 @@
 #ifndef GWK_CONTROLS_DIALOGS_QUERY_H
 #define GWK_CONTROLS_DIALOGS_QUERY_H
 
-#include "Gwork/Gwork.h"
+#include <Gwork/Gwork.h>
 
 namespace Gwk
 {

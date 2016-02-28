@@ -5,9 +5,9 @@
  *  See license in Gwork.h
  */
 
-#include "Gwork/Test/Test.h"
-#include "Gwork/Controls/Label.h"
-#include "Gwork/Controls/CrossSplitter.h"
+#include <Gwork/Test/Test.h>
+#include <Gwork/Controls/Label.h>
+#include <Gwork/Controls/CrossSplitter.h>
 
 using namespace Gwk;
 

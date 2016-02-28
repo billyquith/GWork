@@ -9,16 +9,16 @@
 #ifndef GWK_CONTROLS_WINDOWCONTROL_H
 #define GWK_CONTROLS_WINDOWCONTROL_H
 
-#include "Gwork/Gwork.h"
-#include "Gwork/Controls/Base.h"
-#include "Gwork/Controls/Label.h"
-#include "Gwork/Controls/Button.h"
-#include "Gwork/Controls/Dragger.h"
-#include "Gwork/Controls/Label.h"
-#include "Gwork/Controls/ResizableControl.h"
-#include "Gwork/Controls/Modal.h"
-#include "Gwork/Controls/WindowButtons.h"
-#include "Gwork/Skin.h"
+#include <Gwork/Gwork.h>
+#include <Gwork/Controls/Base.h>
+#include <Gwork/Controls/Label.h>
+#include <Gwork/Controls/Button.h>
+#include <Gwork/Controls/Dragger.h>
+#include <Gwork/Controls/Label.h>
+#include <Gwork/Controls/ResizableControl.h>
+#include <Gwork/Controls/Modal.h>
+#include <Gwork/Controls/WindowButtons.h>
+#include <Gwork/Skin.h>
 
 
 namespace Gwk

@@ -8,9 +8,9 @@
 #ifndef GWK_INPUT_SDL2_H
 #define GWK_INPUT_SDL2_H
 
-#include "Gwork/InputHandler.h"
-#include "Gwork/Gwork.h"
-#include "Gwork/Controls/Canvas.h"
+#include <Gwork/InputHandler.h>
+#include <Gwork/Gwork.h>
+#include <Gwork/Controls/Canvas.h>
 #include <SDL.h>
 
 

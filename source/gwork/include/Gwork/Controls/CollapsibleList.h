@@ -9,12 +9,12 @@
 #ifndef GWK_CONTROLS_COLLAPSIBLELIST_H
 #define GWK_CONTROLS_COLLAPSIBLELIST_H
 
-#include "Gwork/Controls/Base.h"
-#include "Gwork/Controls/Button.h"
-#include "Gwork/Controls/ScrollControl.h"
-#include "Gwork/Gwork.h"
-#include "Gwork/Skin.h"
-#include "Gwork/Controls/CollapsibleCategory.h"
+#include <Gwork/Controls/Base.h>
+#include <Gwork/Controls/Button.h>
+#include <Gwork/Controls/ScrollControl.h>
+#include <Gwork/Gwork.h>
+#include <Gwork/Skin.h>
+#include <Gwork/Controls/CollapsibleCategory.h>
 
 
 namespace Gwk

@@ -6,10 +6,10 @@
  */
 
 
-#include "Gwork/Gwork.h"
-#include "Gwork/Utility.h"
-#include "Gwork/Skin.h"
-#include "Gwork/Controls/NumericUpDown.h"
+#include <Gwork/Gwork.h>
+#include <Gwork/Utility.h>
+#include <Gwork/Skin.h>
+#include <Gwork/Controls/NumericUpDown.h>
 
 using namespace Gwk;
 using namespace Gwk::Controls;

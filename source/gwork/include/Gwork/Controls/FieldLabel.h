@@ -9,8 +9,8 @@
 #ifndef GWK_CONTROLS_FIELDLABEL_H
 #define GWK_CONTROLS_FIELDLABEL_H
 
-#include "Gwork/BaseRender.h"
-#include "Gwork/Controls/Label.h"
+#include <Gwork/BaseRender.h>
+#include <Gwork/Controls/Label.h>
 
 namespace Gwk
 {

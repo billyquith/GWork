@@ -5,8 +5,8 @@
  *  See license in Gwork.h
  */
 
-#include "Gwork/Test/Test.h"
-#include "Gwork/Controls/ImagePanel.h"
+#include <Gwork/Test/Test.h>
+#include <Gwork/Controls/ImagePanel.h>
 
 using namespace Gwk;
 

@@ -10,8 +10,8 @@
 #define GWK_CONTROLS_CANVAS_H
 
 #include <set>
-#include "Gwork/Controls/Base.h"
-#include "Gwork/InputHandler.h"
+#include <Gwork/Controls/Base.h>
+#include <Gwork/InputHandler.h>
 
 namespace Gwk
 {

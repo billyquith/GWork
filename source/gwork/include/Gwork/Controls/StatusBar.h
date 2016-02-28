@@ -9,8 +9,8 @@
 #ifndef GWK_CONTROLS_STATUSBAR_H
 #define GWK_CONTROLS_STATUSBAR_H
 
-#include "Gwork/Gwork.h"
-#include "Gwork/Controls/Label.h"
+#include <Gwork/Gwork.h>
+#include <Gwork/Controls/Label.h>
 
 namespace Gwk
 {

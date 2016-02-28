@@ -6,7 +6,7 @@
  */
 
 
-#include "Gwork/Gwork.h"
+#include <Gwork/Gwork.h>
 #include <math.h>
 
 namespace Gwk

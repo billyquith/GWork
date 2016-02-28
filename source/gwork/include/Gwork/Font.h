@@ -12,7 +12,7 @@
 #include <string>
 #include <list>
 
-#include "Gwork/BaseRender.h"
+#include <Gwork/BaseRender.h>
 
 namespace Gwk
 {

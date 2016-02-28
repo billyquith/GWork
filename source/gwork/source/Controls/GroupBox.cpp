@@ -6,7 +6,7 @@
  */
 
 
-#include "Gwork/Controls/GroupBox.h"
+#include <Gwork/Controls/GroupBox.h>
 
 using namespace Gwk;
 using namespace Gwk::Controls;

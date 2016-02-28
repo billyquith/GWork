@@ -1,7 +1,7 @@
 #include "DesignerBase.h"
 #include "Document.h"
 #include "ControlToolbox.h"
-#include "Gwork/Util/ImportExport.h"
+#include <Gwork/Util/ImportExport.h>
 
 GWK_CONTROL_CONSTRUCTOR( DesignerBase )
 {

@@ -9,7 +9,7 @@
 #ifndef GWK_CONTROLS_LAYOUT_TILE_H
 #define GWK_CONTROLS_LAYOUT_TILE_H
 
-#include "Gwork/Controls/Base.h"
+#include <Gwork/Controls/Base.h>
 
 namespace Gwk
 {

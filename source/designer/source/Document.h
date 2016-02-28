@@ -1,9 +1,9 @@
 
 #pragma once
 
-#include "Gwork/Gwork.h"
-#include "Gwork/Controls.h"
-#include "Gwork/Util/ImportExport.h"
+#include <Gwork/Gwork.h>
+#include <Gwork/Controls.h>
+#include <Gwork/Util/ImportExport.h>
 
 using namespace Gwk;
 

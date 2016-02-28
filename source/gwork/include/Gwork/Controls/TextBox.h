@@ -9,10 +9,10 @@
 #ifndef GWK_CONTROLS_TEXTBOX_H
 #define GWK_CONTROLS_TEXTOBX_H
 
-#include "Gwork/BaseRender.h"
-#include "Gwork/Controls/Base.h"
-#include "Gwork/Controls/Label.h"
-#include "Gwork/Controls/ScrollControl.h"
+#include <Gwork/BaseRender.h>
+#include <Gwork/Controls/Base.h>
+#include <Gwork/Controls/Label.h>
+#include <Gwork/Controls/ScrollControl.h>
 
 namespace Gwk
 {

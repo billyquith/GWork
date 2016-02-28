@@ -6,7 +6,7 @@
  */
 
 
-#include "Gwork/Controls/Resizer.h"
+#include <Gwork/Controls/Resizer.h>
 
 using namespace Gwk;
 using namespace Gwk::ControlsInternal;

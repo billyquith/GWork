@@ -9,9 +9,9 @@
 #ifndef GWK_CONTROLS_FOLDERPICKER_H
 #define GWK_CONTROLS_FOLDERPICKER_H
 
-#include "Gwork/BaseRender.h"
-#include "Gwork/Controls/Dialogs/FolderOpen.h"
-#include "Gwork/Controls/TextBox.h"
+#include <Gwork/BaseRender.h>
+#include <Gwork/Controls/Dialogs/FolderOpen.h>
+#include <Gwork/Controls/TextBox.h>
 
 
 namespace Gwk

@@ -6,15 +6,15 @@
  */
 
 
-#include "Gwork/Gwork.h"
-#include "Gwork/Controls/WindowCanvas.h"
-#include "Gwork/Skin.h"
-#include "Gwork/Controls/Menu.h"
-#include "Gwork/DragAndDrop.h"
-#include "Gwork/ToolTip.h"
+#include <Gwork/Gwork.h>
+#include <Gwork/Controls/WindowCanvas.h>
+#include <Gwork/Skin.h>
+#include <Gwork/Controls/Menu.h>
+#include <Gwork/DragAndDrop.h>
+#include <Gwork/ToolTip.h>
 
 #ifndef GWK_NO_ANIMATION
-#include "Gwork/Anim.h"
+#include <Gwork/Anim.h>
 #endif
 
 using namespace Gwk;

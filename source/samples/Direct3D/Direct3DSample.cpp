@@ -20,12 +20,12 @@
 #include <memory.h>
 #include <tchar.h>
 
-#include "Gwork/Gwork.h"
-#include "Gwork/Skins/Simple.h"
-#include "Gwork/Skins/TexturedBase.h"
-#include "Gwork/Test/Test.h"
-#include "Gwork/Input/Windows.h"
-#include "Gwork/Renderers/DirectX9.h"
+#include <Gwork/Gwork.h>
+#include <Gwork/Skins/Simple.h>
+#include <Gwork/Skins/TexturedBase.h>
+#include <Gwork/Test/Test.h>
+#include <Gwork/Input/Windows.h>
+#include <Gwork/Renderers/DirectX9.h>
 
 HWND g_pHWND = NULL;
 LPDIRECT3D9 g_pD3D = NULL;

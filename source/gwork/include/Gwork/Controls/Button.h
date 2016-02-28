@@ -9,8 +9,8 @@
 #ifndef GWK_CONTROLS_BUTTON_H
 #define GWK_CONTROLS_BUTTON_H
 
-#include "Gwork/Controls/Base.h"
-#include "Gwork/Controls/Label.h"
+#include <Gwork/Controls/Base.h>
+#include <Gwork/Controls/Label.h>
 
 namespace Gwk
 {

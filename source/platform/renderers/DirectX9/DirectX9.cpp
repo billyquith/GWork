@@ -1,9 +1,9 @@
 
-#include "Gwork/Renderers/DirectX9.h"
-#include "Gwork/Utility.h"
-#include "Gwork/Font.h"
-#include "Gwork/Texture.h"
-#include "Gwork/WindowProvider.h"
+#include <Gwork/Renderers/DirectX9.h>
+#include <Gwork/Utility.h>
+#include <Gwork/Font.h>
+#include <Gwork/Texture.h>
+#include <Gwork/WindowProvider.h>
 
 #define D3DFVF_VERTEXFORMAT2D (D3DFVF_XYZRHW|D3DFVF_DIFFUSE|D3DFVF_TEX1)
 

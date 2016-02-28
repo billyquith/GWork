@@ -6,9 +6,9 @@
  */
 
 
-#include "Gwork/Controls/TreeNode.h"
-#include "Gwork/Controls/TreeControl.h"
-#include "Gwork/Utility.h"
+#include <Gwork/Controls/TreeNode.h>
+#include <Gwork/Controls/TreeControl.h>
+#include <Gwork/Utility.h>
 
 using namespace Gwk;
 using namespace Gwk::Controls;

@@ -5,9 +5,9 @@
  *  See license in Gwork.h
  */
 
-#include "Gwork/Test/Test.h"
-#include "Gwork/Controls/StatusBar.h"
-#include "Gwork/Controls/Label.h"
+#include <Gwork/Test/Test.h>
+#include <Gwork/Controls/StatusBar.h>
+#include <Gwork/Controls/Label.h>
 
 using namespace Gwk;
 

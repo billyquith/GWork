@@ -9,7 +9,7 @@
 #ifndef GWK_CONTROLS_SCROLLBARBOTTON_H
 #define GWK_CONTROLS_SCROLLBARBOTTON_H
 
-#include "Gwork/Controls/Button.h"
+#include <Gwork/Controls/Button.h>
 
 namespace Gwk
 {

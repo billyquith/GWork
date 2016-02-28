@@ -9,9 +9,9 @@
 #ifndef GWK_CONTROLS_SPLITTERBAR_H
 #define GWK_CONTROLS_SPLITTERBAR_H
 
-#include "Gwork/Gwork.h"
-#include "Gwork/Controls/Base.h"
-#include "Gwork/Controls/Dragger.h"
+#include <Gwork/Gwork.h>
+#include <Gwork/Controls/Base.h>
+#include <Gwork/Controls/Dragger.h>
 
 namespace Gwk
 {

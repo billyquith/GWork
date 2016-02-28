@@ -6,8 +6,8 @@
  */
 
 
-#include "Gwork/ToolTip.h"
-#include "Gwork/Utility.h"
+#include <Gwork/ToolTip.h>
+#include <Gwork/Utility.h>
 
 namespace Gwk {
     namespace ToolTip

@@ -7,9 +7,9 @@
 
 #pragma once
 
-#include "Gwork/Gwork.h"
-#include "Gwork/Controls.h"
-#include "Gwork/Util/ControlFactory.h"
+#include <Gwork/Gwork.h>
+#include <Gwork/Controls.h>
+#include <Gwork/Util/ControlFactory.h>
 
 using namespace Gwk;
 

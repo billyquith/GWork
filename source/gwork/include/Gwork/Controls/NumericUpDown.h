@@ -9,9 +9,9 @@
 #ifndef GWK_CONTROLS_NUMERICUPDOWN_H
 #define GWK_CONTROLS_NUMERICUPDOWN_H
 
-#include "Gwork/Controls/Base.h"
-#include "Gwork/Controls/Button.h"
-#include "Gwork/Controls/TextBox.h"
+#include <Gwork/Controls/Base.h>
+#include <Gwork/Controls/Button.h>
+#include <Gwork/Controls/TextBox.h>
 
 namespace Gwk
 {

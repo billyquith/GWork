@@ -9,9 +9,9 @@
 #ifndef GWK_ANIM_H
 #define GWK_ANIM_H
 
-#include "Gwork/Gwork.h"
-#include "Gwork/Controls/Base.h"
-#include "Gwork/Platform.h"
+#include <Gwork/Gwork.h>
+#include <Gwork/Controls/Base.h>
+#include <Gwork/Platform.h>
 
 #ifndef GWK_NO_ANIMATION
 

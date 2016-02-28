@@ -9,10 +9,10 @@
 #ifndef GWK_CONTROLS_SCROLLBAR_H
 #define GWK_CONTROLS_SCROLLBAR_H
 
-#include "Gwork/Controls/Base.h"
-#include "Gwork/Controls/ScrollBarBar.h"
-#include "Gwork/Controls/ScrollBarButton.h"
-#include "Gwork/Gwork.h"
+#include <Gwork/Controls/Base.h>
+#include <Gwork/Controls/ScrollBarBar.h>
+#include <Gwork/Controls/ScrollBarButton.h>
+#include <Gwork/Gwork.h>
 
 
 #define SCROLL_BUTTON_UP 0

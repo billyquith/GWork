@@ -6,8 +6,8 @@
  */
 
 
-#include "Gwork/Controls/Slider.h"
-#include "Gwork/Controls/VerticalSlider.h"
+#include <Gwork/Controls/Slider.h>
+#include <Gwork/Controls/VerticalSlider.h>
 
 using namespace Gwk;
 using namespace Gwk::Controls;

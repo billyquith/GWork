@@ -6,8 +6,8 @@
  */
 
 
-#include "Gwork/Anim.h"
-#include "Gwork/Utility.h"
+#include <Gwork/Anim.h>
+#include <Gwork/Utility.h>
 #include <math.h>
 
 using namespace Gwk;

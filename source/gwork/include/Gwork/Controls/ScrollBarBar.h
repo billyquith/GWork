@@ -9,9 +9,9 @@
 #ifndef GWK_CONTROLS_SCROLLBARBAR_H
 #define GWK_CONTROLS_SCROLLBARBAR_H
 
-#include "Gwork/Controls/Dragger.h"
-#include "Gwork/Gwork.h"
-#include "Gwork/Skin.h"
+#include <Gwork/Controls/Dragger.h>
+#include <Gwork/Gwork.h>
+#include <Gwork/Skin.h>
 
 namespace Gwk
 {

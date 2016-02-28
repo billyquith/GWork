@@ -9,9 +9,9 @@
 #ifndef GWK_CONTROLS_CROSSSPLITTER_H
 #define GWK_CONTROLS_CROSSSPLITTER_H
 
-#include "Gwork/Gwork.h"
-#include "Gwork/Controls/Base.h"
-#include "Gwork/Controls/SplitterBar.h"
+#include <Gwork/Gwork.h>
+#include <Gwork/Controls/Base.h>
+#include <Gwork/Controls/SplitterBar.h>
 
 namespace Gwk
 {

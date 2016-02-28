@@ -1,8 +1,8 @@
 
 #pragma once
 
-#include "Gwork/Gwork.h"
-#include "Gwork/Controls.h"
+#include <Gwork/Gwork.h>
+#include <Gwork/Controls.h>
 
 
 class Cage : public Gwk::Controls::Button

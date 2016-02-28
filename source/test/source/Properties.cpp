@@ -5,12 +5,12 @@
  *  See license in Gwork.h
  */
 
-#include "Gwork/Test/Test.h"
-#include "Gwork/Controls/Properties.h"
-#include "Gwork/Controls/PropertyTree.h"
-#include "Gwork/Controls/Property/ColorSelector.h"
-#include "Gwork/Controls/Property/Checkbox.h"
-#include "Gwork/Controls/Property/ComboBox.h"
+#include <Gwork/Test/Test.h>
+#include <Gwork/Controls/Properties.h>
+#include <Gwork/Controls/PropertyTree.h>
+#include <Gwork/Controls/Property/ColorSelector.h>
+#include <Gwork/Controls/Property/Checkbox.h>
+#include <Gwork/Controls/Property/ComboBox.h>
 
 using namespace Gwk;
 

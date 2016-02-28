@@ -6,11 +6,11 @@
  */
 
 
-#include "Gwork/Controls/ScrollControl.h"
-#include "Gwork/Controls/ScrollBar.h"
-#include "Gwork/Controls/VerticalScrollBar.h"
-#include "Gwork/Controls/HorizontalScrollBar.h"
-#include "Gwork/Utility.h"
+#include <Gwork/Controls/ScrollControl.h>
+#include <Gwork/Controls/ScrollBar.h>
+#include <Gwork/Controls/VerticalScrollBar.h>
+#include <Gwork/Controls/HorizontalScrollBar.h>
+#include <Gwork/Utility.h>
 
 using namespace Gwk;
 using namespace Gwk::Controls;

@@ -9,9 +9,9 @@
 #ifndef GWK_CONTROLS_TABSTRIP_H
 #define GWK_CONTROLS_TABSTRIP_H
 
-#include "Gwork/Controls/Base.h"
-#include "Gwork/Controls/Button.h"
-#include "Gwork/Controls/TabButton.h"
+#include <Gwork/Controls/Base.h>
+#include <Gwork/Controls/Button.h>
+#include <Gwork/Controls/TabButton.h>
 
 namespace Gwk
 {

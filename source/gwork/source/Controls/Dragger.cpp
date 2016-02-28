@@ -6,7 +6,7 @@
  */
 
 
-#include "Gwork/Controls/Dragger.h"
+#include <Gwork/Controls/Dragger.h>
 
 using namespace Gwk;
 using namespace Gwk::ControlsInternal;

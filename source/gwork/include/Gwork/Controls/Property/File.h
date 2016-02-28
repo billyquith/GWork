@@ -9,9 +9,9 @@
 #ifndef GWK_CONTROLS_PROPERTY_FILE_H
 #define GWK_CONTROLS_PROPERTY_FILE_H
 
-#include "Gwork/Controls/Properties.h"
-#include "Gwork/Controls/Button.h"
-#include "Gwork/Controls/Dialogs/FolderOpen.h"
+#include <Gwork/Controls/Properties.h>
+#include <Gwork/Controls/Button.h>
+#include <Gwork/Controls/Dialogs/FolderOpen.h>
 
 namespace Gwk
 {

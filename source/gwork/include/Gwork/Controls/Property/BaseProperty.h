@@ -9,10 +9,10 @@
 #ifndef GWK_CONTROLS_PROPERTY_BASEPROPERTY_H
 #define GWK_CONTROLS_PROPERTY_BASEPROPERTY_H
 
-#include "Gwork/Controls/Base.h"
-#include "Gwork/Gwork.h"
-#include "Gwork/Skin.h"
-#include "Gwork/Utility.h"
+#include <Gwork/Controls/Base.h>
+#include <Gwork/Gwork.h>
+#include <Gwork/Skin.h>
+#include <Gwork/Utility.h>
 
 
 namespace Gwk

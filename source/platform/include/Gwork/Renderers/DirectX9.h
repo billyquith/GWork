@@ -8,8 +8,8 @@
 #ifndef GWK_RENDERERS_DIRECTX9_H
 #define GWK_RENDERERS_DIRECTX9_H
 
-#include "Gwork/Gwork.h"
-#include "Gwork/BaseRender.h"
+#include <Gwork/Gwork.h>
+#include <Gwork/BaseRender.h>
 
 #include <D3D9.h>
 #include <D3DX9Core.h>

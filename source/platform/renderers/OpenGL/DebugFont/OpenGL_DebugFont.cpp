@@ -1,8 +1,8 @@
 
-#include "Gwork/Renderers/OpenGL_DebugFont.h"
-#include "Gwork/Utility.h"
-#include "Gwork/Font.h"
-#include "Gwork/Texture.h"
+#include <Gwork/Renderers/OpenGL_DebugFont.h>
+#include <Gwork/Utility.h>
+#include <Gwork/Font.h>
+#include <Gwork/Texture.h>
 
 #include <math.h>
 #include "GL/glew.h"

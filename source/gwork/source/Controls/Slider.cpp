@@ -7,7 +7,7 @@
 
 
 #include <math.h>
-#include "Gwork/Controls/Slider.h"
+#include <Gwork/Controls/Slider.h>
 
 using namespace Gwk;
 using namespace Gwk::Controls;

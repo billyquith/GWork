@@ -6,9 +6,9 @@
  */
 
 
-#include "Gwork/Gwork.h"
-#include "Gwork/Controls/PropertyTree.h"
-#include "Gwork/Skin.h"
+#include <Gwork/Gwork.h>
+#include <Gwork/Controls/PropertyTree.h>
+#include <Gwork/Skin.h>
 
 namespace Gwk
 {

@@ -1,6 +1,6 @@
 #include "SelectionLayer.h"
 #include "Cage.h"
-#include "Gwork/Util/ControlFactory.h"
+#include <Gwork/Util/ControlFactory.h>
 #include "Utility.h"
 
 GWK_CONTROL_CONSTRUCTOR( SelectionLayer )

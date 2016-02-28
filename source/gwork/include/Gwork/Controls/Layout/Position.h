@@ -9,8 +9,8 @@
 #ifndef GWK_CONTROLS_LAYOUT_POSITION_H
 #define GWK_CONTROLS_LAYOUT_POSITION_H
 
-#include "Gwork/Controls/Label.h"
-#include "Gwork/Utility.h"
+#include <Gwork/Controls/Label.h>
+#include <Gwork/Utility.h>
 
 
 namespace Gwk

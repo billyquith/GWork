@@ -13,7 +13,7 @@
 #ifndef GWK_STRUCTURES_H
 #define GWK_STRUCTURES_H
 
-#include "Gwork/Platform.h"
+#include <Gwork/Platform.h>
 
 namespace Gwk
 {

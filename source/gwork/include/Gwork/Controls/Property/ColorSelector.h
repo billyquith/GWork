@@ -9,9 +9,9 @@
 #ifndef GWK_CONTROLS_PROPERTY_COLORSELECTOR_H
 #define GWK_CONTROLS_PROPERTY_COLORSELECTOR_H
 
-#include "Gwork/Controls/Properties.h"
-#include "Gwork/Controls/Menu.h"
-#include "Gwork/Controls/HSVColorPicker.h"
+#include <Gwork/Controls/Properties.h>
+#include <Gwork/Controls/Menu.h>
+#include <Gwork/Controls/HSVColorPicker.h>
 
 #include <stdio.h>
 

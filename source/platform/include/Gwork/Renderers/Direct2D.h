@@ -13,9 +13,9 @@
 #include <dwrite.h>
 #include <wincodec.h>
 
-#include "Gwork/Gwork.h"
-#include "Gwork/BaseRender.h"
-#include "Gwork/Texture.h"
+#include <Gwork/Gwork.h>
+#include <Gwork/BaseRender.h>
+#include <Gwork/Texture.h>
 
 namespace Gwk
 {

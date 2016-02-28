@@ -9,9 +9,9 @@
 #ifndef GWK_CONTROLS_LISTBOX_H
 #define GWK_CONTROLS_LISTBOX_H
 
-#include "Gwork/Gwork.h"
-#include "Gwork/Controls/Layout/Table.h"
-#include "Gwork/Controls/ScrollControl.h"
+#include <Gwork/Gwork.h>
+#include <Gwork/Controls/Layout/Table.h>
+#include <Gwork/Controls/ScrollControl.h>
 
 
 namespace Gwk
