@@ -259,7 +259,7 @@ namespace Gwk
 
     } // ControlFactory
 
-} // Gwen
+} // Gwork
 
 
 //! Information about the ControlFactory.
@@ -290,7 +290,7 @@ namespace Gwk
 //! Instance a ControlFactory.
 //! @param FACTORY_CLASS - The name of the factory.
 #define GWK_CONTROL_FACTORY(FACTORY_CLASS) \
-    void GWENCONTROLFACTORY##FACTORY_CLASS() \
+    void GworkControlFactory##FACTORY_CLASS() \
     { \
         static FACTORY_CLASS instance; \
     }
@@ -298,8 +298,8 @@ namespace Gwk
 //! Declare a ControlFactory factory so that it can be called.
 //! @param FACTORY : Name of the control factory class.
 #define DECLARE_GWK_CONTROL_FACTORY(FACTORY) \
-    extern void GWENCONTROLFACTORY##FACTORY(); \
-    GWENCONTROLFACTORY##FACTORY();
+    extern void GworkControlFactory##FACTORY(); \
+    GworkControlFactory##FACTORY();
 
 #define GWK_CONTROL_FACTORY_PROPERTY(PROP_NAME, DESCRIPTION) \
 public: \
