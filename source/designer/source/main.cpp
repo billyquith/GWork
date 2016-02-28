@@ -1,26 +1,26 @@
 
-#include "Gwen/Gwen.h"
-#include "Gwen/Controls.h"
-#include "Gwen/Skins/TexturedBase.h"
+#include "Gwork/Gwork.h"
+#include "Gwork/Controls.h"
+#include "Gwork/Skins/TexturedBase.h"
 #include "DesignerBase.h"
 #ifdef WIN32
-#	include "Gwen/Renderers/DirectX9.h"
+#	include "Gwork/Renderers/DirectX9.h"
 #else
-#	include "Gwen/Renderers/Allegro.h"
+#	include "Gwork/Renderers/Allegro.h"
 #endif
 
 int main(int, char **)
 {
 #ifdef WIN32
-	Gwen::Renderer::DirectX9	renderer;
+	Gwk::Renderer::DirectX9	renderer;
 #else
-	Gwen::Renderer::Allegro		renderer;
+	Gwk::Renderer::Allegro		renderer;
 #endif
 	
-	Gwen::Skin::TexturedBase skin( &renderer );
+	Gwk::Skin::TexturedBase skin( &renderer );
 	skin.SetRender( &renderer );
 	
-	Gwen::Controls::WindowCanvas window_canvas( -1, -1, 1024, 600, &skin, "GWEN Designer" );
+	Gwk::Controls::WindowCanvas window_canvas( -1, -1, 1024, 600, &skin, "Gwork Designer" );
 	skin.Init( "img/DesignerSkin.png" );
 
 	skin.SetDefaultFont( "OpenSans.ttf", 11 );

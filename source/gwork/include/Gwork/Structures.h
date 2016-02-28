@@ -1,7 +1,8 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 #pragma once
@@ -9,13 +10,13 @@
 #   pragma warning( disable : 4244 )
 #   pragma warning( disable : 4251 )
 #endif
-#ifndef GWEN_STRUCTURES_H
-#define GWEN_STRUCTURES_H
+#ifndef GWK_STRUCTURES_H
+#define GWK_STRUCTURES_H
 
-#include "Gwen/Exports.h"
+#include "Gwork/Exports.h"
 #include <string>
 
-namespace Gwen
+namespace Gwk
 {
     namespace Controls
     {
@@ -46,7 +47,7 @@ namespace Gwen
     typedef std::string     String;
     typedef char            UnicodeChar;
     
-    struct GWEN_EXPORT Margin
+    struct GWK_EXPORT Margin
     {
         Margin(int left_ = 0, int top_ = 0, int right_ = 0, int bottom_ = 0)
         :   top(top_)
@@ -72,7 +73,7 @@ namespace Gwen
     typedef Margin Padding;
 
 
-    struct GWEN_EXPORT Rect
+    struct GWK_EXPORT Rect
     {
         Rect(int x_ = 0, int y_ = 0, int w_ = 0, int h_ = 0)
         :   x(x_), y(y_), w(w_), h(h_)
@@ -97,7 +98,7 @@ namespace Gwen
     };
 
 
-    struct GWEN_EXPORT Point
+    struct GWK_EXPORT Point
     {
         Point(int x_=0, int y_=0)
         :   x(x_), y(y_)
@@ -129,7 +130,7 @@ namespace Gwen
     };
 
 
-    struct GWEN_EXPORT HSV
+    struct GWK_EXPORT HSV
     {
         float h;
         float s;
@@ -137,7 +138,7 @@ namespace Gwen
     };
 
 
-    struct GWEN_EXPORT Color
+    struct GWK_EXPORT Color
     {
         Color(unsigned char r_=255,
               unsigned char g_=255,
@@ -204,26 +205,26 @@ namespace Gwen
 
     namespace DragAndDrop
     {
-        struct GWEN_EXPORT Package
+        struct GWK_EXPORT Package
         {
             Package()
             {
                 userdata = NULL;
                 draggable = false;
                 drawcontrol = NULL;
-                holdoffset = Gwen::Point(0, 0);
+                holdoffset = Gwk::Point(0, 0);
             }
 
             String  name;
             void*   userdata;
             bool    draggable;
 
-            Gwen::Controls::Base*   drawcontrol;
-            Gwen::Point             holdoffset;
+            Gwk::Controls::Base*   drawcontrol;
+            Gwk::Point             holdoffset;
         };
 
 
     }
 
 }
-#endif // ifndef GWEN_STRUCTURES_H
+#endif // ifndef GWK_STRUCTURES_H

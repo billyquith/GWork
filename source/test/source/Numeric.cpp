@@ -1,13 +1,20 @@
-#include "Gwen/UnitTest/UnitTest.h"
-#include "Gwen/Controls/NumericUpDown.h"
+/*
+ *  Gwork
+ *  Copyright (c) 2010 Facepunch Studios
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
+ */
 
-using namespace Gwen;
+#include "Gwork/Test/Test.h"
+#include "Gwork/Controls/NumericUpDown.h"
+
+using namespace Gwk;
 
 class Numeric : public GUnit
 {
 public:
 
-    GWEN_CONTROL_INLINE(Numeric, GUnit)
+    GWK_CONTROL_INLINE(Numeric, GUnit)
     {
         Controls::NumericUpDown* pCtrl = new Controls::NumericUpDown(this);
         pCtrl->SetBounds(10, 10, 50, 20);

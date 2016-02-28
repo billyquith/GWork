@@ -1,22 +1,23 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 
-#include "Gwen/Gwen.h"
-#include "Gwen/Controls/MenuItem.h"
-#include "Gwen/Skin.h"
+#include "Gwork/Gwork.h"
+#include "Gwork/Controls/MenuItem.h"
+#include "Gwork/Skin.h"
 
-using namespace Gwen;
-using namespace Gwen::Controls;
+using namespace Gwk;
+using namespace Gwk::Controls;
 
-class GWEN_EXPORT RightArrow : public Controls::Base
+class GWK_EXPORT RightArrow : public Controls::Base
 {
 public:
 
-    GWEN_CONTROL_INLINE(RightArrow, Controls::Base)
+    GWK_CONTROL_INLINE(RightArrow, Controls::Base)
     {
         SetMouseInputEnabled(false);
     }
@@ -29,7 +30,7 @@ public:
 };
 
 
-GWEN_CONTROL_CONSTRUCTOR(MenuItem)
+GWK_CONTROL_CONSTRUCTOR(MenuItem)
 {
     m_Menu = NULL;
     m_bOnStrip = false;
@@ -133,7 +134,7 @@ void MenuItem::OpenMenu()
 
     m_Menu->SetHidden(false);
     m_Menu->BringToFront();
-    Gwen::Point p = LocalPosToCanvas(Gwen::Point(0, 0));
+    Gwk::Point p = LocalPosToCanvas(Gwk::Point(0, 0));
 
     // Strip menus open downwards
     if (m_bOnStrip)

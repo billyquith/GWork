@@ -1,29 +1,30 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2012 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2015-2016 Billy Quith
+ *  See license in Gwork.h
  */
 
 #pragma once
-#ifndef GWEN_CONTROLS_SPLITTERS_H
-#define GWEN_CONTROLS_SPLITTERS_H
+#ifndef GWK_CONTROLS_SPLITTERS_H
+#define GWK_CONTROLS_SPLITTERS_H
 
-#include "Gwen/Controls/Base.h"
+#include "Gwork/Controls/Base.h"
 
-namespace Gwen
+namespace Gwk
 {
     namespace Controls
     {
-        class GWEN_EXPORT SplitterVertical : public Controls::Base
+        class GWK_EXPORT SplitterVertical : public Controls::Base
         {
-            GWEN_CONTROL_INLINE(SplitterVertical, Controls::Base)
+            GWK_CONTROL_INLINE(SplitterVertical, Controls::Base)
             {
                 m_Panels[0] = new Controls::Base(this);
                 m_Panels[1] = new Controls::Base(this);
                 m_pSplitter = new Controls::SplitterBar(this);
                 m_SplitterSize = 6;
                 m_pSplitter->SetPos(0, 100);
-                m_pSplitter->SetCursor(Gwen::CursorType::SizeNS);
+                m_pSplitter->SetCursor(Gwk::CursorType::SizeNS);
                 m_pSplitter->onDragged.Add(this, &ThisClass::OnSplitterMoved);
                 SetScaling(false, 100);
             }
@@ -57,7 +58,7 @@ namespace Gwen
 
             virtual void RefreshContainers()
             {
-                const Gwen::Rect& inner = GetInnerBounds();
+                const Gwk::Rect& inner = GetInnerBounds();
                 int iOffset = m_Size;
 
                 if (m_RightSided)
@@ -90,17 +91,17 @@ namespace Gwen
         };
 
 
-        class GWEN_EXPORT SplitterHorizontal : public SplitterVertical
+        class GWK_EXPORT SplitterHorizontal : public SplitterVertical
         {
-            GWEN_CONTROL_INLINE(SplitterHorizontal, SplitterVertical)
+            GWK_CONTROL_INLINE(SplitterHorizontal, SplitterVertical)
             {
-                m_pSplitter->SetCursor(Gwen::CursorType::SizeWE);
+                m_pSplitter->SetCursor(Gwk::CursorType::SizeWE);
                 m_pSplitter->SetPos(100, 0);
             }
 
             virtual void RefreshContainers()
             {
-                const Gwen::Rect& inner = GetInnerBounds();
+                const Gwk::Rect& inner = GetInnerBounds();
                 int iOffset = m_Size;
 
                 if (m_RightSided)
@@ -136,4 +137,4 @@ namespace Gwen
     }
 }
 
-#endif // ifndef GWEN_CONTROLS_SPLITTERS_H
+#endif // ifndef GWK_CONTROLS_SPLITTERS_H

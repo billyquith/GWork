@@ -1,23 +1,24 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 
-#include "Gwen/Gwen.h"
-#include "Gwen/BaseRender.h"
-#include "Gwen/Utility.h"
-#include "Gwen/Platform.h"
+#include "Gwork/Gwork.h"
+#include "Gwork/BaseRender.h"
+#include "Gwork/Utility.h"
+#include "Gwork/Platform.h"
 
 #include <math.h>
 
-namespace Gwen
+namespace Gwk
 {
     namespace Renderer
     {
         Base::Base()
-        :   m_RenderOffset(Gwen::Point(0, 0))
+        :   m_RenderOffset(Gwk::Point(0, 0))
         ,   m_fScale(1.0f)
         {
         }
@@ -28,20 +29,20 @@ namespace Gwen
                 GetCTT()->ShutDown();
         }
 
-        void Base::DrawLinedRect(Gwen::Rect rect)
+        void Base::DrawLinedRect(Gwk::Rect rect)
         {
-            DrawFilledRect(Gwen::Rect(rect.x, rect.y, rect.w, 1));
-            DrawFilledRect(Gwen::Rect(rect.x, rect.y+rect.h-1, rect.w, 1));
-            DrawFilledRect(Gwen::Rect(rect.x, rect.y, 1, rect.h));
-            DrawFilledRect(Gwen::Rect(rect.x+rect.w-1, rect.y, 1, rect.h));
+            DrawFilledRect(Gwk::Rect(rect.x, rect.y, rect.w, 1));
+            DrawFilledRect(Gwk::Rect(rect.x, rect.y+rect.h-1, rect.w, 1));
+            DrawFilledRect(Gwk::Rect(rect.x, rect.y, 1, rect.h));
+            DrawFilledRect(Gwk::Rect(rect.x+rect.w-1, rect.y, 1, rect.h));
         }
 
         void Base::DrawPixel(int x, int y)
         {
-            DrawFilledRect(Gwen::Rect(x, y, 1, 1));
+            DrawFilledRect(Gwk::Rect(x, y, 1, 1));
         }
 
-        void Base::DrawShavedCornerRect(Gwen::Rect rect, bool bSlight)
+        void Base::DrawShavedCornerRect(Gwk::Rect rect, bool bSlight)
         {
             // Draw INSIDE the w/h.
             rect.w -= 1;
@@ -49,10 +50,10 @@ namespace Gwen
 
             if (bSlight)
             {
-                DrawFilledRect(Gwen::Rect(rect.x+1, rect.y, rect.w-1, 1));
-                DrawFilledRect(Gwen::Rect(rect.x+1, rect.y+rect.h, rect.w-1, 1));
-                DrawFilledRect(Gwen::Rect(rect.x, rect.y+1, 1, rect.h-1));
-                DrawFilledRect(Gwen::Rect(rect.x+rect.w, rect.y+1, 1, rect.h-1));
+                DrawFilledRect(Gwk::Rect(rect.x+1, rect.y, rect.w-1, 1));
+                DrawFilledRect(Gwk::Rect(rect.x+1, rect.y+rect.h, rect.w-1, 1));
+                DrawFilledRect(Gwk::Rect(rect.x, rect.y+1, 1, rect.h-1));
+                DrawFilledRect(Gwk::Rect(rect.x+rect.w, rect.y+1, 1, rect.h-1));
             }
             else
             {
@@ -60,10 +61,10 @@ namespace Gwen
                 DrawPixel(rect.x+rect.w-1, rect.y+1);
                 DrawPixel(rect.x+1, rect.y+rect.h-1);
                 DrawPixel(rect.x+rect.w-1, rect.y+rect.h-1);
-                DrawFilledRect(Gwen::Rect(rect.x+2, rect.y, rect.w-3, 1));
-                DrawFilledRect(Gwen::Rect(rect.x+2, rect.y+rect.h, rect.w-3, 1));
-                DrawFilledRect(Gwen::Rect(rect.x, rect.y+2, 1, rect.h-3));
-                DrawFilledRect(Gwen::Rect(rect.x+rect.w, rect.y+2, 1, rect.h-3));
+                DrawFilledRect(Gwk::Rect(rect.x+2, rect.y, rect.w-3, 1));
+                DrawFilledRect(Gwk::Rect(rect.x+2, rect.y+rect.h, rect.w-3, 1));
+                DrawFilledRect(Gwk::Rect(rect.x, rect.y+2, 1, rect.h-3));
+                DrawFilledRect(Gwk::Rect(rect.x+rect.w, rect.y+2, 1, rect.h-3));
             }
         }
 
@@ -75,23 +76,23 @@ namespace Gwen
             y = ceilf(((float)y)*m_fScale);
         }
 
-        void Base::Translate(Gwen::Rect& rect)
+        void Base::Translate(Gwk::Rect& rect)
         {
             Translate(rect.x, rect.y);
             rect.w = ceilf(((float)rect.w)*m_fScale);
             rect.h = ceilf(((float)rect.h)*m_fScale);
         }
 
-        void Gwen::Renderer::Base::SetClipRegion(Gwen::Rect rect)
+        void Gwk::Renderer::Base::SetClipRegion(Gwk::Rect rect)
         {
             m_rectClipRegion = rect;
         }
 
-        void Base::AddClipRegion(Gwen::Rect rect)
+        void Base::AddClipRegion(Gwk::Rect rect)
         {
             rect.x = m_RenderOffset.x;
             rect.y = m_RenderOffset.y;
-            Gwen::Rect out = rect;
+            Gwk::Rect out = rect;
 
             if (rect.x < m_rectClipRegion.x)
             {
@@ -114,7 +115,7 @@ namespace Gwen
             m_rectClipRegion = out;
         }
 
-        const Gwen::Rect& Base::ClipRegion() const
+        const Gwk::Rect& Base::ClipRegion() const
         {
             return m_rectClipRegion;
         }
@@ -127,7 +128,7 @@ namespace Gwen
             return true;
         }
 
-        void Base::DrawMissingImage(Gwen::Rect pTargetRect)
+        void Base::DrawMissingImage(Gwk::Rect pTargetRect)
         {
             SetDrawColor(Colors::Red);
             DrawFilledRect(pTargetRect);
@@ -137,7 +138,7 @@ namespace Gwen
         ///  we just draw some rects where the letters would be to give them an
         ///  idea.
 
-        void Base::RenderText(Gwen::Font* pFont, Gwen::Point pos, const Gwen::String& text)
+        void Base::RenderText(Gwk::Font* pFont, Gwk::Point pos, const Gwk::String& text)
         {
             float fSize = pFont->size*Scale();
 
@@ -148,7 +149,7 @@ namespace Gwen
                 if (chr == ' ')
                     continue;
 
-                Gwen::Rect r(pos.x+i*fSize*0.4, pos.y, fSize*0.4-1, fSize);
+                Gwk::Rect r(pos.x+i*fSize*0.4, pos.y, fSize*0.4-1, fSize);
 
                 //
                 // This isn't important, it's just me messing around changing
@@ -184,9 +185,9 @@ namespace Gwen
             }
         }
 
-        Gwen::Point Base::MeasureText(Gwen::Font* pFont, const Gwen::String& text)
+        Gwk::Point Base::MeasureText(Gwk::Font* pFont, const Gwk::String& text)
         {
-            Gwen::Point p;
+            Gwk::Point p;
             p.x = pFont->size*Scale()*(float)text.length()*0.4;
             p.y = pFont->size*Scale();
             return p;

@@ -1,28 +1,30 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 #pragma once
-#ifndef GWEN_ANIM_H
-#define GWEN_ANIM_H
-#include "Gwen/Gwen.h"
-#include "Gwen/Controls/Base.h"
-#include "Gwen/Platform.h"
+#ifndef GWK_ANIM_H
+#define GWK_ANIM_H
 
-#ifndef GWEN_NO_ANIMATION
+#include "Gwork/Gwork.h"
+#include "Gwork/Controls/Base.h"
+#include "Gwork/Platform.h"
 
-namespace Gwen
+#ifndef GWK_NO_ANIMATION
+
+namespace Gwk
 {
     namespace Anim
     {
-        class GWEN_EXPORT Animation
+        class GWK_EXPORT Animation
         {
         public:
 
             typedef std::list<Animation*> ChildList;
-            typedef std::map<Gwen::Controls::Base*, ChildList> List;
+            typedef std::map<Gwk::Controls::Base*, ChildList> List;
 
             virtual void Think() = 0;
             virtual bool Finished()
@@ -34,18 +36,18 @@ namespace Gwen
             {
             }
 
-            Gwen::Controls::Base*   m_Control;
+            Gwk::Controls::Base*   m_Control;
         };
 
 
-        GWEN_EXPORT void Add(Gwen::Controls::Base* control, Animation* animation);
-        GWEN_EXPORT void Cancel(Gwen::Controls::Base* control);
-        GWEN_EXPORT void Think();
+        GWK_EXPORT void Add(Gwk::Controls::Base* control, Animation* animation);
+        GWK_EXPORT void Cancel(Gwk::Controls::Base* control);
+        GWK_EXPORT void Think();
 
         //
         /// Timed animation. Provides a useful base for animations.
         //
-        class GWEN_EXPORT TimedAnimation : public Animation
+        class GWK_EXPORT TimedAnimation : public Animation
         {
         public:
 
@@ -73,7 +75,7 @@ namespace Gwen
 
         namespace Size
         {
-            class GWEN_EXPORT Height : public TimedAnimation
+            class GWK_EXPORT Height : public TimedAnimation
             {
             public:
 
@@ -149,7 +151,7 @@ namespace Gwen
 
         namespace Pos
         {
-            class GWEN_EXPORT X : public Anim::TimedAnimation
+            class GWK_EXPORT X : public Anim::TimedAnimation
             {
             public:
 
@@ -251,5 +253,5 @@ namespace Gwen
     }
 }
 
-#endif // !GWEN_NO_ANIMATION
-#endif // GWEN_ANIM_H
+#endif // !GWK_NO_ANIMATION
+#endif // GWK_ANIM_H

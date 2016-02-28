@@ -1,16 +1,23 @@
-#include "Gwen/UnitTest/UnitTest.h"
-#include "Gwen/Controls/ComboBox.h"
+/*
+ *  Gwork
+ *  Copyright (c) 2010 Facepunch Studios
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
+ */
 
-using namespace Gwen;
+#include "Gwork/Test/Test.h"
+#include "Gwork/Controls/ComboBox.h"
+
+using namespace Gwk;
 
 class ComboBox : public GUnit
 {
 public:
 
-    GWEN_CONTROL_INLINE(ComboBox, GUnit)
+    GWK_CONTROL_INLINE(ComboBox, GUnit)
     {
         {
-            Gwen::Controls::ComboBox* combo = new Gwen::Controls::ComboBox(this);
+            Gwk::Controls::ComboBox* combo = new Gwk::Controls::ComboBox(this);
             combo->SetPos(50, 50);
             combo->SetWidth(200);
             combo->AddItem("Option One", "one");
@@ -22,13 +29,13 @@ public:
         }
         {
             // Empty..
-            Gwen::Controls::ComboBox* combo = new Gwen::Controls::ComboBox(this);
+            Gwk::Controls::ComboBox* combo = new Gwk::Controls::ComboBox(this);
             combo->SetPos(50, 80);
             combo->SetWidth(200);
         }
         {
             // Empty..
-            Gwen::Controls::ComboBox* combo = new Gwen::Controls::ComboBox(this);
+            Gwk::Controls::ComboBox* combo = new Gwk::Controls::ComboBox(this);
             combo->SetPos(50, 110);
             combo->SetWidth(200);
 
@@ -39,9 +46,9 @@ public:
         }
     }
 
-    void OnComboSelect(Gwen::Controls::Base* pControl)
+    void OnComboSelect(Gwk::Controls::Base* pControl)
     {
-        Gwen::Controls::ComboBox* combo = (Gwen::Controls::ComboBox*)pControl;
+        Gwk::Controls::ComboBox* combo = (Gwk::Controls::ComboBox*)pControl;
         UnitPrint(Utility::Format("Combo Changed: %s",
                                   combo->GetSelectedItem()->GetText().c_str()));
     }

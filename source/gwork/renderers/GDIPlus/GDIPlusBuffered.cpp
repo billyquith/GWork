@@ -2,13 +2,13 @@
 #include <windows.h>
 #include <gdiplus.h>
 
-#include "Gwen/Renderers/GDIPlus.h"
+#include "Gwork/Renderers/GDIPlus.h"
 
-#include "Gwen/Utility.h"
-#include "Gwen/Font.h"
-#include "Gwen/Texture.h"
+#include "Gwork/Utility.h"
+#include "Gwork/Font.h"
+#include "Gwork/Texture.h"
 
-namespace Gwen
+namespace Gwk
 {
     namespace Renderer
     {
@@ -24,7 +24,7 @@ namespace Gwen
 
         void GDIPlusBuffered::CreateBackbuffer()
         {
-            // Check the Client Gwen::Rect size (of supplied HWND)
+            // Check the Client Gwk::Rect size (of supplied HWND)
             // If it has changed, we need to recreate the backbuffer
             {
                 RECT rect;

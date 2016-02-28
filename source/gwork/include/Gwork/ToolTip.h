@@ -1,31 +1,32 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 
 #pragma once
-#ifndef GWEN_TOOLTIP_H
-#define GWEN_TOOLTIP_H
+#ifndef GWK_TOOLTIP_H
+#define GWK_TOOLTIP_H
 
-#include "Gwen/Controls/Base.h"
-#include "Gwen/Gwen.h"
-#include "Gwen/Skin.h"
+#include "Gwork/Controls/Base.h"
+#include "Gwork/Gwork.h"
+#include "Gwork/Skin.h"
 
-namespace Gwen {
+namespace Gwk {
     namespace ToolTip
     {
-        GWEN_EXPORT bool TooltipActive();
+        GWK_EXPORT bool TooltipActive();
 
-        GWEN_EXPORT void Enable(Controls::Base* pControl);
-        GWEN_EXPORT void Disable(Controls::Base* pControl);
+        GWK_EXPORT void Enable(Controls::Base* pControl);
+        GWK_EXPORT void Disable(Controls::Base* pControl);
 
-        GWEN_EXPORT void ControlDeleted(Controls::Base* pControl);
+        GWK_EXPORT void ControlDeleted(Controls::Base* pControl);
 
-        GWEN_EXPORT void RenderToolTip(Skin::Base* skin);
+        GWK_EXPORT void RenderToolTip(Skin::Base* skin);
     }
 
 }
 
-#endif // ifndef GWEN_TOOLTIP_H
+#endif // ifndef GWK_TOOLTIP_H

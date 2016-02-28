@@ -1,11 +1,12 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2012 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2015-2016 Billy Quith
+ *  See license in Gwork.h
  */
 
-#include "Gwen/Macros.h"
-#include "Gwen/Platform.h"
+#include "Gwork/Macros.h"
+#include "Gwork/Platform.h"
 
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_image.h>
@@ -14,13 +15,13 @@
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_native_dialog.h>
 
-#include "Gwen/Input/Allegro.h"
+#include "Gwork/Input/Allegro.h"
 
 
-static Gwen::Input::Allegro     g_GwenInput;
+static Gwk::Input::Allegro     g_GworkInput;
 static ALLEGRO_EVENT_QUEUE*     g_event_queue = NULL;
 static ALLEGRO_DISPLAY*         g_display = NULL;
-static Gwen::String             gs_ClipboardEmulator;
+static Gwk::String             gs_ClipboardEmulator;
 
 static const ALLEGRO_SYSTEM_MOUSE_CURSOR g_CursorConversion[] =
 {
@@ -37,34 +38,34 @@ static const ALLEGRO_SYSTEM_MOUSE_CURSOR g_CursorConversion[] =
 };
 
 
-void Gwen::Platform::Sleep(unsigned int iMS)
+void Gwk::Platform::Sleep(unsigned int iMS)
 {
     al_rest(iMS*0.001);
 }
 
-void Gwen::Platform::SetCursor(unsigned char iCursor)
+void Gwk::Platform::SetCursor(unsigned char iCursor)
 {
     al_set_system_mouse_cursor(g_display, g_CursorConversion[iCursor]);
 }
 
-Gwen::String Gwen::Platform::GetClipboardText()
+Gwk::String Gwk::Platform::GetClipboardText()
 {
     return gs_ClipboardEmulator;
 }
 
-bool Gwen::Platform::SetClipboardText(const Gwen::String& str)
+bool Gwk::Platform::SetClipboardText(const Gwk::String& str)
 {
     gs_ClipboardEmulator = str;
     return true;
 }
 
-float Gwen::Platform::GetTimeInSeconds()
+float Gwk::Platform::GetTimeInSeconds()
 {
     return al_get_time();
 }
 
-bool Gwen::Platform::FileOpen(const String& Name, const String& StartPath,
-                              const String& Extension, Gwen::Event::Handler* pHandler,
+bool Gwk::Platform::FileOpen(const String& Name, const String& StartPath,
+                              const String& Extension, Gwk::Event::Handler* pHandler,
                               Event::Handler::FunctionWithInformation fnCallback)
 {
     ALLEGRO_FILECHOOSER* chooser = al_create_native_file_dialog(StartPath.c_str(),
@@ -79,7 +80,7 @@ bool Gwen::Platform::FileOpen(const String& Name, const String& StartPath,
         {
             if (pHandler && fnCallback)
             {
-                Gwen::Event::Information info;
+                Gwk::Event::Information info;
                 info.Control        = NULL;
                 info.ControlCaller  = NULL;
                 info.String         = al_get_native_file_dialog_path(chooser, 0);
@@ -92,9 +93,9 @@ bool Gwen::Platform::FileOpen(const String& Name, const String& StartPath,
     return true;
 }
 
-bool Gwen::Platform::FileSave(const String& Name, const String& StartPath,
-                              const String& Extension, Gwen::Event::Handler* pHandler,
-                              Gwen::Event::Handler::FunctionWithInformation fnCallback)
+bool Gwk::Platform::FileSave(const String& Name, const String& StartPath,
+                              const String& Extension, Gwk::Event::Handler* pHandler,
+                              Gwk::Event::Handler::FunctionWithInformation fnCallback)
 {
     ALLEGRO_FILECHOOSER* chooser = al_create_native_file_dialog(StartPath.c_str(),
                                                                 Name.c_str(),
@@ -108,7 +109,7 @@ bool Gwen::Platform::FileSave(const String& Name, const String& StartPath,
         {
             if (pHandler && fnCallback)
             {
-                Gwen::Event::Information info;
+                Gwk::Event::Information info;
                 info.Control        = NULL;
                 info.ControlCaller  = NULL;
                 info.String         = al_get_native_file_dialog_path(chooser, 0);
@@ -121,8 +122,8 @@ bool Gwen::Platform::FileSave(const String& Name, const String& StartPath,
     return true;
 }
 
-bool Gwen::Platform::FolderOpen(const String& Name, const String& StartPath,
-                                Gwen::Event::Handler* pHandler,
+bool Gwk::Platform::FolderOpen(const String& Name, const String& StartPath,
+                                Gwk::Event::Handler* pHandler,
                                 Event::Handler::FunctionWithInformation fnCallback)
 {
     ALLEGRO_FILECHOOSER* chooser = al_create_native_file_dialog(StartPath.c_str(),
@@ -137,7 +138,7 @@ bool Gwen::Platform::FolderOpen(const String& Name, const String& StartPath,
         {
             if (pHandler && fnCallback)
             {
-                Gwen::Event::Information info;
+                Gwk::Event::Information info;
                 info.Control        = NULL;
                 info.ControlCaller  = NULL;
                 info.String         = al_get_native_file_dialog_path(chooser, 0);
@@ -176,8 +177,8 @@ static bool InitAllegro()
     return true;
 }
 
-void* Gwen::Platform::CreatePlatformWindow(int x, int y, int w, int h,
-                                           const Gwen::String& strWindowTitle)
+void* Gwk::Platform::CreatePlatformWindow(int x, int y, int w, int h,
+                                           const Gwk::String& strWindowTitle)
 {
     // Check Allegro has been initialised.
     if (!InitAllegro())
@@ -211,7 +212,7 @@ void* Gwen::Platform::CreatePlatformWindow(int x, int y, int w, int h,
     return display;
 }
 
-void Gwen::Platform::DestroyPlatformWindow(void* pPtr)
+void Gwk::Platform::DestroyPlatformWindow(void* pPtr)
 {
     ALLEGRO_DISPLAY* display = (ALLEGRO_DISPLAY*)pPtr;
     al_destroy_display(display);
@@ -219,25 +220,25 @@ void Gwen::Platform::DestroyPlatformWindow(void* pPtr)
     g_event_queue = NULL;
 }
 
-void Gwen::Platform::MessagePump(void* pWindow, Gwen::Controls::Canvas* ptarget)
+void Gwk::Platform::MessagePump(void* pWindow, Gwk::Controls::Canvas* ptarget)
 {
     static bool firstCall = true;
 
     if (firstCall)
     {
         firstCall = false;
-        g_GwenInput.Initialize(ptarget);
+        g_GworkInput.Initialize(ptarget);
     }
 
     ALLEGRO_EVENT ev;
 
     while (al_get_next_event(g_event_queue, &ev))
     {
-        g_GwenInput.ProcessMessage(ev);
+        g_GworkInput.ProcessMessage(ev);
     }
 }
 
-void Gwen::Platform::SetBoundsPlatformWindow(void* pPtr, int x, int y, int w, int h)
+void Gwk::Platform::SetBoundsPlatformWindow(void* pPtr, int x, int y, int w, int h)
 {
     ALLEGRO_DISPLAY* display = (ALLEGRO_DISPLAY*)pPtr;
     al_set_window_position(display, x, y);
@@ -246,8 +247,8 @@ void Gwen::Platform::SetBoundsPlatformWindow(void* pPtr, int x, int y, int w, in
         al_resize_display(display, w, h);
 }
 
-void Gwen::Platform::SetWindowMaximized(void* pPtr, bool bMax, Gwen::Point& pNewPos,
-                                        Gwen::Point& pNewSize)
+void Gwk::Platform::SetWindowMaximized(void* pPtr, bool bMax, Gwk::Point& pNewPos,
+                                        Gwk::Point& pNewSize)
 {
     ALLEGRO_DISPLAY* display = (ALLEGRO_DISPLAY*)pPtr;
 
@@ -281,16 +282,16 @@ void Gwen::Platform::SetWindowMaximized(void* pPtr, bool bMax, Gwen::Point& pNew
     pNewSize.y = al_get_display_height(display);
 }
 
-void Gwen::Platform::SetWindowMinimized(void* pPtr, bool bMinimized)
+void Gwk::Platform::SetWindowMinimized(void* pPtr, bool bMinimized)
 {
 }
 
-bool Gwen::Platform::HasFocusPlatformWindow(void* pPtr)
+bool Gwk::Platform::HasFocusPlatformWindow(void* pPtr)
 {
     return true;
 }
 
-void Gwen::Platform::GetDesktopSize(int& w, int& h)
+void Gwk::Platform::GetDesktopSize(int& w, int& h)
 {
     if (!al_is_system_installed())
         al_init();
@@ -301,7 +302,7 @@ void Gwen::Platform::GetDesktopSize(int& w, int& h)
     h = info.y2-info.y1;
 }
 
-void Gwen::Platform::GetCursorPos(Gwen::Point& po)
+void Gwk::Platform::GetCursorPos(Gwk::Point& po)
 {
     ALLEGRO_MOUSE_STATE mouse;
     al_get_mouse_state(&mouse);

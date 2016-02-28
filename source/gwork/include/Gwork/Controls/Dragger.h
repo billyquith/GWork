@@ -1,27 +1,28 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 #pragma once
-#ifndef GWEN_CONTROLS_DRAGGER_H
-#define GWEN_CONTROLS_DRAGGER_H
+#ifndef GWK_CONTROLS_DRAGGER_H
+#define GWK_CONTROLS_DRAGGER_H
 
-#include "Gwen/Controls/Base.h"
-#include "Gwen/Gwen.h"
-#include "Gwen/Skin.h"
+#include "Gwork/Controls/Base.h"
+#include "Gwork/Gwork.h"
+#include "Gwork/Skin.h"
 
 
-namespace Gwen
+namespace Gwk
 {
     namespace ControlsInternal
     {
-        class GWEN_EXPORT Dragger : public Controls::Base
+        class GWK_EXPORT Dragger : public Controls::Base
         {
         public:
 
-            GWEN_CONTROL(Dragger, Controls::Base);
+            GWK_CONTROL(Dragger, Controls::Base);
 
             virtual void OnMouseMoved(int x, int y, int deltaX, int deltaY) override;
 
@@ -45,15 +46,15 @@ namespace Gwen
 
             virtual void OnMouseDoubleClickLeft(int x, int y) override;
 
-            Gwen::Event::Caller onDragged;
-            Gwen::Event::Caller onDragStart;
+            Gwk::Event::Caller onDragged;
+            Gwk::Event::Caller onDragStart;
 
-            Gwen::Event::Caller onDoubleClickLeft;
+            Gwk::Event::Caller onDoubleClickLeft;
 
         protected:
 
             bool m_bDepressed;
-            Gwen::Point m_HoldPos;
+            Gwk::Point m_HoldPos;
             Controls::Base*     m_pTarget;
             bool m_bDoMove;
         };
@@ -61,4 +62,4 @@ namespace Gwen
 
     }
 }
-#endif // ifndef GWEN_CONTROLS_DRAGGER_H
+#endif // ifndef GWK_CONTROLS_DRAGGER_H

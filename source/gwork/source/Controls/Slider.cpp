@@ -1,18 +1,19 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 
 #include <math.h>
-#include "Gwen/Controls/Slider.h"
+#include "Gwork/Controls/Slider.h"
 
-using namespace Gwen;
-using namespace Gwen::Controls;
-using namespace Gwen::ControlsInternal;
+using namespace Gwk;
+using namespace Gwk::Controls;
+using namespace Gwk::ControlsInternal;
 
-GWEN_CONTROL_CONSTRUCTOR(SliderBar)
+GWK_CONTROL_CONSTRUCTOR(SliderBar)
 {
     SetTarget(this);
     RestrictToParent(true);
@@ -23,9 +24,9 @@ void SliderBar::Render(Skin::Base* skin)
     skin->DrawSlideButton(this, IsDepressed(), IsHorizontal());
 }
 
-GWEN_CONTROL_CONSTRUCTOR(Slider)
+GWK_CONTROL_CONSTRUCTOR(Slider)
 {
-    SetBounds(Gwen::Rect(0, 0, 32, 128));
+    SetBounds(Gwk::Rect(0, 0, 32, 128));
     m_SliderBar = new SliderBar(this);
     m_SliderBar->onDragged.Add(this, &Slider::OnMoved);
     m_fMin = 0.0f;
@@ -89,9 +90,9 @@ void Slider::SetRange(float fMin, float fMax)
     m_fMax = fMax;
 }
 
-void Slider::RenderFocus(Gwen::Skin::Base* skin)
+void Slider::RenderFocus(Gwk::Skin::Base* skin)
 {
-    if (Gwen::KeyboardFocus != this)
+    if (Gwk::KeyboardFocus != this)
         return;
 
     if (!IsTabable())

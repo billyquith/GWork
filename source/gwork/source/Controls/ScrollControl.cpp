@@ -1,21 +1,22 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 
-#include "Gwen/Controls/ScrollControl.h"
-#include "Gwen/Controls/ScrollBar.h"
-#include "Gwen/Controls/VerticalScrollBar.h"
-#include "Gwen/Controls/HorizontalScrollBar.h"
-#include "Gwen/Utility.h"
+#include "Gwork/Controls/ScrollControl.h"
+#include "Gwork/Controls/ScrollBar.h"
+#include "Gwork/Controls/VerticalScrollBar.h"
+#include "Gwork/Controls/HorizontalScrollBar.h"
+#include "Gwork/Utility.h"
 
-using namespace Gwen;
-using namespace Gwen::Controls;
-using namespace Gwen::ControlsInternal;
+using namespace Gwk;
+using namespace Gwk::Controls;
+using namespace Gwk::ControlsInternal;
 
-GWEN_CONTROL_CONSTRUCTOR(ScrollControl)
+GWK_CONTROL_CONSTRUCTOR(ScrollControl)
 {
     SetMouseInputEnabled(false);
     m_VerticalScrollBar = new VerticalScrollBar(this);
@@ -59,7 +60,7 @@ void ScrollControl::HBarMoved(Controls::Base* /*control*/)
     Invalidate();
 }
 
-void ScrollControl::OnChildBoundsChanged(Gwen::Rect /*oldChildBounds*/, Base* /*pChild*/)
+void ScrollControl::OnChildBoundsChanged(Gwk::Rect /*oldChildBounds*/, Base* /*pChild*/)
 {
     UpdateScrollBars();
     Invalidate();
@@ -97,14 +98,14 @@ void ScrollControl::Render(Skin::Base* skin)
 #if 0
     // Debug render - this shouldn't render ANYTHING REALLY - it should be up to
     // the parent!
-    Gwen::Rect rect = GetRenderBounds();
-    Gwen::Renderer::Base* render = skin->GetRender();
-    render->SetDrawColor(Gwen::Color(255, 255, 0, 100));
+    Gwk::Rect rect = GetRenderBounds();
+    Gwk::Renderer::Base* render = skin->GetRender();
+    render->SetDrawColor(Gwk::Color(255, 255, 0, 100));
     render->DrawFilledRect(rect);
-    render->SetDrawColor(Gwen::Color(255, 0, 0, 100));
+    render->SetDrawColor(Gwk::Color(255, 0, 0, 100));
     render->DrawFilledRect(m_InnerPanel->GetBounds());
     render->RenderText(skin->GetDefaultFont(),
-                       Gwen::Point(0,0),
+                       Gwk::Point(0,0),
                        Utility::Format("Offset: %i %i", m_InnerPanel->X(), m_InnerPanel->Y()));
 #else // 0
     (void)skin;
@@ -155,20 +156,20 @@ void ScrollControl::UpdateScrollBars()
          ++iter)
     {
         Base* pChild = *iter;
-        childrenWidth = Gwen::Max(childrenWidth, pChild->Right());
-        childrenHeight = Gwen::Max(childrenHeight, pChild->Bottom());
+        childrenWidth = Gwk::Max(childrenWidth, pChild->Right());
+        childrenHeight = Gwk::Max(childrenHeight, pChild->Bottom());
     }
 
     if (m_bCanScrollH)
     {
-        m_InnerPanel->SetSize(Gwen::Max( Width(), childrenWidth ),
-                              Gwen::Max( Height(), childrenHeight ));
+        m_InnerPanel->SetSize(Gwk::Max( Width(), childrenWidth ),
+                              Gwk::Max( Height(), childrenHeight ));
     }
     else
     {
         m_InnerPanel->SetSize(Width() - (m_VerticalScrollBar->Hidden()
                                          ? 0 : m_VerticalScrollBar->Width()-1),
-                              Gwen::Max(Height(), childrenHeight));
+                              Gwk::Max(Height(), childrenHeight));
     }
 
     float wPercent =

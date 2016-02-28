@@ -1,11 +1,17 @@
+/*
+ *  Gwork
+ *  Copyright (c) 2010 Facepunch Studios
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
+ */
 
-#include "Gwen/Gwen.h"
-#include "Gwen/Controls/SplitterBar.h"
+#include "Gwork/Gwork.h"
+#include "Gwork/Controls/SplitterBar.h"
 
-using namespace Gwen;
+using namespace Gwk;
 using namespace Controls;
 
-GWEN_CONTROL_CONSTRUCTOR(SplitterBar)
+GWK_CONTROL_CONSTRUCTOR(SplitterBar)
 {
     SetTarget(this);
     RestrictToParent(true);

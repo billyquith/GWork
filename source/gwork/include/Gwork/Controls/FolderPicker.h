@@ -1,27 +1,28 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2012 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2015-2016 Billy Quith
+ *  See license in Gwork.h
  */
 
 #pragma once
-#ifndef GWEN_CONTROLS_FOLDERPICKER_H
-#define GWEN_CONTROLS_FOLDERPICKER_H
+#ifndef GWK_CONTROLS_FOLDERPICKER_H
+#define GWK_CONTROLS_FOLDERPICKER_H
 
-#include "Gwen/BaseRender.h"
-#include "Gwen/Controls/Dialogs/FolderOpen.h"
-#include "Gwen/Controls/TextBox.h"
+#include "Gwork/BaseRender.h"
+#include "Gwork/Controls/Dialogs/FolderOpen.h"
+#include "Gwork/Controls/TextBox.h"
 
 
-namespace Gwen
+namespace Gwk
 {
     namespace Controls
     {
-        class GWEN_EXPORT FolderPicker : public Controls::Base
+        class GWK_EXPORT FolderPicker : public Controls::Base
         {
         public:
 
-            GWEN_CONTROL_INLINE(FolderPicker, Controls::Base)
+            GWK_CONTROL_INLINE(FolderPicker, Controls::Base)
             {
                 m_Button = new Controls::Button(this);
                 m_Button->Dock(Docking::Right);
@@ -43,14 +44,14 @@ namespace Gwen
                 onFolderChanged.Call(this);
             }
 
-            const Gwen::String& GetFolder()
+            const Gwk::String& GetFolder()
             {
                 return m_TextBox->GetText();
             }
 
             void OnBrowse()
             {
-                Gwen::Dialogs::FolderOpen(true, "Name",
+                Gwk::Dialogs::FolderOpen(true, "Name",
                                           GetFolder(), this,
                                           &FolderPicker::SetFolderCallback);
             }
@@ -69,14 +70,14 @@ namespace Gwen
 
         private:
 
-            void SetFolderCallback(Gwen::Event::Info info)
+            void SetFolderCallback(Gwk::Event::Info info)
             {
                 SetFolder(info.String);
             }
 
             Controls::TextBox*  m_TextBox;
             Controls::Button*   m_Button;
-            Gwen::String m_BrowseName;
+            Gwk::String m_BrowseName;
 
         };
 
@@ -84,4 +85,4 @@ namespace Gwen
     }
 
 }
-#endif // ifndef GWEN_CONTROLS_FOLDERPICKER_H
+#endif // ifndef GWK_CONTROLS_FOLDERPICKER_H

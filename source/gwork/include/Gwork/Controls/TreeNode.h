@@ -1,29 +1,30 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2011 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 #pragma once
-#ifndef GWEN_CONTROLS_TREENODE_H
-#define GWEN_CONTROLS_TREENODE_H
+#ifndef GWK_CONTROLS_TREENODE_H
+#define GWK_CONTROLS_TREENODE_H
 
-#include "Gwen/Controls/Base.h"
-#include "Gwen/Controls/Button.h"
-#include "Gwen/Controls/ScrollControl.h"
+#include "Gwork/Controls/Base.h"
+#include "Gwork/Controls/Button.h"
+#include "Gwork/Controls/ScrollControl.h"
 
 
-namespace Gwen
+namespace Gwk
 {
     namespace Controls
     {
         class TreeControl;
 
-        class GWEN_EXPORT TreeNode : public Base
+        class GWK_EXPORT TreeNode : public Base
         {
         public:
 
-            GWEN_CONTROL(TreeNode, Base);
+            GWK_CONTROL(TreeNode, Base);
 
             virtual TreeNode* AddNode(const String& strLabel);
 
@@ -96,4 +97,4 @@ namespace Gwen
 
     }
 }
-#endif // ifndef GWEN_CONTROLS_TREENODE_H
+#endif // ifndef GWK_CONTROLS_TREENODE_H

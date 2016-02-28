@@ -1,9 +1,9 @@
 #include "DocumentCanvas.h"
-#include "GwenUtil/ControlFactory.h"
+#include "Gwork/Util/ControlFactory.h"
 #include "SelectionLayer.h"
 #include "Utility.h"
 
-GWEN_CONTROL_CONSTRUCTOR( DocumentCanvas )
+GWK_CONTROL_CONSTRUCTOR( DocumentCanvas )
 {
 	SetShouldDrawBackground( true );
 
@@ -12,12 +12,12 @@ GWEN_CONTROL_CONSTRUCTOR( DocumentCanvas )
 	m_SelectionLayer->onPropertiesChanged.Add( this, &ThisClass::OnPropertiesChanged );
 	m_SelectionLayer->onHierachyChanged.Add( this, &ThisClass::OnHierachyChanged );
 
-	ControlFactory::Base* pControlFactory = Gwen::ControlFactory::Find( "DesignerCanvas" );
+	ControlFactory::Base* pControlFactory = Gwk::ControlFactory::Find( "DesignerCanvas" );
 	UserData.Set( "ControlFactory", pControlFactory );
 }
 
 
-void DocumentCanvas::Render( Gwen::Skin::Base* skin )
+void DocumentCanvas::Render( Gwk::Skin::Base* skin )
 {
 	skin->DrawGenericPanel( this );
 }
@@ -28,14 +28,14 @@ void DocumentCanvas::PostLayout( Skin::Base* skin )
 	m_SelectionLayer->SetBounds( 0, 0, Width(), Height() );
 }
 
-bool DocumentCanvas::DragAndDrop_CanAcceptPackage( Gwen::DragAndDrop::Package* pPackage )
+bool DocumentCanvas::DragAndDrop_CanAcceptPackage( Gwk::DragAndDrop::Package* pPackage )
 {
 	return pPackage->name == "ControlSpawn";
 }
 
-bool DocumentCanvas::DragAndDrop_HandleDrop( Gwen::DragAndDrop::Package* pPackage, int x, int y )
+bool DocumentCanvas::DragAndDrop_HandleDrop( Gwk::DragAndDrop::Package* pPackage, int x, int y )
 {
-	Gwen::Point pPos = CanvasPosToLocal( Gwen::Point( x, y ) );
+	Gwk::Point pPos = CanvasPosToLocal( Gwk::Point( x, y ) );
 
 	m_SelectionLayer->SetHidden( true );
 	Controls::Base* pDroppedOn = GetControlAt( pPos.x, pPos.y );
@@ -44,7 +44,7 @@ bool DocumentCanvas::DragAndDrop_HandleDrop( Gwen::DragAndDrop::Package* pPackag
 
 	if ( !pDroppedOn ) pDroppedOn = this;
 
-	pPos = pDroppedOn->CanvasPosToLocal( Gwen::Point( x, y ) );
+	pPos = pDroppedOn->CanvasPosToLocal( Gwk::Point( x, y ) );
 	
 
 	if ( pPackage->name == "ControlSpawn" )
@@ -95,7 +95,7 @@ void DocumentCanvas::OnHierachyChanged( Event::Info info )
 	onHierachyChanged.Call( this, info );
 }
 
-void DocumentCanvas::Command( const Gwen::String& str )
+void DocumentCanvas::Command( const Gwk::String& str )
 {
 	if ( str == "delete" )
 	{

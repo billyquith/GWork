@@ -1,6 +1,6 @@
 
 
-inline Gwen::Controls::Base* FindParentControlFactoryControl( Gwen::Controls::Base* pControl )
+inline Gwk::Controls::Base* FindParentControlFactoryControl( Gwk::Controls::Base* pControl )
 {
 	while ( pControl )
 	{

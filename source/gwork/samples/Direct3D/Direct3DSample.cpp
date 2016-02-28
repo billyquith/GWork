@@ -13,12 +13,12 @@
 #include <memory.h>
 #include <tchar.h>
 
-#include "Gwen/Gwen.h"
-#include "Gwen/Skins/Simple.h"
-#include "Gwen/Skins/TexturedBase.h"
-#include "Gwen/UnitTest/UnitTest.h"
-#include "Gwen/Input/Windows.h"
-#include "Gwen/Renderers/DirectX9.h"
+#include "Gwork/Gwork.h"
+#include "Gwork/Skins/Simple.h"
+#include "Gwork/Skins/TexturedBase.h"
+#include "Gwork/UnitTest/UnitTest.h"
+#include "Gwork/Input/Windows.h"
+#include "Gwork/Renderers/DirectX9.h"
 
 HWND g_pHWND = NULL;
 LPDIRECT3D9 g_pD3D = NULL;
@@ -35,11 +35,11 @@ HWND CreateGameWindow(void)
     wc.style            = CS_HREDRAW|CS_VREDRAW|CS_OWNDC;
     wc.lpfnWndProc      = DefWindowProc;
     wc.hInstance        = GetModuleHandle(NULL);
-    wc.lpszClassName    = L"GWENWindow";
+    wc.lpszClassName    = L"GworkWindow";
     wc.hCursor          = LoadCursor(NULL, IDC_ARROW);
     RegisterClass(&wc);
     HWND hWindow = CreateWindowEx((WS_EX_APPWINDOW|WS_EX_WINDOWEDGE), wc.lpszClassName,
-                                  L"GWEN - Direct 3D Sample",
+                                  L"Gwork - Direct 3D Sample",
                                   (WS_OVERLAPPEDWINDOW|WS_CLIPSIBLINGS|
                                    WS_CLIPCHILDREN)&~(WS_MINIMIZEBOX|WS_MAXIMIZEBOX|WS_THICKFRAME),
                                   -1, -1, 1004, 650, NULL, NULL, GetModuleHandle(
@@ -97,21 +97,21 @@ int main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCm
     RECT FrameBounds;
     GetClientRect(g_pHWND, &FrameBounds);
     //
-    // Create a GWEN DirectX renderer
+    // Create a Gwork DirectX renderer
     //
-    Gwen::Renderer::DirectX9* pRenderer = new Gwen::Renderer::DirectX9(g_pD3DDevice);
+    Gwk::Renderer::DirectX9* pRenderer = new Gwk::Renderer::DirectX9(g_pD3DDevice);
     //
-    // Create a GWEN skin
+    // Create a Gwork skin
     //
-    Gwen::Skin::TexturedBase* pSkin = new Gwen::Skin::TexturedBase(pRenderer);
+    Gwk::Skin::TexturedBase* pSkin = new Gwk::Skin::TexturedBase(pRenderer);
     pSkin->Init("DefaultSkin.png");
     //
-    // Create a Canvas (it's root, on which all other GWEN panels are created)
+    // Create a Canvas (it's root, on which all other Gwork panels are created)
     //
-    Gwen::Controls::Canvas* pCanvas = new Gwen::Controls::Canvas(pSkin);
+    Gwk::Controls::Canvas* pCanvas = new Gwk::Controls::Canvas(pSkin);
     pCanvas->SetSize(FrameBounds.right, FrameBounds.bottom);
     pCanvas->SetDrawBackground(true);
-    pCanvas->SetBackgroundColor(Gwen::Color(150, 170, 170, 255));
+    pCanvas->SetBackgroundColor(Gwk::Color(150, 170, 170, 255));
     //
     // Create our unittest control (which is a Window with controls in it)
     //
@@ -119,10 +119,10 @@ int main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCm
     pUnit->SetPos(10, 10);
     //
     // Create a Windows Control helper
-    // (Processes Windows MSG's and fires input at GWEN)
+    // (Processes Windows MSG's and fires input at Gwork)
     //
-    Gwen::Input::Windows GwenInput;
-    GwenInput.Initialize(pCanvas);
+    Gwk::Input::Windows GworkInput;
+    GworkInput.Initialize(pCanvas);
     //
     // Begin the main game loop
     //
@@ -138,7 +138,7 @@ int main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCm
         if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
         {
             // .. give it to the input handler to process
-            GwenInput.ProcessMessage(msg);
+            GworkInput.ProcessMessage(msg);
 
             // if it's QUIT then quit..
             if (msg.message == WM_QUIT)
@@ -153,7 +153,7 @@ int main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCm
             // Normal DirectX rendering loop
             g_pD3DDevice->BeginScene();
             g_pD3DDevice->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 0, 0), 1, 0);
-            // This is how easy it is to render GWEN!
+            // This is how easy it is to render Gwork!
             pCanvas->RenderCanvas();
             g_pD3DDevice->EndScene();
             g_pD3DDevice->Present(NULL, NULL, NULL, NULL);

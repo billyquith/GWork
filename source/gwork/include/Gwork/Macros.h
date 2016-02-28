@@ -1,6 +1,12 @@
+/*
+ *  Gwork
+ *  Copyright (c) 2010 Facepunch Studios
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
+ */
 
-#ifndef GWEN_MACROS_H
-#define GWEN_MACROS_H
+#ifndef GWK_MACROS_H
+#define GWK_MACROS_H
 
 // C RunTime Header Files
 #include <stdlib.h>
@@ -29,9 +35,9 @@
 
 //! Get the number of items in a static array.
 //! @param A : The array.
-#define GWEN_ARRAY_COUNT(A) (sizeof(A)/sizeof(A[0]))
+#define GWK_ARRAY_COUNT(A) (sizeof(A)/sizeof(A[0]))
 
-namespace Gwen
+namespace Gwk
 {
     template <typename T>
     inline T Min(T a, T b)
@@ -74,4 +80,4 @@ namespace Gwen
 
 }
 
-#endif // ifndef GWEN_MACROS_H
+#endif // ifndef GWK_MACROS_H

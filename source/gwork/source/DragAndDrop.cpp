@@ -1,27 +1,28 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 
-#include "Gwen/Gwen.h"
-#include "Gwen/DragAndDrop.h"
-#include "Gwen/Utility.h"
-#include "Gwen/Platform.h"
+#include "Gwork/Gwork.h"
+#include "Gwork/DragAndDrop.h"
+#include "Gwork/Utility.h"
+#include "Gwork/Platform.h"
 
-using namespace Gwen;
-using namespace Gwen::DragAndDrop;
+using namespace Gwk;
+using namespace Gwk::DragAndDrop;
 
 DragAndDrop::Package* DragAndDrop::CurrentPackage = NULL;
-Gwen::Controls::Base* DragAndDrop::HoveredControl = NULL;
-Gwen::Controls::Base* DragAndDrop::SourceControl = NULL;
+Gwk::Controls::Base* DragAndDrop::HoveredControl = NULL;
+Gwk::Controls::Base* DragAndDrop::SourceControl = NULL;
 
-static Gwen::Controls::Base* LastPressedControl = NULL;
-static Gwen::Controls::Base* NewHoveredControl = NULL;
-static Gwen::Point LastPressedPos;
+static Gwk::Controls::Base* LastPressedControl = NULL;
+static Gwk::Controls::Base* NewHoveredControl = NULL;
+static Gwk::Point LastPressedPos;
 
-void DragAndDrop::ControlDeleted(Gwen::Controls::Base* pControl)
+void DragAndDrop::ControlDeleted(Gwk::Controls::Base* pControl)
 {
     if (SourceControl == pControl)
     {
@@ -44,7 +45,7 @@ void DragAndDrop::ControlDeleted(Gwen::Controls::Base* pControl)
 static int m_iMouseX = 0;
 static int m_iMouseY = 0;
 
-bool DragAndDrop::Start(Gwen::Controls::Base* pControl, Package* pPackage)
+bool DragAndDrop::Start(Gwk::Controls::Base* pControl, Package* pPackage)
 {
     if (CurrentPackage)
         return false;
@@ -73,7 +74,7 @@ bool OnDrop(int x, int y)
     return true;
 }
 
-bool DragAndDrop::OnMouseButton(Gwen::Controls::Base* pHoveredControl, int x, int y, bool bDown)
+bool DragAndDrop::OnMouseButton(Gwk::Controls::Base* pHoveredControl, int x, int y, bool bDown)
 {
     if (!bDown)
     {
@@ -97,7 +98,7 @@ bool DragAndDrop::OnMouseButton(Gwen::Controls::Base* pHoveredControl, int x, in
     // Store the last clicked on control. Don't do anything yet,
     // we'll check it in OnMouseMoved, and if it moves further than
     // x pixels with the mouse down, we'll start to drag.
-    LastPressedPos = Gwen::Point(x, y);
+    LastPressedPos = Gwk::Point(x, y);
     LastPressedControl = pHoveredControl;
     return false;
 }
@@ -128,7 +129,7 @@ bool ShouldStartDraggingControl(int x, int y)
 
     // Now we're dragging something!
     DragAndDrop::SourceControl = LastPressedControl;
-    Gwen::MouseFocus = NULL;
+    Gwk::MouseFocus = NULL;
     LastPressedControl = NULL;
     DragAndDrop::CurrentPackage->drawcontrol = NULL;
 
@@ -147,7 +148,7 @@ bool ShouldStartDraggingControl(int x, int y)
     return true;
 }
 
-void UpdateHoveredControl(Gwen::Controls::Base* pCtrl, int x, int y)
+void UpdateHoveredControl(Gwk::Controls::Base* pCtrl, int x, int y)
 {
     //
     // We use this global variable to represent our hovered control
@@ -197,7 +198,7 @@ void UpdateHoveredControl(Gwen::Controls::Base* pCtrl, int x, int y)
     NewHoveredControl = NULL;
 }
 
-void DragAndDrop::OnMouseMoved(Gwen::Controls::Base* pHoveredControl, int x, int y)
+void DragAndDrop::OnMouseMoved(Gwk::Controls::Base* pHoveredControl, int x, int y)
 {
     // Always keep these up to date, they're used to draw the dragged control.
     m_iMouseX = x;
@@ -227,7 +228,7 @@ void DragAndDrop::OnMouseMoved(Gwen::Controls::Base* pHoveredControl, int x, int
     pHoveredControl->Redraw();
 }
 
-void DragAndDrop::RenderOverlay(Gwen::Controls::Canvas* /*pCanvas*/, Skin::Base* skin)
+void DragAndDrop::RenderOverlay(Gwk::Controls::Canvas* /*pCanvas*/, Skin::Base* skin)
 {
     if (!CurrentPackage)
         return;
@@ -235,8 +236,8 @@ void DragAndDrop::RenderOverlay(Gwen::Controls::Canvas* /*pCanvas*/, Skin::Base*
     if (!CurrentPackage->drawcontrol)
         return;
 
-    Gwen::Point pntOld = skin->GetRender()->GetRenderOffset();
-    skin->GetRender()->AddRenderOffset(Gwen::Rect(m_iMouseX-SourceControl->X()-
+    Gwk::Point pntOld = skin->GetRender()->GetRenderOffset();
+    skin->GetRender()->AddRenderOffset(Gwk::Rect(m_iMouseX-SourceControl->X()-
                                                   CurrentPackage->holdoffset.x, m_iMouseY-
                                                   SourceControl->Y()-CurrentPackage->holdoffset.y,
                                                   0, 0));

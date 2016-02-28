@@ -1,42 +1,43 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 #pragma once
-#ifndef GWEN_CONTROLS_WINDOWCONTROL_H
-#define GWEN_CONTROLS_WINDOWCONTROL_H
+#ifndef GWK_CONTROLS_WINDOWCONTROL_H
+#define GWK_CONTROLS_WINDOWCONTROL_H
 
-#include "Gwen/Gwen.h"
-#include "Gwen/Controls/Base.h"
-#include "Gwen/Controls/Label.h"
-#include "Gwen/Controls/Button.h"
-#include "Gwen/Controls/Dragger.h"
-#include "Gwen/Controls/Label.h"
-#include "Gwen/Controls/ResizableControl.h"
-#include "Gwen/Controls/Modal.h"
-#include "Gwen/Controls/WindowButtons.h"
-#include "Gwen/Skin.h"
+#include "Gwork/Gwork.h"
+#include "Gwork/Controls/Base.h"
+#include "Gwork/Controls/Label.h"
+#include "Gwork/Controls/Button.h"
+#include "Gwork/Controls/Dragger.h"
+#include "Gwork/Controls/Label.h"
+#include "Gwork/Controls/ResizableControl.h"
+#include "Gwork/Controls/Modal.h"
+#include "Gwork/Controls/WindowButtons.h"
+#include "Gwork/Skin.h"
 
 
-namespace Gwen
+namespace Gwk
 {
     namespace Controls
     {
         class CloseButton;
 
-        class GWEN_EXPORT WindowControl : public ResizableControl
+        class GWK_EXPORT WindowControl : public ResizableControl
         {
         public:
 
-            GWEN_CONTROL(WindowControl, ResizableControl);
+            GWK_CONTROL(WindowControl, ResizableControl);
 
             virtual ~WindowControl();
             virtual void Render(Skin::Base* skin) override;
             virtual void RenderUnder(Skin::Base* skin) override;
 
-            virtual void SetTitle(Gwen::String title);
+            virtual void SetTitle(Gwk::String title);
 
             virtual void SetClosable(bool closeable);
 
@@ -46,7 +47,7 @@ namespace Gwen
             virtual void SetHidden(bool hidden) override;
 
             void CloseButtonPressed();
-            void RenderFocus(Gwen::Skin::Base* skin) override;
+            void RenderFocus(Gwk::Skin::Base* skin) override;
             void SetDeleteOnClose(bool b)
             {
                 m_bDeleteOnClose = b;
@@ -55,13 +56,13 @@ namespace Gwen
             void MakeModal(bool bDrawBackground = true);
             void DestroyModal();
 
-            Gwen::Event::Caller onWindowClosed;
+            Gwk::Event::Caller onWindowClosed;
 
         protected:
 
-            Gwen::ControlsInternal::Dragger*    m_TitleBar;
-            Gwen::Controls::Label*              m_Title;
-            Gwen::Controls::WindowCloseButton*  m_CloseButton;
+            Gwk::ControlsInternal::Dragger*    m_TitleBar;
+            Gwk::Controls::Label*              m_Title;
+            Gwk::Controls::WindowCloseButton*  m_CloseButton;
 
             bool m_bDeleteOnClose;
 
@@ -71,4 +72,4 @@ namespace Gwen
 
     }
 }
-#endif // ifndef GWEN_CONTROLS_WINDOWCONTROL_H
+#endif // ifndef GWK_CONTROLS_WINDOWCONTROL_H

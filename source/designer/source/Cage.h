@@ -1,35 +1,35 @@
 
 #pragma once
 
-#include "Gwen/Gwen.h"
-#include "Gwen/Controls.h"
+#include "Gwork/Gwork.h"
+#include "Gwork/Controls.h"
 
 
-class Cage : public Gwen::Controls::Button
+class Cage : public Gwk::Controls::Button
 {
-	GWEN_CONTROL( Cage, Gwen::Controls::Button );
+	GWK_CONTROL( Cage, Gwk::Controls::Button );
 	
-	void Setup( Gwen::Controls::Base* pControl );
+	void Setup( Gwk::Controls::Base* pControl );
 	
-	virtual void Render( Gwen::Skin::Base* skin );
-	virtual void PostLayout( Gwen::Skin::Base* skin );
+	virtual void Render( Gwk::Skin::Base* skin );
+	virtual void PostLayout( Gwk::Skin::Base* skin );
 	
 	virtual void OnMouseMoved( int x, int y, int deltaX, int deltaY );
 	virtual void SetDepressed( bool b );
 	
 	virtual void OnPress();
 	
-	virtual Gwen::Controls::Base* Target() { return m_Control; }
+	virtual Gwk::Controls::Base* Target() { return m_Control; }
 	
-	Gwen::Event::Caller		onMoved;
-	Gwen::Event::Caller		onDragStart;
-	Gwen::Event::Caller		onMoving;
+	Gwk::Event::Caller		onMoved;
+	Gwk::Event::Caller		onDragStart;
+	Gwk::Event::Caller		onMoving;
 	
 protected:
 	
 	bool					m_bDragged;
-	Gwen::Controls::Base*	m_Control;
+	Gwk::Controls::Base*	m_Control;
 	int						m_iBorder;
 	
-	Gwen::Point				m_DragPoint;
+	Gwk::Point				m_DragPoint;
 };

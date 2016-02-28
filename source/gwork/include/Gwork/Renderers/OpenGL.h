@@ -1,20 +1,21 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2011 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+*  See license in Gwork.h
  */
 
-#ifndef GWEN_RENDERERS_OPENGL_H
-#define GWEN_RENDERERS_OPENGL_H
+#ifndef GWK_RENDERERS_OPENGL_H
+#define GWK_RENDERERS_OPENGL_H
 
-#include "Gwen/Gwen.h"
-#include "Gwen/BaseRender.h"
+#include "Gwork/Gwork.h"
+#include "Gwork/BaseRender.h"
 
-namespace Gwen
+namespace Gwk
 {
     namespace Renderer
     {
-        class OpenGL : public Gwen::Renderer::Base
+        class OpenGL : public Gwk::Renderer::Base
         {
         public:
 
@@ -34,18 +35,18 @@ namespace Gwen
             virtual void Begin();
             virtual void End();
 
-            virtual void SetDrawColor(Gwen::Color color);
-            virtual void DrawFilledRect(Gwen::Rect rect);
+            virtual void SetDrawColor(Gwk::Color color);
+            virtual void DrawFilledRect(Gwk::Rect rect);
 
             void StartClip();
             void EndClip();
 
-            void DrawTexturedRect(Gwen::Texture* pTexture, Gwen::Rect pTargetRect, float u1 = 0.0f,
+            void DrawTexturedRect(Gwk::Texture* pTexture, Gwk::Rect pTargetRect, float u1 = 0.0f,
                                   float v1 = 0.0f, float u2 = 1.0f, float v2 = 1.0f);
-            void        LoadTexture(Gwen::Texture* pTexture);
-            void        FreeTexture(Gwen::Texture* pTexture);
-            Gwen::Color PixelColour(Gwen::Texture* pTexture, unsigned int x, unsigned int y,
-                                    const Gwen::Color& col_default);
+            void        LoadTexture(Gwk::Texture* pTexture);
+            void        FreeTexture(Gwk::Texture* pTexture);
+            Gwk::Color PixelColour(Gwk::Texture* pTexture, unsigned int x, unsigned int y,
+                                    const Gwk::Color& col_default);
 
         protected:
 
@@ -55,7 +56,7 @@ namespace Gwen
             void Flush();
             void AddVert(int x, int y, float u = 0.0f, float v = 0.0f);
 
-            Gwen::Color m_Color;
+            Gwk::Color m_Color;
             int m_iVertNum;
             Vertex m_Vertices[ MaxVerts ];
 
@@ -65,12 +66,12 @@ namespace Gwen
             // Self Initialization
             //
 
-            virtual bool InitializeContext(Gwen::WindowProvider* pWindow);
-            virtual bool ShutdownContext(Gwen::WindowProvider* pWindow);
-            virtual bool PresentContext(Gwen::WindowProvider* pWindow);
-            virtual bool ResizedContext(Gwen::WindowProvider* pWindow, int w, int h);
-            virtual bool BeginContext(Gwen::WindowProvider* pWindow);
-            virtual bool EndContext(Gwen::WindowProvider* pWindow);
+            virtual bool InitializeContext(Gwk::WindowProvider* pWindow);
+            virtual bool ShutdownContext(Gwk::WindowProvider* pWindow);
+            virtual bool PresentContext(Gwk::WindowProvider* pWindow);
+            virtual bool ResizedContext(Gwk::WindowProvider* pWindow, int w, int h);
+            virtual bool BeginContext(Gwk::WindowProvider* pWindow);
+            virtual bool EndContext(Gwk::WindowProvider* pWindow);
 
             void*   m_pContext;
         };
@@ -78,4 +79,4 @@ namespace Gwen
 
     }
 }
-#endif // ifndef GWEN_RENDERERS_OPENGL_H
+#endif // ifndef GWK_RENDERERS_OPENGL_H

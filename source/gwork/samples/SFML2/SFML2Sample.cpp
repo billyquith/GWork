@@ -1,15 +1,15 @@
 #include <SFML/Graphics.hpp>
 #include <cmath>
 
-#include "Gwen/Renderers/SFML2.h"
-#include "Gwen/Input/SFML.h"
+#include "Gwork/Renderers/SFML2.h"
+#include "Gwork/Input/SFML.h"
 
-#include "Gwen/Skins/Simple.h"
-#include "Gwen/Skins/TexturedBase.h"
-#include "Gwen/UnitTest/UnitTest.h"
+#include "Gwork/Skins/Simple.h"
+#include "Gwork/Skins/TexturedBase.h"
+#include "Gwork/UnitTest/UnitTest.h"
 
 
-#include <GwenUtil/ControlFactory.h>
+#include <Gwork/Util/ControlFactory.h>
 
 ////////////////////////////////////////////////////////////
 /// Entry point of application
@@ -19,19 +19,19 @@
 int main()
 {
     // Create the window of the application
-    sf::RenderWindow App(sf::VideoMode(1004, 650, 32), "GWEN: SFML2");
+    sf::RenderWindow App(sf::VideoMode(1004, 650, 32), "Gwork: SFML2");
 
-    Gwen::Renderer::SFML2 GwenRenderer(App);
+    Gwk::Renderer::SFML2 GworkRenderer(App);
     
-    Gwen::ControlFactory::GetList();
+    Gwk::ControlFactory::GetList();
 
     //
-    // Create a GWEN skin
+    // Create a Gwork skin
     //
-    // Gwen::Skin::Simple skin;
-    // skin.SetRender( &GwenRenderer );
+    // Gwk::Skin::Simple skin;
+    // skin.SetRender( &GworkRenderer );
 
-    Gwen::Skin::TexturedBase skin(&GwenRenderer);
+    Gwk::Skin::TexturedBase skin(&GworkRenderer);
     skin.Init("DefaultSkin.png");
 
     // The fonts work differently in SFML - it can't use
@@ -40,13 +40,13 @@ int main()
 
 
     //
-    // Create a Canvas (it's root, on which all other GWEN panels are created)
+    // Create a Canvas (it's root, on which all other Gwork panels are created)
     //
-    Gwen::Controls::Canvas* pCanvas = new Gwen::Controls::Canvas(&skin);
+    Gwk::Controls::Canvas* pCanvas = new Gwk::Controls::Canvas(&skin);
 
     pCanvas->SetSize(App.getSize().x, App.getSize().y);
     pCanvas->SetDrawBackground(true);
-    pCanvas->SetBackgroundColor(Gwen::Color(150, 170, 170, 255));
+    pCanvas->SetBackgroundColor(Gwk::Color(150, 170, 170, 255));
 
     //
     // Create our unittest control (which is a Window with controls in it)
@@ -56,8 +56,8 @@ int main()
     //
     // Create an input processor
     //
-    Gwen::Input::SFML GwenInput;
-    GwenInput.Initialize(pCanvas);
+    Gwk::Input::SFML GworkInput;
+    GworkInput.Initialize(pCanvas);
     
     while (App.isOpen())
     {
@@ -78,7 +78,7 @@ int main()
                 pCanvas->SetSize(Event.size.width, Event.size.height);
             }
 
-            GwenInput.ProcessMessage(Event);
+            GworkInput.ProcessMessage(Event);
         }
 
         // Clear the window

@@ -1,19 +1,20 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 
-#include "Gwen/Controls/Slider.h"
-#include "Gwen/Controls/HorizontalSlider.h"
+#include "Gwork/Controls/Slider.h"
+#include "Gwork/Controls/HorizontalSlider.h"
 
-using namespace Gwen;
-using namespace Gwen::Controls;
-using namespace Gwen::ControlsInternal;
+using namespace Gwk;
+using namespace Gwk::Controls;
+using namespace Gwk::ControlsInternal;
 
 
-GWEN_CONTROL_CONSTRUCTOR(HorizontalSlider)
+GWK_CONTROL_CONSTRUCTOR(HorizontalSlider)
 {
     m_SliderBar->SetHorizontal(true);
 }
@@ -30,7 +31,7 @@ void HorizontalSlider::UpdateBarFromValue()
 
 void HorizontalSlider::OnMouseClickLeft(int x, int y, bool bDown)
 {
-    m_SliderBar->MoveTo( CanvasPosToLocal(Gwen::Point(x,y)).x - m_SliderBar->Width()/2,
+    m_SliderBar->MoveTo( CanvasPosToLocal(Gwk::Point(x,y)).x - m_SliderBar->Width()/2,
                          m_SliderBar->Y() );
     m_SliderBar->OnMouseClickLeft(x, y, bDown);
     OnMoved(m_SliderBar);

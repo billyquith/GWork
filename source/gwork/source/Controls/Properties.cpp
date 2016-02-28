@@ -1,29 +1,30 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 
-#include "Gwen/Gwen.h"
-#include "Gwen/Skin.h"
-#include "Gwen/Controls/Properties.h"
-#include "Gwen/Utility.h"
+#include "Gwork/Gwork.h"
+#include "Gwork/Skin.h"
+#include "Gwork/Controls/Properties.h"
+#include "Gwork/Utility.h"
 
-using namespace Gwen;
-using namespace Gwen::Controls;
+using namespace Gwk;
+using namespace Gwk::Controls;
 
-GWEN_CONTROL_CONSTRUCTOR(Properties)
+GWK_CONTROL_CONSTRUCTOR(Properties)
 {
     m_SplitterBar = new SplitterBar(this);
     m_SplitterBar->SetPos(80, 0);
-    m_SplitterBar->SetCursor(Gwen::CursorType::SizeWE);
+    m_SplitterBar->SetCursor(Gwk::CursorType::SizeWE);
     m_SplitterBar->onDragged.Add(this, &Properties::OnSplitterMoved);
     m_SplitterBar->SetShouldDrawBackground(false);
     m_SplitterBar->DoNotIncludeInSize();
 }
 
-void Properties::PostLayout(Gwen::Skin::Base* /*skin*/)
+void Properties::PostLayout(Gwk::Skin::Base* /*skin*/)
 {
     if (SizeToChildren(false, true))
         InvalidateParent();
@@ -61,7 +62,7 @@ PropertyRow* Properties::Find(const String& text)
 {
     for (Base::List::iterator it = GetChildren().begin(); it != GetChildren().end(); ++it)
     {
-        PropertyRow* row = gwen_cast<PropertyRow>(*it);
+        PropertyRow* row = gwk_cast<PropertyRow>(*it);
 
         if (!row)
             continue;
@@ -79,7 +80,7 @@ void Properties::Clear()
 
     for (Base::List::iterator it = ChildListCopy.begin(); it != ChildListCopy.end(); ++it)
     {
-        PropertyRow* row = gwen_cast<PropertyRow>(*it);
+        PropertyRow* row = gwk_cast<PropertyRow>(*it);
 
         if (!row)
             continue;
@@ -90,7 +91,7 @@ void Properties::Clear()
 
 class PropertyRowLabel : public Label
 {
-    GWEN_CONTROL_INLINE(PropertyRowLabel, Label)
+    GWK_CONTROL_INLINE(PropertyRowLabel, Label)
     {
         SetAlignment(Docking::Left|Docking::CenterV);
         m_pPropertyRow = NULL;
@@ -121,7 +122,7 @@ protected:
 };
 
 
-GWEN_CONTROL_CONSTRUCTOR(PropertyRow)
+GWK_CONTROL_CONSTRUCTOR(PropertyRow)
 {
     m_Property = NULL;
     PropertyRowLabel* pLabel = new PropertyRowLabel(this);
@@ -132,7 +133,7 @@ GWEN_CONTROL_CONSTRUCTOR(PropertyRow)
     m_Label = pLabel;
 }
 
-void PropertyRow::Render(Gwen::Skin::Base* skin)
+void PropertyRow::Render(Gwk::Skin::Base* skin)
 {
     /* SORRY */
     if (IsEditing() != m_bLastEditing)
@@ -152,9 +153,9 @@ void PropertyRow::Render(Gwen::Skin::Base* skin)
                           m_Property->IsHovered());
 }
 
-void PropertyRow::Layout(Gwen::Skin::Base* /*skin*/)
+void PropertyRow::Layout(Gwk::Skin::Base* /*skin*/)
 {
-    Properties* pParent = gwen_cast<Properties>(GetParent());
+    Properties* pParent = gwk_cast<Properties>(GetParent());
 
     if (!pParent)
         return;
@@ -173,7 +174,7 @@ void PropertyRow::SetProperty(Property::Base* prop)
     m_Property->onChange.Add(this, &ThisClass::OnPropertyValueChanged);
 }
 
-void PropertyRow::OnPropertyValueChanged(Gwen::Controls::Base* /*control*/)
+void PropertyRow::OnPropertyValueChanged(Gwk::Controls::Base* /*control*/)
 {
     Event::Information info;
     info.String = GetProperty()->GetPropertyValue();

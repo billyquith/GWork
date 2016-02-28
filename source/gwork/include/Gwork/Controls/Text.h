@@ -1,28 +1,29 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 #pragma once
-#ifndef GWEN_CONTROLS_TEXT_H
-#define GWEN_CONTROLS_TEXT_H
+#ifndef GWK_CONTROLS_TEXT_H
+#define GWK_CONTROLS_TEXT_H
 
-#include "Gwen/BaseRender.h"
-#include "Gwen/Controls/Base.h"
+#include "Gwork/BaseRender.h"
+#include "Gwork/Controls/Base.h"
 
-namespace Gwen
+namespace Gwk
 {
     namespace ControlsInternal
     {
-        class GWEN_EXPORT Text : public Controls::Base
+        class GWK_EXPORT Text : public Controls::Base
         {
         public:
 
-            GWEN_CONTROL(Text, Controls::Base);
+            GWK_CONTROL(Text, Controls::Base);
 
             virtual ~Text();
-            Gwen::Font* GetFont();
+            Gwk::Font* GetFont();
 
             void SetString(const String& str);
 
@@ -31,38 +32,38 @@ namespace Gwen
 
             void RefreshSize();
 
-            void SetFont(Gwen::Font* pFont);
+            void SetFont(Gwk::Font* pFont);
 
             const String& GetText() const
             {
                 return m_String;
             }
 
-            Gwen::Rect GetCharacterPosition(unsigned int iChar);
-            int        GetClosestCharacter(Gwen::Point p);
+            Gwk::Rect GetCharacterPosition(unsigned int iChar);
+            int        GetClosestCharacter(Gwk::Point p);
 
             //! Return the encapsulating box of the given line.
             //! @remark This function is necessary to implement multiline selection.
-            virtual Gwen::Rect GetLineBox(int i);
+            virtual Gwk::Rect GetLineBox(int i);
 
             int Length() const
             {
                 return (int)m_String.size();
             }
 
-            virtual void SetTextColor(const Gwen::Color& col)
+            virtual void SetTextColor(const Gwk::Color& col)
             {
                 m_Color = col;
             }
 
-            virtual void SetTextColorOverride(const Gwen::Color& col)
+            virtual void SetTextColorOverride(const Gwk::Color& col)
             {
                 m_ColorOverride = col;
             }
 
             virtual void OnScaleChanged() override;
 
-            inline const Gwen::Color& TextColor() const
+            inline const Gwk::Color& TextColor() const
             {
                 return m_Color;
             }
@@ -94,16 +95,16 @@ namespace Gwen
 
         protected:
 
-            virtual void SplitWords(const Gwen::String& s, std::vector<Gwen::String>& elems);
+            virtual void SplitWords(const Gwk::String& s, std::vector<Gwk::String>& elems);
 
         private:
 
             virtual void RefreshSizeWrap();
 
-            Gwen::String m_String;
-            Gwen::Font*         m_Font;
-            Gwen::Color m_Color;
-            Gwen::Color m_ColorOverride;
+            Gwk::String m_String;
+            Gwk::Font*         m_Font;
+            Gwk::Color m_Color;
+            Gwk::Color m_ColorOverride;
 
             bool m_bWrap;
             bool m_bTextChanged;
@@ -116,4 +117,4 @@ namespace Gwen
     }
 
 }
-#endif // ifndef GWEN_CONTROLS_TEXT_H
+#endif // ifndef GWK_CONTROLS_TEXT_H

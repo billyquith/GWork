@@ -1,8 +1,8 @@
 #include "Hierarchy.h"
 #include "DocumentCanvas.h"
-#include "GwenUtil/ControlFactory.h"
+#include "Gwork/Util/ControlFactory.h"
 
-GWEN_CONTROL_CONSTRUCTOR( Hierarchy )
+GWK_CONTROL_CONSTRUCTOR( Hierarchy )
 {
 	SetSize( 200, 200 );
 
@@ -38,11 +38,11 @@ void Hierarchy::UpdateNode( Controls::TreeNode* pNode, Controls::Base* pControl 
 	}
 	else
 	{
-		Gwen::String strName = pControl->GetName();
-		if ( strName == "" ) strName = "[" + Gwen::String( pControl->GetTypeName() ) + "]";
+		Gwk::String strName = pControl->GetName();
+		if ( strName == "" ) strName = "[" + Gwk::String( pControl->GetTypeName() ) + "]";
 
 		pChildNode = pNode->AddNode( strName );
-		pChildNode->SetImage( "img/controls/" + Gwen::String(pControl->GetTypeName()) + ".png" );
+		pChildNode->SetImage( "img/controls/" + Gwk::String(pControl->GetTypeName()) + ".png" );
 		pChildNode->onSelect.Add( this, &ThisClass::OnNodeSelected );
 		pChildNode->UserData.Set<Controls::Base*>( "TargetControl", pControl );
 	}
@@ -96,7 +96,7 @@ void Hierarchy::SelectNodeRepresentingControl( Controls::Base* pControl, Control
 	Base::List& children = pNode->GetChildNodes();
 	for ( Base::List::iterator iter = children.begin(); iter != children.end(); ++iter )
 	{
-		Controls::TreeNode* pChildNode = gwen_cast<Controls::TreeNode>( *iter );
+		Controls::TreeNode* pChildNode = gwk_cast<Controls::TreeNode>( *iter );
 		if ( !pChildNode ) continue;
 
 		SelectNodeRepresentingControl( pControl, pChildNode );

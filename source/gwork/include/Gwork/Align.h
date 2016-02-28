@@ -1,15 +1,16 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 #pragma once
-#ifndef GWEN_ALIGN_H
-#define GWEN_ALIGN_H
-#include "Gwen/Controls/Base.h"
+#ifndef GWK_ALIGN_H
+#define GWK_ALIGN_H
+#include "Gwork/Controls/Base.h"
 
-namespace Gwen
+namespace Gwk
 {
     namespace Align
     {
@@ -20,4 +21,4 @@ namespace Gwen
 
     }
 }
-#endif // ifndef GWEN_ALIGN_H
+#endif // ifndef GWK_ALIGN_H

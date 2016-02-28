@@ -1,10 +1,17 @@
+/*
+ *  Gwork
+ *  Copyright (c) 2010 Facepunch Studios
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
+ */
+
 #pragma once
-#ifndef GWEN_CONTROLS_DIALOGS_QUERY_H
-#define GWEN_CONTROLS_DIALOGS_QUERY_H
+#ifndef GWK_CONTROLS_DIALOGS_QUERY_H
+#define GWK_CONTROLS_DIALOGS_QUERY_H
 
-#include "Gwen/Gwen.h"
+#include "Gwork/Gwork.h"
 
-namespace Gwen
+namespace Gwk
 {
     namespace Dialogs
     {
@@ -14,4 +21,4 @@ namespace Gwen
     }
 }
 
-#endif // ifndef GWEN_CONTROLS_DIALOGS_QUERY_H
+#endif // ifndef GWK_CONTROLS_DIALOGS_QUERY_H

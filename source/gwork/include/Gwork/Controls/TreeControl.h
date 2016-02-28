@@ -1,29 +1,30 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 #pragma once
-#ifndef GWEN_CONTROLS_TREECONTROL_H
-#define GWEN_CONTROLS_TREECONTROL_H
+#ifndef GWK_CONTROLS_TREECONTROL_H
+#define GWK_CONTROLS_TREECONTROL_H
 
-#include "Gwen/Controls/Base.h"
-#include "Gwen/Controls/TreeNode.h"
+#include "Gwork/Controls/Base.h"
+#include "Gwork/Controls/TreeNode.h"
 
-namespace Gwen
+namespace Gwk
 {
     namespace Controls
     {
-        class GWEN_EXPORT TreeControl : public TreeNode
+        class GWK_EXPORT TreeControl : public TreeNode
         {
         public:
 
-            GWEN_CONTROL(TreeControl, TreeNode);
+            GWK_CONTROL(TreeControl, TreeNode);
 
             virtual void Render(Skin::Base* skin) override;
 
-            virtual void OnChildBoundsChanged(Gwen::Rect oldChildBounds, Base* pChild) override;
+            virtual void OnChildBoundsChanged(Gwk::Rect oldChildBounds, Base* pChild) override;
 
             ScrollControl* Scroller()
             {
@@ -54,4 +55,4 @@ namespace Gwen
 
     }
 }
-#endif // ifndef GWEN_CONTROLS_TREECONTROL_H
+#endif // ifndef GWK_CONTROLS_TREECONTROL_H

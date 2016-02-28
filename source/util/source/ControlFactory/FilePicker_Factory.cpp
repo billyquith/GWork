@@ -1,39 +1,39 @@
 
-#include "GwenUtil/ControlFactory.h"
-#include "Gwen/Controls.h"
+#include "Gwork/Util/ControlFactory.h"
+#include "Gwork/Controls.h"
 
-namespace Gwen
+namespace Gwk
 {
     namespace ControlFactory
     {
-        using namespace Gwen;
+        using namespace Gwk;
 
 //        namespace Properties
 //        {
-//            using namespace Gwen;
+//            using namespace Gwk;
 //
 //            class FileType : public ControlFactory::Property
 //            {
-//                GWEN_CONTROL_FACTORY_PROPERTY(FileType, "In the format \"PNG file | *.png\"");
+//                GWK_CONTROL_FACTORY_PROPERTY(FileType, "In the format \"PNG file | *.png\"");
 //
 //                String GetValueAsString(Controls::Base* ctrl) override
 //                {
-//                    return gwen_cast<Controls::FilePicker>(ctrl)->GetFileType();
+//                    return gwk_cast<Controls::FilePicker>(ctrl)->GetFileType();
 //                }
 //
 //                void SetValueFromString(Controls::Base* ctrl, const String& str) override
 //                {
-//                    gwen_cast<Controls::FilePicker>(ctrl)->SetFileType(str);
+//                    gwk_cast<Controls::FilePicker>(ctrl)->SetFileType(str);
 //                }
 //
 //            };
 //        }
 
-        class FilePicker_Factory : public Gwen::ControlFactory::Base
+        class FilePicker_Factory : public Gwk::ControlFactory::Base
         {
         public:
 
-            GWEN_CONTROL_FACTORY_FOR(FilePicker, Base)
+            GWK_CONTROL_FACTORY_FOR(FilePicker, Base)
             {
 //                ponder::Class::declare<Controls::FilePicker>()
 //                    .base<Controls::Base>()
@@ -42,9 +42,9 @@ namespace Gwen
 //                AddProperty(new Properties::FileType());
             }
 
-            virtual Gwen::Controls::Base* CreateInstance(Gwen::Controls::Base* parent) override
+            virtual Gwk::Controls::Base* CreateInstance(Gwk::Controls::Base* parent) override
             {
-                Gwen::Controls::FilePicker* pControl = new Gwen::Controls::FilePicker(parent);
+                Gwk::Controls::FilePicker* pControl = new Gwk::Controls::FilePicker(parent);
                 pControl->SetSize(100, 20);
                 pControl->SetFileType("EXE file | *.exe");
                 return pControl;
@@ -53,7 +53,7 @@ namespace Gwen
         };
 
 
-        GWEN_CONTROL_FACTORY(FilePicker_Factory);
+        GWK_CONTROL_FACTORY(FilePicker_Factory);
 
     }
 }

@@ -1,28 +1,29 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 #pragma once
-#ifndef GWEN_CONTROLS_RESIZER_H
-#define GWEN_CONTROLS_RESIZER_H
+#ifndef GWK_CONTROLS_RESIZER_H
+#define GWK_CONTROLS_RESIZER_H
 
-#include "Gwen/Controls/Base.h"
-#include "Gwen/Gwen.h"
-#include "Gwen/Skin.h"
-#include "Gwen/Controls/Dragger.h"
+#include "Gwork/Controls/Base.h"
+#include "Gwork/Gwork.h"
+#include "Gwork/Skin.h"
+#include "Gwork/Controls/Dragger.h"
 
 
-namespace Gwen
+namespace Gwk
 {
     namespace ControlsInternal
     {
-        class GWEN_EXPORT Resizer : public Dragger
+        class GWK_EXPORT Resizer : public Dragger
         {
         public:
 
-            GWEN_CONTROL(Resizer, Dragger);
+            GWK_CONTROL(Resizer, Dragger);
 
             virtual void OnMouseMoved(int x, int y, int deltaX, int deltaY) override;
             virtual void SetResizeDir(int dir);
@@ -38,4 +39,4 @@ namespace Gwen
 
     }
 }
-#endif // ifndef GWEN_CONTROLS_RESIZER_H
+#endif // ifndef GWK_CONTROLS_RESIZER_H

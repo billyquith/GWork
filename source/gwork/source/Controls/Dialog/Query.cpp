@@ -1,11 +1,12 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
-#include "Gwen/Gwen.h"
-#include "Gwen/Controls/Dialogs/Query.h"
+#include "Gwork/Gwork.h"
+#include "Gwork/Controls/Dialogs/Query.h"
 
-using namespace Gwen;
-using namespace Gwen::Controls;
+using namespace Gwk;
+using namespace Gwk::Controls;

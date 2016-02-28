@@ -1,19 +1,20 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 
-#include "Gwen/Controls/ScrollBar.h"
-#include "Gwen/Controls/ScrollBarButton.h"
+#include "Gwork/Controls/ScrollBar.h"
+#include "Gwork/Controls/ScrollBarButton.h"
 
-using namespace Gwen;
-using namespace Gwen::Controls;
-using namespace Gwen::ControlsInternal;
+using namespace Gwk;
+using namespace Gwk::Controls;
+using namespace Gwk::ControlsInternal;
 
 
-GWEN_CONTROL_CONSTRUCTOR(ScrollBarButton)
+GWK_CONTROL_CONSTRUCTOR(ScrollBarButton)
 {
     SetDirectionUp();
 }

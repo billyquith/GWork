@@ -1,17 +1,18 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 
-#include "Gwen/Controls/CheckBox.h"
+#include "Gwork/Controls/CheckBox.h"
 
-using namespace Gwen;
-using namespace Gwen::Controls;
+using namespace Gwk;
+using namespace Gwk::Controls;
 
 
-GWEN_CONTROL_CONSTRUCTOR(CheckBox)
+GWK_CONTROL_CONSTRUCTOR(CheckBox)
 {
     SetSize(15, 15);
     m_bChecked = true;

@@ -1,8 +1,15 @@
-#include "Gwen/UnitTest/UnitTest.h"
-#include "Gwen/Controls/TabControl.h"
-#include "Gwen/Controls/RadioButtonController.h"
+/*
+ *  Gwork
+ *  Copyright (c) 2010 Facepunch Studios
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
+ */
 
-using namespace Gwen;
+#include "Gwork/Test/Test.h"
+#include "Gwork/Controls/TabControl.h"
+#include "Gwork/Controls/RadioButtonController.h"
+
+using namespace Gwk;
 
 class TabControl : public GUnit
 {
@@ -10,7 +17,7 @@ public:
 
     Controls::TabControl* m_pDockControlLeft;
 
-    GWEN_CONTROL_INLINE(TabControl, GUnit)
+    GWK_CONTROL_INLINE(TabControl, GUnit)
     {
         {
             m_pDockControlLeft = new Controls::TabControl(this);
@@ -45,10 +52,10 @@ public:
         }
     }
 
-    void OnDockChange(Gwen::Controls::Base* pControl)
+    void OnDockChange(Gwk::Controls::Base* pControl)
     {
-        Gwen::Controls::RadioButtonController* rc =
-            (Gwen::Controls::RadioButtonController*)pControl;
+        Gwk::Controls::RadioButtonController* rc =
+            (Gwk::Controls::RadioButtonController*)pControl;
 
         if (rc->GetSelectedLabel() == "Top")
             m_pDockControlLeft->SetTabStripPosition(Docking::Top);
@@ -63,7 +70,7 @@ public:
             m_pDockControlLeft->SetTabStripPosition(Docking::Right);
     }
 
-    Gwen::Font m_Font;
+    Gwk::Font m_Font;
 };
 
 

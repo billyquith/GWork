@@ -1,18 +1,19 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 
-#include "Gwen/Gwen.h"
-#include "Gwen/Controls/MenuStrip.h"
-#include "Gwen/Skin.h"
+#include "Gwork/Gwork.h"
+#include "Gwork/Controls/MenuStrip.h"
+#include "Gwork/Skin.h"
 
-using namespace Gwen;
-using namespace Gwen::Controls;
+using namespace Gwk;
+using namespace Gwk::Controls;
 
-GWEN_CONTROL_CONSTRUCTOR(MenuStrip)
+GWK_CONTROL_CONSTRUCTOR(MenuStrip)
 {
     SetBounds(0, 0, 200, 22);
     Dock(Docking::Top);

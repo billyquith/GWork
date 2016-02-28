@@ -1,40 +1,40 @@
 
-#include <GwenUtil/ControlFactory.h>
+#include <Gwork/Util/ControlFactory.h>
 
-namespace Gwen {
+namespace Gwk {
 namespace ControlFactory {
     
-const Gwen::String PropertyBool::True    = "true";
-const Gwen::String PropertyBool::False   = "false";
+const Gwk::String PropertyBool::True    = "true";
+const Gwk::String PropertyBool::False   = "false";
 
 void InitializeControls()
 {
-    ponder::Class::declare<Gwen::Color>()
-        .property("a", &Gwen::Color::a)
-        .property("r", &Gwen::Color::r)
-        .property("g", &Gwen::Color::g)
-        .property("b", &Gwen::Color::b)
+    ponder::Class::declare<Gwk::Color>()
+        .property("a", &Gwk::Color::a)
+        .property("r", &Gwk::Color::r)
+        .property("g", &Gwk::Color::g)
+        .property("b", &Gwk::Color::b)
         ;
 
-    ponder::Class::declare<Gwen::Margin>()
-        .property("top",    &Gwen::Margin::top)
-        .property("bottom", &Gwen::Margin::bottom)
-        .property("left",   &Gwen::Margin::left)
-        .property("right",  &Gwen::Margin::right)
+    ponder::Class::declare<Gwk::Margin>()
+        .property("top",    &Gwk::Margin::top)
+        .property("bottom", &Gwk::Margin::bottom)
+        .property("left",   &Gwk::Margin::left)
+        .property("right",  &Gwk::Margin::right)
         ;
 
-    ponder::Class::declare<Gwen::Point>()
-        .property("x",  &Gwen::Point::x)
-        .property("y",  &Gwen::Point::y)
+    ponder::Class::declare<Gwk::Point>()
+        .property("x",  &Gwk::Point::x)
+        .property("y",  &Gwk::Point::y)
         ;
     
     ponder::Enum::declare<Docking::Area>()
-        .value("none",   Gwen::Docking::None)
-        .value("fill",   Gwen::Docking::Fill)
-        .value("left",   Gwen::Docking::Left)
-        .value("right",  Gwen::Docking::Right)
-        .value("top",    Gwen::Docking::Top)
-        .value("bottom", Gwen::Docking::Bottom)
+        .value("none",   Gwk::Docking::None)
+        .value("fill",   Gwk::Docking::Fill)
+        .value("left",   Gwk::Docking::Left)
+        .value("right",  Gwk::Docking::Right)
+        .value("top",    Gwk::Docking::Top)
+        .value("bottom", Gwk::Docking::Bottom)
         ;
 
     ponder::Class::declare<Controls::Base>()
@@ -51,7 +51,7 @@ void InitializeControls()
     ponder::Class::declare<Controls::Label>()
         .base<Controls::Base>()
         .property("text", &Controls::Label::GetText,
-                          [] (Controls::Label& c, const Gwen::String& s) { c.SetText(s); })
+                          [] (Controls::Label& c, const Gwk::String& s) { c.SetText(s); })
         .property("textColor",  &Controls::Label::GetTextColor, &Controls::Label::SetTextColor)
         ;
 
@@ -126,26 +126,26 @@ void InitializeControls()
     // This sucks, but I don't think it's possible to get the factory
     // method working inside a static lib without some shady unportable compiler capers
     //
-//            DECLARE_GWEN_CONTROL_FACTORY(Base_Factory);
-//            DECLARE_GWEN_CONTROL_FACTORY(Label_Factory);
-//            DECLARE_GWEN_CONTROL_FACTORY(LabelClickable_Factory);
-//    DECLARE_GWEN_CONTROL_FACTORY(Button_Factory);
-//    DECLARE_GWEN_CONTROL_FACTORY(TextBox_Factory);
-//    DECLARE_GWEN_CONTROL_FACTORY(TextBoxMultiline_Factory);
-//    DECLARE_GWEN_CONTROL_FACTORY(CheckBox_Factory);
-//    DECLARE_GWEN_CONTROL_FACTORY(CheckBoxWithLabel_Factory);
-//    DECLARE_GWEN_CONTROL_FACTORY(MenuStrip_Factory);
-//    DECLARE_GWEN_CONTROL_FACTORY(ListBox_Factory);
-//    // DECLARE_GWEN_CONTROL_FACTORY( VerticalSplitter_Factory );
-//    DECLARE_GWEN_CONTROL_FACTORY(ImagePanel_Factory);
-//    DECLARE_GWEN_CONTROL_FACTORY(FilePicker_Factory);
-//    DECLARE_GWEN_CONTROL_FACTORY(FolderPicker_Factory);
-//    DECLARE_GWEN_CONTROL_FACTORY(PageControl_Factory);
-//    DECLARE_GWEN_CONTROL_FACTORY(Rectangle_Factory);
-//    DECLARE_GWEN_CONTROL_FACTORY(ProgressBar_Factory);
-//    DECLARE_GWEN_CONTROL_FACTORY(ComboBox_Factory);
-//    DECLARE_GWEN_CONTROL_FACTORY(HorizontalSlider_Factory);
-//    DECLARE_GWEN_CONTROL_FACTORY(DesignerCanvas_Factory);
+//            DECLARE_GWK_CONTROL_FACTORY(Base_Factory);
+//            DECLARE_GWK_CONTROL_FACTORY(Label_Factory);
+//            DECLARE_GWK_CONTROL_FACTORY(LabelClickable_Factory);
+//    DECLARE_GWK_CONTROL_FACTORY(Button_Factory);
+//    DECLARE_GWK_CONTROL_FACTORY(TextBox_Factory);
+//    DECLARE_GWK_CONTROL_FACTORY(TextBoxMultiline_Factory);
+//    DECLARE_GWK_CONTROL_FACTORY(CheckBox_Factory);
+//    DECLARE_GWK_CONTROL_FACTORY(CheckBoxWithLabel_Factory);
+//    DECLARE_GWK_CONTROL_FACTORY(MenuStrip_Factory);
+//    DECLARE_GWK_CONTROL_FACTORY(ListBox_Factory);
+//    // DECLARE_GWK_CONTROL_FACTORY( VerticalSplitter_Factory );
+//    DECLARE_GWK_CONTROL_FACTORY(ImagePanel_Factory);
+//    DECLARE_GWK_CONTROL_FACTORY(FilePicker_Factory);
+//    DECLARE_GWK_CONTROL_FACTORY(FolderPicker_Factory);
+//    DECLARE_GWK_CONTROL_FACTORY(PageControl_Factory);
+//    DECLARE_GWK_CONTROL_FACTORY(Rectangle_Factory);
+//    DECLARE_GWK_CONTROL_FACTORY(ProgressBar_Factory);
+//    DECLARE_GWK_CONTROL_FACTORY(ComboBox_Factory);
+//    DECLARE_GWK_CONTROL_FACTORY(HorizontalSlider_Factory);
+//    DECLARE_GWK_CONTROL_FACTORY(DesignerCanvas_Factory);
 }
 
 List& GetList()
@@ -162,7 +162,7 @@ List& GetList()
     return list;
 }
 
-ControlFactory::Base* Find(const Gwen::String& name)
+ControlFactory::Base* Find(const Gwk::String& name)
 {
     for (ControlFactory::List::iterator it = ControlFactory::GetList().begin();
          it != ControlFactory::GetList().end();
@@ -198,7 +198,7 @@ Base* Base::GetBaseFactory()
     return NULL;
 }
 
-Property* Base::GetProperty(const Gwen::String& name)
+Property* Base::GetProperty(const Gwk::String& name)
 {
     for (ControlFactory::Property::List::const_iterator it = Properties().begin(),
          itEnd = Properties().end();
@@ -218,8 +218,8 @@ Property* Base::GetProperty(const Gwen::String& name)
     return pBase->GetProperty(name);
 }
 
-void Base::SetControlValue(Gwen::Controls::Base* ctrl, const Gwen::String& name,
-                           const Gwen::String& str)
+void Base::SetControlValue(Gwk::Controls::Base* ctrl, const Gwk::String& name,
+                           const Gwk::String& str)
 {
     Property* pProp = GetProperty(name);
 
@@ -236,13 +236,13 @@ void Base::SetControlValue(Gwen::Controls::Base* ctrl, const Gwen::String& name,
     pProp->SetValueFromString(ctrl, str);
 }
 
-void Base::AddChild(Gwen::Controls::Base* ctrl, Gwen::Controls::Base* child,
-                    const Gwen::Point& pos)
+void Base::AddChild(Gwk::Controls::Base* ctrl, Gwk::Controls::Base* child,
+                    const Gwk::Point& pos)
 {
     child->SetParent(ctrl);
 }
 
-void Base::AddChild(Gwen::Controls::Base* ctrl, Gwen::Controls::Base* child, int iPage)
+void Base::AddChild(Gwk::Controls::Base* ctrl, Gwk::Controls::Base* child, int iPage)
 {
     child->SetParent(ctrl);
 }
@@ -266,12 +266,12 @@ Controls::Base* Clone(Controls::Base* pSource, ControlFactory::Base* pFactory)
     return pControl;
 }
 
-void Base::SetParentPage(Gwen::Controls::Base* ctrl, int i)
+void Base::SetParentPage(Gwk::Controls::Base* ctrl, int i)
 {
     ctrl->UserData.Set<int>("ParentPage", i);
 }
 
-int Base::GetParentPage(Gwen::Controls::Base* ctrl)
+int Base::GetParentPage(Gwk::Controls::Base* ctrl)
 {
     if (!ctrl->UserData.Exists("ParentPage"))
         return 0;

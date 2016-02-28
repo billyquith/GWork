@@ -1,11 +1,18 @@
+/*
+ *  Gwork
+ *  Copyright (c) 2010 Facepunch Studios
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
+ */
+
 #pragma once
-#ifndef GWEN_CONTROLS_STATUSBAR_H
-#define GWEN_CONTROLS_STATUSBAR_H
+#ifndef GWK_CONTROLS_STATUSBAR_H
+#define GWK_CONTROLS_STATUSBAR_H
 
-#include "Gwen/Gwen.h"
-#include "Gwen/Controls/Label.h"
+#include "Gwork/Gwork.h"
+#include "Gwork/Controls/Label.h"
 
-namespace Gwen
+namespace Gwk
 {
     namespace Controls
     {
@@ -13,7 +20,7 @@ namespace Gwen
         {
         public:
 
-            GWEN_CONTROL_INLINE(StatusBar, Controls::Label)
+            GWK_CONTROL_INLINE(StatusBar, Controls::Label)
             {
                 SetHeight(22);
                 Dock(Docking::Bottom);
@@ -38,4 +45,4 @@ namespace Gwen
 
     }
 }
-#endif // ifndef GWEN_CONTROLS_STATUSBAR_H
+#endif // ifndef GWK_CONTROLS_STATUSBAR_H

@@ -1,26 +1,27 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 #pragma once
-#ifndef GWEN_CONTROLS_SLIDER_H
-#define GWEN_CONTROLS_SLIDER_H
+#ifndef GWK_CONTROLS_SLIDER_H
+#define GWK_CONTROLS_SLIDER_H
 
-#include "Gwen/Controls/Base.h"
-#include "Gwen/Controls/Button.h"
-#include "Gwen/Controls/Dragger.h"
-#include "Gwen/Gwen.h"
-#include "Gwen/Skin.h"
+#include "Gwork/Controls/Base.h"
+#include "Gwork/Controls/Button.h"
+#include "Gwork/Controls/Dragger.h"
+#include "Gwork/Gwork.h"
+#include "Gwork/Skin.h"
 
-namespace Gwen
+namespace Gwk
 {
     namespace ControlsInternal
     {
-        class GWEN_EXPORT SliderBar : public ControlsInternal::Dragger
+        class GWK_EXPORT SliderBar : public ControlsInternal::Dragger
         {
-            GWEN_CONTROL(SliderBar, ControlsInternal::Dragger);
+            GWK_CONTROL(SliderBar, ControlsInternal::Dragger);
 
             virtual void Render(Skin::Base* skin) override;
             virtual void SetHorizontal(bool b)
@@ -43,9 +44,9 @@ namespace Gwen
 
     namespace Controls
     {
-        class GWEN_EXPORT Slider : public Base
+        class GWK_EXPORT Slider : public Base
         {
-            GWEN_CONTROL(Slider, Base);
+            GWK_CONTROL(Slider, Base);
 
             virtual void Render(Skin::Base* skin) override = 0;
             virtual void Layout(Skin::Base* skin) override;
@@ -108,9 +109,9 @@ namespace Gwen
                 return true;
             }
 
-            virtual void RenderFocus(Gwen::Skin::Base* skin) override;
+            virtual void RenderFocus(Gwk::Skin::Base* skin) override;
 
-            Gwen::Event::Caller onValueChanged;
+            Gwk::Event::Caller onValueChanged;
 
             virtual float GetMin()
             {
@@ -142,4 +143,4 @@ namespace Gwen
 
 
 }
-#endif // ifndef GWEN_CONTROLS_SLIDER_H
+#endif // ifndef GWK_CONTROLS_SLIDER_H

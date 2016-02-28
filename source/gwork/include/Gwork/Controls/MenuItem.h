@@ -1,29 +1,30 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 #pragma once
-#ifndef GWEN_CONTROLS_MENUITEM_H
-#define GWEN_CONTROLS_MENUITEM_H
+#ifndef GWK_CONTROLS_MENUITEM_H
+#define GWK_CONTROLS_MENUITEM_H
 
-#include "Gwen/BaseRender.h"
-#include "Gwen/Controls/Base.h"
-#include "Gwen/Controls/Button.h"
-#include "Gwen/Controls/Menu.h"
+#include "Gwork/BaseRender.h"
+#include "Gwork/Controls/Base.h"
+#include "Gwork/Controls/Button.h"
+#include "Gwork/Controls/Menu.h"
 
-namespace Gwen
+namespace Gwk
 {
     namespace Controls
     {
         class Menu;
 
-        class GWEN_EXPORT MenuItem : public Button
+        class GWK_EXPORT MenuItem : public Button
         {
         public:
 
-            GWEN_CONTROL(MenuItem, Button);
+            GWK_CONTROL(MenuItem, Button);
 
             virtual ~MenuItem();
 
@@ -63,7 +64,7 @@ namespace Gwen
             }
 
             template <typename T>
-            MenuItem* SetAction(Gwen::Event::Handler* pHandler, T fn)
+            MenuItem* SetAction(Gwk::Event::Handler* pHandler, T fn)
             {
                 if (m_Accelerator)
                     AddAccelerator(m_Accelerator->GetText(), fn, pHandler);
@@ -74,10 +75,10 @@ namespace Gwen
 
             void SetAccelerator(const String& strAccelerator);
 
-            Gwen::Event::Caller onMenuItemSelected;
-            Gwen::Event::Caller onChecked;
-            Gwen::Event::Caller onUnChecked;
-            Gwen::Event::Caller onCheckChange;
+            Gwk::Event::Caller onMenuItemSelected;
+            Gwk::Event::Caller onChecked;
+            Gwk::Event::Caller onUnChecked;
+            Gwk::Event::Caller onCheckChange;
 
         private:
 
@@ -96,4 +97,4 @@ namespace Gwen
     }
 
 }
-#endif // ifndef GWEN_CONTROLS_MENUITEM_H
+#endif // ifndef GWK_CONTROLS_MENUITEM_H

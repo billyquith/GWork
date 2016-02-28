@@ -1,14 +1,21 @@
-#include "Gwen/UnitTest/UnitTest.h"
-#include "Gwen/Controls/ColorPicker.h"
-#include "Gwen/Controls/HSVColorPicker.h"
+/*
+ *  Gwork
+ *  Copyright (c) 2010 Facepunch Studios
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
+ */
 
-using namespace Gwen;
+#include "Gwork/Test/Test.h"
+#include "Gwork/Controls/ColorPicker.h"
+#include "Gwork/Controls/HSVColorPicker.h"
+
+using namespace Gwk;
 
 class ColorPicker : public GUnit
 {
 public:
 
-    GWEN_CONTROL_INLINE(ColorPicker, GUnit)
+    GWK_CONTROL_INLINE(ColorPicker, GUnit)
     {
         Controls::ColorPicker* pCtrl = new Controls::ColorPicker(this);
         pCtrl->SetBounds(0, 10, 250, 150);

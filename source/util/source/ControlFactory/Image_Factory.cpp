@@ -1,8 +1,8 @@
 
-#include "GwenUtil/ControlFactory.h"
-#include "Gwen/Controls.h"
+#include "Gwork/Util/ControlFactory.h"
+#include "Gwork/Controls.h"
 
-namespace Gwen
+namespace Gwk
 {
     namespace ControlFactory
     {
@@ -10,17 +10,17 @@ namespace Gwen
         {
             class ImageName : public ControlFactory::Property
             {
-                GWEN_CONTROL_FACTORY_PROPERTY(ImageName,
+                GWK_CONTROL_FACTORY_PROPERTY(ImageName,
                                               "The path to the image (relative to .exe)");
 
                 String GetValueAsString(Controls::Base* ctrl) override
                 {
-                    return gwen_cast<Controls::ImagePanel>(ctrl)->GetImage();
+                    return gwk_cast<Controls::ImagePanel>(ctrl)->GetImage();
                 }
 
                 void SetValueFromString(Controls::Base* ctrl, const String& str) override
                 {
-                    gwen_cast<Controls::ImagePanel>(ctrl)->SetImage(str);
+                    gwk_cast<Controls::ImagePanel>(ctrl)->SetImage(str);
                 }
 
             };
@@ -28,11 +28,11 @@ namespace Gwen
 
             class Stretch : public ControlFactory::PropertyBool
             {
-                GWEN_CONTROL_FACTORY_PROPERTY(Stretch, "The path to the image (relative to .exe)");
+                GWK_CONTROL_FACTORY_PROPERTY(Stretch, "The path to the image (relative to .exe)");
 
                 String GetValueAsString(Controls::Base* ctrl) override
                 {
-                    if (gwen_cast<Controls::ImagePanel>(ctrl)->GetStretch())
+                    if (gwk_cast<Controls::ImagePanel>(ctrl)->GetStretch())
                         return True;
 
                     return False;
@@ -41,7 +41,7 @@ namespace Gwen
                 void SetValueFromString(Controls::Base* ctrl, const String& str) override
                 {
                     bool bTrue = (str == True);
-                    gwen_cast<Controls::ImagePanel>(ctrl)->SetStretch(bTrue);
+                    gwk_cast<Controls::ImagePanel>(ctrl)->SetStretch(bTrue);
                 }
 
             };
@@ -49,19 +49,19 @@ namespace Gwen
 
         }
 
-        class ImagePanel_Factory : public Gwen::ControlFactory::Base
+        class ImagePanel_Factory : public Gwk::ControlFactory::Base
         {
         public:
 
-            GWEN_CONTROL_FACTORY_FOR(ImagePanel, Base)
+            GWK_CONTROL_FACTORY_FOR(ImagePanel, Base)
             {
                 AddProperty(new Properties::ImageName());
                 AddProperty(new Properties::Stretch());
             }
 
-            virtual Gwen::Controls::Base* CreateInstance(Gwen::Controls::Base* parent) override
+            virtual Gwk::Controls::Base* CreateInstance(Gwk::Controls::Base* parent) override
             {
-                Gwen::Controls::ImagePanel* pControl = new Gwen::Controls::ImagePanel(parent);
+                Gwk::Controls::ImagePanel* pControl = new Gwk::Controls::ImagePanel(parent);
                 pControl->SetSize(100, 20);
                 return pControl;
             }
@@ -69,7 +69,7 @@ namespace Gwen
         };
 
 
-        GWEN_CONTROL_FACTORY(ImagePanel_Factory);
+        GWK_CONTROL_FACTORY(ImagePanel_Factory);
 
     }
 }

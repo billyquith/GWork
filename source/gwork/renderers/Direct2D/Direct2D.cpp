@@ -5,11 +5,11 @@
 #include <dwrite.h>
 #include <wincodec.h>
 
-#include "Gwen/Renderers/Direct2D.h"
-#include "Gwen/Utility.h"
-#include "Gwen/Font.h"
-#include "Gwen/Texture.h"
-#include "Gwen/WindowProvider.h"
+#include "Gwork/Renderers/Direct2D.h"
+#include "Gwork/Utility.h"
+#include "Gwork/Font.h"
+#include "Gwork/Texture.h"
+#include "Gwork/WindowProvider.h"
 
 struct FontData
 {
@@ -24,7 +24,7 @@ struct TextureData
 };
 
 
-namespace Gwen
+namespace Gwk
 {
     namespace Renderer
     {
@@ -56,7 +56,7 @@ namespace Gwen
         {
         }
 
-        void Direct2D::DrawFilledRect(Gwen::Rect rect)
+        void Direct2D::DrawFilledRect(Gwk::Rect rect)
         {
             Translate(rect);
 
@@ -67,13 +67,13 @@ namespace Gwen
             }
         }
 
-        void Direct2D::SetDrawColor(Gwen::Color color)
+        void Direct2D::SetDrawColor(Gwk::Color color)
         {
             m_Color = D2D1::ColorF(color.r/255.0f, color.g/255.0f, color.b/255.0f, color.a/255.0f);
             m_pSolidColorBrush->SetColor(m_Color);
         }
 
-        bool Direct2D::InternalLoadFont(Gwen::Font* pFont)
+        bool Direct2D::InternalLoadFont(Gwk::Font* pFont)
         {
             IDWriteTextFormat* pTextFormat = NULL;
             HRESULT hr = m_pDWriteFactory->CreateTextFormat(
@@ -99,13 +99,13 @@ namespace Gwen
             return false;
         }
 
-        void Direct2D::LoadFont(Gwen::Font* pFont)
+        void Direct2D::LoadFont(Gwk::Font* pFont)
         {
             if (InternalLoadFont(pFont))
                 m_FontList.push_back(pFont);
         }
 
-        void Direct2D::InternalFreeFont(Gwen::Font* pFont, bool bRemove)
+        void Direct2D::InternalFreeFont(Gwk::Font* pFont, bool bRemove)
         {
             if (bRemove)
                 m_FontList.remove(pFont);
@@ -119,13 +119,13 @@ namespace Gwen
             pFont->data = NULL;
         }
 
-        void Direct2D::FreeFont(Gwen::Font* pFont)
+        void Direct2D::FreeFont(Gwk::Font* pFont)
         {
             InternalFreeFont(pFont);
         }
 
-        void Direct2D::RenderText(Gwen::Font* pFont, Gwen::Point pos,
-                                  const Gwen::UnicodeString& text)
+        void Direct2D::RenderText(Gwk::Font* pFont, Gwk::Point pos,
+                                  const Gwk::UnicodeString& text)
         {
             // If the font doesn't exist, or the font size should be changed
             if (!pFont->data || fabs(pFont->realsize-pFont->size*Scale()) > 2)
@@ -145,7 +145,7 @@ namespace Gwen
             }
         }
 
-        Gwen::Point Direct2D::MeasureText(Gwen::Font* pFont, const Gwen::UnicodeString& text)
+        Gwk::Point Direct2D::MeasureText(Gwk::Font* pFont, const Gwk::UnicodeString& text)
         {
             // If the font doesn't exist, or the font size should be changed
             if (!pFont->data || fabs(pFont->realsize-pFont->size*Scale()) > 2)
@@ -155,7 +155,7 @@ namespace Gwen
             }
 
             FontData* pFontData = (FontData*)pFont->data;
-            Gwen::Point size;
+            Gwk::Point size;
             IDWriteTextLayout* pLayout;
             DWRITE_TEXT_METRICS metrics;
             m_pDWriteFactory->CreateTextLayout(text.c_str(),
@@ -163,7 +163,7 @@ namespace Gwen
                                                &pLayout);
             pLayout->GetMetrics(&metrics);
             pLayout->Release();
-            return Gwen::Point(metrics.widthIncludingTrailingWhitespace, metrics.height);
+            return Gwk::Point(metrics.widthIncludingTrailingWhitespace, metrics.height);
         }
 
         void Direct2D::DeviceLost()
@@ -197,7 +197,7 @@ namespace Gwen
 
         void Direct2D::StartClip()
         {
-            Gwen::Rect rect = ClipRegion();
+            Gwk::Rect rect = ClipRegion();
             D2D1_RECT_F r =
                 D2D1::RectF(rect.x*Scale(), rect.y*Scale(),
                             (rect.x+rect.w)*Scale(), (rect.y+rect.h)*Scale());
@@ -209,7 +209,7 @@ namespace Gwen
             m_pRT->PopAxisAlignedClip();
         }
 
-        void Direct2D::DrawTexturedRect(Gwen::Texture* pTexture, Gwen::Rect rect, float u1,
+        void Direct2D::DrawTexturedRect(Gwk::Texture* pTexture, Gwk::Rect rect, float u1,
                                         float v1, float u2, float v2)
         {
             TextureData* pTexData = (TextureData*)pTexture->data;
@@ -227,7 +227,7 @@ namespace Gwen
                               );
         }
 
-        bool Direct2D::InternalLoadTexture(Gwen::Texture* pTexture)
+        bool Direct2D::InternalLoadTexture(Gwk::Texture* pTexture)
         {
             IWICBitmapDecoder* pDecoder = NULL;
             IWICBitmapFrameDecode* pSource = NULL;
@@ -297,13 +297,13 @@ namespace Gwen
             return SUCCEEDED(hr);
         }
 
-        void Direct2D::LoadTexture(Gwen::Texture* pTexture)
+        void Direct2D::LoadTexture(Gwk::Texture* pTexture)
         {
             if (InternalLoadTexture(pTexture))
                 m_TextureList.push_back(pTexture);
         }
 
-        void Direct2D::InternalFreeTexture(Gwen::Texture* pTexture, bool bRemove)
+        void Direct2D::InternalFreeTexture(Gwk::Texture* pTexture, bool bRemove)
         {
             if (bRemove)
                 m_TextureList.remove(pTexture);
@@ -324,13 +324,13 @@ namespace Gwen
             pTexture->data = NULL;
         }
 
-        void Direct2D::FreeTexture(Gwen::Texture* pTexture)
+        void Direct2D::FreeTexture(Gwk::Texture* pTexture)
         {
             InternalFreeTexture(pTexture);
         }
 
-        Gwen::Color Direct2D::PixelColour(Gwen::Texture* pTexture, unsigned int x, unsigned int y,
-                                          const Gwen::Color& col_default)
+        Gwk::Color Direct2D::PixelColour(Gwk::Texture* pTexture, unsigned int x, unsigned int y,
+                                          const Gwk::Color& col_default)
         {
             TextureData* pTexData = (TextureData*)pTexture->data;
 
@@ -345,10 +345,10 @@ namespace Gwen
             byte pixelBuffer[4*1*1];
             pTexData->pWICBitmap->CopyPixels(&sourceRect, 4, 4*pTexture->width*pTexture->height,
                                              pixelBuffer);
-            return Gwen::Color(pixelBuffer[2], pixelBuffer[1], pixelBuffer[0], pixelBuffer[3]);
+            return Gwk::Color(pixelBuffer[2], pixelBuffer[1], pixelBuffer[0], pixelBuffer[3]);
         }
 
-        void Direct2D::DrawLinedRect(Gwen::Rect rect)
+        void Direct2D::DrawLinedRect(Gwk::Rect rect)
         {
             Translate(rect);
 
@@ -359,7 +359,7 @@ namespace Gwen
             }
         }
 
-        void Direct2D::DrawShavedCornerRect(Gwen::Rect rect, bool bSlight)
+        void Direct2D::DrawShavedCornerRect(Gwk::Rect rect, bool bSlight)
         {
             Translate(rect);
 
@@ -430,7 +430,7 @@ namespace Gwen
             }
         }
 
-        bool Direct2D::InitializeContext(Gwen::WindowProvider* pWindow)
+        bool Direct2D::InitializeContext(Gwk::WindowProvider* pWindow)
         {
             m_pHWND = (HWND)pWindow->GetWindow();
             HRESULT hr = D2D1CreateFactory(
@@ -469,25 +469,25 @@ namespace Gwen
             return InternalCreateDeviceResources();
         }
 
-        bool Direct2D::ShutdownContext(Gwen::WindowProvider* pWindow)
+        bool Direct2D::ShutdownContext(Gwk::WindowProvider* pWindow)
         {
             InternalReleaseDeviceResources();
             DeviceLost();
             return true;
         }
 
-        bool Direct2D::PresentContext(Gwen::WindowProvider* pWindow)
+        bool Direct2D::PresentContext(Gwk::WindowProvider* pWindow)
         {
             return true;
         }
 
-        bool Direct2D::ResizedContext(Gwen::WindowProvider* pWindow, int w, int h)
+        bool Direct2D::ResizedContext(Gwk::WindowProvider* pWindow, int w, int h)
         {
             HRESULT hr = ((ID2D1HwndRenderTarget*)m_pRT)->Resize(D2D1::SizeU(w, h));
             return SUCCEEDED(hr);
         }
 
-        bool Direct2D::BeginContext(Gwen::WindowProvider* pWindow)
+        bool Direct2D::BeginContext(Gwk::WindowProvider* pWindow)
         {
             if (SUCCEEDED(InternalCreateDeviceResources()))
             {
@@ -498,7 +498,7 @@ namespace Gwen
             return false;
         }
 
-        bool Direct2D::EndContext(Gwen::WindowProvider* pWindow)
+        bool Direct2D::EndContext(Gwk::WindowProvider* pWindow)
         {
             HRESULT hr = m_pRT->EndDraw();
 

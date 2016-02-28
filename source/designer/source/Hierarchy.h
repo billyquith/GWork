@@ -1,16 +1,16 @@
 
 #pragma once
 
-#include "Gwen/Gwen.h"
-#include "Gwen/Controls.h"
+#include "Gwork/Gwork.h"
+#include "Gwork/Controls.h"
 
-using namespace Gwen;
+using namespace Gwk;
 
 class DocumentCanvas;
 
 class Hierarchy : public Controls::Base 
 {
-	GWEN_CONTROL( Hierarchy, Controls::Base );
+	GWK_CONTROL( Hierarchy, Controls::Base );
 
 		void WatchCanvas( DocumentCanvas* pCanvas );
 

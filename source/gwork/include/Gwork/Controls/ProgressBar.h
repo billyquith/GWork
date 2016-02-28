@@ -1,27 +1,28 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 #pragma once
-#ifndef GWEN_CONTROLS_PROGRESSBAR_H
-#define GWEN_CONTROLS_PROGRESSBAR_H
-#include "Gwen/Controls/Base.h"
-#include "Gwen/Controls/Label.h"
-#include "Gwen/Gwen.h"
-#include "Gwen/Skin.h"
+#ifndef GWK_CONTROLS_PROGRESSBAR_H
+#define GWK_CONTROLS_PROGRESSBAR_H
+#include "Gwork/Controls/Base.h"
+#include "Gwork/Controls/Label.h"
+#include "Gwork/Gwork.h"
+#include "Gwork/Skin.h"
 
 
-namespace Gwen
+namespace Gwk
 {
     namespace Controls
     {
-        class GWEN_EXPORT ProgressBar : public Label
+        class GWK_EXPORT ProgressBar : public Label
         {
         public:
 
-            GWEN_CONTROL(ProgressBar, Label);
+            GWK_CONTROL(ProgressBar, Label);
 
             virtual void Render(Skin::Base* skin) override;
 
@@ -63,4 +64,4 @@ namespace Gwen
 
     }
 }
-#endif // ifndef GWEN_CONTROLS_PROGRESSBAR_H
+#endif // ifndef GWK_CONTROLS_PROGRESSBAR_H

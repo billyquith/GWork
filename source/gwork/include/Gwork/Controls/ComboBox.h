@@ -1,30 +1,31 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 #pragma once
-#ifndef GWEN_CONTROLS_COMBOBOX_H
-#define GWEN_CONTROLS_COMBOBOX_H
+#ifndef GWK_CONTROLS_COMBOBOX_H
+#define GWK_CONTROLS_COMBOBOX_H
 
-#include "Gwen/Controls/Base.h"
-#include "Gwen/Controls/Button.h"
-#include "Gwen/Gwen.h"
-#include "Gwen/Skin.h"
-#include "Gwen/Controls/TextBox.h"
-#include "Gwen/Controls/Menu.h"
+#include "Gwork/Controls/Base.h"
+#include "Gwork/Controls/Button.h"
+#include "Gwork/Gwork.h"
+#include "Gwork/Skin.h"
+#include "Gwork/Controls/TextBox.h"
+#include "Gwork/Controls/Menu.h"
 
 
-namespace Gwen
+namespace Gwk
 {
     namespace Controls
     {
-        class GWEN_EXPORT ComboBox : public Button
+        class GWK_EXPORT ComboBox : public Button
         {
         public:
 
-            GWEN_CONTROL(ComboBox, Button);
+            GWK_CONTROL(ComboBox, Button);
 
             virtual void Render(Skin::Base* skin) override;
             virtual void Layout(Skin::Base* skin) override;
@@ -32,9 +33,9 @@ namespace Gwen
 
             virtual void SelectItem(MenuItem* pItem, bool bFireChangeEvents =
                                         true);
-            virtual void SelectItemByName(const Gwen::String& name,
+            virtual void SelectItemByName(const Gwk::String& name,
                                           bool bFireChangeEvents = true);
-            virtual Gwen::Controls::Label* GetSelectedItem();
+            virtual Gwk::Controls::Label* GetSelectedItem();
 
             virtual void OnPress() override;
             virtual void OnItemSelected(Controls::Base* pControl);
@@ -47,7 +48,7 @@ namespace Gwen
             virtual bool      OnKeyUp(bool bDown) override;
             virtual bool      OnKeyDown(bool bDown) override;
 
-            virtual void RenderFocus(Gwen::Skin::Base* skin) override;
+            virtual void RenderFocus(Gwk::Skin::Base* skin) override;
             virtual void OnLostKeyboardFocus() override;
             virtual void OnKeyboardFocus() override;
 
@@ -58,7 +59,7 @@ namespace Gwen
                 return true;
             }
 
-            Gwen::Event::Caller onSelection;
+            Gwk::Event::Caller onSelection;
 
         protected:
 
@@ -72,4 +73,4 @@ namespace Gwen
 
     }
 }
-#endif // ifndef GWEN_CONTROLS_COMBOBOX_H
+#endif // ifndef GWK_CONTROLS_COMBOBOX_H

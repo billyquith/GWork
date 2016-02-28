@@ -1,25 +1,26 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 #pragma once
-#ifndef GWEN_CONTROLS_FIELDLABEL_H
-#define GWEN_CONTROLS_FIELDLABEL_H
+#ifndef GWK_CONTROLS_FIELDLABEL_H
+#define GWK_CONTROLS_FIELDLABEL_H
 
-#include "Gwen/BaseRender.h"
-#include "Gwen/Controls/Label.h"
+#include "Gwork/BaseRender.h"
+#include "Gwork/Controls/Label.h"
 
-namespace Gwen
+namespace Gwk
 {
     namespace Controls
     {
-        class GWEN_EXPORT FieldLabel : public Controls::Label
+        class GWK_EXPORT FieldLabel : public Controls::Label
         {
         public:
 
-            static inline FieldLabel* Setup(Controls::Base* pControl, const Gwen::String& text)
+            static inline FieldLabel* Setup(Controls::Base* pControl, const Gwk::String& text)
             {
                 FieldLabel* plbl = new FieldLabel(pControl->GetParent());
                 plbl->SetText(text);
@@ -31,7 +32,7 @@ namespace Gwen
 
         public:
 
-            GWEN_CONTROL_INLINE(FieldLabel, Controls::Label)
+            GWK_CONTROL_INLINE(FieldLabel, Controls::Label)
             {
                 m_pField = NULL;
                 SetMargin(Margin(0, 1, 0, 1));
@@ -45,7 +46,7 @@ namespace Gwen
                 m_pField = pField;
             }
 
-            void Layout(Gwen::Skin::Base* pskin) override
+            void Layout(Gwk::Skin::Base* pskin) override
             {
                 m_pField->SetWidth(Width()-70);
                 ParentClass::Layout(pskin);
@@ -61,4 +62,4 @@ namespace Gwen
     }
 }
 
-#endif // ifndef GWEN_CONTROLS_FIELDLABEL_H
+#endif // ifndef GWK_CONTROLS_FIELDLABEL_H

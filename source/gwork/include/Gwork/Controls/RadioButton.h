@@ -1,28 +1,29 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 #pragma once
-#ifndef GWEN_CONTROLS_RADIOBUTTON_H
-#define GWEN_CONTROLS_RADIOBUTTON_H
+#ifndef GWK_CONTROLS_RADIOBUTTON_H
+#define GWK_CONTROLS_RADIOBUTTON_H
 
-#include "Gwen/Controls/Base.h"
-#include "Gwen/Controls/Label.h"
-#include "Gwen/Controls/Button.h"
-#include "Gwen/Gwen.h"
-#include "Gwen/Skin.h"
-#include "Gwen/Controls/CheckBox.h"
-#include "Gwen/Controls/LabelClickable.h"
+#include "Gwork/Controls/Base.h"
+#include "Gwork/Controls/Label.h"
+#include "Gwork/Controls/Button.h"
+#include "Gwork/Gwork.h"
+#include "Gwork/Skin.h"
+#include "Gwork/Controls/CheckBox.h"
+#include "Gwork/Controls/LabelClickable.h"
 
-namespace Gwen
+namespace Gwk
 {
     namespace Controls
     {
-        class GWEN_EXPORT RadioButton : public CheckBox
+        class GWK_EXPORT RadioButton : public CheckBox
         {
-            GWEN_CONTROL(RadioButton, CheckBox);
+            GWK_CONTROL(RadioButton, CheckBox);
             virtual void Render(Skin::Base* skin) override;
 
         private:
@@ -36,11 +37,11 @@ namespace Gwen
         };
 
 
-        class GWEN_EXPORT LabeledRadioButton : public Base
+        class GWK_EXPORT LabeledRadioButton : public Base
         {
         public:
 
-            GWEN_CONTROL_INLINE(LabeledRadioButton, Base)
+            GWK_CONTROL_INLINE(LabeledRadioButton, Base)
             {
                 SetSize(200, 19);
                 m_RadioButton = new RadioButton(this);
@@ -57,9 +58,9 @@ namespace Gwen
                 m_Label->SetKeyboardInputEnabled(false);
             }
 
-            void RenderFocus(Gwen::Skin::Base* skin) override
+            void RenderFocus(Gwk::Skin::Base* skin) override
             {
-                if (Gwen::KeyboardFocus != this)
+                if (Gwk::KeyboardFocus != this)
                     return;
 
                 if (!IsTabable())
@@ -100,4 +101,4 @@ namespace Gwen
 
     }
 }
-#endif // ifndef GWEN_CONTROLS_RADIOBUTTON_H
+#endif // ifndef GWK_CONTROLS_RADIOBUTTON_H

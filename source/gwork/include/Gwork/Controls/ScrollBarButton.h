@@ -1,24 +1,25 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 #pragma once
-#ifndef GWEN_CONTROLS_SCROLLBARBOTTON_H
-#define GWEN_CONTROLS_SCROLLBARBOTTON_H
+#ifndef GWK_CONTROLS_SCROLLBARBOTTON_H
+#define GWK_CONTROLS_SCROLLBARBOTTON_H
 
-#include "Gwen/Controls/Button.h"
+#include "Gwork/Controls/Button.h"
 
-namespace Gwen
+namespace Gwk
 {
     namespace ControlsInternal
     {
-        class GWEN_EXPORT ScrollBarButton : public Controls::Button
+        class GWK_EXPORT ScrollBarButton : public Controls::Button
         {
         public:
 
-            GWEN_CONTROL(ScrollBarButton, Controls::Button);
+            GWK_CONTROL(ScrollBarButton, Controls::Button);
 
             void Render(Skin::Base* skin) override;
 
@@ -35,4 +36,4 @@ namespace Gwen
 
     }
 }
-#endif // ifndef GWEN_CONTROLS_SCROLLBARBOTTON_H
+#endif // ifndef GWK_CONTROLS_SCROLLBARBOTTON_H

@@ -2,16 +2,16 @@
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 
-#include "Gwen/Gwen.h"
-#include "Gwen/Skins/Simple.h"
-#include "Gwen/Skins/TexturedBase.h"
-#include "Gwen/UnitTest/UnitTest.h"
-#include "Gwen/Input/Windows.h"
+#include "Gwork/Gwork.h"
+#include "Gwork/Skins/Simple.h"
+#include "Gwork/Skins/TexturedBase.h"
+#include "Gwork/UnitTest/UnitTest.h"
+#include "Gwork/Input/Windows.h"
 
 #ifdef USE_DEBUG_FONT
-#include "Gwen/Renderers/OpenGL_DebugFont.h"
+#include "Gwork/Renderers/OpenGL_DebugFont.h"
 #else
-#include "Gwen/Renderers/OpenGL.h"
+#include "Gwork/Renderers/OpenGL.h"
 #endif
 #include "gl/glew.h"
 
@@ -22,19 +22,19 @@ HWND CreateGameWindow(void)
     wc.style            = CS_HREDRAW|CS_VREDRAW|CS_OWNDC;
     wc.lpfnWndProc      = DefWindowProc;
     wc.hInstance        = GetModuleHandle(NULL);
-    wc.lpszClassName    = L"GWENWindow";
+    wc.lpszClassName    = L"GworkWindow";
     wc.hCursor          = LoadCursor(NULL, IDC_ARROW);
     RegisterClassW(&wc);
 #ifdef USE_DEBUG_FONT
     HWND hWindow = CreateWindowExW((WS_EX_APPWINDOW|WS_EX_WINDOWEDGE), wc.lpszClassName,
-                                   L"GWEN - OpenGL Sample (Using embedded debug font renderer)",
+                                   L"Gwork - OpenGL Sample (Using embedded debug font renderer)",
                                    (WS_OVERLAPPEDWINDOW|WS_CLIPSIBLINGS|
                                     WS_CLIPCHILDREN)&~(WS_MINIMIZEBOX|WS_MAXIMIZEBOX|WS_THICKFRAME),
                                    -1, -1, 1004, 650, NULL, NULL, GetModuleHandle(
                                        NULL), NULL);
 #else
     HWND hWindow = CreateWindowExW((WS_EX_APPWINDOW|WS_EX_WINDOWEDGE), wc.lpszClassName,
-                                   L"GWEN - OpenGL Sample (No cross platform way to render fonts in OpenGL)",
+                                   L"Gwork - OpenGL Sample (No cross platform way to render fonts in OpenGL)",
                                    (WS_OVERLAPPEDWINDOW|WS_CLIPSIBLINGS|
                                     WS_CLIPCHILDREN)&~(WS_MINIMIZEBOX|WS_MAXIMIZEBOX|WS_THICKFRAME), -1, -1, 1004, 650, NULL, NULL,
                                    GetModuleHandle(NULL), NULL);
@@ -95,26 +95,26 @@ int main()
     //
     HGLRC OpenGLContext = CreateOpenGLDeviceContext();
     //
-    // Create a GWEN OpenGL Renderer
+    // Create a Gwork OpenGL Renderer
     //
 #ifdef USE_DEBUG_FONT
-    Gwen::Renderer::OpenGL* pRenderer = new Gwen::Renderer::OpenGL_DebugFont();
+    Gwk::Renderer::OpenGL* pRenderer = new Gwk::Renderer::OpenGL_DebugFont();
 #else
-    Gwen::Renderer::OpenGL* pRenderer = new Gwen::Renderer::OpenGL();
+    Gwk::Renderer::OpenGL* pRenderer = new Gwk::Renderer::OpenGL();
 #endif
     pRenderer->Init();
     //
-    // Create a GWEN skin
+    // Create a Gwork skin
     //
-    Gwen::Skin::TexturedBase* pSkin = new Gwen::Skin::TexturedBase(pRenderer);
+    Gwk::Skin::TexturedBase* pSkin = new Gwk::Skin::TexturedBase(pRenderer);
     pSkin->Init("DefaultSkin.png");
     //
-    // Create a Canvas (it's root, on which all other GWEN panels are created)
+    // Create a Canvas (it's root, on which all other Gwork panels are created)
     //
-    Gwen::Controls::Canvas* pCanvas = new Gwen::Controls::Canvas(pSkin);
+    Gwk::Controls::Canvas* pCanvas = new Gwk::Controls::Canvas(pSkin);
     pCanvas->SetSize(998, 650-24);
     pCanvas->SetDrawBackground(true);
-    pCanvas->SetBackgroundColor(Gwen::Color(150, 170, 170, 255));
+    pCanvas->SetBackgroundColor(Gwk::Color(150, 170, 170, 255));
     //
     // Create our unittest control (which is a Window with controls in it)
     //
@@ -122,10 +122,10 @@ int main()
     pUnit->SetPos(10, 10);
     //
     // Create a Windows Control helper
-    // (Processes Windows MSG's and fires input at GWEN)
+    // (Processes Windows MSG's and fires input at Gwork)
     //
-    Gwen::Input::Windows GwenInput;
-    GwenInput.Initialize(pCanvas);
+    Gwk::Input::Windows GworkInput;
+    GworkInput.Initialize(pCanvas);
     //
     // Begin the main game loop
     //
@@ -141,7 +141,7 @@ int main()
         if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
         {
             // .. give it to the input handler to process
-            GwenInput.ProcessMessage(msg);
+            GworkInput.ProcessMessage(msg);
 
             // if it's QUIT then quit..
             if (msg.message == WM_QUIT)

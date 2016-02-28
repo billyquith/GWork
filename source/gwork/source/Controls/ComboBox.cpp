@@ -1,23 +1,24 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 
-#include "Gwen/Controls/ComboBox.h"
-#include "Gwen/Controls/Menu.h"
+#include "Gwork/Controls/ComboBox.h"
+#include "Gwork/Controls/Menu.h"
 
 
-using namespace Gwen;
-using namespace Gwen::Controls;
-using namespace Gwen::ControlsInternal;
+using namespace Gwk;
+using namespace Gwk::Controls;
+using namespace Gwk::ControlsInternal;
 
-class GWEN_EXPORT DownArrow : public Controls::Base
+class GWK_EXPORT DownArrow : public Controls::Base
 {
 public:
 
-    GWEN_CONTROL_INLINE(DownArrow, Controls::Base)
+    GWK_CONTROL_INLINE(DownArrow, Controls::Base)
     {
         SetMouseInputEnabled(false);
         SetSize(15, 15);
@@ -44,7 +45,7 @@ protected:
 };
 
 
-GWEN_CONTROL_CONSTRUCTOR(ComboBox)
+GWK_CONTROL_CONSTRUCTOR(ComboBox)
 {
     SetSize(100, 20);
     
@@ -59,7 +60,7 @@ GWEN_CONTROL_CONSTRUCTOR(ComboBox)
     m_Button = pArrow;
     m_SelectedItem = NULL;
     
-    SetAlignment(Gwen::Docking::Left|Gwen::Docking::CenterV);
+    SetAlignment(Gwk::Docking::Left|Gwk::Docking::CenterV);
     SetText("");
     SetMargin(Margin(3, 0, 0, 0));
     SetTabable(true);
@@ -139,7 +140,7 @@ void ComboBox::SelectItem(MenuItem* pItem, bool bFireChangeEvents)
 void ComboBox::OnItemSelected(Controls::Base* pControl)
 {
     // Convert selected to a menu item
-    MenuItem* pItem = gwen_cast<MenuItem>(pControl);
+    MenuItem* pItem = gwk_cast<MenuItem>(pControl);
 
     if (!pItem)
         return;
@@ -147,14 +148,14 @@ void ComboBox::OnItemSelected(Controls::Base* pControl)
     SelectItem(pItem);
 }
 
-void ComboBox::SelectItemByName(const Gwen::String& name, bool bFireChangeEvents)
+void ComboBox::SelectItemByName(const Gwk::String& name, bool bFireChangeEvents)
 {
     Base::List& children = m_Menu->GetChildren();
     Base::List::iterator it = children.begin();
 
     while (it != children.end())
     {
-        MenuItem* pChild = gwen_cast<MenuItem>(*it);
+        MenuItem* pChild = gwk_cast<MenuItem>(*it);
 
         if (pChild->GetName() == name)
             return SelectItem(pChild, bFireChangeEvents);
@@ -175,7 +176,7 @@ void ComboBox::OnKeyboardFocus()
     // m_SelectedText->SetTextColor( Color( 255, 255, 255, 255 ) );
 }
 
-Gwen::Controls::Label* ComboBox::GetSelectedItem()
+Gwk::Controls::Label* ComboBox::GetSelectedItem()
 {
     return m_SelectedItem;
 }
@@ -193,8 +194,8 @@ void ComboBox::OpenList()
     m_Menu->SetParent(GetCanvas());
     m_Menu->SetHidden(false);
     m_Menu->BringToFront();
-    Gwen::Point p = LocalPosToCanvas(Gwen::Point(0, 0));
-    m_Menu->SetBounds(Gwen::Rect(p.x, p.y+Height(), Width(), m_Menu->Height()));
+    Gwk::Point p = LocalPosToCanvas(Gwk::Point(0, 0));
+    m_Menu->SetBounds(Gwk::Rect(p.x, p.y+Height(), Width(), m_Menu->Height()));
 }
 
 void ComboBox::CloseList()
@@ -240,6 +241,6 @@ bool ComboBox::OnKeyDown(bool bDown)
     return true;
 }
 
-void ComboBox::RenderFocus(Gwen::Skin::Base* /*skin*/)
+void ComboBox::RenderFocus(Gwk::Skin::Base* /*skin*/)
 {
 }

@@ -1,24 +1,25 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
-#include "Gwen/Gwen.h"
-#include "Gwen/Platform.h"
-#include "Gwen/Controls/Dialogs/FolderOpen.h"
+#include "Gwork/Gwork.h"
+#include "Gwork/Platform.h"
+#include "Gwork/Controls/Dialogs/FolderOpen.h"
 
-using namespace Gwen;
-using namespace Gwen::Dialogs;
+using namespace Gwk;
+using namespace Gwk::Dialogs;
 
-void Gwen::Dialogs::FolderOpenEx(bool bUseSystem, const String& Name, const String& StartPath,
-                                 Gwen::Event::Handler* pHandler,
-                                 Gwen::Event::Handler::FunctionWithInformation fnCallback)
+void Gwk::Dialogs::FolderOpenEx(bool bUseSystem, const String& Name, const String& StartPath,
+                                 Gwk::Event::Handler* pHandler,
+                                 Gwk::Event::Handler::FunctionWithInformation fnCallback)
 {
-    if (bUseSystem && Gwen::Platform::FolderOpen(Name, StartPath, pHandler, fnCallback))
+    if (bUseSystem && Gwk::Platform::FolderOpen(Name, StartPath, pHandler, fnCallback))
         return;
 
     //
-    // TODO: SHOW GWEN FOLDER SELECTION DIALOG
+    // TODO: SHOW Gwork FOLDER SELECTION DIALOG
     //
 }

@@ -3,14 +3,14 @@
 rm CMakeCache.txt
 rm -r CMakeFiles
 rm *.cmake
-rm gwen/*.cmake
+rm gwork/*.cmake
 rm *.ninja
 rm -r build/
-rm gwen/lib*.a
+rm gwork/lib*.a
 rm -r gwork.*/      # Xcode
 
-GEN="-G Ninja"
-# GEN="-G Xcode"
+# GEN="-G Ninja"
+GEN="-G Xcode"
 # DBFLAGS="--debug-output"
 # DBFLAGS="--trace"
 # RENDER=-DRENDER_SDL2=ON

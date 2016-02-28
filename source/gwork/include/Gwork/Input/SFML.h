@@ -1,20 +1,21 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2011 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 #pragma once
-#ifndef GWEN_INPUT_SFML_H
-#define GWEN_INPUT_SFML_H
+#ifndef GWK_INPUT_SFML_H
+#define GWK_INPUT_SFML_H
 
-#include "Gwen/InputHandler.h"
-#include "Gwen/Gwen.h"
-#include "Gwen/Controls/Canvas.h"
+#include "Gwork/InputHandler.h"
+#include "Gwork/Gwork.h"
+#include "Gwork/Controls/Canvas.h"
 
 #include <SFML/Window/Event.hpp>
 
-namespace Gwen
+namespace Gwk
 {
     namespace Input
     {
@@ -29,7 +30,7 @@ namespace Gwen
                 m_MouseY = 0;
             }
 
-            void Initialize(Gwen::Controls::Canvas* c)
+            void Initialize(Gwk::Controls::Canvas* c)
             {
                 m_Canvas = c;
             }
@@ -41,117 +42,117 @@ namespace Gwen
 #if SFML_VERSION_MAJOR == 2
 
                 case sf::Keyboard::BackSpace:
-                    return Gwen::Key::Backspace;
+                    return Gwk::Key::Backspace;
 
                 case sf::Keyboard::Return:
-                    return Gwen::Key::Return;
+                    return Gwk::Key::Return;
 
                 case sf::Keyboard::Escape:
-                    return Gwen::Key::Escape;
+                    return Gwk::Key::Escape;
 
                 case sf::Keyboard::Tab:
-                    return Gwen::Key::Tab;
+                    return Gwk::Key::Tab;
 
                 case sf::Keyboard::Space:
-                    return Gwen::Key::Space;
+                    return Gwk::Key::Space;
 
                 case sf::Keyboard::Up:
-                    return Gwen::Key::Up;
+                    return Gwk::Key::Up;
 
                 case sf::Keyboard::Down:
-                    return Gwen::Key::Down;
+                    return Gwk::Key::Down;
 
                 case sf::Keyboard::Left:
-                    return Gwen::Key::Left;
+                    return Gwk::Key::Left;
 
                 case sf::Keyboard::Right:
-                    return Gwen::Key::Right;
+                    return Gwk::Key::Right;
 
                 case sf::Keyboard::Home:
-                    return Gwen::Key::Home;
+                    return Gwk::Key::Home;
 
                 case sf::Keyboard::End:
-                    return Gwen::Key::End;
+                    return Gwk::Key::End;
 
                 case sf::Keyboard::Delete:
-                    return Gwen::Key::Delete;
+                    return Gwk::Key::Delete;
 
                 case sf::Keyboard::LControl:
-                    return Gwen::Key::Control;
+                    return Gwk::Key::Control;
 
                 case sf::Keyboard::LAlt:
-                    return Gwen::Key::Alt;
+                    return Gwk::Key::Alt;
 
                 case sf::Keyboard::LShift:
-                    return Gwen::Key::Shift;
+                    return Gwk::Key::Shift;
 
                 case sf::Keyboard::RControl:
-                    return Gwen::Key::Control;
+                    return Gwk::Key::Control;
 
                 case sf::Keyboard::RAlt:
-                    return Gwen::Key::Alt;
+                    return Gwk::Key::Alt;
 
                 case sf::Keyboard::RShift:
-                    return Gwen::Key::Shift;
+                    return Gwk::Key::Shift;
 #else // if SFML_VERSION_MAJOR == 2
 
                 case sf::Key::Back:
-                    return Gwen::Key::Backspace;
+                    return Gwk::Key::Backspace;
 
                 case sf::Key::Return:
-                    return Gwen::Key::Return;
+                    return Gwk::Key::Return;
 
                 case sf::Key::Escape:
-                    return Gwen::Key::Escape;
+                    return Gwk::Key::Escape;
 
                 case sf::Key::Tab:
-                    return Gwen::Key::Tab;
+                    return Gwk::Key::Tab;
 
                 case sf::Key::Space:
-                    return Gwen::Key::Space;
+                    return Gwk::Key::Space;
 
                 case sf::Key::Up:
-                    return Gwen::Key::Up;
+                    return Gwk::Key::Up;
 
                 case sf::Key::Down:
-                    return Gwen::Key::Down;
+                    return Gwk::Key::Down;
 
                 case sf::Key::Left:
-                    return Gwen::Key::Left;
+                    return Gwk::Key::Left;
 
                 case sf::Key::Right:
-                    return Gwen::Key::Right;
+                    return Gwk::Key::Right;
 
                 case sf::Key::Home:
-                    return Gwen::Key::Home;
+                    return Gwk::Key::Home;
 
                 case sf::Key::End:
-                    return Gwen::Key::End;
+                    return Gwk::Key::End;
 
                 case sf::Key::Delete:
-                    return Gwen::Key::Delete;
+                    return Gwk::Key::Delete;
 
                 case sf::Key::LControl:
-                    return Gwen::Key::Control;
+                    return Gwk::Key::Control;
 
                 case sf::Key::LAlt:
-                    return Gwen::Key::Alt;
+                    return Gwk::Key::Alt;
 
                 case sf::Key::LShift:
-                    return Gwen::Key::Shift;
+                    return Gwk::Key::Shift;
 
                 case sf::Key::RControl:
-                    return Gwen::Key::Control;
+                    return Gwk::Key::Control;
 
                 case sf::Key::RAlt:
-                    return Gwen::Key::Alt;
+                    return Gwk::Key::Alt;
 
                 case sf::Key::RShift:
-                    return Gwen::Key::Shift;
+                    return Gwk::Key::Shift;
 #endif // if SFML_VERSION_MAJOR == 2
                 }
 
-                return Gwen::Key::Invalid;
+                return Gwk::Key::Invalid;
             }
 
             bool ProcessMessage(sf::Event& event)
@@ -238,7 +239,7 @@ namespace Gwen
 
         protected:
 
-            Gwen::Controls::Canvas* m_Canvas;
+            Gwk::Controls::Canvas* m_Canvas;
             int m_MouseX;
             int m_MouseY;
 
@@ -247,4 +248,4 @@ namespace Gwen
 
     }
 }
-#endif // ifndef GWEN_INPUT_SFML_H
+#endif // ifndef GWK_INPUT_SFML_H

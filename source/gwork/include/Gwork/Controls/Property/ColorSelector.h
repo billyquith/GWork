@@ -1,14 +1,21 @@
-#pragma once
-#ifndef GWEN_CONTROLS_PROPERTY_COLORSELECTOR_H
-#define GWEN_CONTROLS_PROPERTY_COLORSELECTOR_H
+/*
+ *  Gwork
+ *  Copyright (c) 2010 Facepunch Studios
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
+ */
 
-#include "Gwen/Controls/Properties.h"
-#include "Gwen/Controls/Menu.h"
-#include "Gwen/Controls/HSVColorPicker.h"
+#pragma once
+#ifndef GWK_CONTROLS_PROPERTY_COLORSELECTOR_H
+#define GWK_CONTROLS_PROPERTY_COLORSELECTOR_H
+
+#include "Gwork/Controls/Properties.h"
+#include "Gwork/Controls/Menu.h"
+#include "Gwork/Controls/HSVColorPicker.h"
 
 #include <stdio.h>
 
-namespace Gwen
+namespace Gwk
 {
     namespace Controls
     {
@@ -16,7 +23,7 @@ namespace Gwen
         {
             class ColourButton : public Button
             {
-                GWEN_CONTROL_INLINE(ColourButton, Button)
+                GWK_CONTROL_INLINE(ColourButton, Button)
                 {
                     m_Color = Colors::Black;
                     SetText("");
@@ -28,12 +35,12 @@ namespace Gwen
                     skin->GetRender()->DrawFilledRect(GetRenderBounds());
                 }
 
-                void SetColor(const Gwen::Color& col)
+                void SetColor(const Gwk::Color& col)
                 {
                     m_Color = col;
                 }
 
-                Gwen::Color m_Color;
+                Gwk::Color m_Color;
             };
 
 
@@ -43,7 +50,7 @@ namespace Gwen
         {
             class ColorSelector : public Property::Text
             {
-                GWEN_CONTROL_INLINE(ColorSelector, Property::Text)
+                GWK_CONTROL_INLINE(ColorSelector, Property::Text)
                 {
                     m_Button = new Controls::Internal::ColourButton(m_TextBox);
                     m_Button->Dock(Docking::Right);
@@ -54,17 +61,17 @@ namespace Gwen
 
                 void OnButtonPress(Controls::Base* control)
                 {
-                    Gwen::Controls::Menu* pMenu = new Menu(GetCanvas());
+                    Gwk::Controls::Menu* pMenu = new Menu(GetCanvas());
                     pMenu->SetSize(256, 180);
                     pMenu->SetDeleteOnClose(true);
                     pMenu->SetDisableIconMargin(true);
                     
-                    Gwen::Controls::HSVColorPicker* picker = new Gwen::Controls::HSVColorPicker(pMenu);
+                    Gwk::Controls::HSVColorPicker* picker = new Gwk::Controls::HSVColorPicker(pMenu);
                     picker->Dock(Docking::Fill);
                     picker->SetSize(256, 128);
                     float defaultColor[3];
-                    Gwen::Utility::Strings::To::Floats(m_TextBox->GetText(), defaultColor, 3);
-                    picker->SetColor(Gwen::Color(defaultColor[0], defaultColor[1], defaultColor[2], 255),
+                    Gwk::Utility::Strings::To::Floats(m_TextBox->GetText(), defaultColor, 3);
+                    picker->SetColor(Gwk::Color(defaultColor[0], defaultColor[1], defaultColor[2], 255),
                                      false, true);
                     picker->onColorChanged.Add(this, &ThisClass::ColorChanged);
                     
@@ -73,8 +80,8 @@ namespace Gwen
 
                 void ColorChanged(Controls::Base* control)
                 {
-                    Gwen::Controls::HSVColorPicker* picker =
-                        gwen_cast<Gwen::Controls::HSVColorPicker>(control);
+                    Gwk::Controls::HSVColorPicker* picker =
+                        gwk_cast<Gwk::Controls::HSVColorPicker>(control);
                     Color col = picker->GetColor();
                     m_TextBox->SetText(Utility::Format("%u,%u,%u", col.r, col.g, col.b));
                     DoChanged();
@@ -92,7 +99,7 @@ namespace Gwen
 
                 virtual bool IsEditing() override
                 {
-                    return m_TextBox == Gwen::KeyboardFocus;
+                    return m_TextBox == Gwk::KeyboardFocus;
                 }
 
                 virtual void DoChanged() override
@@ -105,7 +112,7 @@ namespace Gwen
                     if (sscanf(m_TextBox->GetText().c_str(), "%u,%u,%u", &r, &g, &b) == 3)
 #endif
                     {
-                        m_Button->SetColor(Gwen::Color(r,g,b));
+                        m_Button->SetColor(Gwk::Color(r,g,b));
                     }
                 }
 
@@ -116,4 +123,4 @@ namespace Gwen
         }
     }
 }
-#endif // ifndef GWEN_CONTROLS_PROPERTY_COLORSELECTOR_H
+#endif // ifndef GWK_CONTROLS_PROPERTY_COLORSELECTOR_H

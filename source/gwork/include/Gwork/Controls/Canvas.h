@@ -1,22 +1,23 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 #pragma once
-#ifndef GWEN_CONTROLS_CANVAS_H
-#define GWEN_CONTROLS_CANVAS_H
+#ifndef GWK_CONTROLS_CANVAS_H
+#define GWK_CONTROLS_CANVAS_H
 
 #include <set>
-#include "Gwen/Controls/Base.h"
-#include "Gwen/InputHandler.h"
+#include "Gwork/Controls/Base.h"
+#include "Gwork/InputHandler.h"
 
-namespace Gwen
+namespace Gwk
 {
     namespace Controls
     {
-        class GWEN_EXPORT Canvas : public Base
+        class GWK_EXPORT Canvas : public Base
         {
         public:
 
@@ -68,7 +69,7 @@ namespace Gwen
                 return m_fScale;
             }
 
-            virtual void OnBoundsChanged(Gwen::Rect oldBounds);
+            virtual void OnBoundsChanged(Gwk::Rect oldBounds);
 
             /// Delete all children (this is done called in the destructor too)
             virtual void ReleaseChildren();
@@ -84,13 +85,13 @@ namespace Gwen
             virtual bool InputMouseMoved(int x, int y, int deltaX, int deltaY);
             virtual bool InputMouseButton(int iButton, bool bDown);
             virtual bool InputKey(int iKey, bool bDown);
-            virtual bool InputCharacter(Gwen::UnicodeChar chr);
+            virtual bool InputCharacter(Gwk::UnicodeChar chr);
             virtual bool InputMouseWheel(int val);
             virtual bool InputQuit()    { return true; }
             /// \}
 
             // Background
-            virtual void SetBackgroundColor(const Gwen::Color& color)
+            virtual void SetBackgroundColor(const Gwk::Color& color)
             {
                 m_BackgroundColor = color;
             }
@@ -112,11 +113,11 @@ namespace Gwen
             void PreDeleteCanvas(Controls::Base*);
 
             bool m_bDrawBackground;
-            Gwen::Color m_BackgroundColor;
+            Gwk::Color m_BackgroundColor;
 
         };
 
 
     }
 }
-#endif // ifndef GWEN_CONTROLS_CANVAS_H
+#endif // ifndef GWK_CONTROLS_CANVAS_H

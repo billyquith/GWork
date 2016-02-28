@@ -1,28 +1,29 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 #pragma once
-#ifndef GWEN_CONTROLS_DOCKBASE_H
-#define GWEN_CONTROLS_DOCKBASE_H
+#ifndef GWK_CONTROLS_DOCKBASE_H
+#define GWK_CONTROLS_DOCKBASE_H
 
-#include "Gwen/Controls/Base.h"
-#include "Gwen/Controls/Button.h"
+#include "Gwork/Controls/Base.h"
+#include "Gwork/Controls/Button.h"
 
-namespace Gwen
+namespace Gwk
 {
     namespace Controls
     {
         class DockedTabControl;
         class TabControl;
 
-        class GWEN_EXPORT DockBase : public Base
+        class GWK_EXPORT DockBase : public Base
         {
         public:
 
-            GWEN_CONTROL(DockBase, Base);
+            GWK_CONTROL(DockBase, Base);
 
             virtual void Render(Skin::Base* skin) override;
             virtual void RenderOver(Skin::Base* skin) override;
@@ -41,11 +42,11 @@ namespace Gwen
         private:
 
             // Drag n Drop
-            virtual bool DragAndDrop_HandleDrop(Gwen::DragAndDrop::Package* pPackage, int x, int y) override;
-            virtual bool DragAndDrop_CanAcceptPackage(Gwen::DragAndDrop::Package* pPackage) override;
-            virtual void DragAndDrop_HoverEnter(Gwen::DragAndDrop::Package* pPackage, int x, int y) override;
-            virtual void DragAndDrop_HoverLeave(Gwen::DragAndDrop::Package* pPackage) override;
-            virtual void DragAndDrop_Hover(Gwen::DragAndDrop::Package* pPackage, int x, int y) override;
+            virtual bool DragAndDrop_HandleDrop(Gwk::DragAndDrop::Package* pPackage, int x, int y) override;
+            virtual bool DragAndDrop_CanAcceptPackage(Gwk::DragAndDrop::Package* pPackage) override;
+            virtual void DragAndDrop_HoverEnter(Gwk::DragAndDrop::Package* pPackage, int x, int y) override;
+            virtual void DragAndDrop_HoverLeave(Gwk::DragAndDrop::Package* pPackage) override;
+            virtual void DragAndDrop_Hover(Gwk::DragAndDrop::Package* pPackage, int x, int y) override;
 
             virtual void SetupChildDock(Docking::Area iPos);
 
@@ -54,7 +55,7 @@ namespace Gwen
             virtual void OnRedundantChildDock(DockBase* pDockBase);
 
             virtual Docking::Area GetDroppedTabDirection(int x, int y);
-            virtual void OnTabRemoved(Gwen::Controls::Base* pControl);
+            virtual void OnTabRemoved(Gwk::Controls::Base* pControl);
 
             DockBase*  GetChildDock(Docking::Area iPos);
             DockBase** GetChildDockPtr(Docking::Area iPos);
@@ -69,11 +70,11 @@ namespace Gwen
 
             bool m_bDrawHover;
             bool m_bDropFar;
-            Gwen::Rect m_HoverRect;
+            Gwk::Rect m_HoverRect;
 
         };
 
 
     }
 }
-#endif // ifndef GWEN_CONTROLS_DOCKBASE_H
+#endif // ifndef GWK_CONTROLS_DOCKBASE_H

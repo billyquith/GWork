@@ -1,19 +1,20 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 #pragma once
-#ifndef GWEN_EVENTS_H
-#define GWEN_EVENTS_H
+#ifndef GWK_EVENTS_H
+#define GWK_EVENTS_H
 
 #include <list>
-#include "Gwen/Exports.h"
-#include "Gwen/Structures.h"
-#include "Gwen/ControlList.h"
+#include "Gwork/Exports.h"
+#include "Gwork/Structures.h"
+#include "Gwork/ControlList.h"
 
-namespace Gwen
+namespace Gwk
 {
     namespace Controls
     {
@@ -32,13 +33,13 @@ namespace Gwen
          */
         struct Packet
         {
-            Packet(Gwen::Controls::Base* pControl = NULL)
+            Packet(Gwk::Controls::Base* pControl = NULL)
                 :   Control(pControl)
             {
             }
 
-            Gwen::Controls::Base   *Control;
-            Gwen::String String;
+            Gwk::Controls::Base   *Control;
+            Gwk::String String;
             int Integer;
             float Float;
             unsigned long long UnsignedLongLong;
@@ -57,7 +58,7 @@ namespace Gwen
                 Init();
             }
 
-            Information(Gwen::Controls::Base* pctrl)
+            Information(Gwk::Controls::Base* pctrl)
             {
                 Init();
                 Control = pctrl;
@@ -73,33 +74,33 @@ namespace Gwen
 
             /// This is set by the event caller, it will always be
             /// the control which is calling the event.
-            Gwen::Controls::Base* ControlCaller;
+            Gwk::Controls::Base* ControlCaller;
 
             /// This is set by the event hook, e.g. :-
             /// ~~~
-            /// onDoSomething.Add( this, &ThisClass::MyFunction, Gwen::Event::Packet("Something") );
+            /// onDoSomething.Add( this, &ThisClass::MyFunction, Gwk::Event::Packet("Something") );
             /// ~~~
-            Gwen::Event::Packet* Packet;
+            Gwk::Event::Packet* Packet;
 
             //
             /// These are set by the event and may or may not be set.
             //
-            Gwen::Controls::Base* Control;
+            Gwk::Controls::Base* Control;
 
-            Gwen::ControlList ControlList;
-            Gwen::String String;
-            Gwen::Point Point;
+            Gwk::ControlList ControlList;
+            Gwk::String String;
+            Gwk::Point Point;
             int Integer;
 
         };
 
 
-        typedef const Gwen::Event::Information& Info;
+        typedef const Gwk::Event::Information& Info;
 
         //
         /// A class wanting to receive events must be derived from this.
         //
-        class GWEN_EXPORT Handler
+        class GWK_EXPORT Handler
         {
         public:
 
@@ -117,16 +118,16 @@ namespace Gwen
 
         public:
 
-            typedef void (Handler::*Function)                   (Gwen::Controls::Base* pFromPanel);
+            typedef void (Handler::*Function)                   (Gwk::Controls::Base* pFromPanel);
             typedef void (Handler::*FunctionBlank)              ();
-            typedef void (Handler::*FunctionWithInformation)    (Gwen::Event::Info info);
+            typedef void (Handler::*FunctionWithInformation)    (Gwk::Event::Info info);
 
         };
 
 
         /// Event callback management.
         //
-        class GWEN_EXPORT Caller
+        class GWK_EXPORT Caller
         {
         public:
 
@@ -134,7 +135,7 @@ namespace Gwen
             ~Caller();
 
             void Call(Controls::Base* pThis);
-            void Call(Controls::Base* pThis, Gwen::Event::Info info);
+            void Call(Controls::Base* pThis, Gwk::Event::Info info);
 
             template <typename T>
             void Add(Event::Handler* ob, T f)
@@ -143,15 +144,15 @@ namespace Gwen
             }
 
             template <typename T>
-            void Add(Event::Handler* ob, void (T::*f)(Gwen::Event::Info))
+            void Add(Event::Handler* ob, void (T::*f)(Gwk::Event::Info))
             {
                 AddInternal(ob, static_cast<Handler::FunctionWithInformation>(f));
             }
 
             template <typename T>
             void Add(Event::Handler* ob,
-                     void (T::*f)(Gwen::Event::Info),
-                     const Gwen::Event::Packet& packet)
+                     void (T::*f)(Gwk::Event::Info),
+                     const Gwk::Event::Packet& packet)
             {
                 AddInternal(ob, static_cast<Handler::FunctionWithInformation>(f), packet);
             }
@@ -170,7 +171,7 @@ namespace Gwen
             void AddInternal(Event::Handler* pObject, Handler::Function pFunction);
             void AddInternal(Event::Handler* pObject, Handler::FunctionWithInformation pFunction);
             void AddInternal(Event::Handler* pObject, Handler::FunctionWithInformation pFunction,
-                             const Gwen::Event::Packet& packet);
+                             const Gwk::Event::Packet& packet);
             void AddInternal(Event::Handler* pObject, Handler::FunctionBlank pFunction);
 
             struct HandlerInstance
@@ -188,7 +189,7 @@ namespace Gwen
                 Handler::FunctionBlank fnFunctionBlank;
 
                 Event::Handler*         pObject;
-                Gwen::Event::Packet Packet;
+                Gwk::Event::Packet Packet;
             };
 
 
@@ -200,4 +201,4 @@ namespace Gwen
 
 }
 
-#endif // ifndef GWEN_EVENTS_H
+#endif // ifndef GWK_EVENTS_H

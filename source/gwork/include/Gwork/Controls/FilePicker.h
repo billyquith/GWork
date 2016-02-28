@@ -1,27 +1,28 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2012 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2015-2016 Billy Quith
+ *  See license in Gwork.h
  */
 
 #pragma once
-#ifndef GWEN_CONTROLS_FILEPICKER_H
-#define GWEN_CONTROLS_FILEPICKER_H
+#ifndef GWK_CONTROLS_FILEPICKER_H
+#define GWK_CONTROLS_FILEPICKER_H
 
-#include "Gwen/BaseRender.h"
-#include "Gwen/Controls/Dialogs/FileOpen.h"
-#include "Gwen/Controls/TextBox.h"
+#include "Gwork/BaseRender.h"
+#include "Gwork/Controls/Dialogs/FileOpen.h"
+#include "Gwork/Controls/TextBox.h"
 
 
-namespace Gwen
+namespace Gwk
 {
     namespace Controls
     {
-        class GWEN_EXPORT FilePicker : public Controls::Base
+        class GWK_EXPORT FilePicker : public Controls::Base
         {
         public:
 
-            GWEN_CONTROL_INLINE(FilePicker, Controls::Base)
+            GWK_CONTROL_INLINE(FilePicker, Controls::Base)
             {
                 m_Button = new Controls::Button(this);
                 m_Button->Dock(Docking::Right);
@@ -35,12 +36,12 @@ namespace Gwen
                 SetFileType("Any Type | *.*");
             }
 
-            void SetFileType(const Gwen::String& string)
+            void SetFileType(const Gwk::String& string)
             {
                 m_FileType = string;
             }
 
-            Gwen::String GetFileType()
+            Gwk::String GetFileType()
             {
                 return m_FileType;
             }
@@ -52,14 +53,14 @@ namespace Gwen
                 onFileChanged.Call(this);
             }
 
-            const Gwen::String& GetFileName()
+            const Gwk::String& GetFileName()
             {
                 return m_TextBox->GetText();
             }
 
             void OnBrowse()
             {
-                Gwen::Dialogs::FileOpen(true, "Name", "Start Path", m_FileType, this,
+                Gwk::Dialogs::FileOpen(true, "Name", "Start Path", m_FileType, this,
                                         &FilePicker::SetFileNameEvent);
             }
 
@@ -93,4 +94,4 @@ namespace Gwen
     }
 
 }
-#endif // ifndef GWEN_CONTROLS_FILEPICKER_H
+#endif // ifndef GWK_CONTROLS_FILEPICKER_H

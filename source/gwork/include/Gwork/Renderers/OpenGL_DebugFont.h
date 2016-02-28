@@ -1,20 +1,21 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2011 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+*  See license in Gwork.h
  */
 
-#ifndef GWEN_RENDERERS_OPENGL_DEBUGFONT_H
-#define GWEN_RENDERERS_OPENGL_DEBUGFONT_H
+#ifndef GWK_RENDERERS_OPENGL_DEBUGFONT_H
+#define GWK_RENDERERS_OPENGL_DEBUGFONT_H
 
-#include "Gwen/Gwen.h"
-#include "Gwen/Renderers/OpenGL.h"
+#include "Gwork/Gwork.h"
+#include "Gwork/Renderers/OpenGL.h"
 
-namespace Gwen
+namespace Gwk
 {
     namespace Renderer
     {
-        class OpenGL_DebugFont : public Gwen::Renderer::OpenGL
+        class OpenGL_DebugFont : public Gwk::Renderer::OpenGL
         {
         public:
 
@@ -23,16 +24,16 @@ namespace Gwen
 
             void Init();
 
-            void RenderText(Gwen::Font* pFont, Gwen::Point pos,
-                            const Gwen::String& text);
-            Gwen::Point MeasureText(Gwen::Font* pFont, const Gwen::String& text);
+            void RenderText(Gwk::Font* pFont, Gwk::Point pos,
+                            const Gwk::String& text);
+            Gwk::Point MeasureText(Gwk::Font* pFont, const Gwk::String& text);
 
         protected:
 
             void CreateDebugFont();
             void DestroyDebugFont();
 
-            Gwen::Texture*  m_pFontTexture;
+            Gwk::Texture*  m_pFontTexture;
             float m_fFontScale[2];
             float m_fLetterSpacing;
 
@@ -41,4 +42,4 @@ namespace Gwen
 
     }
 }
-#endif // ifndef GWEN_RENDERERS_OPENGL_DEBUGFONT_H
+#endif // ifndef GWK_RENDERERS_OPENGL_DEBUGFONT_H

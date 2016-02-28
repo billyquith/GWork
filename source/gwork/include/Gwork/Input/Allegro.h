@@ -1,20 +1,21 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2011 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 #pragma once
-#ifndef GWEN_INPUT_ALLEGRO_H
-#define GWEN_INPUT_ALLEGRO_H
+#ifndef GWK_INPUT_ALLEGRO_H
+#define GWK_INPUT_ALLEGRO_H
 
-#include "Gwen/InputHandler.h"
-#include "Gwen/Gwen.h"
-#include "Gwen/Controls/Canvas.h"
+#include "Gwork/InputHandler.h"
+#include "Gwork/Gwork.h"
+#include "Gwork/Controls/Canvas.h"
 
 #include <allegro5/allegro.h>
 
-namespace Gwen
+namespace Gwk
 {
     namespace Input
     {
@@ -29,7 +30,7 @@ namespace Gwen
                 m_MouseY = 0;
             }
 
-            void Initialize(Gwen::Controls::Canvas* c)
+            void Initialize(Gwk::Controls::Canvas* c)
             {
                 m_Canvas = c;
             }
@@ -39,61 +40,61 @@ namespace Gwen
                 switch (iKeyCode)
                 {
                 case ALLEGRO_KEY_BACKSPACE:
-                    return Gwen::Key::Backspace;
+                    return Gwk::Key::Backspace;
 
                 case ALLEGRO_KEY_ENTER:
-                    return Gwen::Key::Return;
+                    return Gwk::Key::Return;
 
                 case ALLEGRO_KEY_ESCAPE:
-                    return Gwen::Key::Escape;
+                    return Gwk::Key::Escape;
 
                 case ALLEGRO_KEY_TAB:
-                    return Gwen::Key::Tab;
+                    return Gwk::Key::Tab;
 
                 case ALLEGRO_KEY_SPACE:
-                    return Gwen::Key::Space;
+                    return Gwk::Key::Space;
 
                 case ALLEGRO_KEY_UP:
-                    return Gwen::Key::Up;
+                    return Gwk::Key::Up;
 
                 case ALLEGRO_KEY_DOWN:
-                    return Gwen::Key::Down;
+                    return Gwk::Key::Down;
 
                 case ALLEGRO_KEY_LEFT:
-                    return Gwen::Key::Left;
+                    return Gwk::Key::Left;
 
                 case ALLEGRO_KEY_RIGHT:
-                    return Gwen::Key::Right;
+                    return Gwk::Key::Right;
 
                 case ALLEGRO_KEY_HOME:
-                    return Gwen::Key::Home;
+                    return Gwk::Key::Home;
 
                 case ALLEGRO_KEY_END:
-                    return Gwen::Key::End;
+                    return Gwk::Key::End;
 
                 case ALLEGRO_KEY_DELETE:
-                    return Gwen::Key::Delete;
+                    return Gwk::Key::Delete;
 
                 case ALLEGRO_KEY_LCTRL:
-                    return Gwen::Key::Control;
+                    return Gwk::Key::Control;
 
                 case ALLEGRO_KEY_ALT:
-                    return Gwen::Key::Alt;
+                    return Gwk::Key::Alt;
 
                 case ALLEGRO_KEY_LSHIFT:
-                    return Gwen::Key::Shift;
+                    return Gwk::Key::Shift;
 
                 case ALLEGRO_KEY_RCTRL:
-                    return Gwen::Key::Control;
+                    return Gwk::Key::Control;
 
                 case ALLEGRO_KEY_ALTGR:
-                    return Gwen::Key::Alt;
+                    return Gwk::Key::Alt;
 
                 case ALLEGRO_KEY_RSHIFT:
-                    return Gwen::Key::Shift;
+                    return Gwk::Key::Shift;
                 }
 
-                return Gwen::Key::Invalid;
+                return Gwk::Key::Invalid;
             }
 
             bool ProcessMessage(ALLEGRO_EVENT& event)
@@ -147,7 +148,7 @@ namespace Gwen
 
         protected:
 
-            Gwen::Controls::Canvas* m_Canvas;
+            Gwk::Controls::Canvas* m_Canvas;
             int m_MouseX;
             int m_MouseY;
 
@@ -156,4 +157,4 @@ namespace Gwen
 
     }
 }
-#endif // ifndef GWEN_INPUT_ALLEGRO_H
+#endif // ifndef GWK_INPUT_ALLEGRO_H

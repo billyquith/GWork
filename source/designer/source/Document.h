@@ -1,11 +1,11 @@
 
 #pragma once
 
-#include "Gwen/Gwen.h"
-#include "Gwen/Controls.h"
-#include "GwenUtil/ImportExport.h"
+#include "Gwork/Gwork.h"
+#include "Gwork/Controls.h"
+#include "Gwork/Util/ImportExport.h"
 
-using namespace Gwen;
+using namespace Gwk;
 
 class DocumentCanvas;
 class Hierarchy;
@@ -13,15 +13,15 @@ class Hierarchy;
 
 class Document : public Controls::Base
 {
-	GWEN_CONTROL( Document, Controls::Base );
+	GWK_CONTROL( Document, Controls::Base );
 
 	virtual void Initialize( Controls::TabButton* pTab );
 
 	virtual void DoSaveAs( ImportExport::Base* exporter );
 	virtual void DoSave( ImportExport::Base* exporter );
-	virtual void LoadFromFile( const Gwen::String& str, ImportExport::Base* exporter );
+	virtual void LoadFromFile( const Gwk::String& str, ImportExport::Base* exporter );
 	
-	virtual void Command( const Gwen::String& str );
+	virtual void Command( const Gwk::String& str );
 
 protected:
 
@@ -32,7 +32,7 @@ protected:
 	DocumentCanvas*			m_pCanvas;
 	Hierarchy*				m_pHierarchy;
 
-	Gwen::String			m_strFilename;
+	Gwk::String			m_strFilename;
 
 	ImportExport::Base*		m_Exporter;
 	ImportExport::Base*		m_Importer;

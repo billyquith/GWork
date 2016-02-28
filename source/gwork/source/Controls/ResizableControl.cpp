@@ -1,22 +1,23 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 
-#include "Gwen/Controls/ImagePanel.h"
-#include "Gwen/Controls/Label.h"
-#include "Gwen/Controls/ResizableControl.h"
+#include "Gwork/Controls/ImagePanel.h"
+#include "Gwork/Controls/Label.h"
+#include "Gwork/Controls/ResizableControl.h"
 
-using namespace Gwen;
-using namespace Gwen::Controls;
-using namespace Gwen::ControlsInternal;
+using namespace Gwk;
+using namespace Gwk::Controls;
+using namespace Gwk::ControlsInternal;
 
-GWEN_CONTROL_CONSTRUCTOR(ResizableControl)
+GWK_CONTROL_CONSTRUCTOR(ResizableControl)
 {
     m_bResizable = true;
-    m_MinimumSize = Gwen::Point(5, 5);
+    m_MinimumSize = Gwk::Point(5, 5);
     m_bClampMovement = false;
     m_Resizer[5] = NULL;
     m_Resizer[0] = NULL;
@@ -66,7 +67,7 @@ void ResizableControl::DisableResizing()
 {
     for (Base::List::iterator it = Children.begin(); it != Children.end(); ++it)
     {
-        Resizer* resizer = gwen_cast<Resizer>(*it);
+        Resizer* resizer = gwk_cast<Resizer>(*it);
 
         if (!resizer)
             continue;
@@ -80,7 +81,7 @@ void ResizableControl::DisableResizing()
 
 bool ResizableControl::SetBounds(int x, int y, int w, int h)
 {
-    Gwen::Point minSize = GetMinimumSize();
+    Gwk::Point minSize = GetMinimumSize();
 
     // Clamp Minimum Size
     w = Max(w, minSize.x);

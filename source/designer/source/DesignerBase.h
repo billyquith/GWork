@@ -1,11 +1,11 @@
 
 #pragma once
 
-#include "Gwen/Gwen.h"
-#include "Gwen/Controls.h"
-#include "GwenUtil/ImportExport.h"
+#include "Gwork/Gwork.h"
+#include "Gwork/Controls.h"
+#include "Gwork/Util/ImportExport.h"
 
-using namespace Gwen;
+using namespace Gwk;
 
 class Document;
 
@@ -17,7 +17,7 @@ class Document;
 
 class DesignerBase : public Controls::Base 
 {
-	GWEN_CONTROL( DesignerBase, Controls::Base );
+	GWK_CONTROL( DesignerBase, Controls::Base );
 
 	protected:
 

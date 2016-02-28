@@ -1,7 +1,14 @@
-#include "Gwen/UnitTest/UnitTest.h"
-#include "Gwen/Controls/GroupBox.h"
+/*
+ *  Gwork
+ *  Copyright (c) 2010 Facepunch Studios
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
+ */
 
-using namespace Gwen;
+#include "Gwork/Test/Test.h"
+#include "Gwork/Controls/GroupBox.h"
+
+using namespace Gwk;
 
 
 static const char *c_text =
@@ -29,13 +36,13 @@ class GroupBox : public GUnit
 {
 public:
 
-    GWEN_CONTROL_INLINE(GroupBox, GUnit)
+    GWK_CONTROL_INLINE(GroupBox, GUnit)
     {
-        Gwen::Controls::GroupBox* pGroup = new Gwen::Controls::GroupBox(this);
+        Gwk::Controls::GroupBox* pGroup = new Gwk::Controls::GroupBox(this);
         pGroup->SetText("Group Box");
         pGroup->SetSize(300, 200);
 
-		Gwen::Controls::Label* label = new Gwen::Controls::Label( pGroup );
+		Gwk::Controls::Label* label = new Gwk::Controls::Label( pGroup );
 		label->SetText(c_text);
 		label->SetWrap( true );
 		label->Dock(Docking::Fill);

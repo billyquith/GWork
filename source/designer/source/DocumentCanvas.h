@@ -1,26 +1,26 @@
 
 #pragma once
 
-#include "Gwen/Gwen.h"
-#include "Gwen/Controls.h"
+#include "Gwork/Gwork.h"
+#include "Gwork/Controls.h"
 
-using namespace Gwen;
+using namespace Gwk;
 
 class SelectionLayer;
 
 class DocumentCanvas : public Controls::Base 
 {
-	GWEN_CONTROL( DocumentCanvas, Controls::Base );
+	GWK_CONTROL( DocumentCanvas, Controls::Base );
 
-	virtual void Render( Gwen::Skin::Base* skin );
+	virtual void Render( Gwk::Skin::Base* skin );
 	virtual void PostLayout( Skin::Base* skin );
 
 	virtual void SelectControls( ControlList& list );
 
-	virtual bool DragAndDrop_CanAcceptPackage( Gwen::DragAndDrop::Package* pPackage );
-	virtual bool DragAndDrop_HandleDrop( Gwen::DragAndDrop::Package* pPackage, int x, int y );
+	virtual bool DragAndDrop_CanAcceptPackage( Gwk::DragAndDrop::Package* pPackage );
+	virtual bool DragAndDrop_HandleDrop( Gwk::DragAndDrop::Package* pPackage, int x, int y );
 
-	void Command( const Gwen::String& str );
+	void Command( const Gwk::String& str );
 
 	Event::Caller	onChildAdded;
 	Event::Caller	onChildRemoved;

@@ -1,14 +1,15 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2012 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2015-2016 Billy Quith
+ *  See license in Gwork.h
  */
 
-#ifndef GWEN_RENDERERS_DIRECTX9_H
-#define GWEN_RENDERERS_DIRECTX9_H
+#ifndef GWK_RENDERERS_DIRECTX9_H
+#define GWK_RENDERERS_DIRECTX9_H
 
-#include "Gwen/Gwen.h"
-#include "Gwen/BaseRender.h"
+#include "Gwork/Gwork.h"
+#include "Gwork/BaseRender.h"
 
 #include <D3D9.h>
 #include <D3DX9Core.h>
@@ -16,11 +17,11 @@
 #pragma comment( lib, "D3D9.lib" )
 #pragma comment( lib, "D3Dx9.lib" )
 
-namespace Gwen
+namespace Gwk
 {
     namespace Renderer
     {
-        class GWEN_EXPORT DirectX9 : public Gwen::Renderer::Base
+        class GWK_EXPORT DirectX9 : public Gwk::Renderer::Base
         {
         public:
 
@@ -31,25 +32,25 @@ namespace Gwen
             virtual void End();
             virtual void Release();
 
-            virtual void SetDrawColor(Gwen::Color color);
+            virtual void SetDrawColor(Gwk::Color color);
 
-            virtual void DrawFilledRect(Gwen::Rect rect);
+            virtual void DrawFilledRect(Gwk::Rect rect);
 
-            virtual void LoadFont(Gwen::Font* pFont);
-            virtual void FreeFont(Gwen::Font* pFont);
-            virtual void RenderText(Gwen::Font* pFont, Gwen::Point pos,
-                                    const Gwen::String& text);
-            virtual Gwen::Point MeasureText(Gwen::Font* pFont, const Gwen::String& text);
+            virtual void LoadFont(Gwk::Font* pFont);
+            virtual void FreeFont(Gwk::Font* pFont);
+            virtual void RenderText(Gwk::Font* pFont, Gwk::Point pos,
+                                    const Gwk::String& text);
+            virtual Gwk::Point MeasureText(Gwk::Font* pFont, const Gwk::String& text);
 
             void StartClip();
             void EndClip();
 
-            void DrawTexturedRect(Gwen::Texture* pTexture, Gwen::Rect pTargetRect, float u1 = 0.0f,
+            void DrawTexturedRect(Gwk::Texture* pTexture, Gwk::Rect pTargetRect, float u1 = 0.0f,
                                   float v1 = 0.0f, float u2 = 1.0f, float v2 = 1.0f);
-            void        LoadTexture(Gwen::Texture* pTexture);
-            void        FreeTexture(Gwen::Texture* pTexture);
-            Gwen::Color PixelColour(Gwen::Texture* pTexture, unsigned int x, unsigned int y,
-                                    const Gwen::Color& col_default);
+            void        LoadTexture(Gwk::Texture* pTexture);
+            void        FreeTexture(Gwk::Texture* pTexture);
+            Gwk::Color PixelColour(Gwk::Texture* pTexture, unsigned int x, unsigned int y,
+                                    const Gwk::Color& col_default);
 
         public:
 
@@ -57,16 +58,16 @@ namespace Gwen
             // Self Initialization
             //
 
-            virtual bool InitializeContext(Gwen::WindowProvider* pWindow);
-            virtual bool ShutdownContext(Gwen::WindowProvider* pWindow);
-            virtual bool PresentContext(Gwen::WindowProvider* pWindow);
-            virtual bool ResizedContext(Gwen::WindowProvider* pWindow, int w, int h);
-            virtual bool BeginContext(Gwen::WindowProvider* pWindow);
-            virtual bool EndContext(Gwen::WindowProvider* pWindow);
+            virtual bool InitializeContext(Gwk::WindowProvider* pWindow);
+            virtual bool ShutdownContext(Gwk::WindowProvider* pWindow);
+            virtual bool PresentContext(Gwk::WindowProvider* pWindow);
+            virtual bool ResizedContext(Gwk::WindowProvider* pWindow, int w, int h);
+            virtual bool BeginContext(Gwk::WindowProvider* pWindow);
+            virtual bool EndContext(Gwk::WindowProvider* pWindow);
 
         protected:
 
-            virtual void FillPresentParameters(Gwen::WindowProvider* pWindow,
+            virtual void FillPresentParameters(Gwk::WindowProvider* pWindow,
                                                D3DPRESENT_PARAMETERS& Params);
 
         protected:
@@ -75,8 +76,8 @@ namespace Gwen
             IDirect3DDevice9*   m_pDevice;
             IDirect3D9*         m_pD3D;
             DWORD m_Color;
-            Gwen::Font::List m_FontList;
-            // Gwen::Texture::List	m_TextureList;
+            Gwk::Font::List m_FontList;
+            // Gwk::Texture::List	m_TextureList;
 
             void Flush();
             void AddVert(int x, int y);
@@ -101,4 +102,4 @@ namespace Gwen
 
     }
 }
-#endif // ifndef GWEN_RENDERERS_DIRECTX9_H
+#endif // ifndef GWK_RENDERERS_DIRECTX9_H

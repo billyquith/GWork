@@ -1,43 +1,44 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 #pragma once
-#ifndef GWEN_CONTROLS_HSVCOLORPICKER_H
-#define GWEN_CONTROLS_HSVCOLORPICKER_H
+#ifndef GWK_CONTROLS_HSVCOLORPICKER_H
+#define GWK_CONTROLS_HSVCOLORPICKER_H
 
-#include "Gwen/Controls/Base.h"
-#include "Gwen/Gwen.h"
-#include "Gwen/Skin.h"
-#include "Gwen/Controls/ColorControls.h"
-#include "Gwen/Controls/ColorPicker.h"
+#include "Gwork/Controls/Base.h"
+#include "Gwork/Gwork.h"
+#include "Gwork/Skin.h"
+#include "Gwork/Controls/ColorControls.h"
+#include "Gwork/Controls/ColorPicker.h"
 
 
-namespace Gwen
+namespace Gwk
 {
     namespace Controls
     {
-        class GWEN_EXPORT HSVColorPicker : public Controls::Base
+        class GWK_EXPORT HSVColorPicker : public Controls::Base
         {
         public:
 
-            GWEN_CONTROL(HSVColorPicker, Controls::Base);
+            GWK_CONTROL(HSVColorPicker, Controls::Base);
 
-            Gwen::Color GetColor();
-            Gwen::Color GetDefaultColor()
+            Gwk::Color GetColor();
+            Gwk::Color GetDefaultColor()
             {
                 return m_Before->GetColor();
             }
 
-            void SetColor(Gwen::Color color, bool onlyHue = false, bool reset = false);
+            void SetColor(Gwk::Color color, bool onlyHue = false, bool reset = false);
 
-            void ColorBoxChanged(Gwen::Controls::Base* pControl);
-            void ColorSliderChanged(Gwen::Controls::Base* pControl);
-            void NumericTyped(Gwen::Controls::Base* control);
+            void ColorBoxChanged(Gwk::Controls::Base* pControl);
+            void ColorSliderChanged(Gwk::Controls::Base* pControl);
+            void NumericTyped(Gwk::Controls::Base* control);
 
-            void UpdateControls(Gwen::Color newColor);
+            void UpdateControls(Gwk::Color newColor);
 
             Event::Caller onColorChanged;
 
@@ -52,4 +53,4 @@ namespace Gwen
 
     }
 }
-#endif // ifndef GWEN_CONTROLS_HSVCOLORPICKER_H
+#endif // ifndef GWK_CONTROLS_HSVCOLORPICKER_H

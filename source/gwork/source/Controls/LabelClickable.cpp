@@ -1,22 +1,23 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 
-#include "Gwen/Gwen.h"
-#include "Gwen/Skin.h"
-#include "Gwen/Controls/LabelClickable.h"
+#include "Gwork/Gwork.h"
+#include "Gwork/Skin.h"
+#include "Gwork/Controls/LabelClickable.h"
 
-using namespace Gwen;
-using namespace Gwen::Controls;
+using namespace Gwk;
+using namespace Gwk::Controls;
 
-GWEN_CONTROL_CONSTRUCTOR(LabelClickable)
+GWK_CONTROL_CONSTRUCTOR(LabelClickable)
 {
     SetIsToggle(false);
-    SetCursor(Gwen::CursorType::Finger);
-    SetAlignment(Gwen::Docking::Left|Gwen::Docking::CenterV);
+    SetCursor(Gwk::CursorType::Finger);
+    SetAlignment(Gwk::Docking::Left|Gwk::Docking::CenterV);
 }
 
 void LabelClickable::Render(Skin::Base* /*skin*/)

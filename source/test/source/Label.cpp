@@ -1,36 +1,43 @@
-#include "Gwen/UnitTest/UnitTest.h"
-#include "Gwen/Controls/Label.h"
+/*
+ *  Gwork
+ *  Copyright (c) 2010 Facepunch Studios
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
+ */
 
-using namespace Gwen;
+#include "Gwork/Test/Test.h"
+#include "Gwork/Controls/Label.h"
+
+using namespace Gwk;
 
 class Label : public GUnit
 {
 public:
 
-    GWEN_CONTROL_INLINE(Label, GUnit)
+    GWK_CONTROL_INLINE(Label, GUnit)
     {
         {
-            Gwen::Controls::Label* label = new Gwen::Controls::Label(this);
+            Gwk::Controls::Label* label = new Gwk::Controls::Label(this);
             label->SetText("Garry's Normal Label");
             label->SizeToContents();
             label->SetPos(10, 10);
         }
         {
-            Gwen::Controls::Label* label = new Gwen::Controls::Label(this);
+            Gwk::Controls::Label* label = new Gwk::Controls::Label(this);
             label->SetText(Utility::Narrow(
                 L"Chinese: \u4E45\u6709\u5F52\u5929\u613F \u7EC8\u8FC7\u9B3C\u95E8\u5173"));
             label->SizeToContents();
             label->SetPos(10, 30);
         }
         {
-            Gwen::Controls::Label* label = new Gwen::Controls::Label(this);
+            Gwk::Controls::Label* label = new Gwk::Controls::Label(this);
             label->SetText(Utility::Narrow(
                 L"Japanese: \u751F\u3080\u304E\u3000\u751F\u3054\u3081\u3000\u751F\u305F\u307E\u3054"));
             label->SizeToContents();
             label->SetPos(10, 50);
         }
         {
-            Gwen::Controls::Label* label = new Gwen::Controls::Label(this);
+            Gwk::Controls::Label* label = new Gwk::Controls::Label(this);
             label->SetText(Utility::Narrow(
                 L"Korean: \uADF9\uC9C0\uD0D0\uD5D8\u3000\uD611\uD68C\uACB0\uC131\u3000\uCCB4\uACC4"
                         L"\uC801\u3000\uC5F0\uAD6C"));
@@ -38,7 +45,7 @@ public:
             label->SetPos(10, 70);
         }
         {
-            Gwen::Controls::Label* label = new Gwen::Controls::Label(this);
+            Gwk::Controls::Label* label = new Gwk::Controls::Label(this);
             label->SetText(Utility::Narrow(
                 L"Hindi: \u092F\u0947 \u0905\u0928\u0941\u091A\u094D\u091B\u0947\u0926 \u0939\u093F"
                        L"\u0928\u094D\u0926\u0940 \u092E\u0947\u0902 \u0939\u0948\u0964"));
@@ -46,7 +53,7 @@ public:
             label->SetPos(10, 90);
         }
         {
-            Gwen::Controls::Label* label = new Gwen::Controls::Label(this);
+            Gwk::Controls::Label* label = new Gwk::Controls::Label(this);
             label->SetText(Utility::Narrow(
                 L"Arabic: \u0627\u0644\u0622\u0646 \u0644\u062D\u0636\u0648\u0631 \u0627\u0644\u0645"
                         L"\u0624\u062A\u0645\u0631 \u0627\u0644\u062F\u0648\u0644\u064A"));
@@ -54,16 +61,16 @@ public:
             label->SetPos(10, 110);
         }
         {
-            Gwen::Controls::Label* label = new Gwen::Controls::Label(this);
+            Gwk::Controls::Label* label = new Gwk::Controls::Label(this);
             label->SetText("Wow, Coloured Text");
-            label->SetTextColor(Gwen::Color(0, 0, 255, 255));
+            label->SetTextColor(Gwk::Color(0, 0, 255, 255));
             label->SizeToContents();
             label->SetPos(10, 130);
         }
         {
-            Gwen::Controls::Label* label = new Gwen::Controls::Label(this);
+            Gwk::Controls::Label* label = new Gwk::Controls::Label(this);
             label->SetText("Coloured Text With Alpha");
-            label->SetTextColor(Gwen::Color(0, 0, 255, 100));
+            label->SetTextColor(Gwk::Color(0, 0, 255, 100));
             label->SizeToContents();
             label->SetPos(10, 150);
         }
@@ -75,7 +82,7 @@ public:
             //
             m_Font.facename = "OpenSans";// TODO: "Comic Sans MS";
             m_Font.size = 25;
-            Gwen::Controls::Label* label = new Gwen::Controls::Label(this);
+            Gwk::Controls::Label* label = new Gwk::Controls::Label(this);
             label->SetText("Custom Font (Comic Sans 25)");
             label->SetFont(&m_Font);
             label->SizeToContents();
@@ -83,7 +90,7 @@ public:
         }
     }
 
-    Gwen::Font m_Font;
+    Gwk::Font m_Font;
 };
 
 

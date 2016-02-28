@@ -1,30 +1,31 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 #pragma once
-#ifndef GWEN_CONTROLS_PROPERTY_BASEPROPERTY_H
-#define GWEN_CONTROLS_PROPERTY_BASEPROPERTY_H
+#ifndef GWK_CONTROLS_PROPERTY_BASEPROPERTY_H
+#define GWK_CONTROLS_PROPERTY_BASEPROPERTY_H
 
-#include "Gwen/Controls/Base.h"
-#include "Gwen/Gwen.h"
-#include "Gwen/Skin.h"
-#include "Gwen/Utility.h"
+#include "Gwork/Controls/Base.h"
+#include "Gwork/Gwork.h"
+#include "Gwork/Skin.h"
+#include "Gwork/Utility.h"
 
 
-namespace Gwen
+namespace Gwk
 {
     namespace Controls
     {
         namespace Property
         {
-            class GWEN_EXPORT Base : public Gwen::Controls::Base
+            class GWK_EXPORT Base : public Gwk::Controls::Base
             {
             public:
 
-                GWEN_CONTROL_INLINE(Base, Gwen::Controls::Base)
+                GWK_CONTROL_INLINE(Base, Gwk::Controls::Base)
                 {
                     SetHeight(17);
                 }
@@ -43,7 +44,7 @@ namespace Gwen
                     onChange.Call(this, info);
                 }
 
-                void OnPropertyValueChanged(Gwen::Controls::Base* /*control*/)
+                void OnPropertyValueChanged(Gwk::Controls::Base* /*control*/)
                 {
                     DoChanged();
                 }
@@ -55,4 +56,4 @@ namespace Gwen
         }
     }
 }
-#endif // ifndef GWEN_CONTROLS_PROPERTY_BASEPROPERTY_H
+#endif // ifndef GWK_CONTROLS_PROPERTY_BASEPROPERTY_H

@@ -1,24 +1,25 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 #pragma once
-#ifndef GWEN_CONTROLS_NUMERICUPDOWN_H
-#define GWEN_CONTROLS_NUMERICUPDOWN_H
+#ifndef GWK_CONTROLS_NUMERICUPDOWN_H
+#define GWK_CONTROLS_NUMERICUPDOWN_H
 
-#include "Gwen/Controls/Base.h"
-#include "Gwen/Controls/Button.h"
-#include "Gwen/Controls/TextBox.h"
+#include "Gwork/Controls/Base.h"
+#include "Gwork/Controls/Button.h"
+#include "Gwork/Controls/TextBox.h"
 
-namespace Gwen
+namespace Gwk
 {
     namespace Controls
     {
-        class GWEN_EXPORT NumericUpDownButton_Up : public Button
+        class GWK_EXPORT NumericUpDownButton_Up : public Button
         {
-            GWEN_CONTROL_INLINE(NumericUpDownButton_Up, Button)
+            GWK_CONTROL_INLINE(NumericUpDownButton_Up, Button)
             {
                 SetSize(7, 7);
             }
@@ -31,9 +32,9 @@ namespace Gwen
         };
 
 
-        class GWEN_EXPORT NumericUpDownButton_Down : public Button
+        class GWK_EXPORT NumericUpDownButton_Down : public Button
         {
-            GWEN_CONTROL_INLINE(NumericUpDownButton_Down, Button)
+            GWK_CONTROL_INLINE(NumericUpDownButton_Down, Button)
             {
                 SetSize(7, 7);
             }
@@ -46,11 +47,11 @@ namespace Gwen
         };
 
 
-        class GWEN_EXPORT NumericUpDown : public TextBoxNumeric
+        class GWK_EXPORT NumericUpDown : public TextBoxNumeric
         {
         public:
 
-            GWEN_CONTROL(NumericUpDown, TextBoxNumeric);
+            GWK_CONTROL(NumericUpDown, TextBoxNumeric);
 
             virtual void SetMin(int i);
             virtual void SetMax(int i);
@@ -96,4 +97,4 @@ namespace Gwen
 
     }
 }
-#endif // ifndef GWEN_CONTROLS_NUMERICUPDOWN_H
+#endif // ifndef GWK_CONTROLS_NUMERICUPDOWN_H

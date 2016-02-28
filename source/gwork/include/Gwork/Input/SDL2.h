@@ -1,19 +1,20 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2011 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  *  SDL2 Added by BQ.
  */
-#ifndef GWEN_INPUT_SDL2_H
-#define GWEN_INPUT_SDL2_H
+#ifndef GWK_INPUT_SDL2_H
+#define GWK_INPUT_SDL2_H
 
-#include "Gwen/InputHandler.h"
-#include "Gwen/Gwen.h"
-#include "Gwen/Controls/Canvas.h"
+#include "Gwork/InputHandler.h"
+#include "Gwork/Gwork.h"
+#include "Gwork/Controls/Canvas.h"
 #include <SDL.h>
 
 
-namespace Gwen
+namespace Gwk
 {
     namespace Input
     {
@@ -26,7 +27,7 @@ namespace Gwen
                 m_Canvas = NULL;
             }
 
-            void Initialize(Gwen::Controls::Canvas* c)
+            void Initialize(Gwk::Controls::Canvas* c)
             {
                 m_Canvas = c;
             }
@@ -47,24 +48,24 @@ namespace Gwen
 
                         switch (scancode)
                         {
-                        case SDL_SCANCODE_RETURN:       iKey = Gwen::Key::Return; break;
-                        case SDL_SCANCODE_BACKSPACE:    iKey = Gwen::Key::Backspace; break;
-                        case SDL_SCANCODE_DELETE:       iKey = Gwen::Key::Delete; break;
-                        case SDL_SCANCODE_LEFT:         iKey = Gwen::Key::Left; break;
-                        case SDL_SCANCODE_RIGHT:        iKey = Gwen::Key::Right; break;
-                        case SDL_SCANCODE_LSHIFT:       iKey = Gwen::Key::Shift; break;
-                        case SDL_SCANCODE_RSHIFT:       iKey = Gwen::Key::Shift; break;
-                        case SDL_SCANCODE_TAB:          iKey = Gwen::Key::Tab; break;
-                        case SDL_SCANCODE_SPACE:        iKey = Gwen::Key::Space; break;
-                        case SDL_SCANCODE_HOME:         iKey = Gwen::Key::Home; break;
-                        case SDL_SCANCODE_END:          iKey = Gwen::Key::End; break;
-                        case SDL_SCANCODE_LCTRL:        iKey = Gwen::Key::Control; break;
-                        case SDL_SCANCODE_RCTRL:        iKey = Gwen::Key::Control; break;
-                        case SDL_SCANCODE_UP:           iKey = Gwen::Key::Up; break;
-                        case SDL_SCANCODE_DOWN:         iKey = Gwen::Key::Down; break;
-                        case SDL_SCANCODE_ESCAPE:       iKey = Gwen::Key::Escape; break;
-                        case SDL_SCANCODE_LALT:         iKey = Gwen::Key::Alt; break;
-                        case SDL_SCANCODE_RALT:         iKey = Gwen::Key::Alt; break;
+                        case SDL_SCANCODE_RETURN:       iKey = Gwk::Key::Return; break;
+                        case SDL_SCANCODE_BACKSPACE:    iKey = Gwk::Key::Backspace; break;
+                        case SDL_SCANCODE_DELETE:       iKey = Gwk::Key::Delete; break;
+                        case SDL_SCANCODE_LEFT:         iKey = Gwk::Key::Left; break;
+                        case SDL_SCANCODE_RIGHT:        iKey = Gwk::Key::Right; break;
+                        case SDL_SCANCODE_LSHIFT:       iKey = Gwk::Key::Shift; break;
+                        case SDL_SCANCODE_RSHIFT:       iKey = Gwk::Key::Shift; break;
+                        case SDL_SCANCODE_TAB:          iKey = Gwk::Key::Tab; break;
+                        case SDL_SCANCODE_SPACE:        iKey = Gwk::Key::Space; break;
+                        case SDL_SCANCODE_HOME:         iKey = Gwk::Key::Home; break;
+                        case SDL_SCANCODE_END:          iKey = Gwk::Key::End; break;
+                        case SDL_SCANCODE_LCTRL:        iKey = Gwk::Key::Control; break;
+                        case SDL_SCANCODE_RCTRL:        iKey = Gwk::Key::Control; break;
+                        case SDL_SCANCODE_UP:           iKey = Gwk::Key::Up; break;
+                        case SDL_SCANCODE_DOWN:         iKey = Gwk::Key::Down; break;
+                        case SDL_SCANCODE_ESCAPE:       iKey = Gwk::Key::Escape; break;
+                        case SDL_SCANCODE_LALT:         iKey = Gwk::Key::Alt; break;
+                        case SDL_SCANCODE_RALT:         iKey = Gwk::Key::Alt; break;
                         default:                        return false;
                         }
 
@@ -123,11 +124,11 @@ namespace Gwen
 
         protected:
 
-            Gwen::Controls::Canvas* m_Canvas;
+            Gwk::Controls::Canvas* m_Canvas;
 
         };
 
 
     }
 }
-#endif // GWEN_INPUT_SDL2_H
+#endif // GWK_INPUT_SDL2_H

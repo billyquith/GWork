@@ -1,27 +1,28 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 #pragma once
-#ifndef GWEN_CONTROLS_TABBUTTON_H
-#define GWEN_CONTROLS_TABBUTTON_H
+#ifndef GWK_CONTROLS_TABBUTTON_H
+#define GWK_CONTROLS_TABBUTTON_H
 
-#include "Gwen/Controls/Base.h"
-#include "Gwen/Controls/Button.h"
+#include "Gwork/Controls/Base.h"
+#include "Gwork/Controls/Button.h"
 
-namespace Gwen
+namespace Gwk
 {
     namespace Controls
     {
         class TabControl;
 
-        class GWEN_EXPORT TabButton : public Button
+        class GWK_EXPORT TabButton : public Button
         {
         public:
 
-            GWEN_CONTROL(TabButton, Button);
+            GWK_CONTROL(TabButton, Button);
             virtual void Render(Skin::Base* skin) override;
             virtual void Layout(Skin::Base* skin) override;
 
@@ -47,7 +48,7 @@ namespace Gwen
             }
 
             virtual bool DragAndDrop_ShouldStartDrag() override;
-            virtual void DragAndDrop_StartDragging(Gwen::DragAndDrop::Package* /*pPackage*/,
+            virtual void DragAndDrop_StartDragging(Gwk::DragAndDrop::Package* /*pPackage*/,
                                                    int /*x*/, int /*y*/) override
             {
                 SetHidden(true);
@@ -80,4 +81,4 @@ namespace Gwen
 
     }
 }
-#endif // ifndef GWEN_CONTROLS_TABBUTTON_H
+#endif // ifndef GWK_CONTROLS_TABBUTTON_H

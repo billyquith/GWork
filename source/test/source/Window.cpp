@@ -1,13 +1,20 @@
-#include "Gwen/UnitTest/UnitTest.h"
-#include "Gwen/Controls/TreeControl.h"
+/*
+ *  Gwork
+ *  Copyright (c) 2010 Facepunch Studios
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
+ */
 
-using namespace Gwen;
+#include "Gwork/Test/Test.h"
+#include "Gwork/Controls/TreeControl.h"
+
+using namespace Gwk;
 
 class Window : public GUnit
 {
 public:
 
-    GWEN_CONTROL_INLINE(Window, GUnit)
+    GWK_CONTROL_INLINE(Window, GUnit)
     {
         {
             Controls::Button* pButton = new Controls::Button(this);

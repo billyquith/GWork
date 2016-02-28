@@ -1,9 +1,9 @@
 
-#include "Gwen/Gwen.h"
-#include "Gwen/BaseRender.h"
-#include "Gwen/Font.h"
-#include "Gwen/Texture.h"
-#include "Gwen/Renderers/SFML2.h"
+#include "Gwork/Gwork.h"
+#include "Gwork/BaseRender.h"
+#include "Gwork/Font.h"
+#include "Gwork/Texture.h"
+#include "Gwork/Renderers/SFML2.h"
 
 #include <SFML/Graphics.hpp>
 #include <SFML/Graphics/Font.hpp>
@@ -41,7 +41,7 @@ struct TextureData
 };
 
 
-Gwen::Renderer::SFML2::SFML2(sf::RenderTarget& target) :
+Gwk::Renderer::SFML2::SFML2(sf::RenderTarget& target) :
     m_Target(target), m_Color(), m_Buffer(), m_RenderStates(sf::RenderStates::Default), m_Height(
         m_Target.getSize().y)
 {
@@ -49,11 +49,11 @@ Gwen::Renderer::SFML2::SFML2(sf::RenderTarget& target) :
     m_RenderStates.blendMode = sf::BlendAlpha;
 }
 
-Gwen::Renderer::SFML2::~SFML2()
+Gwk::Renderer::SFML2::~SFML2()
 {
 }
 
-void Gwen::Renderer::SFML2::Begin()
+void Gwk::Renderer::SFML2::Begin()
 {
     m_OriginalView = m_Target.getView();
     sf::FloatRect vrect;
@@ -67,16 +67,16 @@ void Gwen::Renderer::SFML2::Begin()
     m_Target.setView(view);
 }
 
-void Gwen::Renderer::SFML2::End()
+void Gwk::Renderer::SFML2::End()
 {
     m_Target.setView(m_OriginalView);
 }
 
-void Gwen::Renderer::SFML2::StartClip()
+void Gwk::Renderer::SFML2::StartClip()
 {
     Flush();
 
-    Gwen::Rect rect = ClipRegion();
+    Gwk::Rect rect = ClipRegion();
     float x = rect.x-1, y = rect.y, w = rect.w+1, h = rect.h+1;
 
     // OpenGL's coords are from the bottom left
@@ -89,18 +89,18 @@ void Gwen::Renderer::SFML2::StartClip()
     glScissor(x*scale, y*scale, w*scale, h*scale);
 }
 
-void Gwen::Renderer::SFML2::EndClip()
+void Gwk::Renderer::SFML2::EndClip()
 {
     Flush();
     glDisable(GL_SCISSOR_TEST);
 }
 
-void Gwen::Renderer::SFML2::SetDrawColor(Gwen::Color color)
+void Gwk::Renderer::SFML2::SetDrawColor(Gwk::Color color)
 {
     m_Color = sf::Color(color.r, color.g, color.b, color.a);
 }
 
-void Gwen::Renderer::SFML2::DrawPixel(int x, int y)
+void Gwk::Renderer::SFML2::DrawPixel(int x, int y)
 {
     EnsurePrimitiveType(sf::Points);
     EnsureTexture(NULL);
@@ -108,7 +108,7 @@ void Gwen::Renderer::SFML2::DrawPixel(int x, int y)
     AddVert(x, y+1);
 }
 
-void Gwen::Renderer::SFML2::DrawLinedRect(Gwen::Rect rect)
+void Gwk::Renderer::SFML2::DrawLinedRect(Gwk::Rect rect)
 {
     EnsurePrimitiveType(sf::Lines);
     EnsureTexture(NULL);
@@ -132,7 +132,7 @@ void Gwen::Renderer::SFML2::DrawLinedRect(Gwen::Rect rect)
     AddVert(rect.x, rect.y);
 }
 
-void Gwen::Renderer::SFML2::DrawFilledRect(Gwen::Rect rect)
+void Gwk::Renderer::SFML2::DrawFilledRect(Gwk::Rect rect)
 {
     EnsurePrimitiveType(sf::Triangles);
     EnsureTexture(NULL);
@@ -148,13 +148,13 @@ void Gwen::Renderer::SFML2::DrawFilledRect(Gwen::Rect rect)
     AddVert(rect.x, rect.y+rect.h);
 }
 
-void Gwen::Renderer::SFML2::DrawShavedCornerRect(Gwen::Rect rect, bool bSlight)
+void Gwk::Renderer::SFML2::DrawShavedCornerRect(Gwk::Rect rect, bool bSlight)
 {
     // TODO: Implement this
     Base::DrawShavedCornerRect(rect, bSlight);
 }
 
-void Gwen::Renderer::SFML2::DrawTexturedRect(Gwen::Texture* pTexture, Gwen::Rect rect, float u1,
+void Gwk::Renderer::SFML2::DrawTexturedRect(Gwk::Texture* pTexture, Gwk::Rect rect, float u1,
                                              float v1, float u2, float v2)
 {
     TextureData* data = reinterpret_cast<TextureData*>(pTexture->data);
@@ -179,7 +179,7 @@ void Gwen::Renderer::SFML2::DrawTexturedRect(Gwen::Texture* pTexture, Gwen::Rect
     AddVert(rect.x, rect.y+rect.h, u1, v2);
 }
 
-void Gwen::Renderer::SFML2::LoadFont(Gwen::Font* font)
+void Gwk::Renderer::SFML2::LoadFont(Gwk::Font* font)
 {
     font->realsize = font->size*Scale();
 
@@ -196,7 +196,7 @@ void Gwen::Renderer::SFML2::LoadFont(Gwen::Font* font)
     font->data = pFont;
 }
 
-void Gwen::Renderer::SFML2::FreeFont(Gwen::Font* pFont)
+void Gwk::Renderer::SFML2::FreeFont(Gwk::Font* pFont)
 {
     if (!pFont->data)
         return;
@@ -206,8 +206,8 @@ void Gwen::Renderer::SFML2::FreeFont(Gwen::Font* pFont)
     pFont->data = NULL;
 }
 
-void Gwen::Renderer::SFML2::RenderText(Gwen::Font* pFont, Gwen::Point pos,
-                                       const Gwen::String& text)
+void Gwk::Renderer::SFML2::RenderText(Gwk::Font* pFont, Gwk::Point pos,
+                                       const Gwk::String& text)
 {
     Flush();
 
@@ -231,7 +231,7 @@ void Gwen::Renderer::SFML2::RenderText(Gwen::Font* pFont, Gwen::Point pos,
     m_Target.draw(sfStr);
 }
 
-Gwen::Point Gwen::Renderer::SFML2::MeasureText(Gwen::Font* pFont, const Gwen::String& text)
+Gwk::Point Gwk::Renderer::SFML2::MeasureText(Gwk::Font* pFont, const Gwk::String& text)
 {
     // If the font doesn't exist, or the font size should be changed
     if (!pFont->data || fabs(pFont->realsize-pFont->size*Scale()) > 2)
@@ -248,10 +248,10 @@ Gwen::Point Gwen::Renderer::SFML2::MeasureText(Gwen::Font* pFont, const Gwen::St
     sfStr.setScale(Scale(), Scale());
     sfStr.setCharacterSize(pFont->realsize);
     sf::FloatRect sz = sfStr.getLocalBounds();
-    return Gwen::Point(sz.left+sz.width, sz.top+sz.height);
+    return Gwk::Point(sz.left+sz.width, sz.top+sz.height);
 }
 
-void Gwen::Renderer::SFML2::LoadTexture(Gwen::Texture* pTexture)
+void Gwk::Renderer::SFML2::LoadTexture(Gwk::Texture* pTexture)
 {
     if (!pTexture)
         return;
@@ -273,7 +273,7 @@ void Gwen::Renderer::SFML2::LoadTexture(Gwen::Texture* pTexture)
     pTexture->data = new TextureData(tex);
 }
 
-void Gwen::Renderer::SFML2::FreeTexture(Gwen::Texture* pTexture)
+void Gwk::Renderer::SFML2::FreeTexture(Gwk::Texture* pTexture)
 {
     TextureData* data = reinterpret_cast<TextureData*>(pTexture->data);
 
@@ -283,8 +283,8 @@ void Gwen::Renderer::SFML2::FreeTexture(Gwen::Texture* pTexture)
     pTexture->data = NULL;
 }
 
-Gwen::Color Gwen::Renderer::SFML2::PixelColour(Gwen::Texture* pTexture, unsigned int x,
-                                               unsigned int y, const Gwen::Color& col_default)
+Gwk::Color Gwk::Renderer::SFML2::PixelColour(Gwk::Texture* pTexture, unsigned int x,
+                                               unsigned int y, const Gwk::Color& col_default)
 {
     TextureData* data = static_cast<TextureData*>(pTexture->data);
 
@@ -298,5 +298,5 @@ Gwen::Color Gwen::Renderer::SFML2::PixelColour(Gwen::Texture* pTexture, unsigned
     }
 
     sf::Color col = data->image->getPixel(x, y);
-    return Gwen::Color(col.r, col.g, col.b, col.a);
+    return Gwk::Color(col.r, col.g, col.b, col.a);
 }

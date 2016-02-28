@@ -1,9 +1,9 @@
 
-#include "Gwen/Renderers/OpenGL.h"
-#include "Gwen/Utility.h"
-#include "Gwen/Font.h"
-#include "Gwen/Texture.h"
-#include "Gwen/WindowProvider.h"
+#include "Gwork/Renderers/OpenGL.h"
+#include "Gwork/Utility.h"
+#include "Gwork/Font.h"
+#include "Gwork/Texture.h"
+#include "Gwork/WindowProvider.h"
 
 #include <math.h>
 
@@ -11,7 +11,7 @@
 #include "FreeImage/FreeImage.h"
 
 
-namespace Gwen
+namespace Gwk
 {
     namespace Renderer
     {
@@ -80,7 +80,7 @@ namespace Gwen
             m_iVertNum++;
         }
 
-        void OpenGL::DrawFilledRect(Gwen::Rect rect)
+        void OpenGL::DrawFilledRect(Gwk::Rect rect)
         {
             GLboolean texturesOn;
             glGetBooleanv(GL_TEXTURE_2D, &texturesOn);
@@ -100,7 +100,7 @@ namespace Gwen
             AddVert(rect.x, rect.y+rect.h);
         }
 
-        void OpenGL::SetDrawColor(Gwen::Color color)
+        void OpenGL::SetDrawColor(Gwk::Color color)
         {
             glColor4ubv((GLubyte*)&color);
             m_Color = color;
@@ -109,7 +109,7 @@ namespace Gwen
         void OpenGL::StartClip()
         {
             Flush();
-            Gwen::Rect rect = ClipRegion();
+            Gwk::Rect rect = ClipRegion();
             // OpenGL's coords are from the bottom left
             // so we need to translate them here.
             {
@@ -127,7 +127,7 @@ namespace Gwen
             glDisable(GL_SCISSOR_TEST);
         }
 
-        void OpenGL::DrawTexturedRect(Gwen::Texture* pTexture, Gwen::Rect rect, float u1, float v1,
+        void OpenGL::DrawTexturedRect(Gwk::Texture* pTexture, Gwk::Rect rect, float u1, float v1,
                                       float u2, float v2)
         {
             GLuint* tex = (GLuint*)pTexture->data;
@@ -157,7 +157,7 @@ namespace Gwen
             AddVert(rect.x, rect.y+rect.h, u1, v2);
         }
 
-        void OpenGL::LoadTexture(Gwen::Texture* pTexture)
+        void OpenGL::LoadTexture(Gwk::Texture* pTexture)
         {
             const std::string &fileName = pTexture->name;
             FREE_IMAGE_FORMAT imageFormat = FreeImage_GetFileType(fileName.c_str());
@@ -197,7 +197,7 @@ namespace Gwen
             // Create a little texture pointer..
             GLuint* pglTexture = new GLuint;
 
-            // Sort out our GWEN texture
+            // Sort out our Gwork texture
             pTexture->data = pglTexture;
             pTexture->width = FreeImage_GetWidth(bits32);
             pTexture->height = FreeImage_GetHeight(bits32);
@@ -217,7 +217,7 @@ namespace Gwen
             FreeImage_Unload(bits32);
         }
 
-        void OpenGL::FreeTexture(Gwen::Texture* pTexture)
+        void OpenGL::FreeTexture(Gwk::Texture* pTexture)
         {
             GLuint* tex = (GLuint*)pTexture->data;
 
@@ -229,8 +229,8 @@ namespace Gwen
             pTexture->data = NULL;
         }
 
-        Gwen::Color OpenGL::PixelColour(Gwen::Texture* pTexture, unsigned int x, unsigned int y,
-                                        const Gwen::Color& col_default)
+        Gwk::Color OpenGL::PixelColour(Gwk::Texture* pTexture, unsigned int x, unsigned int y,
+                                        const Gwk::Color& col_default)
         {
             GLuint* tex = (GLuint*)pTexture->data;
 
@@ -243,7 +243,7 @@ namespace Gwen
                 (unsigned char*)malloc(iPixelSize*pTexture->width*pTexture->height);
             glGetTexImage(GL_TEXTURE_2D, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
             unsigned int iOffset = (y*pTexture->width+x)*4;
-            Gwen::Color c;
+            Gwk::Color c;
             c.r = data[0+iOffset];
             c.g = data[1+iOffset];
             c.b = data[2+iOffset];
@@ -258,7 +258,7 @@ namespace Gwen
             return c;
         }
 
-        bool OpenGL::InitializeContext(Gwen::WindowProvider* pWindow)
+        bool OpenGL::InitializeContext(Gwk::WindowProvider* pWindow)
         {
 #ifdef _WIN32
             HWND pHwnd = (HWND)pWindow->GetWindow();
@@ -301,7 +301,7 @@ namespace Gwen
             return false;
         }
 
-        bool OpenGL::ShutdownContext(Gwen::WindowProvider* pWindow)
+        bool OpenGL::ShutdownContext(Gwk::WindowProvider* pWindow)
         {
 #ifdef _WIN32
             wglDeleteContext((HGLRC)m_pContext);
@@ -310,7 +310,7 @@ namespace Gwen
             return false;
         }
 
-        bool OpenGL::PresentContext(Gwen::WindowProvider* pWindow)
+        bool OpenGL::PresentContext(Gwk::WindowProvider* pWindow)
         {
 #ifdef _WIN32
             HWND pHwnd = (HWND)pWindow->GetWindow();
@@ -325,7 +325,7 @@ namespace Gwen
             return false;
         }
 
-        bool OpenGL::ResizedContext(Gwen::WindowProvider* pWindow, int w, int h)
+        bool OpenGL::ResizedContext(Gwk::WindowProvider* pWindow, int w, int h)
         {
 #ifdef _WIN32
             RECT r;
@@ -344,14 +344,14 @@ namespace Gwen
             return false;
         }
 
-        bool OpenGL::BeginContext(Gwen::WindowProvider* pWindow)
+        bool OpenGL::BeginContext(Gwk::WindowProvider* pWindow)
         {
             glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
             glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
             return true;
         }
 
-        bool OpenGL::EndContext(Gwen::WindowProvider* pWindow)
+        bool OpenGL::EndContext(Gwk::WindowProvider* pWindow)
         {
             return true;
         }

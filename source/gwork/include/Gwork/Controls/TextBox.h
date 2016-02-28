@@ -1,39 +1,40 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 #pragma once
-#ifndef GWEN_CONTROLS_TEXTBOX_H
-#define GWEN_CONTROLS_TEXTOBX_H
+#ifndef GWK_CONTROLS_TEXTBOX_H
+#define GWK_CONTROLS_TEXTOBX_H
 
-#include "Gwen/BaseRender.h"
-#include "Gwen/Controls/Base.h"
-#include "Gwen/Controls/Label.h"
-#include "Gwen/Controls/ScrollControl.h"
+#include "Gwork/BaseRender.h"
+#include "Gwork/Controls/Base.h"
+#include "Gwork/Controls/Label.h"
+#include "Gwork/Controls/ScrollControl.h"
 
-namespace Gwen
+namespace Gwk
 {
     namespace Controls
     {
-        class GWEN_EXPORT TextBox : public Label
+        class GWK_EXPORT TextBox : public Label
         {
-            GWEN_CONTROL(TextBox, Label);
+            GWK_CONTROL(TextBox, Label);
 
             virtual void Render(Skin::Base* skin) override;
-            virtual void RenderFocus(Gwen::Skin::Base* /*skin*/) override {}
+            virtual void RenderFocus(Gwk::Skin::Base* /*skin*/) override {}
 
             virtual void Layout(Skin::Base* skin) override;
             virtual void PostLayout(Skin::Base* skin) override;
 
-#ifndef GWEN_NO_ANIMATION
+#ifndef GWK_NO_ANIMATION
             virtual void UpdateCaretColor();
 #endif
 
-            virtual bool OnChar(Gwen::UnicodeChar c) override;
+            virtual bool OnChar(Gwk::UnicodeChar c) override;
 
-            virtual void InsertText(const Gwen::String& str);
+            virtual void InsertText(const Gwk::String& str);
             virtual void DeleteText(int iStartPos, int iLength);
 
             virtual void RefreshCursorBounds();
@@ -48,10 +49,10 @@ namespace Gwen
 
             virtual bool AccelOnlyFocus() override { return true; }
 
-            virtual void OnPaste(Gwen::Controls::Base* pCtrl) override;
-            virtual void OnCopy(Gwen::Controls::Base* pCtrl) override;
-            virtual void OnCut(Gwen::Controls::Base* pCtrl) override;
-            virtual void OnSelectAll(Gwen::Controls::Base* pCtrl) override;
+            virtual void OnPaste(Gwk::Controls::Base* pCtrl) override;
+            virtual void OnCopy(Gwk::Controls::Base* pCtrl) override;
+            virtual void OnCut(Gwk::Controls::Base* pCtrl) override;
+            virtual void OnSelectAll(Gwk::Controls::Base* pCtrl) override;
 
             virtual void OnMouseDoubleClickLeft(int x, int y) override;
 
@@ -89,7 +90,7 @@ namespace Gwen
         protected:
 
             virtual void OnTextChanged() override;
-            virtual bool IsTextAllowed(const Gwen::String& /*str*/, int /*iPos*/)
+            virtual bool IsTextAllowed(const Gwk::String& /*str*/, int /*iPos*/)
             {
                 return true;
             }
@@ -101,34 +102,34 @@ namespace Gwen
             int m_iCursorEnd;
             int m_iCursorLine;
 
-            Gwen::Rect m_rectSelectionBounds;
-            Gwen::Rect m_rectCaretBounds;
+            Gwk::Rect m_rectSelectionBounds;
+            Gwk::Rect m_rectCaretBounds;
 
             float m_fNextCaretColorChange;
-            Gwen::Color m_CaretColor;
+            Gwk::Color m_CaretColor;
         };
 
 
-        class GWEN_EXPORT TextBoxNumeric : public TextBox
+        class GWK_EXPORT TextBoxNumeric : public TextBox
         {
         public:
 
-            GWEN_CONTROL(TextBoxNumeric, TextBox);
+            GWK_CONTROL(TextBoxNumeric, TextBox);
 
             virtual float GetFloatFromText();
 
         private:
 
-            virtual bool IsTextAllowed(const Gwen::String& str, int iPos) override;
+            virtual bool IsTextAllowed(const Gwk::String& str, int iPos) override;
 
         };
 
 
-        class GWEN_EXPORT TextBoxMultiline : public TextBox
+        class GWK_EXPORT TextBoxMultiline : public TextBox
         {
         public:
 
-            GWEN_CONTROL(TextBoxMultiline, TextBox);
+            GWK_CONTROL(TextBoxMultiline, TextBox);
 
             virtual bool OnKeyReturn(bool bDown) override;
             virtual void Render(Skin::Base* skin) override;
@@ -146,11 +147,11 @@ namespace Gwen
         };
 
 
-        class GWEN_EXPORT PasswordTextBox : public TextBox
+        class GWK_EXPORT PasswordTextBox : public TextBox
         {
         public:
 
-            GWEN_CONTROL(PasswordTextBox, TextBox);
+            GWK_CONTROL(PasswordTextBox, TextBox);
 
             virtual void SetText(const String& str, bool bDoEvents = true) override;
             virtual void SetPasswordChar(const char c);
@@ -166,4 +167,4 @@ namespace Gwen
 
     }
 }
-#endif // ifndef GWEN_CONTROLS_TEXTBOX_H
+#endif // ifndef GWK_CONTROLS_TEXTBOX_H

@@ -1,18 +1,25 @@
-#include "Gwen/UnitTest/UnitTest.h"
-#include "Gwen/Controls/MenuStrip.h"
+/*
+ *  Gwork
+ *  Copyright (c) 2010 Facepunch Studios
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
+ */
 
-using namespace Gwen;
+#include "Gwork/Test/Test.h"
+#include "Gwork/Controls/MenuStrip.h"
+
+using namespace Gwk;
 
 class MenuStrip : public GUnit
 {
 public:
 
-    GWEN_CONTROL_INLINE(MenuStrip, GUnit)
+    GWK_CONTROL_INLINE(MenuStrip, GUnit)
     {
         Dock(Docking::Fill);
-        Gwen::Controls::MenuStrip* menu = new Gwen::Controls::MenuStrip(this);
+        Gwk::Controls::MenuStrip* menu = new Gwk::Controls::MenuStrip(this);
         {
-            Gwen::Controls::MenuItem* pRoot = menu->AddItem("File");
+            Gwk::Controls::MenuItem* pRoot = menu->AddItem("File");
             pRoot->GetMenu()->AddItem("New", "test16.png", "Ctrl + N")->SetAction(this,
                                                                                     &ThisClass::MenuItemSelect);
             pRoot->GetMenu()->AddItem("Load", "test16.png", "Ctrl+")->SetAction(this,
@@ -25,7 +32,7 @@ public:
                                                                         &ThisClass::MenuItemSelect);
         }
         {
-            Gwen::Controls::MenuItem* pRoot = menu->AddItem(
+            Gwk::Controls::MenuItem* pRoot = menu->AddItem(
                 Utility::Narrow(L"\u043F\u0438\u0440\u0430\u0442\u0441\u0442\u0432\u043E"));
             pRoot->GetMenu()
                 ->AddItem(Utility::Narrow(L"\u5355\u5143\u6D4B\u8BD5"))
@@ -35,12 +42,12 @@ public:
                 ->SetAction(this, &ThisClass::MenuItemSelect);
         }
         {
-            Gwen::Controls::MenuItem* pRoot = menu->AddItem("Submenu");
-            Gwen::Controls::MenuItem* pCheckable = pRoot->GetMenu()->AddItem("Checkable");
+            Gwk::Controls::MenuItem* pRoot = menu->AddItem("Submenu");
+            Gwk::Controls::MenuItem* pCheckable = pRoot->GetMenu()->AddItem("Checkable");
             pCheckable->SetCheckable(true);
             pCheckable->SetChecked(true);
             {
-                Gwen::Controls::MenuItem* pRootB = pRoot->GetMenu()->AddItem("Two");
+                Gwk::Controls::MenuItem* pRootB = pRoot->GetMenu()->AddItem("Two");
                 pRootB->GetMenu()->AddItem("Two.One");
                 pRootB->GetMenu()->AddItem("Two.Two");
                 pRootB->GetMenu()->AddItem("Two.Three");
@@ -55,26 +62,26 @@ public:
             pRoot->GetMenu()->AddItem("Four");
             pRoot->GetMenu()->AddItem("Five");
             {
-                Gwen::Controls::MenuItem* pRootB = pRoot->GetMenu()->AddItem("Six");
+                Gwk::Controls::MenuItem* pRootB = pRoot->GetMenu()->AddItem("Six");
                 pRootB->GetMenu()->AddItem("Six.One");
                 pRootB->GetMenu()->AddItem("Six.Two");
                 pRootB->GetMenu()->AddItem("Six.Three");
                 pRootB->GetMenu()->AddItem("Six.Four");
                 pRootB->GetMenu()->AddItem("Six.Five", "test16.png");
                 {
-                    Gwen::Controls::MenuItem* pRootC = pRootB->GetMenu()->AddItem("Six.Six");
+                    Gwk::Controls::MenuItem* pRootC = pRootB->GetMenu()->AddItem("Six.Six");
                     pRootC->GetMenu()->AddItem("Sheep");
                     pRootC->GetMenu()->AddItem("Goose");
                     {
-                        Gwen::Controls::MenuItem* pRootD = pRootC->GetMenu()->AddItem("Camel");
+                        Gwk::Controls::MenuItem* pRootD = pRootC->GetMenu()->AddItem("Camel");
                         pRootD->GetMenu()->AddItem("Eyes");
                         pRootD->GetMenu()->AddItem("Nose");
                         {
-                            Gwen::Controls::MenuItem* pRootE = pRootD->GetMenu()->AddItem("Hair");
+                            Gwk::Controls::MenuItem* pRootE = pRootD->GetMenu()->AddItem("Hair");
                             pRootE->GetMenu()->AddItem("Blonde");
                             pRootE->GetMenu()->AddItem("Black");
                             {
-                                Gwen::Controls::MenuItem* pRootF =
+                                Gwk::Controls::MenuItem* pRootF =
                                     pRootE->GetMenu()->AddItem("Red");
                                 pRootF->GetMenu()->AddItem("Light");
                                 pRootF->GetMenu()->AddItem("Medium");
@@ -97,7 +104,7 @@ public:
 
     void MenuItemSelect(Base* pControl)
     {
-        Gwen::Controls::MenuItem* pMenuItem = (Gwen::Controls::MenuItem*)pControl;
+        Gwk::Controls::MenuItem* pMenuItem = (Gwk::Controls::MenuItem*)pControl;
         UnitPrint(Utility::Format("Menu Selected: %s", pMenuItem->GetText().c_str()));
     }
 

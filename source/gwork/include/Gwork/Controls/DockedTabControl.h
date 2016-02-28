@@ -1,25 +1,26 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 #pragma once
-#ifndef GWEN_CONTROLS_DOCKEDTABCONTROL_H
-#define GWEN_CONTROLS_DOCKEDTABCONTROL_H
+#ifndef GWK_CONTROLS_DOCKEDTABCONTROL_H
+#define GWK_CONTROLS_DOCKEDTABCONTROL_H
 
-#include "Gwen/Controls/Base.h"
-#include "Gwen/Controls/TabControl.h"
+#include "Gwork/Controls/Base.h"
+#include "Gwork/Controls/TabControl.h"
 
-namespace Gwen
+namespace Gwk
 {
     namespace Controls
     {
-        class GWEN_EXPORT DockedTabControl : public TabControl
+        class GWK_EXPORT DockedTabControl : public TabControl
         {
         public:
 
-            GWEN_CONTROL(DockedTabControl, TabControl);
+            GWK_CONTROL(DockedTabControl, TabControl);
 
             void SetShowTitlebar(bool bShow)
             {
@@ -29,7 +30,7 @@ namespace Gwen
             void Layout(Skin::Base* skin) override;
             void UpdateTitleBar();
 
-            virtual void DragAndDrop_StartDragging(Gwen::DragAndDrop::Package* pPackage,
+            virtual void DragAndDrop_StartDragging(Gwk::DragAndDrop::Package* pPackage,
                                                    int x, int y) override;
             virtual void DragAndDrop_EndDragging(bool bSuccess, int x, int y) override;
 
@@ -45,4 +46,4 @@ namespace Gwen
 
     }
 }
-#endif // ifndef GWEN_CONTROLS_DOCKEDTABCONTROL_H
+#endif // ifndef GWK_CONTROLS_DOCKEDTABCONTROL_H

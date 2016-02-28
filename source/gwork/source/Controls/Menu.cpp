@@ -1,20 +1,21 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 
-#include "Gwen/Gwen.h"
-#include "Gwen/Controls/Menu.h"
-#include "Gwen/Skin.h"
-#include "Gwen/Utility.h"
+#include "Gwork/Gwork.h"
+#include "Gwork/Controls/Menu.h"
+#include "Gwork/Skin.h"
+#include "Gwork/Utility.h"
 
-using namespace Gwen;
-using namespace Gwen::Controls;
+using namespace Gwk;
+using namespace Gwk::Controls;
 
 
-GWEN_CONTROL_CONSTRUCTOR(Menu)
+GWK_CONTROL_CONSTRUCTOR(Menu)
 {
     SetBounds(0, 0, 10, 10);
     SetPadding(Padding(2, 2, 2, 2));
@@ -111,7 +112,7 @@ void Menu::CloseAll()
          ++it)
     {
         Base* pChild = *it;
-        MenuItem* pItem = gwen_cast<MenuItem>(pChild);
+        MenuItem* pItem = gwk_cast<MenuItem>(pChild);
 
         if (!pItem)
             continue;
@@ -127,7 +128,7 @@ bool Menu::IsMenuOpen()
          ++it)
     {
         Base* pChild = *it;
-        MenuItem* pItem = gwen_cast<MenuItem>(pChild);
+        MenuItem* pItem = gwk_cast<MenuItem>(pChild);
 
         if (!pItem)
             continue;
@@ -139,12 +140,12 @@ bool Menu::IsMenuOpen()
     return false;
 }
 
-void Menu::OnHoverItem(Gwen::Controls::Base* pControl)
+void Menu::OnHoverItem(Gwk::Controls::Base* pControl)
 {
     if (!ShouldHoverOpenMenu())
         return;
 
-    MenuItem* pItem = gwen_cast<MenuItem>(pControl);
+    MenuItem* pItem = gwk_cast<MenuItem>(pControl);
 
     if (!pItem)
         return;
@@ -160,7 +161,7 @@ void Menu::Open(unsigned int iPos)
 {
     SetHidden(false);
     BringToFront();
-    Gwen::Point MousePos = Input::GetMousePosition();
+    Gwk::Point MousePos = Input::GetMousePosition();
     SetPos(MousePos.x, MousePos.y);
 }
 
@@ -186,7 +187,7 @@ void Menu::AddDivider()
     divider->SetMargin(Margin(IconMarginDisabled() ? 0 : 24, 0, 4, 0));
 }
 
-void MenuDivider::Render(Gwen::Skin::Base* skin)
+void MenuDivider::Render(Gwk::Skin::Base* skin)
 {
     skin->DrawMenuDivider(this);
 }

@@ -1,13 +1,19 @@
+/*
+ *  Gwork
+ *  Copyright (c) 2010 Facepunch Studios
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
+ */
 
 #pragma once
 
-#include "Gwen/Gwen.h"
-#include "Gwen/Controls.h"
-#include "GwenUtil/ControlFactory.h"
+#include "Gwork/Gwork.h"
+#include "Gwork/Controls.h"
+#include "Gwork/Util/ControlFactory.h"
 
-using namespace Gwen;
+using namespace Gwk;
 
-namespace Gwen
+namespace Gwk
 {
     namespace ImportExport
     {
@@ -17,13 +23,13 @@ namespace Gwen
 
             Base();
 
-            virtual Gwen::String Name() = 0;
+            virtual Gwk::String Name() = 0;
 
             virtual bool CanImport() = 0;
-            virtual void Import(Gwen::Controls::Base* pRoot, const Gwen::String& strFilename) = 0;
+            virtual void Import(Gwk::Controls::Base* pRoot, const Gwk::String& strFilename) = 0;
 
             virtual bool CanExport() = 0;
-            virtual void Export(Gwen::Controls::Base* pRoot, const Gwen::String& strFilename) = 0;
+            virtual void Export(Gwk::Controls::Base* pRoot, const Gwk::String& strFilename) = 0;
 
         public:
 
@@ -35,21 +41,21 @@ namespace Gwen
 
 
         ImportExport::Base::List& GetList();
-        ImportExport::Base*       Find(Gwen::String strName);
+        ImportExport::Base*       Find(Gwk::String strName);
 
         namespace Tools
         {
-            ControlList GetExportableChildren(Gwen::Controls::Base* pRoot);
+            ControlList GetExportableChildren(Gwk::Controls::Base* pRoot);
         }
     }
 }
 
-#define GWEN_IMPORTEXPORT(name) \
+#define GWK_IMPORTEXPORT(name) \
     void GWENIMPORTEXPORT_##name() \
     { \
         static name my_instance; \
     }
 
-#define DECLARE_GWEN_IMPORTEXPORT(name) \
+#define DECLARE_GWK_IMPORTEXPORT(name) \
     void GWENIMPORTEXPORT_##name(); \
     GWENIMPORTEXPORT_##name();

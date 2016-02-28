@@ -1,20 +1,21 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 
-#include "Gwen/Gwen.h"
-#include "Gwen/Utility.h"
-#include "Gwen/Skin.h"
-#include "Gwen/Controls/NumericUpDown.h"
+#include "Gwork/Gwork.h"
+#include "Gwork/Utility.h"
+#include "Gwork/Skin.h"
+#include "Gwork/Controls/NumericUpDown.h"
 
-using namespace Gwen;
-using namespace Gwen::Controls;
+using namespace Gwk;
+using namespace Gwk::Controls;
 
 
-GWEN_CONTROL_CONSTRUCTOR(NumericUpDown)
+GWK_CONTROL_CONSTRUCTOR(NumericUpDown)
 {
     SetSize(100, 20);
     Controls::Base* pSplitter = new Controls::Base(this);

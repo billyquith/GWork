@@ -1,17 +1,18 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 
-#include "Gwen/Controls/ScrollBar.h"
-#include "Gwen/Controls/VerticalScrollBar.h"
+#include "Gwork/Controls/ScrollBar.h"
+#include "Gwork/Controls/VerticalScrollBar.h"
 
-using namespace Gwen;
-using namespace Gwen::Controls;
+using namespace Gwk;
+using namespace Gwk::Controls;
 
-GWEN_CONTROL_CONSTRUCTOR(VerticalScrollBar)
+GWK_CONTROL_CONSTRUCTOR(VerticalScrollBar)
 {
     m_Bar->SetVertical();
     m_ScrollButton[SCROLL_BUTTON_UP]->SetDirectionUp();
@@ -83,11 +84,11 @@ void VerticalScrollBar::OnMouseClickLeft(int x, int y, bool bDown)
     if (bDown)
     {
         m_bDepressed = true;
-        Gwen::MouseFocus = this;
+        Gwk::MouseFocus = this;
     }
     else
     {
-        Gwen::Point clickPos = CanvasPosToLocal(Gwen::Point(x, y));
+        Gwk::Point clickPos = CanvasPosToLocal(Gwk::Point(x, y));
 
         if (clickPos.y < m_Bar->Y())
             NudgeUp(this);
@@ -95,7 +96,7 @@ void VerticalScrollBar::OnMouseClickLeft(int x, int y, bool bDown)
             NudgeDown(this);
 
         m_bDepressed = false;
-        Gwen::MouseFocus = NULL;
+        Gwk::MouseFocus = NULL;
     }
 }
 
@@ -107,7 +108,7 @@ float VerticalScrollBar::CalculateScrolledAmount()
 
 bool VerticalScrollBar::SetScrolledAmount(float amount, bool forceUpdate)
 {
-    amount = Gwen::Clamp(amount, 0.f, 1.f);
+    amount = Gwk::Clamp(amount, 0.f, 1.f);
 
     if (!ParentClass::SetScrolledAmount(amount, forceUpdate))
         return false;

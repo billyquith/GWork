@@ -1,15 +1,22 @@
-#include "Gwen/UnitTest/UnitTest.h"
-#include "Gwen/Controls/RadioButtonController.h"
+/*
+ *  Gwork
+ *  Copyright (c) 2010 Facepunch Studios
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
+ */
 
-using namespace Gwen;
+#include "Gwork/Test/Test.h"
+#include "Gwork/Controls/RadioButtonController.h"
+
+using namespace Gwk;
 
 class RadioButton : public GUnit
 {
 public:
 
-    GWEN_CONTROL_INLINE(RadioButton, GUnit)
+    GWK_CONTROL_INLINE(RadioButton, GUnit)
     {
-        Gwen::Controls::RadioButtonController* rc = new Gwen::Controls::RadioButtonController(this);
+        Gwk::Controls::RadioButtonController* rc = new Gwk::Controls::RadioButtonController(this);
         rc->AddOption("Option 1");
         rc->AddOption("Option 2");
         rc->AddOption("Option 3");
@@ -20,9 +27,9 @@ public:
 
     void OnChange(Controls::Base* pControl)
     {
-        Gwen::Controls::RadioButtonController* rc =
-            (Gwen::Controls::RadioButtonController*)pControl;
-        Gwen::Controls::LabeledRadioButton* pSelected = rc->GetSelected();
+        Gwk::Controls::RadioButtonController* rc =
+            (Gwk::Controls::RadioButtonController*)pControl;
+        Gwk::Controls::LabeledRadioButton* pSelected = rc->GetSelected();
         UnitPrint(Utility::Format(
                       "RadioButton changed (using 'OnChange' event)\n Chosen Item: '%s'",
                       pSelected->GetLabel()->GetText().c_str()));

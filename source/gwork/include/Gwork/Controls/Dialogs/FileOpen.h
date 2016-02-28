@@ -1,29 +1,35 @@
+/*
+ *  Gwork
+ *  Copyright (c) 2010 Facepunch Studios
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
+ */
 
 #pragma once
-#ifndef GWEN_CONTROLS_DIALOGS_FILEOPEN_H
-#define GWEN_CONTROLS_DIALOGS_FILEOPEN_H
+#ifndef GWK_CONTROLS_DIALOGS_FILEOPEN_H
+#define GWK_CONTROLS_DIALOGS_FILEOPEN_H
 
-#include <Gwen/Gwen.h>
+#include <Gwork/Gwork.h>
 
-namespace Gwen
+namespace Gwk
 {
     namespace Dialogs
     {
         //
         // The REAL function.
         //
-        void GWEN_EXPORT FileOpenEx(bool bUseSystem, const String& Name, const String& StartPath,
-                                    const String& Extension, Gwen::Event::Handler* pHandler = NULL,
-                                    Gwen::Event::Handler::FunctionWithInformation fnCallback =
+        void GWK_EXPORT FileOpenEx(bool bUseSystem, const String& Name, const String& StartPath,
+                                    const String& Extension, Gwk::Event::Handler* pHandler = NULL,
+                                    Gwk::Event::Handler::FunctionWithInformation fnCallback =
                                         NULL);
 
         //! Create a file open dialog box.
         //! @param bUseSystem : If true dialog may use the system's modal dialog - which
-        //!                     will steal focus and pause the rest of GWEN until it's continued.
+        //!                     will steal focus and pause the rest of Gwork until it's continued.
         //!
         //! Usage:
         //! ~~~~
-        //!     Gwen::Dialogs::FileOpen( true, "Open Map", "C:/my/folder/", "My Map Format|*.bmf",
+        //!     Gwk::Dialogs::FileOpen( true, "Open Map", "C:/my/folder/", "My Map Format|*.bmf",
         //!                              this, &MyClass::OpenFilename );
         //! ~~~~
         //!
@@ -33,13 +39,13 @@ namespace Gwen
         template <typename A>
         void FileOpen(bool bUseSystem, const String& Name, const String& StartPath,
                       const String& Extension,
-                      Gwen::Event::Handler* pHandler = NULL, A fnCallback = NULL)
+                      Gwk::Event::Handler* pHandler = NULL, A fnCallback = NULL)
         {
             FileOpenEx(bUseSystem, Name, StartPath, Extension, pHandler,
-                       static_cast<Gwen::Event::Handler::FunctionWithInformation>(fnCallback));
+                       static_cast<Gwk::Event::Handler::FunctionWithInformation>(fnCallback));
         }
 
     }
 }
 
-#endif // ifndef GWEN_CONTROLS_DIALOGS_FILEOPEN_H
+#endif // ifndef GWK_CONTROLS_DIALOGS_FILEOPEN_H

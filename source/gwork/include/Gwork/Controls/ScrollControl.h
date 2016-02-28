@@ -1,31 +1,32 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 #pragma once
-#ifndef GWEN_CONTROLS_SCROLLCONTROL_H
-#define GWEN_CONTROLS_SCROLLCONTROL_H
+#ifndef GWK_CONTROLS_SCROLLCONTROL_H
+#define GWK_CONTROLS_SCROLLCONTROL_H
 
-#include "Gwen/Controls/Base.h"
-#include "Gwen/Controls/Button.h"
-#include "Gwen/Gwen.h"
-#include "Gwen/Skin.h"
-#include "Gwen/Controls/ScrollBar.h"
-#include "Gwen/Controls/VerticalScrollBar.h"
-#include "Gwen/Controls/HorizontalScrollBar.h"
+#include "Gwork/Controls/Base.h"
+#include "Gwork/Controls/Button.h"
+#include "Gwork/Gwork.h"
+#include "Gwork/Skin.h"
+#include "Gwork/Controls/ScrollBar.h"
+#include "Gwork/Controls/VerticalScrollBar.h"
+#include "Gwork/Controls/HorizontalScrollBar.h"
 
 
-namespace Gwen
+namespace Gwk
 {
     namespace Controls
     {
-        class GWEN_EXPORT ScrollControl : public Base
+        class GWK_EXPORT ScrollControl : public Base
         {
         public:
 
-            GWEN_CONTROL(ScrollControl, Base);
+            GWK_CONTROL(ScrollControl, Base);
 
             virtual void Layout(Skin::Base* skin) override;
             virtual void Render(Skin::Base* skin) override;
@@ -46,7 +47,7 @@ namespace Gwen
                 return m_bCanScrollV;
             }
 
-            virtual void OnChildBoundsChanged(Gwen::Rect oldChildBounds, Base* pChild) override;
+            virtual void OnChildBoundsChanged(Gwk::Rect oldChildBounds, Base* pChild) override;
             virtual void UpdateScrollBars();
 
             virtual void SetVScrollRequired(bool req);
@@ -82,4 +83,4 @@ namespace Gwen
 
     }
 }
-#endif // ifndef GWEN_CONTROLS_SCROLLCONTROL_H
+#endif // ifndef GWK_CONTROLS_SCROLLCONTROL_H

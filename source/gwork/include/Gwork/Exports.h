@@ -1,60 +1,53 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 #pragma once
-#ifndef GWEN_EXPORTS_H
-#define GWEN_EXPORTS_H
+#ifndef GWK_EXPORTS_H
+#define GWK_EXPORTS_H
 
-//
-// GWEN_COMPILE_DLL
-//  - We're compiling the Gwen.DLL (or .dylib etc)
-//
-#if defined (GWEN_COMPILE_DLL)
+// GWK_COMPILE_DLL
+//  - We're compiling the Gwork.dll (or .dylib etc)
+#if defined (GWK_COMPILE_DLL)
 
 #   ifdef _WIN32
 #       if defined (__GNUC__)
-#           define GWEN_EXPORT __attribute__((dllexport))
+#           define GWK_EXPORT __attribute__((dllexport))
 #       else
-#           define GWEN_EXPORT __declspec(dllexport)
+#           define GWK_EXPORT __declspec(dllexport)
 #       endif
 #   endif
-//
-// GWEN_COMPILE_STATIC
+
+// GWK_COMPILE_STATIC
 //  - We're compiling gwen as a static library
-//
-#elif defined (GWEN_COMPILE_STATIC)
+#elif defined (GWK_COMPILE_STATIC)
 
-#   define GWEN_EXPORT
+#   define GWK_EXPORT
 
-//
-// GWEN_DLL
+// GWK_DLL
 // - We're including gwen using the dll
-//
-#elif defined (GWEN_DLL)
+#elif defined (GWK_DLL)
 
 #   ifdef _WIN32
 #       ifdef __GNUC__
-#           define GWEN_EXPORT __attribute__((dllimport))
+#           define GWK_EXPORT __attribute__((dllimport))
 #       else
-#           define GWEN_EXPORT __declspec(dllimport)
+#           define GWK_EXPORT __declspec(dllimport)
 #       endif
 #   endif
 
-//
-// - We're including gwen using a static library
-//
-#else // if defined (GWEN_COMPILE_DLL)
+// - We're including Gwork using a static library
+#else // if defined (GWK_COMPILE_DLL)
 
-#   define GWEN_EXPORT
+#   define GWK_EXPORT
 
-#endif // if defined (GWEN_COMPILE_DLL)
+#endif // if defined (GWK_COMPILE_DLL)
 
-#ifndef GWEN_EXPORT
-#   define GWEN_EXPORT
+#ifndef GWK_EXPORT
+#   define GWK_EXPORT
 #endif
 
-
-#endif // GWEN_EXPORTS_H
+#endif // GWK_EXPORTS_H

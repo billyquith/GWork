@@ -1,11 +1,18 @@
+/*
+ *  Gwork
+ *  Copyright (c) 2010 Facepunch Studios
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
+ */
+
 #pragma once
-#ifndef GWEN_SKINS_TEXTURING_H
-#define GWEN_SKINS_TEXTURING_H
+#ifndef GWK_SKINS_TEXTURING_H
+#define GWK_SKINS_TEXTURING_H
 
-#include "Gwen/Gwen.h"
-#include "Gwen/Texture.h"
+#include "Gwork/Gwork.h"
+#include "Gwork/Texture.h"
 
-namespace Gwen
+namespace Gwk
 {
     namespace Skin
     {
@@ -32,7 +39,7 @@ namespace Gwen
                     iHeight = h;
                 }
 
-                void Draw( Gwen::Renderer::Base* render, Gwen::Rect r, const Gwen::Color & col = Gwen::Colors::White )
+                void Draw( Gwk::Renderer::Base* render, Gwk::Rect r, const Gwk::Color & col = Gwk::Colors::White )
                 {
                     if ( !texture )
                         return;
@@ -41,7 +48,7 @@ namespace Gwen
                     render->DrawTexturedRect( texture, r, uv[0], uv[1], uv[2], uv[3] );
                 }
 
-                void DrawCenter( Gwen::Renderer::Base* render, Gwen::Rect r, const Gwen::Color & col = Gwen::Colors::White )
+                void DrawCenter( Gwk::Renderer::Base* render, Gwk::Rect r, const Gwk::Color & col = Gwk::Colors::White )
                 {
                     if ( !texture )
                         return;
@@ -115,8 +122,8 @@ namespace Gwen
                 //! \param col - Color. Tint?
                 //! \param draw - Bitfield specifying segments to draw.
                 //
-                void Draw( Gwen::Renderer::Base* render, Gwen::Rect r,
-                           const Gwen::Color & col = Gwen::Colors::White, unsigned int draw = ~0 )
+                void Draw( Gwk::Renderer::Base* render, Gwk::Rect r,
+                           const Gwk::Color & col = Gwk::Colors::White, unsigned int draw = ~0 )
                 {
                     if (!texture)
                         return;
@@ -150,10 +157,10 @@ namespace Gwen
                     if (draw & (1<<8)) { DrawRect( render, 8, ( r.x + r.w ) - margin.right, ( r.y + r.h ) - margin.bottom, margin.right, margin.bottom ); }
                 }
 
-                void DrawRect( Gwen::Renderer::Base* render, int i, int x, int y, int w, int h )
+                void DrawRect( Gwk::Renderer::Base* render, int i, int x, int y, int w, int h )
                 {
                     render->DrawTexturedRect( texture,
-                                              Gwen::Rect( x, y, w, h ),
+                                              Gwk::Rect( x, y, w, h ),
                                               rects[i].uv[0], rects[i].uv[1], rects[i].uv[2], rects[i].uv[3] );
                 }
 

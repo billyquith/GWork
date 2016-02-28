@@ -1,26 +1,27 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 
-#include "Gwen/Gwen.h"
-#include "Gwen/Controls/TextBox.h"
-#include "Gwen/Skin.h"
-#include "Gwen/Utility.h"
-#include "Gwen/Platform.h"
+#include "Gwork/Gwork.h"
+#include "Gwork/Controls/TextBox.h"
+#include "Gwork/Skin.h"
+#include "Gwork/Utility.h"
+#include "Gwork/Platform.h"
 
 
-using namespace Gwen;
-using namespace Gwen::Controls;
+using namespace Gwk;
+using namespace Gwk::Controls;
 
-GWEN_CONTROL_CONSTRUCTOR(TextBoxNumeric)
+GWK_CONTROL_CONSTRUCTOR(TextBoxNumeric)
 {
     SetText("0");
 }
 
-bool TextBoxNumeric::IsTextAllowed(const Gwen::String& str, int iPos)
+bool TextBoxNumeric::IsTextAllowed(const Gwk::String& str, int iPos)
 {
     const String& strString = GetText();
 
@@ -62,7 +63,7 @@ bool TextBoxNumeric::IsTextAllowed(const Gwen::String& str, int iPos)
 
 float TextBoxNumeric::GetFloatFromText()
 {
-    float temp = Gwen::Utility::Strings::To::Float(GetText());
+    float temp = Gwk::Utility::Strings::To::Float(GetText());
     return temp;
 }
 

@@ -1,25 +1,26 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2012 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2015-2016 Billy Quith
+ *  See license in Gwork.h
  */
 
 #pragma once
-#ifndef GWEN_CONTROLS_WINDOWS_BUTTONS_H
-#define GWEN_CONTROLS_WINDOWS_BUTTONS_H
+#ifndef GWK_CONTROLS_WINDOWS_BUTTONS_H
+#define GWK_CONTROLS_WINDOWS_BUTTONS_H
 
-#include "Gwen/Gwen.h"
-#include "Gwen/Controls/Button.h"
-#include "Gwen/Skin.h"
+#include "Gwork/Gwork.h"
+#include "Gwork/Controls/Button.h"
+#include "Gwork/Skin.h"
 
 
-namespace Gwen
+namespace Gwk
 {
     namespace Controls
     {
-        class GWEN_EXPORT WindowCloseButton : public Button
+        class GWK_EXPORT WindowCloseButton : public Button
         {
-            GWEN_CONTROL_INLINE(WindowCloseButton, Button)
+            GWK_CONTROL_INLINE(WindowCloseButton, Button)
             {
                 m_pWindow = NULL;
                 SetSize(31, 31);
@@ -37,7 +38,7 @@ namespace Gwen
                                             IsDisabled());
             }
 
-            void SetWindow(Gwen::Controls::Base* p)
+            void SetWindow(Gwk::Controls::Base* p)
             {
                 m_pWindow = p;
             }
@@ -48,9 +49,9 @@ namespace Gwen
         };
 
 
-        class GWEN_EXPORT WindowMaximizeButton : public WindowCloseButton
+        class GWK_EXPORT WindowMaximizeButton : public WindowCloseButton
         {
-            GWEN_CONTROL_INLINE(WindowMaximizeButton, WindowCloseButton)
+            GWK_CONTROL_INLINE(WindowMaximizeButton, WindowCloseButton)
             {
                 m_bMaximized = false;
             }
@@ -78,9 +79,9 @@ namespace Gwen
         };
 
 
-        class GWEN_EXPORT WindowMinimizeButton : public WindowCloseButton
+        class GWK_EXPORT WindowMinimizeButton : public WindowCloseButton
         {
-            GWEN_CONTROL_INLINE(WindowMinimizeButton, WindowCloseButton)
+            GWK_CONTROL_INLINE(WindowMinimizeButton, WindowCloseButton)
             {
             }
 
@@ -101,4 +102,4 @@ namespace Gwen
     }
 }
 
-#endif // ifndef GWEN_CONTROLS_WINDOWS_BUTTONS_H
+#endif // ifndef GWK_CONTROLS_WINDOWS_BUTTONS_H

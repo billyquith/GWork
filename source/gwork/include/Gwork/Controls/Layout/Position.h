@@ -1,28 +1,29 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 #pragma once
-#ifndef GWEN_CONTROLS_LAYOUT_POSITION_H
-#define GWEN_CONTROLS_LAYOUT_POSITION_H
+#ifndef GWK_CONTROLS_LAYOUT_POSITION_H
+#define GWK_CONTROLS_LAYOUT_POSITION_H
 
-#include "Gwen/Controls/Label.h"
-#include "Gwen/Utility.h"
+#include "Gwork/Controls/Label.h"
+#include "Gwork/Utility.h"
 
 
-namespace Gwen
+namespace Gwk
 {
     namespace Controls
     {
         namespace Layout
         {
-            class GWEN_EXPORT Position : public Base
+            class GWK_EXPORT Position : public Base
             {
             public:
 
-                GWEN_CONTROL_INLINE(Position, Base)
+                GWK_CONTROL_INLINE(Position, Base)
                 {
                     SetPosition(Docking::Left|Docking::Top);
                 }
@@ -55,9 +56,9 @@ namespace Gwen
             };
 
 
-            class GWEN_EXPORT Center : public Position
+            class GWK_EXPORT Center : public Position
             {
-                GWEN_CONTROL_INLINE(Center, Position)
+                GWK_CONTROL_INLINE(Center, Position)
                 {
                     SetPosition(Docking::Center);
                 }
@@ -67,4 +68,4 @@ namespace Gwen
         }
     }
 }
-#endif // ifndef GWEN_CONTROLS_LAYOUT_POSITION_H
+#endif // ifndef GWK_CONTROLS_LAYOUT_POSITION_H

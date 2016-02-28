@@ -1,33 +1,34 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 
-#include "Gwen/Gwen.h"
-#include "Gwen/Skin.h"
-#include "Gwen/Controls/TabStrip.h"
-#include "Gwen/Controls/TabControl.h"
-#include "Gwen/Controls/Highlight.h"
-#include "Gwen/DragAndDrop.h"
-#include "Gwen/Utility.h"
+#include "Gwork/Gwork.h"
+#include "Gwork/Skin.h"
+#include "Gwork/Controls/TabStrip.h"
+#include "Gwork/Controls/TabControl.h"
+#include "Gwork/Controls/Highlight.h"
+#include "Gwork/DragAndDrop.h"
+#include "Gwork/Utility.h"
 
-using namespace Gwen;
-using namespace Gwen::Controls;
+using namespace Gwk;
+using namespace Gwk::Controls;
 
 
-GWEN_CONTROL_CONSTRUCTOR(TabStrip)
+GWK_CONTROL_CONSTRUCTOR(TabStrip)
 {
     m_TabDragControl = NULL;
     m_bAllowReorder = false;
 }
 
-bool TabStrip::DragAndDrop_HandleDrop(Gwen::DragAndDrop::Package* /*pPackage*/, int x, int y)
+bool TabStrip::DragAndDrop_HandleDrop(Gwk::DragAndDrop::Package* /*pPackage*/, int x, int y)
 {
-    Gwen::Point LocalPos = CanvasPosToLocal(Gwen::Point(x, y));
-    TabButton* pButton = gwen_cast<TabButton>(DragAndDrop::SourceControl);
-    TabControl* pTabControl = gwen_cast<TabControl>(GetParent());
+    Gwk::Point LocalPos = CanvasPosToLocal(Gwk::Point(x, y));
+    TabButton* pButton = gwk_cast<TabButton>(DragAndDrop::SourceControl);
+    TabControl* pTabControl = gwk_cast<TabControl>(GetParent());
 
     if (pTabControl && pButton)
     {
@@ -42,7 +43,7 @@ bool TabStrip::DragAndDrop_HandleDrop(Gwen::DragAndDrop::Package* /*pPackage*/, 
 
     if (DroppedOn)
     {
-        Gwen::Point DropPos = DroppedOn->CanvasPosToLocal(Gwen::Point(x, y));
+        Gwk::Point DropPos = DroppedOn->CanvasPosToLocal(Gwk::Point(x, y));
         DragAndDrop::SourceControl->BringNextToControl(DroppedOn, DropPos.x > DroppedOn->Width()/2);
     }
     else
@@ -53,7 +54,7 @@ bool TabStrip::DragAndDrop_HandleDrop(Gwen::DragAndDrop::Package* /*pPackage*/, 
     return true;
 }
 
-bool TabStrip::DragAndDrop_CanAcceptPackage(Gwen::DragAndDrop::Package* pPackage)
+bool TabStrip::DragAndDrop_CanAcceptPackage(Gwk::DragAndDrop::Package* pPackage)
 {
     if (!m_bAllowReorder)
         return false;
@@ -66,12 +67,12 @@ bool TabStrip::DragAndDrop_CanAcceptPackage(Gwen::DragAndDrop::Package* pPackage
 
 void TabStrip::Layout(Skin::Base* skin)
 {
-    Gwen::Point pLargestTab(5, 5);
+    Gwk::Point pLargestTab(5, 5);
     int iNum = 0;
 
     for (Base::List::iterator iter = Children.begin(); iter != Children.end(); ++iter)
     {
-        TabButton* pButton = gwen_cast<TabButton>(*iter);
+        TabButton* pButton = gwk_cast<TabButton>(*iter);
 
         if (!pButton)
             continue;
@@ -104,8 +105,8 @@ void TabStrip::Layout(Skin::Base* skin)
             pButton->Dock(Docking::Left);
         }
 
-        pLargestTab.x = Gwen::Max(pLargestTab.x, pButton->Width());
-        pLargestTab.y = Gwen::Max(pLargestTab.y, pButton->Height());
+        pLargestTab.x = Gwk::Max(pLargestTab.x, pButton->Width());
+        pLargestTab.y = Gwk::Max(pLargestTab.y, pButton->Height());
         pButton->SetMargin(m);
         iNum++;
     }
@@ -119,7 +120,7 @@ void TabStrip::Layout(Skin::Base* skin)
     ParentClass::Layout(skin);
 }
 
-void TabStrip::DragAndDrop_HoverEnter(Gwen::DragAndDrop::Package* /*pPackage*/, int /*x*/,
+void TabStrip::DragAndDrop_HoverEnter(Gwk::DragAndDrop::Package* /*pPackage*/, int /*x*/,
                                       int /*y*/)
 {
     if (m_TabDragControl)
@@ -130,21 +131,21 @@ void TabStrip::DragAndDrop_HoverEnter(Gwen::DragAndDrop::Package* /*pPackage*/, 
     m_TabDragControl->SetSize(3, Height());
 }
 
-void TabStrip::DragAndDrop_HoverLeave(Gwen::DragAndDrop::Package* /*pPackage*/)
+void TabStrip::DragAndDrop_HoverLeave(Gwk::DragAndDrop::Package* /*pPackage*/)
 {
     delete m_TabDragControl;
     m_TabDragControl = NULL;
 }
 
-void TabStrip::DragAndDrop_Hover(Gwen::DragAndDrop::Package* /*pPackage*/, int x, int y)
+void TabStrip::DragAndDrop_Hover(Gwk::DragAndDrop::Package* /*pPackage*/, int x, int y)
 {
-    Gwen::Point LocalPos = CanvasPosToLocal(Gwen::Point(x, y));
+    Gwk::Point LocalPos = CanvasPosToLocal(Gwk::Point(x, y));
     Base* DroppedOn = GetControlAt(LocalPos.x, LocalPos.y);
 
     if (DroppedOn && DroppedOn != this)
     {
-        Gwen::Point DropPos = DroppedOn->CanvasPosToLocal(Gwen::Point(x, y));
-        m_TabDragControl->SetBounds(Gwen::Rect(0, 0, 3, Height()));
+        Gwk::Point DropPos = DroppedOn->CanvasPosToLocal(Gwk::Point(x, y));
+        m_TabDragControl->SetBounds(Gwk::Rect(0, 0, 3, Height()));
         m_TabDragControl->BringToFront();
         m_TabDragControl->SetPos(DroppedOn->X()-1, 0);
 
