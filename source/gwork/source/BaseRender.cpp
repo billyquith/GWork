@@ -20,6 +20,7 @@ namespace Gwk
         Base::Base()
         :   m_RenderOffset(Gwk::Point(0, 0))
         ,   m_fScale(1.0f)
+        ,   m_RTT(NULL)
         {
         }
 

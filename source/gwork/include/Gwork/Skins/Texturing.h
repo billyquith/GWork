@@ -10,7 +10,6 @@
 #define GWK_SKINS_TEXTURING_H
 
 #include <Gwork/Gwork.h>
-#include <Gwork/Texture.h>
 
 namespace Gwk
 {

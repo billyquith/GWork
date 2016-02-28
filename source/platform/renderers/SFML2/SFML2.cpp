@@ -5,10 +5,7 @@
  *  See license in Gwork.h
  */
 
-#include <Gwork/Gwork.h>
 #include <Gwork/BaseRender.h>
-#include <Gwork/Font.h>
-#include <Gwork/Texture.h>
 #include <Gwork/Renderers/SFML2.h>
 
 #include <SFML/Graphics.hpp>

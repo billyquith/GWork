@@ -6,14 +6,18 @@
  */
 
 #pragma once
+
+#ifndef GWK_PLATFORMTYPES_H
+#define GWK_PLATFORMTYPES_H
+
 #ifdef _MSC_VER
 #   pragma warning( disable : 4244 )
 #   pragma warning( disable : 4251 )
 #endif
-#ifndef GWK_STRUCTURES_H
-#define GWK_STRUCTURES_H
 
-#include <Gwork/Platform.h>
+#include <Gwork/Exports.h>
+#include <string>
+#include <list>
 
 namespace Gwk
 {
@@ -23,6 +27,14 @@ namespace Gwk
         class Canvas;
     }
 
+    //
+    // All strings are UTF-8 for Unicode. This is backwards compatible with ASCII.
+    // See: http://www.utf8everywhere.org
+    //
+    typedef std::string     String;
+    typedef char            UnicodeChar;
+
+    // TODO: make enum
     namespace CursorType
     {
         static const unsigned char Normal   = 0;
@@ -39,32 +51,7 @@ namespace Gwk
         static const unsigned char Count    = 10;
     }
     
-    struct GWK_EXPORT Margin
-    {
-        Margin(int left_ = 0, int top_ = 0, int right_ = 0, int bottom_ = 0)
-        :   top(top_)
-        ,   bottom(bottom_)
-        ,   left(left_)
-        ,   right(right_)
-        {}
-
-        Margin operator + (const Margin& margin) const
-        {
-            Margin m;
-            m.top       = top+margin.top;
-            m.bottom    = bottom+margin.bottom;
-            m.left      = left+margin.left;
-            m.right     = right+margin.right;
-            return m;
-        }
-
-        int top, bottom, left, right;
-    };
-
-
-    typedef Margin Padding;
-
-
+    
     struct GWK_EXPORT Rect
     {
         Rect(int x_ = 0, int y_ = 0, int w_ = 0, int h_ = 0)
@@ -122,14 +109,6 @@ namespace Gwk
     };
 
 
-    struct GWK_EXPORT HSV
-    {
-        float h;
-        float s;
-        float v;
-    };
-
-
     struct GWK_EXPORT Color
     {
         Color(unsigned char r_=255,
@@ -143,7 +122,7 @@ namespace Gwk
         {}
 
         void operator = (Color c)
-        {            
+        {
             r = c.r;
             g = c.g;
             b = c.b;
@@ -195,28 +174,55 @@ namespace Gwk
     };
 
 
-    namespace DragAndDrop
+    struct Font
     {
-        struct GWK_EXPORT Package
+        typedef std::list<Font*> List;
+
+        Font()
+        :   facename("Arial")
+        ,   size(10)
+        ,   bold(false)
+        ,   data(NULL)
+        ,   realsize(0)
         {
-            Package()
-            {
-                userdata = NULL;
-                draggable = false;
-                drawcontrol = NULL;
-                holdoffset = Gwk::Point(0, 0);
-            }
+        }
 
-            String  name;
-            void*   userdata;
-            bool    draggable;
+        String facename;
+        float size;
+        bool bold;
 
-            Gwk::Controls::Base*   drawcontrol;
-            Gwk::Point             holdoffset;
-        };
+        /// This should be set by the renderer
+        /// if it tries to use a font where it's NULL.
+        void*   data;
+
+        /// This is the real font size, after it's been scaled by Render->Scale()
+        float realsize;
+    };
 
 
-    }
+    struct Texture
+    {
+        typedef std::list<Texture*> List;
 
+        String  name;
+        void*   data;
+        bool    failed;
+        int     width;
+        int     height;
+        
+        bool    readable;
+        void*   surface;
+
+        Texture()
+        :   data(NULL)
+        ,   failed(false)
+        ,   width(4)
+        ,   height(4)
+        ,   readable(false)
+        ,   surface(NULL)
+        {
+        }
+    };
+    
 }
-#endif // ifndef GWK_STRUCTURES_H
+#endif // ifndef GWK_PLATFORMTYPES_H

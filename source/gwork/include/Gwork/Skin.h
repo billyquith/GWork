@@ -10,7 +10,6 @@
 #define GWK_SKIN_H
 
 #include <Gwork/BaseRender.h>
-#include <Gwork/Font.h>
 
 namespace Gwk
 {

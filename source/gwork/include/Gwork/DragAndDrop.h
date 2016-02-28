@@ -12,7 +12,7 @@
 #include <sstream>
 
 #include <Gwork/Skin.h>
-#include <Gwork/Structures.h>
+#include <Gwork/UiTypes.h>
 
 namespace Gwk
 {
