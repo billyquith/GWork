@@ -5,7 +5,7 @@ include_directories(
     ${RENDERER_INC}
 )
 
-set(GWORK_HEADERS
+set(GWK_HEADERS
     include/Gwork/Align.h
     include/Gwork/Anim.h
     include/Gwork/BaseRender.h
@@ -120,7 +120,7 @@ set(GWORK_HEADERS
     include/Gwork/Skins/Texturing.h
 )
 
-set(GWORK_SOURCES
+set(GWK_SOURCES
     source/Anim.cpp
     source/BaseRender.cpp
     source/ControlList.cpp
@@ -191,97 +191,41 @@ set(GWORK_SOURCES
     source/Controls/Dialog/Query.cpp
 )
 
-set(GWORK_RENDER_SOURCES
+set(GWK_RENDER_SOURCES
     include/Gwork/Renderers/${RENDERER_NAME}.h
     renderers/${RENDERER_NAME}/${RENDERER_NAME}.cpp
     source/Platforms/${BUILD_PLATFORM}.cpp
 )
 
-# set(GWORK_TEST_SOURCES
-#     include/Gwork/Test/Test.h
-#     UnitTest/Button.cpp
-#     UnitTest/Checkbox.cpp
-#     UnitTest/CollapsibleList.cpp
-#     UnitTest/ColorPicker.cpp
-#     UnitTest/ComboBox.cpp
-#     UnitTest/CrossSplitter.cpp
-#     UnitTest/GroupBox.cpp
-#     UnitTest/ImagePanel.cpp
-#     UnitTest/Label.cpp
-#     UnitTest/LabelMultiline.cpp
-#     UnitTest/ListBox.cpp
-#     UnitTest/MenuStrip.cpp
-#     UnitTest/Numeric.cpp
-#     UnitTest/PageControl.cpp
-#     UnitTest/ProgressBar.cpp
-#     UnitTest/Properties.cpp
-#     UnitTest/RadioButton.cpp
-#     UnitTest/ReadMe.txt
-#     UnitTest/ScrollControl.cpp
-#     UnitTest/Slider.cpp
-#     UnitTest/StatusBar.cpp
-#     UnitTest/TabControl.cpp
-#     UnitTest/TextBox.cpp
-#     UnitTest/TreeControl.cpp
-#     UnitTest/UnitTest.cpp
-#     UnitTest/Window.cpp
-# )
+set(GWK_HEADER_FOLDER "Headers")
+set(GWK_SOURCE_FOLDER "Source")
 
-# set(GWORK_UTIL_SOURCES
-#     ../util/source/ControlFactory/Base_Factory.cpp
-#     ../util/source/ControlFactory/Button_Factory.cpp
-#     ../util/source/ControlFactory/CheckBox_Factory.cpp
-#     ../util/source/ControlFactory/ComboBox_Factory.cpp
-#     ../util/source/ControlFactory/ControlFactory.cpp
-#     ../util/source/ControlFactory/DesignerCanvas_Factory.cpp
-#     ../util/source/ControlFactory/FilePicker_Factory.cpp
-#     ../util/source/ControlFactory/FolderPicker_Factory.cpp
-#     ../util/source/ControlFactory/Image_Factory.cpp
-#     ../util/source/ControlFactory/Label_Factory.cpp
-#     ../util/source/ControlFactory/ListBox_Factory.cpp
-#     ../util/source/ControlFactory/MenuStrip_Factory.cpp
-#     ../util/source/ControlFactory/PageControl_Factory.cpp
-#     ../util/source/ControlFactory/ProgressBar_Factory.cpp
-#     ../util/source/ControlFactory/Rectangle_Factory.cpp
-#     ../util/source/ControlFactory/Slider_Factory.cpp
-#     ../util/source/ControlFactory/TextBox_Factory.cpp
-#     ../util/source/ControlFactory/VerticalSplitter_Factory.cpp
-#     ../util/source/ImportExport/Base.cpp
-#     ../util/source/ImportExport/DesignerFormat.cpp
-#     ../util/source/ImportExport/DesignerFormat.h
-#     ../util/source/ImportExport/GwenUtil.cpp
-#     ../util/source/ImportExport/GwenUtil.h
-# )
+# header folder groups
+source_group("${GWK_HEADER_FOLDER}"
+             REGULAR_EXPRESSION "include/Gwork/[^/]+\\.h")
+source_group("${GWK_HEADER_FOLDER}\\Controls"
+             REGULAR_EXPRESSION "include/Gwork/Controls/[^/]+\\.h")
+source_group("${GWK_HEADER_FOLDER}\\Controls\\Dialogs"
+             REGULAR_EXPRESSION "include/Gwork/Controls/Dialogs/[^/]+\\.h")
+source_group("${GWK_HEADER_FOLDER}\\Input"
+             REGULAR_EXPRESSION "include/Gwork/Input/[^/]+\\.h")
+source_group("${GWK_HEADER_FOLDER}\\Controls\\Layout"
+             REGULAR_EXPRESSION "include/Gwork/Controls/Layout/[^/]+\\.h")
+source_group("${GWK_HEADER_FOLDER}\\Controls\\Property"
+             REGULAR_EXPRESSION "include/Gwork/Controls/Property/[^/]+\\.h")
+source_group("${GWK_HEADER_FOLDER}\\Skins"
+             REGULAR_EXPRESSION "include/Gwork/Skins/[^/]+\\.h")
 
-# set(GWORK_HEADER_FOLDER "Headers")
-# set(GWORK_SOURCE_FOLDER "Source")
-#
-# # header folder groups
-# source_group("${GWORK_HEADER_FOLDER}"
-#              REGULAR_EXPRESSION "include/Gwork/[^/]+\\.h")
-# source_group("${GWORK_HEADER_FOLDER}\\Controls"
-#              REGULAR_EXPRESSION "include/Gwork/Controls/[^/]+\\.h")
-# source_group("${GWORK_HEADER_FOLDER}\\Controls\\Dialogs"
-#              REGULAR_EXPRESSION "include/Gwork/Controls/Dialogs/[^/]+\\.h")
-# source_group("${GWORK_HEADER_FOLDER}\\Input"
-#              REGULAR_EXPRESSION "include/Gwork/Input/[^/]+\\.h")
-# source_group("${GWORK_HEADER_FOLDER}\\Controls\\Layout"
-#              REGULAR_EXPRESSION "include/Gwork/Controls/Layout/[^/]+\\.h")
-# source_group("${GWORK_HEADER_FOLDER}\\Controls\\Property"
-#              REGULAR_EXPRESSION "include/Gwork/Controls/Property/[^/]+\\.h")
-# source_group("${GWORK_HEADER_FOLDER}\\Skins"
-#              REGULAR_EXPRESSION "include/Gwork/Skins/[^/]+\\.h")
-#
-# # source folder groups
-# source_group("${GWORK_SOURCE_FOLDER}"
-#              REGULAR_EXPRESSION "[^/]+\\.cpp")
-# source_group("${GWORK_SOURCE_FOLDER}\\Controls"
-#              REGULAR_EXPRESSION "source/Controls/[^/]+\\.cpp")
-# source_group("${GWORK_SOURCE_FOLDER}\\Controls\\Dialogs"
-#              REGULAR_EXPRESSION "source/Controls/Dialogs/[^/]+\\.cpp")
+# source folder groups
+source_group("${GWK_SOURCE_FOLDER}"
+             REGULAR_EXPRESSION "[^/]+\\.cpp")
+source_group("${GWK_SOURCE_FOLDER}\\Controls"
+             REGULAR_EXPRESSION "source/Controls/[^/]+\\.cpp")
+source_group("${GWK_SOURCE_FOLDER}\\Controls\\Dialog"
+             REGULAR_EXPRESSION "source/Controls/Dialog/[^/]+\\.cpp")
 
 # Gwork library
-add_library(Gwork STATIC ${GWORK_HEADERS} ${GWORK_SOURCES})
+add_library(Gwork STATIC ${GWK_HEADERS} ${GWK_SOURCES})
 target_compile_features(Gwork PUBLIC cxx_override)
 
 install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/Gwork
@@ -290,62 +234,4 @@ install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/Gwork
 install(TARGETS Gwork
         RUNTIME DESTINATION bin
         LIBRARY DESTINATION lib
-        ARCHIVE DESTINATION lib)
-
-# # Gwork renderer & platform library
-# add_library(Gwork${RENDERER_NAME} STATIC ${GWORK_RENDER_SOURCES})
-# target_compile_features(Gwork${RENDERER_NAME} PUBLIC cxx_override)
-# target_link_libraries(Gwork${RENDERER_NAME} Gwork)
-#
-# include_directories(
-#     ${CMAKE_SOURCE_DIR}/util/include
-# )
-#
-# # Gwork utils
-# add_library(GworkUtil STATIC ${GWORK_UTIL_SOURCES})
-# target_compile_features(GworkUtil PUBLIC cxx_override)
-# target_link_libraries(GworkUtil Gwork)
-#
-# install(TARGETS GworkUtil
-#         RUNTIME DESTINATION bin
-#         LIBRARY DESTINATION lib
-#         ARCHIVE DESTINATION lib)
-#
-# install(DIRECTORY ${CMAKE_SOURCE_DIR}/util/include/GworkUtil
-#         DESTINATION include)
-#
-# # Test library
-# if(BUILD_TEST)
-#     add_library(GworkTest STATIC ${GWORK_TEST_SOURCES})
-#     target_compile_features(GworkTest PUBLIC cxx_override)
-#     target_link_libraries(GworkTest Gwork Gwork${RENDERER_NAME})
-#
-#     install(TARGETS GworkTest
-#             RUNTIME DESTINATION bin
-#             LIBRARY DESTINATION lib
-#             ARCHIVE DESTINATION lib)
-# endif(BUILD_TEST)
-#
-# # Sample executable
-# if(BUILD_SAMPLE)
-#     set(SAMPLE_SOURCES
-#         "Samples/${RENDERER_NAME}/${RENDERER_NAME}Sample.cpp")
-#
-#     add_executable(Gwork${RENDERER_NAME}Sample ${SAMPLE_SOURCES})
-#     target_compile_features(Gwork${RENDERER_NAME}Sample PRIVATE cxx_override)
-#     target_link_libraries(Gwork${RENDERER_NAME}Sample
-#                           Gwork Gwork${RENDERER_NAME} GworkUtil ${RENDERER_LIB} ${PONDER_LIBRARIES})
-#
-#     if(BUILD_TEST)
-#         target_link_libraries(Gwork${RENDERER_NAME}Sample GworkTest)
-#     endif(BUILD_TEST)
-#
-#     install(TARGETS Gwork${RENDERER_NAME}Sample
-#             RUNTIME DESTINATION bin
-#             LIBRARY DESTINATION lib
-#             ARCHIVE DESTINATION lib)
-# endif(BUILD_SAMPLE)
-
-
-      
-
+        ARCHIVE DESTINATION lib)      

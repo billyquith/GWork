@@ -6,7 +6,7 @@ include_directories(
     ${CMAKE_SOURCE_DIR}/source/test/include
 )
 
-set(GWORK_TEST_SOURCES
+set(GWK_TEST_SOURCES
     include/Gwork/Test/Test.h
     source/Button.cpp
     source/Checkbox.cpp
@@ -35,36 +35,18 @@ set(GWORK_TEST_SOURCES
     source/Window.cpp
 )
 
-# set(GWORK_HEADER_FOLDER "Headers")
-# set(GWORK_SOURCE_FOLDER "Source")
-#
-# # header folder groups
-# source_group("${GWORK_HEADER_FOLDER}"
-#              REGULAR_EXPRESSION "include/Gwork/[^/]+\\.h")
-# source_group("${GWORK_HEADER_FOLDER}\\Controls"
-#              REGULAR_EXPRESSION "include/Gwork/Controls/[^/]+\\.h")
-# source_group("${GWORK_HEADER_FOLDER}\\Controls\\Dialogs"
-#              REGULAR_EXPRESSION "include/Gwork/Controls/Dialogs/[^/]+\\.h")
-# source_group("${GWORK_HEADER_FOLDER}\\Input"
-#              REGULAR_EXPRESSION "include/Gwork/Input/[^/]+\\.h")
-# source_group("${GWORK_HEADER_FOLDER}\\Controls\\Layout"
-#              REGULAR_EXPRESSION "include/Gwork/Controls/Layout/[^/]+\\.h")
-# source_group("${GWORK_HEADER_FOLDER}\\Controls\\Property"
-#              REGULAR_EXPRESSION "include/Gwork/Controls/Property/[^/]+\\.h")
-# source_group("${GWORK_HEADER_FOLDER}\\Skins"
-#              REGULAR_EXPRESSION "include/Gwork/Skins/[^/]+\\.h")
-#
-# # source folder groups
-# source_group("${GWORK_SOURCE_FOLDER}"
-#              REGULAR_EXPRESSION "[^/]+\\.cpp")
-# source_group("${GWORK_SOURCE_FOLDER}\\Controls"
-#              REGULAR_EXPRESSION "source/Controls/[^/]+\\.cpp")
-# source_group("${GWORK_SOURCE_FOLDER}\\Controls\\Dialogs"
-#              REGULAR_EXPRESSION "source/Controls/Dialogs/[^/]+\\.cpp")
+set(GWK_HEADER_FOLDER "Headers")
+set(GWK_SOURCE_FOLDER "Source")
+
+# header folder groups
+source_group("${GWK_HEADER_FOLDER}"
+             REGULAR_EXPRESSION "include/Gwork/Test/.*\\.h")
+source_group("${GWK_SOURCE_FOLDER}"
+             REGULAR_EXPRESSION "source/.*\\.cpp")
 
 # Test library
 if(BUILD_TEST)
-    add_library(GworkTest STATIC ${GWORK_TEST_SOURCES})
+    add_library(GworkTest STATIC ${GWK_TEST_SOURCES})
     target_compile_features(GworkTest PUBLIC cxx_override)
     target_link_libraries(GworkTest Gwork Gwork${RENDERER_NAME})
 
