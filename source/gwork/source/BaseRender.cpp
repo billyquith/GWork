@@ -6,10 +6,10 @@
  */
 
 
-#include "Gwork/Gwork.h"
-#include "Gwork/BaseRender.h"
-#include "Gwork/Utility.h"
-#include "Gwork/Platform.h"
+#include <Gwork/Gwork.h>
+#include <Gwork/BaseRender.h>
+#include <Gwork/Utility.h>
+#include <Gwork/Platform.h>
 
 #include <math.h>
 

@@ -5,21 +5,21 @@
  *  See license in Gwork.h
  */
 
-#include "Gwork/Gwork.h"
-#include "Gwork/Skins/Simple.h"
-#include "Gwork/Skins/TexturedBase.h"
-#include "Gwork/Test/Test.h"
-#include "Gwork/Renderers/OpenGL.h"
-#include "Gwork/Controls/WindowCanvas.h"
+#include <Gwork/Gwork.h>
+#include <Gwork/Skins/Simple.h>
+#include <Gwork/Skins/TexturedBase.h>
+#include <Gwork/Test/Test.h>
+#include <Gwork/Renderers/OpenGL.h>
+#include <Gwork/Controls/WindowCanvas.h>
 
 //
 // These are the renderers that work with WindowCanvas
 // (you need to include the relevant libs to use them)
 //
-#include "Gwork/Renderers/OpenGL_DebugFont.h"
-// #include "Gwork/Renderers/GDIPlus.h"
-// #include "Gwork/Renderers/Direct2D.h"
-// #include "Gwork/Renderers/DirectX9.h"
+#include <Gwork/Renderers/OpenGL_DebugFont.h>
+// #include <Gwork/Renderers/GDIPlus.h>
+// #include <Gwork/Renderers/Direct2D.h>
+// #include <Gwork/Renderers/DirectX9.h>
 
 
 //

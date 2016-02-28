@@ -6,12 +6,12 @@
  */
 
 
-#include "Gwork/Gwork.h"
-#include "Gwork/Skin.h"
-#include "Gwork/Controls/DockedTabControl.h"
-#include "Gwork/Controls/Highlight.h"
-#include "Gwork/DragAndDrop.h"
-#include "Gwork/Controls/WindowControl.h"
+#include <Gwork/Gwork.h>
+#include <Gwork/Skin.h>
+#include <Gwork/Controls/DockedTabControl.h>
+#include <Gwork/Controls/Highlight.h>
+#include <Gwork/DragAndDrop.h>
+#include <Gwork/Controls/WindowControl.h>
 
 using namespace Gwk;
 using namespace Gwk::Controls;

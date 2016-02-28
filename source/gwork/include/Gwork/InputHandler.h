@@ -10,7 +10,7 @@
 #define GWK_INPUTHANDLER_H
 
 #include <queue>
-#include "Gwork/Gwork.h"
+#include <Gwork/Gwork.h>
 
 namespace Gwk
 {

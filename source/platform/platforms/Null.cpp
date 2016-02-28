@@ -5,8 +5,8 @@
  *  See license in Gwork.h
  */
 
-//#include "Gwork/Macros.h"
-#include "Gwork/Platform.h"
+//#include <Gwork/Macros.h>
+#include <Gwork/Platform.h>
 
 #ifdef GWK_PLATFORM_NULL
 

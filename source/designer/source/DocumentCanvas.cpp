@@ -1,5 +1,5 @@
 #include "DocumentCanvas.h"
-#include "Gwork/Util/ControlFactory.h"
+#include <Gwork/Util/ControlFactory.h>
 #include "SelectionLayer.h"
 #include "Utility.h"
 

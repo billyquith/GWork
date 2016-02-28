@@ -6,11 +6,11 @@
  */
 
 
-#include "Gwork/Gwork.h"
-#include "Gwork/Controls/TextBox.h"
-#include "Gwork/Skin.h"
-#include "Gwork/Utility.h"
-#include "Gwork/Platform.h"
+#include <Gwork/Gwork.h>
+#include <Gwork/Controls/TextBox.h>
+#include <Gwork/Skin.h>
+#include <Gwork/Utility.h>
+#include <Gwork/Platform.h>
 
 
 using namespace Gwk;

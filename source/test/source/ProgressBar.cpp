@@ -5,9 +5,9 @@
  *  See license in Gwork.h
  */
 
-#include "Gwork/Test/Test.h"
-#include "Gwork/Controls/RadioButtonController.h"
-#include "Gwork/Controls/ProgressBar.h"
+#include <Gwork/Test/Test.h>
+#include <Gwork/Controls/RadioButtonController.h>
+#include <Gwork/Controls/ProgressBar.h>
 
 using namespace Gwk;
 

@@ -9,10 +9,10 @@
 #ifndef GWK_CONTROLS_RESIZER_H
 #define GWK_CONTROLS_RESIZER_H
 
-#include "Gwork/Controls/Base.h"
-#include "Gwork/Gwork.h"
-#include "Gwork/Skin.h"
-#include "Gwork/Controls/Dragger.h"
+#include <Gwork/Controls/Base.h>
+#include <Gwork/Gwork.h>
+#include <Gwork/Skin.h>
+#include <Gwork/Controls/Dragger.h>
 
 
 namespace Gwk

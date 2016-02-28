@@ -13,12 +13,12 @@
 #include <dwrite.h>
 #include <wincodec.h>
 
-#include "Gwork/Gwork.h"
-#include "Gwork/Skins/Simple.h"
-#include "Gwork/Skins/TexturedBase.h"
-#include "Gwork/Test/Test.h"
-#include "Gwork/Input/Windows.h"
-#include "Gwork/Renderers/Direct2D.h"
+#include <Gwork/Gwork.h>
+#include <Gwork/Skins/Simple.h>
+#include <Gwork/Skins/TexturedBase.h>
+#include <Gwork/Test/Test.h>
+#include <Gwork/Input/Windows.h>
+#include <Gwork/Renderers/Direct2D.h>
 
 #pragma comment(lib, "d2d1.lib")
 #pragma comment(lib, "dwrite.lib")

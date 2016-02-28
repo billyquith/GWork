@@ -6,8 +6,8 @@
  */
 
 
-#include "Gwork/Gwork.h"
-#include "Gwork/ControlList.h"
+#include <Gwork/Gwork.h>
+#include <Gwork/ControlList.h>
 
 using namespace Gwk;
 using namespace Gwk::Controls;

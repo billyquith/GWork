@@ -6,9 +6,9 @@
  */
 
 
-#include "Gwork/Controls/ListBox.h"
-#include "Gwork/Controls/ScrollControl.h"
-#include "Gwork/InputHandler.h"
+#include <Gwork/Controls/ListBox.h>
+#include <Gwork/Controls/ScrollControl.h>
+#include <Gwork/InputHandler.h>
 
 using namespace Gwk;
 using namespace Gwk::Controls;

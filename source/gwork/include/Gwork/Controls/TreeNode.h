@@ -9,9 +9,9 @@
 #ifndef GWK_CONTROLS_TREENODE_H
 #define GWK_CONTROLS_TREENODE_H
 
-#include "Gwork/Controls/Base.h"
-#include "Gwork/Controls/Button.h"
-#include "Gwork/Controls/ScrollControl.h"
+#include <Gwork/Controls/Base.h>
+#include <Gwork/Controls/Button.h>
+#include <Gwork/Controls/ScrollControl.h>
 
 
 namespace Gwk

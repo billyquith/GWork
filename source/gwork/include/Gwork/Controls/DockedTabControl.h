@@ -9,8 +9,8 @@
 #ifndef GWK_CONTROLS_DOCKEDTABCONTROL_H
 #define GWK_CONTROLS_DOCKEDTABCONTROL_H
 
-#include "Gwork/Controls/Base.h"
-#include "Gwork/Controls/TabControl.h"
+#include <Gwork/Controls/Base.h>
+#include <Gwork/Controls/TabControl.h>
 
 namespace Gwk
 {

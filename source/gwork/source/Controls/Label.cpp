@@ -6,9 +6,9 @@
  */
 
 
-#include "Gwork/Gwork.h"
-#include "Gwork/Controls/Label.h"
-#include "Gwork/Utility.h"
+#include <Gwork/Gwork.h>
+#include <Gwork/Controls/Label.h>
+#include <Gwork/Utility.h>
 
 using namespace Gwk;
 using namespace Gwk::Controls;

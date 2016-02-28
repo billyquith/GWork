@@ -5,8 +5,8 @@
  *  See license in Gwork.h
  */
 
-#include "Gwork/Gwork.h"
-#include "Gwork/Controls/SplitterBar.h"
+#include <Gwork/Gwork.h>
+#include <Gwork/Controls/SplitterBar.h>
 
 using namespace Gwk;
 using namespace Controls;

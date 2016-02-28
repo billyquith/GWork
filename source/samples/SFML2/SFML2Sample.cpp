@@ -8,12 +8,12 @@
 #include <SFML/Graphics.hpp>
 #include <cmath>
 
-#include "Gwork/Renderers/SFML2.h"
-#include "Gwork/Input/SFML.h"
+#include <Gwork/Renderers/SFML2.h>
+#include <Gwork/Input/SFML.h>
 
-#include "Gwork/Skins/Simple.h"
-#include "Gwork/Skins/TexturedBase.h"
-#include "Gwork/Test/Test.h"
+#include <Gwork/Skins/Simple.h>
+#include <Gwork/Skins/TexturedBase.h>
+#include <Gwork/Test/Test.h>
 
 
 ////////////////////////////////////////////////////////////

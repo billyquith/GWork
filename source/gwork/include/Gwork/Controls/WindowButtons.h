@@ -9,9 +9,9 @@
 #ifndef GWK_CONTROLS_WINDOWS_BUTTONS_H
 #define GWK_CONTROLS_WINDOWS_BUTTONS_H
 
-#include "Gwork/Gwork.h"
-#include "Gwork/Controls/Button.h"
-#include "Gwork/Skin.h"
+#include <Gwork/Gwork.h>
+#include <Gwork/Controls/Button.h>
+#include <Gwork/Skin.h>
 
 
 namespace Gwk

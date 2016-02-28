@@ -9,8 +9,8 @@
 #ifndef GWK_CONTROLS_PROPERTY_TEXT_H
 #define GWK_CONTROLS_PROPERTY_TEXT_H
 
-#include "Gwork/Controls/Property/BaseProperty.h"
-#include "Gwork/Controls/TextBox.h"
+#include <Gwork/Controls/Property/BaseProperty.h>
+#include <Gwork/Controls/TextBox.h>
 
 namespace Gwk
 {

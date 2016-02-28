@@ -6,10 +6,10 @@
  */
 
 
-#include "Gwork/Gwork.h"
-#include "Gwork/DragAndDrop.h"
-#include "Gwork/Utility.h"
-#include "Gwork/Platform.h"
+#include <Gwork/Gwork.h>
+#include <Gwork/DragAndDrop.h>
+#include <Gwork/Utility.h>
+#include <Gwork/Platform.h>
 
 using namespace Gwk;
 using namespace Gwk::DragAndDrop;

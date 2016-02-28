@@ -9,9 +9,9 @@
 #ifndef GWK_CONTROLS_FILEPICKER_H
 #define GWK_CONTROLS_FILEPICKER_H
 
-#include "Gwork/BaseRender.h"
-#include "Gwork/Controls/Dialogs/FileOpen.h"
-#include "Gwork/Controls/TextBox.h"
+#include <Gwork/BaseRender.h>
+#include <Gwork/Controls/Dialogs/FileOpen.h>
+#include <Gwork/Controls/TextBox.h>
 
 
 namespace Gwk

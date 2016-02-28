@@ -6,8 +6,8 @@
  */
 
 
-#include "Gwork/Controls/ComboBox.h"
-#include "Gwork/Controls/Menu.h"
+#include <Gwork/Controls/ComboBox.h>
+#include <Gwork/Controls/Menu.h>
 
 
 using namespace Gwk;

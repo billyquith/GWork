@@ -11,8 +11,8 @@
 
 #include <sstream>
 
-#include "Gwork/Skin.h"
-#include "Gwork/Structures.h"
+#include <Gwork/Skin.h>
+#include <Gwork/Structures.h>
 
 namespace Gwk
 {

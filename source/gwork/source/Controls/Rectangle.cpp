@@ -6,7 +6,7 @@
  */
 
 
-#include "Gwork/Controls/Rectangle.h"
+#include <Gwork/Controls/Rectangle.h>
 
 using namespace Gwk;
 using namespace Gwk::Controls;

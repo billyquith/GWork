@@ -6,11 +6,11 @@
  */
 
 
-#include "Gwork/InputHandler.h"
-#include "Gwork/Controls/Base.h"
-#include "Gwork/DragAndDrop.h"
-#include "Gwork/Hook.h"
-#include "Gwork/Platform.h"
+#include <Gwork/InputHandler.h>
+#include <Gwork/Controls/Base.h>
+#include <Gwork/DragAndDrop.h>
+#include <Gwork/Hook.h>
+#include <Gwork/Platform.h>
 
 using namespace Gwk;
 

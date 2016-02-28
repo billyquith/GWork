@@ -9,10 +9,10 @@
 #ifndef GWK_CONTROLS_IMAGEPANEL_H
 #define GWK_CONTROLS_IMAGEPANEL_H
 
-#include "Gwork/Gwork.h"
-#include "Gwork/Controls/Base.h"
-#include "Gwork/BaseRender.h"
-#include "Gwork/Texture.h"
+#include <Gwork/Gwork.h>
+#include <Gwork/Controls/Base.h>
+#include <Gwork/BaseRender.h>
+#include <Gwork/Texture.h>
 
 namespace Gwk
 {

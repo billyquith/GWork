@@ -6,9 +6,9 @@
  */
 
 
-#include "Gwork/Controls/ImagePanel.h"
-#include "Gwork/Controls/Label.h"
-#include "Gwork/Controls/ResizableControl.h"
+#include <Gwork/Controls/ImagePanel.h>
+#include <Gwork/Controls/Label.h>
+#include <Gwork/Controls/ResizableControl.h>
 
 using namespace Gwk;
 using namespace Gwk::Controls;

@@ -8,8 +8,8 @@
 #ifndef GWK_RENDERERS_OPENGL_DEBUGFONT_H
 #define GWK_RENDERERS_OPENGL_DEBUGFONT_H
 
-#include "Gwork/Gwork.h"
-#include "Gwork/Renderers/OpenGL.h"
+#include <Gwork/Gwork.h>
+#include <Gwork/Renderers/OpenGL.h>
 
 namespace Gwk
 {

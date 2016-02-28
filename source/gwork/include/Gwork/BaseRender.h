@@ -9,7 +9,7 @@
 #ifndef GWK_BASERENDER_H
 #define GWK_BASERENDER_H
 
-#include "Gwork/Structures.h"
+#include <Gwork/Structures.h>
 
 namespace Gwk
 {    

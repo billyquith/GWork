@@ -5,8 +5,8 @@
  *  See license in Gwork.h
  */
 
-#include "Gwork/Test/Test.h"
-#include "Gwork/Controls/TreeControl.h"
+#include <Gwork/Test/Test.h>
+#include <Gwork/Controls/TreeControl.h>
 
 using namespace Gwk;
 

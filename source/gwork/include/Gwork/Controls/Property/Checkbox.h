@@ -9,8 +9,8 @@
 #ifndef GWK_CONTROLS_PROPERTY_CHECKBOX_H
 #define GWK_CONTROLS_PROPERTY_CHECKBOX_H
 
-#include "Gwork/Controls/Property/BaseProperty.h"
-#include "Gwork/Controls/CheckBox.h"
+#include <Gwork/Controls/Property/BaseProperty.h>
+#include <Gwork/Controls/CheckBox.h>
 
 namespace Gwk
 {

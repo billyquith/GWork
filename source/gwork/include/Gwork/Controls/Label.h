@@ -9,9 +9,9 @@
 #ifndef GWK_CONTROLS_LABEL_H
 #define GWK_CONTROLS_LABEL_H
 
-#include "Gwork/BaseRender.h"
-#include "Gwork/Controls/Base.h"
-#include "Gwork/Controls/Text.h"
+#include <Gwork/BaseRender.h>
+#include <Gwork/Controls/Base.h>
+#include <Gwork/Controls/Text.h>
 
 namespace Gwk
 {

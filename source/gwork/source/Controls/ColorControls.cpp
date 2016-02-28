@@ -10,8 +10,8 @@
  */
 
 
-#include "Gwork/Utility.h"
-#include "Gwork/Controls/ColorControls.h"
+#include <Gwork/Utility.h>
+#include <Gwork/Controls/ColorControls.h>
 
 using namespace Gwk;
 using namespace Gwk::Controls;

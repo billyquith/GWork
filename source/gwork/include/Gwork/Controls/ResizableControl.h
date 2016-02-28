@@ -9,14 +9,14 @@
 #ifndef GWK_CONTROLS_RESIZABLECONTROL_H
 #define GWK_CONTROLS_RESIZABLECONTROL_H
 
-#include "Gwork/Controls/Base.h"
-#include "Gwork/Controls/Label.h"
-#include "Gwork/Controls/Button.h"
-#include "Gwork/Controls/Dragger.h"
-#include "Gwork/Controls/Label.h"
-#include "Gwork/Controls/Resizer.h"
-#include "Gwork/Gwork.h"
-#include "Gwork/Skin.h"
+#include <Gwork/Controls/Base.h>
+#include <Gwork/Controls/Label.h>
+#include <Gwork/Controls/Button.h>
+#include <Gwork/Controls/Dragger.h>
+#include <Gwork/Controls/Label.h>
+#include <Gwork/Controls/Resizer.h>
+#include <Gwork/Gwork.h>
+#include <Gwork/Skin.h>
 
 namespace Gwk
 {

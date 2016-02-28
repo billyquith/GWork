@@ -11,7 +11,7 @@
 
 #include <string>
 
-#include "Gwork/BaseRender.h"
+#include <Gwork/BaseRender.h>
 
 namespace Gwk
 {

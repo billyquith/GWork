@@ -10,9 +10,9 @@
 #define GWK_EVENTS_H
 
 #include <list>
-#include "Gwork/Exports.h"
-#include "Gwork/Structures.h"
-#include "Gwork/ControlList.h"
+#include <Gwork/Exports.h>
+#include <Gwork/Structures.h>
+#include <Gwork/ControlList.h>
 
 namespace Gwk
 {

@@ -9,11 +9,11 @@
 #ifndef GWK_CONTROLS_TABCONTROL_H
 #define GWK_CONTROLS_TABCONTROL_H
 
-#include "Gwork/Controls/Base.h"
-#include "Gwork/Controls/Button.h"
-#include "Gwork/Controls/TabButton.h"
-#include "Gwork/Controls/TabStrip.h"
-#include "Gwork/Controls/TabTitleBar.h"
+#include <Gwork/Controls/Base.h>
+#include <Gwork/Controls/Button.h>
+#include <Gwork/Controls/TabButton.h>
+#include <Gwork/Controls/TabStrip.h>
+#include <Gwork/Controls/TabTitleBar.h>
 
 namespace Gwk
 {

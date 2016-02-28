@@ -1,7 +1,7 @@
 
-#include "Gwork/Gwork.h"
-#include "Gwork/Controls.h"
-#include "Gwork/Skins/TexturedBase.h"
+#include <Gwork/Gwork.h>
+#include <Gwork/Controls.h>
+#include <Gwork/Skins/TexturedBase.h>
 #include "DesignerBase.h"
 #ifdef WIN32
 #	include "Gwork/Renderers/DirectX9.h"

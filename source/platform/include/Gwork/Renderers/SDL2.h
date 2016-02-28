@@ -10,8 +10,8 @@
 #ifndef GWK_RENDERERS_ALLEGRO_H
 #define GWK_RENDERERS_ALLEGRO_H
 
-#include "Gwork/Gwork.h"
-#include "Gwork/BaseRender.h"
+#include <Gwork/Gwork.h>
+#include <Gwork/BaseRender.h>
 #include <SDL.h>
 
 

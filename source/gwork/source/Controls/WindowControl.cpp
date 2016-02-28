@@ -6,10 +6,10 @@
  */
 
 
-#include "Gwork/Controls/WindowControl.h"
-#include "Gwork/Controls/ImagePanel.h"
-#include "Gwork/Controls/Label.h"
-#include "Gwork/Controls/Modal.h"
+#include <Gwork/Controls/WindowControl.h>
+#include <Gwork/Controls/ImagePanel.h>
+#include <Gwork/Controls/Label.h>
+#include <Gwork/Controls/Modal.h>
 
 
 using namespace Gwk;

@@ -11,7 +11,7 @@
 
 #include <sstream>
 #include <vector>
-#include "Gwork/Structures.h"
+#include <Gwork/Structures.h>
 
 #include <stdarg.h>
 

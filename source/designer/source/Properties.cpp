@@ -1,6 +1,6 @@
 #include "Properties.h"
 #include "DocumentCanvas.h"
-#include "Gwork/Util/ControlFactory.h"
+#include <Gwork/Util/ControlFactory.h>
 
 GWK_CONTROL_CONSTRUCTOR( Properties )
 {

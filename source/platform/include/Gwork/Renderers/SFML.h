@@ -8,8 +8,8 @@
 #pragma once
 #ifndef GWK_RENDERERS_SFML_H
 #define GWK_RENDERERS_SFML_H
-#include "Gwork/Gwork.h"
-#include "Gwork/BaseRender.h"
+#include <Gwork/Gwork.h>
+#include <Gwork/BaseRender.h>
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
 

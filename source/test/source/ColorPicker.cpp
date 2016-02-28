@@ -5,9 +5,9 @@
  *  See license in Gwork.h
  */
 
-#include "Gwork/Test/Test.h"
-#include "Gwork/Controls/ColorPicker.h"
-#include "Gwork/Controls/HSVColorPicker.h"
+#include <Gwork/Test/Test.h>
+#include <Gwork/Controls/ColorPicker.h>
+#include <Gwork/Controls/HSVColorPicker.h>
 
 using namespace Gwk;
 

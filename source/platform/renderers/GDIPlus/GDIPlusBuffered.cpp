@@ -2,11 +2,11 @@
 #include <windows.h>
 #include <gdiplus.h>
 
-#include "Gwork/Renderers/GDIPlus.h"
+#include <Gwork/Renderers/GDIPlus.h>
 
-#include "Gwork/Utility.h"
-#include "Gwork/Font.h"
-#include "Gwork/Texture.h"
+#include <Gwork/Utility.h>
+#include <Gwork/Font.h>
+#include <Gwork/Texture.h>
 
 namespace Gwk
 {

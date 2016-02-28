@@ -5,9 +5,9 @@
  *  See license in Gwork.h
  */
 
-#include "Gwork/Gwork.h"
-#include "Gwork/Platform.h"
-#include "Gwork/Controls/Dialogs/FileSave.h"
+#include <Gwork/Gwork.h>
+#include <Gwork/Platform.h>
+#include <Gwork/Controls/Dialogs/FileSave.h>
 
 
 bool Gwk::Dialogs::FileSave(bool bUseSystem, const String& Name, const String& StartPath,

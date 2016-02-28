@@ -9,9 +9,9 @@
 #ifndef GWK_CONTROLS_RADIOBOTTONCONTROLLER_H
 #define GWK_CONTROLS_RADIOBOTTONCONTROLLER_H
 
-#include "Gwork/Controls/Base.h"
-#include "Gwork/Controls/Label.h"
-#include "Gwork/Controls/RadioButton.h"
+#include <Gwork/Controls/Base.h>
+#include <Gwork/Controls/Label.h>
+#include <Gwork/Controls/RadioButton.h>
 
 
 namespace Gwk

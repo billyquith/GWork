@@ -9,9 +9,9 @@
 #ifndef GWK_CONTROLS_HIGHLIGHT_H
 #define GWK_CONTROLS_HIGHLIGHT_H
 
-#include "Gwork/BaseRender.h"
-#include "Gwork/Controls/Base.h"
-#include "Gwork/Skin.h"
+#include <Gwork/BaseRender.h>
+#include <Gwork/Controls/Base.h>
+#include <Gwork/Skin.h>
 
 namespace Gwk
 {

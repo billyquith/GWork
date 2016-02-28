@@ -5,12 +5,12 @@
  *  See license in Gwork.h
  */
 
-#include "Gwork/Gwork.h"
-#include "Gwork/Skins/Simple.h"
-#include "Gwork/Skins/TexturedBase.h"
-#include "Gwork/Test/Test.h"
-#include "Gwork/Input/Allegro.h"
-#include "Gwork/Renderers/Allegro.h"
+#include <Gwork/Gwork.h>
+#include <Gwork/Skins/Simple.h>
+#include <Gwork/Skins/TexturedBase.h>
+#include <Gwork/Test/Test.h>
+#include <Gwork/Input/Allegro.h>
+#include <Gwork/Renderers/Allegro.h>
 
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_image.h>

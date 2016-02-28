@@ -6,7 +6,7 @@
  */
 
 
-#include "Gwork/Events.h"
+#include <Gwork/Events.h>
 
 using namespace Gwk;
 using namespace Gwk::Event;

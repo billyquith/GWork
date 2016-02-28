@@ -9,13 +9,13 @@
 #ifndef GWK_CONTROLS_PROPERTIES_H
 #define GWK_CONTROLS_PROPERTIES_H
 
-#include "Gwork/Controls/Base.h"
-#include "Gwork/Controls/Label.h"
-#include "Gwork/Controls/Property/BaseProperty.h"
-#include "Gwork/Controls/Property/Text.h"
-#include "Gwork/Controls/SplitterBar.h"
-#include "Gwork/Gwork.h"
-#include "Gwork/Skin.h"
+#include <Gwork/Controls/Base.h>
+#include <Gwork/Controls/Label.h>
+#include <Gwork/Controls/Property/BaseProperty.h>
+#include <Gwork/Controls/Property/Text.h>
+#include <Gwork/Controls/SplitterBar.h>
+#include <Gwork/Gwork.h>
+#include <Gwork/Skin.h>
 
 
 namespace Gwk

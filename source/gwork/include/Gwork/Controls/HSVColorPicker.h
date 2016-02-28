@@ -9,11 +9,11 @@
 #ifndef GWK_CONTROLS_HSVCOLORPICKER_H
 #define GWK_CONTROLS_HSVCOLORPICKER_H
 
-#include "Gwork/Controls/Base.h"
-#include "Gwork/Gwork.h"
-#include "Gwork/Skin.h"
-#include "Gwork/Controls/ColorControls.h"
-#include "Gwork/Controls/ColorPicker.h"
+#include <Gwork/Controls/Base.h>
+#include <Gwork/Gwork.h>
+#include <Gwork/Skin.h>
+#include <Gwork/Controls/ColorControls.h>
+#include <Gwork/Controls/ColorPicker.h>
 
 
 namespace Gwk

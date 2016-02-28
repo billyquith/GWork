@@ -6,9 +6,9 @@
  */
 
 
-#include "Gwork/Gwork.h"
-#include "Gwork/Skin.h"
-#include "Gwork/Controls/LabelClickable.h"
+#include <Gwork/Gwork.h>
+#include <Gwork/Skin.h>
+#include <Gwork/Controls/LabelClickable.h>
 
 using namespace Gwk;
 using namespace Gwk::Controls;

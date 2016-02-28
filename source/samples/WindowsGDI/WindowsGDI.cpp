@@ -10,12 +10,12 @@
 #include <objbase.h>
 #include <GdiPlus.h>
 
-#include "Gwork/Gwork.h"
-#include "Gwork/Skins/Simple.h"
-#include "Gwork/Skins/TexturedBase.h"
-#include "Gwork/Test/Test.h"
-#include "Gwork/Input/Windows.h"
-#include "Gwork/Renderers/GDIPlus.h"
+#include <Gwork/Gwork.h>
+#include <Gwork/Skins/Simple.h>
+#include <Gwork/Skins/TexturedBase.h>
+#include <Gwork/Test/Test.h>
+#include <Gwork/Input/Windows.h>
+#include <Gwork/Renderers/GDIPlus.h>
 
 #pragma comment( lib, "gdiplus.lib" )
 

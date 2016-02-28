@@ -9,8 +9,8 @@
 #ifndef GWK_CONTROLS_PAGECONTROL_H
 #define GWK_CONTROLS_PAGECONTROL_H
 
-#include "Gwork/Controls/Base.h"
-#include "Gwork/Controls/Button.h"
+#include <Gwork/Controls/Base.h>
+#include <Gwork/Controls/Button.h>
 
 namespace Gwk
 {

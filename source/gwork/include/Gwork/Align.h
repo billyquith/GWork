@@ -8,7 +8,7 @@
 #pragma once
 #ifndef GWK_ALIGN_H
 #define GWK_ALIGN_H
-#include "Gwork/Controls/Base.h"
+#include <Gwork/Controls/Base.h>
 
 namespace Gwk
 {

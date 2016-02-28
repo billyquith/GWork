@@ -1,6 +1,6 @@
 
 #include "ControlToolbox.h"
-#include "Gwork/Util/ControlFactory.h"
+#include <Gwork/Util/ControlFactory.h>
 
 GWK_CONTROL_CONSTRUCTOR( ControlToolbox )
 {

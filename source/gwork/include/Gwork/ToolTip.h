@@ -10,9 +10,9 @@
 #ifndef GWK_TOOLTIP_H
 #define GWK_TOOLTIP_H
 
-#include "Gwork/Controls/Base.h"
-#include "Gwork/Gwork.h"
-#include "Gwork/Skin.h"
+#include <Gwork/Controls/Base.h>
+#include <Gwork/Gwork.h>
+#include <Gwork/Skin.h>
 
 namespace Gwk {
     namespace ToolTip

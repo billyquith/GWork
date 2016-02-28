@@ -13,14 +13,14 @@
 #include <map>
 #include <algorithm>
 
-#include "Gwork/Exports.h"
-#include "Gwork/Structures.h"
-#include "Gwork/BaseRender.h"
-#include "Gwork/Events.h"
-#include "Gwork/Utility.h"
-#include "Gwork/Skin.h"
-#include "Gwork/ControlList.h"
-#include "Gwork/UserData.h"
+#include <Gwork/Exports.h>
+#include <Gwork/Structures.h>
+#include <Gwork/BaseRender.h>
+#include <Gwork/Events.h>
+#include <Gwork/Utility.h>
+#include <Gwork/Skin.h>
+#include <Gwork/ControlList.h>
+#include <Gwork/UserData.h>
 
 namespace Gwk
 {

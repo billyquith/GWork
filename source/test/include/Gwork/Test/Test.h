@@ -10,15 +10,15 @@
 #ifndef GWK_UNITTEST_UNITTEST_H
 #define GWK_UNITTEST_UNITTEST_H
 
-#include "Gwork/Gwork.h"
-#include "Gwork/Align.h"
-#include "Gwork/Utility.h"
-#include "Gwork/Controls/WindowControl.h"
-#include "Gwork/Controls/TabControl.h"
-#include "Gwork/Controls/ListBox.h"
-#include "Gwork/Controls/DockBase.h"
-#include "Gwork/Controls/StatusBar.h"
-#include "Gwork/Controls/PropertyTree.h"
+#include <Gwork/Gwork.h>
+#include <Gwork/Align.h>
+#include <Gwork/Utility.h>
+#include <Gwork/Controls/WindowControl.h>
+#include <Gwork/Controls/TabControl.h>
+#include <Gwork/Controls/ListBox.h>
+#include <Gwork/Controls/DockBase.h>
+#include <Gwork/Controls/StatusBar.h>
+#include <Gwork/Controls/PropertyTree.h>
 
 class UnitTest;
 

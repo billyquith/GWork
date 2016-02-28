@@ -8,16 +8,16 @@
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 
-#include "Gwork/Gwork.h"
-#include "Gwork/Skins/Simple.h"
-#include "Gwork/Skins/TexturedBase.h"
-#include "Gwork/Test/Test.h"
-#include "Gwork/Input/Windows.h"
+#include <Gwork/Gwork.h>
+#include <Gwork/Skins/Simple.h>
+#include <Gwork/Skins/TexturedBase.h>
+#include <Gwork/Test/Test.h>
+#include <Gwork/Input/Windows.h>
 
 #ifdef USE_DEBUG_FONT
-#include "Gwork/Renderers/OpenGL_DebugFont.h"
+#include <Gwork/Renderers/OpenGL_DebugFont.h>
 #else
-#include "Gwork/Renderers/OpenGL.h"
+#include <Gwork/Renderers/OpenGL.h>
 #endif
 #include "gl/glew.h"
 

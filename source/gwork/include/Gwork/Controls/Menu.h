@@ -9,10 +9,10 @@
 #ifndef GWK_CONTROLS_MENU_H
 #define GWK_CONTROLS_MENU_H
 
-#include "Gwork/BaseRender.h"
-#include "Gwork/Controls/Base.h"
-#include "Gwork/Controls/MenuItem.h"
-#include "Gwork/Controls/ScrollControl.h"
+#include <Gwork/BaseRender.h>
+#include <Gwork/Controls/Base.h>
+#include <Gwork/Controls/MenuItem.h>
+#include <Gwork/Controls/ScrollControl.h>
 
 namespace Gwk
 {

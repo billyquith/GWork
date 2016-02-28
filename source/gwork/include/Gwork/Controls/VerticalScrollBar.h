@@ -8,10 +8,10 @@
 #pragma once
 #ifndef GWK_CONTROLS_VERTICALSCROLLBAR_H
 #define GWK_CONTROLS_VERTICALSCROLLBAR_H
-#include "Gwork/Controls/Base.h"
-#include "Gwork/Controls/ScrollBar.h"
-#include "Gwork/Gwork.h"
-#include "Gwork/Skin.h"
+#include <Gwork/Controls/Base.h>
+#include <Gwork/Controls/ScrollBar.h>
+#include <Gwork/Gwork.h>
+#include <Gwork/Skin.h>
 
 namespace Gwk
 {
