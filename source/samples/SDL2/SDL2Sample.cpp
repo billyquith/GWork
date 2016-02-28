@@ -1,9 +1,14 @@
-
+/*
+ *  Gwork
+ *  Copyright (c) 2012 Facepunch Studios
+ *  Copyright (c) 2013-2016 Billy Quith
+ *  See license in Gwork.h
+ */
 
 #include <Gwork/Gwork.h>
 #include <Gwork/Skins/Simple.h>
 #include <Gwork/Skins/TexturedBase.h>
-#include <Gwork/UnitTest/UnitTest.h>
+#include <Gwork/Test/Test.h>
 #include <Gwork/Input/SDL2.h>
 #include <Gwork/Renderers/SDL2.h>
 #include <SDL.h>

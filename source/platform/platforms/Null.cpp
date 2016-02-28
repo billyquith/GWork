@@ -1,11 +1,11 @@
 /*
  *  Gwork
  *  Copyright (c) 2012 Facepunch Studios
- *  Copyright (c) 2015-2016 Billy Quith
+ *  Copyright (c) 2013-2016 Billy Quith
  *  See license in Gwork.h
  */
 
-#include "Gwork/Macros.h"
+//#include "Gwork/Macros.h"
 #include "Gwork/Platform.h"
 
 #ifdef GWK_PLATFORM_NULL

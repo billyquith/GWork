@@ -1,3 +1,10 @@
+/*
+ *  Gwork
+ *  Copyright (c) 2012 Facepunch Studios
+ *  Copyright (c) 2013-2016 Billy Quith
+ *  See license in Gwork.h
+ */
+
 #include <SFML/Graphics.hpp>
 #include <cmath>
 
@@ -6,10 +13,8 @@
 
 #include "Gwork/Skins/Simple.h"
 #include "Gwork/Skins/TexturedBase.h"
-#include "Gwork/UnitTest/UnitTest.h"
+#include "Gwork/Test/Test.h"
 
-
-#include <Gwork/Util/ControlFactory.h>
 
 ////////////////////////////////////////////////////////////
 /// Entry point of application
@@ -23,8 +28,6 @@ int main()
 
     Gwk::Renderer::SFML2 GworkRenderer(App);
     
-    Gwk::ControlFactory::GetList();
-
     //
     // Create a Gwork skin
     //

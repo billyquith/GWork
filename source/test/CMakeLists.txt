@@ -1,6 +1,7 @@
 # Gwork library
 
 include_directories(
+    ${CMAKE_SOURCE_DIR}/source/platform/include
     ${CMAKE_SOURCE_DIR}/source/gwork/include
     ${RENDERER_INC}
     ${CMAKE_SOURCE_DIR}/source/test/include
