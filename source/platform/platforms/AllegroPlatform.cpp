@@ -5,8 +5,8 @@
  *  See license in Gwork.h
  */
 
-#include "Gwork/Macros.h"
-#include "Gwork/Platform.h"
+#include <Gwork/Macros.h>
+#include <Gwork/Platform.h>
 
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_image.h>
@@ -15,7 +15,7 @@
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_native_dialog.h>
 
-#include "Gwork/Input/Allegro.h"
+#include <Gwork/Input/Allegro.h>
 
 
 static Gwk::Input::Allegro     g_GworkInput;
