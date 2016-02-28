@@ -1,11 +1,11 @@
 
 
-#include "Gwen/Gwen.h"
-#include "Gwen/Skins/Simple.h"
-#include "Gwen/Skins/TexturedBase.h"
-#include "Gwen/UnitTest/UnitTest.h"
-#include "Gwen/Input/Allegro.h"
-#include "Gwen/Renderers/Allegro.h"
+#include "Gwork/Gwork.h"
+#include "Gwork/Skins/Simple.h"
+#include "Gwork/Skins/TexturedBase.h"
+#include "Gwork/UnitTest/UnitTest.h"
+#include "Gwork/Input/Allegro.h"
+#include "Gwork/Renderers/Allegro.h"
 
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_image.h>
@@ -39,11 +39,11 @@ int main(int argc, char** argv)
     al_register_event_source(event_queue, al_get_mouse_event_source());
     al_register_event_source(event_queue, al_get_keyboard_event_source());
     
-    // Create a GWEN Allegro Renderer
-    Gwen::Renderer::Allegro* pRenderer = new Gwen::Renderer::Allegro();
+    // Create a Gwork Allegro Renderer
+    Gwk::Renderer::Allegro* pRenderer = new Gwk::Renderer::Allegro();
 
-    // Create a GWEN skin
-    Gwen::Skin::TexturedBase skin(pRenderer);
+    // Create a Gwork skin
+    Gwk::Skin::TexturedBase skin(pRenderer);
     skin.SetRender(pRenderer);
     skin.Init("DefaultSkin.png");
     
@@ -53,20 +53,20 @@ int main(int argc, char** argv)
     //       Arabic, Korean, etc. e.g. "Arial Unicode" (but it's 23MB!).
     skin.SetDefaultFont("OpenSans.ttf", 11);
     
-    // Create a Canvas (it's root, on which all other GWEN panels are created)
-    Gwen::Controls::Canvas* pCanvas = new Gwen::Controls::Canvas(&skin);
+    // Create a Canvas (it's root, on which all other Gwork panels are created)
+    Gwk::Controls::Canvas* pCanvas = new Gwk::Controls::Canvas(&skin);
     pCanvas->SetSize(1024, 768);
     pCanvas->SetDrawBackground(true);
-    pCanvas->SetBackgroundColor(Gwen::Color(150, 170, 170, 255));
+    pCanvas->SetBackgroundColor(Gwk::Color(150, 170, 170, 255));
 
     // Create our unittest control (which is a Window with controls in it)
     UnitTest* pUnit = new UnitTest(pCanvas);
     pUnit->SetPos(10, 10);
 
     // Create a Windows Control helper
-    // (Processes Windows MSG's and fires input at GWEN)
-    Gwen::Input::Allegro GwenInput;
-    GwenInput.Initialize(pCanvas);
+    // (Processes Windows MSG's and fires input at Gwork)
+    Gwk::Input::Allegro GworkInput;
+    GworkInput.Initialize(pCanvas);
     ALLEGRO_EVENT ev;
     bool bQuit = false;
 
@@ -77,7 +77,7 @@ int main(int argc, char** argv)
             if (ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE)
                 bQuit = true;
 
-            GwenInput.ProcessMessage(ev);
+            GworkInput.ProcessMessage(ev);
         }
 
         pCanvas->RenderCanvas();

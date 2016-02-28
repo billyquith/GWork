@@ -1,25 +1,26 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2011 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+*  See license in Gwork.h
  */
 
 #ifndef SFML2_HPP
 #define SFML2_HPP
 
-#include "Gwen/Gwen.h"
-#include "Gwen/BaseRender.h"
+#include "Gwork/Gwork.h"
+#include "Gwork/BaseRender.h"
 
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/Graphics/VertexArray.hpp>
 
-namespace Gwen
+namespace Gwk
 {
     namespace Renderer
     {
-        class SFML2 : public Gwen::Renderer::Base
+        class SFML2 : public Gwk::Renderer::Base
         {
         public:
 
@@ -70,24 +71,24 @@ namespace Gwen
             virtual void StartClip();
             virtual void EndClip();
 
-            virtual void SetDrawColor(Gwen::Color color);
+            virtual void SetDrawColor(Gwk::Color color);
             virtual void DrawPixel(int x, int y);
-            virtual void DrawLinedRect(Gwen::Rect rect);
-            virtual void DrawFilledRect(Gwen::Rect rect);
-            virtual void DrawShavedCornerRect(Gwen::Rect rect, bool bSlight = false);
-            virtual void DrawTexturedRect(Gwen::Texture* pTexture, Gwen::Rect rect, float u1,
+            virtual void DrawLinedRect(Gwk::Rect rect);
+            virtual void DrawFilledRect(Gwk::Rect rect);
+            virtual void DrawShavedCornerRect(Gwk::Rect rect, bool bSlight = false);
+            virtual void DrawTexturedRect(Gwk::Texture* pTexture, Gwk::Rect rect, float u1,
                                           float v1, float u2, float v2);
 
-            virtual void RenderText(Gwen::Font* pFont, Gwen::Point pos,
-                                    const Gwen::String& text);
-            virtual Gwen::Point MeasureText(Gwen::Font* pFont, const Gwen::String& text);
-            virtual void        LoadFont(Gwen::Font* font);
-            virtual void        FreeFont(Gwen::Font* pFont);
+            virtual void RenderText(Gwk::Font* pFont, Gwk::Point pos,
+                                    const Gwk::String& text);
+            virtual Gwk::Point MeasureText(Gwk::Font* pFont, const Gwk::String& text);
+            virtual void        LoadFont(Gwk::Font* font);
+            virtual void        FreeFont(Gwk::Font* pFont);
 
-            virtual void        LoadTexture(Gwen::Texture* pTexture);
-            virtual void        FreeTexture(Gwen::Texture* pTexture);
-            virtual Gwen::Color PixelColour(Gwen::Texture* pTexture, unsigned int x, unsigned int y,
-                                            const Gwen::Color& col_default);
+            virtual void        LoadTexture(Gwk::Texture* pTexture);
+            virtual void        FreeTexture(Gwk::Texture* pTexture);
+            virtual Gwk::Color PixelColour(Gwk::Texture* pTexture, unsigned int x, unsigned int y,
+                                            const Gwk::Color& col_default);
 
         protected:
 

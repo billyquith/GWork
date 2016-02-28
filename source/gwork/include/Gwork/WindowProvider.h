@@ -1,8 +1,15 @@
-#pragma once
-#ifndef GWEN_WINDOW_PROVIDER_H
-#define GWEN_WINDOW_PROVIDER_H
+/*
+ *  Gwork
+ *  Copyright (c) 2010 Facepunch Studios
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
+ */
 
-namespace Gwen
+#pragma once
+#ifndef GWK_WINDOW_PROVIDER_H
+#define GWK_WINDOW_PROVIDER_H
+
+namespace Gwk
 {
     class WindowProvider
     {
@@ -14,4 +21,4 @@ namespace Gwen
 
 }
 
-#endif // ifndef GWEN_WINDOW_PROVIDER_H
+#endif // ifndef GWK_WINDOW_PROVIDER_H

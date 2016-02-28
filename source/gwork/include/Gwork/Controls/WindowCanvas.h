@@ -1,32 +1,33 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2012 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2015-2016 Billy Quith
+ *  See license in Gwork.h
  */
 
 #pragma once
-#ifndef GWEN_CONTROLS_WINDOWCANVAS_H
-#define GWEN_CONTROLS_WINDOWCANVAS_H
+#ifndef GWK_CONTROLS_WINDOWCANVAS_H
+#define GWK_CONTROLS_WINDOWCANVAS_H
 
-#include "Gwen/Controls/Base.h"
-#include "Gwen/InputHandler.h"
-#include "Gwen/WindowProvider.h"
-#include "Gwen/Controls/Dragger.h"
-#include "Gwen/Controls/Label.h"
-#include "Gwen/Controls/WindowButtons.h"
+#include "Gwork/Controls/Base.h"
+#include "Gwork/InputHandler.h"
+#include "Gwork/WindowProvider.h"
+#include "Gwork/Controls/Dragger.h"
+#include "Gwork/Controls/Label.h"
+#include "Gwork/Controls/WindowButtons.h"
 
-namespace Gwen
+namespace Gwk
 {
     namespace Controls
     {
-        class GWEN_EXPORT WindowCanvas : public Canvas, public Gwen::WindowProvider
+        class GWK_EXPORT WindowCanvas : public Canvas, public Gwk::WindowProvider
         {
         public:
 
-            GWEN_CLASS(WindowCanvas, Controls::Canvas);
+            GWK_CLASS(WindowCanvas, Controls::Canvas);
 
-            WindowCanvas(int x, int y, int w, int h, Gwen::Skin::Base* pRenderer,
-                         const Gwen::String& strWindowTitle = "");
+            WindowCanvas(int x, int y, int w, int h, Gwk::Skin::Base* pRenderer,
+                         const Gwk::String& strWindowTitle = "");
             ~WindowCanvas();
 
             virtual void DoThink();
@@ -36,7 +37,7 @@ namespace Gwen
                 return m_bQuit;
             }
 
-            // Gwen::WindowProvider
+            // Gwk::WindowProvider
             virtual void* GetWindow();
 
             virtual bool InputQuit();
@@ -85,26 +86,26 @@ namespace Gwen
             void*       m_pOSWindow;
             bool m_bQuit;
 
-            Gwen::Skin::Base*           m_pSkinChange;
+            Gwk::Skin::Base*           m_pSkinChange;
 
             ControlsInternal::Dragger*  m_TitleBar;
             ControlsInternal::Dragger*  m_Sizer;
-            Gwen::Controls::Label*      m_Title;
+            Gwk::Controls::Label*      m_Title;
 
 
-            Gwen::Point m_WindowPos;
-            Gwen::Point m_HoldPos;
+            Gwk::Point m_WindowPos;
+            Gwk::Point m_HoldPos;
 
             bool m_bCanMaximize;
             bool m_bIsMaximized;
 
-            Gwen::Controls::WindowCloseButton*      m_pClose;
-            Gwen::Controls::WindowMaximizeButton*   m_pMaximize;
-            Gwen::Controls::WindowMinimizeButton*   m_pMinimize;
+            Gwk::Controls::WindowCloseButton*      m_pClose;
+            Gwk::Controls::WindowMaximizeButton*   m_pMaximize;
+            Gwk::Controls::WindowMinimizeButton*   m_pMinimize;
 
         };
 
 
     }
 }
-#endif // ifndef GWEN_CONTROLS_WINDOWCANVAS_H
+#endif // ifndef GWK_CONTROLS_WINDOWCANVAS_H

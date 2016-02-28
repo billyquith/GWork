@@ -1,17 +1,17 @@
 
 #include "Cage.h"
 
-using namespace Gwen;
+using namespace Gwk;
 
-GWEN_CONTROL_CONSTRUCTOR( Cage )
+GWK_CONTROL_CONSTRUCTOR( Cage )
 {
 	m_Control = NULL;
 	m_iBorder = 5;
 }
 
-void Cage::Render( Gwen::Skin::Base* skin )
+void Cage::Render( Gwk::Skin::Base* skin )
 {
-	Gwen::Rect bounds = GetRenderBounds();
+	Gwk::Rect bounds = GetRenderBounds();
 
 	bounds.x += m_iBorder;
 	bounds.y += m_iBorder;
@@ -31,15 +31,15 @@ void Cage::PostLayout( Skin::Base* skin )
 {
 	if ( !m_Control ) return;
 
-	Gwen::Point canvaspos = m_Control->LocalPosToCanvas();
-	Gwen::Point parentpos = GetParent()->CanvasPosToLocal( canvaspos );
+	Gwk::Point canvaspos = m_Control->LocalPosToCanvas();
+	Gwk::Point parentpos = GetParent()->CanvasPosToLocal( canvaspos );
 
 	parentpos.x -= m_iBorder;
 	parentpos.y -= m_iBorder;
 
 	SetPos( parentpos );
 
-	Gwen::Point size = m_Control->GetSize();
+	Gwk::Point size = m_Control->GetSize();
 	size.x += m_iBorder * 2;
 	size.y += m_iBorder * 2;
 
@@ -64,7 +64,7 @@ void Cage::OnMouseMoved( int x, int y, int deltaX, int deltaY )
 	if ( !IsDepressed() ) return;
 
 	Controls::Base*	pControlParent = m_Control->GetParent();
-	Gwen::Point pntRemainder = m_DragPoint - m_Control->GetPos();
+	Gwk::Point pntRemainder = m_DragPoint - m_Control->GetPos();
 
 	//
 	// This event is used by the SelectionLayer to scan
@@ -73,7 +73,7 @@ void Cage::OnMouseMoved( int x, int y, int deltaX, int deltaY )
 	{
 		Event::Information info;
 
-		info.Point = Gwen::Point( x, y );
+		info.Point = Gwk::Point( x, y );
 		onMoving.Call( this, info );
 	}
 
@@ -93,9 +93,9 @@ void Cage::OnMouseMoved( int x, int y, int deltaX, int deltaY )
 	}
 	m_bDragged = true;
 
-	m_DragPoint += Gwen::Point( deltaX, deltaY );
+	m_DragPoint += Gwk::Point( deltaX, deltaY );
 
-	Gwen::Point pos = m_DragPoint;
+	Gwk::Point pos = m_DragPoint;
 
 	pos.x = ((int)((float)pos.x / 10.0f)) * 10;
 	pos.y = ((int)((float)pos.y / 10.0f)) * 10;

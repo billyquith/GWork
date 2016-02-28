@@ -1,14 +1,15 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 
-#include "Gwen/Events.h"
+#include "Gwork/Events.h"
 
-using namespace Gwen;
-using namespace Gwen::Event;
+using namespace Gwk;
+using namespace Gwk::Event;
 
 
 Handler::Handler()
@@ -68,14 +69,14 @@ void Caller::CleanLinks()
 
 void Caller::Call(Controls::Base* pThis)
 {
-    static Gwen::Event::Information info;
+    static Gwk::Event::Information info;
     info.Control = pThis;
     Call(pThis, info);
 }
 
-void Caller::Call(Controls::Base* pThis, Gwen::Event::Info information)
+void Caller::Call(Controls::Base* pThis, Gwk::Event::Info information)
 {
-    Gwen::Event::Information info;
+    Gwk::Event::Information info;
     info = information;
     info.ControlCaller  = pThis;
     std::list<HandlerInstance>::iterator iter;
@@ -107,11 +108,11 @@ void Caller::AddInternal(Event::Handler* pObject, Event::Handler::Function pFunc
 
 void Caller::AddInternal(Event::Handler* pObject, Handler::FunctionWithInformation pFunction)
 {
-    AddInternal(pObject, pFunction, Gwen::Event::Packet());
+    AddInternal(pObject, pFunction, Gwk::Event::Packet());
 }
 
 void Caller::AddInternal(Event::Handler* pObject, Handler::FunctionWithInformation pFunction,
-                         const Gwen::Event::Packet& packet)
+                         const Gwk::Event::Packet& packet)
 {
     HandlerInstance h;
     h.fnFunctionInfo    = pFunction;

@@ -1,24 +1,25 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2011 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 #pragma once
-#ifndef GWEN_CONTROLS_TOOLBAR_H
-#define GWEN_CONTROLS_TOOLBAR_H
+#ifndef GWK_CONTROLS_TOOLBAR_H
+#define GWK_CONTROLS_TOOLBAR_H
 
-#include "Gwen/BaseRender.h"
-#include "Gwen/Controls/Base.h"
-#include "Gwen/Skin.h"
+#include "Gwork/BaseRender.h"
+#include "Gwork/Controls/Base.h"
+#include "Gwork/Skin.h"
 
-namespace Gwen
+namespace Gwk
 {
     namespace Controls
     {
-        class ToolBarButton : public Gwen::Controls::Button
+        class ToolBarButton : public Gwk::Controls::Button
         {
-            GWEN_CONTROL_INLINE(ToolBarButton, Gwen::Controls::Button)
+            GWK_CONTROL_INLINE(ToolBarButton, Gwk::Controls::Button)
             {
                 SetSize(20, 20);
                 Dock(Docking::Left);
@@ -34,7 +35,7 @@ namespace Gwen
 
         class ToolBarStrip : public Base
         {
-            GWEN_CONTROL_INLINE(ToolBarStrip, Base)
+            GWK_CONTROL_INLINE(ToolBarStrip, Base)
             {
                 SetSize(25, 25);
                 SetPadding(Padding(2, 2, 2, 2));
@@ -59,4 +60,4 @@ namespace Gwen
     }
 
 }
-#endif // ifndef GWEN_CONTROLS_TOOLBAR_H
+#endif // ifndef GWK_CONTROLS_TOOLBAR_H

@@ -1,8 +1,8 @@
 //
-//  GwenUtil.cpp.
+//  GworkUtil.cpp.
 //
 
-#include "GwenUtil.h"
+#include "GworkUtil.h"
 
 #include <fstream>
 #include <iostream>
@@ -21,7 +21,7 @@
 #endif
 
 
-namespace GwenUtil {
+namespace GwkUtil {
     namespace String
     {
         namespace Convert
@@ -190,7 +190,7 @@ namespace GwenUtil {
         namespace Json
         {
             template <typename Writer>
-            void WriteValue(Writer& writer, const GwenUtil::Data::Tree& tree)
+            void WriteValue(Writer& writer, const GwkUtil::Data::Tree& tree)
             {
                 if (tree.IsVar<float>())
                 {
@@ -220,13 +220,13 @@ namespace GwenUtil {
             }
 
             template <typename Writer>
-            void DoJsonExport(Writer& writer, const GwenUtil::Data::Tree& tree)
+            void DoJsonExport(Writer& writer, const GwkUtil::Data::Tree& tree)
             {
                 //
                 // If none of the children have keys then it's an array
                 //
                 bool IsArray = true;
-                GWENUTIL_FOREACH_CONST(a, tree.Children(), GwenUtil::Data::Tree::List)
+                GWKUTIL_FOREACH_CONST(a, tree.Children(), GwkUtil::Data::Tree::List)
                 {
                     if (!a->Name().empty())
                     {
@@ -242,16 +242,16 @@ namespace GwenUtil {
 
                 int iUniqueKey = 1;
 
-                GWENUTIL_FOREACH_CONST(a, tree.Children(), GwenUtil::Data::Tree::List)
+                GWKUTIL_FOREACH_CONST(a, tree.Children(), GwkUtil::Data::Tree::List)
                 {
-                    const GwenUtil::BString& strKey = a->Name();
+                    const GwkUtil::BString& strKey = a->Name();
 
                     // If we're not an array then write the key
                     if (!IsArray)
                     {
                         if (strKey.empty())
                         {
-                            writer.String(GwenUtil::String::Format::Print("_%i_",
+                            writer.String(GwkUtil::String::Format::Print("_%i_",
                                                                           iUniqueKey).c_str());
                             iUniqueKey++;
                         }
@@ -280,7 +280,7 @@ namespace GwenUtil {
                     writer.EndObject();
             }
 
-            bool Export(const GwenUtil::Data::Tree& tree, GwenUtil::BString& output, bool bPretty)
+            bool Export(const GwkUtil::Data::Tree& tree, GwkUtil::BString& output, bool bPretty)
             {
                 rapidjson::StringBuffer f;
 
@@ -300,7 +300,7 @@ namespace GwenUtil {
                 return true;
             }
 
-            void DoImport(GwenUtil::Data::Tree& tree, rapidjson::Document::ValueType& doc)
+            void DoImport(GwkUtil::Data::Tree& tree, rapidjson::Document::ValueType& doc)
             {
                 if (doc.IsArray())
                 {
@@ -309,31 +309,31 @@ namespace GwenUtil {
                     {
                         if (it->IsObject() || it->IsArray())
                         {
-                            GwenUtil::Data::Tree& child = tree.AddChild();
+                            GwkUtil::Data::Tree& child = tree.AddChild();
                             DoImport(child, *it);
                         }
 
                         if (it->IsString())
                         {
-                            GwenUtil::Data::Tree& child = tree.AddChild();
+                            GwkUtil::Data::Tree& child = tree.AddChild();
                             child.Value(it->GetString());
                         }
 
                         if (it->IsBool())
                         {
-                            GwenUtil::Data::Tree& child = tree.AddChild();
+                            GwkUtil::Data::Tree& child = tree.AddChild();
                             child.Var<bool>(it->GetBool());
                         }
 
                         if (it->IsInt())
                         {
-                            GwenUtil::Data::Tree& child = tree.AddChild();
+                            GwkUtil::Data::Tree& child = tree.AddChild();
                             child.Var<int>(it->GetInt());
                         }
 
                         if (it->IsNumber())
                         {
-                            GwenUtil::Data::Tree& child = tree.AddChild();
+                            GwkUtil::Data::Tree& child = tree.AddChild();
                             child.Var<float>( static_cast<float>(it->GetDouble()) );
                         }
 
@@ -348,7 +348,7 @@ namespace GwenUtil {
                     {
                         if (it->value.IsObject() || it->value.IsArray())
                         {
-                            GwenUtil::Data::Tree& child = tree.AddChild(it->name.GetString());
+                            GwkUtil::Data::Tree& child = tree.AddChild(it->name.GetString());
                             DoImport(child, it->value);
                         }
 
@@ -367,7 +367,7 @@ namespace GwenUtil {
 
             }
 
-            bool Import(GwenUtil::Data::Tree& tree, const GwenUtil::BString& input)
+            bool Import(GwkUtil::Data::Tree& tree, const GwkUtil::BString& input)
             {
                 rapidjson::Document doc;
 
@@ -384,4 +384,4 @@ namespace GwenUtil {
 
     } // Data
 
-} // GwenUtil
+} // GwkUtil

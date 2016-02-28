@@ -1,28 +1,29 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 
-#include "Gwen/Gwen.h"
-#include "Gwen/Controls/Label.h"
-#include "Gwen/Utility.h"
+#include "Gwork/Gwork.h"
+#include "Gwork/Controls/Label.h"
+#include "Gwork/Utility.h"
 
-using namespace Gwen;
-using namespace Gwen::Controls;
+using namespace Gwk;
+using namespace Gwk::Controls;
 
-GWEN_CONTROL_CONSTRUCTOR(Label)
+GWK_CONTROL_CONSTRUCTOR(Label)
 {
     m_CreatedFont = NULL;
     m_Text = new ControlsInternal::Text(this);
     m_Text->SetFont(GetSkin()->GetDefaultFont());
     SetMouseInputEnabled(false);
     SetBounds(0, 0, 100, 10);
-    SetAlignment(Gwen::Docking::Left|Gwen::Docking::Top);
+    SetAlignment(Gwk::Docking::Left|Gwk::Docking::Top);
 }
 
-void Label::PreDelete(Gwen::Skin::Base* skin)
+void Label::PreDelete(Gwk::Skin::Base* skin)
 {
     if (m_CreatedFont)
     {
@@ -72,15 +73,15 @@ void Label::SizeToContents()
             m_Text->Height()+m_Padding.top+m_Padding.bottom);
 }
 
-Gwen::Rect Label::GetCharacterPosition(int iChar)
+Gwk::Rect Label::GetCharacterPosition(int iChar)
 {
-    Gwen::Rect p = m_Text->GetCharacterPosition(iChar);
+    Gwk::Rect p = m_Text->GetCharacterPosition(iChar);
     p.x += m_Text->X();
     p.y += m_Text->Y();
     return p;
 }
 
-void Label::OnBoundsChanged(Gwen::Rect oldChildBounds)
+void Label::OnBoundsChanged(Gwk::Rect oldChildBounds)
 {
     ParentClass::OnBoundsChanged(oldChildBounds);
 
@@ -91,7 +92,7 @@ void Label::OnBoundsChanged(Gwen::Rect oldChildBounds)
     }
 }
 
-void Label::SetFont(Gwen::String strFacename, int iSize, bool bBold)
+void Label::SetFont(Gwk::String strFacename, int iSize, bool bBold)
 {
     if (m_CreatedFont)
     {
@@ -101,7 +102,7 @@ void Label::SetFont(Gwen::String strFacename, int iSize, bool bBold)
         SetFont(NULL);
     }
 
-    m_CreatedFont = new Gwen::Font();
+    m_CreatedFont = new Gwk::Font();
     Debug::AssertCheck(m_CreatedFont != NULL, "Couldn't Create Font!");
     m_CreatedFont->bold = bBold;
     m_CreatedFont->facename = strFacename;

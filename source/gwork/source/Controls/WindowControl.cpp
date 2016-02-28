@@ -1,22 +1,23 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 
-#include "Gwen/Controls/WindowControl.h"
-#include "Gwen/Controls/ImagePanel.h"
-#include "Gwen/Controls/Label.h"
-#include "Gwen/Controls/Modal.h"
+#include "Gwork/Controls/WindowControl.h"
+#include "Gwork/Controls/ImagePanel.h"
+#include "Gwork/Controls/Label.h"
+#include "Gwork/Controls/Modal.h"
 
 
-using namespace Gwen;
-using namespace Gwen::Controls;
-using namespace Gwen::ControlsInternal;
+using namespace Gwk;
+using namespace Gwk::Controls;
+using namespace Gwk::ControlsInternal;
 
 
-GWEN_CONTROL_CONSTRUCTOR(WindowControl)
+GWK_CONTROL_CONSTRUCTOR(WindowControl)
 {
     m_Modal = NULL;
     m_bDeleteOnClose = false;
@@ -32,7 +33,7 @@ GWEN_CONTROL_CONSTRUCTOR(WindowControl)
     m_Title->Dock(Docking::Fill);
     m_Title->SetPadding(Padding(8, 0, 0, 0));
     m_Title->SetTextColor(GetSkin()->Colors.Window.TitleInactive);
-    m_CloseButton = new Gwen::Controls::WindowCloseButton(m_TitleBar);
+    m_CloseButton = new Gwk::Controls::WindowCloseButton(m_TitleBar);
     m_CloseButton->SetText("");
     m_CloseButton->Dock(Docking::Right);
     m_CloseButton->onPress.Add(this, &WindowControl::CloseButtonPressed);
@@ -47,7 +48,7 @@ GWEN_CONTROL_CONSTRUCTOR(WindowControl)
     BringToFront();
     SetTabable(false);
     Focus();
-    SetMinimumSize(Gwen::Point(100, 40));
+    SetMinimumSize(Gwk::Point(100, 40));
     SetClampMovement(true);
     SetKeyboardInputEnabled(false);
 }
@@ -86,7 +87,7 @@ bool WindowControl::IsOnTop()
          iter != GetParent()->Children.rend();
          ++iter)
     {
-        WindowControl* pWindow = gwen_cast<WindowControl>(*iter);
+        WindowControl* pWindow = gwk_cast<WindowControl>(*iter);
 
         if (!pWindow)
             continue;
@@ -118,7 +119,7 @@ void WindowControl::RenderUnder(Skin::Base* skin)
     skin->DrawShadow(this);
 }
 
-void WindowControl::SetTitle(Gwen::String title)
+void WindowControl::SetTitle(Gwk::String title)
 {
     m_Title->SetText(title);
 }
@@ -152,6 +153,6 @@ void WindowControl::CloseButtonPressed()
         DelayedDelete();
 }
 
-void WindowControl::RenderFocus(Gwen::Skin::Base* /*skin*/)
+void WindowControl::RenderFocus(Gwk::Skin::Base* /*skin*/)
 {
 }

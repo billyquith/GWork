@@ -1,9 +1,9 @@
 
-#include "Gwen/Renderers/DirectX9.h"
-#include "Gwen/Utility.h"
-#include "Gwen/Font.h"
-#include "Gwen/Texture.h"
-#include "Gwen/WindowProvider.h"
+#include "Gwork/Renderers/DirectX9.h"
+#include "Gwork/Utility.h"
+#include "Gwork/Font.h"
+#include "Gwork/Texture.h"
+#include "Gwork/WindowProvider.h"
 
 #define D3DFVF_VERTEXFORMAT2D (D3DFVF_XYZRHW|D3DFVF_DIFFUSE|D3DFVF_TEX1)
 
@@ -14,7 +14,7 @@ struct FontData
 };
 
 
-namespace Gwen
+namespace Gwk
 {
     namespace Renderer
     {
@@ -95,7 +95,7 @@ namespace Gwen
             m_iVertNum++;
         }
 
-        void DirectX9::DrawFilledRect(Gwen::Rect rect)
+        void DirectX9::DrawFilledRect(Gwk::Rect rect)
         {
             if (m_pCurrentTexture != NULL)
             {
@@ -113,12 +113,12 @@ namespace Gwen
             AddVert(rect.x, rect.y+rect.h);
         }
 
-        void DirectX9::SetDrawColor(Gwen::Color color)
+        void DirectX9::SetDrawColor(Gwk::Color color)
         {
             m_Color = D3DCOLOR_ARGB(color.a, color.r, color.g, color.b);
         }
 
-        void DirectX9::LoadFont(Gwen::Font* font)
+        void DirectX9::LoadFont(Gwk::Font* font)
         {
             m_FontList.push_back(font);
             // Scale the font according to canvas
@@ -160,7 +160,7 @@ namespace Gwen
             font->data = pFontData;
         }
 
-        void DirectX9::FreeFont(Gwen::Font* pFont)
+        void DirectX9::FreeFont(Gwk::Font* pFont)
         {
             m_FontList.remove(pFont);
 
@@ -179,8 +179,8 @@ namespace Gwen
             pFont->data = NULL;
         }
 
-        void DirectX9::RenderText(Gwen::Font* pFont, Gwen::Point pos,
-                                  const Gwen::String& text)
+        void DirectX9::RenderText(Gwk::Font* pFont, Gwk::Point pos,
+                                  const Gwk::String& text)
         {
             Flush();
 
@@ -201,7 +201,7 @@ namespace Gwen
                                         m_Color);
         }
 
-        Gwen::Point DirectX9::MeasureText(Gwen::Font* pFont, const Gwen::String& text)
+        Gwk::Point DirectX9::MeasureText(Gwk::Font* pFont, const Gwk::String& text)
         {
             // If the font doesn't exist, or the font size should be changed
             if (!pFont->data || fabs(pFont->realsize-pFont->size*Scale()) > 2)
@@ -211,13 +211,13 @@ namespace Gwen
             }
 
             FontData* pFontData = (FontData*)pFont->data;
-            Gwen::Point size;
+            Gwk::Point size;
 
             if (text.empty())
             {
                 RECT rct = {0, 0, 0, 0};
                 pFontData->pFont->DrawTextW(NULL, L"W", -1, &rct, DT_CALCRECT, 0);
-                return Gwen::Point(0, rct.bottom);
+                return Gwk::Point(0, rct.bottom);
             }
 
             const std::wstring wideText(Utility::Widen(text));
@@ -232,14 +232,14 @@ namespace Gwen
                 rct.right += pFontData->iSpaceWidth;
             }
 
-            return Gwen::Point(rct.right/Scale(), rct.bottom/Scale());
+            return Gwk::Point(rct.right/Scale(), rct.bottom/Scale());
         }
 
         void DirectX9::StartClip()
         {
             Flush();
             m_pDevice->SetRenderState(D3DRS_SCISSORTESTENABLE, TRUE);
-            const Gwen::Rect& rect = ClipRegion();
+            const Gwk::Rect& rect = ClipRegion();
             RECT r;
             r.left = ceil(((float)rect.x)*Scale());
             r.right = ceil(((float)(rect.x+rect.w))*Scale());
@@ -254,7 +254,7 @@ namespace Gwen
             m_pDevice->SetRenderState(D3DRS_SCISSORTESTENABLE, FALSE);
         }
 
-        void DirectX9::DrawTexturedRect(Gwen::Texture* pTexture, Gwen::Rect rect, float u1,
+        void DirectX9::DrawTexturedRect(Gwk::Texture* pTexture, Gwk::Rect rect, float u1,
                                         float v1, float u2, float v2)
         {
             IDirect3DTexture9* pImage = (IDirect3DTexture9*)pTexture->data;
@@ -280,7 +280,7 @@ namespace Gwen
             AddVert(rect.x, rect.y+rect.h, u1, v2);
         }
 
-        void DirectX9::LoadTexture(Gwen::Texture* pTexture)
+        void DirectX9::LoadTexture(Gwk::Texture* pTexture)
         {
             IDirect3DTexture9* ptr = NULL;
             D3DXIMAGE_INFO ImageInfo;
@@ -299,7 +299,7 @@ namespace Gwen
             pTexture->height = ImageInfo.Height;
         }
 
-        void DirectX9::FreeTexture(Gwen::Texture* pTexture)
+        void DirectX9::FreeTexture(Gwk::Texture* pTexture)
         {
             IDirect3DTexture9* pImage = (IDirect3DTexture9*)pTexture->data;
 
@@ -310,8 +310,8 @@ namespace Gwen
             pTexture->data = NULL;
         }
 
-        Gwen::Color DirectX9::PixelColour(Gwen::Texture* pTexture, unsigned int x, unsigned int y,
-                                          const Gwen::Color& col_default)
+        Gwk::Color DirectX9::PixelColour(Gwk::Texture* pTexture, unsigned int x, unsigned int y,
+                                          const Gwk::Color& col_default)
         {
             IDirect3DTexture9* pImage = (IDirect3DTexture9*)pTexture->data;
 
@@ -332,7 +332,7 @@ namespace Gwen
             D3DXCOLOR color = pixels[lockedRect.Pitch/sizeof(DWORD)*y+x];
             pSurface->UnlockRect();
             pSurface->Release();
-            return Gwen::Color(color.r*255, color.g*255, color.b*255, color.a*255);
+            return Gwk::Color(color.r*255, color.g*255, color.b*255, color.a*255);
         }
 
         void DirectX9::Release()
@@ -346,7 +346,7 @@ namespace Gwen
             }
         }
 
-        void DirectX9::FillPresentParameters(Gwen::WindowProvider* pWindow,
+        void DirectX9::FillPresentParameters(Gwk::WindowProvider* pWindow,
                                              D3DPRESENT_PARAMETERS& Params)
         {
             HWND pHWND = (HWND)pWindow->GetWindow();
@@ -362,7 +362,7 @@ namespace Gwen
             Params.PresentationInterval         = D3DPRESENT_INTERVAL_IMMEDIATE;
         }
 
-        bool DirectX9::InitializeContext(Gwen::WindowProvider* pWindow)
+        bool DirectX9::InitializeContext(Gwk::WindowProvider* pWindow)
         {
             HWND pHWND = (HWND)pWindow->GetWindow();
             m_pD3D = Direct3DCreate9(D3D_SDK_VERSION);
@@ -389,7 +389,7 @@ namespace Gwen
             return true;
         }
 
-        bool DirectX9::ShutdownContext(Gwen::WindowProvider* pWindow)
+        bool DirectX9::ShutdownContext(Gwk::WindowProvider* pWindow)
         {
             if (m_pDevice)
             {
@@ -406,13 +406,13 @@ namespace Gwen
             return true;
         }
 
-        bool DirectX9::PresentContext(Gwen::WindowProvider* pWindow)
+        bool DirectX9::PresentContext(Gwk::WindowProvider* pWindow)
         {
             m_pDevice->Present(NULL, NULL, NULL, NULL);
             return true;
         }
 
-        bool DirectX9::ResizedContext(Gwen::WindowProvider* pWindow, int w, int h)
+        bool DirectX9::ResizedContext(Gwk::WindowProvider* pWindow, int w, int h)
         {
             // Force setting the current texture again
             m_pCurrentTexture = NULL;
@@ -426,7 +426,7 @@ namespace Gwen
             return true;
         }
 
-        bool DirectX9::BeginContext(Gwen::WindowProvider* pWindow)
+        bool DirectX9::BeginContext(Gwk::WindowProvider* pWindow)
         {
             m_pDevice->BeginScene();
             m_pDevice->Clear(0, NULL, D3DCLEAR_TARGET|D3DCLEAR_ZBUFFER|D3DCLEAR_STENCIL, D3DCOLOR_XRGB(
@@ -435,7 +435,7 @@ namespace Gwen
             return true;
         }
 
-        bool DirectX9::EndContext(Gwen::WindowProvider* pWindow)
+        bool DirectX9::EndContext(Gwk::WindowProvider* pWindow)
         {
             m_pDevice->EndScene();
             return true;

@@ -1,14 +1,14 @@
 
 #pragma once
 
-#include "Gwen/Gwen.h"
-#include "Gwen/Controls.h"
+#include "Gwork/Gwork.h"
+#include "Gwork/Controls.h"
 
-using namespace Gwen;
+using namespace Gwk;
 
 class SelectionLayer : public Controls::Base 
 {
-	GWEN_CONTROL( SelectionLayer, Controls::Base );
+	GWK_CONTROL( SelectionLayer, Controls::Base );
 
 	virtual void OnMouseClickLeft( int x, int y, bool bDown );
 

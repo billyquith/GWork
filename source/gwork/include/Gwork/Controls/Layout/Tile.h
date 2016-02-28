@@ -1,26 +1,27 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2012 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2015-2016 Billy Quith
+ *  See license in Gwork.h
  */
 
 #pragma once
-#ifndef GWEN_CONTROLS_LAYOUT_TILE_H
-#define GWEN_CONTROLS_LAYOUT_TILE_H
+#ifndef GWK_CONTROLS_LAYOUT_TILE_H
+#define GWK_CONTROLS_LAYOUT_TILE_H
 
-#include "Gwen/Controls/Base.h"
+#include "Gwork/Controls/Base.h"
 
-namespace Gwen
+namespace Gwk
 {
     namespace Controls
     {
         namespace Layout
         {
-            class GWEN_EXPORT Tile : public Base
+            class GWK_EXPORT Tile : public Base
             {
             public:
 
-                GWEN_CONTROL_INLINE(Tile, Base)
+                GWK_CONTROL_INLINE(Tile, Base)
                 {
                     Dock(Docking::Fill);
                     SetTileSize(22, 22);
@@ -28,8 +29,8 @@ namespace Gwen
 
                 void PostLayout(Skin::Base* skin) override
                 {
-                    Gwen::Rect bounds = GetInnerBounds();
-                    Gwen::Point pos = Point(bounds.x, bounds.y);
+                    Gwk::Rect bounds = GetInnerBounds();
+                    Gwk::Point pos = Point(bounds.x, bounds.y);
 
                     for (Base::List::iterator it = Children.begin(); it != Children.end(); ++it)
                     {
@@ -65,4 +66,4 @@ namespace Gwen
     }
 }
 
-#endif // ifndef GWEN_CONTROLS_LAYOUT_TILE_H
+#endif // ifndef GWK_CONTROLS_LAYOUT_TILE_H

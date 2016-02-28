@@ -1,21 +1,22 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 
-#include "Gwen/Gwen.h"
-#include "Gwen/Skin.h"
-#include "Gwen/Controls/DockedTabControl.h"
-#include "Gwen/Controls/Highlight.h"
-#include "Gwen/DragAndDrop.h"
-#include "Gwen/Controls/WindowControl.h"
+#include "Gwork/Gwork.h"
+#include "Gwork/Skin.h"
+#include "Gwork/Controls/DockedTabControl.h"
+#include "Gwork/Controls/Highlight.h"
+#include "Gwork/DragAndDrop.h"
+#include "Gwork/Controls/WindowControl.h"
 
-using namespace Gwen;
-using namespace Gwen::Controls;
+using namespace Gwk;
+using namespace Gwk::Controls;
 
-GWEN_CONTROL_CONSTRUCTOR(DockedTabControl)
+GWK_CONTROL_CONSTRUCTOR(DockedTabControl)
 {
     m_WindowControl = NULL;
     Dock(Docking::Fill);
@@ -40,7 +41,7 @@ void DockedTabControl::UpdateTitleBar()
     m_pTitleBar->UpdateFromTab(GetCurrentButton());
 }
 
-void DockedTabControl::DragAndDrop_StartDragging(Gwen::DragAndDrop::Package* pPackage, int x, int y)
+void DockedTabControl::DragAndDrop_StartDragging(Gwk::DragAndDrop::Package* pPackage, int x, int y)
 {
     ParentClass::DragAndDrop_StartDragging(pPackage, x, y);
     SetHidden(true);
@@ -79,7 +80,7 @@ void DockedTabControl::MoveTabsTo(DockedTabControl* pTarget)
 
     for (Base::List::iterator iter = Children.begin(); iter != Children.end(); ++iter)
     {
-        TabButton* pButton = gwen_cast<TabButton>(*iter);
+        TabButton* pButton = gwk_cast<TabButton>(*iter);
 
         if (!pButton)
             continue;

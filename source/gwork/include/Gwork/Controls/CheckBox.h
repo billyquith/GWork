@@ -1,28 +1,29 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 #pragma once
-#ifndef GWEN_CONTROLS_CHECKBOX_H
-#define GWEN_CONTROLS_CHECKBOX_H
+#ifndef GWK_CONTROLS_CHECKBOX_H
+#define GWK_CONTROLS_CHECKBOX_H
 
-#include "Gwen/Controls/Base.h"
-#include "Gwen/Controls/Button.h"
-#include "Gwen/Gwen.h"
-#include "Gwen/Skin.h"
-#include "Gwen/Controls/LabelClickable.h"
+#include "Gwork/Controls/Base.h"
+#include "Gwork/Controls/Button.h"
+#include "Gwork/Gwork.h"
+#include "Gwork/Skin.h"
+#include "Gwork/Controls/LabelClickable.h"
 
-namespace Gwen
+namespace Gwk
 {
     namespace Controls
     {
-        class GWEN_EXPORT CheckBox : public Button
+        class GWK_EXPORT CheckBox : public Button
         {
         public:
 
-            GWEN_CONTROL(CheckBox, Button);
+            GWK_CONTROL(CheckBox, Button);
 
             virtual void Render(Skin::Base* skin) override;
             virtual void OnPress() override;
@@ -38,9 +39,9 @@ namespace Gwen
                 return m_bChecked;
             }
 
-            Gwen::Event::Caller onChecked;
-            Gwen::Event::Caller onUnChecked;
-            Gwen::Event::Caller onCheckChanged;
+            Gwk::Event::Caller onChecked;
+            Gwk::Event::Caller onUnChecked;
+            Gwk::Event::Caller onCheckChanged;
 
         private:
 
@@ -56,11 +57,11 @@ namespace Gwen
         };
 
 
-        class GWEN_EXPORT CheckBoxWithLabel : public Base
+        class GWK_EXPORT CheckBoxWithLabel : public Base
         {
         public:
 
-            GWEN_CONTROL_INLINE(CheckBoxWithLabel, Base)
+            GWK_CONTROL_INLINE(CheckBoxWithLabel, Base)
             {
                 SetSize(200, 19);
                 m_Checkbox = new CheckBox(this);
@@ -101,4 +102,4 @@ namespace Gwen
 
     }
 }
-#endif // ifndef GWEN_CONTROLS_CHECKBOX_H
+#endif // ifndef GWK_CONTROLS_CHECKBOX_H

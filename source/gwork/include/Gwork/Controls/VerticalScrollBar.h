@@ -1,24 +1,25 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 #pragma once
-#ifndef GWEN_CONTROLS_VERTICALSCROLLBAR_H
-#define GWEN_CONTROLS_VERTICALSCROLLBAR_H
-#include "Gwen/Controls/Base.h"
-#include "Gwen/Controls/ScrollBar.h"
-#include "Gwen/Gwen.h"
-#include "Gwen/Skin.h"
+#ifndef GWK_CONTROLS_VERTICALSCROLLBAR_H
+#define GWK_CONTROLS_VERTICALSCROLLBAR_H
+#include "Gwork/Controls/Base.h"
+#include "Gwork/Controls/ScrollBar.h"
+#include "Gwork/Gwork.h"
+#include "Gwork/Skin.h"
 
-namespace Gwen
+namespace Gwk
 {
     namespace Controls
     {
-        class GWEN_EXPORT VerticalScrollBar : public BaseScrollBar
+        class GWK_EXPORT VerticalScrollBar : public BaseScrollBar
         {
-            GWEN_CONTROL(VerticalScrollBar, BaseScrollBar);
+            GWK_CONTROL(VerticalScrollBar, BaseScrollBar);
 
             virtual void Layout(Skin::Base* skin) override;
 
@@ -59,4 +60,4 @@ namespace Gwen
 
     }
 }
-#endif // ifndef GWEN_CONTROLS_VERTICALSCROLLBAR_H
+#endif // ifndef GWK_CONTROLS_VERTICALSCROLLBAR_H

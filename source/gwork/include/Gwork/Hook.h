@@ -1,27 +1,28 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 #pragma once
-#ifndef GWEN_HOOK_H
-#define GWEN_HOOK_H
+#ifndef GWK_HOOK_H
+#define GWK_HOOK_H
 
-#include <Gwen/Gwen.h>
+#include <Gwork/Gwork.h>
 #include <list>
 
-#if GWEN_HOOKSYSTEM
+#if GWK_HOOKSYSTEM
 
-namespace Gwen
+namespace Gwk
 {
     namespace Hook
     {
-        class GWEN_EXPORT BaseHook
+        class GWK_EXPORT BaseHook
         {
         public:
 
-            virtual bool OnControlClicked(Gwen::Controls::Base*, int /*iMouseX*/, int /*iMouseY*/)
+            virtual bool OnControlClicked(Gwk::Controls::Base*, int /*iMouseX*/, int /*iMouseY*/)
             {
                 return false;
             }
@@ -31,10 +32,10 @@ namespace Gwen
 
         typedef std::list<BaseHook*> HookList;
 
-        GWEN_EXPORT HookList& GetHookList();
+        GWK_EXPORT HookList& GetHookList();
 
-        GWEN_EXPORT void AddHook(BaseHook* pHook);
-        GWEN_EXPORT void RemoveHook(BaseHook* pHook);
+        GWK_EXPORT void AddHook(BaseHook* pHook);
+        GWK_EXPORT void RemoveHook(BaseHook* pHook);
 
         template <typename fnc>
         bool CallHook(fnc f)
@@ -88,5 +89,5 @@ namespace Gwen
 
 }
 
-#endif // if GWEN_HOOKSYSTEM
-#endif // ifndef GWEN_HOOK_H
+#endif // if GWK_HOOKSYSTEM
+#endif // ifndef GWK_HOOK_H

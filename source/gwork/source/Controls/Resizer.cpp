@@ -1,17 +1,18 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 
-#include "Gwen/Controls/Resizer.h"
+#include "Gwork/Controls/Resizer.h"
 
-using namespace Gwen;
-using namespace Gwen::ControlsInternal;
+using namespace Gwk;
+using namespace Gwk::ControlsInternal;
 
 
-GWEN_CONTROL_CONSTRUCTOR(Resizer)
+GWK_CONTROL_CONSTRUCTOR(Resizer)
 {
     m_iResizeDir = Docking::Left;
     SetMouseInputEnabled(true);
@@ -26,10 +27,10 @@ void Resizer::OnMouseMoved(int x, int y, int /*deltaX*/, int /*deltaY*/)
     if (!m_bDepressed)
         return;
 
-    Gwen::Rect pBounds = m_pTarget->GetBounds();
-    Gwen::Point pntMin = m_pTarget->GetMinimumSize();
-    Gwen::Point pCursorPos = m_pTarget->CanvasPosToLocal(Gwen::Point(x, y));
-    Gwen::Point pDelta = m_pTarget->LocalPosToCanvas(m_HoldPos);
+    Gwk::Rect pBounds = m_pTarget->GetBounds();
+    Gwk::Point pntMin = m_pTarget->GetMinimumSize();
+    Gwk::Point pCursorPos = m_pTarget->CanvasPosToLocal(Gwk::Point(x, y));
+    Gwk::Point pDelta = m_pTarget->LocalPosToCanvas(m_HoldPos);
     pDelta.x -= x;
     pDelta.y -= y;
 
@@ -107,14 +108,14 @@ void Resizer::SetResizeDir(int dir)
     m_iResizeDir = dir;
 
     if ((dir&Docking::Left && dir&Docking::Top) || (dir&Docking::Right && dir&Docking::Bottom))
-        return SetCursor(Gwen::CursorType::SizeNWSE);
+        return SetCursor(Gwk::CursorType::SizeNWSE);
 
     if ((dir&Docking::Right && dir&Docking::Top) || (dir&Docking::Left && dir&Docking::Bottom))
-        return SetCursor(Gwen::CursorType::SizeNESW);
+        return SetCursor(Gwk::CursorType::SizeNESW);
 
     if (dir&Docking::Right || dir&Docking::Left)
-        return SetCursor(Gwen::CursorType::SizeWE);
+        return SetCursor(Gwk::CursorType::SizeWE);
 
     if (dir&Docking::Top || dir&Docking::Bottom)
-        return SetCursor(Gwen::CursorType::SizeNS);
+        return SetCursor(Gwk::CursorType::SizeNS);
 }

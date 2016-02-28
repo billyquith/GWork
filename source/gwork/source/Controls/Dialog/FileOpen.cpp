@@ -1,24 +1,25 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
-#include "Gwen/Gwen.h"
-#include "Gwen/Platform.h"
-#include "Gwen/Controls/Dialogs/FileOpen.h"
+#include "Gwork/Gwork.h"
+#include "Gwork/Platform.h"
+#include "Gwork/Controls/Dialogs/FileOpen.h"
 
-using namespace Gwen;
-using namespace Gwen::Dialogs;
+using namespace Gwk;
+using namespace Gwk::Dialogs;
 
-void Gwen::Dialogs::FileOpenEx(bool bUseSystem, const String& Name, const String& StartPath,
-                               const String& Extension, Gwen::Event::Handler* pHandler,
-                               Gwen::Event::Handler::FunctionWithInformation fnCallback)
+void Gwk::Dialogs::FileOpenEx(bool bUseSystem, const String& Name, const String& StartPath,
+                               const String& Extension, Gwk::Event::Handler* pHandler,
+                               Gwk::Event::Handler::FunctionWithInformation fnCallback)
 {
-    if (bUseSystem && Gwen::Platform::FileOpen(Name, StartPath, Extension, pHandler, fnCallback))
+    if (bUseSystem && Gwk::Platform::FileOpen(Name, StartPath, Extension, pHandler, fnCallback))
         return;
 
     //
-    // TODO: SHOW GWEN FILE SELECTION DIALOG
+    // TODO: SHOW Gwork FILE SELECTION DIALOG
     //
 }

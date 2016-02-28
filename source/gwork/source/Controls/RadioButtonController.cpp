@@ -1,34 +1,35 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 
-#include "Gwen/Controls/RadioButtonController.h"
-#include "Gwen/Controls/RadioButton.h"
-#include "Gwen/Utility.h"
+#include "Gwork/Controls/RadioButtonController.h"
+#include "Gwork/Controls/RadioButton.h"
+#include "Gwork/Utility.h"
 
-using namespace Gwen;
-using namespace Gwen::Controls;
+using namespace Gwk;
+using namespace Gwk::Controls;
 
 
-GWEN_CONTROL_CONSTRUCTOR(RadioButtonController)
+GWK_CONTROL_CONSTRUCTOR(RadioButtonController)
 {
     m_Selected = NULL;
     SetTabable(false);
     SetKeyboardInputEnabled(false);
 }
 
-void RadioButtonController::OnRadioClicked(Gwen::Controls::Base* pFromPanel)
+void RadioButtonController::OnRadioClicked(Gwk::Controls::Base* pFromPanel)
 {
-    RadioButton* pCheckedRadioButton = gwen_cast<RadioButton>(pFromPanel);
+    RadioButton* pCheckedRadioButton = gwk_cast<RadioButton>(pFromPanel);
 
     // Iterate through all other buttons and set them to false;
     for (Base::List::iterator iter = Children.begin(); iter != Children.end(); ++iter)
     {
         Base* pChild = *iter;
-        LabeledRadioButton* pLRB = gwen_cast<LabeledRadioButton>(pChild);
+        LabeledRadioButton* pLRB = gwk_cast<LabeledRadioButton>(pChild);
 
         if (pLRB)
         {
@@ -49,8 +50,8 @@ void RadioButtonController::OnChange()
     onSelectionChange.Call(this);
 }
 
-LabeledRadioButton* RadioButtonController::AddOption(const Gwen::String& strText,
-                                                     const Gwen::String& strOptionName)
+LabeledRadioButton* RadioButtonController::AddOption(const Gwk::String& strText,
+                                                     const Gwk::String& strOptionName)
 {
     LabeledRadioButton* lrb = new LabeledRadioButton(this);
     lrb->SetName(strOptionName);

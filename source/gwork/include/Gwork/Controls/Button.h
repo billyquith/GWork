@@ -1,27 +1,28 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 #pragma once
-#ifndef GWEN_CONTROLS_BUTTON_H
-#define GWEN_CONTROLS_BUTTON_H
+#ifndef GWK_CONTROLS_BUTTON_H
+#define GWK_CONTROLS_BUTTON_H
 
-#include "Gwen/Controls/Base.h"
-#include "Gwen/Controls/Label.h"
+#include "Gwork/Controls/Base.h"
+#include "Gwork/Controls/Label.h"
 
-namespace Gwen
+namespace Gwk
 {
     namespace Controls
     {
         class ImagePanel;
 
-        class GWEN_EXPORT Button : public Label
+        class GWK_EXPORT Button : public Label
         {
         public:
 
-            GWEN_CONTROL(Button, Label);
+            GWK_CONTROL(Button, Label);
 
             virtual void Render(Skin::Base* skin) override;
             virtual void OnMouseClickLeft(int x, int y, bool bDown) override;
@@ -81,18 +82,18 @@ namespace Gwen
 
             virtual void SetAction(Event::Handler* pObject,
                                    Handler::FunctionWithInformation pFunction,
-                                   const Gwen::Event::Packet& packet) override;
+                                   const Gwk::Event::Packet& packet) override;
 
         public:
 
-            Gwen::Event::Caller onPress;
-            Gwen::Event::Caller onRightPress;
-            Gwen::Event::Caller onDown;
-            Gwen::Event::Caller onUp;
-            Gwen::Event::Caller onDoubleClick;
-            Gwen::Event::Caller onToggle;
-            Gwen::Event::Caller onToggleOn;
-            Gwen::Event::Caller onToggleOff;
+            Gwk::Event::Caller onPress;
+            Gwk::Event::Caller onRightPress;
+            Gwk::Event::Caller onDown;
+            Gwk::Event::Caller onUp;
+            Gwk::Event::Caller onDoubleClick;
+            Gwk::Event::Caller onToggle;
+            Gwk::Event::Caller onToggleOn;
+            Gwk::Event::Caller onToggleOff;
 
         protected:
 
@@ -108,4 +109,4 @@ namespace Gwen
 
     }
 }
-#endif // ifndef GWEN_CONTROLS_BUTTON_H
+#endif // ifndef GWK_CONTROLS_BUTTON_H

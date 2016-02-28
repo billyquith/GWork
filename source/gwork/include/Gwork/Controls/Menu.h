@@ -1,29 +1,30 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 #pragma once
-#ifndef GWEN_CONTROLS_MENU_H
-#define GWEN_CONTROLS_MENU_H
+#ifndef GWK_CONTROLS_MENU_H
+#define GWK_CONTROLS_MENU_H
 
-#include "Gwen/BaseRender.h"
-#include "Gwen/Controls/Base.h"
-#include "Gwen/Controls/MenuItem.h"
-#include "Gwen/Controls/ScrollControl.h"
+#include "Gwork/BaseRender.h"
+#include "Gwork/Controls/Base.h"
+#include "Gwork/Controls/MenuItem.h"
+#include "Gwork/Controls/ScrollControl.h"
 
-namespace Gwen
+namespace Gwk
 {
     namespace Controls
     {
         class MenuItem;
 
-        class GWEN_EXPORT Menu : public ScrollControl
+        class GWK_EXPORT Menu : public ScrollControl
         {
         public:
 
-            GWEN_CONTROL(Menu, ScrollControl);
+            GWK_CONTROL(Menu, ScrollControl);
 
             virtual void Render(Skin::Base* skin) override;
             virtual void RenderUnder(Skin::Base* skin) override;
@@ -36,7 +37,7 @@ namespace Gwen
 
             virtual void AddDivider();
 
-            void OnHoverItem(Gwen::Controls::Base* pControl);
+            void OnHoverItem(Gwk::Controls::Base* pControl);
             void CloseAll();
             bool IsMenuOpen();
             void ClearItems();
@@ -85,20 +86,20 @@ namespace Gwen
         };
 
 
-        class GWEN_EXPORT MenuDivider : public Base
+        class GWK_EXPORT MenuDivider : public Base
         {
         public:
 
-            GWEN_CONTROL_INLINE(MenuDivider, Base)
+            GWK_CONTROL_INLINE(MenuDivider, Base)
             {
                 SetHeight(1);
             }
 
-            void Render(Gwen::Skin::Base* skin) override;
+            void Render(Gwk::Skin::Base* skin) override;
         };
 
 
     }
 
 }
-#endif // ifndef GWEN_CONTROLS_MENU_H
+#endif // ifndef GWK_CONTROLS_MENU_H

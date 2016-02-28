@@ -1,27 +1,28 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 #pragma once
-#ifndef GWEN_CONTROLS_IMAGEPANEL_H
-#define GWEN_CONTROLS_IMAGEPANEL_H
+#ifndef GWK_CONTROLS_IMAGEPANEL_H
+#define GWK_CONTROLS_IMAGEPANEL_H
 
-#include "Gwen/Gwen.h"
-#include "Gwen/Controls/Base.h"
-#include "Gwen/BaseRender.h"
-#include "Gwen/Texture.h"
+#include "Gwork/Gwork.h"
+#include "Gwork/Controls/Base.h"
+#include "Gwork/BaseRender.h"
+#include "Gwork/Texture.h"
 
-namespace Gwen
+namespace Gwk
 {
     namespace Controls
     {
-        class GWEN_EXPORT ImagePanel : public Controls::Base
+        class GWK_EXPORT ImagePanel : public Controls::Base
         {
         public:
 
-            GWEN_CONTROL_INLINE(ImagePanel, Controls::Base)
+            GWK_CONTROL_INLINE(ImagePanel, Controls::Base)
             {
                 SetUV(0, 0, 1, 1);
                 SetMouseInputEnabled(false);
@@ -80,7 +81,7 @@ namespace Gwen
                 else
                 {
                     skin->GetRender()->DrawTexturedRect(&m_Texture,
-                                                        Gwen::Rect(0, 0,
+                                                        Gwk::Rect(0, 0,
                                                                    m_Texture.width,m_Texture.height),
                                                         m_uv[0], m_uv[1], m_uv[2], m_uv[3]);
                 }
@@ -91,7 +92,7 @@ namespace Gwen
                 SetSize(m_Texture.width, m_Texture.height);
             }
 
-            virtual void SetDrawColor(Gwen::Color color)
+            virtual void SetDrawColor(Gwk::Color color)
             {
                 m_DrawColor = color;
             }
@@ -115,7 +116,7 @@ namespace Gwen
 
             Texture m_Texture;
             float m_uv[4];
-            Gwen::Color m_DrawColor;
+            Gwk::Color m_DrawColor;
 
             bool m_bStretch;
 
@@ -124,4 +125,4 @@ namespace Gwen
 
     }
 }
-#endif // ifndef GWEN_CONTROLS_IMAGEPANEL_H
+#endif // ifndef GWK_CONTROLS_IMAGEPANEL_H

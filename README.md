@@ -1,7 +1,7 @@
 GWork
 =====
 
-GWork is an embeddable GUI library with an extensive control set. Control rendering
+GWork is a skinnable, embeddable GUI library with an extensive control set. Control rendering
 is abstracted, and can be implemented by any application wishing to use the library.
 
 A number of rendering backends are provided for use, or as an example for your own:
@@ -12,7 +12,7 @@ A number of rendering backends are provided for use, or as an example for your o
  * [SDL2][sdl2] (cross-platform).
  * [SFML2][sfml2] (cross-platform).
 
-GWork (pronounced "gw-orc") is a fork of the GUI library [GWEN][gwen]. It was forked 
+Gwork (*pronounced "gw-orc"*) is a fork of the GUI library [GWEN][gwen]. It was forked 
 to fix issues with GWEN and add new features.
 
 ## Build
@@ -63,9 +63,8 @@ cd build/bin
   Github, Google Code, etc use 8 space tabs. GWEN uses 4 space tabs. This 
   messes up the indentation when reading code on Github.
 * Brackets: [Allman][2]/BSD indentation.
-* Line length ~100 chars. Github has width around 100. [Example][3]. Easier for 
-  3 way merge. Everything on screen. Works better for editing on laptop with 
-  a smaller screen.
+* Line length ~100 chars. Github has width around 100. Easier for 
+  3 way merge. Everything on regular screen. 
   
 Please [report problems to Github][7] or they'll get lost.
 
@@ -76,7 +75,6 @@ Please [report problems to Github][7] or they'll get lost.
 [al5]: http://alleg.sourceforge.net
 [1]: http://www.codinghorror.com/blog/2009/04/death-to-the-space-infidels.html "Interesting article on consistency"
 [2]: http://en.wikipedia.org/wiki/Indent_style#Allman_style "Not uncommon"
-[3]: https://github.com/billyquith/GWEN/blob/gwork/gwen/include/Gwen/Skins/TexturedBase.h "Off the edge"
 [5]: http://www.utf8everywhere.org "Why you should use UTF8 everywhere."
 [6]: http://industriousone.com/premake
 [7]: https://github.com/billyquith/GWork/issues "Bugs/Issues"

@@ -3,26 +3,26 @@
 #include "Hierarchy.h"
 #include "Properties.h"
 
-class DocumentInner : public Gwen::Controls::ScrollControl
+class DocumentInner : public Gwk::Controls::ScrollControl
 {
-	GWEN_CONTROL_INLINE( DocumentInner, Gwen::Controls::ScrollControl )
+	GWK_CONTROL_INLINE( DocumentInner, Gwk::Controls::ScrollControl )
 	{
 	}
 
-	void Render( Gwen::Skin::Base* skin )
+	void Render( Gwk::Skin::Base* skin )
 	{
 		skin->GetRender()->SetDrawColor( Color( 255, 255, 255, 255 ) );
 		skin->GetRender()->DrawFilledRect( GetRenderBounds() );
 	}
 
-	void RenderOver( Gwen::Skin::Base* skin )
+	void RenderOver( Gwk::Skin::Base* skin )
 	{
 		skin->GetRender()->SetDrawColor( Color( 90, 90, 90, 255 ) );
 		skin->GetRender()->DrawLinedRect( GetRenderBounds() );
 	}
 };
 
-GWEN_CONTROL_CONSTRUCTOR( Document )
+GWK_CONTROL_CONSTRUCTOR( Document )
 {
 	Dock( Docking::Fill );
 	SetPadding( Padding( 1, 1, 1, 1 ) );
@@ -99,10 +99,10 @@ void Document::DoSaveAs( ImportExport::Base* exporter )
 {
 	m_Exporter = exporter;
 
-	Gwen::Dialogs::FileSave( true, m_strFilename, "", "Gwen Designer File|*.gwen", this, &ThisClass::DoSaveFromDialog );
+	Gwk::Dialogs::FileSave( true, m_strFilename, "", "Gwork Designer File|*.gwk", this, &ThisClass::DoSaveFromDialog );
 }
 
-void Document::LoadFromFile( const Gwen::String& str, ImportExport::Base* exporter )
+void Document::LoadFromFile( const Gwk::String& str, ImportExport::Base* exporter )
 {
 	exporter->Import( m_pCanvas, str );
 
@@ -114,7 +114,7 @@ void Document::OnHierachyChanged( Event::Info info )
 	m_pHierarchy->CompleteRefresh();
 }
 
-void Document::Command( const Gwen::String& str )
+void Document::Command( const Gwk::String& str )
 {
 	m_pCanvas->Command( str );
 

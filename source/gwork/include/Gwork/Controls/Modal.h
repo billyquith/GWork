@@ -1,19 +1,26 @@
+/*
+ *  Gwork
+ *  Copyright (c) 2010 Facepunch Studios
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
+ */
+
 #pragma once
-#ifndef GWEN_CONTROLS_MODAL_H
-#define GWEN_CONTROLS_MODAL_H
+#ifndef GWK_CONTROLS_MODAL_H
+#define GWK_CONTROLS_MODAL_H
 
-#include "Gwen/Controls/Base.h"
-#include "Gwen/Gwen.h"
-#include "Gwen/Skin.h"
+#include "Gwork/Controls/Base.h"
+#include "Gwork/Gwork.h"
+#include "Gwork/Skin.h"
 
 
-namespace Gwen
+namespace Gwk
 {
     namespace ControlsInternal
     {
         class Modal : public Controls::Base
         {
-            GWEN_CONTROL_INLINE(Modal, Controls::Base)
+            GWK_CONTROL_INLINE(Modal, Controls::Base)
             {
                 SetKeyboardInputEnabled(true);
                 SetMouseInputEnabled(true);
@@ -39,4 +46,4 @@ namespace Gwen
 
     }
 }
-#endif // ifndef GWEN_CONTROLS_MODAL_H
+#endif // ifndef GWK_CONTROLS_MODAL_H

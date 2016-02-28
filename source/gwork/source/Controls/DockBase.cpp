@@ -1,23 +1,24 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 
-#include "Gwen/Gwen.h"
-#include "Gwen/Skin.h"
-#include "Gwen/Controls/DockBase.h"
-#include "Gwen/Controls/DockedTabControl.h"
-#include "Gwen/Controls/Highlight.h"
-#include "Gwen/DragAndDrop.h"
-#include "Gwen/Controls/Resizer.h"
+#include "Gwork/Gwork.h"
+#include "Gwork/Skin.h"
+#include "Gwork/Controls/DockBase.h"
+#include "Gwork/Controls/DockedTabControl.h"
+#include "Gwork/Controls/Highlight.h"
+#include "Gwork/DragAndDrop.h"
+#include "Gwork/Controls/Resizer.h"
 
-using namespace Gwen;
-using namespace Gwen::Controls;
+using namespace Gwk;
+using namespace Gwk::Controls;
 
 
-GWEN_CONTROL_CONSTRUCTOR(DockBase)
+GWK_CONTROL_CONSTRUCTOR(DockBase)
 {
     SetPadding(Padding(1, 1, 1, 1));
     SetSize(200, 200);
@@ -65,8 +66,8 @@ void DockBase::SetupChildDock(Docking::Area pos)
 
 void DockBase::Render(Skin::Base* /*skin*/)
 {
-    // Gwen::Render->SetDrawColor( Colors::Black );
-    // Gwen::Render->DrawLinedRect( GetRenderBounds() );
+    // Gwk::Render->SetDrawColor( Colors::Black );
+    // Gwk::Render->DrawLinedRect( GetRenderBounds() );
 }
 
 DockBase** DockBase::GetChildDockPtr(Docking::Area pos)
@@ -111,7 +112,7 @@ Docking::Area DockBase::GetDroppedTabDirection(int x, int y)
     float left = (float)x/(float)w;
     float right = (float)(w-x)/(float)w;
     float bottom = (float)(h-y)/(float)h;
-    float minimum = Gwen::Min(Gwen::Min(Gwen::Min(top, left), right), bottom);
+    float minimum = Gwk::Min(Gwk::Min(Gwk::Min(top, left), right), bottom);
     m_bDropFar = (minimum < 0.2f);
 
     if (minimum > 0.3)
@@ -132,7 +133,7 @@ Docking::Area DockBase::GetDroppedTabDirection(int x, int y)
     return Docking::Fill;
 }
 
-bool DockBase::DragAndDrop_CanAcceptPackage(Gwen::DragAndDrop::Package* pPackage)
+bool DockBase::DragAndDrop_CanAcceptPackage(Gwk::DragAndDrop::Package* pPackage)
 {
     // A TAB button dropped
     if (pPackage->name == "TabButtonMove")
@@ -145,9 +146,9 @@ bool DockBase::DragAndDrop_CanAcceptPackage(Gwen::DragAndDrop::Package* pPackage
     return false;
 }
 
-bool DockBase::DragAndDrop_HandleDrop(Gwen::DragAndDrop::Package* pPackage, int x, int y)
+bool DockBase::DragAndDrop_HandleDrop(Gwk::DragAndDrop::Package* pPackage, int x, int y)
 {
-    Gwen::Point pPos = CanvasPosToLocal(Gwen::Point(x, y));
+    Gwk::Point pPos = CanvasPosToLocal(Gwk::Point(x, y));
     Docking::Area dir = GetDroppedTabDirection(pPos.x, pPos.y);
     DockedTabControl* pAddTo = m_DockedTabControl;
 
@@ -167,7 +168,7 @@ bool DockBase::DragAndDrop_HandleDrop(Gwen::DragAndDrop::Package* pPackage, int 
 
     if (pPackage->name == "TabButtonMove")
     {
-        TabButton* pTabButton = gwen_cast<TabButton>(DragAndDrop::SourceControl);
+        TabButton* pTabButton = gwk_cast<TabButton>(DragAndDrop::SourceControl);
 
         if (!pTabButton)
             return false;
@@ -177,7 +178,7 @@ bool DockBase::DragAndDrop_HandleDrop(Gwen::DragAndDrop::Package* pPackage, int 
 
     if (pPackage->name == "TabWindowMove")
     {
-        DockedTabControl* pTabControl = gwen_cast<DockedTabControl>(DragAndDrop::SourceControl);
+        DockedTabControl* pTabControl = gwk_cast<DockedTabControl>(DragAndDrop::SourceControl);
 
         if (!pTabControl)
             return false;
@@ -212,7 +213,7 @@ bool DockBase::IsEmpty()
     return true;
 }
 
-void DockBase::OnTabRemoved(Gwen::Controls::Base* /*pControl*/)
+void DockBase::OnTabRemoved(Gwk::Controls::Base* /*pControl*/)
 {
     DoRedundancyCheck();
     DoConsolidateCheck();
@@ -223,7 +224,7 @@ void DockBase::DoRedundancyCheck()
     if (!IsEmpty())
         return;
 
-    DockBase* pDockParent = gwen_cast<DockBase>(GetParent());
+    DockBase* pDockParent = gwk_cast<DockBase>(GetParent());
 
     if (!pDockParent)
         return;
@@ -274,27 +275,27 @@ void DockBase::OnRedundantChildDock(DockBase* pDockBase)
     DoConsolidateCheck();
 }
 
-void DockBase::DragAndDrop_HoverEnter(Gwen::DragAndDrop::Package* /*pPackage*/, int /*x*/,
+void DockBase::DragAndDrop_HoverEnter(Gwk::DragAndDrop::Package* /*pPackage*/, int /*x*/,
                                       int /*y*/)
 {
     m_bDrawHover = true;
 }
 
-void DockBase::DragAndDrop_HoverLeave(Gwen::DragAndDrop::Package* /*pPackage*/)
+void DockBase::DragAndDrop_HoverLeave(Gwk::DragAndDrop::Package* /*pPackage*/)
 {
     m_bDrawHover = false;
 }
 
-void DockBase::DragAndDrop_Hover(Gwen::DragAndDrop::Package* /*pPackage*/, int x, int y)
+void DockBase::DragAndDrop_Hover(Gwk::DragAndDrop::Package* /*pPackage*/, int x, int y)
 {
-    Gwen::Point pPos = CanvasPosToLocal(Gwen::Point(x, y));
+    Gwk::Point pPos = CanvasPosToLocal(Gwk::Point(x, y));
     int dir = GetDroppedTabDirection(pPos.x, pPos.y);
 
     if (dir == Docking::Fill)
     {
         if (!m_DockedTabControl)
         {
-            m_HoverRect = Gwen::Rect(0, 0, 0, 0);
+            m_HoverRect = Gwk::Rect(0, 0, 0, 0);
             return;
         }
 
@@ -361,15 +362,15 @@ void DockBase::RenderOver(Skin::Base* skin)
     if (!m_bDrawHover)
         return;
 
-    Gwen::Renderer::Base* render = skin->GetRender();
-    render->SetDrawColor(Gwen::Color(255, 100, 255, 20));
+    Gwk::Renderer::Base* render = skin->GetRender();
+    render->SetDrawColor(Gwk::Color(255, 100, 255, 20));
     render->DrawFilledRect(GetRenderBounds());
 
     if (m_HoverRect.w == 0)
         return;
 
-    render->SetDrawColor(Gwen::Color(255, 100, 255, 100));
+    render->SetDrawColor(Gwk::Color(255, 100, 255, 100));
     render->DrawFilledRect(m_HoverRect);
-    render->SetDrawColor(Gwen::Color(255, 100, 255, 200));
+    render->SetDrawColor(Gwk::Color(255, 100, 255, 200));
     render->DrawLinedRect(m_HoverRect);
 }

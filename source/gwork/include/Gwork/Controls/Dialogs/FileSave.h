@@ -1,10 +1,17 @@
+/*
+ *  Gwork
+ *  Copyright (c) 2010 Facepunch Studios
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
+ */
+
 #pragma once
-#ifndef GWEN_CONTROLS_DIALOGS_FILESAVE_H
-#define GWEN_CONTROLS_DIALOGS_FILESAVE_H
+#ifndef GWK_CONTROLS_DIALOGS_FILESAVE_H
+#define GWK_CONTROLS_DIALOGS_FILESAVE_H
 
-#include <Gwen/Gwen.h>
+#include <Gwork/Gwork.h>
 
-namespace Gwen
+namespace Gwk
 {
     namespace Dialogs
     {
@@ -16,19 +23,19 @@ namespace Gwen
         //
         // The REAL function.
         //
-        void GWEN_EXPORT FileSaveEx(bool bUseSystem, const String& Name, const String& StartPath,
-                                    const String& Extension, Gwen::Event::Handler* pHandler = NULL,
-                                    Gwen::Event::Handler::FunctionWithInformation fnCallback =
+        void GWK_EXPORT FileSaveEx(bool bUseSystem, const String& Name, const String& StartPath,
+                                    const String& Extension, Gwk::Event::Handler* pHandler = NULL,
+                                    Gwk::Event::Handler::FunctionWithInformation fnCallback =
                                         NULL);
 
         //! Open a dialog to save a file.
         //!
         //! @param bUseSystem : If true dialog may use the system's modal dialog - which
-        //!                     will steal focus and pause the rest of GWEN until it's continued.
+        //!                     will steal focus and pause the rest of Gwork until it's continued.
         //!
         //! Usage:
         //! ~~~~
-        //!     Gwen::Dialogs::FileSave( true, "Save Map", "C:/my/folder/", "My Map Format|*.bmf",
+        //!     Gwk::Dialogs::FileSave( true, "Save Map", "C:/my/folder/", "My Map Format|*.bmf",
         //!                              this, &MyClass::OpenFilename );
         //! ~~~~
         //!
@@ -37,14 +44,14 @@ namespace Gwen
         //
         template <typename A>
         void FileSave(bool bUseSystem, const String& Name, const String& StartPath,
-                      const String& Extension, Gwen::Event::Handler* pHandler = NULL,
+                      const String& Extension, Gwk::Event::Handler* pHandler = NULL,
                       A fnCallback = NULL)
         {
             FileSaveEx(bUseSystem, Name, StartPath, Extension, pHandler,
-                       static_cast<Gwen::Event::Handler::FunctionWithInformation>(fnCallback));
+                       static_cast<Gwk::Event::Handler::FunctionWithInformation>(fnCallback));
         }
 
     }
 }
 
-#endif // ifndef GWEN_CONTROLS_DIALOGS_FILESAVE_H
+#endif // ifndef GWK_CONTROLS_DIALOGS_FILESAVE_H

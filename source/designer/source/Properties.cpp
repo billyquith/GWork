@@ -1,8 +1,8 @@
 #include "Properties.h"
 #include "DocumentCanvas.h"
-#include "GwenUtil/ControlFactory.h"
+#include "Gwork/Util/ControlFactory.h"
 
-GWEN_CONTROL_CONSTRUCTOR( Properties )
+GWK_CONTROL_CONSTRUCTOR( Properties )
 {
 	SetSize( 200, 200 );
 
@@ -61,8 +61,8 @@ void Properties::AddPropertiesFromControl( Controls::Base* pControl, bool bAllow
 		ControlFactory::Property::List::const_iterator itEnd = cf->Properties().end();
 		for ( ; it != itEnd; ++it )
 		{
-			Gwen::String strPropertyName = (*it)->Name();
-			Gwen::String strValue = (*it)->GetValueAsString(pControl);
+			Gwk::String strPropertyName = (*it)->Name();
+			Gwk::String strValue = (*it)->GetValueAsString(pControl);
 
 			//
 			// Add a property row to our control
@@ -72,9 +72,9 @@ void Properties::AddPropertiesFromControl( Controls::Base* pControl, bool bAllow
 			{
 				if ( (*it)->OptionCount() > 0 )
 				{
-					//row = properties->Add( strPropertyName, new Gwen::Controls::Property::Checkbox( properties ), strValue );
+					//row = properties->Add( strPropertyName, new Gwk::Controls::Property::Checkbox( properties ), strValue );
 
-					Gwen::Controls::Property::ComboBox* dd = new Gwen::Controls::Property::ComboBox( properties );
+					Gwk::Controls::Property::ComboBox* dd = new Gwk::Controls::Property::ComboBox( properties );
 
 					for (size_t i = 0, nb = (*it)->OptionCount(); i < nb; i++)
 					{

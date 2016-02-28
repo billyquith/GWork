@@ -1,15 +1,15 @@
-#include "Gwen/Gwen.h"
-#include "Gwen/BaseRender.h"
-#include "Gwen/Utility.h"
-#include "Gwen/Font.h"
-#include "Gwen/Texture.h"
-#include "Gwen/Renderers/Allegro.h"
+#include "Gwork/Gwork.h"
+#include "Gwork/BaseRender.h"
+#include "Gwork/Utility.h"
+#include "Gwork/Font.h"
+#include "Gwork/Texture.h"
+#include "Gwork/Renderers/Allegro.h"
 
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_ttf.h>
 #include <allegro5/allegro_primitives.h>
 
-namespace Gwen
+namespace Gwk
 {
     namespace Renderer
     {
@@ -25,27 +25,27 @@ namespace Gwen
             
             void Initialize() {}
             void ShutDown();
-            void SetRenderer(Gwen::Renderer::Base* renderer) { m_renderer = renderer; }
+            void SetRenderer(Gwk::Renderer::Base* renderer) { m_renderer = renderer; }
             
-            void SetupCacheTexture(Gwen::Controls::Base* control);
-            void FinishCacheTexture(Gwen::Controls::Base* control);
+            void SetupCacheTexture(Gwk::Controls::Base* control);
+            void FinishCacheTexture(Gwk::Controls::Base* control);
             
-            void DrawCachedControlTexture(Gwen::Controls::Base* control);
-            void CreateControlCacheTexture(Gwen::Controls::Base* control);
-            void UpdateControlCacheTexture(Gwen::Controls::Base* control) {}
+            void DrawCachedControlTexture(Gwk::Controls::Base* control);
+            void CreateControlCacheTexture(Gwk::Controls::Base* control);
+            void UpdateControlCacheTexture(Gwk::Controls::Base* control) {}
             
             // TODO What destroys the cached textures? Does this assume they always exist?
             
         private:
             
-            Gwen::Renderer::Base *m_renderer;
+            Gwk::Renderer::Base *m_renderer;
             
             struct CacheEntry
             {
                 ALLEGRO_BITMAP *m_bitmap;
             };
             
-            typedef Gwen::Controls::Base* Key;
+            typedef Gwk::Controls::Base* Key;
             typedef std::map< Key, CacheEntry > CacheMap;
             CacheMap m_cache;
             
@@ -55,16 +55,16 @@ namespace Gwen
         void AllegroCTT::ShutDown()
         {
             // TODO - Delete the cached textures we created.
-            // Note: This doesn't get called at the moment because Gwen currently crashes
+            // Note: This doesn't get called at the moment because Gwork currently crashes
             //       if we delete the renderer on clean up.
         }
         
-        void AllegroCTT::CreateControlCacheTexture(Gwen::Controls::Base* control)
+        void AllegroCTT::CreateControlCacheTexture(Gwk::Controls::Base* control)
         {
             // If we haven't seen this control before, create a new entry.
             if (m_cache.find(control) == m_cache.end())
             {
-                const Gwen::Rect &bounds = control->GetBounds();
+                const Gwk::Rect &bounds = control->GetBounds();
                 const int w = bounds.w, h = bounds.h;
                 
                 CacheEntry newEntry = { al_create_bitmap(w, h) };
@@ -72,7 +72,7 @@ namespace Gwen
             }
         }
 
-        void AllegroCTT::SetupCacheTexture(Gwen::Controls::Base* control)
+        void AllegroCTT::SetupCacheTexture(Gwk::Controls::Base* control)
         {
             CacheMap::iterator it = m_cache.find(control);
             assert(it != m_cache.end());
@@ -86,21 +86,21 @@ namespace Gwen
             }
         }
 
-        void AllegroCTT::FinishCacheTexture(Gwen::Controls::Base* control)
+        void AllegroCTT::FinishCacheTexture(Gwk::Controls::Base* control)
         {
             // Prepare for rendering.
             al_set_target_bitmap(m_oldTarget);
             m_oldTarget = NULL;
         }
         
-        void AllegroCTT::DrawCachedControlTexture(Gwen::Controls::Base* control)
+        void AllegroCTT::DrawCachedControlTexture(Gwk::Controls::Base* control)
         {
             CacheMap::iterator it = m_cache.find(control);
             assert(it != m_cache.end());
             if (it != m_cache.end())
             {
                 ALLEGRO_BITMAP *bmp = (*it).second.m_bitmap;                
-                const Gwen::Point &pos = m_renderer->GetRenderOffset();
+                const Gwk::Point &pos = m_renderer->GetRenderOffset();
                 al_draw_bitmap(bmp, pos.x, pos.y, 0);
             }
         }
@@ -118,12 +118,12 @@ namespace Gwen
         {
         }
 
-        void Allegro::SetDrawColor(Gwen::Color color)
+        void Allegro::SetDrawColor(Gwk::Color color)
         {
             m_Color = al_map_rgba(color.r, color.g, color.b, color.a);
         }
 
-        void Allegro::LoadFont(Gwen::Font* font)
+        void Allegro::LoadFont(Gwk::Font* font)
         {
             font->realsize = font->size*Scale();
             std::string fontName(font->facename);
@@ -137,7 +137,7 @@ namespace Gwen
             font->data = afont;
         }
 
-        void Allegro::FreeFont(Gwen::Font* pFont)
+        void Allegro::FreeFont(Gwk::Font* pFont)
         {
             if (pFont->data)
             {
@@ -146,15 +146,15 @@ namespace Gwen
             }
         }
 
-        void Allegro::RenderText(Gwen::Font* pFont, Gwen::Point pos,
-                                 const Gwen::String& text)
+        void Allegro::RenderText(Gwk::Font* pFont, Gwk::Point pos,
+                                 const Gwk::String& text)
         {
             ALLEGRO_FONT *afont = (ALLEGRO_FONT*)pFont->data;
             Translate(pos.x, pos.y);
             al_draw_text(afont, m_Color, pos.x, pos.y, ALLEGRO_ALIGN_LEFT, text.c_str());
         }
 
-        Gwen::Point Allegro::MeasureText(Gwen::Font* pFont, const Gwen::String& text)
+        Gwk::Point Allegro::MeasureText(Gwk::Font* pFont, const Gwk::String& text)
         {
             ALLEGRO_FONT* afont = (ALLEGRO_FONT*)pFont->data;
 
@@ -167,14 +167,14 @@ namespace Gwen
             }
 
             if (!afont)
-                return Gwen::Point(0, 0);
+                return Gwk::Point(0, 0);
 
             return Point(al_get_text_width(afont, text.c_str()), al_get_font_line_height(afont));
         }
 
         void Allegro::StartClip()
         {
-            Gwen::Rect rect = ClipRegion();
+            Gwk::Rect rect = ClipRegion();
             al_set_clipping_rectangle(rect.x, rect.y, rect.w, rect.h);
         }
 
@@ -185,7 +185,7 @@ namespace Gwen
                                       al_get_bitmap_width(targ), al_get_bitmap_height(targ));
         }
 
-        void Allegro::LoadTexture(Gwen::Texture* pTexture)
+        void Allegro::LoadTexture(Gwk::Texture* pTexture)
         {
             if (!pTexture)
                 return;
@@ -209,13 +209,13 @@ namespace Gwen
             }
         }
 
-        void Allegro::FreeTexture(Gwen::Texture* pTexture)
+        void Allegro::FreeTexture(Gwk::Texture* pTexture)
         {
             al_destroy_bitmap((ALLEGRO_BITMAP*)pTexture->data);
             pTexture->data = NULL;
         }
 
-        void Allegro::DrawTexturedRect(Gwen::Texture* pTexture, Gwen::Rect rect,
+        void Allegro::DrawTexturedRect(Gwk::Texture* pTexture, Gwk::Rect rect,
                                        float u1, float v1,
                                        float u2, float v2)
         {
@@ -233,8 +233,8 @@ namespace Gwen
                                   0);
         }
 
-        Gwen::Color Allegro::PixelColour(Gwen::Texture* pTexture, unsigned int x, unsigned int y,
-                                         const Gwen::Color& col_default)
+        Gwk::Color Allegro::PixelColour(Gwk::Texture* pTexture, unsigned int x, unsigned int y,
+                                         const Gwk::Color& col_default)
         {
             ALLEGRO_BITMAP* bmp = (ALLEGRO_BITMAP*)pTexture->data;
 
@@ -242,19 +242,19 @@ namespace Gwen
                 return col_default;
 
             ALLEGRO_COLOR col = al_get_pixel(bmp, x, y);
-            Gwen::Color gcol;
+            Gwk::Color gcol;
             al_unmap_rgba(col, &gcol.r, &gcol.g, &gcol.b, &gcol.a);
             return gcol;
         }
 
-        void Allegro::DrawFilledRect(Gwen::Rect rect)
+        void Allegro::DrawFilledRect(Gwk::Rect rect)
         {
             Translate(rect);
             const float fx = rect.x+0.5f, fy = rect.y+0.5f;
             al_draw_filled_rectangle(fx, fy, fx+rect.w, fy+rect.h, m_Color);
         }
 
-        void Allegro::DrawLinedRect(Gwen::Rect rect)
+        void Allegro::DrawLinedRect(Gwk::Rect rect)
         {
             Translate(rect);
             // Width of 0 draws a line, not a rect of width 1.
@@ -262,7 +262,7 @@ namespace Gwen
             al_draw_rectangle(fx, fy, fx+rect.w, fy+rect.h, m_Color, 0.f);
         }
 
-        void Allegro::DrawShavedCornerRect(Gwen::Rect rect, bool bSlight)
+        void Allegro::DrawShavedCornerRect(Gwk::Rect rect, bool bSlight)
         {
             // Draw INSIDE the w/h.
             rect.w -= 1;
@@ -276,10 +276,10 @@ namespace Gwen
 
             if (bSlight)
             {
-                //    DrawFilledRect(Gwen::Rect(rect.x+1, rect.y, rect.w-1, 1));
-                //    DrawFilledRect(Gwen::Rect(rect.x+1, rect.y+rect.h, rect.w-1, 1));
-                //    DrawFilledRect(Gwen::Rect(rect.x, rect.y+1, 1, rect.h-1));
-                //    DrawFilledRect(Gwen::Rect(rect.x+rect.w, rect.y+1, 1, rect.h-1));
+                //    DrawFilledRect(Gwk::Rect(rect.x+1, rect.y, rect.w-1, 1));
+                //    DrawFilledRect(Gwk::Rect(rect.x+1, rect.y+rect.h, rect.w-1, 1));
+                //    DrawFilledRect(Gwk::Rect(rect.x, rect.y+1, 1, rect.h-1));
+                //    DrawFilledRect(Gwk::Rect(rect.x+rect.w, rect.y+1, 1, rect.h-1));
                 
                 ALLEGRO_VERTEX vtx[4*2];
                 ADD_LINE(0, fx+1.f,fy,         fx+fw-1.f,fy   ); // top
@@ -294,10 +294,10 @@ namespace Gwen
                 //    DrawPixel(rect.x+rect.w-1, rect.y+1);
                 //    DrawPixel(rect.x+1, rect.y+rect.h-1);
                 //    DrawPixel(rect.x+rect.w-1, rect.y+rect.h-1);
-                //    DrawFilledRect(Gwen::Rect(rect.x+2, rect.y, rect.w-3, 1));
-                //    DrawFilledRect(Gwen::Rect(rect.x+2, rect.y+rect.h, rect.w-3, 1));
-                //    DrawFilledRect(Gwen::Rect(rect.x, rect.y+2, 1, rect.h-3));
-                //    DrawFilledRect(Gwen::Rect(rect.x+rect.w, rect.y+2, 1, rect.h-3));
+                //    DrawFilledRect(Gwk::Rect(rect.x+2, rect.y, rect.w-3, 1));
+                //    DrawFilledRect(Gwk::Rect(rect.x+2, rect.y+rect.h, rect.w-3, 1));
+                //    DrawFilledRect(Gwk::Rect(rect.x, rect.y+2, 1, rect.h-3));
+                //    DrawFilledRect(Gwk::Rect(rect.x+rect.w, rect.y+2, 1, rect.h-3));
                 
                 ALLEGRO_VERTEX vtx[4*2];
                 ADD_LINE(0, fx+2.f,fy,          fx+fw-2.f,fy    ); // top
@@ -319,18 +319,18 @@ namespace Gwen
         //        al_put_pixel(x+0.5f, y+0.5f, m_Color);
         //    }
 
-        bool Allegro::BeginContext(Gwen::WindowProvider* pWindow)
+        bool Allegro::BeginContext(Gwk::WindowProvider* pWindow)
         {
             al_clear_to_color(al_map_rgba_f(0.f, 0.f, 0.f, 0.f));
             return true;
         }
 
-        bool Allegro::EndContext(Gwen::WindowProvider* pWindow)
+        bool Allegro::EndContext(Gwk::WindowProvider* pWindow)
         {
             return true;
         }
 
-        bool Allegro::PresentContext(Gwen::WindowProvider* pWindow)
+        bool Allegro::PresentContext(Gwk::WindowProvider* pWindow)
         {
             al_flip_display();
             return true;
@@ -343,4 +343,4 @@ namespace Gwen
 
         
     } // Renderer
-} // Gwen
+} // Gwork

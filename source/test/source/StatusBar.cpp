@@ -1,23 +1,30 @@
-#include "Gwen/UnitTest/UnitTest.h"
-#include "Gwen/Controls/StatusBar.h"
-#include "Gwen/Controls/Label.h"
+/*
+ *  Gwork
+ *  Copyright (c) 2010 Facepunch Studios
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
+ */
 
-using namespace Gwen;
+#include "Gwork/Test/Test.h"
+#include "Gwork/Controls/StatusBar.h"
+#include "Gwork/Controls/Label.h"
+
+using namespace Gwk;
 
 class StatusBar : public GUnit
 {
 public:
 
-    GWEN_CONTROL_INLINE(StatusBar, GUnit)
+    GWK_CONTROL_INLINE(StatusBar, GUnit)
     {
         Dock(Docking::Fill);
-        Gwen::Controls::StatusBar* pStatus = new Gwen::Controls::StatusBar(this);
-        Gwen::Controls::Label* pRight = new Gwen::Controls::Label(pStatus);
+        Gwk::Controls::StatusBar* pStatus = new Gwk::Controls::StatusBar(this);
+        Gwk::Controls::Label* pRight = new Gwk::Controls::Label(pStatus);
         pRight->SetText("Label Added to Right");
         pStatus->AddControl(pRight, true);
     }
 
-    void Layout(Gwen::Skin::Base* skin)
+    void Layout(Gwk::Skin::Base* skin)
     {
     }
 

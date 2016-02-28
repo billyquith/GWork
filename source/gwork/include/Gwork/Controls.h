@@ -1,44 +1,51 @@
+/*
+ *  Gwork
+ *  Copyright (c) 2010 Facepunch Studios
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
+ */
+
 #pragma once
-#ifndef GWEN_CONTROLS_H
-#define GWEN_CONTROLS_H
+#ifndef GWK_CONTROLS_H
+#define GWK_CONTROLS_H
 
-#include <Gwen/Controls/Button.h>
-#include <Gwen/Controls/DockBase.h>
-#include <Gwen/Controls/FieldLabel.h>
-#include <Gwen/Controls/FolderPicker.h>
-#include <Gwen/Controls/FilePicker.h>
-#include <Gwen/Controls/GroupBox.h>
-#include <Gwen/Controls/ImagePanel.h>
-#include <Gwen/Controls/ListBox.h>
-#include <Gwen/Controls/PropertyTree.h>
-#include <Gwen/Controls/Property/Checkbox.h>
-#include <Gwen/Controls/Property/ColorSelector.h>
-#include <Gwen/Controls/Property/Folder.h>
-#include <Gwen/Controls/Property/File.h>
-#include <Gwen/Controls/Property/Text.h>
-#include <Gwen/Controls/Property/ComboBox.h>
-#include <Gwen/Controls/StatusBar.h>
-#include <Gwen/Controls/TabControl.h>
-#include <Gwen/Controls/Text.h>
-#include <Gwen/Controls/TextBox.h>
-#include <Gwen/Controls/WindowCanvas.h>
-#include <Gwen/Controls/MenuStrip.h>
-#include <Gwen/Controls/ToolBar.h>
-#include <Gwen/Controls/Splitters.h>
-#include <Gwen/Controls/PageControl.h>
-#include <Gwen/Controls/ProgressBar.h>
-#include <Gwen/Controls/LabelClickable.h>
-#include <Gwen/Controls/VerticalSlider.h>
-#include <Gwen/Controls/HorizontalSlider.h>
+#include <Gwork/Controls/Button.h>
+#include <Gwork/Controls/DockBase.h>
+#include <Gwork/Controls/FieldLabel.h>
+#include <Gwork/Controls/FolderPicker.h>
+#include <Gwork/Controls/FilePicker.h>
+#include <Gwork/Controls/GroupBox.h>
+#include <Gwork/Controls/ImagePanel.h>
+#include <Gwork/Controls/ListBox.h>
+#include <Gwork/Controls/PropertyTree.h>
+#include <Gwork/Controls/Property/Checkbox.h>
+#include <Gwork/Controls/Property/ColorSelector.h>
+#include <Gwork/Controls/Property/Folder.h>
+#include <Gwork/Controls/Property/File.h>
+#include <Gwork/Controls/Property/Text.h>
+#include <Gwork/Controls/Property/ComboBox.h>
+#include <Gwork/Controls/StatusBar.h>
+#include <Gwork/Controls/TabControl.h>
+#include <Gwork/Controls/Text.h>
+#include <Gwork/Controls/TextBox.h>
+#include <Gwork/Controls/WindowCanvas.h>
+#include <Gwork/Controls/MenuStrip.h>
+#include <Gwork/Controls/ToolBar.h>
+#include <Gwork/Controls/Splitters.h>
+#include <Gwork/Controls/PageControl.h>
+#include <Gwork/Controls/ProgressBar.h>
+#include <Gwork/Controls/LabelClickable.h>
+#include <Gwork/Controls/VerticalSlider.h>
+#include <Gwork/Controls/HorizontalSlider.h>
 
-#include <Gwen/Controls/Rectangle.h>
+#include <Gwork/Controls/Rectangle.h>
 
-#include <Gwen/Controls/Dialogs/FileOpen.h>
-#include <Gwen/Controls/Dialogs/FileSave.h>
+#include <Gwork/Controls/Dialogs/FileOpen.h>
+#include <Gwork/Controls/Dialogs/FileSave.h>
 
-#include <Gwen/Anim.h>
+#include <Gwork/Anim.h>
 
-#include <Gwen/Controls/Layout/Position.h>
-#include <Gwen/Controls/Layout/Tile.h>
+#include <Gwork/Controls/Layout/Position.h>
+#include <Gwork/Controls/Layout/Tile.h>
 
-#endif // ifndef GWEN_CONTROLS_H
+#endif // ifndef GWK_CONTROLS_H

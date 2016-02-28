@@ -1,58 +1,59 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2011 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+*  See license in Gwork.h
  */
 
 #pragma once
 
-#ifndef GWEN_RENDERERS_ALLEGRO_H
-#define GWEN_RENDERERS_ALLEGRO_H
+#ifndef GWK_RENDERERS_ALLEGRO_H
+#define GWK_RENDERERS_ALLEGRO_H
 
-#include "Gwen/Gwen.h"
-#include "Gwen/BaseRender.h"
+#include "Gwork/Gwork.h"
+#include "Gwork/BaseRender.h"
 #include <SDL.h>
 
 
-namespace Gwen
+namespace Gwk
 {
     namespace Renderer
     {
         class SDL2CTT;
         
-        class SDL2 : public Gwen::Renderer::Base
+        class SDL2 : public Gwk::Renderer::Base
         {
         public:
 
             SDL2(SDL_Window *window);
             ~SDL2();
 
-            virtual void SetDrawColor(Gwen::Color color) override;
+            virtual void SetDrawColor(Gwk::Color color) override;
 
-            virtual void DrawFilledRect(Gwen::Rect rect) override;
+            virtual void DrawFilledRect(Gwk::Rect rect) override;
 
-            virtual void LoadFont(Gwen::Font* pFont) override;
-            virtual void FreeFont(Gwen::Font* pFont) override;
-            virtual void RenderText(Gwen::Font* pFont, Gwen::Point pos,
-                                    const Gwen::String& text) override;
-            virtual Gwen::Point MeasureText(Gwen::Font* pFont, const Gwen::String& text) override;
+            virtual void LoadFont(Gwk::Font* pFont) override;
+            virtual void FreeFont(Gwk::Font* pFont) override;
+            virtual void RenderText(Gwk::Font* pFont, Gwk::Point pos,
+                                    const Gwk::String& text) override;
+            virtual Gwk::Point MeasureText(Gwk::Font* pFont, const Gwk::String& text) override;
 
             void StartClip() override;
             void EndClip() override;
 
-            void DrawTexturedRect(Gwen::Texture* pTexture, Gwen::Rect pTargetRect,
+            void DrawTexturedRect(Gwk::Texture* pTexture, Gwk::Rect pTargetRect,
                                   float u1 = 0.0f, float v1 = 0.0f,
                                   float u2 = 1.0f, float v2 = 1.0f) override;
-            void        LoadTexture(Gwen::Texture* pTexture) override;
-            void        FreeTexture(Gwen::Texture* pTexture) override;
-            Gwen::Color PixelColour(Gwen::Texture* pTexture, unsigned int x, unsigned int y,
-                                    const Gwen::Color& col_default) override;
+            void        LoadTexture(Gwk::Texture* pTexture) override;
+            void        FreeTexture(Gwk::Texture* pTexture) override;
+            Gwk::Color PixelColour(Gwk::Texture* pTexture, unsigned int x, unsigned int y,
+                                    const Gwk::Color& col_default) override;
 
-            void DrawLinedRect(Gwen::Rect rect) override;
+            void DrawLinedRect(Gwk::Rect rect) override;
 
-            bool BeginContext(Gwen::WindowProvider* pWindow) override;
-            bool EndContext(Gwen::WindowProvider* pWindow) override;
-            bool PresentContext(Gwen::WindowProvider* pWindow) override;
+            bool BeginContext(Gwk::WindowProvider* pWindow) override;
+            bool EndContext(Gwk::WindowProvider* pWindow) override;
+            bool PresentContext(Gwk::WindowProvider* pWindow) override;
 
         protected:
 
@@ -64,4 +65,4 @@ namespace Gwen
 
     }
 }
-#endif // ifndef GWEN_RENDERERS_ALLEGRO_H
+#endif // ifndef GWK_RENDERERS_ALLEGRO_H

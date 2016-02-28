@@ -1,8 +1,8 @@
 
 #include "ControlToolbox.h"
-#include "GwenUtil/ControlFactory.h"
+#include "Gwork/Util/ControlFactory.h"
 
-GWEN_CONTROL_CONSTRUCTOR( ControlToolbox )
+GWK_CONTROL_CONSTRUCTOR( ControlToolbox )
 {
 	SetWidth( 150 );
 	SetMargin( Margin( 5, 5, 5, 5 ) );

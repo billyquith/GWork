@@ -1,26 +1,27 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 #pragma once
-#ifndef GWEN_CONTROLS_SCROLLBARBAR_H
-#define GWEN_CONTROLS_SCROLLBARBAR_H
+#ifndef GWK_CONTROLS_SCROLLBARBAR_H
+#define GWK_CONTROLS_SCROLLBARBAR_H
 
-#include "Gwen/Controls/Dragger.h"
-#include "Gwen/Gwen.h"
-#include "Gwen/Skin.h"
+#include "Gwork/Controls/Dragger.h"
+#include "Gwork/Gwork.h"
+#include "Gwork/Skin.h"
 
-namespace Gwen
+namespace Gwk
 {
     namespace ControlsInternal
     {
-        class GWEN_EXPORT ScrollBarBar : public ControlsInternal::Dragger
+        class GWK_EXPORT ScrollBarBar : public ControlsInternal::Dragger
         {
         public:
 
-            GWEN_CONTROL(ScrollBarBar, ControlsInternal::Dragger);
+            GWK_CONTROL(ScrollBarBar, ControlsInternal::Dragger);
 
             virtual void Render(Skin::Base* skin) override;
             virtual void Layout(Skin::Base* skin) override;
@@ -64,4 +65,4 @@ namespace Gwen
 
     }
 }
-#endif // ifndef GWEN_CONTROLS_SCROLLBARBAR_H
+#endif // ifndef GWK_CONTROLS_SCROLLBARBAR_H

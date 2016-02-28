@@ -1,8 +1,8 @@
 
-#include "GwenUtil/ImportExport.h"
-#include "GwenUtil.h"
+#include "Gwork/Util/ImportExport.h"
+#include "GworkUtil.h"
 
-namespace Gwen {
+namespace Gwk {
 namespace ImportExport {
 
 
@@ -12,7 +12,7 @@ public:
 
     DesignerFormat();
 
-    virtual Gwen::String Name()
+    virtual Gwk::String Name()
     {
         return "Designer";
     }
@@ -22,37 +22,37 @@ public:
         return true;
     }
 
-    virtual void Import(Gwen::Controls::Base* pRoot, const Gwen::String& strFilename);
+    virtual void Import(Gwk::Controls::Base* pRoot, const Gwk::String& strFilename);
 
     virtual bool CanExport()
     {
         return true;
     }
 
-    virtual void Export(Gwen::Controls::Base* pRoot, const Gwen::String& strFilename);
+    virtual void Export(Gwk::Controls::Base* pRoot, const Gwk::String& strFilename);
 
-    void ExportToTree(Gwen::Controls::Base* pRoot, GwenUtil::Data::Tree& tree);
-    void ImportFromTree(Gwen::Controls::Base* pRoot, GwenUtil::Data::Tree& tree);
+    void ExportToTree(Gwk::Controls::Base* pRoot, GwkUtil::Data::Tree& tree);
+    void ImportFromTree(Gwk::Controls::Base* pRoot, GwkUtil::Data::Tree& tree);
 
 };
 
 
-GWEN_IMPORTEXPORT(DesignerFormat);
+GWK_IMPORTEXPORT(DesignerFormat);
 
 
 DesignerFormat::DesignerFormat()
 {
 }
 
-void DesignerFormat::Import(Gwen::Controls::Base* pRoot, const Gwen::String& strFilename)
+void DesignerFormat::Import(Gwk::Controls::Base* pRoot, const Gwk::String& strFilename)
 {
-    GwenUtil::BString strContents;
+    GwkUtil::BString strContents;
 
-    if (!GwenUtil::File::Read(strFilename, strContents))
+    if (!GwkUtil::File::Read(strFilename, strContents))
         return;
 
-    GwenUtil::Data::Tree tree;
-    GwenUtil::Data::Json::Import(tree, strContents);
+    GwkUtil::Data::Tree tree;
+    GwkUtil::Data::Json::Import(tree, strContents);
 
     if (!tree.HasChild("Controls"))
         return;
@@ -60,7 +60,7 @@ void DesignerFormat::Import(Gwen::Controls::Base* pRoot, const Gwen::String& str
     ImportFromTree(pRoot, tree.GetChild("Controls"));
 }
 
-void DesignerFormat::ImportFromTree(Gwen::Controls::Base* root, GwenUtil::Data::Tree& tree)
+void DesignerFormat::ImportFromTree(Gwk::Controls::Base* root, GwkUtil::Data::Tree& tree)
 {
     ControlFactory::Base* rootFactory = ControlFactory::Find("Base");
 
@@ -69,16 +69,16 @@ void DesignerFormat::ImportFromTree(Gwen::Controls::Base* root, GwenUtil::Data::
 
     if (tree.HasChild("Properties"))
     {
-        GwenUtil::Data::Tree& props = tree.GetChild("Properties");
+        GwkUtil::Data::Tree& props = tree.GetChild("Properties");
         
-        GWENUTIL_FOREACH(p, props.Children(), GwenUtil::Data::Tree::List)
+        GWKUTIL_FOREACH(p, props.Children(), GwkUtil::Data::Tree::List)
         {
             ControlFactory::Property *prop = rootFactory->GetProperty(p->Name());
             if (prop)
             {
                 if (p->HasChildren())
                 {
-                    GWENUTIL_FOREACH(pc, p->Children(), GwenUtil::Data::Tree::List)
+                    GWKUTIL_FOREACH(pc, p->Children(), GwkUtil::Data::Tree::List)
                     {
                         prop->NumSet(root, pc->Name(), pc->Var<float>());
                     }
@@ -93,16 +93,16 @@ void DesignerFormat::ImportFromTree(Gwen::Controls::Base* root, GwenUtil::Data::
 
     if (tree.HasChild("Children"))
     {
-        GwenUtil::Data::Tree& childObject = tree.GetChild("Children");
-        GWENUTIL_FOREACH(c, childObject.Children(), GwenUtil::Data::Tree::List)
+        GwkUtil::Data::Tree& childObject = tree.GetChild("Children");
+        GWKUTIL_FOREACH(c, childObject.Children(), GwkUtil::Data::Tree::List)
         {
-            GwenUtil::BString strType = c->ChildValue("Type");
+            GwkUtil::BString strType = c->ChildValue("Type");
             ControlFactory::Base* factory = ControlFactory::Find(strType);
 
             if (!factory)
                 continue;
 
-            Gwen::Controls::Base* pControl = factory->CreateInstance(root);
+            Gwk::Controls::Base* pControl = factory->CreateInstance(root);
 
             if (!pControl)
                 continue;
@@ -119,19 +119,19 @@ void DesignerFormat::ImportFromTree(Gwen::Controls::Base* root, GwenUtil::Data::
     }
 }
 
-void DesignerFormat::Export(Gwen::Controls::Base* pRoot, const Gwen::String& strFilename)
+void DesignerFormat::Export(Gwk::Controls::Base* pRoot, const Gwk::String& strFilename)
 {
-    GwenUtil::Data::Tree tree;
+    GwkUtil::Data::Tree tree;
     ExportToTree(pRoot, tree);
-    GwenUtil::BString strOutput;
+    GwkUtil::BString strOutput;
 
-    if (GwenUtil::Data::Json::Export(tree, strOutput, true))
-        GwenUtil::File::Write(strFilename, strOutput);
+    if (GwkUtil::Data::Json::Export(tree, strOutput, true))
+        GwkUtil::File::Write(strFilename, strOutput);
 }
 
-void DesignerFormat::ExportToTree(Gwen::Controls::Base* root, GwenUtil::Data::Tree& tree)
+void DesignerFormat::ExportToTree(Gwk::Controls::Base* root, GwkUtil::Data::Tree& tree)
 {
-    GwenUtil::Data::Tree* me = &tree;
+    GwkUtil::Data::Tree* me = &tree;
 
     if (strcmp(root->GetTypeName(), "DocumentCanvas") == 0)
         me = &tree.AddChild("Controls");
@@ -145,7 +145,7 @@ void DesignerFormat::ExportToTree(Gwen::Controls::Base* root, GwenUtil::Data::Tr
     //
     if (root->UserData.Exists("ControlFactory"))
     {
-        GwenUtil::Data::Tree& props = me->AddChild("Properties");
+        GwkUtil::Data::Tree& props = me->AddChild("Properties");
         ControlFactory::Base* pCF = root->UserData.Get<ControlFactory::Base*>("ControlFactory");
         // Save the ParentPage
         {
@@ -163,7 +163,7 @@ void DesignerFormat::ExportToTree(Gwen::Controls::Base* root, GwenUtil::Data::Tr
             {
                 if ((*it)->NumCount() > 0)
                 {
-                    GwenUtil::Data::Tree& prop = props.AddChild((*it)->Name());
+                    GwkUtil::Data::Tree& prop = props.AddChild((*it)->Name());
 
                     for (int i = 0; i < (*it)->NumCount(); i++)
                     {
@@ -184,7 +184,7 @@ void DesignerFormat::ExportToTree(Gwen::Controls::Base* root, GwenUtil::Data::Tr
 
     if (!list.list.empty())
     {
-        GwenUtil::Data::Tree& children = me->AddChild("Children");
+        GwkUtil::Data::Tree& children = me->AddChild("Children");
         ControlList::List::iterator it = list.list.begin();
         ControlList::List::iterator itEnd = list.list.end();
 
@@ -198,4 +198,4 @@ void DesignerFormat::ExportToTree(Gwen::Controls::Base* root, GwenUtil::Data::Tr
 
 
 } // namespace ImportExport
-} // namespace Gwen
+} // namespace Gwk

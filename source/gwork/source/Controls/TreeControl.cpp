@@ -1,18 +1,19 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 
-#include "Gwen/Controls/TreeControl.h"
-#include "Gwen/Controls/ScrollControl.h"
-#include "Gwen/Utility.h"
+#include "Gwork/Controls/TreeControl.h"
+#include "Gwork/Controls/ScrollControl.h"
+#include "Gwork/Utility.h"
 
-using namespace Gwen;
-using namespace Gwen::Controls;
+using namespace Gwk;
+using namespace Gwk::Controls;
 
-GWEN_CONTROL_CONSTRUCTOR(TreeControl)
+GWK_CONTROL_CONSTRUCTOR(TreeControl)
 {
     m_TreeControl = this;
     m_ToggleButton->DelayedDelete();
@@ -37,7 +38,7 @@ void TreeControl::Render(Skin::Base* skin)
         skin->DrawTreeControl(this);
 }
 
-void TreeControl::OnChildBoundsChanged(Gwen::Rect /*oldChildBounds*/, Base* /*pChild*/)
+void TreeControl::OnChildBoundsChanged(Gwk::Rect /*oldChildBounds*/, Base* /*pChild*/)
 {
     m_ScrollControl->UpdateScrollBars();
     Invalidate();
@@ -65,6 +66,6 @@ void TreeControl::OnNodeAdded(TreeNode* pNode)
 
 void TreeControl::OnNodeSelection(Controls::Base* /*control*/)
 {
-    if (!m_bAllowMultipleSelection || !Gwen::Input::IsKeyDown(Key::Control))
+    if (!m_bAllowMultipleSelection || !Gwk::Input::IsKeyDown(Key::Control))
         DeselectAll();
 }

@@ -1,21 +1,22 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 
-#include "Gwen/Gwen.h"
+#include "Gwork/Gwork.h"
 #include <stdio.h>
 #include <stdarg.h>
 
 
-namespace Gwen
+namespace Gwk
 {
     // Globals
-    GWEN_EXPORT Controls::Base* HoveredControl = NULL;
-    GWEN_EXPORT Controls::Base* KeyboardFocus = NULL;
-    GWEN_EXPORT Controls::Base* MouseFocus = NULL;
+    GWK_EXPORT Controls::Base* HoveredControl = NULL;
+    GWK_EXPORT Controls::Base* KeyboardFocus = NULL;
+    GWK_EXPORT Controls::Base* MouseFocus = NULL;
 
     namespace Debug
     {
@@ -44,7 +45,7 @@ namespace Gwen
             va_start(s, str);
             vswprintf(strOut, sizeof(strOut), str, s);
             va_end(s);
-            GwenUtil_OutputDebugWideString(strOut);
+            GwkUtil_OutputDebugWideString(strOut);
         }
 
 #endif // ifdef UNICODE

@@ -1,30 +1,31 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 #pragma once
-#ifndef GWEN_CONTROLS_RICHLABEL_H
-#define GWEN_CONTROLS_RICHLABEL_H
+#ifndef GWK_CONTROLS_RICHLABEL_H
+#define GWK_CONTROLS_RICHLABEL_H
 
-#include "Gwen/BaseRender.h"
-#include "Gwen/Controls/Base.h"
-#include "Gwen/Controls/Text.h"
+#include "Gwork/BaseRender.h"
+#include "Gwork/Controls/Base.h"
+#include "Gwork/Controls/Text.h"
 
 
-namespace Gwen
+namespace Gwk
 {
     namespace Controls
     {
-        class GWEN_EXPORT RichLabel : public Controls::Base
+        class GWK_EXPORT RichLabel : public Controls::Base
         {
         public:
 
-            GWEN_CONTROL(RichLabel, Gwen::Controls::Base);
+            GWK_CONTROL(RichLabel, Gwk::Controls::Base);
 
             void AddLineBreak();
-            void AddText(const Gwen::String& text, Gwen::Color color, Gwen::Font* font = NULL);
+            void AddText(const Gwk::String& text, Gwk::Color color, Gwk::Font* font = NULL);
 
             virtual bool SizeToChildren(bool w = true, bool h = true) override;
 
@@ -40,21 +41,21 @@ namespace Gwen
                 }
 
                 unsigned char       type;
-                Gwen::String text;
-                Gwen::Color         color;
-                Gwen::Font        * font;
+                Gwk::String text;
+                Gwk::Color         color;
+                Gwk::Font        * font;
             };
 
 
-            void Layout(Gwen::Skin::Base* skin) override;
-            void SplitLabel(const Gwen::String& text, Gwen::Font* pFont,
+            void Layout(Gwk::Skin::Base* skin) override;
+            void SplitLabel(const Gwk::String& text, Gwk::Font* pFont,
                             const DividedText& txt, int& x, int& y, int& lineheight);
             void CreateNewline(int& x, int& y, int& lineheight);
-            void CreateLabel(const Gwen::String& text, const DividedText& txt, int& x,
+            void CreateLabel(const Gwk::String& text, const DividedText& txt, int& x,
                              int& y, int& lineheight, bool NoSplit);
             void Rebuild();
 
-            void OnBoundsChanged(Gwen::Rect oldBounds) override;
+            void OnBoundsChanged(Gwk::Rect oldBounds) override;
 
             DividedText::List m_TextBlocks;
             bool m_bNeedsRebuild;
@@ -63,4 +64,4 @@ namespace Gwen
 
     }
 }
-#endif // ifndef GWEN_CONTROLS_RICHLABEL_H
+#endif // ifndef GWK_CONTROLS_RICHLABEL_H

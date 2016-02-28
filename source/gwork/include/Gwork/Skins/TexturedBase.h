@@ -1,22 +1,29 @@
+/*
+ *  Gwork
+ *  Copyright (c) 2010 Facepunch Studios
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
+ */
+
 #pragma once
-#ifndef GWEN_SKINS_TEXTUREDBASE_H
-#define GWEN_SKINS_TEXTUREDBASE_H
+#ifndef GWK_SKINS_TEXTUREDBASE_H
+#define GWK_SKINS_TEXTUREDBASE_H
 
-#include "Gwen/Skin.h"
-#include "Gwen/Gwen.h"
-#include "Gwen/Controls/Base.h"
-#include "Gwen/Texture.h"
-#include "Gwen/Skins/Texturing.h"
+#include "Gwork/Skin.h"
+#include "Gwork/Gwork.h"
+#include "Gwork/Controls/Base.h"
+#include "Gwork/Texture.h"
+#include "Gwork/Skins/Texturing.h"
 
-namespace Gwen
+namespace Gwk
 {
     namespace Skin
     {
-        class TexturedBase : public Gwen::Skin::Base
+        class TexturedBase : public Gwk::Skin::Base
         {
             public:
 
-                TexturedBase( Gwen::Renderer::Base* renderer ) : Gwen::Skin::Base( renderer )
+                TexturedBase( Gwk::Renderer::Base* renderer ) : Gwk::Skin::Base( renderer )
                 {
                 }
 
@@ -457,7 +464,7 @@ namespace Gwen
                 }
 
 
-                virtual void DrawButton( Gwen::Controls::Base* control, bool bDepressed, bool bHovered, bool bDisabled )
+                virtual void DrawButton( Gwk::Controls::Base* control, bool bDepressed, bool bHovered, bool bDisabled )
                 {
                     if ( bDisabled )    { return Textures.Input.Button.Disabled.Draw( GetRender(), control->GetRenderBounds() ); }
 
@@ -468,21 +475,21 @@ namespace Gwen
                     Textures.Input.Button.Normal.Draw( GetRender(), control->GetRenderBounds() );
                 }
 
-                virtual void DrawMenuItem( Gwen::Controls::Base* control, bool bSubmenuOpen, bool bChecked )
+                virtual void DrawMenuItem( Gwk::Controls::Base* control, bool bSubmenuOpen, bool bChecked )
                 {
-                    const Gwen::Rect & rect = control->GetRenderBounds();
+                    const Gwk::Rect & rect = control->GetRenderBounds();
 
                     if ( bSubmenuOpen || control->IsHovered() ) { Textures.Menu.Hover.Draw( GetRender(), rect ); }
 
-                    if ( bChecked ) { Textures.Menu.Check.Draw( GetRender(), Gwen::Rect( rect.x + 4, rect.y + 3, 15, 15 ) ); }
+                    if ( bChecked ) { Textures.Menu.Check.Draw( GetRender(), Gwk::Rect( rect.x + 4, rect.y + 3, 15, 15 ) ); }
                 }
 
-                virtual void DrawMenuStrip( Gwen::Controls::Base* control )
+                virtual void DrawMenuStrip( Gwk::Controls::Base* control )
                 {
                     Textures.Menu.Strip.Draw( GetRender(), control->GetRenderBounds() );
                 }
 
-                virtual void DrawMenu( Gwen::Controls::Base* control, bool bPaddingDisabled )
+                virtual void DrawMenu( Gwk::Controls::Base* control, bool bPaddingDisabled )
                 {
                     if ( !bPaddingDisabled )
                     {
@@ -497,9 +504,9 @@ namespace Gwen
                     Textures.Menu.RightArrow.Draw( GetRender(), control->GetRenderBounds() );
                 }
 
-                virtual void DrawShadow( Gwen::Controls::Base* control )
+                virtual void DrawShadow( Gwk::Controls::Base* control )
                 {
-                    Gwen::Rect r = control->GetRenderBounds();
+                    Gwk::Rect r = control->GetRenderBounds();
                     r.x -= 4;
                     r.y -= 4;
                     r.w += 10;
@@ -507,7 +514,7 @@ namespace Gwen
                     Textures.Shadow.Draw( GetRender(), r );
                 }
 
-                virtual void DrawRadioButton( Gwen::Controls::Base* control, bool bSelected, bool bDepressed )
+                virtual void DrawRadioButton( Gwk::Controls::Base* control, bool bSelected, bool bDepressed )
                 {
                     if ( bSelected )
                     {
@@ -526,7 +533,7 @@ namespace Gwen
                 }
 
 
-                virtual void DrawCheckBox( Gwen::Controls::Base* control, bool bSelected, bool bDepressed )
+                virtual void DrawCheckBox( Gwk::Controls::Base* control, bool bSelected, bool bDepressed )
                 {
                     if ( bSelected )
                     {
@@ -544,18 +551,18 @@ namespace Gwen
                     }
                 }
 
-                virtual void DrawGroupBox( Gwen::Controls::Base* control, int textStart, int textHeight, int textWidth )
+                virtual void DrawGroupBox( Gwk::Controls::Base* control, int textStart, int textHeight, int textWidth )
                 {
-                    Gwen::Rect rect = control->GetRenderBounds();
+                    Gwk::Rect rect = control->GetRenderBounds();
                     rect.y += textHeight/2;
                     rect.h -= textHeight/2;
-                    Textures.GroupBox.Draw( GetRender(), rect, Gwen::Colors::White, ~(1<<1) );
+                    Textures.GroupBox.Draw( GetRender(), rect, Gwk::Colors::White, ~(1<<1) );
                     rect.x += textStart + textWidth - 4;
                     rect.w -= textStart + textWidth - 4;
-                    Textures.GroupBox.Draw( GetRender(), rect, Gwen::Colors::White, (1<<1) );
+                    Textures.GroupBox.Draw( GetRender(), rect, Gwk::Colors::White, (1<<1) );
                 }
 
-                virtual void DrawTextBox( Gwen::Controls::Base* control )
+                virtual void DrawTextBox( Gwk::Controls::Base* control )
                 {
                     if ( control->IsDisabled() )
                     { return Textures.TextBox.Disabled.Draw( GetRender(), control->GetRenderBounds() ); }
@@ -566,7 +573,7 @@ namespace Gwen
                     { Textures.TextBox.Normal.Draw( GetRender(), control->GetRenderBounds() ); }
                 }
 
-                virtual void DrawActiveTabButton( Gwen::Controls::Base* control, int dir )
+                virtual void DrawActiveTabButton( Gwk::Controls::Base* control, int dir )
                 {
                     if ( dir == Docking::Bottom )   { return Textures.Tab.Bottom.Active.Draw( GetRender(), control->GetRenderBounds() + Rect( 0, -8, 0, 8 ) ); }
 
@@ -577,7 +584,7 @@ namespace Gwen
                     if ( dir == Docking::Right )    { return Textures.Tab.Right.Active.Draw( GetRender(), control->GetRenderBounds() + Rect( -8, 0, 8, 0 ) ); }
                 }
 
-                virtual void DrawTabButton( Gwen::Controls::Base* control, bool bActive, int dir )
+                virtual void DrawTabButton( Gwk::Controls::Base* control, bool bActive, int dir )
                 {
                     if ( bActive )
                     { return DrawActiveTabButton( control, dir ); }
@@ -591,12 +598,12 @@ namespace Gwen
                     if ( dir == Docking::Right )    { return Textures.Tab.Right.Inactive.Draw( GetRender(), control->GetRenderBounds() ); }
                 }
 
-                virtual void DrawTabControl( Gwen::Controls::Base* control )
+                virtual void DrawTabControl( Gwk::Controls::Base* control )
                 {
                     Textures.Tab.Control.Draw( GetRender(), control->GetRenderBounds() );
                 }
 
-                virtual void DrawTabTitleBar( Gwen::Controls::Base* control )
+                virtual void DrawTabTitleBar( Gwk::Controls::Base* control )
                 {
                     Textures.Tab.HeaderBar.Draw( GetRender(), control->GetRenderBounds() );
                 }
@@ -606,20 +613,20 @@ namespace Gwen
                     Textures.Panel.Normal.Draw( GetRender(), control->GetRenderBounds() );
                 }
 
-                virtual void DrawWindow( Gwen::Controls::Base* control, int topHeight, bool inFocus )
+                virtual void DrawWindow( Gwk::Controls::Base* control, int topHeight, bool inFocus )
                 {
                     if ( inFocus ) { Textures.Window.Normal.Draw( GetRender(), control->GetRenderBounds() ); }
                     else { Textures.Window.Inactive.Draw( GetRender(), control->GetRenderBounds() ); }
                 }
 
-                virtual void DrawHighlight( Gwen::Controls::Base* control )
+                virtual void DrawHighlight( Gwk::Controls::Base* control )
                 {
-                    Gwen::Rect rect = control->GetRenderBounds();
-                    GetRender()->SetDrawColor( Gwen::Color( 255, 100, 255, 255 ) );
+                    Gwk::Rect rect = control->GetRenderBounds();
+                    GetRender()->SetDrawColor( Gwk::Color( 255, 100, 255, 255 ) );
                     GetRender()->DrawFilledRect( rect );
                 }
 
-                virtual void DrawScrollBar( Gwen::Controls::Base* control, bool isHorizontal, bool bDepressed )
+                virtual void DrawScrollBar( Gwk::Controls::Base* control, bool isHorizontal, bool bDepressed )
                 {
                     if ( isHorizontal )
                     { Textures.Scroller.TrackH.Draw( GetRender(), control->GetRenderBounds() ); }
@@ -656,10 +663,10 @@ namespace Gwen
                 }
 
 
-                virtual void DrawProgressBar( Gwen::Controls::Base* control, bool isHorizontal, float progress )
+                virtual void DrawProgressBar( Gwk::Controls::Base* control, bool isHorizontal, float progress )
                 {
-                    Gwen::Rect rect = control->GetRenderBounds();
-                    Gwen::Color FillColour( 0, 211, 40, 255 );
+                    Gwk::Rect rect = control->GetRenderBounds();
+                    Gwk::Color FillColour( 0, 211, 40, 255 );
 
                     if ( isHorizontal )
                     {
@@ -679,12 +686,12 @@ namespace Gwen
                     }
                 }
 
-                virtual void DrawListBox( Gwen::Controls::Base* control )
+                virtual void DrawListBox( Gwk::Controls::Base* control )
                 {
                     return Textures.Input.ListBox.Background.Draw( GetRender(), control->GetRenderBounds() );
                 }
 
-                virtual void DrawListBoxLine( Gwen::Controls::Base* control, bool bSelected, bool bEven )
+                virtual void DrawListBoxLine( Gwk::Controls::Base* control, bool bSelected, bool bEven )
                 {
                     if ( bSelected )
                     {
@@ -703,7 +710,7 @@ namespace Gwen
                     return Textures.Input.ListBox.OddLine.Draw( GetRender(), control->GetRenderBounds() );
                 }
 
-                void DrawSliderNotchesH( Gwen::Rect rect, int numNotches, int dist )
+                void DrawSliderNotchesH( Gwk::Rect rect, int numNotches, int dist )
                 {
                     if ( numNotches == 0 ) { return; }
 
@@ -711,11 +718,11 @@ namespace Gwen
 
                     for ( int i = 0; i < numNotches + 1; i++ )
                     {
-                        GetRender()->DrawFilledRect( Gwen::Rect( rect.x + iSpacing * i, rect.y + dist - 2, 1, 5 ) );
+                        GetRender()->DrawFilledRect( Gwk::Rect( rect.x + iSpacing * i, rect.y + dist - 2, 1, 5 ) );
                     }
                 }
 
-                void DrawSliderNotchesV( Gwen::Rect rect, int numNotches, int dist )
+                void DrawSliderNotchesV( Gwk::Rect rect, int numNotches, int dist )
                 {
                     if ( numNotches == 0 ) { return; }
 
@@ -723,35 +730,35 @@ namespace Gwen
 
                     for ( int i = 0; i < numNotches + 1; i++ )
                     {
-                        GetRender()->DrawFilledRect( Gwen::Rect( rect.x + dist - 1, rect.y + iSpacing * i, 5, 1 ) );
+                        GetRender()->DrawFilledRect( Gwk::Rect( rect.x + dist - 1, rect.y + iSpacing * i, 5, 1 ) );
                     }
                 }
 
-                virtual void DrawSlider( Gwen::Controls::Base* control, bool bIsHorizontal, int numNotches, int barSize )
+                virtual void DrawSlider( Gwk::Controls::Base* control, bool bIsHorizontal, int numNotches, int barSize )
                 {
                     if ( bIsHorizontal )
                     {
-                        Gwen::Rect rect = control->GetRenderBounds();
+                        Gwk::Rect rect = control->GetRenderBounds();
                         rect.x += barSize/2;
                         rect.w -= barSize;
                         rect.y += rect.h/2 - 1;
                         rect.h = 1;
-                        GetRender()->SetDrawColor( Gwen::Color( 0, 0, 0, 100 ) );
+                        GetRender()->SetDrawColor( Gwk::Color( 0, 0, 0, 100 ) );
                         DrawSliderNotchesH( rect, numNotches, barSize/2 );
                         return GetRender()->DrawFilledRect( rect );
                     }
 
-                    Gwen::Rect rect = control->GetRenderBounds();
+                    Gwk::Rect rect = control->GetRenderBounds();
                     rect.y += barSize/2;
                     rect.h -= barSize;
                     rect.x += rect.w/2 - 1;
                     rect.w = 1;
-                    GetRender()->SetDrawColor( Gwen::Color( 0, 0, 0, 100 ) );
+                    GetRender()->SetDrawColor( Gwk::Color( 0, 0, 0, 100 ) );
                     DrawSliderNotchesV( rect, numNotches, barSize * 0.4 );
                     return GetRender()->DrawFilledRect( rect );
                 }
 
-                virtual void DrawComboBox( Gwen::Controls::Base* control, bool bDown, bool bMenuOpen )
+                virtual void DrawComboBox( Gwk::Controls::Base* control, bool bDown, bool bMenuOpen )
                 {
                     if (control->IsDisabled())
                         return Textures.Input.ComboBox.Disabled.Draw( GetRender(), control->GetRenderBounds() );
@@ -765,9 +772,9 @@ namespace Gwen
                     Textures.Input.ComboBox.Normal.Draw( GetRender(), control->GetRenderBounds() );
                 }
 
-                virtual void DrawKeyboardHighlight( Gwen::Controls::Base* control, const Gwen::Rect & r, int iOffset )
+                virtual void DrawKeyboardHighlight( Gwk::Controls::Base* control, const Gwk::Rect & r, int iOffset )
                 {
-                    Gwen::Rect rect = r;
+                    Gwk::Rect rect = r;
                     rect.x += iOffset;
                     rect.y += iOffset;
                     rect.w -= iOffset * 2;
@@ -777,7 +784,7 @@ namespace Gwen
 
                     for ( int i = 0; i < rect.w/2; i++ )
                     {
-                        m_Render->SetDrawColor( Gwen::Color( 0, 0, 0, 255 ) );
+                        m_Render->SetDrawColor( Gwk::Color( 0, 0, 0, 255 ) );
 
                         if ( !skip )
                         {
@@ -792,7 +799,7 @@ namespace Gwen
 
                     for ( int i = 0; i < rect.h/2; i++ )
                     {
-                        GetRender()->SetDrawColor( Gwen::Color( 0, 0, 0, 255 ) );
+                        GetRender()->SetDrawColor( Gwk::Color( 0, 0, 0, 255 ) );
 
                         if ( !skip )
                         {
@@ -804,12 +811,12 @@ namespace Gwen
                     }
                 }
 
-                virtual void DrawToolTip( Gwen::Controls::Base* control )
+                virtual void DrawToolTip( Gwk::Controls::Base* control )
                 {
                     return Textures.Tooltip.Draw( GetRender(), control->GetRenderBounds() );
                 }
 
-                virtual void DrawScrollButton( Gwen::Controls::Base* control, int iDirection, bool bDepressed, bool bHovered, bool bDisabled )
+                virtual void DrawScrollButton( Gwk::Controls::Base* control, int iDirection, bool bDepressed, bool bHovered, bool bDisabled )
                 {
                     int i = 0;
 
@@ -831,7 +838,7 @@ namespace Gwen
                     return Textures.Scroller.Button.Normal[i].Draw( GetRender(), control->GetRenderBounds() );
                 }
 
-                virtual void DrawComboDownArrow( Gwen::Controls::Base* control, bool bHovered, bool bDown, bool bMenuOpen, bool bDisabled )
+                virtual void DrawComboDownArrow( Gwk::Controls::Base* control, bool bHovered, bool bDown, bool bMenuOpen, bool bDisabled )
                 {
                     if ( bDisabled )
                     { return Textures.Input.ComboBox.Button.Disabled.Draw( GetRender(), control->GetRenderBounds() ); }
@@ -845,7 +852,7 @@ namespace Gwen
                     Textures.Input.ComboBox.Button.Normal.Draw( GetRender(), control->GetRenderBounds() );
                 }
 
-                virtual void DrawNumericUpDownButton( Gwen::Controls::Base* control, bool bDepressed, bool bUp )
+                virtual void DrawNumericUpDownButton( Gwk::Controls::Base* control, bool bDepressed, bool bUp )
                 {
                     if ( bUp )
                     {
@@ -874,7 +881,7 @@ namespace Gwen
 
                 virtual void DrawTreeButton( Controls::Base* control, bool bOpen )
                 {
-                    Gwen::Rect rect = control->GetRenderBounds();
+                    Gwk::Rect rect = control->GetRenderBounds();
 
                     if ( bOpen )
                     { Textures.Tree.Minus.Draw( GetRender(), rect ); }
@@ -882,22 +889,22 @@ namespace Gwen
                     { Textures.Tree.Plus.Draw( GetRender(), rect ); }
                 }
 
-                void DrawColorDisplay( Controls::Base* control, Gwen::Color color )
+                void DrawColorDisplay( Controls::Base* control, Gwk::Color color )
                 {
-                    Gwen::Rect rect = control->GetRenderBounds();
+                    Gwk::Rect rect = control->GetRenderBounds();
 
                     if ( color.a != 255 )
                     {
-                        GetRender()->SetDrawColor( Gwen::Color( 255, 255, 255, 255 ) );
+                        GetRender()->SetDrawColor( Gwk::Color( 255, 255, 255, 255 ) );
                         GetRender()->DrawFilledRect( rect );
-                        GetRender()->SetDrawColor( Gwen::Color( 128, 128, 128, 128 ) );
-                        GetRender()->DrawFilledRect( Gwen::Rect( 0, 0, rect.w/2, rect.h/2 ) );
-                        GetRender()->DrawFilledRect( Gwen::Rect( rect.w/2, rect.h/2, rect.w/2, rect.h/2 ) );
+                        GetRender()->SetDrawColor( Gwk::Color( 128, 128, 128, 128 ) );
+                        GetRender()->DrawFilledRect( Gwk::Rect( 0, 0, rect.w/2, rect.h/2 ) );
+                        GetRender()->DrawFilledRect( Gwk::Rect( rect.w/2, rect.h/2, rect.w/2, rect.h/2 ) );
                     }
 
                     GetRender()->SetDrawColor( color );
                     GetRender()->DrawFilledRect( rect );
-                    GetRender()->SetDrawColor( Gwen::Color( 0, 0, 0, 255 ) );
+                    GetRender()->SetDrawColor( Gwk::Color( 0, 0, 0, 255 ) );
                     GetRender()->DrawLinedRect( rect );
                 }
 
@@ -905,15 +912,15 @@ namespace Gwen
                 {
                     if ( !control->ShouldDrawBackground() ) { return; }
 
-                    Gwen::Rect rect = control->GetRenderBounds();
+                    Gwk::Rect rect = control->GetRenderBounds();
                     GetRender()->SetDrawColor( Colors.ModalBackground );
                     GetRender()->DrawFilledRect( rect );
                 }
 
                 virtual void DrawMenuDivider( Controls::Base* control )
                 {
-                    Gwen::Rect rect = control->GetRenderBounds();
-                    GetRender()->SetDrawColor( Gwen::Color( 0, 0, 0, 100 ) );
+                    Gwk::Rect rect = control->GetRenderBounds();
+                    GetRender()->SetDrawColor( Gwk::Color( 0, 0, 0, 100 ) );
                     GetRender()->DrawFilledRect( rect );
                 }
 
@@ -922,11 +929,11 @@ namespace Gwen
                     Textures.Tree.Background.Draw( GetRender(), control->GetRenderBounds() );
                 }
 
-                virtual void DrawWindowCloseButton( Gwen::Controls::Base* control, bool bDepressed, bool bHovered, bool bDisabled )
+                virtual void DrawWindowCloseButton( Gwk::Controls::Base* control, bool bDepressed, bool bHovered, bool bDisabled )
                 {
-                    Gwen::Rect r = Gwen::Rect( control->GetRenderBounds().x, control->GetRenderBounds().y, 31, 31 );
+                    Gwk::Rect r = Gwk::Rect( control->GetRenderBounds().x, control->GetRenderBounds().y, 31, 31 );
 
-                    if ( bDisabled )    { return Textures.Window.Close.Draw( GetRender(), r, Gwen::Color( 255, 255, 255, 50 ) ); }
+                    if ( bDisabled )    { return Textures.Window.Close.Draw( GetRender(), r, Gwk::Color( 255, 255, 255, 50 ) ); }
 
                     if ( bDepressed )   { return Textures.Window.Close_Down.Draw( GetRender(), r ); }
 
@@ -935,13 +942,13 @@ namespace Gwen
                     Textures.Window.Close.Draw( GetRender(), r );
                 }
 
-                virtual void DrawWindowMaximizeButton( Gwen::Controls::Base* control, bool bDepressed, bool bHovered, bool bDisabled, bool bMaximized )
+                virtual void DrawWindowMaximizeButton( Gwk::Controls::Base* control, bool bDepressed, bool bHovered, bool bDisabled, bool bMaximized )
                 {
-                    Gwen::Rect r = Gwen::Rect( control->GetRenderBounds().x, control->GetRenderBounds().y, 31, 31 );
+                    Gwk::Rect r = Gwk::Rect( control->GetRenderBounds().x, control->GetRenderBounds().y, 31, 31 );
 
                     if ( !bMaximized )
                     {
-                        if ( bDisabled )    { return Textures.Window.Maxi.Draw( GetRender(), r, Gwen::Color( 255, 255, 255, 50 ) ); }
+                        if ( bDisabled )    { return Textures.Window.Maxi.Draw( GetRender(), r, Gwk::Color( 255, 255, 255, 50 ) ); }
 
                         if ( bDepressed )   { return Textures.Window.Maxi_Down.Draw( GetRender(), r ); }
 
@@ -950,7 +957,7 @@ namespace Gwen
                         return Textures.Window.Maxi.Draw( GetRender(), r );
                     }
 
-                    if ( bDisabled )    { return Textures.Window.Restore.Draw( GetRender(), r, Gwen::Color( 255, 255, 255, 50 ) ); }
+                    if ( bDisabled )    { return Textures.Window.Restore.Draw( GetRender(), r, Gwk::Color( 255, 255, 255, 50 ) ); }
 
                     if ( bDepressed )   { return Textures.Window.Restore_Down.Draw( GetRender(), r ); }
 
@@ -959,11 +966,11 @@ namespace Gwen
                     return Textures.Window.Restore.Draw( GetRender(), r );
                 }
 
-                virtual void DrawWindowMinimizeButton( Gwen::Controls::Base* control, bool bDepressed, bool bHovered, bool bDisabled )
+                virtual void DrawWindowMinimizeButton( Gwk::Controls::Base* control, bool bDepressed, bool bHovered, bool bDisabled )
                 {
-                    Gwen::Rect r = Gwen::Rect( control->GetRenderBounds().x, control->GetRenderBounds().y, 31, 31 );
+                    Gwk::Rect r = Gwk::Rect( control->GetRenderBounds().x, control->GetRenderBounds().y, 31, 31 );
 
-                    if ( bDisabled )    { return Textures.Window.Mini.Draw( GetRender(), r, Gwen::Color( 255, 255, 255, 100 ) ); }
+                    if ( bDisabled )    { return Textures.Window.Mini.Draw( GetRender(), r, Gwk::Color( 255, 255, 255, 100 ) ); }
 
                     if ( bDepressed )   { return Textures.Window.Mini_Down.Draw( GetRender(), r ); }
 
@@ -973,7 +980,7 @@ namespace Gwen
                 }
 
 
-                virtual void DrawSlideButton( Gwen::Controls::Base* control, bool bDepressed, bool bHorizontal )
+                virtual void DrawSlideButton( Gwk::Controls::Base* control, bool bDepressed, bool bHorizontal )
                 {
                     if ( !bHorizontal )
                     {
@@ -999,7 +1006,7 @@ namespace Gwen
                 {
                     if ( bSelected )
                     {
-                        Textures.Selection.Draw( GetRender(), Gwen::Rect( 17, 0, iLabelWidth + 2, iLabelHeight - 1 ) );
+                        Textures.Selection.Draw( GetRender(), Gwk::Rect( 17, 0, iLabelWidth + 2, iLabelHeight - 1 ) );
                     }
 
                     Base::DrawTreeNode( ctrl, bOpen, bSelected, iLabelHeight, iLabelWidth, iHalfWay, iLastBranch, bIsRoot );

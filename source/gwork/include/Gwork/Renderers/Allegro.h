@@ -1,59 +1,60 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2011 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+*  See license in Gwork.h
  */
 
 #pragma once
 
-#ifndef GWEN_RENDERERS_ALLEGRO_H
-#define GWEN_RENDERERS_ALLEGRO_H
+#ifndef GWK_RENDERERS_ALLEGRO_H
+#define GWK_RENDERERS_ALLEGRO_H
 
-#include "Gwen/Gwen.h"
-#include "Gwen/BaseRender.h"
+#include "Gwork/Gwork.h"
+#include "Gwork/BaseRender.h"
 #include <allegro5/allegro5.h>
 
-namespace Gwen
+namespace Gwk
 {
     namespace Renderer
     {
         class AllegroCTT;
         
-        class Allegro : public Gwen::Renderer::Base
+        class Allegro : public Gwk::Renderer::Base
         {
         public:
 
             Allegro();
             ~Allegro();
 
-            virtual void SetDrawColor(Gwen::Color color);
+            virtual void SetDrawColor(Gwk::Color color);
 
-            virtual void DrawFilledRect(Gwen::Rect rect);
+            virtual void DrawFilledRect(Gwk::Rect rect);
 
-            virtual void LoadFont(Gwen::Font* pFont);
-            virtual void FreeFont(Gwen::Font* pFont);
-            virtual void RenderText(Gwen::Font* pFont, Gwen::Point pos,
-                                    const Gwen::String& text);
-            virtual Gwen::Point MeasureText(Gwen::Font* pFont, const Gwen::String& text);
+            virtual void LoadFont(Gwk::Font* pFont);
+            virtual void FreeFont(Gwk::Font* pFont);
+            virtual void RenderText(Gwk::Font* pFont, Gwk::Point pos,
+                                    const Gwk::String& text);
+            virtual Gwk::Point MeasureText(Gwk::Font* pFont, const Gwk::String& text);
 
             void StartClip();
             void EndClip();
 
-            void DrawTexturedRect(Gwen::Texture* pTexture, Gwen::Rect pTargetRect,
+            void DrawTexturedRect(Gwk::Texture* pTexture, Gwk::Rect pTargetRect,
                                   float u1 = 0.0f, float v1 = 0.0f,
                                   float u2 = 1.0f, float v2 = 1.0f);
-            void        LoadTexture(Gwen::Texture* pTexture);
-            void        FreeTexture(Gwen::Texture* pTexture);
-            Gwen::Color PixelColour(Gwen::Texture* pTexture, unsigned int x, unsigned int y,
-                                    const Gwen::Color& col_default);
+            void        LoadTexture(Gwk::Texture* pTexture);
+            void        FreeTexture(Gwk::Texture* pTexture);
+            Gwk::Color PixelColour(Gwk::Texture* pTexture, unsigned int x, unsigned int y,
+                                    const Gwk::Color& col_default);
 
-            void DrawLinedRect(Gwen::Rect rect);
-            void DrawShavedCornerRect(Gwen::Rect rect, bool bSlight = false);
+            void DrawLinedRect(Gwk::Rect rect);
+            void DrawShavedCornerRect(Gwk::Rect rect, bool bSlight = false);
             // void DrawPixel(int x, int y);
 
-            bool BeginContext(Gwen::WindowProvider* pWindow);
-            bool EndContext(Gwen::WindowProvider* pWindow);
-            bool PresentContext(Gwen::WindowProvider* pWindow);
+            bool BeginContext(Gwk::WindowProvider* pWindow);
+            bool EndContext(Gwk::WindowProvider* pWindow);
+            bool PresentContext(Gwk::WindowProvider* pWindow);
 
             // Cache to texture.
             ICacheToTexture* GetCTT();
@@ -67,4 +68,4 @@ namespace Gwen
 
     }
 }
-#endif // ifndef GWEN_RENDERERS_ALLEGRO_H
+#endif // ifndef GWK_RENDERERS_ALLEGRO_H

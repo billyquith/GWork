@@ -1,15 +1,16 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2012 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2015-2016 Billy Quith
+ *  See license in Gwork.h
  */
 
 
-#include "Gwen/Gwen.h"
-#include "Gwen/ControlList.h"
+#include "Gwork/Gwork.h"
+#include "Gwork/ControlList.h"
 
-using namespace Gwen;
-using namespace Gwen::Controls;
+using namespace Gwk;
+using namespace Gwk::Controls;
 
 void ControlList::Enable()
 {
@@ -43,7 +44,7 @@ void ControlList::Hide()
     }
 }
 
-Gwen::String ControlList::GetValue()
+Gwk::String ControlList::GetValue()
 {
     for (List::const_iterator it = list.begin(); it != list.end(); ++it)
     {
@@ -53,7 +54,7 @@ Gwen::String ControlList::GetValue()
     return "";
 }
 
-void ControlList::SetValue(const Gwen::String& value)
+void ControlList::SetValue(const Gwk::String& value)
 {
     for (List::const_iterator it = list.begin(); it != list.end(); ++it)
     {
@@ -61,7 +62,7 @@ void ControlList::SetValue(const Gwen::String& value)
     }
 }
 
-void ControlList::MoveBy(const Gwen::Point& point)
+void ControlList::MoveBy(const Gwk::Point& point)
 {
     for (List::const_iterator it = list.begin(); it != list.end(); ++it)
     {
@@ -77,9 +78,9 @@ void ControlList::DoAction()
     }
 }
 
-void ControlList::SetActionInternal(Gwen::Event::Handler* pObject,
-                                    void ( Gwen::Event::Handler::*f )(
-                                        Gwen::Event::Info), const Gwen::Event::Packet& packet)
+void ControlList::SetActionInternal(Gwk::Event::Handler* pObject,
+                                    void ( Gwk::Event::Handler::*f )(
+                                        Gwk::Event::Info), const Gwk::Event::Packet& packet)
 {
     for (List::const_iterator it = list.begin(); it != list.end(); ++it)
     {

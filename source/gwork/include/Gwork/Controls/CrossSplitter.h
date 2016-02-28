@@ -1,20 +1,27 @@
+/*
+ *  Gwork
+ *  Copyright (c) 2010 Facepunch Studios
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
+ */
+
 #pragma once
-#ifndef GWEN_CONTROLS_CROSSSPLITTER_H
-#define GWEN_CONTROLS_CROSSSPLITTER_H
+#ifndef GWK_CONTROLS_CROSSSPLITTER_H
+#define GWK_CONTROLS_CROSSSPLITTER_H
 
-#include "Gwen/Gwen.h"
-#include "Gwen/Controls/Base.h"
-#include "Gwen/Controls/SplitterBar.h"
+#include "Gwork/Gwork.h"
+#include "Gwork/Controls/Base.h"
+#include "Gwork/Controls/SplitterBar.h"
 
-namespace Gwen
+namespace Gwk
 {
     namespace Controls
     {
-        class GWEN_EXPORT CrossSplitter : public Controls::Base
+        class GWK_EXPORT CrossSplitter : public Controls::Base
         {
         public:
 
-            GWEN_CONTROL(CrossSplitter, Controls::Base);
+            GWK_CONTROL(CrossSplitter, Controls::Base);
 
             void Layout(Skin::Base* skin) override;
 
@@ -65,12 +72,12 @@ namespace Gwen
 
             char m_iZoomedSection;
 
-            Gwen::Event::Caller onZoomed;
-            Gwen::Event::Caller onUnZoomed;
-            Gwen::Event::Caller onZoomChange;
+            Gwk::Event::Caller onZoomed;
+            Gwk::Event::Caller onUnZoomed;
+            Gwk::Event::Caller onZoomChange;
         };
 
 
     }
 }
-#endif // ifndef GWEN_CONTROLS_CROSSSPLITTER_H
+#endif // ifndef GWK_CONTROLS_CROSSSPLITTER_H

@@ -1,11 +1,12 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
-#include "Gwen/ToolTip.h"
-#include "Gwen/Utility.h"
+#include "Gwork/ToolTip.h"
+#include "Gwork/Utility.h"
 
 #include <cstdio>
 
@@ -14,7 +15,7 @@
 #include <locale>       // Narrow/widen
 #include <codecvt>      // Narrow/widen - C++11
 
-namespace Gwen {
+namespace Gwk {
 namespace Utility {
 
         //  This section from: https://github.com/bkaradzic/bx/blob/master/include/bx/string.h
@@ -102,7 +103,7 @@ namespace Utility {
             return out;
         }
 
-        std::wstring Widen(const Gwen::String &nstr)
+        std::wstring Widen(const Gwk::String &nstr)
         {
             // UTF-8 to UTF-16 (C++11)
             // See: http://en.cppreference.com/w/cpp/locale/codecvt_utf8_utf16
@@ -114,13 +115,13 @@ namespace Utility {
             return wstr;
         }
 
-        Gwen::String Narrow(const std::wstring &wstr)
+        Gwk::String Narrow(const std::wstring &wstr)
         {
             // wide to UTF-8 (C++11)
             // See: http://en.cppreference.com/w/cpp/locale/wstring_convert/to_bytes
 
             std::wstring_convert< std::codecvt_utf8<wchar_t> > conv1;
-            Gwen::String u8str = conv1.to_bytes(wstr);
+            Gwk::String u8str = conv1.to_bytes(wstr);
 
             return u8str;
         }
@@ -136,7 +137,7 @@ namespace Utility {
             }
         }
 
-        void Strings::Split(const Gwen::String& str, const Gwen::String& seperator,
+        void Strings::Split(const Gwk::String& str, const Gwk::String& seperator,
             Strings::List& outbits, bool bLeave)
         {
             size_t iOffset = 0;
@@ -157,7 +158,7 @@ namespace Utility {
             outbits.push_back(str.substr(iOffset, iLength-iOffset));
         }
 
-        int Strings::To::Int(const Gwen::String& str)
+        int Strings::To::Int(const Gwk::String& str)
         {
             if (str == "")
                 return 0;
@@ -165,7 +166,7 @@ namespace Utility {
             return atoi(str.c_str());
         }
 
-        float Strings::To::Float(const Gwen::String& str)
+        float Strings::To::Float(const Gwk::String& str)
         {
             if (str == "")
                 return 0.0f;
@@ -173,7 +174,7 @@ namespace Utility {
             return static_cast<float>( atof(str.c_str()) );
         }
 
-        bool Strings::To::Bool(const Gwen::String& str)
+        bool Strings::To::Bool(const Gwk::String& str)
         {
             if (str.size() == 0)
                 return false;
@@ -190,7 +191,7 @@ namespace Utility {
             return true;
         }
 
-        bool Strings::To::Floats(const Gwen::String& str, float* f, size_t iCount)
+        bool Strings::To::Floats(const Gwk::String& str, float* f, size_t iCount)
         {
             Strings::List lst;
             Strings::Split(str, " ", lst);
@@ -235,19 +236,19 @@ namespace Utility {
             return true;
         }
 
-        void Strings::ToUpper(Gwen::String& str)
+        void Strings::ToUpper(Gwk::String& str)
         {
             transform(str.begin(), str.end(), str.begin(), toupper);
         }
 
-        void Strings::Strip(Gwen::String& str, const Gwen::String& chars)
+        void Strings::Strip(Gwk::String& str, const Gwk::String& chars)
         {
-            Gwen::String Source = str;
+            Gwk::String Source = str;
             str = "";
 
             for (unsigned int i = 0; i < Source.length(); i++)
             {
-                if (chars.find(Source[i]) != Gwen::String::npos)
+                if (chars.find(Source[i]) != Gwk::String::npos)
                     continue;
 
                 str += Source[i];
@@ -255,7 +256,7 @@ namespace Utility {
         }
 
 
-        Gwen::Rect ClampRectToRect(Gwen::Rect inside, Gwen::Rect outside, bool clampSize)
+        Gwk::Rect ClampRectToRect(Gwk::Rect inside, Gwk::Rect outside, bool clampSize)
         {
             if (inside.x < outside.x)
                 inside.x = outside.x;

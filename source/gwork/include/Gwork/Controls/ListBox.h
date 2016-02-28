@@ -1,29 +1,30 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 #pragma once
-#ifndef GWEN_CONTROLS_LISTBOX_H
-#define GWEN_CONTROLS_LISTBOX_H
+#ifndef GWK_CONTROLS_LISTBOX_H
+#define GWK_CONTROLS_LISTBOX_H
 
-#include "Gwen/Gwen.h"
-#include "Gwen/Controls/Layout/Table.h"
-#include "Gwen/Controls/ScrollControl.h"
+#include "Gwork/Gwork.h"
+#include "Gwork/Controls/Layout/Table.h"
+#include "Gwork/Controls/ScrollControl.h"
 
 
-namespace Gwen
+namespace Gwk
 {
     namespace Controls
     {
         class ScrollControl;
 
-        class GWEN_EXPORT ListBox : public ScrollControl
+        class GWK_EXPORT ListBox : public ScrollControl
         {
         public:
 
-            GWEN_CONTROL(ListBox, ScrollControl);
+            GWK_CONTROL(ListBox, ScrollControl);
 
             typedef std::list<Layout::TableRow*> Rows;
 
@@ -52,12 +53,12 @@ namespace Gwen
             }
 
             virtual Layout::TableRow* GetSelectedRow();
-            virtual Gwen::String      GetSelectedRowName();
+            virtual Gwk::String      GetSelectedRowName();
 
-            virtual void SetSelectedRow(Gwen::Controls::Base* pRow, bool bClearOthers = true);
+            virtual void SetSelectedRow(Gwk::Controls::Base* pRow, bool bClearOthers = true);
             virtual void SelectByString(const String& string, bool bClearOthers = true);
 
-            Gwen::Event::Caller onRowSelected;
+            Gwk::Event::Caller onRowSelected;
 
             Controls::Layout::Table* GetTable()
             {
@@ -92,4 +93,4 @@ namespace Gwen
 
     }
 }
-#endif // ifndef GWEN_CONTROLS_LISTBOX_H
+#endif // ifndef GWK_CONTROLS_LISTBOX_H

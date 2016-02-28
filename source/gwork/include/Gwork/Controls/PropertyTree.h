@@ -1,22 +1,23 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 #pragma once
-#ifndef GWEN_CONTROLS_PROPERTYTREE_H
-#define GWEN_CONTROLS_PROPERTYTREE_H
+#ifndef GWK_CONTROLS_PROPERTYTREE_H
+#define GWK_CONTROLS_PROPERTYTREE_H
 
-#include "Gwen/Controls/Base.h"
-#include "Gwen/Controls/Label.h"
-#include "Gwen/Gwen.h"
-#include "Gwen/Skin.h"
-#include "Gwen/Controls/TreeControl.h"
-#include "Gwen/Controls/Properties.h"
+#include "Gwork/Controls/Base.h"
+#include "Gwork/Controls/Label.h"
+#include "Gwork/Gwork.h"
+#include "Gwork/Skin.h"
+#include "Gwork/Controls/TreeControl.h"
+#include "Gwork/Controls/Properties.h"
 
 
-namespace Gwen
+namespace Gwk
 {
     namespace Controls
     {
@@ -24,7 +25,7 @@ namespace Gwen
         {
         public:
 
-            GWEN_CONTROL_INLINE(PropertyTreeNode, TreeNode)
+            GWK_CONTROL_INLINE(PropertyTreeNode, TreeNode)
             {
                 m_Title->SetTextColorOverride(GetSkin()->Colors.Properties.Title);
             }
@@ -41,7 +42,7 @@ namespace Gwen
         {
         public:
 
-            GWEN_CONTROL_INLINE(PropertyTree, TreeControl)
+            GWK_CONTROL_INLINE(PropertyTree, TreeControl)
             {
             }
 
@@ -52,4 +53,4 @@ namespace Gwen
 
     }
 }
-#endif // ifndef GWEN_CONTROLS_PROPERTYTREE_H
+#endif // ifndef GWK_CONTROLS_PROPERTYTREE_H

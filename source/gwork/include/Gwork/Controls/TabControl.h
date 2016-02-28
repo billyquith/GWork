@@ -1,20 +1,21 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 #pragma once
-#ifndef GWEN_CONTROLS_TABCONTROL_H
-#define GWEN_CONTROLS_TABCONTROL_H
+#ifndef GWK_CONTROLS_TABCONTROL_H
+#define GWK_CONTROLS_TABCONTROL_H
 
-#include "Gwen/Controls/Base.h"
-#include "Gwen/Controls/Button.h"
-#include "Gwen/Controls/TabButton.h"
-#include "Gwen/Controls/TabStrip.h"
-#include "Gwen/Controls/TabTitleBar.h"
+#include "Gwork/Controls/Base.h"
+#include "Gwork/Controls/Button.h"
+#include "Gwork/Controls/TabButton.h"
+#include "Gwork/Controls/TabStrip.h"
+#include "Gwork/Controls/TabTitleBar.h"
 
-namespace Gwen
+namespace Gwk
 {
     namespace ControlsInternal
     {
@@ -23,9 +24,9 @@ namespace Gwen
 
     namespace Controls
     {
-        class GWEN_EXPORT TabControl : public Base
+        class GWK_EXPORT TabControl : public Base
         {
-            GWEN_CONTROL(TabControl, Base);
+            GWK_CONTROL(TabControl, Base);
 
             virtual TabButton* AddPage(const String strText, Controls::Base* pPage = NULL);
 
@@ -56,8 +57,8 @@ namespace Gwen
                 GetTabStrip()->SetAllowReorder(b);
             }
 
-            Gwen::Event::Caller onLoseTab;
-            Gwen::Event::Caller onAddTab;
+            Gwk::Event::Caller onLoseTab;
+            Gwk::Event::Caller onAddTab;
 
         private:
 
@@ -79,4 +80,4 @@ namespace Gwen
 
     }
 }
-#endif // ifndef GWEN_CONTROLS_TABCONTROL_H
+#endif // ifndef GWK_CONTROLS_TABCONTROL_H

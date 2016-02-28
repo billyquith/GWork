@@ -1,22 +1,22 @@
 
-#include "GwenUtil/ControlFactory.h"
-#include "Gwen/Controls.h"
+#include "Gwork/Util/ControlFactory.h"
+#include "Gwork/Controls.h"
 
-namespace Gwen
+namespace Gwk
 {
 //    namespace ControlFactory
 //    {
-//        using namespace Gwen;
+//        using namespace Gwk;
 //
 //        namespace Properties
 //        {
 //            class Color : public ControlFactory::Property
 //            {
-//                GWEN_CONTROL_FACTORY_PROPERTY(Color, "Rectangle's Background Color");
+//                GWK_CONTROL_FACTORY_PROPERTY(Color, "Rectangle's Background Color");
 //
 //                String GetValueAsString(Controls::Base* ctrl) override
 //                {
-//                    Controls::Rectangle* pRect = gwen_cast<Controls::Rectangle>(ctrl);
+//                    Controls::Rectangle* pRect = gwk_cast<Controls::Rectangle>(ctrl);
 //                    return Utility::Format("%i %i %i %i", pRect->GetColor().r,
 //                                           pRect->GetColor().g,
 //                                           pRect->GetColor().b, pRect->GetColor().a);
@@ -24,13 +24,13 @@ namespace Gwen
 //
 //                void SetValueFromString(Controls::Base* ctrl, const String& str) override
 //                {
-//                    Controls::Rectangle* pRect = gwen_cast<Controls::Rectangle>(ctrl);
+//                    Controls::Rectangle* pRect = gwk_cast<Controls::Rectangle>(ctrl);
 //                    int r, g, b, a;
 //
 //                    if (sscanf(str.c_str(), "%i %i %i %i", &r, &g, &b, &a) != 4)
 //                        return;
 //
-//                    pRect->SetColor(Gwen::Color(r, g, b, a));
+//                    pRect->SetColor(Gwk::Color(r, g, b, a));
 //                }
 //
 //                size_t NumCount() const override
@@ -38,7 +38,7 @@ namespace Gwen
 //                    return 4;
 //                }
 //
-//                Gwen::String NumName(size_t i) const override
+//                Gwk::String NumName(size_t i) const override
 //                {
 //                    if (i == 0)
 //                        return "r";
@@ -54,7 +54,7 @@ namespace Gwen
 //
 //                float NumGet(Controls::Base* ctrl, int i) override
 //                {
-//                    Controls::Rectangle* pRect = gwen_cast<Controls::Rectangle>(ctrl);
+//                    Controls::Rectangle* pRect = gwk_cast<Controls::Rectangle>(ctrl);
 //
 //                    if (i == 0)
 //                        return pRect->GetColor().r;
@@ -70,8 +70,8 @@ namespace Gwen
 //
 //                void NumSet(Controls::Base* ctrl, int i, float f) override
 //                {
-//                    Controls::Rectangle* pRect = gwen_cast<Controls::Rectangle>(ctrl);
-//                    Gwen::Color c = pRect->GetColor();
+//                    Controls::Rectangle* pRect = gwk_cast<Controls::Rectangle>(ctrl);
+//                    Gwk::Color c = pRect->GetColor();
 //
 //                    if (i == 0)
 //                        c.r = f;
@@ -94,18 +94,18 @@ namespace Gwen
 //        }
 //
 //
-//        class Rectangle_Factory : public Gwen::ControlFactory::Base
+//        class Rectangle_Factory : public Gwk::ControlFactory::Base
 //        {
 //        public:
 //
-//            GWEN_CONTROL_FACTORY_FOR(Rectangle, Base)
+//            GWK_CONTROL_FACTORY_FOR(Rectangle, Base)
 //            {
 //                AddProperty(new Properties::Color());
 //            }
 //
-//            virtual Gwen::Controls::Base* CreateInstance(Gwen::Controls::Base* parent) override
+//            virtual Gwk::Controls::Base* CreateInstance(Gwk::Controls::Base* parent) override
 //            {
-//                Gwen::Controls::Rectangle* pControl = new Gwen::Controls::Rectangle(parent);
+//                Gwk::Controls::Rectangle* pControl = new Gwk::Controls::Rectangle(parent);
 //                pControl->SetSize(100, 100);
 //                return pControl;
 //            }
@@ -113,7 +113,7 @@ namespace Gwen
 //        };
 //
 //
-//        GWEN_CONTROL_FACTORY(Rectangle_Factory);
+//        GWK_CONTROL_FACTORY(Rectangle_Factory);
 //
 //    }
 }

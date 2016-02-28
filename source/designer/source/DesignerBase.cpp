@@ -1,9 +1,9 @@
 #include "DesignerBase.h"
 #include "Document.h"
 #include "ControlToolbox.h"
-#include "GwenUtil/ImportExport.h"
+#include "Gwork/Util/ImportExport.h"
 
-GWEN_CONTROL_CONSTRUCTOR( DesignerBase )
+GWK_CONTROL_CONSTRUCTOR( DesignerBase )
 {
 	Dock( Docking::Fill );
 
@@ -25,7 +25,7 @@ void DesignerBase::CreateMenu()
 
 	// File
 	{
-		Gwen::Controls::MenuItem* pRoot = pStrip->AddItem( "File" );
+		Gwk::Controls::MenuItem* pRoot = pStrip->AddItem( "File" );
 
 		pRoot->GetMenu()->AddItem( "New", "img/menu/new.png", "Ctrl + N" )->SetAction( this, &ThisClass::NewDocument );
 
@@ -94,7 +94,7 @@ void DesignerBase::CloseDocument()
 
 void DesignerBase::OpenDocument()
 {
-	Gwen::Dialogs::FileOpen( true, "", "", "Gwen Designer File|*.gwen", this, &ThisClass::DoOpenDocument );
+	Gwk::Dialogs::FileOpen( true, "", "", "Gwork Designer File|*.gwk", this, &ThisClass::DoOpenDocument );
 }
 
 void DesignerBase::DoOpenDocument( Event::Info info )
@@ -130,7 +130,7 @@ Document* DesignerBase::CurrentDocument()
 	Controls::TabButton* pButton = m_DocumentHolder->GetCurrentButton();
 	if ( !pButton ) return NULL;
 
-	Document* doc = gwen_cast<Document>(pButton->GetPage()->FindChildByName( "Document" ));
+	Document* doc = gwk_cast<Document>(pButton->GetPage()->FindChildByName( "Document" ));
 	if ( !doc ) return NULL;
 
 	return doc;

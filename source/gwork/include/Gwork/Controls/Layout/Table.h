@@ -1,17 +1,18 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 #pragma once
-#ifndef GWEN_CONTROLS_LAYOUT_TABLE_H
-#define GWEN_CONTROLS_LAYOUT_TABLE_H
+#ifndef GWK_CONTROLS_LAYOUT_TABLE_H
+#define GWK_CONTROLS_LAYOUT_TABLE_H
 
-#include "Gwen/Controls/Button.h"
-#include "Gwen/Utility.h"
+#include "Gwork/Controls/Button.h"
+#include "Gwork/Utility.h"
 
-namespace Gwen
+namespace Gwk
 {
     namespace Controls
     {
@@ -19,11 +20,11 @@ namespace Gwen
         {
             class Table;
 
-            class GWEN_EXPORT TableRow : public Base
+            class GWK_EXPORT TableRow : public Base
             {
                 static const int MaxColumns = 16;
 
-                GWEN_CONTROL_INLINE(TableRow, Base)
+                GWK_CONTROL_INLINE(TableRow, Base)
                 {
                     SetEven(false);
 
@@ -113,13 +114,13 @@ namespace Gwen
                         else
                             m_Columns[i]->SizeToContents();
 
-                        iHeight = Gwen::Max(iHeight, m_Columns[i]->Height());
+                        iHeight = Gwk::Max(iHeight, m_Columns[i]->Height());
                     }
 
                     SetHeight(iHeight);
                 }
 
-                void SetTextColor(const Gwen::Color& color)
+                void SetTextColor(const Gwk::Color& color)
                 {
                     for (int i = 0; i < m_ColumnCount; i++)
                     {
@@ -143,7 +144,7 @@ namespace Gwen
                 //
                 // This is sometimes called by derivatives.
                 //
-                Gwen::Event::Caller onRowSelected;
+                Gwk::Event::Caller onRowSelected;
 
                 virtual bool GetEven()
                 {
@@ -167,11 +168,11 @@ namespace Gwen
             };
 
 
-            class GWEN_EXPORT Table : public Base
+            class GWK_EXPORT Table : public Base
             {
             public:
 
-                GWEN_CONTROL_INLINE(Table, Base)
+                GWK_CONTROL_INLINE(Table, Base)
                 {
                     m_iColumnCount = 1;
                     m_iDefaultRowHeight = 22;
@@ -191,7 +192,7 @@ namespace Gwen
 
                     for (Base::List::iterator it = Children.begin(); it != Children.end(); ++it)
                     {
-                        TableRow* pRow = gwen_cast<TableRow>(*it);
+                        TableRow* pRow = gwk_cast<TableRow>(*it);
 
                         if (!pRow)
                             continue;
@@ -229,7 +230,7 @@ namespace Gwen
 
                 TableRow* GetRow(int i)
                 {
-                    return gwen_cast<TableRow>(GetChild(i));
+                    return gwk_cast<TableRow>(GetChild(i));
                 }
 
                 unsigned int RowCount(int i)
@@ -246,7 +247,7 @@ namespace Gwen
                 {
                     for (Base::List::iterator it = Children.begin(); it != Children.end(); ++it)
                     {
-                        TableRow* pRow = gwen_cast<TableRow>(*it);
+                        TableRow* pRow = gwk_cast<TableRow>(*it);
 
                         if (!pRow)
                             continue;
@@ -280,7 +281,7 @@ namespace Gwen
 
                     for (Base::List::iterator it = Children.begin(); it != Children.end(); ++it)
                     {
-                        TableRow* pRow = gwen_cast<TableRow>(*it);
+                        TableRow* pRow = gwk_cast<TableRow>(*it);
 
                         if (!pRow)
                             continue;
@@ -325,7 +326,7 @@ namespace Gwen
 
                     for (Base::List::iterator it = Children.begin(); it != Children.end(); ++it)
                     {
-                        TableRow* pRow = gwen_cast<TableRow>(*it);
+                        TableRow* pRow = gwk_cast<TableRow>(*it);
 
                         if (!pRow)
                             continue;
@@ -336,7 +337,7 @@ namespace Gwen
                         {
                             if (pRow->m_Columns[i])
                             {
-                                m_ColumnWidth[i] = Gwen::Max(m_ColumnWidth[i],
+                                m_ColumnWidth[i] = Gwk::Max(m_ColumnWidth[i],
                                                              pRow->m_Columns[i]->Width());
                             }
                         }
@@ -360,4 +361,4 @@ namespace Gwen
         }
     }
 }
-#endif // ifndef GWEN_CONTROLS_LAYOUT_TABLE_H
+#endif // ifndef GWK_CONTROLS_LAYOUT_TABLE_H

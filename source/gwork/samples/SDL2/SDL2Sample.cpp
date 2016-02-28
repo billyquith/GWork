@@ -1,11 +1,11 @@
 
 
-#include <Gwen/Gwen.h>
-#include <Gwen/Skins/Simple.h>
-#include <Gwen/Skins/TexturedBase.h>
-#include <Gwen/UnitTest/UnitTest.h>
-#include <Gwen/Input/SDL2.h>
-#include <Gwen/Renderers/SDL2.h>
+#include <Gwork/Gwork.h>
+#include <Gwork/Skins/Simple.h>
+#include <Gwork/Skins/TexturedBase.h>
+#include <Gwork/UnitTest/UnitTest.h>
+#include <Gwork/Input/SDL2.h>
+#include <Gwork/Renderers/SDL2.h>
 #include <SDL.h>
 #include <SDL_ttf.h>
 
@@ -25,11 +25,11 @@ int main(int argc, char** argv)
 	if (!window)
 		return -1;
 
-    // Create a GWEN Allegro Renderer
-    Gwen::Renderer::SDL2 *pRenderer = new Gwen::Renderer::SDL2(window);
+    // Create a Gwork Allegro Renderer
+    Gwk::Renderer::SDL2 *pRenderer = new Gwk::Renderer::SDL2(window);
 
-    // Create a GWEN skin
-    Gwen::Skin::TexturedBase skin(pRenderer);
+    // Create a Gwork skin
+    Gwk::Skin::TexturedBase skin(pRenderer);
     skin.SetRender(pRenderer);
     skin.Init("DefaultSkin.png");
     
@@ -37,18 +37,18 @@ int main(int argc, char** argv)
     //       Arabic, Korean, etc. e.g. "Arial Unicode" (but it's 23MB!).
     skin.SetDefaultFont("OpenSans.ttf", 11);
     
-    // Create a Canvas (it's root, on which all other GWEN panels are created)
-    Gwen::Controls::Canvas* pCanvas = new Gwen::Controls::Canvas(&skin);
+    // Create a Canvas (it's root, on which all other Gwork panels are created)
+    Gwk::Controls::Canvas* pCanvas = new Gwk::Controls::Canvas(&skin);
     pCanvas->SetSize(SCREEN_WIDTH, SCREEN_HEIGHT);
     pCanvas->SetDrawBackground(true);
-    pCanvas->SetBackgroundColor(Gwen::Color(150, 170, 170, 255));
+    pCanvas->SetBackgroundColor(Gwk::Color(150, 170, 170, 255));
 
     // Create our unittest control (which is a Window with controls in it)
     UnitTest* pUnit = new UnitTest(pCanvas);
     pUnit->SetPos(10, 10);
 
-    Gwen::Input::SDL2 GwenInput;
-    GwenInput.Initialize(pCanvas);
+    Gwk::Input::SDL2 GworkInput;
+    GworkInput.Initialize(pCanvas);
     bool bQuit = false;
 
     while (!bQuit)
@@ -59,7 +59,7 @@ int main(int argc, char** argv)
             if (evt.type == SDL_QUIT)
                 bQuit = true;
 
-            GwenInput.ProcessEvent(&evt);
+            GworkInput.ProcessEvent(&evt);
         }
         
         pRenderer->BeginContext(NULL);
@@ -68,7 +68,7 @@ int main(int argc, char** argv)
         pRenderer->EndContext(NULL);
     }
 
-    //TTF_Quit();   TODO: Currently crashes. GWEN needs work.
+    //TTF_Quit();   TODO: Currently crashes. Gwork needs work.
     SDL_DestroyWindow(window);
     SDL_Quit();
     

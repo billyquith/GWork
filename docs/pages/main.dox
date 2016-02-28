@@ -2,9 +2,8 @@
 
 @mainpage GWoRK
 
-This is an experimental fork of the excellent GUI library
-[GWEN](https://github.com/garrynewman/GWEN). Many thanks to Garry for his
-work on this.
+This is a fork of the [GWEN](https://github.com/garrynewman/GWEN) GUI library
+by Garry Newman. Thanks to Garry for his work.
 
 
 ### On the docs ###

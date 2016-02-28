@@ -1,27 +1,28 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 #pragma once
-#ifndef GWEN_CONTROLS_HORIZONTALSLIDER_H
-#define GWEN_CONTROLS_HORIZONTALSLIDER_H
+#ifndef GWK_CONTROLS_HORIZONTALSLIDER_H
+#define GWK_CONTROLS_HORIZONTALSLIDER_H
 
-#include "Gwen/Controls/Base.h"
-#include "Gwen/Controls/Button.h"
-#include "Gwen/Controls/Dragger.h"
-#include "Gwen/Gwen.h"
-#include "Gwen/Skin.h"
-#include "Gwen/Controls/Slider.h"
+#include "Gwork/Controls/Base.h"
+#include "Gwork/Controls/Button.h"
+#include "Gwork/Controls/Dragger.h"
+#include "Gwork/Gwork.h"
+#include "Gwork/Skin.h"
+#include "Gwork/Controls/Slider.h"
 
-namespace Gwen
+namespace Gwk
 {
     namespace Controls
     {
-        class GWEN_EXPORT HorizontalSlider : public Slider
+        class GWK_EXPORT HorizontalSlider : public Slider
         {
-            GWEN_CONTROL(HorizontalSlider, Slider);
+            GWK_CONTROL(HorizontalSlider, Slider);
 
             virtual void Layout(Skin::Base* skin) override;
             virtual void Render(Skin::Base* skin) override;
@@ -34,4 +35,4 @@ namespace Gwen
 
     }
 }
-#endif // ifndef GWEN_CONTROLS_HORIZONTALSLIDER_H
+#endif // ifndef GWK_CONTROLS_HORIZONTALSLIDER_H

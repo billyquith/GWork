@@ -1,20 +1,21 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 
-#include "Gwen/Controls/TreeNode.h"
-#include "Gwen/Controls/TreeControl.h"
-#include "Gwen/Utility.h"
+#include "Gwork/Controls/TreeNode.h"
+#include "Gwork/Controls/TreeControl.h"
+#include "Gwork/Utility.h"
 
-using namespace Gwen;
-using namespace Gwen::Controls;
+using namespace Gwk;
+using namespace Gwk::Controls;
 
 class OpenToggleButton : public Button
 {
-    GWEN_CONTROL_INLINE(OpenToggleButton, Button)
+    GWK_CONTROL_INLINE(OpenToggleButton, Button)
     {
         SetIsToggle(true);
         SetTabable(false);
@@ -34,7 +35,7 @@ class OpenToggleButton : public Button
 
 class TreeNodeText : public Button
 {
-    GWEN_CONTROL_INLINE(TreeNodeText, Button)
+    GWK_CONTROL_INLINE(TreeNodeText, Button)
     {
         SetAlignment(Docking::Left|Docking::CenterV);
         SetShouldDrawBackground(false);
@@ -60,7 +61,7 @@ class TreeNodeText : public Button
 
 const int TreeIndentation = 14;
 
-GWEN_CONTROL_CONSTRUCTOR(TreeNode)
+GWK_CONTROL_CONSTRUCTOR(TreeNode)
 {
     m_TreeControl = NULL;
     m_ToggleButton = new OpenToggleButton(this);
@@ -104,7 +105,7 @@ TreeNode* TreeNode::AddNode(const String& strLabel)
     TreeNode* node = new TreeNode(this);
     node->SetText(strLabel);
     node->Dock(Docking::Top);
-    node->SetRoot(gwen_cast<TreeControl>(this) != NULL);
+    node->SetRoot(gwk_cast<TreeControl>(this) != NULL);
     node->SetTreeControl(m_TreeControl);
 
     if (m_TreeControl)
@@ -184,7 +185,7 @@ void TreeNode::ExpandAll()
 
     for (Base::List::iterator iter = children.begin(); iter != children.end(); ++iter)
     {
-        TreeNode* pChild = gwen_cast<TreeNode>(*iter);
+        TreeNode* pChild = gwk_cast<TreeNode>(*iter);
 
         if (!pChild)
             continue;
@@ -262,7 +263,7 @@ void TreeNode::DeselectAll()
 
     for (Base::List::iterator iter = children.begin(); iter != children.end(); ++iter)
     {
-        TreeNode* pChild = gwen_cast<TreeNode>(*iter);
+        TreeNode* pChild = gwk_cast<TreeNode>(*iter);
 
         if (!pChild)
             continue;

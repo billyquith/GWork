@@ -1,32 +1,33 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2011 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 
 #pragma once
-#ifndef GWEN_UNITTEST_UNITTEST_H
-#define GWEN_UNITTEST_UNITTEST_H
+#ifndef GWK_UNITTEST_UNITTEST_H
+#define GWK_UNITTEST_UNITTEST_H
 
-#include "Gwen/Gwen.h"
-#include "Gwen/Align.h"
-#include "Gwen/Utility.h"
-#include "Gwen/Controls/WindowControl.h"
-#include "Gwen/Controls/TabControl.h"
-#include "Gwen/Controls/ListBox.h"
-#include "Gwen/Controls/DockBase.h"
-#include "Gwen/Controls/StatusBar.h"
-#include "Gwen/Controls/PropertyTree.h"
+#include "Gwork/Gwork.h"
+#include "Gwork/Align.h"
+#include "Gwork/Utility.h"
+#include "Gwork/Controls/WindowControl.h"
+#include "Gwork/Controls/TabControl.h"
+#include "Gwork/Controls/ListBox.h"
+#include "Gwork/Controls/DockBase.h"
+#include "Gwork/Controls/StatusBar.h"
+#include "Gwork/Controls/PropertyTree.h"
 
 class UnitTest;
 
 
-class GUnit : public Gwen::Controls::Base
+class GUnit : public Gwk::Controls::Base
 {
 public:
 
-    GWEN_CONTROL_INLINE(GUnit, Gwen::Controls::Base)
+    GWK_CONTROL_INLINE(GUnit, Gwk::Controls::Base)
     {
         m_pUnitTest = NULL;
     }
@@ -36,11 +37,11 @@ public:
         m_pUnitTest = u;
     }
 
-    void UnitPrint(Gwen::String str);
+    void UnitPrint(Gwk::String str);
 
-    void Layout(Gwen::Skin::Base* skin)
+    void Layout(Gwk::Skin::Base* skin)
     {
-        if (GetDock() != Gwen::Docking::None)
+        if (GetDock() != Gwk::Docking::None)
             return;
 
         SizeToChildren(true, true);
@@ -50,35 +51,35 @@ public:
 };
 
 
-class UnitTest : public Gwen::Controls::DockBase
+class UnitTest : public Gwk::Controls::DockBase
 {
 public:
 
-    GWEN_CONTROL(UnitTest, Gwen::Controls::DockBase);
+    GWK_CONTROL(UnitTest, Gwk::Controls::DockBase);
 
-    void PrintText(const Gwen::String& str);
+    void PrintText(const Gwk::String& str);
 
-    void Render(Gwen::Skin::Base* skin);
+    void Render(Gwk::Skin::Base* skin);
 
 private:
 
-    void OnCategorySelect(Gwen::Event::Info info);
+    void OnCategorySelect(Gwk::Event::Info info);
 
-    Gwen::Controls::TabControl* m_TabControl;
-    Gwen::Controls::ListBox*    m_TextOutput;
-    Gwen::Controls::PropertyTree* m_ControlProperties;
-    Gwen::Controls::StatusBar*  m_StatusBar;
+    Gwk::Controls::TabControl* m_TabControl;
+    Gwk::Controls::ListBox*    m_TextOutput;
+    Gwk::Controls::PropertyTree* m_ControlProperties;
+    Gwk::Controls::StatusBar*  m_StatusBar;
     unsigned int m_iFrames;
     float m_fLastSecond;
 
-    Gwen::Controls::Base*       m_pLastControl;
+    Gwk::Controls::Base*       m_pLastControl;
 
 };
 
 
 #define DEFINE_UNIT_TEST(NAME) \
-    GUnit* RegisterUnitTest_##NAME(Gwen::Controls::Base *tab) \
+    GUnit* RegisterUnitTest_##NAME(Gwk::Controls::Base *tab) \
     { return new NAME(tab); }
 
 
-#endif // ifndef GWEN_UNITTEST_UNITTEST_H
+#endif // ifndef GWK_UNITTEST_UNITTEST_H

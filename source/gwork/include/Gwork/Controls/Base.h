@@ -1,27 +1,28 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 #pragma once
-#ifndef GWEN_CONTROLS_BASE_H
-#define GWEN_CONTROLS_BASE_H
+#ifndef GWK_CONTROLS_BASE_H
+#define GWK_CONTROLS_BASE_H
 
 #include <list>
 #include <map>
 #include <algorithm>
 
-#include "Gwen/Exports.h"
-#include "Gwen/Structures.h"
-#include "Gwen/BaseRender.h"
-#include "Gwen/Events.h"
-#include "Gwen/Utility.h"
-#include "Gwen/Skin.h"
-#include "Gwen/ControlList.h"
-#include "Gwen/UserData.h"
+#include "Gwork/Exports.h"
+#include "Gwork/Structures.h"
+#include "Gwork/BaseRender.h"
+#include "Gwork/Events.h"
+#include "Gwork/Utility.h"
+#include "Gwork/Skin.h"
+#include "Gwork/ControlList.h"
+#include "Gwork/UserData.h"
 
-namespace Gwen
+namespace Gwk
 {
     namespace Docking
     {
@@ -52,17 +53,17 @@ namespace Gwen
         class Canvas;
 
         //
-        //! This is the base class for all Gwen controls.
+        //! This is the base class for all Gwork controls.
         //
-        class GWEN_EXPORT Base : public Event::Handler
+        class GWK_EXPORT Base : public Event::Handler
         {
         public:
 
             typedef std::list<Base*> List;
 
-            typedef std::map<Gwen::String, Gwen::Event::Caller*> AccelMap;
+            typedef std::map<Gwk::String, Gwk::Event::Caller*> AccelMap;
 
-            Base(Base* pParent, const Gwen::String& Name = "");
+            Base(Base* pParent, const Gwk::String& Name = "");
             virtual ~Base();
             
             static const char* GetTypeNameStatic() { return "Base"; }
@@ -71,7 +72,7 @@ namespace Gwen
             virtual const char* GetParentTypeName() const { return NULL; }
             
             virtual void DelayedDelete();
-            virtual void PreDelete(Gwen::Skin::Base* skin) {}
+            virtual void PreDelete(Gwk::Skin::Base* skin) {}
 
             virtual void            SetParent(Controls::Base* pParent);
             virtual Controls::Base* GetParent() const
@@ -93,15 +94,15 @@ namespace Gwen
             virtual unsigned int    NumChildren();
             virtual Controls::Base* GetChild(unsigned int i);
             virtual bool            SizeToChildren(bool w = true, bool h = true);
-            virtual Gwen::Point     ChildrenSize();
-            virtual Controls::Base* FindChildByName(const Gwen::String& name,
+            virtual Gwk::Point     ChildrenSize();
+            virtual Controls::Base* FindChildByName(const Gwk::String& name,
                                                     bool bRecursive = false);
 
             template <class T>
-            T* FindChild(const Gwen::String& name, bool bRecursive = false);
+            T* FindChild(const Gwk::String& name, bool bRecursive = false);
 
-            virtual void SetName(const Gwen::String& name)  { m_Name = name; }
-            virtual const Gwen::String& GetName()           { return m_Name; }
+            virtual void SetName(const Gwk::String& name)  { m_Name = name; }
+            virtual const Gwk::String& GetName()           { return m_Name; }
 
             virtual void Think() {}
 
@@ -120,8 +121,8 @@ namespace Gwen
             virtual void BringToFront(void);
             virtual void BringNextToControl(Controls::Base* pChild, bool bBehind);
 
-            virtual Gwen::Point LocalPosToCanvas(const Gwen::Point& in = Point(0, 0));
-            virtual Gwen::Point CanvasPosToLocal(const Gwen::Point& in);
+            virtual Gwk::Point LocalPosToCanvas(const Gwk::Point& in = Point(0, 0));
+            virtual Gwk::Point CanvasPosToLocal(const Gwk::Point& in);
 
             virtual void Dock(Docking::Area dock);
             virtual Docking::Area GetDock() const;
@@ -164,7 +165,7 @@ namespace Gwen
             virtual Point GetSize() const           { return Point(Width(), Height()); }
 
             virtual bool SetBounds(int x, int y, int w, int h);
-            virtual bool SetBounds(const Gwen::Rect& bounds);
+            virtual bool SetBounds(const Gwk::Rect& bounds);
 
             virtual void SetPadding(const Padding& padding);
             virtual void SetMargin(const Margin& margin);
@@ -173,14 +174,14 @@ namespace Gwen
             virtual void MoveTo(int x, int y);
             virtual void MoveBy(int x, int y);
 
-            virtual const Gwen::Rect& GetBounds() const { return m_Bounds; }
+            virtual const Gwk::Rect& GetBounds() const { return m_Bounds; }
 
             virtual Controls::Base* GetControlAt(int x, int y, bool bOnlyIfMouseEnabled = true);
 
         protected:
 
-            virtual void OnBoundsChanged(Gwen::Rect oldBounds);
-            virtual void OnChildBoundsChanged(Gwen::Rect oldChildBounds, Base* pChild);
+            virtual void OnBoundsChanged(Gwk::Rect oldBounds);
+            virtual void OnChildBoundsChanged(Gwk::Rect oldChildBounds, Base* pChild);
 
             virtual void OnScaleChanged();
 
@@ -188,15 +189,15 @@ namespace Gwen
 
             //! InnerBounds is the area inside the control that
             //! doesn't have child controls docked to it.
-            virtual const Gwen::Rect& GetInnerBounds() const { return m_InnerBounds; }
+            virtual const Gwk::Rect& GetInnerBounds() const { return m_InnerBounds; }
 
         protected:
 
-            Gwen::Rect m_InnerBounds;
+            Gwk::Rect m_InnerBounds;
 
         public:
 
-            virtual const Gwen::Rect& GetRenderBounds() const { return m_RenderBounds; }
+            virtual const Gwk::Rect& GetRenderBounds() const { return m_RenderBounds; }
 
         protected:
 
@@ -204,18 +205,18 @@ namespace Gwen
 
         public:
 
-            virtual void DoRender(Gwen::Skin::Base* skin);
-            virtual void DoCacheRender(Gwen::Skin::Base* skin, Gwen::Controls::Base* pMaster);
-            virtual void RenderRecursive(Gwen::Skin::Base* skin, const Gwen::Rect& cliprect);
+            virtual void DoRender(Gwk::Skin::Base* skin);
+            virtual void DoCacheRender(Gwk::Skin::Base* skin, Gwk::Controls::Base* pMaster);
+            virtual void RenderRecursive(Gwk::Skin::Base* skin, const Gwk::Rect& cliprect);
 
             virtual bool ShouldClip()   { return true; }
 
         protected:
 
-            virtual void Render(Gwen::Skin::Base* skin);
-            virtual void RenderUnder(Gwen::Skin::Base* /*skin*/)    {}
-            virtual void RenderOver(Gwen::Skin::Base* /*skin*/)     {}
-            virtual void RenderFocus(Gwen::Skin::Base* /*skin*/);
+            virtual void Render(Gwk::Skin::Base* skin);
+            virtual void RenderUnder(Gwk::Skin::Base* /*skin*/)    {}
+            virtual void RenderOver(Gwk::Skin::Base* /*skin*/)     {}
+            virtual void RenderFocus(Gwk::Skin::Base* /*skin*/);
 
         public:
 
@@ -237,7 +238,7 @@ namespace Gwen
 
             // Skin
             virtual void              SetSkin(Skin::Base* skin, bool doChildren = false);
-            virtual Gwen::Skin::Base* GetSkin(void);
+            virtual Gwk::Skin::Base* GetSkin(void);
 
             // Background drawing
             virtual bool ShouldDrawBackground()
@@ -252,7 +253,7 @@ namespace Gwen
 
         protected:
 
-            virtual void OnSkinChanged(Gwen::Skin::Base* newSkin);
+            virtual void OnSkinChanged(Gwk::Skin::Base* newSkin);
 
         public:
 
@@ -286,7 +287,7 @@ namespace Gwen
 
             virtual bool NeedsInputChars()                  { return false; }
 
-            virtual bool OnChar(Gwen::UnicodeChar /*c*/)    { return false; }
+            virtual bool OnChar(Gwk::UnicodeChar /*c*/)    { return false; }
 
             virtual bool OnKeyPress(int iKey, bool bPress = true);
             virtual bool OnKeyRelease(int iKey);
@@ -357,17 +358,17 @@ namespace Gwen
 
             virtual void UpdateCursor();
 
-            virtual Gwen::Point GetMinimumSize()
+            virtual Gwk::Point GetMinimumSize()
             {
-                return Gwen::Point(1, 1);
+                return Gwk::Point(1, 1);
             }
 
-            virtual Gwen::Point GetMaximumSize()
+            virtual Gwk::Point GetMaximumSize()
             {
-                return Gwen::Point(4096, 4096);
+                return Gwk::Point(4096, 4096);
             }
 
-            virtual void SetToolTip(const Gwen::String& strText);
+            virtual void SetToolTip(const Gwk::String& strText);
             virtual void SetToolTip(Base* tooltip)
             {
                 m_ToolTip = tooltip;
@@ -390,7 +391,7 @@ namespace Gwen
             virtual void SetTabable(bool isTabable)     { m_Tabable = isTabable; }
 
             // Accelerator functionality
-            void DefaultAccel(Gwen::Controls::Base* /*pCtrl*/)
+            void DefaultAccel(Gwk::Controls::Base* /*pCtrl*/)
             {
                 AcceleratePressed();
             }
@@ -398,20 +399,20 @@ namespace Gwen
             virtual void AcceleratePressed()    {}
             virtual bool AccelOnlyFocus()       { return false; }
 
-            virtual bool HandleAccelerator(Gwen::String& accelerator);
+            virtual bool HandleAccelerator(Gwk::String& accelerator);
 
             template <typename T>
             void AddAccelerator(const String& accelerator, T func,
-                                Gwen::Event::Handler* handler = NULL)
+                                Gwk::Event::Handler* handler = NULL)
             {
                 if (handler == NULL)
                     handler = this;
 
-                Gwen::Event::Caller* caller = new Gwen::Event::Caller();
+                Gwk::Event::Caller* caller = new Gwk::Event::Caller();
                 caller->Add(handler, func);
-                Gwen::String str = accelerator;
-                Gwen::Utility::Strings::ToUpper(str);
-                Gwen::Utility::Strings::Strip(str, " ");
+                Gwk::String str = accelerator;
+                Gwk::Utility::Strings::ToUpper(str);
+                Gwk::Utility::Strings::Strip(str, " ");
                 m_Accelerators[ str ] = caller;
             }
 
@@ -424,8 +425,8 @@ namespace Gwen
 
             // Default Events
 
-            Gwen::Event::Caller onHoverEnter;
-            Gwen::Event::Caller onHoverLeave;
+            Gwk::Event::Caller onHoverEnter;
+            Gwk::Event::Caller onHoverLeave;
 
             // Childrens List
 
@@ -452,13 +453,13 @@ namespace Gwen
 
             Skin::Base* m_Skin;
 
-            Gwen::Rect m_Bounds;
-            Gwen::Rect m_RenderBounds;
+            Gwk::Rect m_Bounds;
+            Gwk::Rect m_RenderBounds;
 
             Padding m_Padding;
             Margin m_Margin;
 
-            Gwen::String m_Name;
+            Gwk::String m_Name;
 
             bool m_bRestrictToParent;
             bool m_bDisabled;
@@ -514,8 +515,8 @@ namespace Gwen
             virtual bool DragAndDrop_Draggable();
             virtual bool DragAndDrop_ShouldStartDrag()  { return true; }
 
-            virtual void DragAndDrop_StartDragging(Gwen::DragAndDrop::Package* pPackage, int x, int y);
-            virtual Gwen::DragAndDrop::Package* DragAndDrop_GetPackage(int x, int y);
+            virtual void DragAndDrop_StartDragging(Gwk::DragAndDrop::Package* pPackage, int x, int y);
+            virtual Gwk::DragAndDrop::Package* DragAndDrop_GetPackage(int x, int y);
             virtual void DragAndDrop_EndDragging(bool /*bSuccess*/, int /*x*/, int /*y*/) {}
 
         protected:
@@ -525,22 +526,22 @@ namespace Gwen
         public:
 
             // Receiver
-            virtual void DragAndDrop_HoverEnter(Gwen::DragAndDrop::Package* /*pPackage*/,
+            virtual void DragAndDrop_HoverEnter(Gwk::DragAndDrop::Package* /*pPackage*/,
                                                 int /*x*/, int /*y*/)
             {
             }
 
-            virtual void DragAndDrop_HoverLeave(Gwen::DragAndDrop::Package* /*pPackage*/)
+            virtual void DragAndDrop_HoverLeave(Gwk::DragAndDrop::Package* /*pPackage*/)
             {
             }
 
-            virtual void DragAndDrop_Hover(Gwen::DragAndDrop::Package* /*pPackage*/,
+            virtual void DragAndDrop_Hover(Gwk::DragAndDrop::Package* /*pPackage*/,
                                            int /*x*/, int /*y*/)
             {
             }
 
-            virtual bool DragAndDrop_HandleDrop(Gwen::DragAndDrop::Package* pPackage, int x, int y);
-            virtual bool DragAndDrop_CanAcceptPackage(Gwen::DragAndDrop::Package* /*pPackage*/)
+            virtual bool DragAndDrop_HandleDrop(Gwk::DragAndDrop::Package* pPackage, int x, int y);
+            virtual bool DragAndDrop_CanAcceptPackage(Gwk::DragAndDrop::Package* /*pPackage*/)
             {
                 return false;
             }
@@ -551,7 +552,7 @@ namespace Gwen
 
         public:
 
-#ifndef GWEN_NO_ANIMATION
+#ifndef GWK_NO_ANIMATION
 
             virtual void Anim_WidthIn(float fLength, float fDelay = 0.0f, float fEase = 1.0f);
             virtual void Anim_HeightIn(float fLength, float fDelay = 0.0f, float fEase = 1.0f);
@@ -563,7 +564,7 @@ namespace Gwen
 #endif
 
             //
-            // Dynamic casting, see gwen_cast below
+            // Dynamic casting, see gwk_cast below
             //
 
         public:
@@ -573,7 +574,7 @@ namespace Gwen
                 return GetTypeNameStatic();
             }
 
-            virtual Gwen::Controls::Base* DynamicCast(const char* Variable)
+            virtual Gwk::Controls::Base* DynamicCast(const char* Variable)
             {
                 return NULL;
             }
@@ -589,20 +590,20 @@ namespace Gwen
 
         public:
 
-            virtual String GetChildValue(const Gwen::String& strName);
+            virtual String GetChildValue(const Gwk::String& strName);
             virtual String GetValue();
             virtual void       SetValue(const String& strValue);
             virtual void       DoAction() {}
 
             virtual void SetAction(Event::Handler* pObject,
                                    Handler::FunctionWithInformation pFunction,
-                                   const Gwen::Event::Packet& packet)
+                                   const Gwk::Event::Packet& packet)
             {
             }
 
-            virtual int GetNamedChildren(Gwen::ControlList& list, const Gwen::String& strName,
+            virtual int GetNamedChildren(Gwk::ControlList& list, const Gwk::String& strName,
                                          bool bDeep = true);
-            virtual Gwen::ControlList GetNamedChildren(const Gwen::String& strName,
+            virtual Gwk::ControlList GetNamedChildren(const Gwk::String& strName,
                                                        bool bDeep = true);
 
         public:
@@ -615,12 +616,12 @@ namespace Gwen
     }
 
     /**
-     *  To avoid using dynamic_cast we have gwen_cast.
+     *  To avoid using dynamic_cast we have gwk_cast.
      *
-     *  Each class in Gwen includes GWEN_DYNAMIC. You don't have to include this
-     *  macro anywhere as it's automatically included in the GWEN_CONTROL macro.
+     *  Each class in Gwork includes GWK_DYNAMIC. You don't have to include this
+     *  macro anywhere as it's automatically included in the GWK_CONTROL macro.
      *
-     *  GWEN_DYNAMIC adds 2 functions:
+     *  GWK_DYNAMIC adds 2 functions:
      *
      *  * GetIdentifier() :-
      *      a static function with a static variable inside, which returns
@@ -637,21 +638,21 @@ namespace Gwen
      *      the class from which the identifier was taken.
      *
      *  Really you shouldn't actually have to concern yourself with that stuff.
-     *  The only thing you should use in theory is gwen_cast - which is used
+     *  The only thing you should use in theory is gwk_cast - which is used
      *  just the same as dynamic cast - except for one difference. We pass in
      *  the class name, not a pointer to the class:
      *
-     *      gwen_cast<MyControl>(control)
+     *      gwk_cast<MyControl>(control)
      *      dynamic_cast<MyControl*>(control)
      *
      */
     template <class T>
-    inline T* gwen_cast(Gwen::Controls::Base* p)
+    inline T* gwk_cast(Gwk::Controls::Base* p)
     {
         if (!p)
             return NULL;
 
-        Gwen::Controls::Base* pReturn = p->DynamicCast(T::GetIdentifier());
+        Gwk::Controls::Base* pReturn = p->DynamicCast(T::GetIdentifier());
 
         if (!pReturn)
             return NULL;
@@ -660,18 +661,18 @@ namespace Gwen
     }
 
     template <class T>
-    inline T* Controls::Base::FindChild(const Gwen::String& name, bool bRecursive)
+    inline T* Controls::Base::FindChild(const Gwk::String& name, bool bRecursive)
     {
-        return gwen_cast<T>(FindChildByName(name, bRecursive));
+        return gwk_cast<T>(FindChildByName(name, bRecursive));
     }
 
-#define GWEN_DYNAMIC(THISNAME, BASENAME) \
+#define GWK_DYNAMIC(THISNAME, BASENAME) \
     static const char* GetIdentifier()                                  \
     {                                                                   \
         static const char* ident = #BASENAME ":" #THISNAME;             \
         return ident;                                                   \
     }                                                                   \
-    virtual Gwen::Controls::Base* DynamicCast(const char* Variable) override \
+    virtual Gwk::Controls::Base* DynamicCast(const char* Variable) override \
     {                                                                   \
         if (GetIdentifier() == Variable)                                \
             return this;                                                \
@@ -679,27 +680,27 @@ namespace Gwen
         return ParentClass::DynamicCast(Variable);                        \
     }
 
-#define GWEN_CLASS(THISNAME, BASENAME) \
+#define GWK_CLASS(THISNAME, BASENAME) \
     typedef BASENAME ParentClass; \
     typedef THISNAME ThisClass;
 
 // To be placed in the controls .h definition.
-#define GWEN_CONTROL(THISNAME, BASENAME) \
+#define GWK_CONTROL(THISNAME, BASENAME) \
 public: \
-    GWEN_CLASS(THISNAME, BASENAME)  \
-    GWEN_DYNAMIC(THISNAME, BASENAME) \
+    GWK_CLASS(THISNAME, BASENAME)  \
+    GWK_DYNAMIC(THISNAME, BASENAME) \
     static  const char* GetTypeNameStatic() { return #THISNAME; } \
     virtual const char* GetTypeName() const override { return GetTypeNameStatic(); } \
     virtual const char* GetParentTypeName() const override { return ParentClass::GetTypeNameStatic(); } \
-    THISNAME(Gwen::Controls::Base* pParent, const Gwen::String& pName = "")
+    THISNAME(Gwk::Controls::Base* pParent, const Gwk::String& pName = "")
 
-#define GWEN_CONTROL_INLINE(THISNAME, BASENAME) \
-    GWEN_CONTROL(THISNAME, BASENAME) : ParentClass(pParent, pName)
+#define GWK_CONTROL_INLINE(THISNAME, BASENAME) \
+    GWK_CONTROL(THISNAME, BASENAME) : ParentClass(pParent, pName)
 
-#define GWEN_CONTROL_CONSTRUCTOR(THISNAME) \
-    THISNAME::THISNAME(Gwen::Controls::Base* pParent, const Gwen::String& pName) \
+#define GWK_CONTROL_CONSTRUCTOR(THISNAME) \
+    THISNAME::THISNAME(Gwk::Controls::Base* pParent, const Gwk::String& pName) \
         : ParentClass(pParent, pName)
 
-} // namespace Gwen
+} // namespace Gwk
 
-#endif // ifndef GWEN_CONTROLS_BASE_H
+#endif // ifndef GWK_CONTROLS_BASE_H

@@ -1,17 +1,18 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 
-#include "Gwen/Controls/GroupBox.h"
+#include "Gwork/Controls/GroupBox.h"
 
-using namespace Gwen;
-using namespace Gwen::Controls;
+using namespace Gwk;
+using namespace Gwk::Controls;
 
 
-GWEN_CONTROL_CONSTRUCTOR(GroupBox)
+GWK_CONTROL_CONSTRUCTOR(GroupBox)
 {
     // Set to true, because it's likely that our
     // children will want mouse input, and they

@@ -1,36 +1,37 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 #pragma once
-#ifndef GWEN_DRAGANDDROP_H
-#define GWEN_DRAGANDDROP_H
+#ifndef GWK_DRAGANDDROP_H
+#define GWK_DRAGANDDROP_H
 
 #include <sstream>
 
-#include "Gwen/Skin.h"
-#include "Gwen/Structures.h"
+#include "Gwork/Skin.h"
+#include "Gwork/Structures.h"
 
-namespace Gwen
+namespace Gwk
 {
     namespace DragAndDrop
     {
-        extern GWEN_EXPORT Package* CurrentPackage;
-        extern GWEN_EXPORT Gwen::Controls::Base*    SourceControl;
-        extern GWEN_EXPORT Gwen::Controls::Base*    HoveredControl;
+        extern GWK_EXPORT Package* CurrentPackage;
+        extern GWK_EXPORT Gwk::Controls::Base*    SourceControl;
+        extern GWK_EXPORT Gwk::Controls::Base*    HoveredControl;
 
-        bool GWEN_EXPORT Start(Gwen::Controls::Base* pControl, Package* pPackage);
+        bool GWK_EXPORT Start(Gwk::Controls::Base* pControl, Package* pPackage);
 
-        bool GWEN_EXPORT OnMouseButton(Gwen::Controls::Base* pHoveredControl, int x, int y,
+        bool GWK_EXPORT OnMouseButton(Gwk::Controls::Base* pHoveredControl, int x, int y,
                                        bool bDown);
-        void GWEN_EXPORT OnMouseMoved(Gwen::Controls::Base* pHoveredControl, int x, int y);
+        void GWK_EXPORT OnMouseMoved(Gwk::Controls::Base* pHoveredControl, int x, int y);
 
-        void GWEN_EXPORT RenderOverlay(Gwen::Controls::Canvas* pCanvas, Skin::Base* skin);
+        void GWK_EXPORT RenderOverlay(Gwk::Controls::Canvas* pCanvas, Skin::Base* skin);
 
-        void GWEN_EXPORT ControlDeleted(Gwen::Controls::Base* pControl);
+        void GWK_EXPORT ControlDeleted(Gwk::Controls::Base* pControl);
     }
 
 }
-#endif // ifndef GWEN_DRAGANDDROP_H
+#endif // ifndef GWK_DRAGANDDROP_H

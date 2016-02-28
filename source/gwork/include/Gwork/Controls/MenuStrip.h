@@ -1,25 +1,26 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 #pragma once
-#ifndef GWEN_CONTROLS_MENUSTRIP_H
-#define GWEN_CONTROLS_MENUSTRIP_H
+#ifndef GWK_CONTROLS_MENUSTRIP_H
+#define GWK_CONTROLS_MENUSTRIP_H
 
-#include "Gwen/BaseRender.h"
-#include "Gwen/Controls/Base.h"
-#include "Gwen/Controls/Menu.h"
-#include "Gwen/Controls/MenuItem.h"
+#include "Gwork/BaseRender.h"
+#include "Gwork/Controls/Base.h"
+#include "Gwork/Controls/Menu.h"
+#include "Gwork/Controls/MenuItem.h"
 
-namespace Gwen
+namespace Gwk
 {
     namespace Controls
     {
-        class GWEN_EXPORT MenuStrip : public Menu
+        class GWK_EXPORT MenuStrip : public Menu
         {
-            GWEN_CONTROL(MenuStrip, Menu);
+            GWK_CONTROL(MenuStrip, Menu);
 
             virtual void Render(Skin::Base* skin) override;
             virtual void RenderUnder(Skin::Base* /*skin*/) override {}
@@ -38,4 +39,4 @@ namespace Gwen
     }
 
 }
-#endif // ifndef GWEN_CONTROLS_MENUSTRIP_H
+#endif // ifndef GWK_CONTROLS_MENUSTRIP_H

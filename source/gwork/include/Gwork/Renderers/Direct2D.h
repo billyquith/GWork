@@ -1,26 +1,27 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+*  See license in Gwork.h
  */
 
-#ifndef GWEN_RENDERERS_DIRECT2D_H
-#define GWEN_RENDERERS_DIRECT2D_H
+#ifndef GWK_RENDERERS_DIRECT2D_H
+#define GWK_RENDERERS_DIRECT2D_H
 
 #include <d2d1.h>
 #include <d2d1helper.h>
 #include <dwrite.h>
 #include <wincodec.h>
 
-#include "Gwen/Gwen.h"
-#include "Gwen/BaseRender.h"
-#include "Gwen/Texture.h"
+#include "Gwork/Gwork.h"
+#include "Gwork/BaseRender.h"
+#include "Gwork/Texture.h"
 
-namespace Gwen
+namespace Gwk
 {
     namespace Renderer
     {
-        class GWEN_EXPORT Direct2D : public Gwen::Renderer::Base
+        class GWK_EXPORT Direct2D : public Gwk::Renderer::Base
         {
         public:
 
@@ -33,15 +34,15 @@ namespace Gwen
             virtual void End();
             virtual void Release();
 
-            virtual void SetDrawColor(Gwen::Color color);
+            virtual void SetDrawColor(Gwk::Color color);
 
-            virtual void DrawFilledRect(Gwen::Rect rect);
+            virtual void DrawFilledRect(Gwk::Rect rect);
 
-            virtual void LoadFont(Gwen::Font* pFont);
-            virtual void FreeFont(Gwen::Font* pFont);
-            virtual void RenderText(Gwen::Font* pFont, Gwen::Point pos,
-                                    const Gwen::String& text);
-            virtual Gwen::Point MeasureText(Gwen::Font* pFont, const Gwen::String& text);
+            virtual void LoadFont(Gwk::Font* pFont);
+            virtual void FreeFont(Gwk::Font* pFont);
+            virtual void RenderText(Gwk::Font* pFont, Gwk::Point pos,
+                                    const Gwk::String& text);
+            virtual Gwk::Point MeasureText(Gwk::Font* pFont, const Gwk::String& text);
 
             virtual void DeviceLost();
             virtual void DeviceAcquired(ID2D1RenderTarget* pRT);
@@ -49,15 +50,15 @@ namespace Gwen
             void StartClip();
             void EndClip();
 
-            void DrawTexturedRect(Gwen::Texture* pTexture, Gwen::Rect pTargetRect, float u1 = 0.0f,
+            void DrawTexturedRect(Gwk::Texture* pTexture, Gwk::Rect pTargetRect, float u1 = 0.0f,
                                   float v1 = 0.0f, float u2 = 1.0f, float v2 = 1.0f);
-            void        LoadTexture(Gwen::Texture* pTexture);
-            void        FreeTexture(Gwen::Texture* pTexture);
-            Gwen::Color PixelColour(Gwen::Texture* pTexture, unsigned int x, unsigned int y,
-                                    const Gwen::Color& col_default);
+            void        LoadTexture(Gwk::Texture* pTexture);
+            void        FreeTexture(Gwk::Texture* pTexture);
+            Gwk::Color PixelColour(Gwk::Texture* pTexture, unsigned int x, unsigned int y,
+                                    const Gwk::Color& col_default);
 
-            void DrawLinedRect(Gwen::Rect rect);
-            void DrawShavedCornerRect(Gwen::Rect rect, bool bSlight = false);
+            void DrawLinedRect(Gwk::Rect rect);
+            void DrawShavedCornerRect(Gwk::Rect rect, bool bSlight = false);
 
         public:
 
@@ -65,12 +66,12 @@ namespace Gwen
             // Self Initialization
             //
 
-            bool InitializeContext(Gwen::WindowProvider* pWindow);
-            bool ShutdownContext(Gwen::WindowProvider* pWindow);
-            bool PresentContext(Gwen::WindowProvider* pWindow);
-            bool ResizedContext(Gwen::WindowProvider* pWindow, int w, int h);
-            bool BeginContext(Gwen::WindowProvider* pWindow);
-            bool EndContext(Gwen::WindowProvider* pWindow);
+            bool InitializeContext(Gwk::WindowProvider* pWindow);
+            bool ShutdownContext(Gwk::WindowProvider* pWindow);
+            bool PresentContext(Gwk::WindowProvider* pWindow);
+            bool ResizedContext(Gwk::WindowProvider* pWindow, int w, int h);
+            bool BeginContext(Gwk::WindowProvider* pWindow);
+            bool EndContext(Gwk::WindowProvider* pWindow);
 
         private:
 
@@ -82,11 +83,11 @@ namespace Gwen
 
         private:
 
-            bool InternalLoadTexture(Gwen::Texture* pTexture);
-            bool InternalLoadFont(Gwen::Font* pFont);
+            bool InternalLoadTexture(Gwk::Texture* pTexture);
+            bool InternalLoadFont(Gwk::Font* pFont);
 
-            void InternalFreeFont(Gwen::Font* pFont, bool bRemove = true);
-            void InternalFreeTexture(Gwen::Texture* pTexture, bool bRemove = true);
+            void InternalFreeFont(Gwk::Font* pFont, bool bRemove = true);
+            void InternalFreeTexture(Gwk::Texture* pTexture, bool bRemove = true);
 
         private:
 
@@ -98,12 +99,12 @@ namespace Gwen
 
             D2D1::ColorF m_Color;
 
-            Gwen::Texture::List m_TextureList;
-            Gwen::Font::List m_FontList;
+            Gwk::Texture::List m_TextureList;
+            Gwk::Font::List m_FontList;
 
         };
 
 
     }
 }
-#endif // ifndef GWEN_RENDERERS_DIRECT2D_H
+#endif // ifndef GWK_RENDERERS_DIRECT2D_H

@@ -19,16 +19,16 @@ make_directory(${CMAKE_BINARY_DIR})
 make_directory(${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
 make_directory(${CMAKE_LIBRARY_OUTPUT_DIRECTORY})
 
-file(COPY ${CMAKE_HOME_DIRECTORY}/gwen/bin/DefaultSkin.png
-          ${CMAKE_HOME_DIRECTORY}/gwen/bin/gwen.png
-          ${CMAKE_HOME_DIRECTORY}/gwen/bin/OpenSans.ttf
-          ${CMAKE_HOME_DIRECTORY}/gwen/bin/test16.png
-     DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
+# file(COPY ${CMAKE_HOME_DIRECTORY}/Gwork/bin/DefaultSkin.png
+#           ${CMAKE_HOME_DIRECTORY}/Gwork/bin/gwen.png
+#           ${CMAKE_HOME_DIRECTORY}/Gwork/bin/OpenSans.ttf
+#           ${CMAKE_HOME_DIRECTORY}/Gwork/bin/test16.png
+#      DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
  
 # configure projects
 include(${CMAKE_SOURCE_DIR}/cmake/Config.cmake)
 
 # add our projects
-add_subdirectory(gwen)
+add_subdirectory(source)
 
 

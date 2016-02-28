@@ -1,27 +1,28 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 #pragma once
-#ifndef GWEN_CONTROLS_RADIOBOTTONCONTROLLER_H
-#define GWEN_CONTROLS_RADIOBOTTONCONTROLLER_H
+#ifndef GWK_CONTROLS_RADIOBOTTONCONTROLLER_H
+#define GWK_CONTROLS_RADIOBOTTONCONTROLLER_H
 
-#include "Gwen/Controls/Base.h"
-#include "Gwen/Controls/Label.h"
-#include "Gwen/Controls/RadioButton.h"
+#include "Gwork/Controls/Base.h"
+#include "Gwork/Controls/Label.h"
+#include "Gwork/Controls/RadioButton.h"
 
 
-namespace Gwen
+namespace Gwk
 {
     namespace Controls
     {
-        class GWEN_EXPORT RadioButtonController : public Base
+        class GWK_EXPORT RadioButtonController : public Base
         {
         public:
 
-            GWEN_CONTROL(RadioButtonController, Base);
+            GWK_CONTROL(RadioButtonController, Base);
 
             virtual void Render(Skin::Base* /*skin*/) override
             {
@@ -31,15 +32,15 @@ namespace Gwen
 
             virtual void OnChange();
 
-            virtual LabeledRadioButton* AddOption(const Gwen::String& strText,
-                                                  const Gwen::String& strOptionName = "");
+            virtual LabeledRadioButton* AddOption(const Gwk::String& strText,
+                                                  const Gwk::String& strOptionName = "");
 
             virtual LabeledRadioButton* GetSelected()
             {
                 return m_Selected;
             }
 
-            virtual const Gwen::String& GetSelectedName()
+            virtual const Gwk::String& GetSelectedName()
             {
                 return m_Selected->GetName();
             }
@@ -59,4 +60,4 @@ namespace Gwen
 
     }
 }
-#endif // ifndef GWEN_CONTROLS_RADIOBOTTONCONTROLLER_H
+#endif // ifndef GWK_CONTROLS_RADIOBOTTONCONTROLLER_H

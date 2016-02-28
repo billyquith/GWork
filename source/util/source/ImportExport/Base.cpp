@@ -1,11 +1,11 @@
-#include "GwenUtil/ImportExport.h"
+#include "Gwork/Util/ImportExport.h"
 
-namespace Gwen {
+namespace Gwk {
 namespace ImportExport {
 
 void InitializeFormats()
 {
-    DECLARE_GWEN_IMPORTEXPORT(DesignerFormat);
+    DECLARE_GWK_IMPORTEXPORT(DesignerFormat);
 }
 
 ImportExport::Base::List& GetList()
@@ -22,7 +22,7 @@ ImportExport::Base::List& GetList()
     return list;
 }
 
-ImportExport::Base* Find(Gwen::String strName)
+ImportExport::Base* Find(Gwk::String strName)
 {
     ImportExport::Base::List::iterator it = GetList().begin();
     ImportExport::Base::List::iterator itEnd = GetList().end();
@@ -45,13 +45,13 @@ Base::Base()
 
 namespace Tools
 {
-    ControlList GetExportableChildren(Gwen::Controls::Base* pRoot)
+    ControlList GetExportableChildren(Gwk::Controls::Base* pRoot)
     {
         ControlList list;
         
         for (int i = 0; i < pRoot->NumChildren(); i++)
         {
-            Gwen::Controls::Base* pBaseChild = pRoot->GetChild(i);
+            Gwk::Controls::Base* pBaseChild = pRoot->GetChild(i);
             
             if (!pBaseChild)
                 continue;
@@ -76,4 +76,4 @@ namespace Tools
 }
 
 } // namespace ImportExport
-} // namespace Gwen
+} // namespace Gwk

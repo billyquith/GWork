@@ -1,9 +1,16 @@
+/*
+ *  Gwork
+ *  Copyright (c) 2010 Facepunch Studios
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
+ */
+
 #pragma once
-#ifndef GWEN_CONTROLLIST_H
-#define GWEN_CONTROLLIST_H
+#ifndef GWK_CONTROLLIST_H
+#define GWK_CONTROLLIST_H
 
 
-namespace Gwen
+namespace Gwk
 {
     struct Point;
 
@@ -18,7 +25,7 @@ namespace Gwen
         struct Information;
         struct Packet;
 
-        typedef const Gwen::Event::Information& Info;
+        typedef const Gwk::Event::Information& Info;
     }
 
     template <typename TYPE>
@@ -69,7 +76,7 @@ namespace Gwen
     };
 
 
-    class ControlList : public TEasyList<Gwen::Controls::Base*>
+    class ControlList : public TEasyList<Gwk::Controls::Base*>
     {
     public:
 
@@ -79,31 +86,31 @@ namespace Gwen
         void Show();
         void Hide();
 
-        Gwen::String GetValue();
-        void             SetValue(const Gwen::String& value);
+        Gwk::String GetValue();
+        void             SetValue(const Gwk::String& value);
 
         template <typename T>
-        void SetAction(Gwen::Event::Handler* ob,
-                       void ( T::*f )(Gwen::Event::Info),
-                       const Gwen::Event::Packet& packet)
+        void SetAction(Gwk::Event::Handler* ob,
+                       void ( T::*f )(Gwk::Event::Info),
+                       const Gwk::Event::Packet& packet)
         {
             SetActionInternal(ob,
-                              static_cast<void(Gwen::Event::Handler::*) (Gwen::Event::Info)>(f),
+                              static_cast<void(Gwk::Event::Handler::*) (Gwk::Event::Info)>(f),
                               packet);
         }
 
-        void MoveBy(const Gwen::Point& point);
+        void MoveBy(const Gwk::Point& point);
 
         void DoAction();
 
     protected:
 
-        void SetActionInternal(Gwen::Event::Handler*pObject,
-                               void ( Gwen::Event::Handler::*f )(Gwen::Event::Info),
-                               const Gwen::Event::Packet&packet);
+        void SetActionInternal(Gwk::Event::Handler*pObject,
+                               void ( Gwk::Event::Handler::*f )(Gwk::Event::Info),
+                               const Gwk::Event::Packet&packet);
     };
 
 
 }
 
-#endif // ifndef GWEN_CONTROLLIST_H
+#endif // ifndef GWK_CONTROLLIST_H

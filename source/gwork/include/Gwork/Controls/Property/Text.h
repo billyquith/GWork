@@ -1,27 +1,28 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 #pragma once
-#ifndef GWEN_CONTROLS_PROPERTY_TEXT_H
-#define GWEN_CONTROLS_PROPERTY_TEXT_H
+#ifndef GWK_CONTROLS_PROPERTY_TEXT_H
+#define GWK_CONTROLS_PROPERTY_TEXT_H
 
-#include "Gwen/Controls/Property/BaseProperty.h"
-#include "Gwen/Controls/TextBox.h"
+#include "Gwork/Controls/Property/BaseProperty.h"
+#include "Gwork/Controls/TextBox.h"
 
-namespace Gwen
+namespace Gwk
 {
     namespace Controls
     {
         namespace Property
         {
-            class GWEN_EXPORT Text : public Property::Base
+            class GWK_EXPORT Text : public Property::Base
             {
             public:
 
-                GWEN_CONTROL_INLINE(Text, Property::Base)
+                GWK_CONTROL_INLINE(Text, Property::Base)
                 {
                     m_TextBox = new TextBox(this);
                     m_TextBox->Dock(Docking::Fill);
@@ -56,4 +57,4 @@ namespace Gwen
         }
     }
 }
-#endif // ifndef GWEN_CONTROLS_PROPERTY_TEXT_H
+#endif // ifndef GWK_CONTROLS_PROPERTY_TEXT_H

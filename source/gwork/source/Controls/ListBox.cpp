@@ -1,20 +1,21 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 
-#include "Gwen/Controls/ListBox.h"
-#include "Gwen/Controls/ScrollControl.h"
-#include "Gwen/InputHandler.h"
+#include "Gwork/Controls/ListBox.h"
+#include "Gwork/Controls/ScrollControl.h"
+#include "Gwork/InputHandler.h"
 
-using namespace Gwen;
-using namespace Gwen::Controls;
+using namespace Gwk;
+using namespace Gwk::Controls;
 
 class ListBoxRow : public Layout::TableRow
 {
-    GWEN_CONTROL_INLINE(ListBoxRow, Layout::TableRow)
+    GWK_CONTROL_INLINE(ListBoxRow, Layout::TableRow)
     {
         SetMouseInputEnabled(true);
         SetSelected(false);
@@ -49,9 +50,9 @@ class ListBoxRow : public Layout::TableRow
 
         // TODO: Get these values from the skin.
         if (b)
-            SetTextColor(Gwen::Colors::White);
+            SetTextColor(Gwk::Colors::White);
         else
-            SetTextColor(Gwen::Colors::Black);
+            SetTextColor(Gwk::Colors::Black);
     }
 
 private:
@@ -61,7 +62,7 @@ private:
 };
 
 
-GWEN_CONTROL_CONSTRUCTOR(ListBox)
+GWK_CONTROL_CONSTRUCTOR(ListBox)
 {
     SetScroll(false, true);
     SetAutoHideBars(true);
@@ -96,7 +97,7 @@ void ListBox::Render(Skin::Base* skin)
 void ListBox::Layout(Skin::Base* skin)
 {
     ParentClass::Layout(skin);
-    const Gwen::Rect& inner = m_InnerPanel->GetInnerBounds();
+    const Gwk::Rect& inner = m_InnerPanel->GetInnerBounds();
     m_Table->SetPos(inner.x, inner.y);
     m_Table->SetWidth(inner.w);
     m_Table->SizeToChildren(false, true);
@@ -117,7 +118,7 @@ void ListBox::UnselectAll()
 
 void ListBox::OnRowSelected(Base* pControl)
 {
-    bool bClear = !Gwen::Input::IsShiftDown();
+    bool bClear = !Gwk::Input::IsShiftDown();
 
     if (!AllowMultiSelect())
         bClear = true;
@@ -133,7 +134,7 @@ Layout::TableRow* ListBox::GetSelectedRow()
     return *m_SelectedRows.begin();
 }
 
-Gwen::String ListBox::GetSelectedRowName()
+Gwk::String ListBox::GetSelectedRowName()
 {
     Layout::TableRow* row = GetSelectedRow();
 
@@ -149,12 +150,12 @@ void ListBox::Clear()
     m_Table->Clear();
 }
 
-void ListBox::SetSelectedRow(Gwen::Controls::Base* pControl, bool bClearOthers)
+void ListBox::SetSelectedRow(Gwk::Controls::Base* pControl, bool bClearOthers)
 {
     if (bClearOthers)
         UnselectAll();
 
-    ListBoxRow* pRow = gwen_cast<ListBoxRow>(pControl);
+    ListBoxRow* pRow = gwk_cast<ListBoxRow>(pControl);
 
     if (!pRow)
         return;
@@ -174,7 +175,7 @@ void ListBox::SelectByString(const String& strName, bool bClearOthers)
 
     for (Base::List::iterator iter = children.begin(); iter != children.end(); ++iter)
     {
-        ListBoxRow* pChild = gwen_cast<ListBoxRow>(*iter);
+        ListBoxRow* pChild = gwk_cast<ListBoxRow>(*iter);
 
         if (!pChild)
             continue;
@@ -208,12 +209,12 @@ bool ListBox::OnKeyDown(bool bDown)
             if (next != end)
                 result = next;
 
-            ListBoxRow* pRow = gwen_cast<ListBoxRow>(*result);
+            ListBoxRow* pRow = gwk_cast<ListBoxRow>(*result);
 
             if (pRow)
             {
                 pRow->DoSelect();
-                Controls::VerticalScrollBar* pScroll = gwen_cast<Controls::VerticalScrollBar>(
+                Controls::VerticalScrollBar* pScroll = gwk_cast<Controls::VerticalScrollBar>(
                     m_VerticalScrollBar);
 
                 if (pScroll)
@@ -247,12 +248,12 @@ bool ListBox::OnKeyUp(bool bDown)
             if (result != begin)
                 --result;
 
-            ListBoxRow* pRow = gwen_cast<ListBoxRow>(*result);
+            ListBoxRow* pRow = gwk_cast<ListBoxRow>(*result);
 
             if (pRow)
             {
                 pRow->DoSelect();
-                Controls::VerticalScrollBar* pScroll = gwen_cast<Controls::VerticalScrollBar>(
+                Controls::VerticalScrollBar* pScroll = gwk_cast<Controls::VerticalScrollBar>(
                     m_VerticalScrollBar);
 
                 if (pScroll)

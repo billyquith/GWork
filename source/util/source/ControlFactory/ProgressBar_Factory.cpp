@@ -1,22 +1,22 @@
 
-#include "GwenUtil/ControlFactory.h"
-#include "Gwen/Controls.h"
+#include "Gwork/Util/ControlFactory.h"
+#include "Gwork/Controls.h"
 
-namespace Gwen
+namespace Gwk
 {
 //    namespace ControlFactory
 //    {
-//        using namespace Gwen;
+//        using namespace Gwk;
 //
 //        namespace Properties
 //        {
 //            class CycleSpeed : public ControlFactory::Property
 //            {
-//                GWEN_CONTROL_FACTORY_PROPERTY(CycleSpeed, "");
+//                GWK_CONTROL_FACTORY_PROPERTY(CycleSpeed, "");
 //
 //                String GetValueAsString(Controls::Base* ctrl) override
 //                {
-//                    return Utility::Format("%f", (float)gwen_cast<Controls::ProgressBar>(
+//                    return Utility::Format("%f", (float)gwk_cast<Controls::ProgressBar>(
 //                                               ctrl)->GetCycleSpeed());
 //                }
 //
@@ -27,7 +27,7 @@ namespace Gwen
 //                    if (sscanf(str.c_str(), "%f", &num) != 1)
 //                        return;
 //
-//                    gwen_cast<Controls::ProgressBar>(ctrl)->SetCycleSpeed(num);
+//                    gwk_cast<Controls::ProgressBar>(ctrl)->SetCycleSpeed(num);
 //                }
 //
 //            };
@@ -35,18 +35,18 @@ namespace Gwen
 //
 //        }
 //
-//        class ProgressBar_Factory : public Gwen::ControlFactory::Base
+//        class ProgressBar_Factory : public Gwk::ControlFactory::Base
 //        {
 //        public:
 //
-//            GWEN_CONTROL_FACTORY_FOR(ProgressBar, Base)
+//            GWK_CONTROL_FACTORY_FOR(ProgressBar, Base)
 //            {
 //                AddProperty(new Properties::CycleSpeed());
 //            }
 //
-//            virtual Gwen::Controls::Base* CreateInstance(Gwen::Controls::Base* parent) override
+//            virtual Gwk::Controls::Base* CreateInstance(Gwk::Controls::Base* parent) override
 //            {
-//                Gwen::Controls::ProgressBar* pControl = new Gwen::Controls::ProgressBar(parent);
+//                Gwk::Controls::ProgressBar* pControl = new Gwk::Controls::ProgressBar(parent);
 //                pControl->SetSize(200, 20);
 //                return pControl;
 //            }
@@ -54,7 +54,7 @@ namespace Gwen
 //        };
 //
 //
-//        GWEN_CONTROL_FACTORY(ProgressBar_Factory);
+//        GWK_CONTROL_FACTORY(ProgressBar_Factory);
 //
 //    }
 }

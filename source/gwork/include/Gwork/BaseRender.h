@@ -1,16 +1,17 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 #pragma once
-#ifndef GWEN_BASERENDER_H
-#define GWEN_BASERENDER_H
+#ifndef GWK_BASERENDER_H
+#define GWK_BASERENDER_H
 
-#include "Gwen/Structures.h"
+#include "Gwork/Structures.h"
 
-namespace Gwen
+namespace Gwk
 {
     struct Font;
     struct Texture;
@@ -28,12 +29,12 @@ namespace Gwen
 
             virtual void Initialize() = 0;
             virtual void ShutDown() = 0;
-            virtual void SetupCacheTexture(Gwen::Controls::Base* control) = 0;
-            virtual void FinishCacheTexture(Gwen::Controls::Base* control) = 0;
-            virtual void DrawCachedControlTexture(Gwen::Controls::Base* control) = 0;
-            virtual void CreateControlCacheTexture(Gwen::Controls::Base* control) = 0;
-            virtual void UpdateControlCacheTexture(Gwen::Controls::Base* control) = 0;
-            virtual void SetRenderer(Gwen::Renderer::Base* renderer) = 0;
+            virtual void SetupCacheTexture(Gwk::Controls::Base* control) = 0;
+            virtual void FinishCacheTexture(Gwk::Controls::Base* control) = 0;
+            virtual void DrawCachedControlTexture(Gwk::Controls::Base* control) = 0;
+            virtual void CreateControlCacheTexture(Gwk::Controls::Base* control) = 0;
+            virtual void UpdateControlCacheTexture(Gwk::Controls::Base* control) = 0;
+            virtual void SetRenderer(Gwk::Renderer::Base* renderer) = 0;
 
         };
 
@@ -42,7 +43,7 @@ namespace Gwen
         ///
         /// @note We never instance this directly, only the derived implementations.
         //
-        class GWEN_EXPORT Base
+        class GWK_EXPORT Base
         {
         protected:
             
@@ -58,25 +59,25 @@ namespace Gwen
 
             virtual void SetDrawColor(Color color)          {}
 
-            virtual void DrawFilledRect(Gwen::Rect rect)    {}
+            virtual void DrawFilledRect(Gwk::Rect rect)    {}
 
             virtual void StartClip()    {}
             virtual void EndClip()      {}
 
-            virtual void LoadTexture(Gwen::Texture* pTexture)   {}
-            virtual void FreeTexture(Gwen::Texture* pTexture)   {}
+            virtual void LoadTexture(Gwk::Texture* pTexture)   {}
+            virtual void FreeTexture(Gwk::Texture* pTexture)   {}
 
-            virtual void DrawTexturedRect(Gwen::Texture* pTexture, Gwen::Rect pTargetRect,
+            virtual void DrawTexturedRect(Gwk::Texture* pTexture, Gwk::Rect pTargetRect,
                                           float u1 = 0.0f, float v1 = 0.0f,
                                           float u2 = 1.0f, float v2 = 1.0f)
             {}
 
-            virtual void DrawMissingImage(Gwen::Rect pTargetRect);
+            virtual void DrawMissingImage(Gwk::Rect pTargetRect);
 
-            virtual Gwen::Color PixelColour(Gwen::Texture* pTexture,
+            virtual Gwk::Color PixelColour(Gwk::Texture* pTexture,
                                             unsigned int x, unsigned int y,
-                                            const Gwen::Color& col_default =
-                                                                    Gwen::Color(255,255,255,255))
+                                            const Gwk::Color& col_default =
+                                                                    Gwk::Color(255,255,255,255))
             {
                 return col_default;
             }
@@ -86,24 +87,24 @@ namespace Gwen
                 return NULL;
             }
 
-            virtual void LoadFont(Gwen::Font* pFont)    {}
-            virtual void FreeFont(Gwen::Font* pFont)    {}
+            virtual void LoadFont(Gwk::Font* pFont)    {}
+            virtual void FreeFont(Gwk::Font* pFont)    {}
 
-            virtual void RenderText(Gwen::Font* pFont,
-                                    Gwen::Point pos,
-                                    const Gwen::String& text);
+            virtual void RenderText(Gwk::Font* pFont,
+                                    Gwk::Point pos,
+                                    const Gwk::String& text);
             
-            virtual Gwen::Point MeasureText(Gwen::Font* pFont,
-                                            const Gwen::String& text);
+            virtual Gwk::Point MeasureText(Gwk::Font* pFont,
+                                            const Gwk::String& text);
 
             /// \sect{Render Specialisation}
             ///     No need to implement these functions in your derived class, but
             ///     if you can do them faster than the default implementation it's a
             ///     good idea to.
             //
-            virtual void    DrawLinedRect(Gwen::Rect rect);
+            virtual void    DrawLinedRect(Gwk::Rect rect);
             virtual void    DrawPixel(int x, int y);
-            virtual void    DrawShavedCornerRect(Gwen::Rect rect, bool bSlight = false);
+            virtual void    DrawShavedCornerRect(Gwk::Rect rect, bool bSlight = false);
             /// \}
 
         public:
@@ -113,42 +114,42 @@ namespace Gwen
             ///     into view space, taking Offsets into account.
             //
             void Translate(int& x, int& y);
-            void Translate(Gwen::Rect& rect);
+            void Translate(Gwk::Rect& rect);
             /// \}
 
             //
             /// Set the rendering offset. You shouldn't have to touch these, ever.
             //
-            void SetRenderOffset(const Gwen::Point& offset)
+            void SetRenderOffset(const Gwk::Point& offset)
             {
                 m_RenderOffset = offset;
             }
 
-            void AddRenderOffset(const Gwen::Rect& offset)
+            void AddRenderOffset(const Gwk::Rect& offset)
             {
                 m_RenderOffset.x += offset.x;
                 m_RenderOffset.y += offset.y;
             }
 
-            const Gwen::Point& GetRenderOffset() const
+            const Gwk::Point& GetRenderOffset() const
             {
                 return m_RenderOffset;
             }
 
         private:
 
-            Gwen::Point m_RenderOffset;
+            Gwk::Point m_RenderOffset;
 
         public:
 
-            void              SetClipRegion(Gwen::Rect rect);
-            void              AddClipRegion(Gwen::Rect rect);
+            void              SetClipRegion(Gwk::Rect rect);
+            void              AddClipRegion(Gwk::Rect rect);
             bool              ClipRegionVisible();
-            const Gwen::Rect& ClipRegion() const;
+            const Gwk::Rect& ClipRegion() const;
 
         private:
 
-            Gwen::Rect m_rectClipRegion;
+            Gwk::Rect m_rectClipRegion;
             ICacheToTexture* m_RTT;
 
         public:
@@ -162,32 +163,32 @@ namespace Gwen
             // Self Initialization, shutdown
             //
 
-            virtual bool InitializeContext(Gwen::WindowProvider* pWindow)
+            virtual bool InitializeContext(Gwk::WindowProvider* pWindow)
             {
                 return false;
             }
 
-            virtual bool ShutdownContext(Gwen::WindowProvider* pWindow)
+            virtual bool ShutdownContext(Gwk::WindowProvider* pWindow)
             {
                 return false;
             }
 
-            virtual bool ResizedContext(Gwen::WindowProvider* pWindow, int w, int h)
+            virtual bool ResizedContext(Gwk::WindowProvider* pWindow, int w, int h)
             {
                 return false;
             }
 
-            virtual bool BeginContext(Gwen::WindowProvider* pWindow)
+            virtual bool BeginContext(Gwk::WindowProvider* pWindow)
             {
                 return false;
             }
 
-            virtual bool EndContext(Gwen::WindowProvider* pWindow)
+            virtual bool EndContext(Gwk::WindowProvider* pWindow)
             {
                 return false;
             }
 
-            virtual bool PresentContext(Gwen::WindowProvider* pWindow)
+            virtual bool PresentContext(Gwk::WindowProvider* pWindow)
             {
                 return false;
             }
@@ -200,4 +201,4 @@ namespace Gwen
 
     }
 }
-#endif // ifndef GWEN_BASERENDER_H
+#endif // ifndef GWK_BASERENDER_H

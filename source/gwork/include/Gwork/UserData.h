@@ -1,8 +1,15 @@
-#pragma once
-#ifndef GWEN_USERDATA_H
-#define GWEN_USERDATA_H
+/*
+ *  Gwork
+ *  Copyright (c) 2010 Facepunch Studios
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
+ */
 
-namespace Gwen
+#pragma once
+#ifndef GWK_USERDATA_H
+#define GWK_USERDATA_H
+
+namespace Gwk
 {
     /**
      *
@@ -59,7 +66,7 @@ namespace Gwen
             }
         };
 
-        typedef std::map<Gwen::String, ValueBase*> Container;
+        typedef std::map<Gwk::String, ValueBase*> Container;
         Container m_List;
 
     public:
@@ -80,7 +87,7 @@ namespace Gwen
         }
 
         template <typename T>
-        void Set(const Gwen::String& str, const T& var)
+        void Set(const Gwk::String& str, const T& var)
         {
             Value<T> *val = NULL;
             Container::iterator it = m_List.find(str);
@@ -96,13 +103,13 @@ namespace Gwen
             }
         }
 
-        bool Exists(const Gwen::String& str) const
+        bool Exists(const Gwk::String& str) const
         {
             return m_List.find(str) != m_List.end();
         }
 
         template <typename T>
-        T& Get(const Gwen::String& str)
+        T& Get(const Gwk::String& str)
         {
             Value<T> *v = static_cast< Value<T>* >(m_List[str]);
             return v->val;        }
@@ -111,4 +118,4 @@ namespace Gwen
 
 }
 
-#endif // ifndef GWEN_USERDATA_H
+#endif // ifndef GWK_USERDATA_H

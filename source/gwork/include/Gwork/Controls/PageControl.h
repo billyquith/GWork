@@ -1,25 +1,26 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2012 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2015-2016 Billy Quith
+ *  See license in Gwork.h
  */
 
 #pragma once
-#ifndef GWEN_CONTROLS_PAGECONTROL_H
-#define GWEN_CONTROLS_PAGECONTROL_H
+#ifndef GWK_CONTROLS_PAGECONTROL_H
+#define GWK_CONTROLS_PAGECONTROL_H
 
-#include "Gwen/Controls/Base.h"
-#include "Gwen/Controls/Button.h"
+#include "Gwork/Controls/Base.h"
+#include "Gwork/Controls/Button.h"
 
-namespace Gwen
+namespace Gwk
 {
     namespace Controls
     {
-        class GWEN_EXPORT PageControl : public Base
+        class GWK_EXPORT PageControl : public Base
         {
             static const unsigned int MaxPages = 64;
 
-            GWEN_CONTROL(PageControl, Base);
+            GWK_CONTROL(PageControl, Base);
 
             virtual void         SetPageCount(unsigned int i);
             virtual unsigned int GetPageCount()
@@ -93,4 +94,4 @@ namespace Gwen
 
     }
 }
-#endif // ifndef GWEN_CONTROLS_PAGECONTROL_H
+#endif // ifndef GWK_CONTROLS_PAGECONTROL_H

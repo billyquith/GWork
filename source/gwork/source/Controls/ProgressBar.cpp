@@ -1,19 +1,20 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 
-#include "Gwen/Controls/ScrollControl.h"
-#include "Gwen/Controls/ProgressBar.h"
-#include "Gwen/Anim.h"
-#include "Gwen/Utility.h"
+#include "Gwork/Controls/ScrollControl.h"
+#include "Gwork/Controls/ProgressBar.h"
+#include "Gwork/Anim.h"
+#include "Gwork/Utility.h"
 
-using namespace Gwen;
-using namespace Gwen::Controls;
+using namespace Gwk;
+using namespace Gwk::Controls;
 
-class ProgressBarThink : public Gwen::Anim::Animation
+class ProgressBarThink : public Gwk::Anim::Animation
 {
 public:
 
@@ -25,7 +26,7 @@ public:
     virtual void Think()
     {
         float fDiff = Platform::GetTimeInSeconds()-m_fLastFrame;
-        gwen_cast<ProgressBar>(m_Control)->CycleThink(Gwen::Clamp(fDiff, 0.f, 0.3f));
+        gwk_cast<ProgressBar>(m_Control)->CycleThink(Gwk::Clamp(fDiff, 0.f, 0.3f));
         m_fLastFrame = Platform::GetTimeInSeconds();
     }
 
@@ -33,17 +34,17 @@ public:
 };
 
 
-GWEN_CONTROL_CONSTRUCTOR(ProgressBar)
+GWK_CONTROL_CONSTRUCTOR(ProgressBar)
 {
     SetMouseInputEnabled(true);
-    SetBounds(Gwen::Rect(0, 0, 128, 32));
+    SetBounds(Gwk::Rect(0, 0, 128, 32));
     SetTextPadding(Padding(3, 3, 3, 3));
     SetHorizontal();
-    SetAlignment(Gwen::Docking::Center);
+    SetAlignment(Gwk::Docking::Center);
     m_fProgress = 0.0f;
     m_bAutoLabel = true;
     m_fCycleSpeed = 0.0f;
-    Gwen::Anim::Add(this, new ProgressBarThink());
+    Gwk::Anim::Add(this, new ProgressBarThink());
 }
 
 void ProgressBar::SetValue(float val)

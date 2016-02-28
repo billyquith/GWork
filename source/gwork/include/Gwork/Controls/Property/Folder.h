@@ -1,13 +1,19 @@
+/*
+ *  Gwork
+ *  Copyright (c) 2010 Facepunch Studios
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
+ */
 
 #pragma once
-#ifndef GWEN_CONTROLS_PROPERTY_FOLDER_H
-#define GWEN_CONTROLS_PROPERTY_FOLDER_H
+#ifndef GWK_CONTROLS_PROPERTY_FOLDER_H
+#define GWK_CONTROLS_PROPERTY_FOLDER_H
 
-#include "Gwen/Controls/Properties.h"
-#include "Gwen/Controls/Button.h"
-#include "Gwen/Controls/Dialogs/FolderOpen.h"
+#include "Gwork/Controls/Properties.h"
+#include "Gwork/Controls/Button.h"
+#include "Gwork/Controls/Dialogs/FolderOpen.h"
 
-namespace Gwen
+namespace Gwk
 {
     namespace Controls
     {
@@ -15,7 +21,7 @@ namespace Gwen
         {
             class Folder : public Property::Text
             {
-                GWEN_CONTROL_INLINE(Folder, Property::Text)
+                GWK_CONTROL_INLINE(Folder, Property::Text)
                 {
                     Controls::Button* pButton = new Controls::Button(this);
                     pButton->Dock(Docking::Right);
@@ -28,7 +34,7 @@ namespace Gwen
 
                 void OnButtonPress(Controls::Base* control)
                 {
-                    Gwen::Dialogs::FolderOpen(true, m_strDialogName,
+                    Gwk::Dialogs::FolderOpen(true, m_strDialogName,
                                               m_TextBox->GetText(), this,
                                               &Folder::EventFilePicked);
                 }
@@ -46,4 +52,4 @@ namespace Gwen
         }
     }
 }
-#endif // ifndef GWEN_CONTROLS_PROPERTY_FOLDER_H
+#endif // ifndef GWK_CONTROLS_PROPERTY_FOLDER_H

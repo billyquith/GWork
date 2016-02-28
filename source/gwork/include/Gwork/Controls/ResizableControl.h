@@ -1,31 +1,32 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 #pragma once
-#ifndef GWEN_CONTROLS_RESIZABLECONTROL_H
-#define GWEN_CONTROLS_RESIZABLECONTROL_H
+#ifndef GWK_CONTROLS_RESIZABLECONTROL_H
+#define GWK_CONTROLS_RESIZABLECONTROL_H
 
-#include "Gwen/Controls/Base.h"
-#include "Gwen/Controls/Label.h"
-#include "Gwen/Controls/Button.h"
-#include "Gwen/Controls/Dragger.h"
-#include "Gwen/Controls/Label.h"
-#include "Gwen/Controls/Resizer.h"
-#include "Gwen/Gwen.h"
-#include "Gwen/Skin.h"
+#include "Gwork/Controls/Base.h"
+#include "Gwork/Controls/Label.h"
+#include "Gwork/Controls/Button.h"
+#include "Gwork/Controls/Dragger.h"
+#include "Gwork/Controls/Label.h"
+#include "Gwork/Controls/Resizer.h"
+#include "Gwork/Gwork.h"
+#include "Gwork/Skin.h"
 
-namespace Gwen
+namespace Gwk
 {
     namespace Controls
     {
-        class GWEN_EXPORT ResizableControl : public Base
+        class GWK_EXPORT ResizableControl : public Base
         {
         public:
 
-            GWEN_CONTROL(ResizableControl, Base);
+            GWK_CONTROL(ResizableControl, Base);
 
             virtual void SetClampMovement(bool shouldClamp)
             {
@@ -37,12 +38,12 @@ namespace Gwen
                 return m_bClampMovement;
             }
 
-            virtual void SetMinimumSize(const Gwen::Point& minSize)
+            virtual void SetMinimumSize(const Gwk::Point& minSize)
             {
                 m_MinimumSize = minSize;
             }
 
-            virtual Gwen::Point GetMinimumSize() override
+            virtual Gwk::Point GetMinimumSize() override
             {
                 return m_MinimumSize;
             }
@@ -66,7 +67,7 @@ namespace Gwen
 
             void OnResizedInternal(Controls::Base* pControl);
 
-            Gwen::Point m_MinimumSize;
+            Gwk::Point m_MinimumSize;
             bool m_bClampMovement;
             bool m_bResizable;
 
@@ -78,4 +79,4 @@ namespace Gwen
 
     }
 }
-#endif // ifndef GWEN_CONTROLS_RESIZABLECONTROL_H
+#endif // ifndef GWK_CONTROLS_RESIZABLECONTROL_H

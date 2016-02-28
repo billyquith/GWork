@@ -1,26 +1,27 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 #pragma once
-#ifndef GWEN_CONTROLS_HIGHLIGHT_H
-#define GWEN_CONTROLS_HIGHLIGHT_H
+#ifndef GWK_CONTROLS_HIGHLIGHT_H
+#define GWK_CONTROLS_HIGHLIGHT_H
 
-#include "Gwen/BaseRender.h"
-#include "Gwen/Controls/Base.h"
-#include "Gwen/Skin.h"
+#include "Gwork/BaseRender.h"
+#include "Gwork/Controls/Base.h"
+#include "Gwork/Skin.h"
 
-namespace Gwen
+namespace Gwk
 {
     namespace ControlsInternal
     {
-        class GWEN_EXPORT Highlight : public Controls::Base
+        class GWK_EXPORT Highlight : public Controls::Base
         {
         public:
 
-            GWEN_CONTROL_INLINE(Highlight, Controls::Base)
+            GWK_CONTROL_INLINE(Highlight, Controls::Base)
             {
             }
 
@@ -35,4 +36,4 @@ namespace Gwen
     }
 
 }
-#endif // ifndef GWEN_CONTROLS_HIGHLIGHT_H
+#endif // ifndef GWK_CONTROLS_HIGHLIGHT_H

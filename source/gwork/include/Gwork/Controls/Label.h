@@ -1,30 +1,31 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 #pragma once
-#ifndef GWEN_CONTROLS_LABEL_H
-#define GWEN_CONTROLS_LABEL_H
+#ifndef GWK_CONTROLS_LABEL_H
+#define GWK_CONTROLS_LABEL_H
 
-#include "Gwen/BaseRender.h"
-#include "Gwen/Controls/Base.h"
-#include "Gwen/Controls/Text.h"
+#include "Gwork/BaseRender.h"
+#include "Gwork/Controls/Base.h"
+#include "Gwork/Controls/Text.h"
 
-namespace Gwen
+namespace Gwk
 {
     namespace Controls
     {
         //
         //! A control that contains a text item.
         //
-        class GWEN_EXPORT Label : public Controls::Base
+        class GWK_EXPORT Label : public Controls::Base
         {
         public:
-            GWEN_CONTROL(Label, Controls::Base);
+            GWK_CONTROL(Label, Controls::Base);
             
-            virtual void PreDelete(Gwen::Skin::Base* skin) override;
+            virtual void PreDelete(Gwk::Skin::Base* skin) override;
 
             virtual void SetText(const String& str, bool bDoEvents = true);
 
@@ -45,29 +46,29 @@ namespace Gwen
             virtual int  GetAlignment();
 
 
-            virtual void SetFont(Gwen::String strFacename, int iSize, bool bBold);
+            virtual void SetFont(Gwk::String strFacename, int iSize, bool bBold);
 
-            virtual void SetFont(Gwen::Font* pFont)
+            virtual void SetFont(Gwk::Font* pFont)
             {
                 m_Text->SetFont(pFont);
             }
 
-            virtual Gwen::Font* GetFont()
+            virtual Gwk::Font* GetFont()
             {
                 return m_Text->GetFont();
             }
 
-            virtual void SetTextColor(const Gwen::Color& col)
+            virtual void SetTextColor(const Gwk::Color& col)
             {
                 m_Text->SetTextColor(col);
             }
 
-            virtual void SetTextColorOverride(const Gwen::Color& col)
+            virtual void SetTextColorOverride(const Gwk::Color& col)
             {
                 m_Text->SetTextColorOverride(col);
             }
 
-            inline const Gwen::Color& GetTextColor() const
+            inline const Gwk::Color& GetTextColor() const
             {
                 return m_Text->TextColor();
             }
@@ -81,7 +82,7 @@ namespace Gwen
 
             virtual int TextLength()        { return m_Text->Length(); }
             
-            Gwen::Rect GetCharacterPosition(int iChar);
+            Gwk::Rect GetCharacterPosition(int iChar);
 
             virtual void SetTextPadding(const Padding& padding)
             {
@@ -140,13 +141,13 @@ namespace Gwen
                 m_Text->SetWrap(b);
             }
 
-            virtual void OnBoundsChanged(Gwen::Rect oldChildBounds) override;
+            virtual void OnBoundsChanged(Gwk::Rect oldChildBounds) override;
 
         protected:
 
             virtual void OnTextChanged() {}
 
-            Gwen::Font*                 m_CreatedFont;
+            Gwk::Font*                 m_CreatedFont;
             ControlsInternal::Text*     m_Text;
             int m_iAlign;
 
@@ -156,4 +157,4 @@ namespace Gwen
     }
 }
 
-#endif // ifndef GWEN_CONTROLS_LABEL_H
+#endif // ifndef GWK_CONTROLS_LABEL_H

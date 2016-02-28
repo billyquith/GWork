@@ -6,12 +6,12 @@
 #include <dwrite.h>
 #include <wincodec.h>
 
-#include "Gwen/Gwen.h"
-#include "Gwen/Skins/Simple.h"
-#include "Gwen/Skins/TexturedBase.h"
-#include "Gwen/UnitTest/UnitTest.h"
-#include "Gwen/Input/Windows.h"
-#include "Gwen/Renderers/Direct2D.h"
+#include "Gwork/Gwork.h"
+#include "Gwork/Skins/Simple.h"
+#include "Gwork/Skins/TexturedBase.h"
+#include "Gwork/UnitTest/UnitTest.h"
+#include "Gwork/Input/Windows.h"
+#include "Gwork/Renderers/Direct2D.h"
 
 #pragma comment(lib, "d2d1.lib")
 #pragma comment(lib, "dwrite.lib")
@@ -23,7 +23,7 @@ IDWriteFactory*         g_pDWriteFactory = NULL;
 IWICImagingFactory*     g_pWICFactory = NULL;
 ID2D1HwndRenderTarget*  g_pRT = NULL; // this is device-specific
 
-Gwen::Renderer::Direct2D* g_pRenderer = NULL;
+Gwk::Renderer::Direct2D* g_pRenderer = NULL;
 
 //
 // Windows bullshit to create a Window to render to.
@@ -35,11 +35,11 @@ HWND CreateGameWindow(void)
     wc.style            = CS_HREDRAW|CS_VREDRAW|CS_OWNDC;
     wc.lpfnWndProc      = DefWindowProc;
     wc.hInstance        = GetModuleHandle(NULL);
-    wc.lpszClassName    = L"GWENWindow";
+    wc.lpszClassName    = L"GworkWindow";
     wc.hCursor          = LoadCursor(NULL, IDC_ARROW);
     RegisterClass(&wc);
     HWND hWindow = CreateWindowEx((WS_EX_APPWINDOW|WS_EX_WINDOWEDGE), wc.lpszClassName,
-                                  L"GWEN - Direct 2D Sample",
+                                  L"Gwork - Direct 2D Sample",
                                   (WS_OVERLAPPEDWINDOW|WS_CLIPSIBLINGS|
                                    WS_CLIPCHILDREN)&~(WS_MINIMIZEBOX|WS_MAXIMIZEBOX|WS_THICKFRAME),
                                   -1, -1, 1004, 650, NULL, NULL, GetModuleHandle(
@@ -79,9 +79,9 @@ int main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCm
     g_pHWND = CreateGameWindow();
     createDeviceResources();
     //
-    // Create a GWEN Direct2D renderer
+    // Create a Gwork Direct2D renderer
     //
-    g_pRenderer = new Gwen::Renderer::Direct2D(g_pRT, g_pDWriteFactory, g_pWICFactory);
+    g_pRenderer = new Gwk::Renderer::Direct2D(g_pRT, g_pDWriteFactory, g_pWICFactory);
     runSample();
     delete g_pRenderer;
     g_pRenderer = NULL;
@@ -136,17 +136,17 @@ void runSample()
     RECT FrameBounds;
     GetClientRect(g_pHWND, &FrameBounds);
     //
-    // Create a GWEN skin
+    // Create a Gwork skin
     //
-    Gwen::Skin::TexturedBase skin(g_pRenderer);
+    Gwk::Skin::TexturedBase skin(g_pRenderer);
     skin.Init("DefaultSkin.png");
     //
-    // Create a Canvas (it's root, on which all other GWEN panels are created)
+    // Create a Canvas (it's root, on which all other Gwork panels are created)
     //
-    Gwen::Controls::Canvas* pCanvas = new Gwen::Controls::Canvas(&skin);
+    Gwk::Controls::Canvas* pCanvas = new Gwk::Controls::Canvas(&skin);
     pCanvas->SetSize(FrameBounds.right, FrameBounds.bottom);
     pCanvas->SetDrawBackground(true);
-    pCanvas->SetBackgroundColor(Gwen::Color(150, 170, 170, 255));
+    pCanvas->SetBackgroundColor(Gwk::Color(150, 170, 170, 255));
     //
     // Create our unittest control (which is a Window with controls in it)
     //
@@ -154,10 +154,10 @@ void runSample()
     pUnit->SetPos(10, 10);
     //
     // Create a Windows Control helper
-    // (Processes Windows MSG's and fires input at GWEN)
+    // (Processes Windows MSG's and fires input at Gwork)
     //
-    Gwen::Input::Windows GwenInput;
-    GwenInput.Initialize(pCanvas);
+    Gwk::Input::Windows GworkInput;
+    GworkInput.Initialize(pCanvas);
     //
     // Begin the main game loop
     //
@@ -173,7 +173,7 @@ void runSample()
         if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
         {
             // .. give it to the input handler to process
-            GwenInput.ProcessMessage(msg);
+            GworkInput.ProcessMessage(msg);
 
             // if it's QUIT then quit..
             if (msg.message == WM_QUIT)
@@ -190,7 +190,7 @@ void runSample()
                 g_pRT->BeginDraw();
                 g_pRT->SetTransform(D2D1::Matrix3x2F::Identity());
                 g_pRT->Clear(D2D1::ColorF(D2D1::ColorF::White));
-                // This is how easy it is to render GWEN!
+                // This is how easy it is to render Gwork!
                 pCanvas->RenderCanvas();
                 HRESULT hr = g_pRT->EndDraw();
 

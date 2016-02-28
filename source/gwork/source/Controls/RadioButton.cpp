@@ -1,16 +1,17 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 
-#include "Gwen/Controls/RadioButton.h"
+#include "Gwork/Controls/RadioButton.h"
 
-using namespace Gwen;
-using namespace Gwen::Controls;
+using namespace Gwk;
+using namespace Gwk::Controls;
 
-GWEN_CONTROL_CONSTRUCTOR(RadioButton)
+GWK_CONTROL_CONSTRUCTOR(RadioButton)
 {
     SetSize(15, 15);
     SetMouseInputEnabled(true);

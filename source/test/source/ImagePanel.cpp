@@ -1,13 +1,20 @@
-#include "Gwen/UnitTest/UnitTest.h"
-#include "Gwen/Controls/ImagePanel.h"
+/*
+ *  Gwork
+ *  Copyright (c) 2010 Facepunch Studios
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
+ */
 
-using namespace Gwen;
+#include "Gwork/Test/Test.h"
+#include "Gwork/Controls/ImagePanel.h"
+
+using namespace Gwk;
 
 class ImagePanel : public GUnit
 {
 public:
 
-    GWEN_CONTROL_INLINE(ImagePanel, GUnit)
+    GWK_CONTROL_INLINE(ImagePanel, GUnit)
     {
         // Normal
         {

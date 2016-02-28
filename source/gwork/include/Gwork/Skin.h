@@ -1,17 +1,18 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 #pragma once
-#ifndef GWEN_SKIN_H
-#define GWEN_SKIN_H
+#ifndef GWK_SKIN_H
+#define GWK_SKIN_H
 
-#include "Gwen/BaseRender.h"
-#include "Gwen/Font.h"
+#include "Gwork/BaseRender.h"
+#include "Gwork/Font.h"
 
-namespace Gwen
+namespace Gwk
 {
     namespace Controls
     {
@@ -28,11 +29,11 @@ namespace Gwen
             static const unsigned char Dot              = 3;
         }
 
-        class GWEN_EXPORT Base
+        class GWK_EXPORT Base
         {
         public:
 
-            Base(Gwen::Renderer::Base* renderer = NULL)
+            Base(Gwk::Renderer::Base* renderer = NULL)
             {
                 m_DefaultFont.facename = "Arial";
                 m_DefaultFont.size = 10.0f;
@@ -44,7 +45,7 @@ namespace Gwen
                 ReleaseFont(&m_DefaultFont);
             }
 
-            virtual void ReleaseFont(Gwen::Font* fnt)
+            virtual void ReleaseFont(Gwk::Font* fnt)
             {
                 if (!fnt)
                     return;
@@ -78,12 +79,12 @@ namespace Gwen
             virtual void DrawTextBox(Controls::Base* control) = 0;
 
             virtual void DrawWindow(Controls::Base* control, int topHeight, bool inFocus) = 0;
-            virtual void DrawWindowCloseButton(Gwen::Controls::Base* control, bool bDepressed,
+            virtual void DrawWindowCloseButton(Gwk::Controls::Base* control, bool bDepressed,
                                                bool bHovered, bool bDisabled) = 0;
-            virtual void DrawWindowMaximizeButton(Gwen::Controls::Base* control, bool bDepressed,
+            virtual void DrawWindowMaximizeButton(Gwk::Controls::Base* control, bool bDepressed,
                                                   bool bHovered, bool bDisabled,
                                                   bool bMaximized) = 0;
-            virtual void DrawWindowMinimizeButton(Gwen::Controls::Base* control, bool bDepressed,
+            virtual void DrawWindowMinimizeButton(Gwk::Controls::Base* control, bool bDepressed,
                                                   bool bHovered, bool bDisabled) = 0;
 
 
@@ -105,13 +106,13 @@ namespace Gwen
 
             virtual void DrawSlider(Controls::Base* control, bool bIsHorizontal, int numNotches,
                                     int barSize) = 0;
-            virtual void DrawSlideButton(Gwen::Controls::Base* control, bool bDepressed,
+            virtual void DrawSlideButton(Gwk::Controls::Base* control, bool bDepressed,
                                          bool bHorizontal) = 0;
 
             virtual void DrawComboBox(Controls::Base* control, bool bIsDown, bool bIsMenuOpen) = 0;
-            virtual void DrawComboDownArrow(Gwen::Controls::Base* control, bool bHovered,
+            virtual void DrawComboDownArrow(Gwk::Controls::Base* control, bool bHovered,
                                             bool bDown, bool bOpen, bool bDisabled) = 0;
-            virtual void DrawKeyboardHighlight(Controls::Base* control, const Gwen::Rect& rect,
+            virtual void DrawKeyboardHighlight(Controls::Base* control, const Gwk::Rect& rect,
                                                int offset) = 0;
             virtual void DrawToolTip(Controls::Base* control) = 0;
 
@@ -128,7 +129,7 @@ namespace Gwen
                                          bool bHovered);
             virtual void DrawPropertyTreeNode(Controls::Base* control, int BorderLeft,
                                               int BorderTop);
-            virtual void DrawColorDisplay(Controls::Base* control, Gwen::Color color) = 0;
+            virtual void DrawColorDisplay(Controls::Base* control, Gwk::Color color) = 0;
             virtual void DrawModalControl(Controls::Base* control) = 0;
             virtual void DrawMenuDivider(Controls::Base* control) = 0;
 
@@ -136,76 +137,76 @@ namespace Gwen
             virtual void DrawCategoryInner(Controls::Base* ctrl, bool bCollapsed) = 0;
 
 
-            virtual void SetRender(Gwen::Renderer::Base* renderer)
+            virtual void SetRender(Gwk::Renderer::Base* renderer)
             {
                 m_Render = renderer;
             }
 
-            virtual Gwen::Renderer::Base* GetRender()
+            virtual Gwk::Renderer::Base* GetRender()
             {
                 return m_Render;
             }
 
-            virtual void DrawArrowDown(Gwen::Rect rect);
-            virtual void DrawArrowUp(Gwen::Rect rect);
-            virtual void DrawArrowLeft(Gwen::Rect rect);
-            virtual void DrawArrowRight(Gwen::Rect rect);
-            virtual void DrawCheck(Gwen::Rect rect);
+            virtual void DrawArrowDown(Gwk::Rect rect);
+            virtual void DrawArrowUp(Gwk::Rect rect);
+            virtual void DrawArrowLeft(Gwk::Rect rect);
+            virtual void DrawArrowRight(Gwk::Rect rect);
+            virtual void DrawCheck(Gwk::Rect rect);
 
 
             struct
             {
                 struct Window_t
                 {
-                    Gwen::Color TitleActive;
-                    Gwen::Color TitleInactive;
+                    Gwk::Color TitleActive;
+                    Gwk::Color TitleInactive;
 
                 } Window;
 
 
                 struct Label_t
                 {
-                    Gwen::Color Default;
-                    Gwen::Color Bright;
-                    Gwen::Color Dark;
-                    Gwen::Color Highlight;
+                    Gwk::Color Default;
+                    Gwk::Color Bright;
+                    Gwk::Color Dark;
+                    Gwk::Color Highlight;
 
                 } Label;
 
 
                 struct Tree_t
                 {
-                    Gwen::Color Lines;
-                    Gwen::Color Normal;
-                    Gwen::Color Hover;
-                    Gwen::Color Selected;
+                    Gwk::Color Lines;
+                    Gwk::Color Normal;
+                    Gwk::Color Hover;
+                    Gwk::Color Selected;
 
                 } Tree;
 
 
                 struct Properties_t
                 {
-                    Gwen::Color Line_Normal;
-                    Gwen::Color Line_Selected;
-                    Gwen::Color Line_Hover;
-                    Gwen::Color Column_Normal;
-                    Gwen::Color Column_Selected;
-                    Gwen::Color Column_Hover;
-                    Gwen::Color Label_Normal;
-                    Gwen::Color Label_Selected;
-                    Gwen::Color Label_Hover;
-                    Gwen::Color Border;
-                    Gwen::Color Title;
+                    Gwk::Color Line_Normal;
+                    Gwk::Color Line_Selected;
+                    Gwk::Color Line_Hover;
+                    Gwk::Color Column_Normal;
+                    Gwk::Color Column_Selected;
+                    Gwk::Color Column_Hover;
+                    Gwk::Color Label_Normal;
+                    Gwk::Color Label_Selected;
+                    Gwk::Color Label_Hover;
+                    Gwk::Color Border;
+                    Gwk::Color Title;
 
                 } Properties;
 
 
                 struct Button_t
                 {
-                    Gwen::Color Normal;
-                    Gwen::Color Hover;
-                    Gwen::Color Down;
-                    Gwen::Color Disabled;
+                    Gwk::Color Normal;
+                    Gwk::Color Hover;
+                    Gwk::Color Down;
+                    Gwk::Color Disabled;
 
                 } Button;
 
@@ -214,19 +215,19 @@ namespace Gwen
                 {
                     struct Active_t
                     {
-                        Gwen::Color Normal;
-                        Gwen::Color Hover;
-                        Gwen::Color Down;
-                        Gwen::Color Disabled;
+                        Gwk::Color Normal;
+                        Gwk::Color Hover;
+                        Gwk::Color Down;
+                        Gwk::Color Disabled;
                     } Active;
 
 
                     struct Inactive_t
                     {
-                        Gwen::Color Normal;
-                        Gwen::Color Hover;
-                        Gwen::Color Down;
-                        Gwen::Color Disabled;
+                        Gwk::Color Normal;
+                        Gwk::Color Hover;
+                        Gwk::Color Down;
+                        Gwk::Color Disabled;
                     } Inactive;
 
 
@@ -235,48 +236,48 @@ namespace Gwen
 
                 struct Category_t
                 {
-                    Gwen::Color Header;
-                    Gwen::Color Header_Closed;
+                    Gwk::Color Header;
+                    Gwk::Color Header_Closed;
 
                     struct Line_t
                     {
-                        Gwen::Color Text;
-                        Gwen::Color Text_Hover;
-                        Gwen::Color Text_Selected;
-                        Gwen::Color Button;
-                        Gwen::Color Button_Hover;
-                        Gwen::Color Button_Selected;
+                        Gwk::Color Text;
+                        Gwk::Color Text_Hover;
+                        Gwk::Color Text_Selected;
+                        Gwk::Color Button;
+                        Gwk::Color Button_Hover;
+                        Gwk::Color Button_Selected;
                     } Line;
 
 
                     struct LineAlt_t
                     {
-                        Gwen::Color Text;
-                        Gwen::Color Text_Hover;
-                        Gwen::Color Text_Selected;
-                        Gwen::Color Button;
-                        Gwen::Color Button_Hover;
-                        Gwen::Color Button_Selected;
+                        Gwk::Color Text;
+                        Gwk::Color Text_Hover;
+                        Gwk::Color Text_Selected;
+                        Gwk::Color Button;
+                        Gwk::Color Button_Hover;
+                        Gwk::Color Button_Selected;
                     } LineAlt;
 
 
                 } Category;
 
 
-                Gwen::Color ModalBackground;
-                Gwen::Color TooltipText;
+                Gwk::Color ModalBackground;
+                Gwk::Color TooltipText;
 
             } Colors;
 
 
         public:
 
-            virtual Gwen::Font* GetDefaultFont()
+            virtual Gwk::Font* GetDefaultFont()
             {
                 return &m_DefaultFont;
             }
 
-            virtual void SetDefaultFont(const Gwen::String& strFacename, float fSize = 10.0f)
+            virtual void SetDefaultFont(const Gwk::String& strFacename, float fSize = 10.0f)
             {
                 m_DefaultFont.facename = strFacename;
                 m_DefaultFont.size = fSize;
@@ -284,12 +285,12 @@ namespace Gwen
 
         protected:
 
-            Gwen::Font m_DefaultFont;
-            Gwen::Renderer::Base* m_Render;
+            Gwk::Font m_DefaultFont;
+            Gwk::Renderer::Base* m_Render;
 
         };
 
 
     }
 }
-#endif // ifndef GWEN_SKIN_H
+#endif // ifndef GWK_SKIN_H

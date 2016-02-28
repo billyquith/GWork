@@ -1,32 +1,33 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 #pragma once
-#ifndef GWEN_CONTROLS_TABTITLEBAR_H
-#define GWEN_CONTROLS_TABTITLEBAR_H
+#ifndef GWK_CONTROLS_TABTITLEBAR_H
+#define GWK_CONTROLS_TABTITLEBAR_H
 
-#include "Gwen/Controls/Base.h"
-#include "Gwen/Controls/Label.h"
-#include "Gwen/Controls/TabButton.h"
-#include "Gwen/DragAndDrop.h"
-#include "Gwen/Skin.h"
+#include "Gwork/Controls/Base.h"
+#include "Gwork/Controls/Label.h"
+#include "Gwork/Controls/TabButton.h"
+#include "Gwork/DragAndDrop.h"
+#include "Gwork/Skin.h"
 
-namespace Gwen
+namespace Gwk
 {
     namespace Controls
     {
-        class GWEN_EXPORT TabTitleBar : public Label
+        class GWK_EXPORT TabTitleBar : public Label
         {
         public:
 
-            GWEN_CONTROL_INLINE(TabTitleBar, Label)
+            GWK_CONTROL_INLINE(TabTitleBar, Label)
             {
                 SetMouseInputEnabled(true);
-                SetTextPadding(Gwen::Padding(5, 2, 5, 2));
-                SetPadding(Gwen::Padding(1, 2, 1, 2));
+                SetTextPadding(Gwk::Padding(5, 2, 5, 2));
+                SetPadding(Gwk::Padding(1, 2, 1, 2));
                 DragAndDrop_SetPackage(true, "TabWindowMove");
             }
 
@@ -35,7 +36,7 @@ namespace Gwen
                 skin->DrawTabTitleBar(this);
             }
 
-            void DragAndDrop_StartDragging(Gwen::DragAndDrop::Package* pPackage, int x, int y) override
+            void DragAndDrop_StartDragging(Gwk::DragAndDrop::Package* pPackage, int x, int y) override
             {
                 DragAndDrop::SourceControl = GetParent();
                 DragAndDrop::SourceControl->DragAndDrop_StartDragging(pPackage, x, y);
@@ -54,4 +55,4 @@ namespace Gwen
 
     }
 }
-#endif // ifndef GWEN_CONTROLS_TABTITLEBAR_H
+#endif // ifndef GWK_CONTROLS_TABTITLEBAR_H

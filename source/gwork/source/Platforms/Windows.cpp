@@ -1,10 +1,11 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2011 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+*  See license in Gwork.h
  */
 
-#ifdef GWEN_PLATFORM_WINDOWS
+#ifdef GWK_PLATFORM_WINDOWS
 
 #ifndef _WIN32_WINNT
 #define _WIN32_WINNT 0x06000000
@@ -14,22 +15,22 @@
 #endif
 #endif
 
-#include "Gwen/Macros.h"
-#include "Gwen/Utility.h"
-#include "Gwen/Platform.h"
-#include "Gwen/Input/Windows.h"
+#include "Gwork/Macros.h"
+#include "Gwork/Utility.h"
+#include "Gwork/Platform.h"
+#include "Gwork/Input/Windows.h"
 
 #include <windows.h>
 #include <ShlObj.h>
 #include <Shobjidl.h>
 
-using namespace Gwen;
-using namespace Gwen::Platform;
+using namespace Gwk;
+using namespace Gwk::Platform;
 
 static const size_t FILESTRING_SIZE = 256;
 static const size_t FILTERBUFFER_SIZE = 512;
 
-static Gwen::Input::Windows GwenInput;
+static Gwk::Input::Windows GworkInput;
 
 static LPCTSTR iCursorConversion[] =
 {
@@ -45,13 +46,13 @@ static LPCTSTR iCursorConversion[] =
     IDC_HAND
 };
 
-void Gwen::Platform::SetCursor(unsigned char iCursor)
+void Gwk::Platform::SetCursor(unsigned char iCursor)
 {
     // Todo.. Properly.
     ::SetCursor(LoadCursor(NULL, iCursorConversion[iCursor]));
 }
 
-void Gwen::Platform::GetCursorPos(Gwen::Point& po)
+void Gwk::Platform::GetCursorPos(Gwk::Point& po)
 {
     POINT p;
     ::GetCursorPos(&p);
@@ -59,13 +60,13 @@ void Gwen::Platform::GetCursorPos(Gwen::Point& po)
     po.y = p.y;
 }
 
-void Gwen::Platform::GetDesktopSize(int& w, int& h)
+void Gwk::Platform::GetDesktopSize(int& w, int& h)
 {
     w = GetSystemMetrics(SM_CXFULLSCREEN);
     h = GetSystemMetrics(SM_CYFULLSCREEN);
 }
 
-Gwen::String Gwen::Platform::GetClipboardText()
+Gwk::String Gwk::Platform::GetClipboardText()
 {
     if (!OpenClipboard(NULL))
         return "";
@@ -86,7 +87,7 @@ Gwen::String Gwen::Platform::GetClipboardText()
     return str;
 }
 
-bool Gwen::Platform::SetClipboardText(const Gwen::String& str)
+bool Gwk::Platform::SetClipboardText(const Gwk::String& str)
 {
     if (!OpenClipboard(NULL))
         return false;
@@ -125,7 +126,7 @@ double GetPerformanceFrequency()
     return Frequency;
 }
 
-float Gwen::Platform::GetTimeInSeconds()
+float Gwk::Platform::GetTimeInSeconds()
 {
     static float fCurrentTime = 0.0f;
     static __int64 iLastTime = 0;
@@ -142,8 +143,8 @@ float Gwen::Platform::GetTimeInSeconds()
     return fCurrentTime;
 }
 
-bool Gwen::Platform::FileOpen(const String& Name, const String& StartPath, const String& Extension,
-                              Gwen::Event::Handler* pHandler,
+bool Gwk::Platform::FileOpen(const String& Name, const String& StartPath, const String& Extension,
+                              Gwk::Event::Handler* pHandler,
                               Event::Handler::FunctionWithInformation fnCallback)
 {
     char Filestring[FILESTRING_SIZE];
@@ -152,7 +153,7 @@ bool Gwen::Platform::FileOpen(const String& Name, const String& StartPath, const
     {
         memset(FilterBuffer, 0, sizeof(FilterBuffer));
         memcpy(FilterBuffer, Extension.c_str(),
-               Gwen::Min(Extension.length(), sizeof(FilterBuffer)));
+               Gwk::Min(Extension.length(), sizeof(FilterBuffer)));
 
         for (int i = 0; i < FILTERBUFFER_SIZE; i++)
         {
@@ -185,7 +186,7 @@ bool Gwen::Platform::FileOpen(const String& Name, const String& StartPath, const
     {
         if (pHandler && fnCallback)
         {
-            Gwen::Event::Information info;
+            Gwk::Event::Information info;
             info.Control        = NULL;
             info.ControlCaller  = NULL;
             info.String         = opf.lpstrFile;
@@ -196,8 +197,8 @@ bool Gwen::Platform::FileOpen(const String& Name, const String& StartPath, const
     return true;
 }
 
-bool Gwen::Platform::FolderOpen(const String& Name, const String& StartPath,
-                                Gwen::Event::Handler* pHandler,
+bool Gwk::Platform::FolderOpen(const String& Name, const String& StartPath,
+                                Gwk::Event::Handler* pHandler,
                                 Event::Handler::FunctionWithInformation fnCallback)
 {
     IFileDialog* pfd = NULL;
@@ -233,11 +234,11 @@ bool Gwen::Platform::FolderOpen(const String& Name, const String& StartPath,
                 return bSuccess;
 
             //
-            // GWEN callback - call it.
+            // Gwork callback - call it.
             //
             if (pHandler && fnCallback)
             {
-                Gwen::Event::Information info;
+                Gwk::Event::Information info;
                 info.Control        = NULL;
                 info.ControlCaller  = NULL;
                 info.String         = Utility::Narrow(strOut);
@@ -254,9 +255,9 @@ bool Gwen::Platform::FolderOpen(const String& Name, const String& StartPath,
     return bSuccess;
 }
 
-bool Gwen::Platform::FileSave(const String& Name, const String& StartPath, const String& Extension,
-                              Gwen::Event::Handler* pHandler,
-                              Gwen::Event::Handler::FunctionWithInformation fnCallback)
+bool Gwk::Platform::FileSave(const String& Name, const String& StartPath, const String& Extension,
+                              Gwk::Event::Handler* pHandler,
+                              Gwk::Event::Handler::FunctionWithInformation fnCallback)
 {
     char Filestring[FILESTRING_SIZE];
     String returnstring;
@@ -264,7 +265,7 @@ bool Gwen::Platform::FileSave(const String& Name, const String& StartPath, const
     {
         memset(FilterBuffer, 0, sizeof(FilterBuffer));
         memcpy(FilterBuffer, Extension.c_str(),
-               Gwen::Min(Extension.size(), sizeof(FilterBuffer)));
+               Gwk::Min(Extension.size(), sizeof(FilterBuffer)));
 
         for (int i = 0; i < FILTERBUFFER_SIZE; i++)
         {
@@ -297,7 +298,7 @@ bool Gwen::Platform::FileSave(const String& Name, const String& StartPath, const
     {
         if (pHandler && fnCallback)
         {
-            Gwen::Event::Information info;
+            Gwk::Event::Information info;
             info.Control        = NULL;
             info.ControlCaller  = NULL;
             info.String         = opf.lpstrFile;
@@ -308,8 +309,8 @@ bool Gwen::Platform::FileSave(const String& Name, const String& StartPath, const
     return true;
 }
 
-void* Gwen::Platform::CreatePlatformWindow(int x, int y, int w, int h,
-                                           const Gwen::String& strWindowTitle)
+void* Gwk::Platform::CreatePlatformWindow(int x, int y, int w, int h,
+                                           const Gwk::String& strWindowTitle)
 {
     CoInitializeEx(NULL, COINIT_APARTMENTTHREADED);
     WNDCLASSA wc;
@@ -317,7 +318,7 @@ void* Gwen::Platform::CreatePlatformWindow(int x, int y, int w, int h,
     wc.style            = CS_OWNDC|CS_DROPSHADOW;
     wc.lpfnWndProc      = DefWindowProc;
     wc.hInstance        = GetModuleHandle(NULL);
-    wc.lpszClassName    = "GWEN_Window_Class";
+    wc.lpszClassName    = "GWK_Window_Class";
     wc.hCursor          = LoadCursor(NULL, IDC_ARROW);
     RegisterClassA(&wc);
     HWND hWindow = CreateWindowExA(WS_EX_APPWINDOW|WS_EX_ACCEPTFILES, wc.lpszClassName,
@@ -334,20 +335,20 @@ void* Gwen::Platform::CreatePlatformWindow(int x, int y, int w, int h,
     return (void*)hWindow;
 }
 
-void Gwen::Platform::DestroyPlatformWindow(void* pPtr)
+void Gwk::Platform::DestroyPlatformWindow(void* pPtr)
 {
     DestroyWindow((HWND)pPtr);
     CoUninitialize();
 }
 
-void Gwen::Platform::MessagePump(void* pWindow, Gwen::Controls::Canvas* ptarget)
+void Gwk::Platform::MessagePump(void* pWindow, Gwk::Controls::Canvas* ptarget)
 {
-    GwenInput.Initialize(ptarget);
+    GworkInput.Initialize(ptarget);
     MSG msg;
 
     while (PeekMessage(&msg, (HWND)pWindow, 0, 0, PM_REMOVE))
     {
-        if (GwenInput.ProcessMessage(msg))
+        if (GworkInput.ProcessMessage(msg))
             continue;
 
         if (msg.message == WM_PAINT)
@@ -370,7 +371,7 @@ void Gwen::Platform::MessagePump(void* pWindow, Gwen::Controls::Canvas* ptarget)
     }
 }
 
-void Gwen::Platform::SetBoundsPlatformWindow(void* pPtr, int x, int y, int w, int h)
+void Gwk::Platform::SetBoundsPlatformWindow(void* pPtr, int x, int y, int w, int h)
 {
     SetWindowPos((HWND)pPtr, HWND_NOTOPMOST, x, y, w, h,
                  SWP_NOOWNERZORDER|SWP_NOACTIVATE|SWP_NOCOPYBITS|SWP_NOSENDCHANGING);
@@ -381,8 +382,8 @@ void Gwen::Platform::SetBoundsPlatformWindow(void* pPtr, int x, int y, int w, in
     }
 }
 
-void Gwen::Platform::SetWindowMaximized(void* pPtr, bool bMax, Gwen::Point& pNewPos,
-                                        Gwen::Point& pNewSize)
+void Gwk::Platform::SetWindowMaximized(void* pPtr, bool bMax, Gwk::Point& pNewPos,
+                                        Gwk::Point& pNewSize)
 {
     if (bMax)
     {
@@ -418,7 +419,7 @@ void Gwen::Platform::SetWindowMaximized(void* pPtr, bool bMax, Gwen::Point& pNew
     pNewPos.y = r.top;
 }
 
-void Gwen::Platform::SetWindowMinimized(void* pPtr, bool bMinimized)
+void Gwk::Platform::SetWindowMinimized(void* pPtr, bool bMinimized)
 {
     if (bMinimized)
         ShowWindow((HWND)pPtr, SW_SHOWMINIMIZED);
@@ -426,14 +427,14 @@ void Gwen::Platform::SetWindowMinimized(void* pPtr, bool bMinimized)
         ShowWindow((HWND)pPtr, SW_RESTORE);
 }
 
-bool Gwen::Platform::HasFocusPlatformWindow(void* pPtr)
+bool Gwk::Platform::HasFocusPlatformWindow(void* pPtr)
 {
     return GetActiveWindow() == (HWND)pPtr;
 }
 
-void Gwen::Platform::Sleep(unsigned int iMS)
+void Gwk::Platform::Sleep(unsigned int iMS)
 {
     ::Sleep(iMS);
 }
 
-#endif // GWEN_PLATFORM_WINDOWS
+#endif // GWK_PLATFORM_WINDOWS

@@ -1,22 +1,23 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 
-#include "Gwen/Gwen.h"
-#include "Gwen/Skin.h"
-#include "Gwen/Controls/TabButton.h"
-#include "Gwen/Controls/TabControl.h"
-#include "Gwen/Controls/Highlight.h"
-#include "Gwen/DragAndDrop.h"
+#include "Gwork/Gwork.h"
+#include "Gwork/Skin.h"
+#include "Gwork/Controls/TabButton.h"
+#include "Gwork/Controls/TabControl.h"
+#include "Gwork/Controls/Highlight.h"
+#include "Gwork/DragAndDrop.h"
 
-using namespace Gwen;
-using namespace Gwen::Controls;
+using namespace Gwk;
+using namespace Gwk::Controls;
 
 
-GWEN_CONTROL_CONSTRUCTOR(TabButton)
+GWK_CONTROL_CONSTRUCTOR(TabButton)
 {
     m_Page = NULL;
     m_Control = NULL;
@@ -83,7 +84,7 @@ bool TabButton::OnKeyLeft(bool bDown)
         {
             Base* pNextTab = *it;
             GetTabControl()->OnTabPressed(pNextTab);
-            Gwen::KeyboardFocus = pNextTab;
+            Gwk::KeyboardFocus = pNextTab;
         }
     }
 
@@ -101,7 +102,7 @@ bool TabButton::OnKeyRight(bool bDown)
         {
             Base* pNextTab = *it;
             GetTabControl()->OnTabPressed(pNextTab);
-            Gwen::KeyboardFocus = pNextTab;
+            Gwk::KeyboardFocus = pNextTab;
         }
     }
 

@@ -1,21 +1,22 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
-#include "Gwen/Controls/CollapsibleCategory.h"
-#include "Gwen/Controls/CollapsibleList.h"
+#include "Gwork/Controls/CollapsibleCategory.h"
+#include "Gwork/Controls/CollapsibleList.h"
 
 
-namespace Gwen {
+namespace Gwk {
     
-using namespace Gwen::Controls;
+using namespace Gwk::Controls;
 
     
 class CategoryButton : public Button
 {
-    GWEN_CONTROL_INLINE(CategoryButton, Button)
+    GWK_CONTROL_INLINE(CategoryButton, Button)
     {
         SetAlignment(Docking::Left|Docking::CenterV);
         m_bAlt = false;
@@ -73,7 +74,7 @@ class CategoryButton : public Button
 
 class CategoryHeaderButton : public Button
 {
-    GWEN_CONTROL_INLINE(CategoryHeaderButton, Button)
+    GWK_CONTROL_INLINE(CategoryHeaderButton, Button)
     {
         SetShouldDrawBackground(false);
         SetIsToggle(true);
@@ -91,7 +92,7 @@ class CategoryHeaderButton : public Button
 };
 
 
-GWEN_CONTROL_CONSTRUCTOR(CollapsibleCategory)
+GWK_CONTROL_CONSTRUCTOR(CollapsibleCategory)
 {
     m_pList = NULL;
     m_pButton = new CategoryHeaderButton(this);
@@ -116,7 +117,7 @@ Button* CollapsibleCategory::Add(const String& name)
 
 void CollapsibleCategory::OnSelection(Controls::Base* control)
 {
-    CategoryButton* pChild = gwen_cast<CategoryButton>(control);
+    CategoryButton* pChild = gwk_cast<CategoryButton>(control);
     
     if (!pChild)
         return;
@@ -146,7 +147,7 @@ void CollapsibleCategory::UnselectAll()
     
     for (Base::List::iterator iter = children.begin(); iter != children.end(); ++iter)
     {
-        CategoryButton* pChild = gwen_cast<CategoryButton>(*iter);
+        CategoryButton* pChild = gwk_cast<CategoryButton>(*iter);
         
         if (!pChild)
             continue;
@@ -167,7 +168,7 @@ void CollapsibleCategory::PostLayout(Skin::Base* /*skin*/)
     
     for (Base::List::iterator iter = children.begin(); iter != children.end(); ++iter)
     {
-        CategoryButton* pChild = gwen_cast<CategoryButton>(*iter);
+        CategoryButton* pChild = gwk_cast<CategoryButton>(*iter);
         
         if (!pChild)
             continue;
@@ -184,7 +185,7 @@ Button* CollapsibleCategory::GetSelected()
     
     for (Base::List::iterator iter = children.begin(); iter != children.end(); ++iter)
     {
-        CategoryButton* pChild = gwen_cast<CategoryButton>(*iter);
+        CategoryButton* pChild = gwk_cast<CategoryButton>(*iter);
         
         if (!pChild)
             continue;
@@ -207,5 +208,5 @@ bool CollapsibleCategory::IsExpanded() const
     return !m_pButton->GetToggleState();
 }
     
-} // namespace Gwen
+} // namespace Gwk
 

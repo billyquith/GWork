@@ -1,9 +1,9 @@
 #include "SelectionLayer.h"
 #include "Cage.h"
-#include "GwenUtil/ControlFactory.h"
+#include "Gwork/Util/ControlFactory.h"
 #include "Utility.h"
 
-GWEN_CONTROL_CONSTRUCTOR( SelectionLayer )
+GWK_CONTROL_CONSTRUCTOR( SelectionLayer )
 {
 	SetShouldDrawBackground( true );
 }
@@ -35,7 +35,7 @@ void SelectionLayer::RemoveSelection( Controls::Base* pControl )
 
 	for ( int i=0; i<NumChildren(); i++ )
 	{
-		Cage* pCage = gwen_cast<Cage>( GetChild( i ) );
+		Cage* pCage = gwk_cast<Cage>( GetChild( i ) );
 		if  (!pCage ) continue;
 
 		if ( pCage->Target() == pControl )
@@ -49,7 +49,7 @@ void SelectionLayer::OnMouseClickLeft( int x, int y, bool bDown )
 {
 	if ( !bDown ) return;
 
-	Gwen::Point pPos = GetParent()->CanvasPosToLocal( Gwen::Point( x, y ) );
+	Gwk::Point pPos = GetParent()->CanvasPosToLocal( Gwk::Point( x, y ) );
 	
 	SetMouseInputEnabled( false );
 
@@ -61,7 +61,7 @@ void SelectionLayer::OnMouseClickLeft( int x, int y, bool bDown )
 	bool bPanelsWereSelected = !m_Selected.list.empty();
 
 
-	if ( !Gwen::Input::IsShiftDown() )
+	if ( !Gwk::Input::IsShiftDown() )
 	{
 		ClearSelection();
 	}
@@ -71,8 +71,8 @@ void SelectionLayer::OnMouseClickLeft( int x, int y, bool bDown )
 
 		if ( pCtrl != pChild )
 		{
-			Gwen::ControlFactory::Base* pFactory =
-				pCtrl->UserData.Get<Gwen::ControlFactory::Base*>( "ControlFactory" );
+			Gwk::ControlFactory::Base* pFactory =
+				pCtrl->UserData.Get<Gwk::ControlFactory::Base*>( "ControlFactory" );
 
 			if ( pFactory->ChildTouched( pCtrl, pChild ) )
 				return;
@@ -113,7 +113,7 @@ void SelectionLayer::OnControlDragged( Event::Info info )
 
 void SelectionLayer::OnCagePressed( Event::Info info )
 {
-	Cage* pCage = gwen_cast<Cage>( info.ControlCaller );
+	Cage* pCage = gwk_cast<Cage>( info.ControlCaller );
 	if ( !pCage ) return;
 
 	RemoveSelection( pCage->Target() );
@@ -138,7 +138,7 @@ void SelectionLayer::OnCageMoving( Event::Info info )
 	//
 	// Convert the passed canvas pos to a pos local to the canvas
 	//
-	Gwen::Point pPos = GetParent()->CanvasPosToLocal( info.Point );
+	Gwk::Point pPos = GetParent()->CanvasPosToLocal( info.Point );
 	
 	// Hide all of the selected panels, and this selection layer
 	{
@@ -171,8 +171,8 @@ void SelectionLayer::OnCageMoving( Event::Info info )
 			if ( !pCtrl ) continue;
 			if ( !pCtrl->UserData.Exists( "ControlFactory" ) ) continue;
 
-			Gwen::ControlFactory::Base* pFactory =
-                pCtrl->UserData.Get<Gwen::ControlFactory::Base*>( "ControlFactory" );
+			Gwk::ControlFactory::Base* pFactory =
+                pCtrl->UserData.Get<Gwk::ControlFactory::Base*>( "ControlFactory" );
 
 			Controls::Base* pOldParent = (*it)->GetParent();
 
@@ -180,7 +180,7 @@ void SelectionLayer::OnCageMoving( Event::Info info )
 			// then make it have it. Tweak positions so they're the same
 			if ( pCtrl && pCtrl != (*it)->GetParent() )
 			{
-				Gwen::Point pPos = (*it)->LocalPosToCanvas();
+				Gwk::Point pPos = (*it)->LocalPosToCanvas();
 				pFactory->AddChild( pCtrl, *it, pCtrl->CanvasPosToLocal( info.Point ) );
 				(*it)->SetPos( (*it)->GetParent()->CanvasPosToLocal( pPos ) );
 
@@ -204,13 +204,13 @@ void SelectionLayer::OnDragStart()
 	//
 	// If shift dragging, duplicate the selected panels
 	//
-	if ( !Gwen::Input::IsShiftDown() ) return;
+	if ( !Gwk::Input::IsShiftDown() ) return;
 
 	ControlList NewList;
 
 	for ( ControlList::List::const_iterator it = m_Selected.list.begin(); it != m_Selected.list.end(); ++it )
 	{
-		Gwen::ControlFactory::Base* pFactory = (*it)->UserData.Get<Gwen::ControlFactory::Base*>( "ControlFactory" );
+		Gwk::ControlFactory::Base* pFactory = (*it)->UserData.Get<Gwk::ControlFactory::Base*>( "ControlFactory" );
 		Controls::Base* pControl = ControlFactory::Clone( *it, pFactory );
 		pControl->UserData.Set( "ControlFactory", pFactory );
 		pControl->SetMouseInputEnabled( true );
@@ -226,7 +226,7 @@ void SelectionLayer::SwitchCage( Controls::Base* pControl, Controls::Base* pTo )
 {
 	for ( int i=0; i<NumChildren(); i++ )
 	{
-		Cage* pCage = gwen_cast<Cage>( GetChild( i ) );
+		Cage* pCage = gwk_cast<Cage>( GetChild( i ) );
 		if  (!pCage ) continue;
 
 		if ( pCage->Target() == pControl )

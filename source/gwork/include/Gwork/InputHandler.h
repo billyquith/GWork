@@ -1,17 +1,18 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 #pragma once
-#ifndef GWEN_INPUTHANDLER_H
-#define GWEN_INPUTHANDLER_H
+#ifndef GWK_INPUTHANDLER_H
+#define GWK_INPUTHANDLER_H
 
 #include <queue>
-#include "Gwen/Gwen.h"
+#include "Gwork/Gwork.h"
 
-namespace Gwen
+namespace Gwk
 {
     namespace Controls
     {
@@ -59,33 +60,33 @@ namespace Gwen
 
 
         // For use in panels
-        bool GWEN_EXPORT        IsKeyDown(int iKey);
-        bool GWEN_EXPORT        IsLeftMouseDown();
-        bool GWEN_EXPORT        IsRightMouseDown();
-        Gwen::Point GWEN_EXPORT GetMousePosition();
+        bool GWK_EXPORT        IsKeyDown(int iKey);
+        bool GWK_EXPORT        IsLeftMouseDown();
+        bool GWK_EXPORT        IsRightMouseDown();
+        Gwk::Point GWK_EXPORT GetMousePosition();
 
         inline bool IsShiftDown()
         {
-            return IsKeyDown(Gwen::Key::Shift);
+            return IsKeyDown(Gwk::Key::Shift);
         }
 
         inline bool IsControlDown()
         {
-            return IsKeyDown(Gwen::Key::Control);
+            return IsKeyDown(Gwk::Key::Control);
         }
 
         // Does copy, paste etc
-        bool GWEN_EXPORT DoSpecialKeys(Controls::Base* pCanvas, Gwen::UnicodeChar chr);
-        bool GWEN_EXPORT HandleAccelerator(Controls::Base* pCanvas, Gwen::UnicodeChar chr);
+        bool GWK_EXPORT DoSpecialKeys(Controls::Base* pCanvas, Gwk::UnicodeChar chr);
+        bool GWK_EXPORT HandleAccelerator(Controls::Base* pCanvas, Gwk::UnicodeChar chr);
 
         // Send input to canvas for study
-        void GWEN_EXPORT OnMouseMoved(Controls::Base* pCanvas, int x, int y, int deltaX,
+        void GWK_EXPORT OnMouseMoved(Controls::Base* pCanvas, int x, int y, int deltaX,
                                       int deltaY);
-        bool GWEN_EXPORT OnMouseClicked(Controls::Base* pCanvas, int iButton, bool bDown);
-        bool GWEN_EXPORT OnKeyEvent(Controls::Base* pCanvas, int iKey, bool bDown);
-        void GWEN_EXPORT OnCanvasThink(Controls::Base* pControl);
+        bool GWK_EXPORT OnMouseClicked(Controls::Base* pCanvas, int iButton, bool bDown);
+        bool GWK_EXPORT OnKeyEvent(Controls::Base* pCanvas, int iKey, bool bDown);
+        void GWK_EXPORT OnCanvasThink(Controls::Base* pControl);
 
 
     }
 }
-#endif // ifndef GWEN_INPUTHANDLER_H
+#endif // ifndef GWK_INPUTHANDLER_H

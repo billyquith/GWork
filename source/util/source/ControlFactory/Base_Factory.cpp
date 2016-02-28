@@ -1,17 +1,16 @@
+#include <Gwork/Util/ControlFactory.h>
+#include <Gwork/Controls.h>
 
-#include <GwenUtil/ControlFactory.h>
-#include <Gwen/Controls.h>
-
-//namespace Gwen
+//namespace Gwk
 //{
 //    namespace ControlFactory
 //    {
 //        namespace Properties
 //        {
 //            
-//            class ControlName : public Gwen::ControlFactory::Property
+//            class ControlName : public Gwk::ControlFactory::Property
 //            {
-//                GWEN_CONTROL_FACTORY_PROPERTY(ControlName, "The control's name");
+//                GWK_CONTROL_FACTORY_PROPERTY(ControlName, "The control's name");
 //
 //                String GetValueAsString(Controls::Base* ctrl) override
 //                {
@@ -32,16 +31,16 @@
 //                { "y", Y }
 //            };
 
-//            class Position : public Gwen::ControlFactory::Property
+//            class Position : public Gwk::ControlFactory::Property
 //            {
 //                typedef ValueEnumMap<PositionEnum> EnumMap;
 //                EnumMap m_EnumMap;
 //                
 //            public:
-//                GWEN_CONTROL_FACTORY_PROPERTY(Position, "Sets the position of the control");
+//                GWK_CONTROL_FACTORY_PROPERTY(Position, "Sets the position of the control");
 //                
 //                Position()
-//                :   m_EnumMap(g_posEnums, GWEN_ARRAY_COUNT(g_posEnums))
+//                :   m_EnumMap(g_posEnums, GWK_ARRAY_COUNT(g_posEnums))
 //                {}
 //
 //                String GetValueAsString(Controls::Base* ctrl) override
@@ -64,7 +63,7 @@
 //                    return m_EnumMap.GetEnumCount();
 //                }
 //
-//                Gwen::String NumName(size_t i) const override
+//                Gwk::String NumName(size_t i) const override
 //                {
 //                    return m_EnumMap.GetNameByIndex(i);
 //                }
@@ -83,19 +82,19 @@
 //            };
 
 
-//            class Margin : public Gwen::ControlFactory::Property
+//            class Margin : public Gwk::ControlFactory::Property
 //            {
-//                GWEN_CONTROL_FACTORY_PROPERTY(Margin, "Sets the margin of a docked control");
+//                GWK_CONTROL_FACTORY_PROPERTY(Margin, "Sets the margin of a docked control");
 //
 //                String GetValueAsString(Controls::Base* ctrl)
 //                {
-//                    Gwen::Margin m = ctrl->GetMargin();
+//                    Gwk::Margin m = ctrl->GetMargin();
 //                    return Utility::Format("%i %i %i %i", m.left, m.top, m.right, m.bottom);
 //                }
 //
 //                void SetValueFromString(Controls::Base* ctrl, const String& str) override
 //                {
-//                    Gwen::Margin m;
+//                    Gwk::Margin m;
 //
 //                    if (sscanf(str.c_str(), "%i %i %i %i", &m.left, &m.top, &m.right,
 //                                &m.bottom) != 4)
@@ -109,7 +108,7 @@
 //                    return 4;
 //                }
 //
-//                Gwen::String NumName(size_t i) const override
+//                Gwk::String NumName(size_t i) const override
 //                {
 //                    if (i == 0)
 //                        return "left";
@@ -125,7 +124,7 @@
 //
 //                float NumGet(Controls::Base* ctrl, int i) override
 //                {
-//                    Gwen::Margin m = ctrl->GetMargin();
+//                    Gwk::Margin m = ctrl->GetMargin();
 //
 //                    if (i == 0)
 //                        return m.left;
@@ -141,7 +140,7 @@
 //
 //                void NumSet(Controls::Base* ctrl, int i, float f) override
 //                {
-//                    Gwen::Margin m = ctrl->GetMargin();
+//                    Gwk::Margin m = ctrl->GetMargin();
 //
 //                    if (i == 0)
 //                        m.left = f;
@@ -161,9 +160,9 @@
 //            };
 
 
-//            class Size : public Gwen::ControlFactory::Property
+//            class Size : public Gwk::ControlFactory::Property
 //            {
-//                GWEN_CONTROL_FACTORY_PROPERTY(Size, "The with and height of the control");
+//                GWK_CONTROL_FACTORY_PROPERTY(Size, "The with and height of the control");
 //
 //                String GetValueAsString(Controls::Base* ctrl) override
 //                {
@@ -185,7 +184,7 @@
 //                    return 2;
 //                }
 //
-//                Gwen::String NumName(size_t i) const override
+//                Gwk::String NumName(size_t i) const override
 //                {
 //                    if (i == 0)
 //                        return "w";
@@ -213,24 +212,24 @@
             
             
 //            static const ValueEnumMapItem<Docking::Area> g_DockEnums[] = {
-//                { "None",   Gwen::Docking::None },
-//                { "Fill",   Gwen::Docking::Fill },
-//                { "Left",   Gwen::Docking::Left },
-//                { "Right",  Gwen::Docking::Right },
-//                { "Top",    Gwen::Docking::Top },
-//                { "Bottom", Gwen::Docking::Bottom },
+//                { "None",   Gwk::Docking::None },
+//                { "Fill",   Gwk::Docking::Fill },
+//                { "Left",   Gwk::Docking::Left },
+//                { "Right",  Gwk::Docking::Right },
+//                { "Top",    Gwk::Docking::Top },
+//                { "Bottom", Gwk::Docking::Bottom },
 //            };
 //            
-//            class Dock : public Gwen::ControlFactory::Property
+//            class Dock : public Gwk::ControlFactory::Property
 //            {
-//                typedef ValueEnumMap<Gwen::Docking::Area> EnumMap;
+//                typedef ValueEnumMap<Gwk::Docking::Area> EnumMap;
 //                EnumMap m_EnumMap;
 //                
 //            public:
-//                GWEN_CONTROL_FACTORY_PROPERTY(Dock, "How the control is to be docked");
+//                GWK_CONTROL_FACTORY_PROPERTY(Dock, "How the control is to be docked");
 //                
 //                Dock()
-//                :   m_EnumMap(g_DockEnums, GWEN_ARRAY_COUNT(g_DockEnums))
+//                :   m_EnumMap(g_DockEnums, GWK_ARRAY_COUNT(g_DockEnums))
 //                {}
 //
 //                String GetValueAsString(Controls::Base* ctrl) override
@@ -249,7 +248,7 @@
 //                    return m_EnumMap.GetEnumCount();
 //                }
 //
-//                Gwen::String OptionGet(int i) override
+//                Gwk::String OptionGet(int i) override
 //                {
 //                    return m_EnumMap.GetNameByIndex(i);
 //                }
@@ -259,11 +258,11 @@
 //        } // namespace Properties
 
 
-//        class Base_Factory : public Gwen::ControlFactory::Base
+//        class Base_Factory : public Gwk::ControlFactory::Base
 //        {
 //        public:
 //
-//            GWEN_CONTROL_FACTORY_FOR(Base,)
+//            GWK_CONTROL_FACTORY_FOR(Base,)
 //            {
 ////                AddProperty(new Properties::ControlName());
 ////                AddProperty(new Properties::Dock());
@@ -272,16 +271,16 @@
 ////                AddProperty(new Properties::Margin());                
 //            }
 //
-//            virtual Gwen::Controls::Base* CreateInstance(Gwen::Controls::Base* parent)
+//            virtual Gwk::Controls::Base* CreateInstance(Gwk::Controls::Base* parent)
 //            {
-//                Gwen::Controls::Base* pControl = new Gwen::Controls::Base(parent);
+//                Gwk::Controls::Base* pControl = new Gwk::Controls::Base(parent);
 //                pControl->SetSize(100, 100);
 //                return pControl;
 //            }
 //        };
 //
 //
-//        GWEN_CONTROL_FACTORY(Base_Factory);
+//        GWK_CONTROL_FACTORY(Base_Factory);
 //
 //    }
 //}

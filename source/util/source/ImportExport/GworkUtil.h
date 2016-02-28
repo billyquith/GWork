@@ -1,10 +1,14 @@
-//
-//  GwenUtil.h - Utilites for Gwen ImportExport.
-//
-//  Note: This is done to remove the dependency on Bootil and keep the Gwen and the editor self
-//        contained. Bootil contains a lot of other stuff that we don't want. Import needs to be
-//        able to be used by the client app, and Gwen "dropped in".
-//
+/*
+ *  GworkUtil.h - Utilites for Gwork ImportExport.
+ *
+ *  Copyright (c) 2010 Facepunch Studios
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
+ *
+ *  Note: This is done to remove the dependency on Bootil and keep the Gwork and the editor self
+ *        contained. Bootil contains a lot of other stuff that we don't want. Import needs to be
+ *        able to be used by the client app, and Gwork "dropped in".
+ */
 
 #include <string>
 #include <list>
@@ -13,15 +17,15 @@
 #ifndef IMPORTEXPORT_UIDATA_H
 #define IMPORTEXPORT_UIDATA_H
 
-namespace GwenUtil
+namespace GwkUtil
 {
     typedef std::string     BString;
     typedef std::wstring    WString;
 
-#define GWENUTIL_FOREACH(varname, arrayname, arraytype) \
+#define GWKUTIL_FOREACH(varname, arrayname, arraytype) \
     for (arraytype::iterator varname = arrayname.begin(); varname != arrayname.end(); ++varname)
 
-#define GWENUTIL_FOREACH_CONST(varname, arrayname, arraytype) \
+#define GWKUTIL_FOREACH_CONST(varname, arrayname, arraytype) \
     for (arraytype::const_iterator varname = arrayname.begin(); \
          varname != arrayname.end(); \
          ++varname)
@@ -80,22 +84,22 @@ namespace GwenUtil
             
             // String (generic value)
             template <>
-            inline unsigned char ValueId<GwenUtil::BString>() { return 1; }
+            inline unsigned char ValueId<GwkUtil::BString>() { return 1; }
             
             // Float
             template <>
             inline unsigned char ValueId<float>() { return 2; }
             
             template <>
-            inline GwenUtil::BString ToString(float var)
+            inline GwkUtil::BString ToString(float var)
             {
-                return GwenUtil::String::Format::NiceFloat(var);
+                return GwkUtil::String::Format::NiceFloat(var);
             }
             
             template <>
-            inline float ToValue(const GwenUtil::BString& var)
+            inline float ToValue(const GwkUtil::BString& var)
             {
-                return GwenUtil::String::To::Float(var);
+                return GwkUtil::String::To::Float(var);
             }
             
             // int
@@ -103,15 +107,15 @@ namespace GwenUtil
             inline unsigned char ValueId<int>() { return 3; }
             
             template <>
-            inline GwenUtil::BString ToString(int var)
+            inline GwkUtil::BString ToString(int var)
             {
-                return GwenUtil::String::Format::Int(var);
+                return GwkUtil::String::Format::Int(var);
             }
             
             template <>
-            inline int ToValue(const GwenUtil::BString& var)
+            inline int ToValue(const GwkUtil::BString& var)
             {
-                return GwenUtil::String::To::Int(var);
+                return GwkUtil::String::To::Int(var);
             }
             
             // Bool
@@ -119,15 +123,15 @@ namespace GwenUtil
             inline unsigned char ValueId<bool>() { return 4; }
             
             template <>
-            inline GwenUtil::BString ToString(bool var)
+            inline GwkUtil::BString ToString(bool var)
             {
                 return var ? "true" : "false";
             }
             
             template <>
-            inline bool ToValue(const GwenUtil::BString& var)
+            inline bool ToValue(const GwkUtil::BString& var)
             {
-                return GwenUtil::String::To::Bool(var);
+                return GwkUtil::String::To::Bool(var);
             }
             
             // Double
@@ -135,15 +139,15 @@ namespace GwenUtil
             inline unsigned char ValueId<double>() { return 5; }
             
             template <>
-            inline GwenUtil::BString ToString(double var)
+            inline GwkUtil::BString ToString(double var)
             {
-                return GwenUtil::String::Format::NiceDouble(var);
+                return GwkUtil::String::Format::NiceDouble(var);
             }
             
             template <>
-            inline double ToValue(const GwenUtil::BString& var)
+            inline double ToValue(const GwkUtil::BString& var)
             {
-                return GwenUtil::String::To::Double(var);
+                return GwkUtil::String::To::Double(var);
             }
         }
         
@@ -169,7 +173,7 @@ namespace GwenUtil
             //!
             //! Returns true if we have some children
             //!
-            //!     GWENUTIL_FOREACH[_CONST]( child, mytree.Children(), Bootil::Data::Tree::List )
+            //!     GWKUTIL_FOREACH[_CONST]( child, mytree.Children(), Bootil::Data::Tree::List )
             //!     {
             //!         // Do stuff to 'child'
             //!     }
@@ -283,7 +287,7 @@ namespace GwenUtil
 
         inline BString Tree::ChildValue(const BString& name, const BString& Default) const
         {
-            GWENUTIL_FOREACH_CONST(a, Children(), typename List)
+            GWKUTIL_FOREACH_CONST(a, Children(), typename List)
             {
                 if (a->Name() == name)
                     return a->Value();
@@ -294,7 +298,7 @@ namespace GwenUtil
 
         inline bool Tree::HasChild(const BString& name) const
         {
-            GWENUTIL_FOREACH_CONST(a, Children(), typename List)
+            GWKUTIL_FOREACH_CONST(a, Children(), typename List)
             {
                 if (a->Name() == name)
                     return true;
@@ -305,7 +309,7 @@ namespace GwenUtil
 
         inline Tree& Tree::GetChild(const BString& name)
         {
-            GWENUTIL_FOREACH(a, Children(), typename List)
+            GWKUTIL_FOREACH(a, Children(), typename List)
             {
                 if (a->Name() == name)
                     return *a;
@@ -330,7 +334,7 @@ namespace GwenUtil
         template <typename TValue>
         inline TValue Tree::ChildVar(BString strKey, TValue varDefault) const
         {
-            GWENUTIL_FOREACH_CONST(a, Children(), typename List)
+            GWKUTIL_FOREACH_CONST(a, Children(), typename List)
             {
                 if (a->Name() == strKey)
                     return a->template Var<TValue>();
@@ -360,9 +364,9 @@ namespace GwenUtil
 
         namespace Json
         {
-            bool Export(const GwenUtil::Data::Tree& tree, GwenUtil::BString& output,
+            bool Export(const GwkUtil::Data::Tree& tree, GwkUtil::BString& output,
                         bool bPretty = false);
-            bool Import(GwenUtil::Data::Tree& tree, const GwenUtil::BString& input);
+            bool Import(GwkUtil::Data::Tree& tree, const GwkUtil::BString& input);
         }
 
     } // namespace Data

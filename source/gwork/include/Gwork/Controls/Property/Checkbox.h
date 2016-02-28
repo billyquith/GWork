@@ -1,29 +1,30 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 #pragma once
-#ifndef GWEN_CONTROLS_PROPERTY_CHECKBOX_H
-#define GWEN_CONTROLS_PROPERTY_CHECKBOX_H
+#ifndef GWK_CONTROLS_PROPERTY_CHECKBOX_H
+#define GWK_CONTROLS_PROPERTY_CHECKBOX_H
 
-#include "Gwen/Controls/Property/BaseProperty.h"
-#include "Gwen/Controls/CheckBox.h"
+#include "Gwork/Controls/Property/BaseProperty.h"
+#include "Gwork/Controls/CheckBox.h"
 
-namespace Gwen
+namespace Gwk
 {
     namespace Controls
     {
         namespace Property
         {
-            class GWEN_EXPORT Checkbox : public Property::Base
+            class GWK_EXPORT Checkbox : public Property::Base
             {
             public:
 
-                GWEN_CONTROL_INLINE(Checkbox, Property::Base)
+                GWK_CONTROL_INLINE(Checkbox, Property::Base)
                 {
-                    m_Checkbox = new Gwen::Controls::CheckBox(this);
+                    m_Checkbox = new Gwk::Controls::CheckBox(this);
                     m_Checkbox->SetShouldDrawBackground(false);
                     m_Checkbox->onCheckChanged.Add(this, &ParentClass::OnPropertyValueChanged);
                     m_Checkbox->SetTabable(true);
@@ -55,11 +56,11 @@ namespace Gwen
                     return ParentClass::IsHovered() || m_Checkbox->IsHovered();
                 }
 
-                Gwen::Controls::CheckBox* m_Checkbox;
+                Gwk::Controls::CheckBox* m_Checkbox;
             };
 
 
         }
     }
 }
-#endif // ifndef GWEN_CONTROLS_PROPERTY_CHECKBOX_H
+#endif // ifndef GWK_CONTROLS_PROPERTY_CHECKBOX_H

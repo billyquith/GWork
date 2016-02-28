@@ -1,19 +1,20 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 #pragma once
-#ifndef GWEN_FONT_H
-#define GWEN_FONT_H
+#ifndef GWK_FONT_H
+#define GWK_FONT_H
 
 #include <string>
 #include <list>
 
-#include "Gwen/BaseRender.h"
+#include "Gwork/BaseRender.h"
 
-namespace Gwen
+namespace Gwk
 {
     struct Font
     {
@@ -44,5 +45,5 @@ namespace Gwen
     };
 
 
-} // namespace Gwen
-#endif // ifndef GWEN_FONT_H
+} // namespace Gwk
+#endif // ifndef GWK_FONT_H

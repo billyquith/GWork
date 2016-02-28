@@ -1,18 +1,19 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2011 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
-#ifndef GWEN_INPUT_WINDOWS_H
-#define GWEN_INPUT_WINDOWS_H
+#ifndef GWK_INPUT_WINDOWS_H
+#define GWK_INPUT_WINDOWS_H
 
-#include "Gwen/InputHandler.h"
-#include "Gwen/Gwen.h"
-#include "Gwen/Controls/Canvas.h"
+#include "Gwork/InputHandler.h"
+#include "Gwork/Gwork.h"
+#include "Gwork/Controls/Canvas.h"
 
 #include <windows.h>
 
-namespace Gwen
+namespace Gwk
 {
     namespace Input
     {
@@ -27,7 +28,7 @@ namespace Gwen
                 m_MouseY = 0;
             }
 
-            void Initialize(Gwen::Controls::Canvas* c)
+            void Initialize(Gwk::Controls::Canvas* c)
             {
                 m_Canvas = c;
             }
@@ -59,7 +60,7 @@ namespace Gwen
 
                 case WM_CHAR:
                     {
-                        Gwen::UnicodeChar chr = (Gwen::UnicodeChar)msg.wParam;
+                        Gwk::UnicodeChar chr = (Gwk::UnicodeChar)msg.wParam;
                         return m_Canvas->InputCharacter(chr);
                     }
 
@@ -113,38 +114,38 @@ namespace Gwen
                             msg.wParam <=
                             'Z')
                         {
-                            Gwen::UnicodeChar chr = (Gwen::UnicodeChar)msg.wParam;
+                            Gwk::UnicodeChar chr = (Gwk::UnicodeChar)msg.wParam;
                             return m_Canvas->InputCharacter(chr);
                         }
 
                         if (msg.wParam == VK_SHIFT)
-                            iKey = Gwen::Key::Shift;
+                            iKey = Gwk::Key::Shift;
                         else if (msg.wParam == VK_RETURN)
-                            iKey = Gwen::Key::Return;
+                            iKey = Gwk::Key::Return;
                         else if (msg.wParam == VK_BACK)
-                            iKey = Gwen::Key::Backspace;
+                            iKey = Gwk::Key::Backspace;
                         else if (msg.wParam == VK_DELETE)
-                            iKey = Gwen::Key::Delete;
+                            iKey = Gwk::Key::Delete;
                         else if (msg.wParam == VK_LEFT)
-                            iKey = Gwen::Key::Left;
+                            iKey = Gwk::Key::Left;
                         else if (msg.wParam == VK_RIGHT)
-                            iKey = Gwen::Key::Right;
+                            iKey = Gwk::Key::Right;
                         else if (msg.wParam == VK_TAB)
-                            iKey = Gwen::Key::Tab;
+                            iKey = Gwk::Key::Tab;
                         else if (msg.wParam == VK_SPACE)
-                            iKey = Gwen::Key::Space;
+                            iKey = Gwk::Key::Space;
                         else if (msg.wParam == VK_HOME)
-                            iKey = Gwen::Key::Home;
+                            iKey = Gwk::Key::Home;
                         else if (msg.wParam == VK_END)
-                            iKey = Gwen::Key::End;
+                            iKey = Gwk::Key::End;
                         else if (msg.wParam == VK_CONTROL)
-                            iKey = Gwen::Key::Control;
+                            iKey = Gwk::Key::Control;
                         else if (msg.wParam == VK_SPACE)
-                            iKey = Gwen::Key::Space;
+                            iKey = Gwk::Key::Space;
                         else if (msg.wParam == VK_UP)
-                            iKey = Gwen::Key::Up;
+                            iKey = Gwk::Key::Up;
                         else if (msg.wParam == VK_DOWN)
-                            iKey = Gwen::Key::Down;
+                            iKey = Gwk::Key::Down;
 
                         if (iKey != -1)
                             return m_Canvas->InputKey(iKey, bDown);
@@ -161,7 +162,7 @@ namespace Gwen
 
         protected:
 
-            Gwen::Controls::Canvas* m_Canvas;
+            Gwk::Controls::Canvas* m_Canvas;
             int m_MouseX;
             int m_MouseY;
 
@@ -170,4 +171,4 @@ namespace Gwen
 
     }
 }
-#endif // ifndef GWEN_INPUT_WINDOWS_H
+#endif // ifndef GWK_INPUT_WINDOWS_H

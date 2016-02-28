@@ -1,37 +1,38 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 #pragma once
-#ifndef GWEN_CONTROLS_TABSTRIP_H
-#define GWEN_CONTROLS_TABSTRIP_H
+#ifndef GWK_CONTROLS_TABSTRIP_H
+#define GWK_CONTROLS_TABSTRIP_H
 
-#include "Gwen/Controls/Base.h"
-#include "Gwen/Controls/Button.h"
-#include "Gwen/Controls/TabButton.h"
+#include "Gwork/Controls/Base.h"
+#include "Gwork/Controls/Button.h"
+#include "Gwork/Controls/TabButton.h"
 
-namespace Gwen
+namespace Gwk
 {
     namespace Controls
     {
         // class TabControl;
 
-        class GWEN_EXPORT TabStrip : public Base
+        class GWK_EXPORT TabStrip : public Base
         {
         public:
 
-            GWEN_CONTROL(TabStrip, Base);
+            GWK_CONTROL(TabStrip, Base);
 
             virtual void Layout(Skin::Base* skin) override;
 
-            virtual bool DragAndDrop_HandleDrop(Gwen::DragAndDrop::Package* pPackage, int x, int y) override;
-            virtual bool DragAndDrop_CanAcceptPackage(Gwen::DragAndDrop::Package* pPackage) override;
+            virtual bool DragAndDrop_HandleDrop(Gwk::DragAndDrop::Package* pPackage, int x, int y) override;
+            virtual bool DragAndDrop_CanAcceptPackage(Gwk::DragAndDrop::Package* pPackage) override;
 
-            virtual void DragAndDrop_HoverEnter(Gwen::DragAndDrop::Package* pPackage, int x, int y) override;
-            virtual void DragAndDrop_HoverLeave(Gwen::DragAndDrop::Package* pPackage) override;
-            virtual void DragAndDrop_Hover(Gwen::DragAndDrop::Package* pPackage, int x, int y) override;
+            virtual void DragAndDrop_HoverEnter(Gwk::DragAndDrop::Package* pPackage, int x, int y) override;
+            virtual void DragAndDrop_HoverLeave(Gwk::DragAndDrop::Package* pPackage) override;
+            virtual void DragAndDrop_Hover(Gwk::DragAndDrop::Package* pPackage, int x, int y) override;
 
             virtual void SetTabPosition(Docking::Area pos);
 
@@ -60,4 +61,4 @@ namespace Gwen
 
     }
 }
-#endif // ifndef GWEN_CONTROLS_TABSTRIP_H
+#endif // ifndef GWK_CONTROLS_TABSTRIP_H

@@ -1,29 +1,30 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2012 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2015-2016 Billy Quith
+ *  See license in Gwork.h
  */
 
 #pragma once
-#ifndef GWEN_CONTROLS_PROPERTY_COMBOBOX_H
-#define GWEN_CONTROLS_PROPERTY_COMBOBOX_H
+#ifndef GWK_CONTROLS_PROPERTY_COMBOBOX_H
+#define GWK_CONTROLS_PROPERTY_COMBOBOX_H
 
-#include "Gwen/Controls/Property/BaseProperty.h"
-#include "Gwen/Controls/ComboBox.h"
+#include "Gwork/Controls/Property/BaseProperty.h"
+#include "Gwork/Controls/ComboBox.h"
 
-namespace Gwen
+namespace Gwk
 {
     namespace Controls
     {
         namespace Property
         {
-            class GWEN_EXPORT ComboBox : public Property::Base
+            class GWK_EXPORT ComboBox : public Property::Base
             {
             public:
 
-                GWEN_CONTROL_INLINE(ComboBox, Property::Base)
+                GWK_CONTROL_INLINE(ComboBox, Property::Base)
                 {
-                    m_ComboBox = new Gwen::Controls::ComboBox(this);
+                    m_ComboBox = new Gwk::Controls::ComboBox(this);
                     m_ComboBox->Dock(Docking::Fill);
                     m_ComboBox->onSelection.Add(this, &ParentClass::OnPropertyValueChanged);
                     m_ComboBox->SetTabable(true);
@@ -34,7 +35,7 @@ namespace Gwen
 
                 virtual String GetPropertyValue() override
                 {
-                    Gwen::Controls::Label* pControl = m_ComboBox->GetSelectedItem();
+                    Gwk::Controls::Label* pControl = m_ComboBox->GetSelectedItem();
 
                     if (!pControl)
                         return "";
@@ -57,18 +58,18 @@ namespace Gwen
                     return ParentClass::IsHovered() || m_ComboBox->IsHovered();
                 }
 
-                Gwen::Controls::ComboBox* GetComboBox()
+                Gwk::Controls::ComboBox* GetComboBox()
                 {
                     return m_ComboBox;
                 }
 
             protected:
 
-                Gwen::Controls::ComboBox* m_ComboBox;
+                Gwk::Controls::ComboBox* m_ComboBox;
             };
 
 
         }
     }
 }
-#endif // ifndef GWEN_CONTROLS_PROPERTY_COMBOBOX_H
+#endif // ifndef GWK_CONTROLS_PROPERTY_COMBOBOX_H

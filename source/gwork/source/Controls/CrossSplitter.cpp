@@ -1,25 +1,31 @@
+/*
+ *  Gwork
+ *  Copyright (c) 2010 Facepunch Studios
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
+ */
 
-#include "Gwen/Gwen.h"
-#include "Gwen/Controls/CrossSplitter.h"
-#include "Gwen/Controls/Button.h"
+#include "Gwork/Gwork.h"
+#include "Gwork/Controls/CrossSplitter.h"
+#include "Gwork/Controls/Button.h"
 
-using namespace Gwen;
+using namespace Gwk;
 using namespace Controls;
 
-GWEN_CONTROL_CONSTRUCTOR(CrossSplitter)
+GWK_CONTROL_CONSTRUCTOR(CrossSplitter)
 {
     m_VSplitter = new SplitterBar(this);
     m_VSplitter->SetPos(0, 128);
     m_VSplitter->onDragged.Add(this, &CrossSplitter::OnVerticalMoved);
-    m_VSplitter->SetCursor(Gwen::CursorType::SizeNS);
+    m_VSplitter->SetCursor(Gwk::CursorType::SizeNS);
     m_HSplitter = new SplitterBar(this);
     m_HSplitter->SetPos(128, 0);
     m_HSplitter->onDragged.Add(this, &CrossSplitter::OnHorizontalMoved);
-    m_HSplitter->SetCursor(Gwen::CursorType::SizeWE);
+    m_HSplitter->SetCursor(Gwk::CursorType::SizeWE);
     m_CSplitter = new SplitterBar(this);
     m_CSplitter->SetPos(128, 128);
     m_CSplitter->onDragged.Add(this, &CrossSplitter::OnCenterMoved);
-    m_CSplitter->SetCursor(Gwen::CursorType::SizeAll);
+    m_CSplitter->SetCursor(Gwk::CursorType::SizeAll);
     m_fHVal = 0.5f;
     m_fVVal = 0.5f;
     SetPanel(0, NULL);

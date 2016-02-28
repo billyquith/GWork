@@ -1,17 +1,17 @@
 
-// SDL2 Renderer for GWEN - http://www.libsdl.org/
+// SDL2 Renderer for Gwork - http://www.libsdl.org/
 // Added by BQ.
 
-#include <Gwen/Gwen.h>
-#include <Gwen/BaseRender.h>
-#include <Gwen/Utility.h>
-#include <Gwen/Font.h>
-#include <Gwen/Texture.h>
-#include <Gwen/Renderers/SDL2.h>
+#include <Gwork/Gwork.h>
+#include <Gwork/BaseRender.h>
+#include <Gwork/Utility.h>
+#include <Gwork/Font.h>
+#include <Gwork/Texture.h>
+#include <Gwork/Renderers/SDL2.h>
 #include <SDL_image.h>
 #include <SDL_ttf.h>
 
-namespace Gwen
+namespace Gwk
 {
     namespace Renderer
     {
@@ -29,7 +29,7 @@ namespace Gwen
             SDL_DestroyRenderer(m_renderer);
         }
 
-        void SDL2::SetDrawColor(Gwen::Color color)
+        void SDL2::SetDrawColor(Gwk::Color color)
         {
             m_color.r = color.r;
             m_color.g = color.g;
@@ -39,7 +39,7 @@ namespace Gwen
             SDL_SetRenderDrawColor(m_renderer, color.r, color.g, color.b, color.a);
         }
 
-        void SDL2::LoadFont(Gwen::Font* font)
+        void SDL2::LoadFont(Gwk::Font* font)
         {
             font->realsize = font->size*Scale();
             std::string fontFile(font->facename);
@@ -56,7 +56,7 @@ namespace Gwen
             font->data = tfont;
         }
 
-        void SDL2::FreeFont(Gwen::Font* pFont)
+        void SDL2::FreeFont(Gwk::Font* pFont)
         {
             if (pFont->data)
             {
@@ -65,7 +65,7 @@ namespace Gwen
             }
         }
 
-        void SDL2::RenderText(Gwen::Font* pFont, Gwen::Point pos, const Gwen::String& text)
+        void SDL2::RenderText(Gwk::Font* pFont, Gwk::Point pos, const Gwk::String& text)
         {
             TTF_Font *tfont = static_cast<TTF_Font*>(pFont->data);
             Translate(pos.x, pos.y);
@@ -83,7 +83,7 @@ namespace Gwen
             SDL_DestroyTexture(texture);
         }
 
-        Gwen::Point SDL2::MeasureText(Gwen::Font* pFont, const Gwen::String& text)
+        Gwk::Point SDL2::MeasureText(Gwk::Font* pFont, const Gwk::String& text)
         {
             TTF_Font *tfont = static_cast<TTF_Font*>(pFont->data);
 
@@ -96,7 +96,7 @@ namespace Gwen
             }
 
             if (!tfont)
-                return Gwen::Point(0, 0);
+                return Gwk::Point(0, 0);
 
             int w,h;
             TTF_SizeUTF8(tfont, text.c_str(), &w,&h);
@@ -106,7 +106,7 @@ namespace Gwen
 
         void SDL2::StartClip()
         {
-            const Gwen::Rect &rect = ClipRegion();
+            const Gwk::Rect &rect = ClipRegion();
             const SDL_Rect clip = { rect.x,rect.y, rect.w,rect.h };
             SDL_RenderSetClipRect(m_renderer, &clip);
         }
@@ -116,7 +116,7 @@ namespace Gwen
             SDL_RenderSetClipRect(m_renderer, NULL);
         }
 
-        void SDL2::LoadTexture(Gwen::Texture* pTexture)
+        void SDL2::LoadTexture(Gwk::Texture* pTexture)
         {
             if (!pTexture)
                 return;
@@ -156,7 +156,7 @@ namespace Gwen
             }
         }
 
-        void SDL2::FreeTexture(Gwen::Texture* pTexture)
+        void SDL2::FreeTexture(Gwk::Texture* pTexture)
         {
             SDL_DestroyTexture(static_cast<SDL_Texture*>(pTexture->data));
             pTexture->data = NULL;
@@ -169,7 +169,7 @@ namespace Gwen
             }
         }
 
-        void SDL2::DrawTexturedRect(Gwen::Texture* pTexture, Gwen::Rect rect,
+        void SDL2::DrawTexturedRect(Gwk::Texture* pTexture, Gwk::Rect rect,
                                     float u1, float v1, float u2, float v2)
         {
             SDL_Texture *tex = static_cast<SDL_Texture*>(pTexture->data);
@@ -188,8 +188,8 @@ namespace Gwen
             SDL_RenderCopy(m_renderer, tex, &source, &dest);
         }
 
-        Gwen::Color SDL2::PixelColour(Gwen::Texture* pTexture, unsigned int x, unsigned int y,
-                                      const Gwen::Color& col_default)
+        Gwk::Color SDL2::PixelColour(Gwk::Texture* pTexture, unsigned int x, unsigned int y,
+                                      const Gwk::Color& col_default)
         {
             SDL_Surface *surf = static_cast<SDL_Surface*>(pTexture->surface);
 
@@ -202,7 +202,7 @@ namespace Gwen
             const char *mem = static_cast<char*>(surf->pixels) + y*surf->pitch + x*sizeof(Uint32);
             const Uint32 pix = *reinterpret_cast<const Uint32*>(mem);
 
-            Gwen::Color col;
+            Gwk::Color col;
             SDL_GetRGBA(pix, surf->format, &col.r, &col.g, &col.b, &col.a);
 
             if (SDL_MUSTLOCK(surf) != 0)
@@ -211,7 +211,7 @@ namespace Gwen
             return col;
         }
 
-        void SDL2::DrawFilledRect(Gwen::Rect rect)
+        void SDL2::DrawFilledRect(Gwk::Rect rect)
         {
             Translate(rect);
             
@@ -219,7 +219,7 @@ namespace Gwen
             SDL_RenderFillRect(m_renderer, &srect);
         }
 
-        void SDL2::DrawLinedRect(Gwen::Rect rect)
+        void SDL2::DrawLinedRect(Gwk::Rect rect)
         {
             Translate(rect);
             
@@ -227,19 +227,19 @@ namespace Gwen
             SDL_RenderDrawRect(m_renderer, &srect);
         }
 
-        bool SDL2::BeginContext(Gwen::WindowProvider* )
+        bool SDL2::BeginContext(Gwk::WindowProvider* )
         {
             SDL_RenderClear(m_renderer);
             SDL_SetRenderDrawBlendMode(m_renderer, SDL_BLENDMODE_BLEND);
             return true;
         }
 
-        bool SDL2::EndContext(Gwen::WindowProvider* pWindow)
+        bool SDL2::EndContext(Gwk::WindowProvider* pWindow)
         {
             return true;
         }
 
-        bool SDL2::PresentContext(Gwen::WindowProvider* pWindow)
+        bool SDL2::PresentContext(Gwk::WindowProvider* pWindow)
         {
             SDL_RenderPresent(m_renderer);
             return true;
@@ -247,4 +247,4 @@ namespace Gwen
 
         
     } // Renderer
-} // Gwen
+} // Gwork

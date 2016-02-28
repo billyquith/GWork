@@ -1,20 +1,21 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 
-#include "Gwen/Gwen.h"
-#include "Gwen/Skin.h"
-#include "Gwen/Controls/Button.h"
-#include "Gwen/Controls/ImagePanel.h"
+#include "Gwork/Gwork.h"
+#include "Gwork/Skin.h"
+#include "Gwork/Controls/Button.h"
+#include "Gwork/Controls/ImagePanel.h"
 
-using namespace Gwen;
-using namespace Gwen::Controls;
+using namespace Gwk;
+using namespace Gwk::Controls;
 
 
-GWEN_CONTROL_CONSTRUCTOR(Button)
+GWK_CONTROL_CONSTRUCTOR(Button)
 {
     m_Image = NULL;
     m_bDepressed = false;
@@ -22,7 +23,7 @@ GWEN_CONTROL_CONSTRUCTOR(Button)
     SetSize(100, 20);
     SetMouseInputEnabled(true);
     SetIsToggle(false);
-    SetAlignment(Gwen::Docking::Center);
+    SetAlignment(Gwk::Docking::Center);
     SetTextPadding(Padding(3, 0, 3, 0));
     m_bToggleStatus = false;
     SetKeyboardInputEnabled(false);
@@ -51,7 +52,7 @@ void Button::OnMouseClickLeft(int /*x*/, int /*y*/, bool bDown)
     if (bDown)
     {
         SetDepressed(true);
-        Gwen::MouseFocus = this;
+        Gwk::MouseFocus = this;
         onDown.Call(this);
     }
     else
@@ -60,7 +61,7 @@ void Button::OnMouseClickLeft(int /*x*/, int /*y*/, bool bDown)
             OnPress();
 
         SetDepressed(false);
-        Gwen::MouseFocus = NULL;
+        Gwk::MouseFocus = NULL;
         onUp.Call(this);
     }
 }
@@ -73,7 +74,7 @@ void Button::OnMouseClickRight(int /*x*/, int /*y*/, bool bDown)
     if (bDown)
     {
         SetDepressed(true);
-        Gwen::MouseFocus = this;
+        Gwk::MouseFocus = this;
         onDown.Call(this);
     }
     else
@@ -82,7 +83,7 @@ void Button::OnMouseClickRight(int /*x*/, int /*y*/, bool bDown)
             OnRightPress();
 
         SetDepressed(false);
-        Gwen::MouseFocus = NULL;
+        Gwk::MouseFocus = NULL;
         onUp.Call(this);
     }
 }
@@ -218,11 +219,11 @@ void Button::SetImageAlpha(float f)
     if (!m_Image)
         return;
 
-    m_Image->SetDrawColor(Gwen::Color(255, 255, 255, 255.0f*f));
+    m_Image->SetDrawColor(Gwk::Color(255, 255, 255, 255.0f*f));
 }
 
 void Button::SetAction(Event::Handler* pObject, Handler::FunctionWithInformation pFunction,
-                       const Gwen::Event::Packet& packet)
+                       const Gwk::Event::Packet& packet)
 {
     onPress.Add(pObject, pFunction, packet);
 }

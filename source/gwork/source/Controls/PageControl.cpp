@@ -1,21 +1,22 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2012 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2015-2016 Billy Quith
+ *  See license in Gwork.h
  */
 
 
-#include "Gwen/Gwen.h"
-#include "Gwen/Utility.h"
-#include "Gwen/Skin.h"
-#include "Gwen/Controls/PageControl.h"
-#include "Gwen/Controls.h"
+#include "Gwork/Gwork.h"
+#include "Gwork/Utility.h"
+#include "Gwork/Skin.h"
+#include "Gwork/Controls/PageControl.h"
+#include "Gwork/Controls.h"
 
-using namespace Gwen;
-using namespace Gwen::Controls;
+using namespace Gwk;
+using namespace Gwk::Controls;
 
 
-GWEN_CONTROL_CONSTRUCTOR(PageControl)
+GWK_CONTROL_CONSTRUCTOR(PageControl)
 {
     m_iPages = 0;
     m_iCurrentPage = 0;

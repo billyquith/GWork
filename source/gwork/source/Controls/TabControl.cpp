@@ -1,26 +1,27 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 
-#include "Gwen/Gwen.h"
-#include "Gwen/Skin.h"
-#include "Gwen/Controls/TabControl.h"
-#include "Gwen/Controls/Highlight.h"
-#include "Gwen/DragAndDrop.h"
-#include "Gwen/Controls/WindowControl.h"
-#include "Gwen/Controls/ScrollBarButton.h"
+#include "Gwork/Gwork.h"
+#include "Gwork/Skin.h"
+#include "Gwork/Controls/TabControl.h"
+#include "Gwork/Controls/Highlight.h"
+#include "Gwork/DragAndDrop.h"
+#include "Gwork/Controls/WindowControl.h"
+#include "Gwork/Controls/ScrollBarButton.h"
 
-using namespace Gwen;
-using namespace Gwen::Controls;
+using namespace Gwk;
+using namespace Gwk::Controls;
 
 class TabControlInner : public Base
 {
 public:
 
-    GWEN_CONTROL_INLINE(TabControlInner, Base)
+    GWK_CONTROL_INLINE(TabControlInner, Base)
     {
     }
 
@@ -32,7 +33,7 @@ public:
 };
 
 
-GWEN_CONTROL_CONSTRUCTOR(TabControl)
+GWK_CONTROL_CONSTRUCTOR(TabControl)
 {
     m_iScrollOffset = 0;
     m_pCurrentButton = NULL;
@@ -100,7 +101,7 @@ void TabControl::AddPage(TabButton* pButton)
 
 void TabControl::OnTabPressed(Controls::Base* control)
 {
-    TabButton* pButton = gwen_cast<TabButton>(control);
+    TabButton* pButton = gwk_cast<TabButton>(control);
 
     if (!pButton)
         return;
@@ -153,7 +154,7 @@ int TabControl::TabCount(void)
 
 TabButton* TabControl::GetTab(int iNum)
 {
-    return gwen_cast<TabButton>(m_TabStrip->GetChild(iNum));
+    return gwk_cast<TabButton>(m_TabStrip->GetChild(iNum));
 }
 
 void TabControl::SetTabStripPosition(Docking::Area dock)
@@ -168,7 +169,7 @@ bool TabControl::DoesAllowDrag()
 
 void TabControl::HandleOverflow()
 {
-    Gwen::Point TabsSize = m_TabStrip->ChildrenSize();
+    Gwk::Point TabsSize = m_TabStrip->ChildrenSize();
     // Only enable the scrollers if the tabs are at the top.
     // This is a limitation we should explore.
     // Really TabControl should have derivitives for tabs placed elsewhere where
@@ -181,7 +182,7 @@ void TabControl::HandleOverflow()
     if (!bNeeded)
         return;
 
-    m_iScrollOffset = Gwen::Clamp(m_iScrollOffset, 0, TabsSize.x-Width()+32);
+    m_iScrollOffset = Gwk::Clamp(m_iScrollOffset, 0, TabsSize.x-Width()+32);
 #if 0
     //
     // This isn't frame rate independent.
@@ -190,7 +191,7 @@ void TabControl::HandleOverflow()
     // Then get a margin animation type and do it properly!
     // TODO!
     //
-    m_TabStrip->SetMargin(Margin(Gwen::Approach(m_TabStrip->GetMargin().left, m_iScrollOffset* -1,
+    m_TabStrip->SetMargin(Margin(Gwk::Approach(m_TabStrip->GetMargin().left, m_iScrollOffset* -1,
                                                 2), 0, 0, 0));
     InvalidateParent();
 #else // if 0

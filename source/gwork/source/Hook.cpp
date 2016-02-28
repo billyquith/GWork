@@ -1,32 +1,33 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 
-#include <Gwen/Hook.h>
+#include <Gwork/Hook.h>
 
-#if GWEN_HOOKSYSTEM
+#if GWK_HOOKSYSTEM
 
-using namespace Gwen;
-using namespace Gwen::Hook;
+using namespace Gwk;
+using namespace Gwk::Hook;
 
 std::list<BaseHook*> g_HookList;
 
-void Gwen::Hook::AddHook(BaseHook* pHook)
+void Gwk::Hook::AddHook(BaseHook* pHook)
 {
     g_HookList.push_back(pHook);
 }
 
-void Gwen::Hook::RemoveHook(BaseHook* pHook)
+void Gwk::Hook::RemoveHook(BaseHook* pHook)
 {
     g_HookList.remove(pHook);
 }
 
-HookList& Gwen::Hook::GetHookList()
+HookList& Gwk::Hook::GetHookList()
 {
     return g_HookList;
 }
 
-#endif // if GWEN_HOOKSYSTEM
+#endif // if GWK_HOOKSYSTEM

@@ -1,19 +1,20 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 
-#include "Gwen/Controls/Rectangle.h"
+#include "Gwork/Controls/Rectangle.h"
 
-using namespace Gwen;
-using namespace Gwen::Controls;
+using namespace Gwk;
+using namespace Gwk::Controls;
 
 
-GWEN_CONTROL_CONSTRUCTOR(Rectangle)
+GWK_CONTROL_CONSTRUCTOR(Rectangle)
 {
-    m_Color = Gwen::Color(255, 255, 255, 255);
+    m_Color = Gwk::Color(255, 255, 255, 255);
 }
 
 void Rectangle::Render(Skin::Base* skin)

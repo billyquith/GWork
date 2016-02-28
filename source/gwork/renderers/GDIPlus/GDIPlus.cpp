@@ -2,15 +2,15 @@
 #include <windows.h>
 #include <gdiplus.h>
 
-#include "Gwen/Renderers/GDIPlus.h"
-#include "Gwen/Utility.h"
-#include "Gwen/Font.h"
-#include "Gwen/Texture.h"
-#include "Gwen/WindowProvider.h"
+#include "Gwork/Renderers/GDIPlus.h"
+#include "Gwork/Utility.h"
+#include "Gwork/Font.h"
+#include "Gwork/Texture.h"
+#include "Gwork/WindowProvider.h"
 
 #include <math.h>
 
-namespace Gwen
+namespace Gwk
 {
     namespace Renderer
     {
@@ -49,19 +49,19 @@ namespace Gwen
             m_hDC = NULL;
         }
 
-        void GDIPlus::DrawFilledRect(Gwen::Rect rect)
+        void GDIPlus::DrawFilledRect(Gwk::Rect rect)
         {
             Translate(rect);
             Gdiplus::SolidBrush solidBrush(m_Colour);
             graphics->FillRectangle(&solidBrush, rect.x, rect.y, rect.w, rect.h);
         }
 
-        void GDIPlus::SetDrawColor(Gwen::Color color)
+        void GDIPlus::SetDrawColor(Gwk::Color color)
         {
             m_Colour = Gdiplus::Color(color.a, color.r, color.g, color.b);
         }
 
-        void GDIPlus::LoadFont(Gwen::Font* font)
+        void GDIPlus::LoadFont(Gwk::Font* font)
         {
             Gdiplus::FontStyle fs = Gdiplus::FontStyleRegular;
             font->realsize = font->size*Scale();
@@ -70,7 +70,7 @@ namespace Gwen
             font->data = pFont;
         }
 
-        void GDIPlus::FreeFont(Gwen::Font* pFont)
+        void GDIPlus::FreeFont(Gwk::Font* pFont)
         {
             if (!pFont->data)
                 return;
@@ -80,8 +80,8 @@ namespace Gwen
             pFont->data = NULL;
         }
 
-        void GDIPlus::RenderText(Gwen::Font* pFont, Gwen::Point pos,
-                                 const Gwen::String& text)
+        void GDIPlus::RenderText(Gwk::Font* pFont, Gwk::Point pos,
+                                 const Gwk::String& text)
         {
             Translate(pos.x, pos.y);
 
@@ -101,9 +101,9 @@ namespace Gwen
                                  pGDIFont, r, &strFormat, &solidBrush);
         }
 
-        Gwen::Point GDIPlus::MeasureText(Gwen::Font* pFont, const Gwen::String& text)
+        Gwk::Point GDIPlus::MeasureText(Gwk::Font* pFont, const Gwk::String& text)
         {
-            Gwen::Point p(1, 1);
+            Gwk::Point p(1, 1);
 
             if (!pFont->data || fabs(pFont->realsize-pFont->size*Scale()) > 2)
             {
@@ -120,12 +120,12 @@ namespace Gwen
             const std::wstring wtext( Utility::Widen(text) );
             g.MeasureString(wtext.c_str(), -1, pGDIFont, Gdiplus::SizeF(10000, 10000),
                             &strFormat, &size);
-            return Gwen::Point(size.Width+1, size.Height+1);
+            return Gwk::Point(size.Width+1, size.Height+1);
         }
 
         void GDIPlus::StartClip()
         {
-            const Gwen::Rect& rect = ClipRegion();
+            const Gwk::Rect& rect = ClipRegion();
             graphics->SetClip(Gdiplus::Rect(rect.x*Scale(), rect.y*Scale(), rect.w*Scale(), rect.h*
                                             Scale()), Gdiplus::CombineModeReplace);
         }
@@ -135,7 +135,7 @@ namespace Gwen
             graphics->ResetClip();
         }
 
-        void GDIPlus::DrawTexturedRect(Gwen::Texture* pTexture, Gwen::Rect pTargetRect, float u1,
+        void GDIPlus::DrawTexturedRect(Gwk::Texture* pTexture, Gwk::Rect pTargetRect, float u1,
                                        float v1, float u2, float v2)
         {
             Gdiplus::Bitmap* pImage = (Gdiplus::Bitmap*)pTexture->data;
@@ -158,7 +158,7 @@ namespace Gwen
             graphics->DrawImage(pImage, TargetRect, u1, v1, u2, v2, Gdiplus::UnitPixel);
         }
 
-        void GDIPlus::LoadTexture(Gwen::Texture* pTexture)
+        void GDIPlus::LoadTexture(Gwk::Texture* pTexture)
         {
             Gdiplus::Bitmap* pImage = new Gdiplus::Bitmap(Utility::Widen(pTexture->name).c_str());
             pTexture->data = pImage;
@@ -166,7 +166,7 @@ namespace Gwen
             pTexture->height = pImage->GetHeight();
         }
 
-        void GDIPlus::FreeTexture(Gwen::Texture* pTexture)
+        void GDIPlus::FreeTexture(Gwk::Texture* pTexture)
         {
             Gdiplus::Bitmap* pImage = (Gdiplus::Bitmap*)pTexture->data;
 
@@ -176,8 +176,8 @@ namespace Gwen
             delete pImage;
         }
 
-        Gwen::Color GDIPlus::PixelColour(Gwen::Texture* pTexture, unsigned int x, unsigned int y,
-                                         const Gwen::Color& col_default)
+        Gwk::Color GDIPlus::PixelColour(Gwk::Texture* pTexture, unsigned int x, unsigned int y,
+                                         const Gwk::Color& col_default)
         {
             Gdiplus::Bitmap* pImage = (Gdiplus::Bitmap*)pTexture->data;
 
@@ -186,36 +186,36 @@ namespace Gwen
 
             Gdiplus::Color c;
             pImage->GetPixel(x, y, &c);
-            return Gwen::Color(c.GetR(), c.GetG(), c.GetB(), c.GetA());
+            return Gwk::Color(c.GetR(), c.GetG(), c.GetB(), c.GetA());
         }
 
-        bool GDIPlus::InitializeContext(Gwen::WindowProvider* pWindow)
+        bool GDIPlus::InitializeContext(Gwk::WindowProvider* pWindow)
         {
             m_HWND = (HWND)pWindow->GetWindow();
             return true;
         }
 
-        bool GDIPlus::ShutdownContext(Gwen::WindowProvider* pWindow)
+        bool GDIPlus::ShutdownContext(Gwk::WindowProvider* pWindow)
         {
             return true;
         }
 
-        bool GDIPlus::PresentContext(Gwen::WindowProvider* pWindow)
+        bool GDIPlus::PresentContext(Gwk::WindowProvider* pWindow)
         {
             return true;
         }
 
-        bool GDIPlus::ResizedContext(Gwen::WindowProvider* pWindow, int w, int h)
+        bool GDIPlus::ResizedContext(Gwk::WindowProvider* pWindow, int w, int h)
         {
             return true;
         }
 
-        bool GDIPlus::BeginContext(Gwen::WindowProvider* pWindow)
+        bool GDIPlus::BeginContext(Gwk::WindowProvider* pWindow)
         {
             return true;
         }
 
-        bool GDIPlus::EndContext(Gwen::WindowProvider* pWindow)
+        bool GDIPlus::EndContext(Gwk::WindowProvider* pWindow)
         {
             return true;
         }

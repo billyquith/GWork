@@ -1,17 +1,18 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 #pragma once
-#ifndef GWEN_CONTROLS_SCROLLBAR_H
-#define GWEN_CONTROLS_SCROLLBAR_H
+#ifndef GWK_CONTROLS_SCROLLBAR_H
+#define GWK_CONTROLS_SCROLLBAR_H
 
-#include "Gwen/Controls/Base.h"
-#include "Gwen/Controls/ScrollBarBar.h"
-#include "Gwen/Controls/ScrollBarButton.h"
-#include "Gwen/Gwen.h"
+#include "Gwork/Controls/Base.h"
+#include "Gwork/Controls/ScrollBarBar.h"
+#include "Gwork/Controls/ScrollBarButton.h"
+#include "Gwork/Gwork.h"
 
 
 #define SCROLL_BUTTON_UP 0
@@ -20,15 +21,15 @@
 #define SCROLL_BUTTON_RIGHT 1
 #define NUDGE_DIST 10
 
-namespace Gwen
+namespace Gwk
 {
     namespace Controls
     {
-        class GWEN_EXPORT BaseScrollBar : public Base
+        class GWK_EXPORT BaseScrollBar : public Base
         {
         public:
 
-            GWEN_CONTROL(BaseScrollBar, Base);
+            GWK_CONTROL(BaseScrollBar, Base);
 
             virtual void Render(Skin::Base* skin) override;
 
@@ -86,7 +87,7 @@ namespace Gwen
                 return false;
             }
 
-            Gwen::Event::Caller onBarMoved;
+            Gwk::Event::Caller onBarMoved;
 
         protected:
 
@@ -103,4 +104,4 @@ namespace Gwen
 
     }
 }
-#endif // ifndef GWEN_CONTROLS_SCROLLBAR_H
+#endif // ifndef GWK_CONTROLS_SCROLLBAR_H

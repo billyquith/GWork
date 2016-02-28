@@ -1,18 +1,19 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 #pragma once
-#ifndef GWEN_TEXTURE_H
-#define GWEN_TEXTURE_H
+#ifndef GWK_TEXTURE_H
+#define GWK_TEXTURE_H
 
 #include <string>
 
-#include "Gwen/BaseRender.h"
+#include "Gwork/BaseRender.h"
 
-namespace Gwen
+namespace Gwk
 {
     //
     // Texture
@@ -44,16 +45,16 @@ namespace Gwen
         {
         }
 
-        void Load(const String& str, Gwen::Renderer::Base* render, bool needReadable=false)
+        void Load(const String& str, Gwk::Renderer::Base* render, bool needReadable=false)
         {
             name = str;
-            Gwen::Debug::AssertCheck(render != NULL, "No renderer!");
+            Gwk::Debug::AssertCheck(render != NULL, "No renderer!");
             
             readable = needReadable;
             render->LoadTexture(this);
         }
 
-        void Release(Gwen::Renderer::Base* render)
+        void Release(Gwk::Renderer::Base* render)
         {
             render->FreeTexture(this);
         }
@@ -67,4 +68,4 @@ namespace Gwen
 
 
 }
-#endif // ifndef GWEN_TEXTURE_H
+#endif // ifndef GWK_TEXTURE_H

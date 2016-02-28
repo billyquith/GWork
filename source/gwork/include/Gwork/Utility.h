@@ -1,34 +1,35 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 #pragma once
-#ifndef GWEN_UTILITY_H
-#define GWEN_UTILITY_H
+#ifndef GWK_UTILITY_H
+#define GWK_UTILITY_H
 
 #include <sstream>
 #include <vector>
-#include "Gwen/Structures.h"
+#include "Gwork/Structures.h"
 
 #include <stdarg.h>
 
-namespace Gwen
+namespace Gwk
 {
     namespace Utility
     {
      
-        GWEN_EXPORT int vsnprintf(char* _str, size_t _count, const char* _format, va_list _argList);
-        GWEN_EXPORT int vsnwprintf(wchar_t* _str, size_t _count, const wchar_t* _format, va_list _argList);
-        GWEN_EXPORT int snprintf(char* _str, size_t _count, const char* _format, ...);
-        GWEN_EXPORT int swnprintf(wchar_t* _out, size_t _count, const wchar_t* _format, ...);
-        GWEN_EXPORT void PrintfVargs(String& _out, const char* _format, va_list _argList);
-        GWEN_EXPORT void Printf(String& _out, const char* _format, ...);
-        GWEN_EXPORT String Format(const char* fmt, ...);
+        GWK_EXPORT int vsnprintf(char* _str, size_t _count, const char* _format, va_list _argList);
+        GWK_EXPORT int vsnwprintf(wchar_t* _str, size_t _count, const wchar_t* _format, va_list _argList);
+        GWK_EXPORT int snprintf(char* _str, size_t _count, const char* _format, ...);
+        GWK_EXPORT int swnprintf(wchar_t* _out, size_t _count, const wchar_t* _format, ...);
+        GWK_EXPORT void PrintfVargs(String& _out, const char* _format, va_list _argList);
+        GWK_EXPORT void Printf(String& _out, const char* _format, ...);
+        GWK_EXPORT String Format(const char* fmt, ...);
 
-        GWEN_EXPORT std::wstring Widen(const String &nstr);
-        GWEN_EXPORT String Narrow(const std::wstring &wstr);
+        GWK_EXPORT std::wstring Widen(const String &nstr);
+        GWK_EXPORT String Narrow(const std::wstring &wstr);
 
         template <typename TYPE>
         inline String ToString(const TYPE& object)
@@ -38,19 +39,19 @@ namespace Gwen
             return os.str();
         }
 
-        GWEN_EXPORT void Replace(String& str, const String& strFind, const String& strReplace);
+        GWK_EXPORT void Replace(String& str, const String& strFind, const String& strReplace);
 
         namespace Strings
         {
-            typedef std::vector<Gwen::String> List;
+            typedef std::vector<Gwk::String> List;
 
-            GWEN_EXPORT void Split(const Gwen::String& str, const Gwen::String& seperator,
+            GWK_EXPORT void Split(const Gwk::String& str, const Gwk::String& seperator,
                                    Strings::List& outbits, bool bLeaveSeperators = false);
-            GWEN_EXPORT bool Wildcard(const Gwen::String& strWildcard,
-                                      const Gwen::String& strHaystack);
+            GWK_EXPORT bool Wildcard(const Gwk::String& strWildcard,
+                                      const Gwk::String& strHaystack);
 
-            GWEN_EXPORT void ToUpper(Gwen::String& str);
-            GWEN_EXPORT void Strip(Gwen::String& str, const Gwen::String& chars);
+            GWK_EXPORT void ToUpper(Gwk::String& str);
+            GWK_EXPORT void Strip(Gwk::String& str, const Gwk::String& chars);
 
             template <typename T>
             T TrimLeft(const T& str, const T& strChars)
@@ -62,17 +63,17 @@ namespace Gwen
 
             namespace To
             {
-                GWEN_EXPORT bool  Bool(const Gwen::String& str);
-                GWEN_EXPORT int   Int(const Gwen::String& str);
-                GWEN_EXPORT float Float(const Gwen::String& str);
-                GWEN_EXPORT float Float(const Gwen::String& str);
-                GWEN_EXPORT bool  Floats(const Gwen::String& str, float* f, size_t iCount);
+                GWK_EXPORT bool  Bool(const Gwk::String& str);
+                GWK_EXPORT int   Int(const Gwk::String& str);
+                GWK_EXPORT float Float(const Gwk::String& str);
+                GWK_EXPORT float Float(const Gwk::String& str);
+                GWK_EXPORT bool  Floats(const Gwk::String& str, float* f, size_t iCount);
             }
         }
         
-        Gwen::Rect ClampRectToRect(Gwen::Rect inside, Gwen::Rect outside, bool clampSize = false);
+        Gwk::Rect ClampRectToRect(Gwk::Rect inside, Gwk::Rect outside, bool clampSize = false);
 
     }
 }
 
-#endif // ifndef GWEN_UTILITY_H
+#endif // ifndef GWK_UTILITY_H

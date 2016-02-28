@@ -1,22 +1,23 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 
-#include "Gwen/Gwen.h"
-#include "Gwen/Controls/RichLabel.h"
-#include "Gwen/Controls/Label.h"
-#include "Gwen/Utility.h"
+#include "Gwork/Gwork.h"
+#include "Gwork/Controls/RichLabel.h"
+#include "Gwork/Controls/Label.h"
+#include "Gwork/Utility.h"
 
-using namespace Gwen;
-using namespace Gwen::Controls;
+using namespace Gwk;
+using namespace Gwk::Controls;
 
 const unsigned char Type_Text = 0;
 const unsigned char Type_Newline = 1;
 
-GWEN_CONTROL_CONSTRUCTOR(RichLabel)
+GWK_CONTROL_CONSTRUCTOR(RichLabel)
 {
     m_bNeedsRebuild = false;
 }
@@ -28,13 +29,13 @@ void RichLabel::AddLineBreak()
     m_TextBlocks.push_back(t);
 }
 
-void RichLabel::AddText(const Gwen::String& text, Gwen::Color color, Gwen::Font* font)
+void RichLabel::AddText(const Gwk::String& text, Gwk::Color color, Gwk::Font* font)
 {
     if (text.length() == 0)
         return;
 
-    Gwen::Utility::Strings::List lst;
-    Gwen::Utility::Strings::Split(text, "\n", lst, false);
+    Gwk::Utility::Strings::List lst;
+    Gwk::Utility::Strings::Split(text, "\n", lst, false);
 
     for (size_t i = 0; i < lst.size(); i++)
     {
@@ -58,11 +59,11 @@ bool RichLabel::SizeToChildren(bool w, bool h)
     return ParentClass::SizeToChildren(w, h);
 }
 
-void RichLabel::SplitLabel(const Gwen::String& text, Gwen::Font* pFont,
+void RichLabel::SplitLabel(const Gwk::String& text, Gwk::Font* pFont,
                            const DividedText& txt, int& x, int& y, int& lineheight)
 {
-    Gwen::Utility::Strings::List lst;
-    Gwen::Utility::Strings::Split(text, " ", lst, true);
+    Gwk::Utility::Strings::List lst;
+    Gwk::Utility::Strings::Split(text, " ", lst, true);
 
     if (lst.size() == 0)
         return;
@@ -70,14 +71,14 @@ void RichLabel::SplitLabel(const Gwen::String& text, Gwen::Font* pFont,
     int iSpaceLeft = Width()-x;
     // Does the whole word fit in?
     {
-        Gwen::Point StringSize = GetSkin()->GetRender()->MeasureText(pFont, text);
+        Gwk::Point StringSize = GetSkin()->GetRender()->MeasureText(pFont, text);
 
         if (iSpaceLeft > StringSize.x)
             return CreateLabel(text, txt, x, y, lineheight, true);
     }
     // If the first word is bigger than the line, just give up.
     {
-        Gwen::Point WordSize = GetSkin()->GetRender()->MeasureText(pFont, lst[0]);
+        Gwk::Point WordSize = GetSkin()->GetRender()->MeasureText(pFont, lst[0]);
 
         if (WordSize.x >= iSpaceLeft)
         {
@@ -86,15 +87,15 @@ void RichLabel::SplitLabel(const Gwen::String& text, Gwen::Font* pFont,
             if (lst[0].size() >= text.size())
                 return;
 
-            Gwen::String LeftOver = text.substr(lst[0].size()+1);
+            Gwk::String LeftOver = text.substr(lst[0].size()+1);
             return SplitLabel(LeftOver, pFont, txt, x, y, lineheight);
         }
     }
-    Gwen::String strNewString = "";
+    Gwk::String strNewString = "";
 
     for (size_t i = 0; i < lst.size(); i++)
     {
-        Gwen::Point WordSize = GetSkin()->GetRender()->MeasureText(pFont, strNewString+lst[i]);
+        Gwk::Point WordSize = GetSkin()->GetRender()->MeasureText(pFont, strNewString+lst[i]);
 
         if (WordSize.x > iSpaceLeft)
         {
@@ -107,17 +108,17 @@ void RichLabel::SplitLabel(const Gwen::String& text, Gwen::Font* pFont,
         strNewString += lst[i];
     }
 
-    Gwen::String LeftOver = text.substr(strNewString.size()+1);
+    Gwk::String LeftOver = text.substr(strNewString.size()+1);
     return SplitLabel(LeftOver, pFont, txt, x, y, lineheight);
 }
 
-void RichLabel::CreateLabel(const Gwen::String& text, const DividedText& txt, int& x, int& y,
+void RichLabel::CreateLabel(const Gwk::String& text, const DividedText& txt, int& x, int& y,
                             int& lineheight, bool NoSplit)
 {
     //
     // Use default font or is one set?
     //
-    Gwen::Font* pFont = GetSkin()->GetDefaultFont();
+    Gwk::Font* pFont = GetSkin()->GetDefaultFont();
 
     if (txt.font)
         pFont = txt.font;
@@ -125,7 +126,7 @@ void RichLabel::CreateLabel(const Gwen::String& text, const DividedText& txt, in
     //
     // This string is too long for us, split it up.
     //
-    Gwen::Point p = GetSkin()->GetRender()->MeasureText(pFont, text);
+    Gwk::Point p = GetSkin()->GetRender()->MeasureText(pFont, text);
 
     if (lineheight == -1)
         lineheight = p.y;
@@ -142,8 +143,8 @@ void RichLabel::CreateLabel(const Gwen::String& text, const DividedText& txt, in
     if (x+p.x >= Width())
         CreateNewline(x, y, lineheight);
 
-    Gwen::Controls::Label*  pLabel = new Gwen::Controls::Label(this);
-    pLabel->SetText(x == 0 ? Gwen::Utility::Strings::TrimLeft<Gwen::String>(text,
+    Gwk::Controls::Label*  pLabel = new Gwk::Controls::Label(this);
+    pLabel->SetText(x == 0 ? Gwk::Utility::Strings::TrimLeft<Gwk::String>(text,
                                                                                    " ") : text);
     pLabel->SetTextColor(txt.color);
     pLabel->SetFont(pFont);
@@ -187,13 +188,13 @@ void RichLabel::Rebuild()
     m_bNeedsRebuild = false;
 }
 
-void RichLabel::OnBoundsChanged(Gwen::Rect oldBounds)
+void RichLabel::OnBoundsChanged(Gwk::Rect oldBounds)
 {
     ParentClass::OnBoundsChanged(oldBounds);
     Rebuild();
 }
 
-void RichLabel::Layout(Gwen::Skin::Base* skin)
+void RichLabel::Layout(Gwk::Skin::Base* skin)
 {
     ParentClass::Layout(skin);
 

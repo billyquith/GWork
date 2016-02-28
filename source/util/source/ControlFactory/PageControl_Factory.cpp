@@ -1,23 +1,23 @@
 
-#include "GwenUtil/ControlFactory.h"
-#include "Gwen/Controls.h"
+#include "Gwork/Util/ControlFactory.h"
+#include "Gwork/Controls.h"
 
 
-namespace Gwen
+namespace Gwk
 {
     namespace ControlFactory
     {
-        using namespace Gwen;
+        using namespace Gwk;
 
         namespace Properties
         {
             class NumPages : public ControlFactory::Property
             {
-                GWEN_CONTROL_FACTORY_PROPERTY(NumPages, "The number of pages we have");
+                GWK_CONTROL_FACTORY_PROPERTY(NumPages, "The number of pages we have");
 
                 String GetValueAsString(Controls::Base* ctrl) override
                 {
-                    return Utility::Format("%i", (int)gwen_cast<Controls::PageControl>(
+                    return Utility::Format("%i", (int)gwk_cast<Controls::PageControl>(
                                                ctrl)->GetPageCount());
                 }
 
@@ -28,7 +28,7 @@ namespace Gwen
                     if (sscanf(str.c_str(), "%i", &num) != 1)
                         return;
 
-                    gwen_cast<Controls::PageControl>(ctrl)->SetPageCount(num);
+                    gwk_cast<Controls::PageControl>(ctrl)->SetPageCount(num);
                 }
 
             };
@@ -36,19 +36,19 @@ namespace Gwen
 
             class FinishName : public ControlFactory::Property
             {
-                GWEN_CONTROL_FACTORY_PROPERTY(FinishName, "The name of the finish button");
+                GWK_CONTROL_FACTORY_PROPERTY(FinishName, "The name of the finish button");
 
                 String GetValueAsString(Controls::Base* ctrl) override
                 {
-                    Gwen::Controls::PageControl* pControl =
-                        gwen_cast<Gwen::Controls::PageControl>(ctrl);
+                    Gwk::Controls::PageControl* pControl =
+                        gwk_cast<Gwk::Controls::PageControl>(ctrl);
                     return pControl->FinishButton()->GetName();
                 }
 
                 void SetValueFromString(Controls::Base* ctrl, const String& str) override
                 {
-                    Gwen::Controls::PageControl* pControl =
-                        gwen_cast<Gwen::Controls::PageControl>(ctrl);
+                    Gwk::Controls::PageControl* pControl =
+                        gwk_cast<Gwk::Controls::PageControl>(ctrl);
                     pControl->FinishButton()->SetName(str);
                 }
 
@@ -57,19 +57,19 @@ namespace Gwen
 
         }
 
-        class PageControl_Factory : public Gwen::ControlFactory::Base
+        class PageControl_Factory : public Gwk::ControlFactory::Base
         {
         public:
 
-            GWEN_CONTROL_FACTORY_FOR(PageControl, Base)
+            GWK_CONTROL_FACTORY_FOR(PageControl, Base)
             {
                 AddProperty(new Properties::NumPages());
                 AddProperty(new Properties::FinishName());
             }
 
-            virtual Gwen::Controls::Base* CreateInstance(Gwen::Controls::Base* parent) override
+            virtual Gwk::Controls::Base* CreateInstance(Gwk::Controls::Base* parent) override
             {
-                Gwen::Controls::PageControl* pControl = new Gwen::Controls::PageControl(parent);
+                Gwk::Controls::PageControl* pControl = new Gwk::Controls::PageControl(parent);
                 pControl->SetSize(300, 300);
                 pControl->SetPageCount(1);
                 return pControl;
@@ -78,10 +78,10 @@ namespace Gwen
             //
             // Called when a child is clicked on in the editor
             //
-            virtual bool ChildTouched(Gwen::Controls::Base* ctrl,
-                                      Gwen::Controls::Base* pChildControl)
+            virtual bool ChildTouched(Gwk::Controls::Base* ctrl,
+                                      Gwk::Controls::Base* pChildControl)
             {
-                Gwen::Controls::PageControl* pControl = gwen_cast<Gwen::Controls::PageControl>(
+                Gwk::Controls::PageControl* pControl = gwk_cast<Gwk::Controls::PageControl>(
                     ctrl);
 
                 if (pChildControl == pControl->NextButton())
@@ -101,17 +101,17 @@ namespace Gwen
             // A child is being dropped on this position.. set the parent
             // properly
             //
-            void AddChild(Gwen::Controls::Base* ctrl, Gwen::Controls::Base* child,
-                          const Gwen::Point& pos)
+            void AddChild(Gwk::Controls::Base* ctrl, Gwk::Controls::Base* child,
+                          const Gwk::Point& pos)
             {
-                Gwen::Controls::PageControl* pControl = gwen_cast<Gwen::Controls::PageControl>(
+                Gwk::Controls::PageControl* pControl = gwk_cast<Gwk::Controls::PageControl>(
                     ctrl);
                 AddChild(ctrl, child, pControl->GetPageNumber());
             }
 
-            void AddChild(Gwen::Controls::Base* ctrl, Gwen::Controls::Base* child, int iPage)
+            void AddChild(Gwk::Controls::Base* ctrl, Gwk::Controls::Base* child, int iPage)
             {
-                Gwen::Controls::PageControl* pControl = gwen_cast<Gwen::Controls::PageControl>(
+                Gwk::Controls::PageControl* pControl = gwk_cast<Gwk::Controls::PageControl>(
                     ctrl);
 
                 if (!pControl->GetPage(iPage))
@@ -124,7 +124,7 @@ namespace Gwen
         };
 
 
-        GWEN_CONTROL_FACTORY(PageControl_Factory);
+        GWK_CONTROL_FACTORY(PageControl_Factory);
 
     }
 }

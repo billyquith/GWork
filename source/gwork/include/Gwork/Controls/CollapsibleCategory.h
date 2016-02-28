@@ -1,30 +1,31 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 #pragma once
-#ifndef GWEN_CONTROLS_COLLAPSIBLECATEGORY_H
-#define GWEN_CONTROLS_COLLAPSIBLECATEGORY_H
+#ifndef GWK_CONTROLS_COLLAPSIBLECATEGORY_H
+#define GWK_CONTROLS_COLLAPSIBLECATEGORY_H
 
-#include "Gwen/Controls/Base.h"
-#include "Gwen/Controls/Button.h"
-#include "Gwen/Gwen.h"
-#include "Gwen/Skin.h"
+#include "Gwork/Controls/Base.h"
+#include "Gwork/Controls/Button.h"
+#include "Gwork/Gwork.h"
+#include "Gwork/Skin.h"
 
 
-namespace Gwen
+namespace Gwk
 {
     namespace Controls
     {
         class CollapsibleList;
 
-        class GWEN_EXPORT CollapsibleCategory : public Gwen::Controls::Base
+        class GWK_EXPORT CollapsibleCategory : public Gwk::Controls::Base
         {
         public:
 
-            GWEN_CONTROL(CollapsibleCategory, Gwen::Controls::Base);
+            GWK_CONTROL(CollapsibleCategory, Gwk::Controls::Base);
 
             virtual void Render(Skin::Base* skin) override;
 
@@ -51,7 +52,7 @@ namespace Gwen
 
         public:
 
-            Gwen::Event::Caller onSelection;
+            Gwk::Event::Caller onSelection;
 
         protected:
 
@@ -64,4 +65,4 @@ namespace Gwen
 
     }
 }
-#endif // ifndef GWEN_CONTROLS_COLLAPSIBLECATEGORY_H
+#endif // ifndef GWK_CONTROLS_COLLAPSIBLECATEGORY_H

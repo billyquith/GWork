@@ -1,15 +1,16 @@
 /*
- *  GWEN
+ *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  See license in Gwen.h
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
  */
 
 
-#include "Gwen/Gwen.h"
-#include "Gwen/Controls/PropertyTree.h"
-#include "Gwen/Skin.h"
+#include "Gwork/Gwork.h"
+#include "Gwork/Controls/PropertyTree.h"
+#include "Gwork/Skin.h"
 
-namespace Gwen
+namespace Gwk
 {
     namespace Controls
     {
@@ -29,7 +30,7 @@ namespace Gwen
 
             for (Base::List::iterator iter = children.begin(); iter != children.end(); ++iter)
             {
-                PropertyTreeNode* pChild = gwen_cast<PropertyTreeNode>(*iter);
+                PropertyTreeNode* pChild = gwk_cast<PropertyTreeNode>(*iter);
 
                 if (!pChild)
                     continue;
@@ -42,7 +43,7 @@ namespace Gwen
                          iter != nodechildren.end();
                          ++iter)
                     {
-                        Properties* pPropertyChild = gwen_cast<Properties>(*iter);
+                        Properties* pPropertyChild = gwk_cast<Properties>(*iter);
 
                         if (!pPropertyChild)
                             continue;
