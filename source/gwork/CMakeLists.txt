@@ -1,3 +1,4 @@
+# Gwork library
 
 include_directories(
     ${CMAKE_SOURCE_DIR}/source/gwork/include
@@ -120,230 +121,230 @@ set(GWORK_HEADERS
 )
 
 set(GWORK_SOURCES
-    src/Anim.cpp
-    src/BaseRender.cpp
-    src/ControlList.cpp
-    src/DragAndDrop.cpp
-    src/Events.cpp
-    src/Gwen.cpp
-    src/Hook.cpp
-    src/InputHandler.cpp
-    src/Skin.cpp
-    src/ToolTip.cpp
-    src/Utility.cpp
-    src/Controls/Base.cpp
-    src/Controls/Button.cpp
-    src/Controls/Canvas.cpp
-    src/Controls/CheckBox.cpp
-    src/Controls/CollapsibleCategory.cpp
-    src/Controls/ColorControls.cpp
-    src/Controls/ColorPicker.cpp
-    src/Controls/ComboBox.cpp
-    src/Controls/CrossSplitter.cpp
-    src/Controls/DockBase.cpp
-    src/Controls/DockedTabControl.cpp
-    src/Controls/Dragger.cpp
-    src/Controls/GroupBox.cpp
-    src/Controls/HSVColorPicker.cpp
-    src/Controls/HorizontalScrollBar.cpp
-    src/Controls/HorizontalSlider.cpp
-    src/Controls/ImagePanel.cpp
-    src/Controls/Label.cpp
-    src/Controls/LabelClickable.cpp
-    src/Controls/ListBox.cpp
-    src/Controls/Menu.cpp
-    src/Controls/MenuItem.cpp
-    src/Controls/MenuStrip.cpp
-    src/Controls/NumericUpDown.cpp
-    src/Controls/PageControl.cpp
-    src/Controls/ProgressBar.cpp
-    src/Controls/Properties.cpp
-    src/Controls/PropertyTree.cpp
-    src/Controls/RadioButton.cpp
-    src/Controls/RadioButtonController.cpp
-    src/Controls/Rectangle.cpp
-    src/Controls/ResizableControl.cpp
-    src/Controls/Resizer.cpp
-    src/Controls/RichLabel.cpp
-    src/Controls/ScrollBar.cpp
-    src/Controls/ScrollBarBar.cpp
-    src/Controls/ScrollBarButton.cpp
-    src/Controls/ScrollControl.cpp
-    src/Controls/Slider.cpp
-    src/Controls/SplitterBar.cpp
-    src/Controls/TabButton.cpp
-    src/Controls/TabControl.cpp
-    src/Controls/TabStrip.cpp
-    src/Controls/Text.cpp
-    src/Controls/TextBox.cpp
-    src/Controls/TextBoxNumeric.cpp
-    src/Controls/TreeControl.cpp
-    src/Controls/TreeNode.cpp
-    src/Controls/VerticalScrollBar.cpp
-    src/Controls/VerticalSlider.cpp
-    src/Controls/WindowCanvas.cpp
-    src/Controls/WindowControl.cpp
+    source/Anim.cpp
+    source/BaseRender.cpp
+    source/ControlList.cpp
+    source/DragAndDrop.cpp
+    source/Events.cpp
+    source/Gwen.cpp
+    source/Hook.cpp
+    source/InputHandler.cpp
+    source/Skin.cpp
+    source/ToolTip.cpp
+    source/Utility.cpp
+    source/Controls/Base.cpp
+    source/Controls/Button.cpp
+    source/Controls/Canvas.cpp
+    source/Controls/CheckBox.cpp
+    source/Controls/CollapsibleCategory.cpp
+    source/Controls/ColorControls.cpp
+    source/Controls/ColorPicker.cpp
+    source/Controls/ComboBox.cpp
+    source/Controls/CrossSplitter.cpp
+    source/Controls/DockBase.cpp
+    source/Controls/DockedTabControl.cpp
+    source/Controls/Dragger.cpp
+    source/Controls/GroupBox.cpp
+    source/Controls/HSVColorPicker.cpp
+    source/Controls/HorizontalScrollBar.cpp
+    source/Controls/HorizontalSlider.cpp
+    source/Controls/ImagePanel.cpp
+    source/Controls/Label.cpp
+    source/Controls/LabelClickable.cpp
+    source/Controls/ListBox.cpp
+    source/Controls/Menu.cpp
+    source/Controls/MenuItem.cpp
+    source/Controls/MenuStrip.cpp
+    source/Controls/NumericUpDown.cpp
+    source/Controls/PageControl.cpp
+    source/Controls/ProgressBar.cpp
+    source/Controls/Properties.cpp
+    source/Controls/PropertyTree.cpp
+    source/Controls/RadioButton.cpp
+    source/Controls/RadioButtonController.cpp
+    source/Controls/Rectangle.cpp
+    source/Controls/ResizableControl.cpp
+    source/Controls/Resizer.cpp
+    source/Controls/RichLabel.cpp
+    source/Controls/ScrollBar.cpp
+    source/Controls/ScrollBarBar.cpp
+    source/Controls/ScrollBarButton.cpp
+    source/Controls/ScrollControl.cpp
+    source/Controls/Slider.cpp
+    source/Controls/SplitterBar.cpp
+    source/Controls/TabButton.cpp
+    source/Controls/TabControl.cpp
+    source/Controls/TabStrip.cpp
+    source/Controls/Text.cpp
+    source/Controls/TextBox.cpp
+    source/Controls/TextBoxNumeric.cpp
+    source/Controls/TreeControl.cpp
+    source/Controls/TreeNode.cpp
+    source/Controls/VerticalScrollBar.cpp
+    source/Controls/VerticalSlider.cpp
+    source/Controls/WindowCanvas.cpp
+    source/Controls/WindowControl.cpp
     # dialog
-    src/Controls/Dialog/FileOpen.cpp
-    src/Controls/Dialog/FileSave.cpp
-    src/Controls/Dialog/FolderOpen.cpp
-    src/Controls/Dialog/Query.cpp
+    source/Controls/Dialog/FileOpen.cpp
+    source/Controls/Dialog/FileSave.cpp
+    source/Controls/Dialog/FolderOpen.cpp
+    source/Controls/Dialog/Query.cpp
 )
 
 set(GWORK_RENDER_SOURCES
     include/Gwork/Renderers/${RENDERER_NAME}.h
-    Renderers/${RENDERER_NAME}/${RENDERER_NAME}.cpp
-    src/Platforms/${BUILD_PLATFORM}.cpp
+    renderers/${RENDERER_NAME}/${RENDERER_NAME}.cpp
+    source/Platforms/${BUILD_PLATFORM}.cpp
 )
 
-set(GWORK_TEST_SOURCES
-    include/Gwork/UnitTest/UnitTest.h
-    UnitTest/Button.cpp
-    UnitTest/Checkbox.cpp
-    UnitTest/CollapsibleList.cpp
-    UnitTest/ColorPicker.cpp
-    UnitTest/ComboBox.cpp
-    UnitTest/CrossSplitter.cpp
-    UnitTest/GroupBox.cpp
-    UnitTest/ImagePanel.cpp
-    UnitTest/Label.cpp
-    UnitTest/LabelMultiline.cpp
-    UnitTest/ListBox.cpp
-    UnitTest/MenuStrip.cpp
-    UnitTest/Numeric.cpp
-    UnitTest/PageControl.cpp
-    UnitTest/ProgressBar.cpp
-    UnitTest/Properties.cpp
-    UnitTest/RadioButton.cpp
-    UnitTest/ReadMe.txt
-    UnitTest/ScrollControl.cpp
-    UnitTest/Slider.cpp
-    UnitTest/StatusBar.cpp
-    UnitTest/TabControl.cpp
-    UnitTest/TextBox.cpp
-    UnitTest/TreeControl.cpp
-    UnitTest/UnitTest.cpp
-    UnitTest/Window.cpp
-)
+# set(GWORK_TEST_SOURCES
+#     include/Gwork/Test/Test.h
+#     UnitTest/Button.cpp
+#     UnitTest/Checkbox.cpp
+#     UnitTest/CollapsibleList.cpp
+#     UnitTest/ColorPicker.cpp
+#     UnitTest/ComboBox.cpp
+#     UnitTest/CrossSplitter.cpp
+#     UnitTest/GroupBox.cpp
+#     UnitTest/ImagePanel.cpp
+#     UnitTest/Label.cpp
+#     UnitTest/LabelMultiline.cpp
+#     UnitTest/ListBox.cpp
+#     UnitTest/MenuStrip.cpp
+#     UnitTest/Numeric.cpp
+#     UnitTest/PageControl.cpp
+#     UnitTest/ProgressBar.cpp
+#     UnitTest/Properties.cpp
+#     UnitTest/RadioButton.cpp
+#     UnitTest/ReadMe.txt
+#     UnitTest/ScrollControl.cpp
+#     UnitTest/Slider.cpp
+#     UnitTest/StatusBar.cpp
+#     UnitTest/TabControl.cpp
+#     UnitTest/TextBox.cpp
+#     UnitTest/TreeControl.cpp
+#     UnitTest/UnitTest.cpp
+#     UnitTest/Window.cpp
+# )
 
-set(GWORK_UTIL_SOURCES
-    ../util/src/ControlFactory/Base_Factory.cpp
-    ../util/src/ControlFactory/Button_Factory.cpp
-    ../util/src/ControlFactory/CheckBox_Factory.cpp
-    ../util/src/ControlFactory/ComboBox_Factory.cpp
-    ../util/src/ControlFactory/ControlFactory.cpp
-    ../util/src/ControlFactory/DesignerCanvas_Factory.cpp
-    ../util/src/ControlFactory/FilePicker_Factory.cpp
-    ../util/src/ControlFactory/FolderPicker_Factory.cpp
-    ../util/src/ControlFactory/Image_Factory.cpp
-    ../util/src/ControlFactory/Label_Factory.cpp
-    ../util/src/ControlFactory/ListBox_Factory.cpp
-    ../util/src/ControlFactory/MenuStrip_Factory.cpp
-    ../util/src/ControlFactory/PageControl_Factory.cpp
-    ../util/src/ControlFactory/ProgressBar_Factory.cpp
-    ../util/src/ControlFactory/Rectangle_Factory.cpp
-    ../util/src/ControlFactory/Slider_Factory.cpp
-    ../util/src/ControlFactory/TextBox_Factory.cpp
-    ../util/src/ControlFactory/VerticalSplitter_Factory.cpp
-    ../util/src/ImportExport/Base.cpp
-    ../util/src/ImportExport/DesignerFormat.cpp
-    ../util/src/ImportExport/DesignerFormat.h
-    ../util/src/ImportExport/GwenUtil.cpp
-    ../util/src/ImportExport/GwenUtil.h
-)
+# set(GWORK_UTIL_SOURCES
+#     ../util/source/ControlFactory/Base_Factory.cpp
+#     ../util/source/ControlFactory/Button_Factory.cpp
+#     ../util/source/ControlFactory/CheckBox_Factory.cpp
+#     ../util/source/ControlFactory/ComboBox_Factory.cpp
+#     ../util/source/ControlFactory/ControlFactory.cpp
+#     ../util/source/ControlFactory/DesignerCanvas_Factory.cpp
+#     ../util/source/ControlFactory/FilePicker_Factory.cpp
+#     ../util/source/ControlFactory/FolderPicker_Factory.cpp
+#     ../util/source/ControlFactory/Image_Factory.cpp
+#     ../util/source/ControlFactory/Label_Factory.cpp
+#     ../util/source/ControlFactory/ListBox_Factory.cpp
+#     ../util/source/ControlFactory/MenuStrip_Factory.cpp
+#     ../util/source/ControlFactory/PageControl_Factory.cpp
+#     ../util/source/ControlFactory/ProgressBar_Factory.cpp
+#     ../util/source/ControlFactory/Rectangle_Factory.cpp
+#     ../util/source/ControlFactory/Slider_Factory.cpp
+#     ../util/source/ControlFactory/TextBox_Factory.cpp
+#     ../util/source/ControlFactory/VerticalSplitter_Factory.cpp
+#     ../util/source/ImportExport/Base.cpp
+#     ../util/source/ImportExport/DesignerFormat.cpp
+#     ../util/source/ImportExport/DesignerFormat.h
+#     ../util/source/ImportExport/GwenUtil.cpp
+#     ../util/source/ImportExport/GwenUtil.h
+# )
 
-set(GWORK_HEADER_FOLDER "Headers")
-set(GWORK_SOURCE_FOLDER "Source")
-
-# header folder groups
-source_group("${GWORK_HEADER_FOLDER}"
-             REGULAR_EXPRESSION "include/Gwork/[^/]+\\.h")
-source_group("${GWORK_HEADER_FOLDER}\\Controls"
-             REGULAR_EXPRESSION "include/Gwork/Controls/[^/]+\\.h")
-source_group("${GWORK_HEADER_FOLDER}\\Controls\\Dialogs"
-             REGULAR_EXPRESSION "include/Gwork/Controls/Dialogs/[^/]+\\.h")
-source_group("${GWORK_HEADER_FOLDER}\\Input"
-             REGULAR_EXPRESSION "include/Gwork/Input/[^/]+\\.h")
-source_group("${GWORK_HEADER_FOLDER}\\Controls\\Layout"
-             REGULAR_EXPRESSION "include/Gwork/Controls/Layout/[^/]+\\.h")
-source_group("${GWORK_HEADER_FOLDER}\\Controls\\Property"
-             REGULAR_EXPRESSION "include/Gwork/Controls/Property/[^/]+\\.h")
-source_group("${GWORK_HEADER_FOLDER}\\Skins"
-             REGULAR_EXPRESSION "include/Gwork/Skins/[^/]+\\.h")
-
-# source folder groups
-source_group("${GWORK_SOURCE_FOLDER}"
-             REGULAR_EXPRESSION "[^/]+\\.cpp")
-source_group("${GWORK_SOURCE_FOLDER}\\Controls"
-             REGULAR_EXPRESSION "src/Controls/[^/]+\\.cpp")
-source_group("${GWORK_SOURCE_FOLDER}\\Controls\\Dialogs"
-             REGULAR_EXPRESSION "src/Controls/Dialogs/[^/]+\\.cpp")
+# set(GWORK_HEADER_FOLDER "Headers")
+# set(GWORK_SOURCE_FOLDER "Source")
+#
+# # header folder groups
+# source_group("${GWORK_HEADER_FOLDER}"
+#              REGULAR_EXPRESSION "include/Gwork/[^/]+\\.h")
+# source_group("${GWORK_HEADER_FOLDER}\\Controls"
+#              REGULAR_EXPRESSION "include/Gwork/Controls/[^/]+\\.h")
+# source_group("${GWORK_HEADER_FOLDER}\\Controls\\Dialogs"
+#              REGULAR_EXPRESSION "include/Gwork/Controls/Dialogs/[^/]+\\.h")
+# source_group("${GWORK_HEADER_FOLDER}\\Input"
+#              REGULAR_EXPRESSION "include/Gwork/Input/[^/]+\\.h")
+# source_group("${GWORK_HEADER_FOLDER}\\Controls\\Layout"
+#              REGULAR_EXPRESSION "include/Gwork/Controls/Layout/[^/]+\\.h")
+# source_group("${GWORK_HEADER_FOLDER}\\Controls\\Property"
+#              REGULAR_EXPRESSION "include/Gwork/Controls/Property/[^/]+\\.h")
+# source_group("${GWORK_HEADER_FOLDER}\\Skins"
+#              REGULAR_EXPRESSION "include/Gwork/Skins/[^/]+\\.h")
+#
+# # source folder groups
+# source_group("${GWORK_SOURCE_FOLDER}"
+#              REGULAR_EXPRESSION "[^/]+\\.cpp")
+# source_group("${GWORK_SOURCE_FOLDER}\\Controls"
+#              REGULAR_EXPRESSION "source/Controls/[^/]+\\.cpp")
+# source_group("${GWORK_SOURCE_FOLDER}\\Controls\\Dialogs"
+#              REGULAR_EXPRESSION "source/Controls/Dialogs/[^/]+\\.cpp")
 
 # Gwork library
 add_library(Gwork STATIC ${GWORK_HEADERS} ${GWORK_SOURCES})
 target_compile_features(Gwork PUBLIC cxx_override)
+
+install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/Gwork
+        DESTINATION include)
 
 install(TARGETS Gwork
         RUNTIME DESTINATION bin
         LIBRARY DESTINATION lib
         ARCHIVE DESTINATION lib)
 
-install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/Gwork
-        DESTINATION include)
-
-# Gwork renderer & platform library
-add_library(Gwork${RENDERER_NAME} STATIC ${GWORK_RENDER_SOURCES})
-target_compile_features(Gwork${RENDERER_NAME} PUBLIC cxx_override)
-target_link_libraries(Gwork${RENDERER_NAME} Gwork)
-
-include_directories(
-    ${CMAKE_SOURCE_DIR}/util/include
-)
-
-# Gwork utils
-add_library(GworkUtil STATIC ${GWORK_UTIL_SOURCES})
-target_compile_features(GworkUtil PUBLIC cxx_override)
-target_link_libraries(GworkUtil Gwork)
-
-install(TARGETS GworkUtil
-        RUNTIME DESTINATION bin
-        LIBRARY DESTINATION lib
-        ARCHIVE DESTINATION lib)
-
-install(DIRECTORY ${CMAKE_SOURCE_DIR}/util/include/GworkUtil
-        DESTINATION include)
-
-# Test library
-if(BUILD_TEST)
-    add_library(GworkTest STATIC ${GWORK_TEST_SOURCES})
-    target_compile_features(GworkTest PUBLIC cxx_override)
-    target_link_libraries(GworkTest Gwork Gwork${RENDERER_NAME})
-
-    install(TARGETS GworkTest
-            RUNTIME DESTINATION bin
-            LIBRARY DESTINATION lib
-            ARCHIVE DESTINATION lib)
-endif(BUILD_TEST)
-
-# Sample executable
-if(BUILD_SAMPLE)
-    set(SAMPLE_SOURCES
-        "Samples/${RENDERER_NAME}/${RENDERER_NAME}Sample.cpp")
-
-    add_executable(Gwork${RENDERER_NAME}Sample ${SAMPLE_SOURCES})
-    target_compile_features(Gwork${RENDERER_NAME}Sample PRIVATE cxx_override)
-    target_link_libraries(Gwork${RENDERER_NAME}Sample
-                          Gwork Gwork${RENDERER_NAME} GworkUtil ${RENDERER_LIB} ${PONDER_LIBRARIES})
-
-    if(BUILD_TEST)
-        target_link_libraries(Gwork${RENDERER_NAME}Sample GworkTest)
-    endif(BUILD_TEST)
-
-    install(TARGETS Gwork${RENDERER_NAME}Sample
-            RUNTIME DESTINATION bin
-            LIBRARY DESTINATION lib
-            ARCHIVE DESTINATION lib)
-endif(BUILD_SAMPLE)
+# # Gwork renderer & platform library
+# add_library(Gwork${RENDERER_NAME} STATIC ${GWORK_RENDER_SOURCES})
+# target_compile_features(Gwork${RENDERER_NAME} PUBLIC cxx_override)
+# target_link_libraries(Gwork${RENDERER_NAME} Gwork)
+#
+# include_directories(
+#     ${CMAKE_SOURCE_DIR}/util/include
+# )
+#
+# # Gwork utils
+# add_library(GworkUtil STATIC ${GWORK_UTIL_SOURCES})
+# target_compile_features(GworkUtil PUBLIC cxx_override)
+# target_link_libraries(GworkUtil Gwork)
+#
+# install(TARGETS GworkUtil
+#         RUNTIME DESTINATION bin
+#         LIBRARY DESTINATION lib
+#         ARCHIVE DESTINATION lib)
+#
+# install(DIRECTORY ${CMAKE_SOURCE_DIR}/util/include/GworkUtil
+#         DESTINATION include)
+#
+# # Test library
+# if(BUILD_TEST)
+#     add_library(GworkTest STATIC ${GWORK_TEST_SOURCES})
+#     target_compile_features(GworkTest PUBLIC cxx_override)
+#     target_link_libraries(GworkTest Gwork Gwork${RENDERER_NAME})
+#
+#     install(TARGETS GworkTest
+#             RUNTIME DESTINATION bin
+#             LIBRARY DESTINATION lib
+#             ARCHIVE DESTINATION lib)
+# endif(BUILD_TEST)
+#
+# # Sample executable
+# if(BUILD_SAMPLE)
+#     set(SAMPLE_SOURCES
+#         "Samples/${RENDERER_NAME}/${RENDERER_NAME}Sample.cpp")
+#
+#     add_executable(Gwork${RENDERER_NAME}Sample ${SAMPLE_SOURCES})
+#     target_compile_features(Gwork${RENDERER_NAME}Sample PRIVATE cxx_override)
+#     target_link_libraries(Gwork${RENDERER_NAME}Sample
+#                           Gwork Gwork${RENDERER_NAME} GworkUtil ${RENDERER_LIB} ${PONDER_LIBRARIES})
+#
+#     if(BUILD_TEST)
+#         target_link_libraries(Gwork${RENDERER_NAME}Sample GworkTest)
+#     endif(BUILD_TEST)
+#
+#     install(TARGETS Gwork${RENDERER_NAME}Sample
+#             RUNTIME DESTINATION bin
+#             LIBRARY DESTINATION lib
+#             ARCHIVE DESTINATION lib)
+# endif(BUILD_SAMPLE)
 
 
       
