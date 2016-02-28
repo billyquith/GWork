@@ -51,11 +51,11 @@ namespace Gwk
 }
 
 #define GWK_IMPORTEXPORT(name) \
-    void GWENIMPORTEXPORT_##name() \
+    void GworkImportExport_##name() \
     { \
         static name my_instance; \
     }
 
 #define DECLARE_GWK_IMPORTEXPORT(name) \
-    void GWENIMPORTEXPORT_##name(); \
-    GWENIMPORTEXPORT_##name();
+    void GworkImportExport_##name(); \
+    GworkImportExport_##name();

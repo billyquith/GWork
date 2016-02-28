@@ -1,8 +1,8 @@
-#include "Gwen/BaseRender.h"
-#include "Gwen/Gwen.h"
-#include "Gwen/Utility.h"
-#include "Gwen/Font.h"
-#include "Gwen/Texture.h"
+#include "Gwork/BaseRender.h"
+#include "Gwork/Gwork.h"
+#include "Gwork/Utility.h"
+#include "Gwork/Font.h"
+#include "Gwork/Texture.h"
 
 #include <windows.h>
 #include <gdiplus.h>
@@ -15,11 +15,11 @@ using namespace Gdiplus;
 //
 #define USE_GDIPLUS_DOUBLE_BUFFERING
 
-class GWENRENDER_Windows : public Gwen::Gwen::Renderer::Base
+class GworkRender_Windows : public Gwk::Gwk::Renderer::Base
 {
 public:
 
-    GWENRENDER_Windows(HWND pHWND)
+    GworkRender_Windows(HWND pHWND)
     {
         m_HWND = pHWND;
         m_hDC = NULL;
@@ -35,7 +35,7 @@ public:
         GdiplusStartup(&m_gdiplusToken, &gdiplusStartupInput, NULL);
     }
 
-    ~GWENRENDER_Windows()
+    ~GworkRender_Windows()
     {
 #ifdef USE_GDIPLUS_DOUBLE_BUFFERING
         DestroyOffscreenBitmap();
@@ -120,14 +120,14 @@ public:
         graphics->DrawLine(&pen, x, y, a, b);
     }
 
-    virtual void DrawFilledRect(Gwen::Rect rect)
+    virtual void DrawFilledRect(Gwk::Rect rect)
     {
         Translate(rect);
         SolidBrush solidBrush(GetGDIColor());
         graphics->FillRectangle(&solidBrush, rect.x, rect.y, rect.w, rect.h);
     }
 
-    virtual void DrawRectRotated(const Gwen::Rect& rect, float fAngle, const Gwen::Point& pntHandle)
+    virtual void DrawRectRotated(const Gwk::Rect& rect, float fAngle, const Gwk::Point& pntHandle)
     {
     }
 
@@ -157,7 +157,7 @@ public:
         return NULL;
     }
 
-    virtual void SetDrawColor(Gwen::Color color)
+    virtual void SetDrawColor(Gwk::Color color)
     {
         m_Col = Color(color.a, color.r, color.g, color.b);
     }
@@ -167,19 +167,19 @@ public:
         return m_Col;
     }
 
-    virtual void LoadFont(Gwen::Font* font)
+    virtual void LoadFont(Gwk::Font* font)
     {
-        Gwen::Debug::Msg("LOAD FONT %s\n", font->facename.c_str());
+        Gwk::Debug::Msg("LOAD FONT %s\n", font->facename.c_str());
         FontStyle fs = FontStyleRegular;
         font->realsize = font->size*Scale();
-        Font* pFont = new Font(Gwen::Utility::StringToUnicode(
+        Font* pFont = new Font(Gwk::Utility::StringToUnicode(
                                    font->facename).c_str(), font->realsize, fs, UnitPixel, NULL);
         font->data = pFont;
     }
 
-    virtual void FreeFont(Gwen::Font* pFont)
+    virtual void FreeFont(Gwk::Font* pFont)
     {
-        Gwen::Debug::Msg("FREE FONT %s\n", pFont->facename.c_str());
+        Gwk::Debug::Msg("FREE FONT %s\n", pFont->facename.c_str());
 
         if (!pFont->data)
             return;
@@ -189,12 +189,12 @@ public:
         pFont->data = NULL;
     }
 
-    virtual void RenderText(Gwen::Font* pFont, Gwen::Rect rect, const Gwen::UnicodeString& text)
+    virtual void RenderText(Gwk::Font* pFont, Gwk::Rect rect, const Gwk::UnicodeString& text)
     {
         /*
-         * SetDrawColor( Gwen::Color( 255, 0, 0, 100 ) );
+         * SetDrawColor( Gwk::Color( 255, 0, 0, 100 ) );
          * DrawFilledRect( rect );
-         * SetDrawColor( Gwen::Color( 0, 0, 0, 255 ) );
+         * SetDrawColor( Gwk::Color( 0, 0, 0, 255 ) );
          */
         Translate(rect);
 
@@ -211,9 +211,9 @@ public:
         graphics->DrawString(text.c_str(), text.length()+1, pGDIFont, r, &strFormat, &solidBrush);
     }
 
-    virtual Gwen::Point MeasureText(Gwen::Font* pFont, const Gwen::UnicodeString& text)
+    virtual Gwk::Point MeasureText(Gwk::Font* pFont, const Gwk::UnicodeString& text)
     {
-        Gwen::Point p(32, 32);
+        Gwk::Point p(32, 32);
 
         if (!pFont->data || fabs(pFont->realsize-pFont->size*Scale()) > 2)
         {
@@ -228,12 +228,12 @@ public:
         Graphics g(m_HWND);
         Font* pGDIFont = (Font*)pFont->data;
         Status s = g.MeasureString(text.c_str(), -1, pGDIFont, &strFormat, &size);
-        return Gwen::Point(size.Width+1, size.Height+1);
+        return Gwk::Point(size.Width+1, size.Height+1);
     }
 
     void StartClip()
     {
-        const Gwen::Rect& rect = ClipRegion();
+        const Gwk::Rect& rect = ClipRegion();
         graphics->SetClip(Rect(rect.x*Scale(), rect.y*Scale(), rect.w*Scale(),
                                rect.h*Scale()), CombineMode::CombineModeReplace);
         // Pen      pen( Color( 100, 255, 0, 255 ) );
@@ -246,18 +246,18 @@ public:
         graphics->ResetClip();
     }
 
-    bool ProcessTexture(Gwen::Texture* pTexture)
+    bool ProcessTexture(Gwk::Texture* pTexture)
     {
         return true;
     }
 
-    void DrawMissingImage(Gwen::Rect pTargetRect)
+    void DrawMissingImage(Gwk::Rect pTargetRect)
     {
-        SetDrawColor(Gwen::Colors::Red);
+        SetDrawColor(Gwk::Colors::Red);
         DrawFilledRect(pTargetRect);
     }
 
-    void DrawTexturedRect(Gwen::Texture* pTexture, Gwen::Rect pTargetRect, float u1 = 0.0f,
+    void DrawTexturedRect(Gwk::Texture* pTexture, Gwk::Rect pTargetRect, float u1 = 0.0f,
                           float v1 = 0.0f, float u2 = 1.0f, float v2 = 1.0f)
     {
         Image* pImage = (Image*)pTexture->data;
@@ -286,18 +286,18 @@ public:
         graphics->DrawImage(pImage, TargetRect, u1, v1, u2, v2, UnitPixel);
     }
 
-    void LoadTexture(Gwen::Texture* pTexture)
+    void LoadTexture(Gwk::Texture* pTexture)
     {
-        Gwen::Debug::Msg("LOAD TEXTURE %s\n", pTexture->name.c_str());
-        Image* pImage = new Image(Gwen::Utility::StringToUnicode(pTexture->name).c_str());
+        Gwk::Debug::Msg("LOAD TEXTURE %s\n", pTexture->name.c_str());
+        Image* pImage = new Image(Gwk::Utility::StringToUnicode(pTexture->name).c_str());
         pTexture->data = pImage;
         pTexture->width = pImage->GetWidth();
         pTexture->height = pImage->GetHeight();
     }
 
-    void FreeTexture(Gwen::Texture* pTexture)
+    void FreeTexture(Gwk::Texture* pTexture)
     {
-        Gwen::Debug::Msg("RELEASED TEXTURE %s\n", pTexture->name.c_str());
+        Gwk::Debug::Msg("RELEASED TEXTURE %s\n", pTexture->name.c_str());
         Image* pImage = (Image*)pTexture->data;
 
         if (!pImage)

@@ -22,13 +22,13 @@
 #   endif
 
 // GWK_COMPILE_STATIC
-//  - We're compiling gwen as a static library
+//  - We're compiling Gwork as a static library
 #elif defined (GWK_COMPILE_STATIC)
 
 #   define GWK_EXPORT
 
 // GWK_DLL
-// - We're including gwen using the dll
+// - We're including Gwork using the dll
 #elif defined (GWK_DLL)
 
 #   ifdef _WIN32
