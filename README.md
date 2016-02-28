@@ -17,9 +17,13 @@ to fix issues with GWEN and add new features.
 
 ## Build
 
+Get source code:
+
+* From git: `git clone https://github.com/billyquith/GWork.git gwork` or
+* [Download zip](https://github.com/billyquith/GWork/archive/gwork.zip) & unzip
+
 CMake is used to generate the project files. 
 ```bash
-git clone https://github.com/billyquith/GWork.git gwork
 cd gwork
 cmake -G Ninja -DRENDER_SDL2=ON  # create Ninja project files with SDL2 renderer
 ninja
@@ -39,7 +43,8 @@ cd build/bin
 
 * CMake is used to generate project files instead of Premake. CMake is much more
   comprehensive.
-* [SDL2][sdl2] renderer added. Tested on *OSX and Windows*.
+* [SDL2][sdl2] renderer added.
+* C++11 used.
 * [UTF-8 everywhere][5]. Unicode support simplified.
   * `Gwen::UnicodeString` removed. This assumed that all Unicode was best as a 
     wide encoding. This is not the case on all platforms.
@@ -51,7 +56,6 @@ cd build/bin
   * Docs currently very minimal as GWEN has almost no documentation.
 * Cache to texture optimisation implemented (Allegro only).
 * No dependency on Bootil (Garry's personal library).
-* C++11 used, e.g. *locale* is used for Unicode narrow/widen.
 * Fixes for [Allegro][al5]. e.g. text rendering.
 * Many warnings fixed.
 
