@@ -9,7 +9,7 @@
 #ifndef GWK_PLATFORM_H
 #define GWK_PLATFORM_H
 
-#include <Gwork/Exports.h>
+#include <Gwork/PlatformTypes.h>
 #include <string>
 
 #if defined(GWK_NOT_NATIVE_PLATFORM)
@@ -25,13 +25,6 @@ namespace Gwk
 {
     struct Point;
     
-    //
-    // All strings are UTF-8 for Unicode. This is backwards compatible with ASCII.
-    // See: http://www.utf8everywhere.org
-    //
-    typedef std::string     String;
-    typedef char            UnicodeChar;
-
     namespace Platform
     {
         //! Go to sleep for a time. Stops CPU hogging.

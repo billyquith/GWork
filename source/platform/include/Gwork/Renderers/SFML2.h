@@ -8,7 +8,6 @@
 #ifndef SFML2_HPP
 #define SFML2_HPP
 
-#include <Gwork/Gwork.h>
 #include <Gwork/BaseRender.h>
 
 #include <SFML/Graphics/RenderTarget.hpp>

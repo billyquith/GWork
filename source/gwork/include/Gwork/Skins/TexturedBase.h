@@ -12,7 +12,6 @@
 #include <Gwork/Skin.h>
 #include <Gwork/Gwork.h>
 #include <Gwork/Controls/Base.h>
-#include <Gwork/Texture.h>
 #include <Gwork/Skins/Texturing.h>
 
 namespace Gwk
@@ -29,7 +28,7 @@ namespace Gwk
 
                 ~TexturedBase()
                 {
-                    m_Texture.Release( m_Render );
+                    m_Render->FreeTexture(&m_Texture);
                 }
 
                 Texture m_Texture;
@@ -300,7 +299,11 @@ namespace Gwk
                 {
                     m_DefaultFont.facename  = "Microsoft Sans Serif";
                     m_DefaultFont.size      = 11;
-                    m_Texture.Load( TextureName, GetRender(), true ); // Readable texture
+                    
+                    m_Texture.name = TextureName;
+                    m_Texture.readable = true;
+                    GetRender()->LoadTexture(&m_Texture); // Readable texture
+                    
                     Colors.Window.TitleActive   = GetRender()->PixelColour( &m_Texture, 4 + 8 * 0, 508, Color( 255, 0, 0 ) );
                     Colors.Window.TitleInactive = GetRender()->PixelColour( &m_Texture, 4 + 8 * 1, 508, Color( 255, 255, 0 ) );
                     Colors.Button.Normal        = GetRender()->PixelColour( &m_Texture, 4 + 8 * 2, 508, Color( 255, 255, 0 ) );

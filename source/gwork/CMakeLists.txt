@@ -9,21 +9,18 @@ include_directories(
 set(GWK_HEADERS
     include/Gwork/Align.h
     include/Gwork/Anim.h
-    include/Gwork/BaseRender.h
     include/Gwork/Config.h
     include/Gwork/ControlList.h
     include/Gwork/Controls.h
     include/Gwork/DragAndDrop.h
     include/Gwork/Events.h
-    include/Gwork/Font.h
     include/Gwork/Gwork.h
     include/Gwork/Hook.h
     include/Gwork/InputHandler.h
     include/Gwork/Macros.h
     include/Gwork/Skin.h
-    include/Gwork/Structures.h
-    include/Gwork/Texture.h
     include/Gwork/ToolTip.h
+    include/Gwork/UiTypes.h
     include/Gwork/UserData.h
     include/Gwork/Utility.h
     include/Gwork/WindowProvider.h

@@ -38,7 +38,7 @@
 #include <Gwork/Macros.h>
 #include <Gwork/Config.h>
 #include <Gwork/Exports.h>
-#include <Gwork/Structures.h>
+#include <Gwork/UiTypes.h>
 #include <Gwork/Skin.h>
 #include <Gwork/Controls/Base.h>
 #include <Gwork/Controls/Canvas.h>

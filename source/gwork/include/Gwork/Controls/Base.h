@@ -14,7 +14,7 @@
 #include <algorithm>
 
 #include <Gwork/Exports.h>
-#include <Gwork/Structures.h>
+#include <Gwork/UiTypes.h>
 #include <Gwork/BaseRender.h>
 #include <Gwork/Events.h>
 #include <Gwork/Utility.h>

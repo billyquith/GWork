@@ -11,7 +11,7 @@
 
 #include <list>
 #include <Gwork/Exports.h>
-#include <Gwork/Structures.h>
+#include <Gwork/UiTypes.h>
 #include <Gwork/ControlList.h>
 
 namespace Gwk

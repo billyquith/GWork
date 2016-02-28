@@ -12,7 +12,6 @@
 #include <Gwork/Gwork.h>
 #include <Gwork/Controls/Base.h>
 #include <Gwork/BaseRender.h>
-#include <Gwork/Texture.h>
 
 namespace Gwk
 {
@@ -32,7 +31,7 @@ namespace Gwk
 
             virtual ~ImagePanel()
             {
-                m_Texture.Release(GetSkin()->GetRender());
+                GetSkin()->GetRender()->FreeTexture(&m_Texture);
             }
 
             virtual void SetUV(float u1, float v1, float u2, float v2)
@@ -45,7 +44,8 @@ namespace Gwk
 
             virtual void SetImage(const String& imageName)
             {
-                m_Texture.Load(imageName, GetSkin()->GetRender());
+                m_Texture.name = imageName;
+                GetSkin()->GetRender()->LoadTexture(&m_Texture);
             }
 
             virtual String& GetImage()
@@ -99,7 +99,7 @@ namespace Gwk
 
             virtual bool FailedToLoad()
             {
-                return m_Texture.FailedToLoad();
+                return m_Texture.failed;
             }
 
             virtual bool GetStretch()

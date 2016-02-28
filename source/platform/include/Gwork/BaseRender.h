@@ -9,7 +9,7 @@
 #ifndef GWK_BASERENDER_H
 #define GWK_BASERENDER_H
 
-#include <Gwork/Structures.h>
+#include <Gwork/PlatformTypes.h>
 
 namespace Gwk
 {    
@@ -133,10 +133,10 @@ namespace Gwk
                 return m_RenderOffset;
             }
 
-            void              SetClipRegion(Gwk::Rect rect);
-            void              AddClipRegion(Gwk::Rect rect);
-            bool              ClipRegionVisible();
-            const Gwk::Rect& ClipRegion() const;
+            void                SetClipRegion(Gwk::Rect rect);
+            void                AddClipRegion(Gwk::Rect rect);
+            bool                ClipRegionVisible();
+            const Gwk::Rect&    ClipRegion() const;
 
             void SetScale(float fScale)     { m_fScale = fScale; }
             float Scale() const             { return m_fScale; }
