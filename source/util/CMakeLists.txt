@@ -6,7 +6,7 @@ include_directories(
     ${CMAKE_SOURCE_DIR}/source/util/include
 )
 
-set(GWORK_UTIL_SOURCES
+set(GWK_UTIL_SOURCES
     # control factory
     include/Gwork/Util/ControlFactory.h
     source/ControlFactory/Base_Factory.cpp
@@ -30,41 +30,29 @@ set(GWORK_UTIL_SOURCES
     # import/export
     include/Gwork/Util/ImportExport.h
     source/ImportExport/Base.cpp
+    source/ImportExport/DesignerFormat.h        # private
     source/ImportExport/DesignerFormat.cpp
-    source/ImportExport/DesignerFormat.h
-    source/ImportExport/GworkUtil.h         # private
+    source/ImportExport/GworkUtil.h             # private
     source/ImportExport/GworkUtil.cpp
 )
 
-# set(GWORK_HEADER_FOLDER "Headers")
-# set(GWORK_SOURCE_FOLDER "Source")
-#
-# # header folder groups
-# source_group("${GWORK_HEADER_FOLDER}"
-#              REGULAR_EXPRESSION "include/Gwork/[^/]+\\.h")
-# source_group("${GWORK_HEADER_FOLDER}\\Controls"
-#              REGULAR_EXPRESSION "include/Gwork/Controls/[^/]+\\.h")
-# source_group("${GWORK_HEADER_FOLDER}\\Controls\\Dialogs"
-#              REGULAR_EXPRESSION "include/Gwork/Controls/Dialogs/[^/]+\\.h")
-# source_group("${GWORK_HEADER_FOLDER}\\Input"
-#              REGULAR_EXPRESSION "include/Gwork/Input/[^/]+\\.h")
-# source_group("${GWORK_HEADER_FOLDER}\\Controls\\Layout"
-#              REGULAR_EXPRESSION "include/Gwork/Controls/Layout/[^/]+\\.h")
-# source_group("${GWORK_HEADER_FOLDER}\\Controls\\Property"
-#              REGULAR_EXPRESSION "include/Gwork/Controls/Property/[^/]+\\.h")
-# source_group("${GWORK_HEADER_FOLDER}\\Skins"
-#              REGULAR_EXPRESSION "include/Gwork/Skins/[^/]+\\.h")
-#
-# # source folder groups
-# source_group("${GWORK_SOURCE_FOLDER}"
-#              REGULAR_EXPRESSION "[^/]+\\.cpp")
-# source_group("${GWORK_SOURCE_FOLDER}\\Controls"
-#              REGULAR_EXPRESSION "source/Controls/[^/]+\\.cpp")
-# source_group("${GWORK_SOURCE_FOLDER}\\Controls\\Dialogs"
-#              REGULAR_EXPRESSION "source/Controls/Dialogs/[^/]+\\.cpp")
+set(GWK_HEADER_FOLDER "Headers")
+set(GWK_SOURCE_FOLDER "Source")
+
+# header folder groups
+source_group("${GWK_HEADER_FOLDER}\\ControlFactory"
+             FILES "include/Gwork/Util/ControlFactory.h")
+source_group("${GWK_HEADER_FOLDER}\\ImportExport"
+             FILES "include/Gwork/Util/ImportExport.h")
+
+# source folder groups
+source_group("${GWK_SOURCE_FOLDER}\\ControlFactory"
+             REGULAR_EXPRESSION "source/ControlFactory/.*")
+source_group("${GWK_SOURCE_FOLDER}\\ImportExport"
+             REGULAR_EXPRESSION "source/ImportExport/.*")
 
 # Gwork utils
-add_library(GworkUtil STATIC ${GWORK_UTIL_SOURCES})
+add_library(GworkUtil STATIC ${GWK_UTIL_SOURCES})
 target_compile_features(GworkUtil PUBLIC cxx_override)
 target_link_libraries(GworkUtil Gwork)
 
