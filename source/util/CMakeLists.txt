@@ -37,9 +37,6 @@ set(GWK_UTIL_SOURCES
     source/ImportExport/GworkUtil.cpp
 )
 
-set(GWK_HEADER_FOLDER "Headers")
-set(GWK_SOURCE_FOLDER "Source")
-
 # header folder groups
 source_group("${GWK_HEADER_FOLDER}\\ControlFactory"
              FILES "include/Gwork/Util/ControlFactory.h")
