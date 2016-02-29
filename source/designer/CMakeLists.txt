@@ -2,7 +2,7 @@
 
 include_directories(
     ${CMAKE_SOURCE_DIR}/source/gwork/include
-    ${RENDERER_INC}
+    ${GWK_RENDER_INCLUDES}
     ${CMAKE_SOURCE_DIR}/source/util/include
 )
 

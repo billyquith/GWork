@@ -3,7 +3,7 @@
 include_directories(
     ${CMAKE_SOURCE_DIR}/source/platform/include
     ${CMAKE_SOURCE_DIR}/source/gwork/include
-    ${RENDERER_INC}
+    ${GWK_RENDER_INCLUDES}
     ${CMAKE_SOURCE_DIR}/source/test/include
 )
 
@@ -49,7 +49,7 @@ source_group("${GWK_SOURCE_FOLDER}"
 if(BUILD_TEST)
     add_library(GworkTest STATIC ${GWK_TEST_SOURCES})
     target_compile_features(GworkTest PUBLIC cxx_override)
-    target_link_libraries(GworkTest Gwork Gwork${RENDERER_NAME})
+    target_link_libraries(GworkTest Gwork Gwork${GWK_RENDER_NAME})
 
     install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/Gwork
             DESTINATION include)
