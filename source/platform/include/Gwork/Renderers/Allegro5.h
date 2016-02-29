@@ -45,7 +45,7 @@ namespace Gwk
                                   float u2 = 1.0f, float v2 = 1.0f);
             void        LoadTexture(Gwk::Texture* pTexture);
             void        FreeTexture(Gwk::Texture* pTexture);
-            Gwk::Color PixelColour(Gwk::Texture* pTexture, unsigned int x, unsigned int y,
+            Gwk::Color  PixelColour(Gwk::Texture* pTexture, unsigned int x, unsigned int y,
                                     const Gwk::Color& col_default);
 
             void DrawLinedRect(Gwk::Rect rect);

@@ -210,7 +210,7 @@ bool Canvas::InputKey(int iKey, bool bDown)
     if (iKey <= Gwk::Key::Invalid)
         return false;
 
-    if (iKey >= Gwk::Key::Count)
+    if (iKey >= Gwk::Key::KeysCount)
         return false;
 
     return Gwk::Input::OnKeyEvent(this, iKey, bDown);

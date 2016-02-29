@@ -34,23 +34,23 @@ namespace Gwk
     typedef std::string     String;
     typedef char            UnicodeChar;
 
-    // TODO: make enum
     namespace CursorType
     {
-        static const unsigned char Normal   = 0;
-        static const unsigned char Beam     = 1;
-        static const unsigned char SizeNS   = 2;
-        static const unsigned char SizeWE   = 3;
-        static const unsigned char SizeNWSE = 4;
-        static const unsigned char SizeNESW = 5;
-        static const unsigned char SizeAll  = 6;
-        static const unsigned char No       = 7;
-        static const unsigned char Wait     = 8;
-        static const unsigned char Finger   = 9;
-
-        static const unsigned char Count    = 10;
+        enum
+        {
+            Normal   = 0,
+            Beam     = 1,
+            SizeNS   = 2,
+            SizeWE   = 3,
+            SizeNWSE = 4,
+            SizeNESW = 5,
+            SizeAll  = 6,
+            No       = 7,
+            Wait     = 8,
+            Finger   = 9,
+            Cursor_Count = 10
+        };
     }
-    
     
     struct GWK_EXPORT Rect
     {
@@ -75,7 +75,6 @@ namespace Gwk
 
         int x, y, w, h;
     };
-
 
     struct GWK_EXPORT Point
     {
@@ -107,7 +106,6 @@ namespace Gwk
 
         int x, y;
     };
-
 
     struct GWK_EXPORT Color
     {
@@ -173,7 +171,6 @@ namespace Gwk
         unsigned char r, g, b, a;
     };
 
-
     struct Font
     {
         typedef std::list<Font*> List;
@@ -198,7 +195,6 @@ namespace Gwk
         /// This is the real font size, after it's been scaled by Render->Scale()
         float realsize;
     };
-
 
     struct Texture
     {

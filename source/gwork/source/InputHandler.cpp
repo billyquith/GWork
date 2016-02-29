@@ -34,7 +34,7 @@ struct KeyData
 {
     KeyData()
     {
-        for (int i = 0; i < Gwk::Key::Count; i++)
+        for (int i = 0; i < Gwk::Key::KeysCount; i++)
         {
             KeyState[i] = false;
             NextRepeat[i] = 0;
@@ -45,8 +45,8 @@ struct KeyData
         RightMouseDown = false;
     }
 
-    bool    KeyState[ Gwk::Key::Count ];
-    float   NextRepeat[ Gwk::Key::Count ];
+    bool    KeyState[ Gwk::Key::KeysCount ];
+    float   NextRepeat[ Gwk::Key::KeysCount ];
     Controls::Base* Target;
     bool    LeftMouseDown;
     bool    RightMouseDown;
@@ -156,7 +156,7 @@ void Gwk::Input::OnCanvasThink(Controls::Base* pControl)
     //
     // Simulate Key-Repeats
     //
-    for (int i = 0; i < Gwk::Key::Count; i++)
+    for (int i = 0; i < Gwk::Key::KeysCount; i++)
     {
         if (g_KeyData.KeyState[i] && g_KeyData.Target != KeyboardFocus)
         {

@@ -9,9 +9,9 @@
 #ifndef GWK_INPUT_ALLEGRO_H
 #define GWK_INPUT_ALLEGRO_H
 
-#include <Gwork/InputHandler.h>
-#include <Gwork/Gwork.h>
-#include <Gwork/Controls/Canvas.h>
+//#include <Gwork/InputHandler.h>
+//#include <Gwork/Gwork.h>
+//#include <Gwork/Controls/Canvas.h>
 
 #include <allegro5/allegro.h>
 
@@ -24,10 +24,10 @@ namespace Gwk
         public:
 
             Allegro()
+            :   m_Canvas(NULL)
+            ,   m_MouseX(0)
+            ,   m_MouseY(0)
             {
-                m_Canvas = NULL;
-                m_MouseX = 0;
-                m_MouseY = 0;
             }
 
             void Initialize(Gwk::Controls::Canvas* c)
@@ -106,8 +106,8 @@ namespace Gwk
                 {
                 case ALLEGRO_EVENT_MOUSE_AXES:
                     {
-                        int dx = event.mouse.dx;
-                        int dy = event.mouse.dy;
+                        const int dx = event.mouse.dx;
+                        const int dy = event.mouse.dy;
 
                         if (event.mouse.dz != 0)
                             return m_Canvas->InputMouseWheel(event.mouse.dz*60);
@@ -138,7 +138,7 @@ namespace Gwk
                             return m_Canvas->InputCharacter(event.keyboard.keycode);
                         }
 
-                        unsigned char iKey = TranslateKeyCode(event.keyboard.keycode);
+                        const unsigned char iKey = TranslateKeyCode(event.keyboard.keycode);
                         return m_Canvas->InputKey(iKey, bPressed);
                     }
                 }

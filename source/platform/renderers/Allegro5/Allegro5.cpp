@@ -1,6 +1,6 @@
 #include <Gwork/BaseRender.h>
-#include <Gwork/Utility.h>
-#include <Gwork/Renderers/Allegro.h>
+// #include <Gwork/Utility.h>
+#include <Gwork/Renderers/Allegro5.h>
 
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_ttf.h>
@@ -53,7 +53,7 @@ namespace Gwk
 
         void AllegroCTT::ShutDown()
         {
-            // TODO - Delete the cached textures we created.
+            // TODO: - Delete the cached textures we created.
             // Note: This doesn't get called at the moment because Gwork currently crashes
             //       if we delete the renderer on clean up.
         }
