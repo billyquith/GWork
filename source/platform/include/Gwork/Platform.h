@@ -23,13 +23,11 @@
 
 namespace Gwk
 {
-    struct Point;
-    
     namespace Platform
     {
         //! Go to sleep for a time. Stops CPU hogging.
-        //! @param iMS : Number of milliseconds to sleep for.
-        GWK_EXPORT void Sleep(unsigned int iMS);
+        //! @param ms : Number of milliseconds to sleep for.
+        GWK_EXPORT void Sleep(unsigned int ms);
 
         // Needed for things like double click
         GWK_EXPORT float GetTimeInSeconds();

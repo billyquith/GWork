@@ -5,7 +5,7 @@
  *  See license in Gwork.h
  */
 
-#include <Gwork/Macros.h>
+//#include <Gwork/Macros.h>
 #include <Gwork/Platform.h>
 
 #include <allegro5/allegro.h>
