@@ -1,11 +1,15 @@
 # CMake build instructions for Gwork
 
+# configure cmake
 cmake_minimum_required(VERSION 3.0)
 cmake_policy(SET CMP0004 OLD)
 
 project(gwork)
 
-# configure cmake
+set(GWK_HEADER_FOLDER "Headers")
+set(GWK_SOURCE_FOLDER "Source")
+
+# some build options
 set(CMAKE_FIND_FRAMEWORK LAST)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/")
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
