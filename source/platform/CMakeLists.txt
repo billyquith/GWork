@@ -3,7 +3,6 @@
 include_directories(
     ${CMAKE_SOURCE_DIR}/source/platform/include
     ${GWK_RENDER_INCLUDES}
-    # ${CMAKE_SOURCE_DIR}/source/gwork/include        # TODO: remove
 )
 
 set(GWK_RENDER_HEADERS

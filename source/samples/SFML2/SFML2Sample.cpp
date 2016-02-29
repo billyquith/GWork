@@ -16,64 +16,48 @@
 #include <Gwork/Test/Test.h>
 
 
-////////////////////////////////////////////////////////////
-/// Entry point of application
-///
-/// \return Application exit code
-////////////////////////////////////////////////////////////
 int main()
 {
     // Create the window of the application
-    sf::RenderWindow App(sf::VideoMode(1004, 650, 32), "Gwork: SFML2");
+    sf::RenderWindow app(sf::VideoMode(1004, 650, 32), "Gwork: SFML2");
 
-    Gwk::Renderer::SFML2 GworkRenderer(App);
+    // Create renderer
+    Gwk::Renderer::SFML2 renderer(app);
     
-    //
     // Create a Gwork skin
-    //
-    // Gwk::Skin::Simple skin;
-    // skin.SetRender( &GworkRenderer );
-
-    Gwk::Skin::TexturedBase skin(&GworkRenderer);
+    Gwk::Skin::TexturedBase skin(&renderer);
     skin.Init("DefaultSkin.png");
 
     // The fonts work differently in SFML - it can't use
     // system fonts. So force the skin to use a local one.
     skin.SetDefaultFont("OpenSans.ttf", 11);
 
-
-    //
     // Create a Canvas (it's root, on which all other Gwork panels are created)
-    //
     Gwk::Controls::Canvas* pCanvas = new Gwk::Controls::Canvas(&skin);
 
-    pCanvas->SetSize(App.getSize().x, App.getSize().y);
+    pCanvas->SetSize(app.getSize().x, app.getSize().y);
     pCanvas->SetDrawBackground(true);
     pCanvas->SetBackgroundColor(Gwk::Color(150, 170, 170, 255));
 
-    //
     // Create our unittest control (which is a Window with controls in it)
-    //
     new UnitTest(pCanvas);
 
-    //
     // Create an input processor
-    //
     Gwk::Input::SFML GworkInput;
     GworkInput.Initialize(pCanvas);
     
-    while (App.isOpen())
+    while (app.isOpen())
     {
         // Handle events
         sf::Event Event;
 
-        while (App.pollEvent(Event))
+        while (app.pollEvent(Event))
         {
             // Window closed or escape key pressed : exit
             if (Event.type == sf::Event::Closed
                 || (Event.type == sf::Event::KeyPressed && Event.key.code == sf::Keyboard::Escape))
             {
-                App.close();
+                app.close();
                 break;
             }
             else if (Event.type == sf::Event::Resized)
@@ -84,11 +68,10 @@ int main()
             GworkInput.ProcessMessage(Event);
         }
 
-        // Clear the window
-
-        App.clear();
+        // Render the control canvas
+        app.clear();
         pCanvas->RenderCanvas();
-        App.display();
+        app.display();
     }
 
     return EXIT_SUCCESS;

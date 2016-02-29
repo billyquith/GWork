@@ -12,15 +12,6 @@
 #include <Gwork/PlatformTypes.h>
 #include <string>
 
-#if defined(GWK_NOT_NATIVE_PLATFORM)
-#   define GWK_PLATFORM_EXTERNAL       // Platform implemented outside Gwork.
-#elif defined(_WIN32)
-#   define GWK_PLATFORM_WINDOWS        // Use Windows API.
-#else
-#   define GWK_PLATFORM_NULL           // Most features not implemented, but does link.
-#endif
-
-
 namespace Gwk
 {
     namespace Platform
