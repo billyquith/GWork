@@ -21,24 +21,26 @@ namespace Gwk
 
     namespace Key
     {
-        const unsigned char Invalid = 0;
-        const unsigned char Return = 1;
-        const unsigned char Backspace = 2;
-        const unsigned char Delete = 3;
-        const unsigned char Left = 4;
-        const unsigned char Right = 5;
-        const unsigned char Shift = 6;
-        const unsigned char Tab = 7;
-        const unsigned char Space = 8;
-        const unsigned char Home = 9;
-        const unsigned char End = 10;
-        const unsigned char Control = 11;
-        const unsigned char Up = 12;
-        const unsigned char Down = 13;
-        const unsigned char Escape = 14;
-        const unsigned char Alt = 15;
-
-        const unsigned char Count = 16;
+        enum KeyCode : char
+        {
+            Invalid = 0,
+            Return = 1,
+            Backspace = 2,
+            Delete = 3,
+            Left = 4,
+            Right = 5,
+            Shift = 6,
+            Tab = 7,
+            Space = 8,
+            Home = 9,
+            End = 10,
+            Control = 11,
+            Up = 12,
+            Down = 13,
+            Escape = 14,
+            Alt = 15,
+            KeysCount = 16  //!< number of keys
+        };
     }
 
     namespace Input
@@ -54,10 +56,7 @@ namespace Gwk
                 Redo,
                 SelectAll
             };
-
-
         }
-
 
         // For use in panels
         bool GWK_EXPORT        IsKeyDown(int iKey);
@@ -85,8 +84,6 @@ namespace Gwk
         bool GWK_EXPORT OnMouseClicked(Controls::Base* pCanvas, int iButton, bool bDown);
         bool GWK_EXPORT OnKeyEvent(Controls::Base* pCanvas, int iKey, bool bDown);
         void GWK_EXPORT OnCanvasThink(Controls::Base* pControl);
-
-
     }
 }
 #endif // ifndef GWK_INPUTHANDLER_H

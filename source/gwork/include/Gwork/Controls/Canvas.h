@@ -26,29 +26,21 @@ namespace Gwk
             Canvas(Skin::Base* pSkin);
             virtual ~Canvas();
 
-            //
             /// For additional initialization
             /// (which is sometimes not appropriate in the constructor)
-            //
             virtual void Initialize() {}
 
-            //
             /// You should call this to render your canvas.
-            //
             virtual void RenderCanvas();
 
-            //
             /// Call this whenever you want to process input. This
             /// is usually once a frame..
-            //
             virtual void DoThink();
 
-            //
             /// In most situations you will be rendering the canvas
             /// every frame. But in some situations you will only want
             /// to render when there have been changes. You can do this
             /// by checking NeedsRedraw().
-            //
             virtual bool NeedsRedraw()  { return m_bNeedsRedraw; }
 
             virtual void Redraw()       { m_bNeedsRedraw = true; }
