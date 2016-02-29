@@ -104,12 +104,6 @@ set(GWK_HEADERS
     include/Gwork/Controls/Dialogs/FileSave.h
     include/Gwork/Controls/Dialogs/FolderOpen.h
     include/Gwork/Controls/Dialogs/Query.h
-    # input
-    include/Gwork/Input/Allegro.h
-    include/Gwork/Input/SDL13.h
-    include/Gwork/Input/SDL2.h
-    include/Gwork/Input/SFML.h
-    include/Gwork/Input/Windows.h
     # skins
     include/Gwork/Skins/Simple.h
     include/Gwork/Skins/TexturedBase.h
@@ -190,7 +184,7 @@ set(GWK_SOURCES
 set(GWK_RENDER_SOURCES
     include/Gwork/Renderers/${GWK_RENDER_NAME}.h
     renderers/${GWK_RENDER_NAME}/${GWK_RENDER_NAME}.cpp
-    source/Platforms/${BUILD_PLATFORM}.cpp
+    source/Platforms/${GWK_PLATFORM_NAME}.cpp
 )
 
 set(GWK_HEADER_FOLDER "Headers")

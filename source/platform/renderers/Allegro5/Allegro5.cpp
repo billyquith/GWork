@@ -1,13 +1,12 @@
-#include <Gwork/Gwork.h>
 #include <Gwork/BaseRender.h>
 #include <Gwork/Utility.h>
-#include <Gwork/Font.h>
-#include <Gwork/Texture.h>
 #include <Gwork/Renderers/Allegro.h>
 
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_ttf.h>
 #include <allegro5/allegro_primitives.h>
+
+#include <map>
 
 namespace Gwk
 {

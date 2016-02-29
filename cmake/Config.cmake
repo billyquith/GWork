@@ -10,7 +10,7 @@ message("Project version: ${VERSION_STR}")
 
 ### User options
 
-set(BUILD_PLATFORM "Null")
+set(GWK_PLATFORM_NAME "Null")
 
 # Windows only
 if(WIN32)
@@ -18,7 +18,7 @@ if(WIN32)
     # TODO: option(RENDER_DIRECTX9  "Renderer: DirectX9" OFF)
     # TODO: option(RENDER_GDIPLUS   "Renderer: GDIPlus" OFF)
     # TODO: option(RENDER_OPENGL        "Renderer: OpenGL" OFF)
-    set(BUILD_PLATFORM "Windows")
+    set(GWK_PLATFORM_NAME "Windows")
 endif()
 
 # Cross-platform
@@ -67,7 +67,7 @@ if(RENDER_ALLEGRO5)
     set(GWK_RENDER_NAME "Allegro5")
     set(GWK_RENDER_INCLUDES "${ALLEGRO5_INCLUDE_DIRS}")
     set(GWK_RENDER_LIBRARIES "${ALLEGRO5_LIBRARIES}")
-    set(BUILD_PLATFORM "AllegroPlatform")
+    set(GWK_PLATFORM_NAME "Allegro5")
 endif(RENDER_ALLEGRO5)
 
 if(RENDER_SDL2)
