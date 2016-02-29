@@ -187,9 +187,6 @@ set(GWK_RENDER_SOURCES
     source/Platforms/${GWK_PLATFORM_NAME}.cpp
 )
 
-set(GWK_HEADER_FOLDER "Headers")
-set(GWK_SOURCE_FOLDER "Source")
-
 # header folder groups
 source_group("${GWK_HEADER_FOLDER}"
              REGULAR_EXPRESSION "include/Gwork/[^/]+\\.h")

@@ -36,9 +36,6 @@ set(GWK_TEST_SOURCES
     source/Window.cpp
 )
 
-set(GWK_HEADER_FOLDER "Headers")
-set(GWK_SOURCE_FOLDER "Source")
-
 # header folder groups
 source_group("${GWK_HEADER_FOLDER}"
              REGULAR_EXPRESSION "include/Gwork/Test/.*\\.h")

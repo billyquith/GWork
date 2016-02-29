@@ -19,6 +19,17 @@ set(GWK_RENDER_SOURCES
     platforms/${GWK_PLATFORM_NAME}Platform.cpp
 )
 
+source_group("${GWK_HEADER_FOLDER}\\Input"
+             REGULAR_EXPRESSION "include/Gwork/Input/[^/]+\\.h")
+source_group("${GWK_HEADER_FOLDER}\\Renderer"
+             REGULAR_EXPRESSION "include/Gwork/Renderers/[^/]+\\.h")
+source_group("${GWK_HEADER_FOLDER}"
+             REGULAR_EXPRESSION "include/Gwork/[^/]+\\.h")
+
+# source folder groups
+source_group("${GWK_SOURCE_FOLDER}"
+             REGULAR_EXPRESSION ".*\\.cpp")
+
 # Gwork renderer & platform library
 add_library(Gwork${GWK_RENDER_NAME} STATIC ${GWK_RENDER_HEADERS} ${GWK_RENDER_SOURCES})
 target_compile_features(Gwork${GWK_RENDER_NAME} PUBLIC cxx_override)
