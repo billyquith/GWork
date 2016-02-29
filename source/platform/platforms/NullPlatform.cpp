@@ -6,16 +6,13 @@
  */
 
 #include <Gwork/Platform.h>
-
-#ifdef GWK_PLATFORM_NULL
-
 #include <time.h>
 
 static Gwk::String gs_ClipboardEmulator;
 
-void Gwk::Platform::Sleep(unsigned int iMS)
+void Gwk::Platform::Sleep(unsigned int ms)
 {
-    // TODO.
+    ::sleep(ms);
 }
 
 void Gwk::Platform::SetCursor(unsigned char iCursor)
@@ -43,23 +40,17 @@ float Gwk::Platform::GetTimeInSeconds()
 bool Gwk::Platform::FileOpen(const String& Name, const String& StartPath, const String& Extension,
                              String& filePathOut)
 {
-    // No platform independent way to do this.
-    // Ideally you would open a system dialog here
     return false;
 }
 
 bool Gwk::Platform::FileSave(const String& Name, const String& StartPath, const String& Extension,
                              String& filePathOut)
 {
-    // No platform independent way to do this.
-    // Ideally you would open a system dialog here
     return false;
 }
 
 bool Gwk::Platform::FolderOpen(const String& Name, const String& StartPath, String& filePathOut)
 {
-    // No platform independent way to do this.
-    // Ideally you would open a system dialog here
     return false;
 }
 
@@ -105,5 +96,3 @@ void Gwk::Platform::GetDesktopSize(int& w, int& h)
 void Gwk::Platform::GetCursorPos(Gwk::Point& po)
 {
 }
-
-#endif // GWK_PLATFORM_NULL

@@ -22,17 +22,17 @@
 int main(int argc, char** argv)
 {
     if (!al_init())
-        return -1;
+        return EXIT_FAILURE;
 
     ALLEGRO_DISPLAY* display = al_create_display(1024, 768);
 
     if (!display)
-        return -1;
+        return EXIT_FAILURE;
 
     ALLEGRO_EVENT_QUEUE* event_queue = al_create_event_queue();
 
     if (!event_queue)
-        return -1;
+        return EXIT_FAILURE;
 
     al_init_image_addon();
     al_init_font_addon();
@@ -93,5 +93,5 @@ int main(int argc, char** argv)
 
     al_destroy_display(display);
     al_destroy_event_queue(event_queue);
-    return 0;
+    return EXIT_SUCCESS;
 }

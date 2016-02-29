@@ -24,7 +24,7 @@ struct Action
     unsigned char       type;
 
     int                 x,y;
-    Gwk::UnicodeChar   chr;
+    Gwk::UnicodeChar    chr;
 };
 
 static const float KeyRepeatRate = 0.03f;
@@ -54,10 +54,10 @@ struct KeyData
 };
 
 static KeyData      g_KeyData;
-static Gwk::Point  g_MousePosition;
+static Gwk::Point   g_MousePosition;
 
 static float        g_fLastClickTime[MAX_MOUSE_BUTTONS];
-static Gwk::Point  g_pntLastClickPos;
+static Gwk::Point   g_pntLastClickPos;
 
 enum
 {
@@ -189,8 +189,8 @@ bool Gwk::Input::IsRightMouseDown()
     return g_KeyData.RightMouseDown;
 }
 
-void Gwk::Input::OnMouseMoved(Controls::Base* pCanvas, int x, int y, int /*deltaX*/,
-                               int /*deltaY*/)
+void Gwk::Input::OnMouseMoved(Controls::Base* pCanvas, int x, int y,
+                              int /*deltaX*/, int /*deltaY*/)
 {
     g_MousePosition.x = x;
     g_MousePosition.y = y;
@@ -225,7 +225,7 @@ bool Gwk::Input::OnMouseClicked(Controls::Base* pCanvas, int iMouseButton, bool 
         g_KeyData.RightMouseDown = bDown;
 
     // Double click.
-    //! @todo Shouldn't double click if mouse has moved significantly
+    // TODO - Shouldn't double click if mouse has moved significantly
     bool bIsDoubleClick = false;
 
     if (bDown
