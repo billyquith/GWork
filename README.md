@@ -6,9 +6,9 @@ is abstracted, and can be implemented by any application wishing to use the libr
 
 A number of rendering backends are provided for use, or as an example for your own:
  * [Allegro5][al5] (cross-platform).
- * Direct2D (Windows).
- * DirectX9 (Windows).
- * GDI+ (Windows).
+ * TODO: Direct2D (Windows).
+ * TODO: DirectX9 (Windows).
+ * TODO: GDI+ (Windows).
  * [SDL2][sdl2] (cross-platform).
  * [SFML2][sfml2] (cross-platform).
 
@@ -22,7 +22,8 @@ Get source code:
 * From git: `git clone https://github.com/billyquith/GWork.git gwork` or
 * [Download zip](https://github.com/billyquith/GWork/archive/gwork.zip) & unzip
 
-CMake is used to generate the project files. 
+CMake is used to generate the project files.
+
 ```bash
 cd gwork
 cmake -G Ninja -DRENDER_SDL2=ON  # create Ninja project files with SDL2 renderer

@@ -3,7 +3,7 @@
 include_directories(
     ${CMAKE_SOURCE_DIR}/source/platform/include
     ${CMAKE_SOURCE_DIR}/source/gwork/include
-    ${RENDERER_INC}
+    ${GWK_RENDER_INCLUDES}
 )
 
 set(GWK_HEADERS
@@ -188,8 +188,8 @@ set(GWK_SOURCES
 )
 
 set(GWK_RENDER_SOURCES
-    include/Gwork/Renderers/${RENDERER_NAME}.h
-    renderers/${RENDERER_NAME}/${RENDERER_NAME}.cpp
+    include/Gwork/Renderers/${GWK_RENDER_NAME}.h
+    renderers/${GWK_RENDER_NAME}/${GWK_RENDER_NAME}.cpp
     source/Platforms/${BUILD_PLATFORM}.cpp
 )
 
