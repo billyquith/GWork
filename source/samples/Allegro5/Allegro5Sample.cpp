@@ -59,19 +59,19 @@ int main(int argc, char** argv)
     skin.SetDefaultFont("OpenSans.ttf", 11);
     
     // Create a Canvas (it's root, on which all other Gwork panels are created)
-    Gwk::Controls::Canvas* pCanvas = new Gwk::Controls::Canvas(&skin);
-    pCanvas->SetSize(1024, 768);
-    pCanvas->SetDrawBackground(true);
-    pCanvas->SetBackgroundColor(Gwk::Color(150, 170, 170, 255));
+    Gwk::Controls::Canvas* canvas = new Gwk::Controls::Canvas(&skin);
+    canvas->SetSize(1024, 768);
+    canvas->SetDrawBackground(true);
+    canvas->SetBackgroundColor(Gwk::Color(150, 170, 170, 255));
 
     // Create our unittest control (which is a Window with controls in it)
-    UnitTest* unit = new UnitTest(pCanvas);
+    UnitTest* unit = new UnitTest(canvas);
     unit->SetPos(10, 10);
 
     // Create a Windows Control helper
     // (Processes Windows MSG's and fires input at Gwork)
     Gwk::Input::Allegro GworkInput;
-    GworkInput.Initialize(pCanvas);
+    GworkInput.Initialize(canvas);
     ALLEGRO_EVENT ev;
     bool haveQuit = false;
 
@@ -85,7 +85,7 @@ int main(int argc, char** argv)
             GworkInput.ProcessMessage(ev);
         }
 
-        pCanvas->RenderCanvas();
+        canvas->RenderCanvas();
         al_flip_display();
         
         al_rest(0.001);
