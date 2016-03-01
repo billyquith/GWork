@@ -52,6 +52,37 @@ namespace Gwk
         };
     }
     
+    struct GWK_EXPORT Point
+    {
+        Point(int x_=0, int y_=0)
+        :   x(x_), y(y_)
+        {}
+        
+        void operator += (const Point& p)
+        {
+            x += p.x;
+            y += p.y;
+        }
+        
+        Point operator + (const Point& p) const
+        {
+            return Point(x + p.x, p.y + y);
+        }
+        
+        void operator -= (const Point& p)
+        {
+            x -= p.x;
+            y -= p.y;
+        }
+        
+        Point operator - (const Point& p) const
+        {
+            return Point(x - p.x, y - p.y);
+        }
+        
+        int x, y;
+    };
+
     struct GWK_EXPORT Rect
     {
         Rect(int x_ = 0, int y_ = 0, int w_ = 0, int h_ = 0)
@@ -72,39 +103,10 @@ namespace Gwk
             m.h = h+rct.h;
             return m;
         }
+        
+        Point GetSize() const { return Point(w,h); }
 
         int x, y, w, h;
-    };
-
-    struct GWK_EXPORT Point
-    {
-        Point(int x_=0, int y_=0)
-        :   x(x_), y(y_)
-        {}
-
-        void operator += (const Point& p)
-        {
-            x += p.x;
-            y += p.y;
-        }
-
-        Point operator + (const Point& p) const
-        {
-            return Point(x + p.x, p.y + y);
-        }
-
-        void operator -= (const Point& p)
-        {
-            x -= p.x;
-            y -= p.y;
-        }
-
-        Point operator - (const Point& p) const
-        {
-            return Point(x - p.x, y - p.y);
-        }
-
-        int x, y;
     };
 
     struct GWK_EXPORT Color

@@ -24,16 +24,17 @@ namespace Gwk
         class ICacheToTexture
         {
         public:
-
             virtual ~ICacheToTexture() {}
+            
+            typedef void* CacheHandle;
 
             virtual void Initialize() = 0;
             virtual void ShutDown() = 0;
-            virtual void SetupCacheTexture(Gwk::Controls::Base* control) = 0;
-            virtual void FinishCacheTexture(Gwk::Controls::Base* control) = 0;
-            virtual void DrawCachedControlTexture(Gwk::Controls::Base* control) = 0;
-            virtual void CreateControlCacheTexture(Gwk::Controls::Base* control) = 0;
-            virtual void UpdateControlCacheTexture(Gwk::Controls::Base* control) = 0;
+            virtual void SetupCacheTexture(CacheHandle control) = 0;
+            virtual void FinishCacheTexture(CacheHandle control) = 0;
+            virtual void DrawCachedControlTexture(CacheHandle control) = 0;
+            virtual void CreateControlCacheTexture(CacheHandle control, const Point& size) = 0;
+            virtual void UpdateControlCacheTexture(CacheHandle control) = 0;
             virtual void SetRenderer(Gwk::Renderer::Base* renderer) = 0;
 
         };
