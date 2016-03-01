@@ -79,8 +79,6 @@ namespace Gwk
         static const Color Grey(200, 200, 200, 255);
         static const Color GreyLight(230, 230, 230, 255);
         static const Color GworkPink(255, 65, 199, 255);
-
-
     }
 
     extern GWK_EXPORT Controls::Base*  HoveredControl;

@@ -9,15 +9,16 @@
 #ifndef GWK_CONTROLS_CANVAS_H
 #define GWK_CONTROLS_CANVAS_H
 
-#include <set>
 #include <Gwork/Controls/Base.h>
 #include <Gwork/InputHandler.h>
+#include <Gwork/InputEventListener.h>
+#include <set>
 
 namespace Gwk
 {
     namespace Controls
     {
-        class GWK_EXPORT Canvas : public Base
+        class GWK_EXPORT Canvas : public Base, public IInputEventListener
         {
         public:
 
@@ -41,16 +42,16 @@ namespace Gwk
             /// every frame. But in some situations you will only want
             /// to render when there have been changes. You can do this
             /// by checking NeedsRedraw().
-            virtual bool NeedsRedraw()  { return m_bNeedsRedraw; }
+            virtual bool NeedsRedraw() { return m_bNeedsRedraw; }
 
-            virtual void Redraw()       { m_bNeedsRedraw = true; }
+            virtual void Redraw() override { m_bNeedsRedraw = true; }
 
             // Internal. Do not call directly.
-            virtual void Render(Skin::Base* pRender);
+            virtual void Render(Skin::Base* pRender) override;
 
             /// Childpanels call parent->GetCanvas() until they get to
             /// this top level function.
-            virtual Controls::Canvas* GetCanvas()
+            virtual Controls::Canvas* GetCanvas() override
             {
                 return this;
             }
@@ -61,7 +62,7 @@ namespace Gwk
                 return m_fScale;
             }
 
-            virtual void OnBoundsChanged(Gwk::Rect oldBounds);
+            virtual void OnBoundsChanged(Gwk::Rect oldBounds) override;
 
             /// Delete all children (this is done called in the destructor too)
             virtual void ReleaseChildren();
@@ -74,12 +75,15 @@ namespace Gwk
             Controls::Base* NextTab;
 
             /// \sect{Input}            
-            virtual bool InputMouseMoved(int x, int y, int deltaX, int deltaY);
-            virtual bool InputMouseButton(int iButton, bool bDown);
-            virtual bool InputKey(int iKey, bool bDown);
-            virtual bool InputCharacter(Gwk::UnicodeChar chr);
-            virtual bool InputMouseWheel(int val);
-            virtual bool InputQuit()    { return true; }
+            bool InputMouseMoved(int x, int y, int deltaX, int deltaY) override;
+            bool InputMouseButton(int iButton, bool bDown) override;
+            bool InputKey(int iKey, bool bDown) override;
+            bool InputCharacter(Gwk::UnicodeChar chr) override;
+            bool InputMouseWheel(int val) override;
+            bool InputQuit() override
+            {
+                return true;
+            }
             /// \}
 
             // Background
