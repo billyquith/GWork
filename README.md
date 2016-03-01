@@ -3,6 +3,8 @@ GWork
 
 GWork is a skinnable, embeddable GUI library with an extensive control set. Control rendering
 is abstracted, and can be implemented by any application wishing to use the library.
+Gwork (*pronounced "gw-orc"*) is a fork of the GUI library [GWEN][gwen]. It was forked 
+to fix issues with GWEN and add new features.
 
 A number of rendering backends are provided for use, or as an example for your own:
  * [Allegro5][al5] (cross-platform).
@@ -11,9 +13,6 @@ A number of rendering backends are provided for use, or as an example for your o
  * TODO: GDI+ (Windows).
  * [SDL2][sdl2] (cross-platform).
  * [SFML2][sfml2] (cross-platform).
-
-Gwork (*pronounced "gw-orc"*) is a fork of the GUI library [GWEN][gwen]. It was forked 
-to fix issues with GWEN and add new features.
 
 ## Build
 
@@ -27,13 +26,13 @@ CMake is used to generate the project files.
 ```bash
 cd gwork
 cmake -G Ninja -DRENDER_SDL2=ON  # create Ninja project files with SDL2 renderer
-ninja
 ```
 
 Providing the dependencies are present, this will create a sample executable. When run it will
 demonstrate all of the controls available:
 
 ```bash
+ninja  # build project
 cd build/bin
 ./GworkSDL2Sample
 ```
@@ -69,7 +68,8 @@ cd build/bin
   messes up the indentation when reading code on Github.
 * Brackets: [Allman][2]/BSD indentation.
 * Line length ~100 chars. Github has width around 100. Easier for 
-  3 way merge. Everything on regular screen. 
+  3 way merge. Everything on regular screen.
+* camelCase variables.
   
 Please [report problems to Github][7] or they'll get lost.
 
