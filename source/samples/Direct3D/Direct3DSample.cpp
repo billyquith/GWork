@@ -27,9 +27,9 @@
 #include <Gwork/Input/Windows.h>
 #include <Gwork/Renderers/DirectX9.h>
 
-HWND g_pHWND = NULL;
-LPDIRECT3D9 g_pD3D = NULL;
-IDirect3DDevice9*       g_pD3DDevice = NULL;
+HWND g_hWND = NULL;
+LPDIRECT3D9 g_D3D = NULL;
+IDirect3DDevice9*       g_D3DDevice = NULL;
 D3DPRESENT_PARAMETERS g_D3DParams;
 
 //
@@ -62,14 +62,14 @@ HWND CreateGameWindow(void)
 //
 void ResetD3DDevice()
 {
-    g_pD3DDevice->Reset(&g_D3DParams);
+    g_D3DDevice->Reset(&g_D3DParams);
 }
 
 void CreateD3DDevice()
 {
     ZeroMemory(&g_D3DParams, sizeof(g_D3DParams));
     RECT ClientRect;
-    GetClientRect(g_pHWND, &ClientRect);
+    GetClientRect(g_hWND, &ClientRect);
     g_D3DParams.Windowed = TRUE;
     g_D3DParams.SwapEffect = D3DSWAPEFFECT_DISCARD;
     g_D3DParams.BackBufferWidth = ClientRect.right;
@@ -79,9 +79,9 @@ void CreateD3DDevice()
     // g_D3DParams.EnableAutoDepthStencil = TRUE;
     // g_D3DParams.AutoDepthStencilFormat = D3DFMT_D24S8;
     g_D3DParams.PresentationInterval = D3DPRESENT_INTERVAL_IMMEDIATE;
-    HRESULT hr = g_pD3D->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, g_pHWND,
+    HRESULT hr = g_D3D->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, g_hWND,
                                       D3DCREATE_SOFTWARE_VERTEXPROCESSING, &g_D3DParams,
-                                      &g_pD3DDevice);
+                                      &g_D3DDevice);
 
     if (FAILED(hr))
     {
@@ -98,38 +98,38 @@ int main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCm
     //
     // Create a window and attach directx to it
     //
-    g_pD3D = Direct3DCreate9(D3D_SDK_VERSION);
-    g_pHWND = CreateGameWindow();
+    g_D3D = Direct3DCreate9(D3D_SDK_VERSION);
+    g_hWND = CreateGameWindow();
     CreateD3DDevice();
     RECT FrameBounds;
-    GetClientRect(g_pHWND, &FrameBounds);
+    GetClientRect(g_hWND, &FrameBounds);
     //
     // Create a Gwork DirectX renderer
     //
-    Gwk::Renderer::DirectX9* pRenderer = new Gwk::Renderer::DirectX9(g_pD3DDevice);
+    Gwk::Renderer::DirectX9* renderer = new Gwk::Renderer::DirectX9(g_D3DDevice);
     //
     // Create a Gwork skin
     //
-    Gwk::Skin::TexturedBase* pSkin = new Gwk::Skin::TexturedBase(pRenderer);
-    pSkin->Init("DefaultSkin.png");
+    Gwk::Skin::TexturedBase* skin = new Gwk::Skin::TexturedBase(renderer);
+    skin->Init("DefaultSkin.png");
     //
     // Create a Canvas (it's root, on which all other Gwork panels are created)
     //
-    Gwk::Controls::Canvas* pCanvas = new Gwk::Controls::Canvas(pSkin);
-    pCanvas->SetSize(FrameBounds.right, FrameBounds.bottom);
-    pCanvas->SetDrawBackground(true);
-    pCanvas->SetBackgroundColor(Gwk::Color(150, 170, 170, 255));
+    Gwk::Controls::Canvas* canvas = new Gwk::Controls::Canvas(skin);
+    canvas->SetSize(FrameBounds.right, FrameBounds.bottom);
+    canvas->SetDrawBackground(true);
+    canvas->SetBackgroundColor(Gwk::Color(150, 170, 170, 255));
     //
     // Create our unittest control (which is a Window with controls in it)
     //
-    UnitTest* pUnit = new UnitTest(pCanvas);
-    pUnit->SetPos(10, 10);
+    UnitTest* unit = new UnitTest(canvas);
+    unit->SetPos(10, 10);
     //
     // Create a Windows Control helper
     // (Processes Windows MSG's and fires input at Gwork)
     //
     Gwk::Input::Windows GworkInput;
-    GworkInput.Initialize(pCanvas);
+    GworkInput.Initialize(canvas);
     //
     // Begin the main game loop
     //
@@ -138,7 +138,7 @@ int main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCm
     while (true)
     {
         // Skip out if the window is closed
-        if (!IsWindowVisible(g_pHWND))
+        if (!IsWindowVisible(g_hWND))
             break;
 
         // If we have a message from windows..
@@ -158,28 +158,28 @@ int main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCm
         else
         {
             // Normal DirectX rendering loop
-            g_pD3DDevice->BeginScene();
-            g_pD3DDevice->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 0, 0), 1, 0);
+            g_D3DDevice->BeginScene();
+            g_D3DDevice->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 0, 0), 1, 0);
             // This is how easy it is to render Gwork!
-            pCanvas->RenderCanvas();
-            g_pD3DDevice->EndScene();
-            g_pD3DDevice->Present(NULL, NULL, NULL, NULL);
+            canvas->RenderCanvas();
+            g_D3DDevice->EndScene();
+            g_D3DDevice->Present(NULL, NULL, NULL, NULL);
         }
     }
 
-    delete pCanvas;
-    delete pSkin;
-    delete pRenderer;
+    delete canvas;
+    delete skin;
+    delete renderer;
 
-    if (g_pD3DDevice)
+    if (g_D3DDevice)
     {
-        g_pD3DDevice->Release();
-        g_pD3DDevice = NULL;
+        g_D3DDevice->Release();
+        g_D3DDevice = NULL;
     }
 
-    if (g_pD3D)
+    if (g_D3D)
     {
-        g_pD3D->Release();
-        g_pD3D = NULL;
+        g_D3D->Release();
+        g_D3D = NULL;
     }
 }

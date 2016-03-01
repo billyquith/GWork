@@ -29,10 +29,10 @@ namespace Gwk
                 SetAlignment(Docking::Left|Docking::CenterV);
             }
 
-            virtual void AddControl(Controls::Base* pCtrl, bool bRight)
+            virtual void AddControl(Controls::Base* ctrl, bool bRight)
             {
-                pCtrl->SetParent(this);
-                pCtrl->Dock(bRight ? Docking::Right : Docking::Left);
+                ctrl->SetParent(this);
+                ctrl->Dock(bRight ? Docking::Right : Docking::Left);
             }
 
             virtual void Render(Skin::Base* skin) override

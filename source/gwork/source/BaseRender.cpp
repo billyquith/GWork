@@ -18,7 +18,7 @@ namespace Gwk
     namespace Renderer
     {
         Base::Base()
-        :   m_RenderOffset(Gwk::Point(0, 0))
+        :   m_renderOffset(Gwk::Point(0, 0))
         ,   m_fScale(1.0f)
         ,   m_RTT(NULL)
         {
@@ -71,8 +71,8 @@ namespace Gwk
 
         void Base::Translate(int& x, int& y)
         {
-            x += m_RenderOffset.x;
-            y += m_RenderOffset.y;
+            x += m_renderOffset.x;
+            y += m_renderOffset.y;
             x = ceilf(((float)x)*m_fScale);
             y = ceilf(((float)y)*m_fScale);
         }
@@ -91,8 +91,8 @@ namespace Gwk
 
         void Base::AddClipRegion(Gwk::Rect rect)
         {
-            rect.x = m_RenderOffset.x;
-            rect.y = m_RenderOffset.y;
+            rect.x = m_renderOffset.x;
+            rect.y = m_renderOffset.y;
             Gwk::Rect out = rect;
 
             if (rect.x < m_rectClipRegion.x)
@@ -129,19 +129,19 @@ namespace Gwk
             return true;
         }
 
-        void Base::DrawMissingImage(Gwk::Rect pTargetRect)
+        void Base::DrawMissingImage(Gwk::Rect targetRect)
         {
             SetDrawColor(Colors::Red);
-            DrawFilledRect(pTargetRect);
+            DrawFilledRect(targetRect);
         }
 
         ///  If they haven't defined these font functions in their renderer code
         ///  we just draw some rects where the letters would be to give them an
         ///  idea.
 
-        void Base::RenderText(Gwk::Font* pFont, Gwk::Point pos, const Gwk::String& text)
+        void Base::RenderText(Gwk::Font* font, Gwk::Point pos, const Gwk::String& text)
         {
-            float fSize = pFont->size*Scale();
+            float fSize = font->size*Scale();
 
             for (unsigned int i = 0; i < text.length(); i++)
             {
@@ -186,11 +186,11 @@ namespace Gwk
             }
         }
 
-        Gwk::Point Base::MeasureText(Gwk::Font* pFont, const Gwk::String& text)
+        Gwk::Point Base::MeasureText(Gwk::Font* font, const Gwk::String& text)
         {
             Gwk::Point p;
-            p.x = pFont->size*Scale()*(float)text.length()*0.4;
-            p.y = pFont->size*Scale();
+            p.x = font->size*Scale()*(float)text.length()*0.4;
+            p.y = font->size*Scale();
             return p;
         }
 

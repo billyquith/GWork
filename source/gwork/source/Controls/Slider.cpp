@@ -27,12 +27,12 @@ void SliderBar::Render(Skin::Base* skin)
 GWK_CONTROL_CONSTRUCTOR(Slider)
 {
     SetBounds(Gwk::Rect(0, 0, 32, 128));
-    m_SliderBar = new SliderBar(this);
-    m_SliderBar->onDragged.Add(this, &Slider::OnMoved);
+    m_sliderBar = new SliderBar(this);
+    m_sliderBar->onDragged.Add(this, &Slider::OnMoved);
     m_fMin = 0.0f;
     m_fMax = 1.0f;
     m_bClampToNotches = false;
-    m_iNumNotches = 5;
+    m_numNotches = 5;
     m_fValue = 0.0f;
     SetTabable(true);
 }
@@ -66,8 +66,8 @@ void Slider::SetValueInternal(float val)
 {
     if (m_bClampToNotches)
     {
-        val = floorf(val*(float)m_iNumNotches+0.5f);
-        val /= (float)m_iNumNotches;
+        val = floorf(val*(float)m_numNotches+0.5f);
+        val /= (float)m_numNotches;
     }
 
     if (m_fValue != val)

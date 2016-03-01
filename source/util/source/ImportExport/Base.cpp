@@ -45,15 +45,15 @@ Base::Base()
 
 namespace Tools
 {
-    ControlList GetExportableChildren(Gwk::Controls::Base* pRoot)
+    ControlList GetExportableChildren(Gwk::Controls::Base* root)
     {
         ControlList list;
         
-        for (int i = 0; i < pRoot->NumChildren(); i++)
+        for (int i = 0; i < root->NumChildren(); i++)
         {
-            Gwk::Controls::Base* pBaseChild = pRoot->GetChild(i);
+            Gwk::Controls::Base* baseChild = root->GetChild(i);
             
-            if (!pBaseChild)
+            if (!baseChild)
                 continue;
             
             //
@@ -61,13 +61,13 @@ namespace Tools
             // child that is
             // We will count it as one of our children.
             //
-            if (!pBaseChild->UserData.Exists("ControlFactory"))
+            if (!baseChild->UserData.Exists("ControlFactory"))
             {
-                list.Add(GetExportableChildren(pBaseChild));
+                list.Add(GetExportableChildren(baseChild));
                 continue;
             }
             
-            list.Add(pBaseChild);
+            list.Add(baseChild);
         }
         
         return list;

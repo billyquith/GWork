@@ -24,11 +24,11 @@ namespace Gwk
 
             virtual void Render(Skin::Base* skin) override;
 
-            virtual void OnChildBoundsChanged(Gwk::Rect oldChildBounds, Base* pChild) override;
+            virtual void OnChildBoundsChanged(Gwk::Rect oldChildBounds, Base* child) override;
 
             ScrollControl* Scroller()
             {
-                return m_ScrollControl;
+                return m_scrollControl;
             }
 
             virtual void Clear();
@@ -41,13 +41,13 @@ namespace Gwk
                 m_bAllowMultipleSelection = b;
             }
 
-            virtual void OnNodeAdded(TreeNode* pNode);
+            virtual void OnNodeAdded(TreeNode* node);
 
         private:
 
             void OnNodeSelection(Controls::Base* control);
 
-            ScrollControl*      m_ScrollControl;
+            ScrollControl*      m_scrollControl;
             bool m_bAllowMultipleSelection;
 
         };

@@ -36,7 +36,7 @@ namespace Gwk
             {
             }
 
-            Gwk::Controls::Base*   m_Control;
+            Gwk::Controls::Base*   m_control;
         };
 
 
@@ -83,30 +83,30 @@ namespace Gwk
                        float fDelay = 0.0f, float fEase = -1.0f)
                 : TimedAnimation(fLength, fDelay, fEase)
                 {
-                    m_iStartSize = iStartSize;
-                    m_iDelta = iEndSize-m_iStartSize;
+                    m_startSize = iStartSize;
+                    m_delta = iEndSize-m_startSize;
                     m_bHide = bHide;
                 }
 
                 virtual void OnStart()
                 {
-                    m_Control->SetHeight(m_iStartSize);
+                    m_control->SetHeight(m_startSize);
                 }
 
                 virtual void Run(float delta)
                 {
-                    m_Control->SetHeight(m_iStartSize+(((float)m_iDelta)*delta));
+                    m_control->SetHeight(m_startSize+(((float)m_delta)*delta));
                 }
 
                 virtual void OnFinish()
                 {
-                    m_Control->SetHeight(m_iStartSize+m_iDelta); m_Control->SetHidden(m_bHide);
+                    m_control->SetHeight(m_startSize+m_delta); m_control->SetHidden(m_bHide);
                 }
 
             protected:
 
-                int m_iStartSize;
-                int m_iDelta;
+                int m_startSize;
+                int m_delta;
                 bool m_bHide;
             };
 
@@ -119,30 +119,30 @@ namespace Gwk
                       float fDelay = 0.0f, float fEase = -1.0f)
                 : TimedAnimation(fLength, fDelay, fEase)
                 {
-                    m_iStartSize = iStartSize;
-                    m_iDelta = iEndSize-m_iStartSize;
+                    m_startSize = iStartSize;
+                    m_delta = iEndSize-m_startSize;
                     m_bHide = bHide;
                 }
 
                 virtual void OnStart()
                 {
-                    m_Control->SetWidth(m_iStartSize);
+                    m_control->SetWidth(m_startSize);
                 }
 
                 virtual void Run(float delta)
                 {
-                    m_Control->SetWidth(m_iStartSize+(((float)m_iDelta)*delta));
+                    m_control->SetWidth(m_startSize+(((float)m_delta)*delta));
                 }
 
                 virtual void OnFinish()
                 {
-                    m_Control->SetWidth(m_iStartSize+m_iDelta); m_Control->SetHidden(m_bHide);
+                    m_control->SetWidth(m_startSize+m_delta); m_control->SetHidden(m_bHide);
                 }
 
             protected:
 
-                int m_iStartSize;
-                int m_iDelta;
+                int m_startSize;
+                int m_delta;
                 bool m_bHide;
             };
 
@@ -159,32 +159,32 @@ namespace Gwk
                   float fDelay = 0.0f, float fEase = 1.0f)
                 : TimedAnimation(fLength, fDelay, fEase)
                 {
-                    m_iStartSize = iStartSize;
-                    m_iDelta = iEndSize-m_iStartSize;
+                    m_startSize = iStartSize;
+                    m_delta = iEndSize-m_startSize;
                     m_bHide = bHide;
                 }
 
                 virtual void OnStart()
                 {
-                    m_Control->SetPos(m_iStartSize, m_Control->GetPos().y);
+                    m_control->SetPos(m_startSize, m_control->GetPos().y);
                 }
 
                 virtual void Run(float delta)
                 {
-                    m_Control->SetPos(m_iStartSize+(((float)m_iDelta)*delta),
-                                      m_Control->GetPos().y);
+                    m_control->SetPos(m_startSize+(((float)m_delta)*delta),
+                                      m_control->GetPos().y);
                 }
 
                 virtual void OnFinish()
                 {
-                    m_Control->SetPos(m_iStartSize+m_iDelta, m_Control->GetPos().y);
-                    m_Control->SetHidden(m_bHide);
+                    m_control->SetPos(m_startSize+m_delta, m_control->GetPos().y);
+                    m_control->SetHidden(m_bHide);
                 }
 
             protected:
 
-                int m_iStartSize;
-                int m_iDelta;
+                int m_startSize;
+                int m_delta;
                 bool m_bHide;
             };
 
@@ -197,32 +197,32 @@ namespace Gwk
                   float fDelay = 0.0f, float fEase = 1.0f)
                 :   TimedAnimation(fLength, fDelay, fEase)
                 {
-                    m_iStartSize = iStartSize;
-                    m_iDelta = iEndSize-m_iStartSize;
+                    m_startSize = iStartSize;
+                    m_delta = iEndSize-m_startSize;
                     m_bHide = bHide;
                 }
 
                 virtual void OnStart()
                 {
-                    m_Control->SetPos(m_Control->GetPos().x, m_iStartSize);
+                    m_control->SetPos(m_control->GetPos().x, m_startSize);
                 }
 
                 virtual void Run(float delta)
                 {
-                    m_Control->SetPos(m_Control->GetPos().x, m_iStartSize+
-                                      (((float)m_iDelta)*delta));
+                    m_control->SetPos(m_control->GetPos().x, m_startSize+
+                                      (((float)m_delta)*delta));
                 }
 
                 virtual void OnFinish()
                 {
-                    m_Control->SetPos(m_Control->GetPos().x, m_iStartSize+m_iDelta);
-                    m_Control->SetHidden(m_bHide);
+                    m_control->SetPos(m_control->GetPos().x, m_startSize+m_delta);
+                    m_control->SetHidden(m_bHide);
                 }
 
             protected:
 
-                int m_iStartSize;
-                int m_iDelta;
+                int m_startSize;
+                int m_delta;
                 bool m_bHide;
             };
 
@@ -242,7 +242,7 @@ namespace Gwk
 
                 virtual void OnFinish()
                 {
-                    m_Control->DelayedDelete();
+                    m_control->DelayedDelete();
                 }
 
             };

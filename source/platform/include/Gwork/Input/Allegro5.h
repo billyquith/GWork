@@ -21,15 +21,15 @@ namespace Gwk
         public:
 
             Allegro()
-            :   m_EventListener(NULL)
-            ,   m_MouseX(0)
-            ,   m_MouseY(0)
+            :   m_eventListener(NULL)
+            ,   m_mouseX(0)
+            ,   m_mouseY(0)
             {
             }
 
             void Initialize(IInputEventListener* el)
             {
-                m_EventListener = el;
+                m_eventListener = el;
             }
 
             unsigned char TranslateKeyCode(int iKeyCode)
@@ -96,7 +96,7 @@ namespace Gwk
 
             bool ProcessMessage(const ALLEGRO_EVENT& event)
             {
-                if (!m_EventListener)
+                if (!m_eventListener)
                     return false;
 
                 switch (event.type)
@@ -107,20 +107,20 @@ namespace Gwk
                         const int dy = event.mouse.dy;
 
                         if (event.mouse.dz != 0)
-                            return m_EventListener->InputMouseWheel(event.mouse.dz*60);
+                            return m_eventListener->InputMouseWheel(event.mouse.dz*60);
 
-                        m_MouseX = event.mouse.x;
-                        m_MouseY = event.mouse.y;
-                        return m_EventListener->InputMouseMoved(m_MouseX, m_MouseY, dx, dy);
+                        m_mouseX = event.mouse.x;
+                        m_mouseY = event.mouse.y;
+                        return m_eventListener->InputMouseMoved(m_mouseX, m_mouseY, dx, dy);
                     }
 
                 case ALLEGRO_EVENT_MOUSE_BUTTON_DOWN:
                 case ALLEGRO_EVENT_MOUSE_BUTTON_UP:
-                    return m_EventListener->InputMouseButton(event.mouse.button-1,
+                    return m_eventListener->InputMouseButton(event.mouse.button-1,
                                                       event.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN);
 
                 case ALLEGRO_EVENT_KEY_CHAR:
-                    return m_EventListener->InputCharacter(event.keyboard.unichar);
+                    return m_eventListener->InputCharacter(event.keyboard.unichar);
 
                 case ALLEGRO_EVENT_KEY_DOWN:
                 case ALLEGRO_EVENT_KEY_UP:
@@ -132,11 +132,11 @@ namespace Gwk
                             && event.keyboard.keycode >= 'a'
                             && event.keyboard.keycode <= 'z')
                         {
-                            return m_EventListener->InputCharacter(event.keyboard.keycode);
+                            return m_eventListener->InputCharacter(event.keyboard.keycode);
                         }
 
                         const unsigned char iKey = TranslateKeyCode(event.keyboard.keycode);
-                        return m_EventListener->InputKey(iKey, bPressed);
+                        return m_eventListener->InputKey(iKey, bPressed);
                     }
                 }
 
@@ -145,9 +145,9 @@ namespace Gwk
 
         protected:
 
-            IInputEventListener *m_EventListener;
-            int m_MouseX;
-            int m_MouseY;
+            IInputEventListener *m_eventListener;
+            int m_mouseX;
+            int m_mouseY;
 
         };
 

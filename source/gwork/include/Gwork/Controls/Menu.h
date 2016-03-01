@@ -37,7 +37,7 @@ namespace Gwk
 
             virtual void AddDivider();
 
-            void OnHoverItem(Gwk::Controls::Base* pControl);
+            void OnHoverItem(Gwk::Controls::Base* control);
             void CloseAll();
             bool IsMenuOpen();
             void ClearItems();

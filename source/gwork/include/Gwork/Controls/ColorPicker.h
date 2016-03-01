@@ -25,29 +25,29 @@ namespace Gwk
             GWK_CONTROL_INLINE(ColorDisplay, Controls::Base)
             {
                 SetSize(32, 32);
-                m_Color = Color(255, 0, 0, 255);
-                m_DrawCheckers = true;
+                m_color = Color(255, 0, 0, 255);
+                m_drawCheckers = true;
             }
 
             virtual void Render(Gwk::Skin::Base* skin) override
             {
-                skin->DrawColorDisplay(this, m_Color);
+                skin->DrawColorDisplay(this, m_color);
             }
 
-            virtual void SetColor(Gwk::Color color)    { m_Color = color; }
-            virtual Gwk::Color GetColor()              { return m_Color; }
+            virtual void SetColor(Gwk::Color color)    { m_color = color; }
+            virtual Gwk::Color GetColor()              { return m_color; }
 
-            virtual void SetRed(int red)                { m_Color.r = red; }
-            virtual void SetGreen(int green)            { m_Color.g = green; }
-            virtual void SetBlue(int blue)              { m_Color.b = blue; }
-            virtual void SetAlpha(int alpha)            { m_Color.a = alpha; }
+            virtual void SetRed(int red)                { m_color.r = red; }
+            virtual void SetGreen(int green)            { m_color.g = green; }
+            virtual void SetBlue(int blue)              { m_color.b = blue; }
+            virtual void SetAlpha(int alpha)            { m_color.a = alpha; }
 
-            virtual void SetDrawCheckers(bool should)   { m_DrawCheckers = should; }
+            virtual void SetDrawCheckers(bool should)   { m_drawCheckers = should; }
 
         protected:
 
-            Gwk::Color m_Color;
-            bool m_DrawCheckers;
+            Gwk::Color m_color;
+            bool m_drawCheckers;
         };
 
 
@@ -64,7 +64,7 @@ namespace Gwk
             virtual void SetAlphaVisible(bool visible);
 
             virtual void        SetColor(Gwk::Color color);
-            virtual Gwk::Color GetColor()      { return m_Color; }
+            virtual Gwk::Color GetColor()      { return m_color; }
 
             /// \sect{By name}
             ///     Set colour channel value. Range: 0-255.
@@ -77,10 +77,10 @@ namespace Gwk
             /// \sect{Set by value}
             ///     Set colour channel value. Range: 0-255.
             //
-            virtual void SetRed(int red)        { m_Color.r = red; }
-            virtual void SetGreen(int green)    { m_Color.g = green; }
-            virtual void SetBlue(int blue)      { m_Color.b = blue; }
-            virtual void SetAlpha(int alpha)    { m_Color.a = alpha; }
+            virtual void SetRed(int red)        { m_color.r = red; }
+            virtual void SetGreen(int green)    { m_color.g = green; }
+            virtual void SetBlue(int blue)      { m_color.b = blue; }
+            virtual void SetAlpha(int alpha)    { m_color.a = alpha; }
             // \}
 
             Event::Caller onColorChanged;
@@ -95,7 +95,7 @@ namespace Gwk
             virtual void UpdateColorControls(Gwk::String name, Gwk::Color col, int sliderVal);
             virtual void CreateColorControl(Gwk::String name, int y);
             
-            Gwk::Color m_Color;
+            Gwk::Color m_color;
         };
 
 

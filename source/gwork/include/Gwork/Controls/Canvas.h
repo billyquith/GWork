@@ -24,7 +24,7 @@ namespace Gwk
 
             typedef Controls::Base ParentClass;
 
-            Canvas(Skin::Base* pSkin);
+            Canvas(Skin::Base* skin);
             virtual ~Canvas();
 
             /// For additional initialization
@@ -47,7 +47,7 @@ namespace Gwk
             virtual void Redraw() override { m_bNeedsRedraw = true; }
 
             // Internal. Do not call directly.
-            virtual void Render(Skin::Base* pRender) override;
+            virtual void Render(Skin::Base* render) override;
 
             /// Childpanels call parent->GetCanvas() until they get to
             /// this top level function.
@@ -68,7 +68,7 @@ namespace Gwk
             virtual void ReleaseChildren();
 
             /// Delayed deletes
-            virtual void AddDelayedDelete(Controls::Base* pControl);
+            virtual void AddDelayedDelete(Controls::Base* control);
             virtual void ProcessDelayedDeletes();
 
             Controls::Base* FirstTab;
@@ -89,7 +89,7 @@ namespace Gwk
             // Background
             virtual void SetBackgroundColor(const Gwk::Color& color)
             {
-                m_BackgroundColor = color;
+                m_backgroundColor = color;
             }
 
             virtual void SetDrawBackground(bool bShouldDraw)
@@ -103,13 +103,13 @@ namespace Gwk
             bool m_bAnyDelete;
             float m_fScale;
 
-            Controls::Base::List m_DeleteList;
-            std::set<Controls::Base*> m_DeleteSet;
+            Controls::Base::List m_deleteList;
+            std::set<Controls::Base*> m_deleteSet;
             friend class Controls::Base;
             void PreDeleteCanvas(Controls::Base*);
 
             bool m_bDrawBackground;
-            Gwk::Color m_BackgroundColor;
+            Gwk::Color m_backgroundColor;
 
         };
 

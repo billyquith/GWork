@@ -63,7 +63,7 @@ namespace Gwk
 
             typedef std::map<Gwk::String, Gwk::Event::Caller*> AccelMap;
 
-            Base(Base* pParent, const Gwk::String& Name = "");
+            Base(Base* parent, const Gwk::String& Name = "");
             virtual ~Base();
             
             static const char* GetTypeNameStatic() { return "Base"; }
@@ -74,23 +74,23 @@ namespace Gwk
             virtual void DelayedDelete();
             virtual void PreDelete(Gwk::Skin::Base* skin) {}
 
-            virtual void            SetParent(Controls::Base* pParent);
+            virtual void            SetParent(Controls::Base* parent);
             virtual Controls::Base* GetParent() const
             {
-                return m_Parent;
+                return m_parent;
             }
 
             virtual Controls::Canvas* GetCanvas();
 
             virtual Base::List& GetChildren()
             {
-                if (m_InnerPanel)
-                    return m_InnerPanel->GetChildren();
+                if (m_innerPanel)
+                    return m_innerPanel->GetChildren();
 
                 return Children;
             }
 
-            virtual bool            IsChild(Controls::Base* pChild);
+            virtual bool            IsChild(Controls::Base* child);
             virtual unsigned int    NumChildren();
             virtual Controls::Base* GetChild(unsigned int i);
             virtual bool            SizeToChildren(bool w = true, bool h = true);
@@ -101,17 +101,17 @@ namespace Gwk
             template <class T>
             T* FindChild(const Gwk::String& name, bool bRecursive = false);
 
-            virtual void SetName(const Gwk::String& name)  { m_Name = name; }
-            virtual const Gwk::String& GetName()           { return m_Name; }
+            virtual void SetName(const Gwk::String& name)  { m_name = name; }
+            virtual const Gwk::String& GetName()           { return m_name; }
 
             virtual void Think() {}
 
         protected:
 
-            virtual void AddChild(Controls::Base* pChild);
-            virtual void RemoveChild(Controls::Base* pParent);
-            virtual void OnChildAdded(Controls::Base* pChild);
-            virtual void OnChildRemoved(Controls::Base* pChild);
+            virtual void AddChild(Controls::Base* child);
+            virtual void RemoveChild(Controls::Base* parent);
+            virtual void OnChildAdded(Controls::Base* child);
+            virtual void OnChildRemoved(Controls::Base* child);
 
         public:
 
@@ -119,7 +119,7 @@ namespace Gwk
 
             virtual void SendToBack(void);
             virtual void BringToFront(void);
-            virtual void BringNextToControl(Controls::Base* pChild, bool bBehind);
+            virtual void BringNextToControl(Controls::Base* child, bool bBehind);
 
             virtual Gwk::Point LocalPosToCanvas(const Gwk::Point& in = Point(0, 0));
             virtual Gwk::Point CanvasPosToLocal(const Gwk::Point& in);
@@ -130,28 +130,28 @@ namespace Gwk
             virtual void RestrictToParent(bool restrict)    { m_bRestrictToParent = restrict; }
             virtual bool ShouldRestrictToParent()           { return m_bRestrictToParent; }
 
-            virtual int X() const       { return m_Bounds.x; }  //!< Get X position of Control.
-            virtual int Y() const       { return m_Bounds.y; }  //!< Get Y position of Control.
+            virtual int X() const       { return m_bounds.x; }  //!< Get X position of Control.
+            virtual int Y() const       { return m_bounds.y; }  //!< Get Y position of Control.
 
-            virtual int Width() const   { return m_Bounds.w; }  //!< Get Control width.
-            virtual int Height() const  { return m_Bounds.h; }  //!< Get Control height.
+            virtual int Width() const   { return m_bounds.w; }  //!< Get Control width.
+            virtual int Height() const  { return m_bounds.h; }  //!< Get Control height.
 
             virtual int Bottom() const
             {
-                return m_Bounds.y+m_Bounds.h+m_Margin.bottom;
+                return m_bounds.y+m_bounds.h+m_margin.bottom;
             }
 
             //! Get right boundary of control.
             virtual int Right() const
             {
-                return m_Bounds.x+m_Bounds.w+m_Margin.right;
+                return m_bounds.x+m_bounds.w+m_margin.right;
             }
 
             //! Get the margin of the control. 
-            virtual const Margin& GetMargin() const     { return m_Margin; }
+            virtual const Margin& GetMargin() const     { return m_margin; }
             
             //! Get the padding for the control.
-            virtual const Padding& GetPadding() const   { return m_Padding; }
+            virtual const Padding& GetPadding() const   { return m_padding; }
 
             virtual void SetPos(int x, int y);
             virtual void SetPos(const Point& p)     { return SetPos(p.x, p.y); }
@@ -174,14 +174,14 @@ namespace Gwk
             virtual void MoveTo(int x, int y);
             virtual void MoveBy(int x, int y);
 
-            virtual const Gwk::Rect& GetBounds() const { return m_Bounds; }
+            virtual const Gwk::Rect& GetBounds() const { return m_bounds; }
 
             virtual Controls::Base* GetControlAt(int x, int y, bool bOnlyIfMouseEnabled = true);
 
         protected:
 
             virtual void OnBoundsChanged(Gwk::Rect oldBounds);
-            virtual void OnChildBoundsChanged(Gwk::Rect oldChildBounds, Base* pChild);
+            virtual void OnChildBoundsChanged(Gwk::Rect oldChildBounds, Base* child);
 
             virtual void OnScaleChanged();
 
@@ -189,15 +189,15 @@ namespace Gwk
 
             //! InnerBounds is the area inside the control that
             //! doesn't have child controls docked to it.
-            virtual const Gwk::Rect& GetInnerBounds() const { return m_InnerBounds; }
+            virtual const Gwk::Rect& GetInnerBounds() const { return m_innerBounds; }
 
         protected:
 
-            Gwk::Rect m_InnerBounds;
+            Gwk::Rect m_innerBounds;
 
         public:
 
-            virtual const Gwk::Rect& GetRenderBounds() const { return m_RenderBounds; }
+            virtual const Gwk::Rect& GetRenderBounds() const { return m_renderBounds; }
 
         protected:
 
@@ -206,7 +206,7 @@ namespace Gwk
         public:
 
             virtual void DoRender(Gwk::Skin::Base* skin);
-            virtual void DoCacheRender(Gwk::Skin::Base* skin, Gwk::Controls::Base* pMaster);
+            virtual void DoCacheRender(Gwk::Skin::Base* skin, Gwk::Controls::Base* master);
             virtual void RenderRecursive(Gwk::Skin::Base* skin, const Gwk::Rect& cliprect);
 
             virtual bool ShouldClip()   { return true; }
@@ -292,10 +292,10 @@ namespace Gwk
             virtual bool OnKeyPress(int iKey, bool bPress = true);
             virtual bool OnKeyRelease(int iKey);
 
-            virtual void OnPaste(Controls::Base* /*pFrom*/)         {}
-            virtual void OnCopy(Controls::Base* /*pFrom*/)          {}
-            virtual void OnCut(Controls::Base* /*pFrom*/)           {}
-            virtual void OnSelectAll(Controls::Base* /*pFrom*/)     {}
+            virtual void OnPaste(Controls::Base* /*from*/)         {}
+            virtual void OnCopy(Controls::Base* /*from*/)          {}
+            virtual void OnCut(Controls::Base* /*from*/)           {}
+            virtual void OnSelectAll(Controls::Base* /*from*/)     {}
 
             virtual bool OnKeyTab(bool bDown);
             virtual bool OnKeySpace(bool /*bDown*/)         { return false; }
@@ -314,7 +314,7 @@ namespace Gwk
             virtual bool ShouldDrawHover();
 
             virtual void Touch();
-            virtual void OnChildTouched(Controls::Base* pChild);
+            virtual void OnChildTouched(Controls::Base* child);
 
             virtual bool IsOnTop();
 
@@ -341,8 +341,8 @@ namespace Gwk
                 UpdateColours();
                 m_bCacheTextureDirty = true;
 
-                if (m_Parent)
-                    m_Parent->Redraw();
+                if (m_parent)
+                    m_parent->Redraw();
             }
 
             virtual void UpdateColours()    {}
@@ -354,7 +354,7 @@ namespace Gwk
             //! Query if this control is cached to a texture.
             virtual bool IsCachedToTexture() const  { return m_bCacheToTexture; }
 
-            virtual void SetCursor(unsigned char c) { m_Cursor = c; }
+            virtual void SetCursor(unsigned char c) { m_cursor = c; }
 
             virtual void UpdateCursor();
 
@@ -371,27 +371,27 @@ namespace Gwk
             virtual void SetToolTip(const Gwk::String& strText);
             virtual void SetToolTip(Base* tooltip)
             {
-                m_ToolTip = tooltip;
-                if (m_ToolTip)
+                m_toolTip = tooltip;
+                if (m_toolTip)
                 {
-                    m_ToolTip->SetParent(this);
-                    m_ToolTip->SetHidden(true);
+                    m_toolTip->SetParent(this);
+                    m_toolTip->SetHidden(true);
                 }
             }
 
             virtual Base* GetToolTip()
             {
-                return m_ToolTip;
+                return m_toolTip;
             }
 
             virtual bool IsMenuComponent();
             virtual void CloseMenus();
 
-            virtual bool IsTabable()                    { return m_Tabable; }
-            virtual void SetTabable(bool isTabable)     { m_Tabable = isTabable; }
+            virtual bool IsTabable()                    { return m_tabable; }
+            virtual void SetTabable(bool isTabable)     { m_tabable = isTabable; }
 
             // Accelerator functionality
-            void DefaultAccel(Gwk::Controls::Base* /*pCtrl*/)
+            void DefaultAccel(Gwk::Controls::Base* /*ctrl*/)
             {
                 AcceleratePressed();
             }
@@ -413,7 +413,7 @@ namespace Gwk
                 Gwk::String str = accelerator;
                 Gwk::Utility::Strings::ToUpper(str);
                 Gwk::Utility::Strings::Strip(str, " ");
-                m_Accelerators[ str ] = caller;
+                m_accelerators[ str ] = caller;
             }
 
             void AddAccelerator(const String& accelerator)
@@ -421,7 +421,7 @@ namespace Gwk
                 AddAccelerator(accelerator, &Base::DefaultAccel, this);
             }
 
-            AccelMap m_Accelerators;
+            AccelMap m_accelerators;
 
             // Default Events
 
@@ -436,30 +436,30 @@ namespace Gwk
 
             //! The logical parent.
             //! It's usually what you expect, the control you've parented it to.
-            Base* m_Parent;
+            Base* m_parent;
 
             //! If the InnerPanel exists our children will automatically
             //! become children of that instead of us - allowing us to move
             //! them all around by moving that panel (useful for scrolling etc).
-            Base* m_InnerPanel;
+            Base* m_innerPanel;
             
-            virtual Base* Inner()   { return m_InnerPanel; }
+            virtual Base* Inner()   { return m_innerPanel; }
 
             //! This is the panel's actual parent - most likely the logical
             //! parent's InnerPanel (if it has one). You should rarely need this.
-            Base* m_ActualParent;
+            Base* m_actualParent;
 
-            Base* m_ToolTip;
+            Base* m_toolTip;
 
-            Skin::Base* m_Skin;
+            Skin::Base* m_skin;
 
-            Gwk::Rect m_Bounds;
-            Gwk::Rect m_RenderBounds;
+            Gwk::Rect m_bounds;
+            Gwk::Rect m_renderBounds;
 
-            Padding m_Padding;
-            Margin m_Margin;
+            Padding m_padding;
+            Margin m_margin;
 
-            Gwk::String m_Name;
+            Gwk::String m_name;
 
             bool m_bRestrictToParent;
             bool m_bDisabled;
@@ -468,11 +468,11 @@ namespace Gwk
             bool m_bKeyboardInputEnabled;
             bool m_bDrawBackground;
 
-            Docking::Area m_iDock;
+            Docking::Area m_dock;
 
-            unsigned char m_Cursor;
+            unsigned char m_cursor;
 
-            bool m_Tabable;
+            bool m_tabable;
 
         public:
 
@@ -484,8 +484,8 @@ namespace Gwk
             void Invalidate();
             void InvalidateParent()
             {
-                if (m_Parent)
-                    m_Parent->Invalidate();
+                if (m_parent)
+                    m_parent->Invalidate();
             }
 
             void InvalidateChildren(bool bRecursive = false);
@@ -511,37 +511,37 @@ namespace Gwk
             // Giver
 
             virtual void DragAndDrop_SetPackage(bool bDraggable, const String& strName = "",
-                                                void* pUserData = NULL);
+                                                void* userData = NULL);
             virtual bool DragAndDrop_Draggable();
             virtual bool DragAndDrop_ShouldStartDrag()  { return true; }
 
-            virtual void DragAndDrop_StartDragging(Gwk::DragAndDrop::Package* pPackage, int x, int y);
+            virtual void DragAndDrop_StartDragging(Gwk::DragAndDrop::Package* package, int x, int y);
             virtual Gwk::DragAndDrop::Package* DragAndDrop_GetPackage(int x, int y);
             virtual void DragAndDrop_EndDragging(bool /*bSuccess*/, int /*x*/, int /*y*/) {}
 
         protected:
 
-            DragAndDrop::Package*   m_DragAndDrop_Package;
+            DragAndDrop::Package*   m_dragAndDrop_Package;
 
         public:
 
             // Receiver
-            virtual void DragAndDrop_HoverEnter(Gwk::DragAndDrop::Package* /*pPackage*/,
+            virtual void DragAndDrop_HoverEnter(Gwk::DragAndDrop::Package* /*package*/,
                                                 int /*x*/, int /*y*/)
             {
             }
 
-            virtual void DragAndDrop_HoverLeave(Gwk::DragAndDrop::Package* /*pPackage*/)
+            virtual void DragAndDrop_HoverLeave(Gwk::DragAndDrop::Package* /*package*/)
             {
             }
 
-            virtual void DragAndDrop_Hover(Gwk::DragAndDrop::Package* /*pPackage*/,
+            virtual void DragAndDrop_Hover(Gwk::DragAndDrop::Package* /*package*/,
                                            int /*x*/, int /*y*/)
             {
             }
 
-            virtual bool DragAndDrop_HandleDrop(Gwk::DragAndDrop::Package* pPackage, int x, int y);
-            virtual bool DragAndDrop_CanAcceptPackage(Gwk::DragAndDrop::Package* /*pPackage*/)
+            virtual bool DragAndDrop_HandleDrop(Gwk::DragAndDrop::Package* package, int x, int y);
+            virtual bool DragAndDrop_CanAcceptPackage(Gwk::DragAndDrop::Package* /*package*/)
             {
                 return false;
             }
@@ -554,11 +554,11 @@ namespace Gwk
 
 #ifndef GWK_NO_ANIMATION
 
-            virtual void Anim_WidthIn(float fLength, float fDelay = 0.0f, float fEase = 1.0f);
-            virtual void Anim_HeightIn(float fLength, float fDelay = 0.0f, float fEase = 1.0f);
-            virtual void Anim_WidthOut(float fLength, bool bHide = true, float fDelay = 0.0f,
+            virtual void Anim_widthIn(float fLength, float fDelay = 0.0f, float fEase = 1.0f);
+            virtual void Anim_heightIn(float fLength, float fDelay = 0.0f, float fEase = 1.0f);
+            virtual void Anim_widthOut(float fLength, bool bHide = true, float fDelay = 0.0f,
                                        float fEase = 1.0f);
-            virtual void Anim_HeightOut(float fLength, bool bHide = true, float fDelay = 0.0f,
+            virtual void Anim_heightOut(float fLength, bool bHide = true, float fDelay = 0.0f,
                                         float fEase = 1.0f);
 
 #endif
@@ -595,8 +595,8 @@ namespace Gwk
             virtual void       SetValue(const String& strValue);
             virtual void       DoAction() {}
 
-            virtual void SetAction(Event::Handler* pObject,
-                                   Handler::FunctionWithInformation pFunction,
+            virtual void SetAction(Event::Handler* object,
+                                   Handler::FunctionWithInformation function,
                                    const Gwk::Event::Packet& packet)
             {
             }
@@ -652,12 +652,9 @@ namespace Gwk
         if (!p)
             return NULL;
 
-        Gwk::Controls::Base* pReturn = p->DynamicCast(T::GetIdentifier());
+        Gwk::Controls::Base* result = p->DynamicCast(T::GetIdentifier());
 
-        if (!pReturn)
-            return NULL;
-
-        return static_cast<T*>(pReturn);
+        return result != NULL ? static_cast<T*>(result) : NULL;
     }
 
     template <class T>
@@ -692,14 +689,14 @@ public: \
     static  const char* GetTypeNameStatic() { return #THISNAME; } \
     virtual const char* GetTypeName() const override { return GetTypeNameStatic(); } \
     virtual const char* GetParentTypeName() const override { return ParentClass::GetTypeNameStatic(); } \
-    THISNAME(Gwk::Controls::Base* pParent, const Gwk::String& pName = "")
+    THISNAME(Gwk::Controls::Base* parent, const Gwk::String& name = "")
 
 #define GWK_CONTROL_INLINE(THISNAME, BASENAME) \
-    GWK_CONTROL(THISNAME, BASENAME) : ParentClass(pParent, pName)
+    GWK_CONTROL(THISNAME, BASENAME) : ParentClass(parent, name)
 
 #define GWK_CONTROL_CONSTRUCTOR(THISNAME) \
-    THISNAME::THISNAME(Gwk::Controls::Base* pParent, const Gwk::String& pName) \
-        : ParentClass(pParent, pName)
+    THISNAME::THISNAME(Gwk::Controls::Base* parent, const Gwk::String& name) \
+        : ParentClass(parent, name)
 
 } // namespace Gwk
 

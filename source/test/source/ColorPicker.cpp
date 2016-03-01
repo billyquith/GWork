@@ -17,10 +17,10 @@ public:
 
     GWK_CONTROL_INLINE(ColorPicker, GUnit)
     {
-        Controls::ColorPicker* pCtrl = new Controls::ColorPicker(this);
-        pCtrl->SetBounds(0, 10, 250, 150);
-        Controls::HSVColorPicker* pHSVCtrl = new Controls::HSVColorPicker(this);
-        pHSVCtrl->SetBounds(260, 10, 250, 150);
+        Controls::ColorPicker* ctrl = new Controls::ColorPicker(this);
+        ctrl->SetBounds(0, 10, 250, 150);
+        Controls::HSVColorPicker* hSVCtrl = new Controls::HSVColorPicker(this);
+        hSVCtrl->SetBounds(260, 10, 250, 150);
     }
 };
 

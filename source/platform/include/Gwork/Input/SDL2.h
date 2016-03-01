@@ -24,17 +24,17 @@ namespace Gwk
 
             SDL2()
             {
-                m_Canvas = NULL;
+                m_canvas = NULL;
             }
 
             void Initialize(Gwk::Controls::Canvas* c)
             {
-                m_Canvas = c;
+                m_canvas = c;
             }
 
             bool ProcessEvent(SDL_Event* event)
             {
-                if (!m_Canvas)
+                if (!m_canvas)
                     return false;
 
                 switch (event->type)
@@ -69,19 +69,19 @@ namespace Gwk
                         default:                        return false;
                         }
 
-                        return m_Canvas->InputKey(iKey, ke->state != 0);
+                        return m_canvas->InputKey(iKey, ke->state != 0);
                     }
 
                 case SDL_TEXTINPUT:
                     {
                         // TODO: This will probably need fixing for UTF-8.
-                        return m_Canvas->InputCharacter(event->text.text[0]);
+                        return m_canvas->InputCharacter(event->text.text[0]);
                     }
 
                 case SDL_MOUSEMOTION:
                     {
                         SDL_MouseMotionEvent* E = &event->motion;
-                        return m_Canvas->InputMouseMoved(E->x, E->y, E->xrel, E->yrel);
+                        return m_canvas->InputMouseMoved(E->x, E->y, E->xrel, E->yrel);
                     }
 
                 case SDL_MOUSEBUTTONDOWN:
@@ -108,13 +108,13 @@ namespace Gwk
                             return false;
                         }
 
-                        return m_Canvas->InputMouseButton(Button, E->state != 0);
+                        return m_canvas->InputMouseButton(Button, E->state != 0);
                     }
 
                 case SDL_MOUSEWHEEL:
                     {
                         SDL_MouseWheelEvent* E = &event->wheel;
-                        return m_Canvas->InputMouseWheel(E->y);
+                        return m_canvas->InputMouseWheel(E->y);
                     }
 
                 default:
@@ -124,7 +124,7 @@ namespace Gwk
 
         protected:
 
-            Gwk::Controls::Canvas* m_Canvas;
+            Gwk::Controls::Canvas* m_canvas;
 
         };
 

@@ -41,16 +41,16 @@ void Menu::Layout(Skin::Base* skin)
 {
     int childrenHeight = 0;
 
-    for (Base::List::iterator it = m_InnerPanel->Children.begin();
-         it != m_InnerPanel->Children.end();
+    for (Base::List::iterator it = m_innerPanel->Children.begin();
+         it != m_innerPanel->Children.end();
          ++it)
     {
-        Base* pChild = (*it);
+        Base* child = (*it);
         
-        if (!pChild)
+        if (!child)
             continue;
         
-        childrenHeight += pChild->Height();
+        childrenHeight += child->Height();
     }
 
     if (Y()+childrenHeight > GetCanvas()->Height())
@@ -67,13 +67,13 @@ MenuItem* Menu::AddItem(const String& strName,
                         const String& strIconName,
                         const String& strAccelerator)
 {
-    MenuItem* pItem = new MenuItem(this);
-    pItem->SetPadding(Padding(2, 4, 4, 4));
-    pItem->SetText(strName);
-    pItem->SetImage(strIconName);
-    pItem->SetAccelerator(strAccelerator);
-    OnAddItem(pItem);
-    return pItem;
+    MenuItem* item = new MenuItem(this);
+    item->SetPadding(Padding(2, 4, 4, 4));
+    item->SetText(strName);
+    item->SetImage(strIconName);
+    item->SetAccelerator(strAccelerator);
+    OnAddItem(item);
+    return item;
 }
 
 void Menu::OnAddItem(MenuItem* item)
@@ -92,69 +92,69 @@ void Menu::OnAddItem(MenuItem* item)
 
 void Menu::ClearItems()
 {
-    for (Base::List::iterator it = m_InnerPanel->Children.begin();
-         it != m_InnerPanel->Children.end();
+    for (Base::List::iterator it = m_innerPanel->Children.begin();
+         it != m_innerPanel->Children.end();
          ++it)
     {
-        Base* pChild = *it;
+        Base* child = *it;
 
-        if (!pChild)
+        if (!child)
             continue;
 
-        pChild->DelayedDelete();
+        child->DelayedDelete();
     }
 }
 
 void Menu::CloseAll()
 {
-    for (Base::List::iterator it = m_InnerPanel->Children.begin();
-         it != m_InnerPanel->Children.end();
+    for (Base::List::iterator it = m_innerPanel->Children.begin();
+         it != m_innerPanel->Children.end();
          ++it)
     {
-        Base* pChild = *it;
-        MenuItem* pItem = gwk_cast<MenuItem>(pChild);
+        Base* child = *it;
+        MenuItem* item = gwk_cast<MenuItem>(child);
 
-        if (!pItem)
+        if (!item)
             continue;
 
-        pItem->CloseMenu();
+        item->CloseMenu();
     }
 }
 
 bool Menu::IsMenuOpen()
 {
-    for (Base::List::iterator it = m_InnerPanel->Children.begin();
-         it != m_InnerPanel->Children.end();
+    for (Base::List::iterator it = m_innerPanel->Children.begin();
+         it != m_innerPanel->Children.end();
          ++it)
     {
-        Base* pChild = *it;
-        MenuItem* pItem = gwk_cast<MenuItem>(pChild);
+        Base* child = *it;
+        MenuItem* item = gwk_cast<MenuItem>(child);
 
-        if (!pItem)
+        if (!item)
             continue;
 
-        if (pItem->IsMenuOpen())
+        if (item->IsMenuOpen())
             return true;
     }
 
     return false;
 }
 
-void Menu::OnHoverItem(Gwk::Controls::Base* pControl)
+void Menu::OnHoverItem(Gwk::Controls::Base* control)
 {
     if (!ShouldHoverOpenMenu())
         return;
 
-    MenuItem* pItem = gwk_cast<MenuItem>(pControl);
+    MenuItem* item = gwk_cast<MenuItem>(control);
 
-    if (!pItem)
+    if (!item)
         return;
 
-    if (pItem->IsMenuOpen())
+    if (item->IsMenuOpen())
         return;
 
     CloseAll();
-    pItem->OpenMenu();
+    item->OpenMenu();
 }
 
 void Menu::Open(unsigned int iPos)

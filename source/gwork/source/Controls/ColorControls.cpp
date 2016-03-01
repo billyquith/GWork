@@ -122,7 +122,7 @@ Gwk::Color ColorLerpBox::GetSelectedColor()
 void ColorLerpBox::SetColor(Gwk::Color color, bool onlyHue)
 {
     HSV hsv = RGBtoHSV(color.r, color.g, color.b);
-    m_Hue = hsv.h;
+    m_hue = hsv.h;
 
     if (!onlyHue)
     {
@@ -163,7 +163,7 @@ Gwk::Color ColorLerpBox::GetColorAtPos(int x, int y)
 {
     float xPercent = (float)x / (float)Width();
     float yPercent = 1.f - (float)y/(float)Height();
-    Gwk::Color result = HSVToColor(m_Hue, xPercent, yPercent);
+    Gwk::Color result = HSVToColor(m_hue, xPercent, yPercent);
     result.a = 255;
     return result;
 }
@@ -215,7 +215,7 @@ void ColorSlider::Render(Gwk::Skin::Base* skin)
         skin->GetRender()->DrawFilledRect(Gwk::Rect(5, y, Width()-10, 1));
     }
 
-    int drawHeight = m_iSelectedDist-3;
+    int drawHeight = m_selectedDist-3;
     // Draw our selectors
     skin->GetRender()->SetDrawColor(Gwk::Color(0, 0, 0, 255));
     skin->GetRender()->DrawFilledRect(Gwk::Rect(0, drawHeight+2, Width(), 1));
@@ -256,7 +256,7 @@ void ColorSlider::OnMouseMoved(int x, int y, int /*deltaX*/, int /*deltaY*/)
         if (cursorPos.y > Height())
             cursorPos.y = Height();
 
-        m_iSelectedDist = cursorPos.y;
+        m_selectedDist = cursorPos.y;
         onSelectionChanged.Call(this);
     }
 }
@@ -264,11 +264,11 @@ void ColorSlider::OnMouseMoved(int x, int y, int /*deltaX*/, int /*deltaY*/)
 void ColorSlider::SetColor(Gwk::Color color)
 {
     HSV hsv = RGBtoHSV(color.r, color.g, color.b);
-    m_iSelectedDist = hsv.h/360*Height();
+    m_selectedDist = hsv.h/360*Height();
     onSelectionChanged.Call(this);
 }
 
 Gwk::Color ColorSlider::GetSelectedColor()
 {
-    return GetColorAtHeight(m_iSelectedDist);
+    return GetColorAtHeight(m_selectedDist);
 }

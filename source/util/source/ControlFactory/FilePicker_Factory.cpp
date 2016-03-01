@@ -44,10 +44,10 @@ namespace Gwk
 
             virtual Gwk::Controls::Base* CreateInstance(Gwk::Controls::Base* parent) override
             {
-                Gwk::Controls::FilePicker* pControl = new Gwk::Controls::FilePicker(parent);
-                pControl->SetSize(100, 20);
-                pControl->SetFileType("EXE file | *.exe");
-                return pControl;
+                Gwk::Controls::FilePicker* control = new Gwk::Controls::FilePicker(parent);
+                control->SetSize(100, 20);
+                control->SetFileType("EXE file | *.exe");
+                return control;
             }
 
         };

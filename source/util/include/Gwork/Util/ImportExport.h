@@ -26,10 +26,10 @@ namespace Gwk
             virtual Gwk::String Name() = 0;
 
             virtual bool CanImport() = 0;
-            virtual void Import(Gwk::Controls::Base* pRoot, const Gwk::String& strFilename) = 0;
+            virtual void Import(Gwk::Controls::Base* root, const Gwk::String& strFilename) = 0;
 
             virtual bool CanExport() = 0;
-            virtual void Export(Gwk::Controls::Base* pRoot, const Gwk::String& strFilename) = 0;
+            virtual void Export(Gwk::Controls::Base* root, const Gwk::String& strFilename) = 0;
 
         public:
 
@@ -45,7 +45,7 @@ namespace Gwk
 
         namespace Tools
         {
-            ControlList GetExportableChildren(Gwk::Controls::Base* pRoot);
+            ControlList GetExportableChildren(Gwk::Controls::Base* root);
         }
     }
 }

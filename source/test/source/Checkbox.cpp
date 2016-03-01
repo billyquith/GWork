@@ -34,17 +34,17 @@ public:
         }
     }
 
-    void OnChecked(Controls::Base* pControl)
+    void OnChecked(Controls::Base* control)
     {
         UnitPrint("Checkbox Checked (using 'OnChecked' event)");
     }
 
-    void OnUnchecked(Controls::Base* pControl)
+    void OnUnchecked(Controls::Base* control)
     {
         UnitPrint("Checkbox Unchecked (using 'OnUnchecked' event)");
     }
 
-    void OnCheckChanged(Controls::Base* pControl)
+    void OnCheckChanged(Controls::Base* control)
     {
         UnitPrint("Checkbox CheckChanged (using 'OnCheckChanged' event)");
     }

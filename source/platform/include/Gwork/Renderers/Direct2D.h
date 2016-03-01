@@ -26,8 +26,8 @@ namespace Gwk
         public:
 
             Direct2D();
-            Direct2D(ID2D1RenderTarget* pDevice, IDWriteFactory* pDWriteFactory,
-                     IWICImagingFactory* pWICFactory);
+            Direct2D(ID2D1RenderTarget* device, IDWriteFactory* dWriteFactory,
+                     IWICImagingFactory* wICFactory);
             ~Direct2D();
 
             virtual void Begin();
@@ -38,23 +38,23 @@ namespace Gwk
 
             virtual void DrawFilledRect(Gwk::Rect rect);
 
-            virtual void LoadFont(Gwk::Font* pFont);
-            virtual void FreeFont(Gwk::Font* pFont);
-            virtual void RenderText(Gwk::Font* pFont, Gwk::Point pos,
+            virtual void LoadFont(Gwk::Font* font);
+            virtual void FreeFont(Gwk::Font* font);
+            virtual void RenderText(Gwk::Font* font, Gwk::Point pos,
                                     const Gwk::String& text);
-            virtual Gwk::Point MeasureText(Gwk::Font* pFont, const Gwk::String& text);
+            virtual Gwk::Point MeasureText(Gwk::Font* font, const Gwk::String& text);
 
             virtual void DeviceLost();
-            virtual void DeviceAcquired(ID2D1RenderTarget* pRT);
+            virtual void DeviceAcquired(ID2D1RenderTarget* rT);
 
             void StartClip();
             void EndClip();
 
-            void DrawTexturedRect(Gwk::Texture* pTexture, Gwk::Rect pTargetRect, float u1 = 0.0f,
+            void DrawTexturedRect(Gwk::Texture* texture, Gwk::Rect targetRect, float u1 = 0.0f,
                                   float v1 = 0.0f, float u2 = 1.0f, float v2 = 1.0f);
-            void        LoadTexture(Gwk::Texture* pTexture);
-            void        FreeTexture(Gwk::Texture* pTexture);
-            Gwk::Color PixelColour(Gwk::Texture* pTexture, unsigned int x, unsigned int y,
+            void        LoadTexture(Gwk::Texture* texture);
+            void        FreeTexture(Gwk::Texture* texture);
+            Gwk::Color PixelColour(Gwk::Texture* texture, unsigned int x, unsigned int y,
                                     const Gwk::Color& col_default);
 
             void DrawLinedRect(Gwk::Rect rect);
@@ -66,41 +66,41 @@ namespace Gwk
             // Self Initialization
             //
 
-            bool InitializeContext(Gwk::WindowProvider* pWindow);
-            bool ShutdownContext(Gwk::WindowProvider* pWindow);
-            bool PresentContext(Gwk::WindowProvider* pWindow);
-            bool ResizedContext(Gwk::WindowProvider* pWindow, int w, int h);
-            bool BeginContext(Gwk::WindowProvider* pWindow);
-            bool EndContext(Gwk::WindowProvider* pWindow);
+            bool InitializeContext(Gwk::WindowProvider* window);
+            bool ShutdownContext(Gwk::WindowProvider* window);
+            bool PresentContext(Gwk::WindowProvider* window);
+            bool ResizedContext(Gwk::WindowProvider* window, int w, int h);
+            bool BeginContext(Gwk::WindowProvider* window);
+            bool EndContext(Gwk::WindowProvider* window);
 
         private:
 
             bool InternalCreateDeviceResources();
             void InternalReleaseDeviceResources();
 
-            ID2D1Factory*   m_pD2DFactory;
-            HWND m_pHWND;
+            ID2D1Factory*   m_d2DFactory;
+            HWND m_hWND;
 
         private:
 
-            bool InternalLoadTexture(Gwk::Texture* pTexture);
-            bool InternalLoadFont(Gwk::Font* pFont);
+            bool InternalLoadTexture(Gwk::Texture* texture);
+            bool InternalLoadFont(Gwk::Font* font);
 
-            void InternalFreeFont(Gwk::Font* pFont, bool bRemove = true);
-            void InternalFreeTexture(Gwk::Texture* pTexture, bool bRemove = true);
+            void InternalFreeFont(Gwk::Font* font, bool bRemove = true);
+            void InternalFreeTexture(Gwk::Texture* texture, bool bRemove = true);
 
         private:
 
-            IDWriteFactory*     m_pDWriteFactory;
-            IWICImagingFactory* m_pWICFactory;
-            ID2D1RenderTarget*  m_pRT;
+            IDWriteFactory*     m_dWriteFactory;
+            IWICImagingFactory* m_wICFactory;
+            ID2D1RenderTarget*  m_rT;
 
-            ID2D1SolidColorBrush* m_pSolidColorBrush;
+            ID2D1SolidColorBrush* m_solidColorBrush;
 
-            D2D1::ColorF m_Color;
+            D2D1::ColorF m_color;
 
-            Gwk::Texture::List m_TextureList;
-            Gwk::Font::List m_FontList;
+            Gwk::Texture::List m_textureList;
+            Gwk::Font::List m_fontList;
 
         };
 

@@ -19,13 +19,13 @@ namespace Gwk
         {
             GWK_CONTROL_INLINE(SplitterVertical, Controls::Base)
             {
-                m_Panels[0] = new Controls::Base(this);
-                m_Panels[1] = new Controls::Base(this);
-                m_pSplitter = new Controls::SplitterBar(this);
-                m_SplitterSize = 6;
-                m_pSplitter->SetPos(0, 100);
-                m_pSplitter->SetCursor(Gwk::CursorType::SizeNS);
-                m_pSplitter->onDragged.Add(this, &ThisClass::OnSplitterMoved);
+                m_panels[0] = new Controls::Base(this);
+                m_panels[1] = new Controls::Base(this);
+                m_splitter = new Controls::SplitterBar(this);
+                m_splitterSize = 6;
+                m_splitter->SetPos(0, 100);
+                m_splitter->SetCursor(Gwk::CursorType::SizeNS);
+                m_splitter->onDragged.Add(this, &ThisClass::OnSplitterMoved);
                 SetScaling(false, 100);
             }
 
@@ -37,21 +37,21 @@ namespace Gwk
             void SetPanels(Controls::Base* pA, Controls::Base* pB)
             {
                 if (pA)
-                    pA->SetParent(m_Panels[0]);
+                    pA->SetParent(m_panels[0]);
 
                 if (pB)
-                    pB->SetParent(m_Panels[1]);
+                    pB->SetParent(m_panels[1]);
             }
 
             void SetScaling(bool Right, int iSize)
             {
-                m_RightSided = Right;
-                m_Size = iSize;
+                m_rightSided = Right;
+                m_size = iSize;
             }
 
             virtual int SplitterPos()
             {
-                return m_pSplitter->Y();
+                return m_splitter->Y();
             }
 
         protected:
@@ -59,35 +59,35 @@ namespace Gwk
             virtual void RefreshContainers()
             {
                 const Gwk::Rect& inner = GetInnerBounds();
-                int iOffset = m_Size;
+                int iOffset = m_size;
 
-                if (m_RightSided)
-                    iOffset = Height()-m_Size;
+                if (m_rightSided)
+                    iOffset = Height()-m_size;
 
-                m_pSplitter->SetSize(inner.w, m_SplitterSize);
-                m_pSplitter->SetPos(0, iOffset);
-                m_Panels[0]->SetPos(inner.x, inner.y);
-                m_Panels[0]->SetSize(inner.w, iOffset);
-                m_Panels[1]->SetPos(inner.x, (iOffset+m_SplitterSize));
-                m_Panels[1]->SetSize(inner.w, (inner.y+inner.h)-(iOffset+m_SplitterSize));
+                m_splitter->SetSize(inner.w, m_splitterSize);
+                m_splitter->SetPos(0, iOffset);
+                m_panels[0]->SetPos(inner.x, inner.y);
+                m_panels[0]->SetSize(inner.w, iOffset);
+                m_panels[1]->SetPos(inner.x, (iOffset+m_splitterSize));
+                m_panels[1]->SetSize(inner.w, (inner.y+inner.h)-(iOffset+m_splitterSize));
             }
 
             virtual void OnSplitterMoved()
             {
-                if (m_RightSided)
-                    m_Size = Height()-m_pSplitter->Y();
+                if (m_rightSided)
+                    m_size = Height()-m_splitter->Y();
                 else
-                    m_Size = m_pSplitter->Y();
+                    m_size = m_splitter->Y();
 
                 RefreshContainers();
                 Invalidate();
             }
 
-            Controls::Base*         m_Panels[2];
-            bool m_RightSided;
-            int m_Size;
-            Controls::SplitterBar*  m_pSplitter;
-            unsigned int m_SplitterSize;
+            Controls::Base*         m_panels[2];
+            bool m_rightSided;
+            int m_size;
+            Controls::SplitterBar*  m_splitter;
+            unsigned int m_splitterSize;
         };
 
 
@@ -95,32 +95,32 @@ namespace Gwk
         {
             GWK_CONTROL_INLINE(SplitterHorizontal, SplitterVertical)
             {
-                m_pSplitter->SetCursor(Gwk::CursorType::SizeWE);
-                m_pSplitter->SetPos(100, 0);
+                m_splitter->SetCursor(Gwk::CursorType::SizeWE);
+                m_splitter->SetPos(100, 0);
             }
 
             virtual void RefreshContainers()
             {
                 const Gwk::Rect& inner = GetInnerBounds();
-                int iOffset = m_Size;
+                int iOffset = m_size;
 
-                if (m_RightSided)
-                    iOffset = Width()-m_Size;
+                if (m_rightSided)
+                    iOffset = Width()-m_size;
 
-                m_pSplitter->SetSize(m_SplitterSize, inner.h);
-                m_pSplitter->SetPos(iOffset, 0);
-                m_Panels[0]->SetPos(inner.x, inner.y);
-                m_Panels[0]->SetSize(iOffset, inner.h);
-                m_Panels[1]->SetPos((iOffset+m_SplitterSize), inner.y);
-                m_Panels[1]->SetSize((inner.x+inner.w)-(iOffset+m_SplitterSize), inner.h);
+                m_splitter->SetSize(m_splitterSize, inner.h);
+                m_splitter->SetPos(iOffset, 0);
+                m_panels[0]->SetPos(inner.x, inner.y);
+                m_panels[0]->SetSize(iOffset, inner.h);
+                m_panels[1]->SetPos((iOffset+m_splitterSize), inner.y);
+                m_panels[1]->SetSize((inner.x+inner.w)-(iOffset+m_splitterSize), inner.h);
             }
 
             virtual void OnSplitterMoved()
             {
-                if (m_RightSided)
-                    m_Size = Width()-m_pSplitter->X();
+                if (m_rightSided)
+                    m_size = Width()-m_splitter->X();
                 else
-                    m_Size = m_pSplitter->X();
+                    m_size = m_splitter->X();
 
                 RefreshContainers();
                 Invalidate();
@@ -128,7 +128,7 @@ namespace Gwk
 
             virtual int SplitterPos()
             {
-                return m_pSplitter->X();
+                return m_splitter->X();
             }
 
         };

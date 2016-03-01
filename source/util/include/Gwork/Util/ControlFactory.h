@@ -51,7 +51,7 @@ namespace Gwk
 
         List&                 GetList();
         ControlFactory::Base* Find(const Gwk::String& name);
-        Controls::Base*       Clone(Controls::Base* pEnt, ControlFactory::Base* pFactory);
+        Controls::Base*       Clone(Controls::Base* ent, ControlFactory::Base* factory);
         
         template <typename ENUM>
         struct ValueEnumMapItem
@@ -73,22 +73,22 @@ namespace Gwk
             static const int Undefined = -1;
             
             ValueEnumMap(const Enum *pairs, Count_t count)
-            :   m_Enums(pairs)
-            ,   m_EnumCount(count)
+            :   m_enums(pairs)
+            ,   m_enumCount(count)
             {}
             
-            size_t GetEnumCount() const { return m_EnumCount; }
+            size_t GetEnumCount() const { return m_enumCount; }
             
             const char* GetNameByIndex(Count_t index) const
             {
-                return m_Enums[index].name;
+                return m_enums[index].name;
             }
 
             size_t GetIndexByName(const char *name) const
             {
-                for (Count_t i=0; i < m_EnumCount; ++i)
+                for (Count_t i=0; i < m_enumCount; ++i)
                 {
-                    if (strcmp(m_Enums[i].name, name)==0)
+                    if (strcmp(m_enums[i].name, name)==0)
                         return i;
                 }
                 return Undefined;
@@ -97,23 +97,23 @@ namespace Gwk
             ENUM GetValueByName(const char *name, EnumType defaultValue = Undefined) const
             {
                 const size_t i = GetIndexByName(name);
-                return i!=Undefined ? m_Enums[i].value : defaultValue;
+                return i!=Undefined ? m_enums[i].value : defaultValue;
             }
 
             const char* GetNameByValue(EnumType value, Count_t defaultIndex=0) const
             {
-                for (size_t i=0; i < m_EnumCount; ++i)
+                for (size_t i=0; i < m_enumCount; ++i)
                 {
-                    const Enum &item = m_Enums[i];
+                    const Enum &item = m_enums[i];
                     if (item.value == value)
                         return item.name;   // We found the item.
                 }
-                return m_Enums[defaultIndex].name;   // Not found. Return default indexed.
+                return m_enums[defaultIndex].name;   // Not found. Return default indexed.
             }
 
         private:
-            const Enum     *m_Enums;
-            const Count_t   m_EnumCount;
+            const Enum     *m_enums;
+            const Count_t   m_enumCount;
         };
         
 
@@ -214,7 +214,7 @@ namespace Gwk
             virtual Gwk::Controls::Base* CreateInstance(Gwk::Controls::Base* parent) = 0;
 
             Base* GetBaseFactory();
-            void  AddProperty(Property* pProp);
+            void  AddProperty(Property* prop);
 
             Property* GetProperty(const Gwk::String& name);
             void      SetControlValue(Gwk::Controls::Base* ctrl, const Gwk::String& name,
@@ -222,7 +222,7 @@ namespace Gwk
 
             const Property::List& Properties()
             {
-                return m_Properties;
+                return m_properties;
             }
 
             /// Called when the control is drag and dropped onto the parent, even
@@ -238,7 +238,7 @@ namespace Gwk
 
             /// Called when a child is clicked on in an editor
             virtual bool ChildTouched(Gwk::Controls::Base* ctrl,
-                                      Gwk::Controls::Base* pChildControl)
+                                      Gwk::Controls::Base* childControl)
             {
                 return false;
             }
@@ -253,7 +253,7 @@ namespace Gwk
 
         protected:
 
-            Property::List m_Properties;
+            Property::List m_properties;
         };
 
 

@@ -88,9 +88,9 @@ namespace Gwk
             virtual void SyncNumberFromText();
 
 
-            int m_iNumber;
-            int m_iMax;
-            int m_iMin;
+            int m_number;
+            int m_max;
+            int m_min;
 
         };
 

@@ -32,7 +32,7 @@ namespace Gwk
 
         protected:
 
-            int m_iResizeDir;
+            int m_resizeDir;
 
         };
 

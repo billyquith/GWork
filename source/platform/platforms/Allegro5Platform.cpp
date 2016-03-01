@@ -18,12 +18,12 @@
 #include <Gwork/Input/Allegro5.h>
 
 
-static Gwk::Input::Allegro      g_GworkInput;
+static Gwk::Input::Allegro      g_gworkInput;
 static ALLEGRO_EVENT_QUEUE*     g_event_queue = NULL;
 static ALLEGRO_DISPLAY*         g_display = NULL;
 static Gwk::String              gs_ClipboardEmulator;
 
-static const ALLEGRO_SYSTEM_MOUSE_CURSOR g_CursorConversion[] =
+static const ALLEGRO_SYSTEM_MOUSE_CURSOR g_cursorConversion[] =
 {
     ALLEGRO_SYSTEM_MOUSE_CURSOR_ARROW,      // IDC_ARROW
     ALLEGRO_SYSTEM_MOUSE_CURSOR_EDIT,       // IDC_IBEAM
@@ -45,7 +45,7 @@ void Gwk::Platform::Sleep(unsigned int iMS)
 
 void Gwk::Platform::SetCursor(unsigned char iCursor)
 {
-    al_set_system_mouse_cursor(g_display, g_CursorConversion[iCursor]);
+    al_set_system_mouse_cursor(g_display, g_cursorConversion[iCursor]);
 }
 
 Gwk::String Gwk::Platform::GetClipboardText()
@@ -199,45 +199,45 @@ void* Gwk::Platform::CreatePlatformWindow(int x, int y, int w, int h,
     return display;
 }
 
-void Gwk::Platform::DestroyPlatformWindow(void* pPtr)
+void Gwk::Platform::DestroyPlatformWindow(void* ptr)
 {
-    ALLEGRO_DISPLAY* display = (ALLEGRO_DISPLAY*)pPtr;
+    ALLEGRO_DISPLAY* display = (ALLEGRO_DISPLAY*)ptr;
     al_destroy_display(display);
     al_destroy_event_queue(g_event_queue);
     g_event_queue = NULL;
 }
 
-bool Gwk::Platform::MessagePump(void* pWindow)
+bool Gwk::Platform::MessagePump(void* window)
 {
 //    static bool firstCall = true;
 //    if (firstCall)
 //    {
 //        firstCall = false;
-////        g_GworkInput.Initialize(ptarget);   TODO - initialise input to canvas
+////        g_gworkInput.Initialize(ptarget);   TODO - initialise input to canvas
 //    }
 
     ALLEGRO_EVENT ev;
     while (al_get_next_event(g_event_queue, &ev))
     {
-        g_GworkInput.ProcessMessage(ev);
+        g_gworkInput.ProcessMessage(ev);
     }
     
     return false;
 }
 
-void Gwk::Platform::SetBoundsPlatformWindow(void* pPtr, int x, int y, int w, int h)
+void Gwk::Platform::SetBoundsPlatformWindow(void* ptr, int x, int y, int w, int h)
 {
-    ALLEGRO_DISPLAY* display = (ALLEGRO_DISPLAY*)pPtr;
+    ALLEGRO_DISPLAY* display = (ALLEGRO_DISPLAY*)ptr;
     al_set_window_position(display, x, y);
 
     if (al_get_display_width(display) != w || al_get_display_height(display) != h)
         al_resize_display(display, w, h);
 }
 
-void Gwk::Platform::SetWindowMaximized(void* pPtr, bool bMax, Gwk::Point& pNewPos,
-                                        Gwk::Point& pNewSize)
+void Gwk::Platform::SetWindowMaximized(void* ptr, bool bMax, Gwk::Point& newPos,
+                                        Gwk::Point& newSize)
 {
-    ALLEGRO_DISPLAY* display = (ALLEGRO_DISPLAY*)pPtr;
+    ALLEGRO_DISPLAY* display = (ALLEGRO_DISPLAY*)ptr;
 
     if (bMax)
     {
@@ -264,16 +264,16 @@ void Gwk::Platform::SetWindowMaximized(void* pPtr, bool bMax, Gwk::Point& pNewPo
         al_set_window_position(display, w/4, h/4);
     }
 
-    al_get_window_position(display, &pNewPos.x, &pNewPos.y);
-    pNewSize.x = al_get_display_width(display);
-    pNewSize.y = al_get_display_height(display);
+    al_get_window_position(display, &newPos.x, &newPos.y);
+    newSize.x = al_get_display_width(display);
+    newSize.y = al_get_display_height(display);
 }
 
-void Gwk::Platform::SetWindowMinimized(void* pPtr, bool bMinimized)
+void Gwk::Platform::SetWindowMinimized(void* ptr, bool bMinimized)
 {
 }
 
-bool Gwk::Platform::HasFocusPlatformWindow(void* pPtr)
+bool Gwk::Platform::HasFocusPlatformWindow(void* ptr)
 {
     return true;
 }

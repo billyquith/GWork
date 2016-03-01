@@ -14,33 +14,33 @@ using namespace Gwk::Controls;
 
 GWK_CONTROL_CONSTRUCTOR(HorizontalScrollBar)
 {
-    m_Bar->SetHorizontal();
-    m_ScrollButton[SCROLL_BUTTON_LEFT]->SetDirectionLeft();
-    m_ScrollButton[SCROLL_BUTTON_LEFT]->onPress.Add(this, &HorizontalScrollBar::NudgeLeft);
-    m_ScrollButton[SCROLL_BUTTON_RIGHT]->SetDirectionRight();
-    m_ScrollButton[SCROLL_BUTTON_RIGHT]->onPress.Add(this, &HorizontalScrollBar::NudgeRight);
-    m_Bar->onDragged.Add(this, &HorizontalScrollBar::OnBarMoved);
+    m_bar->SetHorizontal();
+    m_scrollButton[SCROLL_BUTTON_LEFT]->SetDirectionLeft();
+    m_scrollButton[SCROLL_BUTTON_LEFT]->onPress.Add(this, &HorizontalScrollBar::NudgeLeft);
+    m_scrollButton[SCROLL_BUTTON_RIGHT]->SetDirectionRight();
+    m_scrollButton[SCROLL_BUTTON_RIGHT]->onPress.Add(this, &HorizontalScrollBar::NudgeRight);
+    m_bar->onDragged.Add(this, &HorizontalScrollBar::OnBarMoved);
 }
 
 void HorizontalScrollBar::Layout(Skin::Base* skin)
 {
     ParentClass::Layout(skin);
-    m_ScrollButton[SCROLL_BUTTON_LEFT]->SetWidth(Height());
-    m_ScrollButton[SCROLL_BUTTON_LEFT]->Dock(Docking::Left);
-    m_ScrollButton[SCROLL_BUTTON_RIGHT]->SetWidth(Height());
-    m_ScrollButton[SCROLL_BUTTON_RIGHT]->Dock(Docking::Right);
-    m_Bar->SetHeight(GetButtonSize());
-    m_Bar->SetPadding(Padding(GetButtonSize(), 0, GetButtonSize(), 0));
+    m_scrollButton[SCROLL_BUTTON_LEFT]->SetWidth(Height());
+    m_scrollButton[SCROLL_BUTTON_LEFT]->Dock(Docking::Left);
+    m_scrollButton[SCROLL_BUTTON_RIGHT]->SetWidth(Height());
+    m_scrollButton[SCROLL_BUTTON_RIGHT]->Dock(Docking::Right);
+    m_bar->SetHeight(GetButtonSize());
+    m_bar->SetPadding(Padding(GetButtonSize(), 0, GetButtonSize(), 0));
     float barWidth = (m_fViewableContentSize/m_fContentSize)*(Width()-GetButtonSize());
 
     if (barWidth < GetButtonSize()/2)
         barWidth = GetButtonSize()/2;
 
-    m_Bar->SetWidth(barWidth);
-    m_Bar->SetHidden(Width()-(GetButtonSize()*2) <= barWidth);
+    m_bar->SetWidth(barWidth);
+    m_bar->SetHidden(Width()-(GetButtonSize()*2) <= barWidth);
 
     // Based on our last scroll amount, produce a position for the bar
-    if (!m_Bar->IsDepressed())
+    if (!m_bar->IsDepressed())
         SetScrolledAmount(GetScrolledAmount(), true);
 }
 
@@ -85,9 +85,9 @@ void HorizontalScrollBar::OnMouseClickLeft(int x, int y, bool bDown)
     {
         Gwk::Point clickPos = CanvasPosToLocal(Gwk::Point(x, y));
 
-        if (clickPos.x < m_Bar->X())
+        if (clickPos.x < m_bar->X())
             NudgeLeft(this);
-        else if (clickPos.x > m_Bar->X()+m_Bar->Width())
+        else if (clickPos.x > m_bar->X()+m_bar->Width())
             NudgeRight(this);
 
         m_bDepressed = false;
@@ -97,8 +97,8 @@ void HorizontalScrollBar::OnMouseClickLeft(int x, int y, bool bDown)
 
 float HorizontalScrollBar::CalculateScrolledAmount()
 {
-    return (float)(m_Bar->X()-
-                   GetButtonSize())/(float)(Width()-m_Bar->Width()-(GetButtonSize()*2));
+    return (float)(m_bar->X()-
+                   GetButtonSize())/(float)(Width()-m_bar->Width()-(GetButtonSize()*2));
 }
 
 bool HorizontalScrollBar::SetScrolledAmount(float amount, bool forceUpdate)
@@ -110,8 +110,8 @@ bool HorizontalScrollBar::SetScrolledAmount(float amount, bool forceUpdate)
 
     if (forceUpdate)
     {
-        int newX = GetButtonSize()+(amount*((Width()-m_Bar->Width())-(GetButtonSize()*2)));
-        m_Bar->MoveTo(newX, m_Bar->Y());
+        int newX = GetButtonSize()+(amount*((Width()-m_bar->Width())-(GetButtonSize()*2)));
+        m_bar->MoveTo(newX, m_bar->Y());
     }
 
     return true;
@@ -119,7 +119,7 @@ bool HorizontalScrollBar::SetScrolledAmount(float amount, bool forceUpdate)
 
 void HorizontalScrollBar::OnBarMoved(Controls::Base* control)
 {
-    if (m_Bar->IsDepressed())
+    if (m_bar->IsDepressed())
     {
         SetScrolledAmount(CalculateScrolledAmount(), false);
         ParentClass::OnBarMoved(control);

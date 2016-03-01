@@ -44,18 +44,18 @@ namespace Gwk
             GWK_CONTROL_INLINE(LabeledRadioButton, Base)
             {
                 SetSize(200, 19);
-                m_RadioButton = new RadioButton(this);
-                m_RadioButton->Dock(Docking::Left);
-                m_RadioButton->SetMargin(Margin(0, 2, 2, 2));
-                m_RadioButton->SetTabable(false);
-                m_RadioButton->SetKeyboardInputEnabled(false);
-                m_Label = new LabelClickable(this);
-                m_Label->SetAlignment(Docking::CenterV | Docking::Left);
-                m_Label->SetText("Radio Button");
-                m_Label->Dock(Docking::Fill);
-                m_Label->onPress.Add(m_RadioButton, &CheckBox::OnPress);
-                m_Label->SetTabable(false);
-                m_Label->SetKeyboardInputEnabled(false);
+                m_radioButton = new RadioButton(this);
+                m_radioButton->Dock(Docking::Left);
+                m_radioButton->SetMargin(Margin(0, 2, 2, 2));
+                m_radioButton->SetTabable(false);
+                m_radioButton->SetKeyboardInputEnabled(false);
+                m_label = new LabelClickable(this);
+                m_label->SetAlignment(Docking::CenterV | Docking::Left);
+                m_label->SetText("Radio Button");
+                m_label->Dock(Docking::Fill);
+                m_label->onPress.Add(m_radioButton, &CheckBox::OnPress);
+                m_label->SetTabable(false);
+                m_label->SetKeyboardInputEnabled(false);
             }
 
             void RenderFocus(Gwk::Skin::Base* skin) override
@@ -71,31 +71,31 @@ namespace Gwk
 
             virtual RadioButton* GetRadioButton()
             {
-                return m_RadioButton;
+                return m_radioButton;
             }
 
             virtual LabelClickable* GetLabel()
             {
-                return m_Label;
+                return m_label;
             }
 
             virtual bool OnKeySpace(bool bDown) override
             {
                 if (bDown)
-                    m_RadioButton->SetChecked(!m_RadioButton->IsChecked());
+                    m_radioButton->SetChecked(!m_radioButton->IsChecked());
 
                 return true;
             }
 
             virtual void Select()
             {
-                m_RadioButton->SetChecked(true);
+                m_radioButton->SetChecked(true);
             }
 
         private:
 
-            RadioButton*        m_RadioButton;
-            LabelClickable*     m_Label;
+            RadioButton*        m_radioButton;
+            LabelClickable*     m_label;
         };
 
 

@@ -27,12 +27,12 @@ namespace Gwk
 
             GWK_CONTROL_INLINE(PropertyTreeNode, TreeNode)
             {
-                m_Title->SetTextColorOverride(GetSkin()->Colors.Properties.Title);
+                m_title->SetTextColorOverride(GetSkin()->Colors.Properties.Title);
             }
 
             virtual void Render(Skin::Base* skin) override
             {
-                skin->DrawPropertyTreeNode(this, m_InnerPanel->X(), m_InnerPanel->Y());
+                skin->DrawPropertyTreeNode(this, m_innerPanel->X(), m_innerPanel->Y());
             }
 
         };

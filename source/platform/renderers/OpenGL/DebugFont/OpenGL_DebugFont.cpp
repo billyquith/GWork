@@ -19,7 +19,7 @@ namespace Gwk
             m_fLetterSpacing = 1.0f/16.0f;
             m_fFontScale[0] = 1.5f;
             m_fFontScale[1] = 1.5f;
-            m_pFontTexture = NULL;
+            m_fontTexture = NULL;
         }
 
         void OpenGL_DebugFont::Init()
@@ -34,16 +34,16 @@ namespace Gwk
 
         void OpenGL_DebugFont::CreateDebugFont()
         {
-            if (m_pFontTexture)
+            if (m_fontTexture)
                 return;
 
-            m_pFontTexture = new Gwk::Texture();
+            m_fontTexture = new Gwk::Texture();
             // Create a little texture pointer..
             GLuint* pglTexture = new GLuint;
             // Sort out our Gwork texture
-            m_pFontTexture->data = pglTexture;
-            m_pFontTexture->width = 256;
-            m_pFontTexture->height = 256;
+            m_fontTexture->data = pglTexture;
+            m_fontTexture->width = 256;
+            m_fontTexture->height = 256;
             // Create the opengl texture
             glGenTextures(1, pglTexture);
             glBindTexture(GL_TEXTURE_2D, *pglTexture);
@@ -59,32 +59,32 @@ namespace Gwk
                 texdata[i*4+3] = sGworkFontData[i];
             }
 
-            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, m_pFontTexture->width, m_pFontTexture->height,
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, m_fontTexture->width, m_fontTexture->height,
                          0, GL_RGBA, GL_UNSIGNED_BYTE, (const GLvoid*)texdata);
             delete[]texdata;
         }
 
         void OpenGL_DebugFont::DestroyDebugFont()
         {
-            if (!m_pFontTexture)
+            if (!m_fontTexture)
                 return;
 
-            GLuint* tex = (GLuint*)m_pFontTexture->data;
+            GLuint* tex = (GLuint*)m_fontTexture->data;
 
             if (!tex)
                 return;
 
             glDeleteTextures(1, tex);
             delete tex;
-            m_pFontTexture->data = NULL;
-            delete m_pFontTexture;
-            m_pFontTexture = NULL;
+            m_fontTexture->data = NULL;
+            delete m_fontTexture;
+            m_fontTexture = NULL;
         }
 
-        void OpenGL_DebugFont::RenderText(Gwk::Font* pFont, Gwk::Point pos,
+        void OpenGL_DebugFont::RenderText(Gwk::Font* font, Gwk::Point pos,
                                           const Gwk::String& text)
         {
-            float fSize = pFont->size*Scale();
+            float fSize = font->size*Scale();
 
             if (!text.length())
                 return;
@@ -98,7 +98,7 @@ namespace Gwk
                 Gwk::Rect r(pos.x+yOffset, pos.y-fSize*0.5, (fSize*m_fFontScale[0]),
                              fSize*m_fFontScale[1]);
 
-                if (m_pFontTexture)
+                if (m_fontTexture)
                 {
                     float uv_texcoords[8] = {0., 0., 1., 1.};
 
@@ -112,7 +112,7 @@ namespace Gwk
                         uv_texcoords[5] = float(cy+1.0f/16.0f);
                     }
 
-                    DrawTexturedRect(m_pFontTexture, r, uv_texcoords[0], uv_texcoords[5],
+                    DrawTexturedRect(m_fontTexture, r, uv_texcoords[0], uv_texcoords[5],
                                      uv_texcoords[4], uv_texcoords[1]);
                     yOffset += curSpacing;
                 }
@@ -124,11 +124,11 @@ namespace Gwk
             }
         }
 
-        Gwk::Point OpenGL_DebugFont::MeasureText(Gwk::Font* pFont,
+        Gwk::Point OpenGL_DebugFont::MeasureText(Gwk::Font* font,
                                                   const Gwk::String& text)
         {
             Gwk::Point p;
-            float fSize = pFont->size*Scale();
+            float fSize = font->size*Scale();
             float spacing = 0.0f;
 
             for (unsigned int i = 0; i < text.length(); i++)
@@ -138,7 +138,7 @@ namespace Gwk
             }
 
             p.x = spacing*m_fLetterSpacing*fSize*m_fFontScale[0];
-            p.y = pFont->size*Scale();
+            p.y = font->size*Scale();
             return p;
         }
 

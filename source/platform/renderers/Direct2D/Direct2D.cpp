@@ -13,14 +13,14 @@
 
 struct FontData
 {
-    IDWriteTextFormat*  pTextFormat;
+    IDWriteTextFormat*  textFormat;
 };
 
 
 struct TextureData
 {
-    ID2D1Bitmap*        pBitmap; // device-specific
-    IWICBitmapSource*   pWICBitmap;
+    ID2D1Bitmap*        bitmap; // device-specific
+    IWICBitmapSource*   wICBitmap;
 };
 
 
@@ -29,19 +29,19 @@ namespace Gwk
     namespace Renderer
     {
         // self-hosting constructor
-        Direct2D::Direct2D() : m_Color(D2D1::ColorF::White)
+        Direct2D::Direct2D() : m_color(D2D1::ColorF::White)
         {
-            m_pRT               = NULL;
-            m_pDWriteFactory    = NULL;
-            m_pWICFactory       = NULL;
+            m_rT               = NULL;
+            m_dWriteFactory    = NULL;
+            m_wICFactory       = NULL;
         }
 
-        Direct2D::Direct2D(ID2D1RenderTarget* pRT, IDWriteFactory* pDWriteFactory,
-                           IWICImagingFactory* pWICFactory) : m_Color(D2D1::ColorF::White)
+        Direct2D::Direct2D(ID2D1RenderTarget* rT, IDWriteFactory* dWriteFactory,
+                           IWICImagingFactory* wICFactory) : m_color(D2D1::ColorF::White)
         {
-            DeviceAcquired(pRT);
-            m_pDWriteFactory    = pDWriteFactory;
-            m_pWICFactory       = pWICFactory;
+            DeviceAcquired(rT);
+            m_dWriteFactory    = dWriteFactory;
+            m_wICFactory       = wICFactory;
         }
 
         Direct2D::~Direct2D()
@@ -60,135 +60,135 @@ namespace Gwk
         {
             Translate(rect);
 
-            if (m_pSolidColorBrush)
+            if (m_solidColorBrush)
             {
-                m_pRT->FillRectangle(D2D1::RectF(rect.x, rect.y, rect.x+rect.w,
-                                                 rect.y+rect.h), m_pSolidColorBrush);
+                m_rT->FillRectangle(D2D1::RectF(rect.x, rect.y, rect.x+rect.w,
+                                                 rect.y+rect.h), m_solidColorBrush);
             }
         }
 
         void Direct2D::SetDrawColor(Gwk::Color color)
         {
-            m_Color = D2D1::ColorF(color.r/255.0f, color.g/255.0f, color.b/255.0f, color.a/255.0f);
-            m_pSolidColorBrush->SetColor(m_Color);
+            m_color = D2D1::ColorF(color.r/255.0f, color.g/255.0f, color.b/255.0f, color.a/255.0f);
+            m_solidColorBrush->SetColor(m_color);
         }
 
-        bool Direct2D::InternalLoadFont(Gwk::Font* pFont)
+        bool Direct2D::InternalLoadFont(Gwk::Font* font)
         {
-            IDWriteTextFormat* pTextFormat = NULL;
-            HRESULT hr = m_pDWriteFactory->CreateTextFormat(
-                pFont->facename.c_str(),
+            IDWriteTextFormat* textFormat = NULL;
+            HRESULT hr = m_dWriteFactory->CreateTextFormat(
+                font->facename.c_str(),
                 NULL,
-                pFont->bold ? DWRITE_FONT_WEIGHT_BOLD : DWRITE_FONT_WEIGHT_NORMAL,
+                font->bold ? DWRITE_FONT_WEIGHT_BOLD : DWRITE_FONT_WEIGHT_NORMAL,
                 DWRITE_FONT_STYLE_NORMAL,
                 DWRITE_FONT_STRETCH_NORMAL,
-                pFont->size,
+                font->size,
                 L"",
-                &pTextFormat
+                &textFormat
                 );
 
             if (SUCCEEDED(hr))
             {
-                FontData*   pFontData = new FontData();
-                pFontData->pTextFormat = pTextFormat;
-                pFont->data = pFontData;
-                pFont->realsize = pFont->size*Scale();
+                FontData*   fontData = new FontData();
+                fontData->textFormat = textFormat;
+                font->data = fontData;
+                font->realsize = font->size*Scale();
                 return true;
             }
 
             return false;
         }
 
-        void Direct2D::LoadFont(Gwk::Font* pFont)
+        void Direct2D::LoadFont(Gwk::Font* font)
         {
-            if (InternalLoadFont(pFont))
-                m_FontList.push_back(pFont);
+            if (InternalLoadFont(font))
+                m_fontList.push_back(font);
         }
 
-        void Direct2D::InternalFreeFont(Gwk::Font* pFont, bool bRemove)
+        void Direct2D::InternalFreeFont(Gwk::Font* font, bool bRemove)
         {
             if (bRemove)
-                m_FontList.remove(pFont);
+                m_fontList.remove(font);
 
-            if (!pFont->data)
+            if (!font->data)
                 return;
 
-            FontData* pFontData = (FontData*)pFont->data;
-            pFontData->pTextFormat->Release();
-            delete pFontData;
-            pFont->data = NULL;
+            FontData* fontData = (FontData*)font->data;
+            fontData->textFormat->Release();
+            delete fontData;
+            font->data = NULL;
         }
 
-        void Direct2D::FreeFont(Gwk::Font* pFont)
+        void Direct2D::FreeFont(Gwk::Font* font)
         {
-            InternalFreeFont(pFont);
+            InternalFreeFont(font);
         }
 
-        void Direct2D::RenderText(Gwk::Font* pFont, Gwk::Point pos,
+        void Direct2D::RenderText(Gwk::Font* font, Gwk::Point pos,
                                   const Gwk::UnicodeString& text)
         {
             // If the font doesn't exist, or the font size should be changed
-            if (!pFont->data || fabs(pFont->realsize-pFont->size*Scale()) > 2)
+            if (!font->data || fabs(font->realsize-font->size*Scale()) > 2)
             {
-                InternalFreeFont(pFont, false);
-                InternalLoadFont(pFont);
+                InternalFreeFont(font, false);
+                InternalLoadFont(font);
             }
 
-            FontData* pFontData = (FontData*)pFont->data;
+            FontData* fontData = (FontData*)font->data;
             Translate(pos.x, pos.y);
 
-            if (m_pSolidColorBrush)
+            if (m_solidColorBrush)
             {
-                m_pRT->DrawTextW(text.c_str(), text.length(), pFontData->pTextFormat,
+                m_rT->DrawTextW(text.c_str(), text.length(), fontData->textFormat,
                                  D2D1::RectF(pos.x, pos.y, pos.x+50000,
-                                             pos.y+50000), m_pSolidColorBrush);
+                                             pos.y+50000), m_solidColorBrush);
             }
         }
 
-        Gwk::Point Direct2D::MeasureText(Gwk::Font* pFont, const Gwk::UnicodeString& text)
+        Gwk::Point Direct2D::MeasureText(Gwk::Font* font, const Gwk::UnicodeString& text)
         {
             // If the font doesn't exist, or the font size should be changed
-            if (!pFont->data || fabs(pFont->realsize-pFont->size*Scale()) > 2)
+            if (!font->data || fabs(font->realsize-font->size*Scale()) > 2)
             {
-                InternalFreeFont(pFont, false);
-                InternalLoadFont(pFont);
+                InternalFreeFont(font, false);
+                InternalLoadFont(font);
             }
 
-            FontData* pFontData = (FontData*)pFont->data;
+            FontData* fontData = (FontData*)font->data;
             Gwk::Point size;
-            IDWriteTextLayout* pLayout;
+            IDWriteTextLayout* layout;
             DWRITE_TEXT_METRICS metrics;
-            m_pDWriteFactory->CreateTextLayout(text.c_str(),
-                                               text.length(), pFontData->pTextFormat, 50000, 50000,
-                                               &pLayout);
-            pLayout->GetMetrics(&metrics);
-            pLayout->Release();
+            m_dWriteFactory->CreateTextLayout(text.c_str(),
+                                               text.length(), fontData->textFormat, 50000, 50000,
+                                               &layout);
+            layout->GetMetrics(&metrics);
+            layout->Release();
             return Gwk::Point(metrics.widthIncludingTrailingWhitespace, metrics.height);
         }
 
         void Direct2D::DeviceLost()
         {
-            if (m_pSolidColorBrush != NULL)
+            if (m_solidColorBrush != NULL)
             {
-                m_pSolidColorBrush->Release();
-                m_pSolidColorBrush = NULL;
+                m_solidColorBrush->Release();
+                m_solidColorBrush = NULL;
             }
 
-            for (Texture::List::const_iterator tex_it = m_TextureList.begin();
-                 tex_it != m_TextureList.end();
+            for (Texture::List::const_iterator tex_it = m_textureList.begin();
+                 tex_it != m_textureList.end();
                  ++tex_it)
             {
                 InternalFreeTexture(*tex_it, false);
             }
         }
 
-        void Direct2D::DeviceAcquired(ID2D1RenderTarget* pRT)
+        void Direct2D::DeviceAcquired(ID2D1RenderTarget* rT)
         {
-            m_pRT = pRT;
-            HRESULT hr = m_pRT->CreateSolidColorBrush(m_Color, &m_pSolidColorBrush);
+            m_rT = rT;
+            HRESULT hr = m_rT->CreateSolidColorBrush(m_color, &m_solidColorBrush);
 
-            for (Texture::List::const_iterator tex_it = m_TextureList.begin();
-                 tex_it != m_TextureList.end();
+            for (Texture::List::const_iterator tex_it = m_textureList.begin();
+                 tex_it != m_textureList.end();
                  ++tex_it)
             {
                 InternalLoadTexture(*tex_it);
@@ -201,60 +201,60 @@ namespace Gwk
             D2D1_RECT_F r =
                 D2D1::RectF(rect.x*Scale(), rect.y*Scale(),
                             (rect.x+rect.w)*Scale(), (rect.y+rect.h)*Scale());
-            m_pRT->PushAxisAlignedClip(r, D2D1_ANTIALIAS_MODE_PER_PRIMITIVE);
+            m_rT->PushAxisAlignedClip(r, D2D1_ANTIALIAS_MODE_PER_PRIMITIVE);
         }
 
         void Direct2D::EndClip()
         {
-            m_pRT->PopAxisAlignedClip();
+            m_rT->PopAxisAlignedClip();
         }
 
-        void Direct2D::DrawTexturedRect(Gwk::Texture* pTexture, Gwk::Rect rect, float u1,
+        void Direct2D::DrawTexturedRect(Gwk::Texture* texture, Gwk::Rect rect, float u1,
                                         float v1, float u2, float v2)
         {
-            TextureData* pTexData = (TextureData*)pTexture->data;
+            TextureData* texData = (TextureData*)texture->data;
 
             // Missing image, not loaded properly?
-            if (!pTexData || pTexData->pBitmap == NULL)
+            if (!texData || texData->bitmap == NULL)
                 return DrawMissingImage(rect);
 
             Translate(rect);
-            m_pRT->DrawBitmap(pTexData->pBitmap,
+            m_rT->DrawBitmap(texData->bitmap,
                               D2D1::RectF(rect.x, rect.y, rect.x+rect.w, rect.y+rect.h),
                               1.0f, D2D1_BITMAP_INTERPOLATION_MODE_LINEAR,
-                              D2D1::RectF(u1*pTexture->width, v1*pTexture->height, u2*
-                                          pTexture->width, v2*pTexture->height)
+                              D2D1::RectF(u1*texture->width, v1*texture->height, u2*
+                                          texture->width, v2*texture->height)
                               );
         }
 
-        bool Direct2D::InternalLoadTexture(Gwk::Texture* pTexture)
+        bool Direct2D::InternalLoadTexture(Gwk::Texture* texture)
         {
-            IWICBitmapDecoder* pDecoder = NULL;
-            IWICBitmapFrameDecode* pSource = NULL;
-            IWICFormatConverter* pConverter = NULL;
-            ID2D1Bitmap*            pD2DBitmap = NULL;
-            HRESULT hr = m_pWICFactory->CreateDecoderFromFilename(
-                pTexture->name.GetUnicode().c_str(),
+            IWICBitmapDecoder* decoder = NULL;
+            IWICBitmapFrameDecode* source = NULL;
+            IWICFormatConverter* converter = NULL;
+            ID2D1Bitmap*            d2DBitmap = NULL;
+            HRESULT hr = m_wICFactory->CreateDecoderFromFilename(
+                texture->name.GetUnicode().c_str(),
                 NULL,
                 GENERIC_READ,
                 WICDecodeMetadataCacheOnLoad,
-                &pDecoder
+                &decoder
                 );
 
             if (SUCCEEDED(hr))
-                hr = pDecoder->GetFrame(0, &pSource);
+                hr = decoder->GetFrame(0, &source);
 
             if (SUCCEEDED(hr))
             {
                 // Convert the image format to 32bppPBGRA
                 // (DXGI_FORMAT_B8G8R8A8_UNORM + D2D1_ALPHA_MODE_PREMULTIPLIED).
-                hr = m_pWICFactory->CreateFormatConverter(&pConverter);
+                hr = m_wICFactory->CreateFormatConverter(&converter);
             }
 
             if (SUCCEEDED(hr))
             {
-                hr = pConverter->Initialize(
-                    pSource,
+                hr = converter->Initialize(
+                    source,
                     GUID_WICPixelFormat32bppPBGRA,
                     WICBitmapDitherTypeNone,
                     NULL,
@@ -265,76 +265,76 @@ namespace Gwk
 
             if (SUCCEEDED(hr))
             {
-                hr = m_pRT->CreateBitmapFromWicBitmap(
-                    pConverter,
+                hr = m_rT->CreateBitmapFromWicBitmap(
+                    converter,
                     NULL,
-                    &pD2DBitmap
+                    &d2DBitmap
                     );
             }
 
             if (SUCCEEDED(hr))
             {
                 TextureData* texdata = new TextureData();
-                texdata->pWICBitmap = pSource;
-                texdata->pBitmap = pD2DBitmap;
-                pTexture->data = texdata;
-                D2D1_SIZE_F size = texdata->pBitmap->GetSize();
-                pTexture->width = size.width;
-                pTexture->height = size.height;
-                pTexture->failed = false;
+                texdata->wICBitmap = source;
+                texdata->bitmap = d2DBitmap;
+                texture->data = texdata;
+                D2D1_SIZE_F size = texdata->bitmap->GetSize();
+                texture->width = size.width;
+                texture->height = size.height;
+                texture->failed = false;
             }
             else
             {
-                pTexture->failed = true;
+                texture->failed = true;
             }
 
-            if (pDecoder != NULL)
-                pDecoder->Release();
+            if (decoder != NULL)
+                decoder->Release();
 
-            if (pConverter != NULL)
-                pConverter->Release();
+            if (converter != NULL)
+                converter->Release();
 
             return SUCCEEDED(hr);
         }
 
-        void Direct2D::LoadTexture(Gwk::Texture* pTexture)
+        void Direct2D::LoadTexture(Gwk::Texture* texture)
         {
-            if (InternalLoadTexture(pTexture))
-                m_TextureList.push_back(pTexture);
+            if (InternalLoadTexture(texture))
+                m_textureList.push_back(texture);
         }
 
-        void Direct2D::InternalFreeTexture(Gwk::Texture* pTexture, bool bRemove)
+        void Direct2D::InternalFreeTexture(Gwk::Texture* texture, bool bRemove)
         {
             if (bRemove)
-                m_TextureList.remove(pTexture);
+                m_textureList.remove(texture);
 
-            if (pTexture->data != NULL)
+            if (texture->data != NULL)
             {
-                TextureData* texdata = (TextureData*)pTexture->data;
+                TextureData* texdata = (TextureData*)texture->data;
 
-                if (texdata->pWICBitmap != NULL)
-                    texdata->pWICBitmap->Release();
+                if (texdata->wICBitmap != NULL)
+                    texdata->wICBitmap->Release();
 
-                if (texdata->pBitmap != NULL)
-                    texdata->pBitmap->Release();
+                if (texdata->bitmap != NULL)
+                    texdata->bitmap->Release();
 
                 delete texdata;
             }
 
-            pTexture->data = NULL;
+            texture->data = NULL;
         }
 
-        void Direct2D::FreeTexture(Gwk::Texture* pTexture)
+        void Direct2D::FreeTexture(Gwk::Texture* texture)
         {
-            InternalFreeTexture(pTexture);
+            InternalFreeTexture(texture);
         }
 
-        Gwk::Color Direct2D::PixelColour(Gwk::Texture* pTexture, unsigned int x, unsigned int y,
+        Gwk::Color Direct2D::PixelColour(Gwk::Texture* texture, unsigned int x, unsigned int y,
                                           const Gwk::Color& col_default)
         {
-            TextureData* pTexData = (TextureData*)pTexture->data;
+            TextureData* texData = (TextureData*)texture->data;
 
-            if (!pTexData || pTexData->pBitmap == NULL)
+            if (!texData || texData->bitmap == NULL)
                 return col_default;
 
             WICRect sourceRect;
@@ -343,7 +343,7 @@ namespace Gwk
             sourceRect.Width = sourceRect.Height = 1;
             // these bitmaps are always in GUID_WICPixelFormat32bppPBGRA
             byte pixelBuffer[4*1*1];
-            pTexData->pWICBitmap->CopyPixels(&sourceRect, 4, 4*pTexture->width*pTexture->height,
+            texData->wICBitmap->CopyPixels(&sourceRect, 4, 4*texture->width*texture->height,
                                              pixelBuffer);
             return Gwk::Color(pixelBuffer[2], pixelBuffer[1], pixelBuffer[0], pixelBuffer[3]);
         }
@@ -352,10 +352,10 @@ namespace Gwk
         {
             Translate(rect);
 
-            if (m_pSolidColorBrush)
+            if (m_solidColorBrush)
             {
-                m_pRT->DrawRectangle(D2D1::RectF(rect.x, rect.y, rect.x+rect.w,
-                                                 rect.y+rect.h), m_pSolidColorBrush);
+                m_rT->DrawRectangle(D2D1::RectF(rect.x, rect.y, rect.x+rect.w,
+                                                 rect.y+rect.h), m_solidColorBrush);
             }
         }
 
@@ -363,31 +363,31 @@ namespace Gwk
         {
             Translate(rect);
 
-            if (m_pSolidColorBrush)
+            if (m_solidColorBrush)
             {
-                m_pRT->DrawRoundedRectangle(D2D1::RoundedRect(D2D1::RectF(rect.x, rect.y, rect.x+
+                m_rT->DrawRoundedRectangle(D2D1::RoundedRect(D2D1::RectF(rect.x, rect.y, rect.x+
                                                                           rect.w,
                                                                           rect.y+rect.h), 10.f,
-                                                              10.f), m_pSolidColorBrush);
+                                                              10.f), m_solidColorBrush);
             }
         }
 
         void Direct2D::Release()
         {
-            Texture::List::iterator tex_it = m_TextureList.begin();
+            Texture::List::iterator tex_it = m_textureList.begin();
 
-            while (tex_it != m_TextureList.end())
+            while (tex_it != m_textureList.end())
             {
                 FreeTexture(*tex_it);
-                tex_it = m_TextureList.begin();
+                tex_it = m_textureList.begin();
             }
 
-            Font::List::iterator it = m_FontList.begin();
+            Font::List::iterator it = m_fontList.begin();
 
-            while (it != m_FontList.end())
+            while (it != m_fontList.end())
             {
                 FreeFont(*it);
-                it = m_FontList.begin();
+                it = m_fontList.begin();
             }
         }
 
@@ -395,26 +395,26 @@ namespace Gwk
         {
             HRESULT hr = S_OK;
 
-            if (!m_pRT)
+            if (!m_rT)
             {
                 RECT rc;
-                GetClientRect(m_pHWND, &rc);
+                GetClientRect(m_hWND, &rc);
                 D2D1_SIZE_U size = D2D1::SizeU(
                     rc.right-rc.left,
                     rc.bottom-rc.top
                     );
-                ID2D1HwndRenderTarget* pRT;
+                ID2D1HwndRenderTarget* rT;
                 // Create a Direct2D render target.
-                hr = m_pD2DFactory->CreateHwndRenderTarget(
+                hr = m_d2DFactory->CreateHwndRenderTarget(
                     D2D1::RenderTargetProperties(),
-                    D2D1::HwndRenderTargetProperties(m_pHWND, size),
-                    &pRT
+                    D2D1::HwndRenderTargetProperties(m_hWND, size),
+                    &rT
                     );
 
                 if (SUCCEEDED(hr))
                 {
-                    pRT->SetTextAntialiasMode(D2D1_TEXT_ANTIALIAS_MODE_CLEARTYPE);
-                    DeviceAcquired(pRT);
+                    rT->SetTextAntialiasMode(D2D1_TEXT_ANTIALIAS_MODE_CLEARTYPE);
+                    DeviceAcquired(rT);
                 }
             }
 
@@ -423,19 +423,19 @@ namespace Gwk
 
         void Direct2D::InternalReleaseDeviceResources()
         {
-            if (m_pRT != NULL)
+            if (m_rT != NULL)
             {
-                m_pRT->Release();
-                m_pRT = NULL;
+                m_rT->Release();
+                m_rT = NULL;
             }
         }
 
-        bool Direct2D::InitializeContext(Gwk::WindowProvider* pWindow)
+        bool Direct2D::InitializeContext(Gwk::WindowProvider* window)
         {
-            m_pHWND = (HWND)pWindow->GetWindow();
+            m_hWND = (HWND)window->GetWindow();
             HRESULT hr = D2D1CreateFactory(
                 D2D1_FACTORY_TYPE_SINGLE_THREADED,
-                &m_pD2DFactory
+                &m_d2DFactory
                 );
 
             if (FAILED(hr))
@@ -444,7 +444,7 @@ namespace Gwk
             hr = DWriteCreateFactory(
                 DWRITE_FACTORY_TYPE_SHARED,
                 __uuidof(IDWriteFactory),
-                reinterpret_cast<IUnknown**>(&m_pDWriteFactory)
+                reinterpret_cast<IUnknown**>(&m_dWriteFactory)
                 );
 
             if (FAILED(hr))
@@ -460,7 +460,7 @@ namespace Gwk
                 NULL,
                 CLSCTX_INPROC_SERVER,
                 IID_IWICImagingFactory,
-                reinterpret_cast<void**>(&m_pWICFactory)
+                reinterpret_cast<void**>(&m_wICFactory)
                 );
 
             if (FAILED(hr))
@@ -469,38 +469,38 @@ namespace Gwk
             return InternalCreateDeviceResources();
         }
 
-        bool Direct2D::ShutdownContext(Gwk::WindowProvider* pWindow)
+        bool Direct2D::ShutdownContext(Gwk::WindowProvider* window)
         {
             InternalReleaseDeviceResources();
             DeviceLost();
             return true;
         }
 
-        bool Direct2D::PresentContext(Gwk::WindowProvider* pWindow)
+        bool Direct2D::PresentContext(Gwk::WindowProvider* window)
         {
             return true;
         }
 
-        bool Direct2D::ResizedContext(Gwk::WindowProvider* pWindow, int w, int h)
+        bool Direct2D::ResizedContext(Gwk::WindowProvider* window, int w, int h)
         {
-            HRESULT hr = ((ID2D1HwndRenderTarget*)m_pRT)->Resize(D2D1::SizeU(w, h));
+            HRESULT hr = ((ID2D1HwndRenderTarget*)m_rT)->Resize(D2D1::SizeU(w, h));
             return SUCCEEDED(hr);
         }
 
-        bool Direct2D::BeginContext(Gwk::WindowProvider* pWindow)
+        bool Direct2D::BeginContext(Gwk::WindowProvider* window)
         {
             if (SUCCEEDED(InternalCreateDeviceResources()))
             {
-                m_pRT->BeginDraw();
+                m_rT->BeginDraw();
                 return true;
             }
 
             return false;
         }
 
-        bool Direct2D::EndContext(Gwk::WindowProvider* pWindow)
+        bool Direct2D::EndContext(Gwk::WindowProvider* window)
         {
-            HRESULT hr = m_pRT->EndDraw();
+            HRESULT hr = m_rT->EndDraw();
 
             if (hr == D2DERR_RECREATE_TARGET)
             {

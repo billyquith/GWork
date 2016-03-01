@@ -48,7 +48,7 @@ namespace Gwk
 
 
             void Layout(Gwk::Skin::Base* skin) override;
-            void SplitLabel(const Gwk::String& text, Gwk::Font* pFont,
+            void SplitLabel(const Gwk::String& text, Gwk::Font* font,
                             const DividedText& txt, int& x, int& y, int& lineheight);
             void CreateNewline(int& x, int& y, int& lineheight);
             void CreateLabel(const Gwk::String& text, const DividedText& txt, int& x,
@@ -57,7 +57,7 @@ namespace Gwk
 
             void OnBoundsChanged(Gwk::Rect oldBounds) override;
 
-            DividedText::List m_TextBlocks;
+            DividedText::List m_textBlocks;
             bool m_bNeedsRebuild;
         };
 

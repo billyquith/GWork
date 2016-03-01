@@ -16,33 +16,33 @@ using namespace Gwk::ControlsInternal;
 
 GWK_CONTROL_CONSTRUCTOR(HorizontalSlider)
 {
-    m_SliderBar->SetHorizontal(true);
+    m_sliderBar->SetHorizontal(true);
 }
 
 float HorizontalSlider::CalculateValue()
 {
-    return (float)m_SliderBar->X()/(float)(Width()-m_SliderBar->Width());
+    return (float)m_sliderBar->X()/(float)(Width()-m_sliderBar->Width());
 }
 
 void HorizontalSlider::UpdateBarFromValue()
 {
-    m_SliderBar->MoveTo((Width()-m_SliderBar->Width())*(m_fValue), m_SliderBar->Y());
+    m_sliderBar->MoveTo((Width()-m_sliderBar->Width())*(m_fValue), m_sliderBar->Y());
 }
 
 void HorizontalSlider::OnMouseClickLeft(int x, int y, bool bDown)
 {
-    m_SliderBar->MoveTo( CanvasPosToLocal(Gwk::Point(x,y)).x - m_SliderBar->Width()/2,
-                         m_SliderBar->Y() );
-    m_SliderBar->OnMouseClickLeft(x, y, bDown);
-    OnMoved(m_SliderBar);
+    m_sliderBar->MoveTo( CanvasPosToLocal(Gwk::Point(x,y)).x - m_sliderBar->Width()/2,
+                         m_sliderBar->Y() );
+    m_sliderBar->OnMouseClickLeft(x, y, bDown);
+    OnMoved(m_sliderBar);
 }
 
 void HorizontalSlider::Layout(Skin::Base* /*skin*/)
 {
-    m_SliderBar->SetSize(15, Height());
+    m_sliderBar->SetSize(15, Height());
 }
 
 void HorizontalSlider::Render(Skin::Base* skin)
 {
-    skin->DrawSlider(this, true, m_bClampToNotches ? m_iNumNotches : 0, m_SliderBar->Width());
+    skin->DrawSlider(this, true, m_bClampToNotches ? m_numNotches : 0, m_sliderBar->Width());
 }

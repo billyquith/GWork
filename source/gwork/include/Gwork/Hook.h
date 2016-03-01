@@ -34,8 +34,8 @@ namespace Gwk
 
         GWK_EXPORT HookList& GetHookList();
 
-        GWK_EXPORT void AddHook(BaseHook* pHook);
-        GWK_EXPORT void RemoveHook(BaseHook* pHook);
+        GWK_EXPORT void AddHook(BaseHook* hook);
+        GWK_EXPORT void RemoveHook(BaseHook* hook);
 
         template <typename fnc>
         bool CallHook(fnc f)

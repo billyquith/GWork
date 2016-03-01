@@ -35,12 +35,12 @@ namespace Gwk
             virtual void  OnHorizontalMoved(Controls::Base* control);
             virtual void  OnCenterMoved(Controls::Base* control);
 
-            virtual void            SetPanel(int i, Controls::Base* pPanel);
+            virtual void            SetPanel(int i, Controls::Base* panel);
             virtual Controls::Base* GetPanel(int i);
 
             virtual bool IsZoomed()
             {
-                return m_iZoomedSection != -1;
+                return m_zoomedSection != -1;
             }
 
             virtual void Zoom(int section);
@@ -60,17 +60,17 @@ namespace Gwk
 
         private:
 
-            SplitterBar* m_VSplitter;
-            SplitterBar* m_HSplitter;
-            SplitterBar* m_CSplitter;
+            SplitterBar* m_vSplitter;
+            SplitterBar* m_hSplitter;
+            SplitterBar* m_cSplitter;
 
-            Controls::Base* m_Sections[4];
+            Controls::Base* m_sections[4];
 
             float m_fHVal;
             float m_fVVal;
             int m_fBarSize;
 
-            char m_iZoomedSection;
+            char m_zoomedSection;
 
             Gwk::Event::Caller onZoomed;
             Gwk::Event::Caller onUnZoomed;

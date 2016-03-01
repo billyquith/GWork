@@ -16,29 +16,29 @@ using namespace Gwk::Controls;
 
 GWK_CONTROL_CONSTRUCTOR(RadioButtonController)
 {
-    m_Selected = NULL;
+    m_selected = NULL;
     SetTabable(false);
     SetKeyboardInputEnabled(false);
 }
 
-void RadioButtonController::OnRadioClicked(Gwk::Controls::Base* pFromPanel)
+void RadioButtonController::OnRadioClicked(Gwk::Controls::Base* fromPanel)
 {
-    RadioButton* pCheckedRadioButton = gwk_cast<RadioButton>(pFromPanel);
+    RadioButton* checkedRadioButton = gwk_cast<RadioButton>(fromPanel);
 
     // Iterate through all other buttons and set them to false;
     for (Base::List::iterator iter = Children.begin(); iter != Children.end(); ++iter)
     {
-        Base* pChild = *iter;
-        LabeledRadioButton* pLRB = gwk_cast<LabeledRadioButton>(pChild);
+        Base* child = *iter;
+        LabeledRadioButton* lRB = gwk_cast<LabeledRadioButton>(child);
 
-        if (pLRB)
+        if (lRB)
         {
-            RadioButton* pChildRadioButton = pLRB->GetRadioButton();
+            RadioButton* childRadioButton = lRB->GetRadioButton();
 
-            if (pChildRadioButton == pCheckedRadioButton)
-                m_Selected = pLRB;
+            if (childRadioButton == checkedRadioButton)
+                m_selected = lRB;
             else
-                pLRB->GetRadioButton()->SetChecked(false);
+                lRB->GetRadioButton()->SetChecked(false);
         }
     }
 

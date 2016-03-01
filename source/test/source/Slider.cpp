@@ -19,47 +19,47 @@ public:
     GWK_CONTROL_INLINE(Slider, GUnit)
     {
         {
-            Gwk::Controls::HorizontalSlider* pSlider = new Gwk::Controls::HorizontalSlider(this);
-            pSlider->SetPos(10, 10);
-            pSlider->SetSize(150, 20);
-            pSlider->SetRange(0, 100);
-            pSlider->SetFloatValue(25);
-            pSlider->onValueChanged.Add(this, &Slider::SliderMoved);
+            Gwk::Controls::HorizontalSlider* slider = new Gwk::Controls::HorizontalSlider(this);
+            slider->SetPos(10, 10);
+            slider->SetSize(150, 20);
+            slider->SetRange(0, 100);
+            slider->SetFloatValue(25);
+            slider->onValueChanged.Add(this, &Slider::SliderMoved);
         }
         {
-            Gwk::Controls::HorizontalSlider* pSlider = new Gwk::Controls::HorizontalSlider(this);
-            pSlider->SetPos(10, 40);
-            pSlider->SetSize(150, 20);
-            pSlider->SetRange(0, 100);
-            pSlider->SetFloatValue(20);
-            pSlider->SetNotchCount(10);
-            pSlider->SetClampToNotches(true);
-            pSlider->onValueChanged.Add(this, &Slider::SliderMoved);
+            Gwk::Controls::HorizontalSlider* slider = new Gwk::Controls::HorizontalSlider(this);
+            slider->SetPos(10, 40);
+            slider->SetSize(150, 20);
+            slider->SetRange(0, 100);
+            slider->SetFloatValue(20);
+            slider->SetNotchCount(10);
+            slider->SetClampToNotches(true);
+            slider->onValueChanged.Add(this, &Slider::SliderMoved);
         }
         {
-            Gwk::Controls::VerticalSlider* pSlider = new Gwk::Controls::VerticalSlider(this);
-            pSlider->SetPos(160, 10);
-            pSlider->SetSize(20, 200);
-            pSlider->SetRange(0, 100);
-            pSlider->SetFloatValue(25);
-            pSlider->onValueChanged.Add(this, &Slider::SliderMoved);
+            Gwk::Controls::VerticalSlider* slider = new Gwk::Controls::VerticalSlider(this);
+            slider->SetPos(160, 10);
+            slider->SetSize(20, 200);
+            slider->SetRange(0, 100);
+            slider->SetFloatValue(25);
+            slider->onValueChanged.Add(this, &Slider::SliderMoved);
         }
         {
-            Gwk::Controls::VerticalSlider* pSlider = new Gwk::Controls::VerticalSlider(this);
-            pSlider->SetPos(190, 10);
-            pSlider->SetSize(20, 200);
-            pSlider->SetRange(0, 100);
-            pSlider->SetFloatValue(20);
-            pSlider->SetNotchCount(10);
-            pSlider->SetClampToNotches(true);
-            pSlider->onValueChanged.Add(this, &Slider::SliderMoved);
+            Gwk::Controls::VerticalSlider* slider = new Gwk::Controls::VerticalSlider(this);
+            slider->SetPos(190, 10);
+            slider->SetSize(20, 200);
+            slider->SetRange(0, 100);
+            slider->SetFloatValue(20);
+            slider->SetNotchCount(10);
+            slider->SetClampToNotches(true);
+            slider->onValueChanged.Add(this, &Slider::SliderMoved);
         }
     }
 
-    void SliderMoved(Base* pControl)
+    void SliderMoved(Base* control)
     {
-        Gwk::Controls::Slider* pSlider = (Gwk::Controls::Slider*)pControl;
-        UnitPrint(Utility::Format("Slider Value: %.2f", (float)pSlider->GetFloatValue()));
+        Gwk::Controls::Slider* slider = (Gwk::Controls::Slider*)control;
+        UnitPrint(Utility::Format("Slider Value: %.2f", (float)slider->GetFloatValue()));
     }
 
 };

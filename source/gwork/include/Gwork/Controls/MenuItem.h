@@ -64,12 +64,12 @@ namespace Gwk
             }
 
             template <typename T>
-            MenuItem* SetAction(Gwk::Event::Handler* pHandler, T fn)
+            MenuItem* SetAction(Gwk::Event::Handler* handler, T fn)
             {
-                if (m_Accelerator)
-                    AddAccelerator(m_Accelerator->GetText(), fn, pHandler);
+                if (m_accelerator)
+                    AddAccelerator(m_accelerator->GetText(), fn, handler);
 
-                onMenuItemSelected.Add(pHandler, fn);
+                onMenuItemSelected.Add(handler, fn);
                 return this;
             }
 
@@ -82,15 +82,15 @@ namespace Gwk
 
         private:
 
-            Menu*   m_Menu;
+            Menu*   m_menu;
             bool m_bOnStrip;
             bool m_bCheckable;
             bool m_bChecked;
 
-            Label*  m_Accelerator;
+            Label*  m_accelerator;
 
 
-            Controls::Base*     m_SubmenuArrow;
+            Controls::Base*     m_submenuArrow;
         };
 
 

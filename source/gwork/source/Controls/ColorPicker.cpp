@@ -85,7 +85,7 @@ void ColorPicker::NumericTyped(Gwk::Controls::Base* control)
 
 void ColorPicker::SetColor(Gwk::Color color)
 {
-    m_Color = color;
+    m_color = color;
     UpdateControls();
 }
 

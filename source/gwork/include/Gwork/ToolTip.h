@@ -19,10 +19,10 @@ namespace Gwk {
     {
         GWK_EXPORT bool TooltipActive();
 
-        GWK_EXPORT void Enable(Controls::Base* pControl);
-        GWK_EXPORT void Disable(Controls::Base* pControl);
+        GWK_EXPORT void Enable(Controls::Base* control);
+        GWK_EXPORT void Disable(Controls::Base* control);
 
-        GWK_EXPORT void ControlDeleted(Controls::Base* pControl);
+        GWK_EXPORT void ControlDeleted(Controls::Base* control);
 
         GWK_EXPORT void RenderToolTip(Skin::Base* skin);
     }

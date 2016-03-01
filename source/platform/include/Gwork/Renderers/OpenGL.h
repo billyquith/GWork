@@ -41,11 +41,11 @@ namespace Gwk
             void StartClip();
             void EndClip();
 
-            void DrawTexturedRect(Gwk::Texture* pTexture, Gwk::Rect pTargetRect, float u1 = 0.0f,
+            void DrawTexturedRect(Gwk::Texture* texture, Gwk::Rect targetRect, float u1 = 0.0f,
                                   float v1 = 0.0f, float u2 = 1.0f, float v2 = 1.0f);
-            void        LoadTexture(Gwk::Texture* pTexture);
-            void        FreeTexture(Gwk::Texture* pTexture);
-            Gwk::Color PixelColour(Gwk::Texture* pTexture, unsigned int x, unsigned int y,
+            void        LoadTexture(Gwk::Texture* texture);
+            void        FreeTexture(Gwk::Texture* texture);
+            Gwk::Color PixelColour(Gwk::Texture* texture, unsigned int x, unsigned int y,
                                     const Gwk::Color& col_default);
 
         protected:
@@ -56,9 +56,9 @@ namespace Gwk
             void Flush();
             void AddVert(int x, int y, float u = 0.0f, float v = 0.0f);
 
-            Gwk::Color m_Color;
-            int m_iVertNum;
-            Vertex m_Vertices[ MaxVerts ];
+            Gwk::Color m_color;
+            int m_vertNum;
+            Vertex m_vertices[ MaxVerts ];
 
         public:
 
@@ -66,14 +66,14 @@ namespace Gwk
             // Self Initialization
             //
 
-            virtual bool InitializeContext(Gwk::WindowProvider* pWindow);
-            virtual bool ShutdownContext(Gwk::WindowProvider* pWindow);
-            virtual bool PresentContext(Gwk::WindowProvider* pWindow);
-            virtual bool ResizedContext(Gwk::WindowProvider* pWindow, int w, int h);
-            virtual bool BeginContext(Gwk::WindowProvider* pWindow);
-            virtual bool EndContext(Gwk::WindowProvider* pWindow);
+            virtual bool InitializeContext(Gwk::WindowProvider* window);
+            virtual bool ShutdownContext(Gwk::WindowProvider* window);
+            virtual bool PresentContext(Gwk::WindowProvider* window);
+            virtual bool ResizedContext(Gwk::WindowProvider* window, int w, int h);
+            virtual bool BeginContext(Gwk::WindowProvider* window);
+            virtual bool EndContext(Gwk::WindowProvider* window);
 
-            void*   m_pContext;
+            void*   m_context;
         };
 
 

@@ -22,9 +22,9 @@ static Gwk::Controls::Base* LastPressedControl = NULL;
 static Gwk::Controls::Base* NewHoveredControl = NULL;
 static Gwk::Point LastPressedPos;
 
-void DragAndDrop::ControlDeleted(Gwk::Controls::Base* pControl)
+void DragAndDrop::ControlDeleted(Gwk::Controls::Base* control)
 {
-    if (SourceControl == pControl)
+    if (SourceControl == control)
     {
         SourceControl = NULL;
         CurrentPackage = NULL;
@@ -32,26 +32,26 @@ void DragAndDrop::ControlDeleted(Gwk::Controls::Base* pControl)
         LastPressedControl = NULL;
     }
 
-    if (LastPressedControl == pControl)
+    if (LastPressedControl == control)
         LastPressedControl = NULL;
 
-    if (HoveredControl == pControl)
+    if (HoveredControl == control)
         HoveredControl = NULL;
 
-    if (NewHoveredControl == pControl)
+    if (NewHoveredControl == control)
         NewHoveredControl = NULL;
 }
 
-static int m_iMouseX = 0;
-static int m_iMouseY = 0;
+static int m_mouseX = 0;
+static int m_mouseY = 0;
 
-bool DragAndDrop::Start(Gwk::Controls::Base* pControl, Package* pPackage)
+bool DragAndDrop::Start(Gwk::Controls::Base* control, Package* package)
 {
     if (CurrentPackage)
         return false;
 
-    CurrentPackage = pPackage;
-    SourceControl = pControl;
+    CurrentPackage = package;
+    SourceControl = control;
     return true;
 }
 
@@ -74,7 +74,7 @@ bool OnDrop(int x, int y)
     return true;
 }
 
-bool DragAndDrop::OnMouseButton(Gwk::Controls::Base* pHoveredControl, int x, int y, bool bDown)
+bool DragAndDrop::OnMouseButton(Gwk::Controls::Base* hoveredControl, int x, int y, bool bDown)
 {
     if (!bDown)
     {
@@ -89,17 +89,17 @@ bool DragAndDrop::OnMouseButton(Gwk::Controls::Base* pHoveredControl, int x, int
         return true;
     }
 
-    if (!pHoveredControl)
+    if (!hoveredControl)
         return false;
 
-    if (!pHoveredControl->DragAndDrop_Draggable())
+    if (!hoveredControl->DragAndDrop_Draggable())
         return false;
 
     // Store the last clicked on control. Don't do anything yet,
     // we'll check it in OnMouseMoved, and if it moves further than
     // x pixels with the mouse down, we'll start to drag.
     LastPressedPos = Gwk::Point(x, y);
-    LastPressedControl = pHoveredControl;
+    LastPressedControl = hoveredControl;
     return false;
 }
 
@@ -148,7 +148,7 @@ bool ShouldStartDraggingControl(int x, int y)
     return true;
 }
 
-void UpdateHoveredControl(Gwk::Controls::Base* pCtrl, int x, int y)
+void UpdateHoveredControl(Gwk::Controls::Base* ctrl, int x, int y)
 {
     //
     // We use this global variable to represent our hovered control
@@ -156,7 +156,7 @@ void UpdateHoveredControl(Gwk::Controls::Base* pCtrl, int x, int y)
     // Hover callbacks, we won't be left with a hanging pointer.
     // This isn't ideal - but it's minimal.
     //
-    NewHoveredControl = pCtrl;
+    NewHoveredControl = ctrl;
 
     // Nothing to change..
     if (DragAndDrop::HoveredControl == NewHoveredControl)
@@ -198,11 +198,11 @@ void UpdateHoveredControl(Gwk::Controls::Base* pCtrl, int x, int y)
     NewHoveredControl = NULL;
 }
 
-void DragAndDrop::OnMouseMoved(Gwk::Controls::Base* pHoveredControl, int x, int y)
+void DragAndDrop::OnMouseMoved(Gwk::Controls::Base* hoveredControl, int x, int y)
 {
     // Always keep these up to date, they're used to draw the dragged control.
-    m_iMouseX = x;
-    m_iMouseY = y;
+    m_mouseX = x;
+    m_mouseY = y;
 
     // If we're not carrying anything, then check to see if we should
     // pick up from a control that we're holding down. If not, then forget it.
@@ -214,7 +214,7 @@ void DragAndDrop::OnMouseMoved(Gwk::Controls::Base* pHoveredControl, int x, int 
         CurrentPackage->drawcontrol->Redraw();
 
     // Swap to this new hovered control and notify them of the change.
-    UpdateHoveredControl(pHoveredControl, x, y);
+    UpdateHoveredControl(hoveredControl, x, y);
 
     if (!HoveredControl)
         return;
@@ -225,10 +225,10 @@ void DragAndDrop::OnMouseMoved(Gwk::Controls::Base* pHoveredControl, int x, int 
     // Override the cursor - since it might have been set my underlying controls
     // Ideally this would show the 'being dragged' control. TODO
     Platform::SetCursor(CursorType::Normal);
-    pHoveredControl->Redraw();
+    hoveredControl->Redraw();
 }
 
-void DragAndDrop::RenderOverlay(Gwk::Controls::Canvas* /*pCanvas*/, Skin::Base* skin)
+void DragAndDrop::RenderOverlay(Gwk::Controls::Canvas* /*canvas*/, Skin::Base* skin)
 {
     if (!CurrentPackage)
         return;
@@ -237,8 +237,8 @@ void DragAndDrop::RenderOverlay(Gwk::Controls::Canvas* /*pCanvas*/, Skin::Base* 
         return;
 
     Gwk::Point pntOld = skin->GetRender()->GetRenderOffset();
-    skin->GetRender()->AddRenderOffset(Gwk::Rect(m_iMouseX-SourceControl->X()-
-                                                  CurrentPackage->holdoffset.x, m_iMouseY-
+    skin->GetRender()->AddRenderOffset(Gwk::Rect(m_mouseX-SourceControl->X()-
+                                                  CurrentPackage->holdoffset.x, m_mouseY-
                                                   SourceControl->Y()-CurrentPackage->holdoffset.y,
                                                   0, 0));
     CurrentPackage->drawcontrol->DoRender(skin);

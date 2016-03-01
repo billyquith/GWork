@@ -49,18 +49,18 @@ struct KeyData
 
 };
 
-static KeyData      g_KeyData;
-static Gwk::Point   g_MousePosition;
+static KeyData      g_keyData;
+static Gwk::Point   g_mousePosition;
 
 static float        g_fLastClickTime[c_MaxMouseButtons];
 static Gwk::Point   g_pntLastClickPos;
 
 
-static void UpdateHoveredControl(Controls::Base* pInCanvas)
+static void UpdateHoveredControl(Controls::Base* inCanvas)
 {
-    Controls::Base* pHovered = pInCanvas->GetControlAt(g_MousePosition.x, g_MousePosition.y);
+    Controls::Base* hovered = inCanvas->GetControlAt(g_mousePosition.x, g_mousePosition.y);
 
-    if (pHovered != Gwk::HoveredControl)
+    if (hovered != Gwk::HoveredControl)
     {
         if (Gwk::HoveredControl)
         {
@@ -69,13 +69,13 @@ static void UpdateHoveredControl(Controls::Base* pInCanvas)
             OldHover->OnMouseLeave();
         }
 
-        Gwk::HoveredControl = pHovered;
+        Gwk::HoveredControl = hovered;
 
         if (Gwk::HoveredControl)
             Gwk::HoveredControl->OnMouseEnter();
     }
 
-    if (Gwk::MouseFocus && Gwk::MouseFocus->GetCanvas() == pInCanvas)
+    if (Gwk::MouseFocus && Gwk::MouseFocus->GetCanvas() == inCanvas)
     {
         if (Gwk::HoveredControl)
         {
@@ -101,9 +101,9 @@ static bool FindKeyboardFocus(Controls::Base* control)
              iter != control->Children.end();
              ++iter)
         {
-            Controls::Base* pChild = *iter;
+            Controls::Base* child = *iter;
 
-            if (pChild == Gwk::KeyboardFocus)
+            if (child == Gwk::KeyboardFocus)
                 return false;
         }
 
@@ -116,7 +116,7 @@ static bool FindKeyboardFocus(Controls::Base* control)
 
 Gwk::Point Gwk::Input::GetMousePosition()
 {
-    return g_MousePosition;
+    return g_mousePosition;
 }
 
 void Gwk::Input::OnCanvasThink(Controls::Base* control)
@@ -141,15 +141,15 @@ void Gwk::Input::OnCanvasThink(Controls::Base* control)
     // Simulate Key-Repeats
     for (int i = 0; i < Gwk::Key::KeysCount; i++)
     {
-        if (g_KeyData.KeyState[i] && g_KeyData.Target != KeyboardFocus)
+        if (g_keyData.KeyState[i] && g_keyData.Target != KeyboardFocus)
         {
-            g_KeyData.KeyState[i] = false;
+            g_keyData.KeyState[i] = false;
             continue;
         }
 
-        if (g_KeyData.KeyState[i] && fTime > g_KeyData.NextRepeat[i])
+        if (g_keyData.KeyState[i] && fTime > g_keyData.NextRepeat[i])
         {
-            g_KeyData.NextRepeat[i] = Gwk::Platform::GetTimeInSeconds()+c_KeyRepeatRate;
+            g_keyData.NextRepeat[i] = Gwk::Platform::GetTimeInSeconds()+c_KeyRepeatRate;
 
             if (KeyboardFocus)
                 KeyboardFocus->OnKeyPress(i);
@@ -159,61 +159,61 @@ void Gwk::Input::OnCanvasThink(Controls::Base* control)
 
 bool Gwk::Input::IsKeyDown(int iKey)
 {
-    return g_KeyData.KeyState[ iKey ];
+    return g_keyData.KeyState[ iKey ];
 }
 
 bool Gwk::Input::IsLeftMouseDown()
 {
-    return g_KeyData.LeftMouseDown;
+    return g_keyData.LeftMouseDown;
 }
 
 bool Gwk::Input::IsRightMouseDown()
 {
-    return g_KeyData.RightMouseDown;
+    return g_keyData.RightMouseDown;
 }
 
-void Gwk::Input::OnMouseMoved(Controls::Base* pCanvas, int x, int y,
+void Gwk::Input::OnMouseMoved(Controls::Base* canvas, int x, int y,
                               int /*deltaX*/, int /*deltaY*/)
 {
-    g_MousePosition.x = x;
-    g_MousePosition.y = y;
-    UpdateHoveredControl(pCanvas);
+    g_mousePosition.x = x;
+    g_mousePosition.y = y;
+    UpdateHoveredControl(canvas);
 }
 
-bool Gwk::Input::OnMouseClicked(Controls::Base* pCanvas, int iMouseButton, bool bDown)
+bool Gwk::Input::OnMouseClicked(Controls::Base* canvas, int iMouseButton, bool bDown)
 {
     // If we click on a control that isn't a menu we want to close
     // all the open menus. Menus are children of the canvas.
     if (bDown && (!Gwk::HoveredControl || !Gwk::HoveredControl->IsMenuComponent()))
-        pCanvas->CloseMenus();
+        canvas->CloseMenus();
 
     if (!Gwk::HoveredControl)
         return false;
 
-    if (Gwk::HoveredControl->GetCanvas() != pCanvas)
+    if (Gwk::HoveredControl->GetCanvas() != canvas)
         return false;
 
     if (!Gwk::HoveredControl->Visible())
         return false;
 
-    if (Gwk::HoveredControl == pCanvas)
+    if (Gwk::HoveredControl == canvas)
         return false;
 
     if (iMouseButton > c_MaxMouseButtons)
         return false;
 
     if (iMouseButton == 0)
-        g_KeyData.LeftMouseDown = bDown;
+        g_keyData.LeftMouseDown = bDown;
     else if (iMouseButton == 1)
-        g_KeyData.RightMouseDown = bDown;
+        g_keyData.RightMouseDown = bDown;
 
     // Double click.
     // TODO - Shouldn't double click if mouse has moved significantly
     bool bIsDoubleClick = false;
 
     if (bDown
-        && g_pntLastClickPos.x == g_MousePosition.x
-        && g_pntLastClickPos.y == g_MousePosition.y
+        && g_pntLastClickPos.x == g_mousePosition.x
+        && g_pntLastClickPos.y == g_mousePosition.y
         && (Gwk::Platform::GetTimeInSeconds()-g_fLastClickTime[iMouseButton]) < c_DoubleClickSpeed)
     {
         bIsDoubleClick = true;
@@ -222,7 +222,7 @@ bool Gwk::Input::OnMouseClicked(Controls::Base* pCanvas, int iMouseButton, bool 
     if (bDown && !bIsDoubleClick)
     {
         g_fLastClickTime[ iMouseButton ] = Gwk::Platform::GetTimeInSeconds();
-        g_pntLastClickPos = g_MousePosition;
+        g_pntLastClickPos = g_mousePosition;
     }
 
     if (bDown)
@@ -249,8 +249,8 @@ bool Gwk::Input::OnMouseClicked(Controls::Base* pCanvas, int iMouseButton, bool 
     {
         if (Hook::CallHook(&Hook::BaseHook::OnControlClicked,
                            Gwk::HoveredControl,
-                           g_MousePosition.x,
-                           g_MousePosition.y))
+                           g_mousePosition.x,
+                           g_mousePosition.y))
         return true;
     }
 
@@ -260,24 +260,24 @@ bool Gwk::Input::OnMouseClicked(Controls::Base* pCanvas, int iMouseButton, bool 
     {
     case 0:
         if (DragAndDrop::OnMouseButton(Gwk::HoveredControl,
-                                       g_MousePosition.x, g_MousePosition.y,
+                                       g_mousePosition.x, g_mousePosition.y,
                                        bDown))
         {
             return true;
         }
 
         if (bIsDoubleClick)
-            Gwk::HoveredControl->OnMouseDoubleClickLeft(g_MousePosition.x, g_MousePosition.y);
+            Gwk::HoveredControl->OnMouseDoubleClickLeft(g_mousePosition.x, g_mousePosition.y);
         else
-            Gwk::HoveredControl->OnMouseClickLeft(g_MousePosition.x, g_MousePosition.y, bDown);
+            Gwk::HoveredControl->OnMouseClickLeft(g_mousePosition.x, g_mousePosition.y, bDown);
 
         return true;
 
     case 1:
         if (bIsDoubleClick)
-            Gwk::HoveredControl->OnMouseDoubleClickRight(g_MousePosition.x, g_MousePosition.y);
+            Gwk::HoveredControl->OnMouseDoubleClickRight(g_mousePosition.x, g_mousePosition.y);
         else
-            Gwk::HoveredControl->OnMouseClickRight(g_MousePosition.x, g_MousePosition.y, bDown);
+            Gwk::HoveredControl->OnMouseClickRight(g_mousePosition.x, g_mousePosition.y, bDown);
 
         return true;
     }
@@ -285,7 +285,7 @@ bool Gwk::Input::OnMouseClicked(Controls::Base* pCanvas, int iMouseButton, bool 
     return false;
 }
 
-bool Gwk::Input::HandleAccelerator(Controls::Base* pCanvas, Gwk::UnicodeChar chr)
+bool Gwk::Input::HandleAccelerator(Controls::Base* canvas, Gwk::UnicodeChar chr)
 {
     // Build the accelerator search string
     Gwk::String accelString;
@@ -307,18 +307,18 @@ bool Gwk::Input::HandleAccelerator(Controls::Base* pCanvas, Gwk::UnicodeChar chr
     if (Gwk::MouseFocus && Gwk::MouseFocus->HandleAccelerator(accelString))
         return true;
 
-    if (pCanvas->HandleAccelerator(accelString))
+    if (canvas->HandleAccelerator(accelString))
         return true;
 
     return false;
 }
 
-bool Gwk::Input::DoSpecialKeys(Controls::Base* pCanvas, Gwk::UnicodeChar chr)
+bool Gwk::Input::DoSpecialKeys(Controls::Base* canvas, Gwk::UnicodeChar chr)
 {
     if (!Gwk::KeyboardFocus)
         return false;
 
-    if (Gwk::KeyboardFocus->GetCanvas() != pCanvas)
+    if (Gwk::KeyboardFocus->GetCanvas() != canvas)
         return false;
 
     if (!Gwk::KeyboardFocus->Visible())
@@ -354,40 +354,40 @@ bool Gwk::Input::DoSpecialKeys(Controls::Base* pCanvas, Gwk::UnicodeChar chr)
     return false;
 }
 
-bool Gwk::Input::OnKeyEvent(Controls::Base* pCanvas, int iKey, bool bDown)
+bool Gwk::Input::OnKeyEvent(Controls::Base* canvas, int iKey, bool bDown)
 {
-    Gwk::Controls::Base* pTarget = Gwk::KeyboardFocus;
+    Gwk::Controls::Base* target = Gwk::KeyboardFocus;
 
-    if (pTarget && pTarget->GetCanvas() != pCanvas)
-        pTarget = NULL;
+    if (target && target->GetCanvas() != canvas)
+        target = NULL;
 
-    if (pTarget && !pTarget->Visible())
-        pTarget = NULL;
+    if (target && !target->Visible())
+        target = NULL;
 
     if (bDown)
     {
-        if (!g_KeyData.KeyState[iKey])
+        if (!g_keyData.KeyState[iKey])
         {
-            g_KeyData.KeyState[iKey] = true;
-            g_KeyData.NextRepeat[iKey] = Gwk::Platform::GetTimeInSeconds()+c_KeyRepeatDelay;
-            g_KeyData.Target = pTarget;
+            g_keyData.KeyState[iKey] = true;
+            g_keyData.NextRepeat[iKey] = Gwk::Platform::GetTimeInSeconds()+c_KeyRepeatDelay;
+            g_keyData.Target = target;
 
-            if (pTarget)
-                return pTarget->OnKeyPress(iKey);
+            if (target)
+                return target->OnKeyPress(iKey);
         }
     }
     else
     {
-        if (g_KeyData.KeyState[iKey])
+        if (g_keyData.KeyState[iKey])
         {
-            g_KeyData.KeyState[iKey] = false;
+            g_keyData.KeyState[iKey] = false;
 
             //! @bug This causes shift left arrow in textboxes
             //! to not work. What is disabling it here breaking?
-            //! `g_KeyData.Target = NULL;`
+            //! `g_keyData.Target = NULL;`
             
-            if (pTarget)
-                return pTarget->OnKeyRelease(iKey);
+            if (target)
+                return target->OnKeyRelease(iKey);
         }
     }
 

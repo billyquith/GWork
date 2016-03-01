@@ -13,10 +13,10 @@ class SelectionLayer : public Controls::Base
 	virtual void OnMouseClickLeft( int x, int y, bool bDown );
 
 	virtual void ClearSelection();
-	virtual void AddSelection( Controls::Base* pControl );
-	virtual void RemoveSelection(  Controls::Base* pControl );
+	virtual void AddSelection( Controls::Base* control );
+	virtual void RemoveSelection(  Controls::Base* control );
 
-	ControlList& GetSelected(){ return m_Selected; }
+	ControlList& GetSelected(){ return m_selected; }
 
 	Event::Caller onSelectionChanged;
 	Event::Caller onPropertiesChanged;
@@ -29,8 +29,8 @@ class SelectionLayer : public Controls::Base
 		void OnCagePressed( Event::Info info );
 		void OnDragStart();
 
-		void SwitchCage( Controls::Base* pControl, Controls::Base* pTo );
+		void SwitchCage( Controls::Base* control, Controls::Base* to );
 
-		ControlList	m_Selected;
+		ControlList	m_selected;
 
 };

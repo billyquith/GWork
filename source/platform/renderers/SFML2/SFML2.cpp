@@ -22,21 +22,14 @@
 
 struct TextureData
 {
-    TextureData(sf::Image* img) : texture(NULL), image(img)
-    {
-    }
+    TextureData(sf::Image* img) : texture(NULL), image(img) {}
 
-    TextureData(sf::Texture* text) : texture(text), image(NULL)
-    {
-    }
+    TextureData(sf::Texture* text) : texture(text), image(NULL) {}
 
     ~TextureData()
     {
-        if (texture != NULL)
-            delete texture;
-
-        if (image != NULL)
-            delete image;
+        delete texture;
+        delete image;
     }
 
     sf::Texture *texture;
@@ -44,12 +37,13 @@ struct TextureData
 };
 
 
-Gwk::Renderer::SFML2::SFML2(sf::RenderTarget& target) :
-    m_Target(target), m_Color(), m_Buffer(), m_RenderStates(sf::RenderStates::Default), m_Height(
-        m_Target.getSize().y)
+Gwk::Renderer::SFML2::SFML2(sf::RenderTarget& target)
+    :   m_target(target)
+    ,   m_renderStates(sf::RenderStates::Default)
+    ,   m_height(m_target.getSize().y)
 {
-    m_Buffer.setPrimitiveType(sf::Triangles);
-    m_RenderStates.blendMode = sf::BlendAlpha;
+    m_buffer.setPrimitiveType(sf::Triangles);
+    m_renderStates.blendMode = sf::BlendAlpha;
 }
 
 Gwk::Renderer::SFML2::~SFML2()
@@ -58,21 +52,28 @@ Gwk::Renderer::SFML2::~SFML2()
 
 void Gwk::Renderer::SFML2::Begin()
 {
-    m_OriginalView = m_Target.getView();
+    m_originalView = m_target.getView();
+    
     sf::FloatRect vrect;
-    vrect.left = 0; vrect.top = 0;
-    vrect.width = m_Target.getSize().x; vrect.height = m_Height = m_Target.getSize().y;
+    vrect.left = 0;
+    vrect.top = 0;
+    vrect.width = m_target.getSize().x;
+    vrect.height = m_height = m_target.getSize().y;
+    
     sf::FloatRect vprect;
-    vprect.left = 0; vprect.top = 0;
-    vprect.width = 1.0f; vprect.height = 1.0f;
+    vprect.left = 0;
+    vprect.top = 0;
+    vprect.width = 1.0f;
+    vprect.height = 1.0f;
+    
     sf::View view(vrect);
     view.setViewport(vprect);
-    m_Target.setView(view);
+    m_target.setView(view);
 }
 
 void Gwk::Renderer::SFML2::End()
 {
-    m_Target.setView(m_OriginalView);
+    m_target.setView(m_originalView);
 }
 
 void Gwk::Renderer::SFML2::StartClip()
@@ -84,9 +85,9 @@ void Gwk::Renderer::SFML2::StartClip()
 
     // OpenGL's coords are from the bottom left
     // so we need to translate them here.
-    y = m_Height-(y+h);
+    y = m_height-(y+h);
 
-    float scale = Scale();
+    const float scale = Scale();
 
     glEnable(GL_SCISSOR_TEST);
     glScissor(x*scale, y*scale, w*scale, h*scale);
@@ -100,7 +101,7 @@ void Gwk::Renderer::SFML2::EndClip()
 
 void Gwk::Renderer::SFML2::SetDrawColor(Gwk::Color color)
 {
-    m_Color = sf::Color(color.r, color.g, color.b, color.a);
+    m_color = sf::Color(color.r, color.g, color.b, color.a);
 }
 
 void Gwk::Renderer::SFML2::DrawPixel(int x, int y)
@@ -157,10 +158,10 @@ void Gwk::Renderer::SFML2::DrawShavedCornerRect(Gwk::Rect rect, bool bSlight)
     Base::DrawShavedCornerRect(rect, bSlight);
 }
 
-void Gwk::Renderer::SFML2::DrawTexturedRect(Gwk::Texture* pTexture, Gwk::Rect rect, float u1,
-                                             float v1, float u2, float v2)
+void Gwk::Renderer::SFML2::DrawTexturedRect(Gwk::Texture* texture, Gwk::Rect rect, float u1,
+                                            float v1, float u2, float v2)
 {
-    TextureData* data = reinterpret_cast<TextureData*>(pTexture->data);
+    TextureData* data = reinterpret_cast<TextureData*>(texture->data);
 
     // Missing image, not loaded properly?
     if (!data)
@@ -186,30 +187,30 @@ void Gwk::Renderer::SFML2::LoadFont(Gwk::Font* font)
 {
     font->realsize = font->size*Scale();
 
-    sf::Font* pFont = new sf::Font();
+    sf::Font* sfFont = new sf::Font();
 
-    if (!pFont->loadFromFile(font->facename))
+    if (!sfFont->loadFromFile(font->facename))
     {
-        // Ideally here we should be setting the font to a system default font
-        // here.
-        delete pFont;
-        pFont = NULL; // SFML 2 doesn't have a default font anymore
+        // Ideally here we should be setting the font to a system
+        // default font here.
+        delete sfFont;
+        sfFont = NULL; // SFML 2 doesn't have a default font anymore
     }
 
-    font->data = pFont;
+    font->data = sfFont;
 }
 
-void Gwk::Renderer::SFML2::FreeFont(Gwk::Font* pFont)
+void Gwk::Renderer::SFML2::FreeFont(Gwk::Font* font)
 {
-    if (!pFont->data)
+    if (!font->data)
         return;
 
-    sf::Font* font = reinterpret_cast<sf::Font*>(pFont->data);
-    delete font;
-    pFont->data = NULL;
+    sf::Font* sfFont = reinterpret_cast<sf::Font*>(font->data);
+    delete sfFont;
+    font->data = NULL;
 }
 
-void Gwk::Renderer::SFML2::RenderText(Gwk::Font* pFont, Gwk::Point pos,
+void Gwk::Renderer::SFML2::RenderText(Gwk::Font* font, Gwk::Point pos,
                                       const Gwk::String& text)
 {
     Flush();
@@ -217,79 +218,78 @@ void Gwk::Renderer::SFML2::RenderText(Gwk::Font* pFont, Gwk::Point pos,
     Translate(pos.x, pos.y);
 
     // If the font doesn't exist, or the font size should be changed
-    if (!pFont->data || fabs(pFont->realsize-pFont->size*Scale()) > 2)
+    if (!font->data || fabs(font->realsize-font->size*Scale()) > 2)
     {
-        FreeFont(pFont);
-        LoadFont(pFont);
+        FreeFont(font);
+        LoadFont(font);
     }
 
-    const sf::Font* pSFFont = reinterpret_cast<sf::Font*>(pFont->data);
+    const sf::Font* sFFont = reinterpret_cast<sf::Font*>(font->data);
 
     sf::Text sfStr;
     sfStr.setString(text);
-    sfStr.setFont(*pSFFont);
+    sfStr.setFont(*sFFont);
     sfStr.move(pos.x, pos.y);
-    sfStr.setCharacterSize(pFont->realsize);
-    sfStr.setColor(m_Color);
-    m_Target.draw(sfStr);
+    sfStr.setCharacterSize(font->realsize);
+    sfStr.setColor(m_color);
+    m_target.draw(sfStr);
 }
 
-Gwk::Point Gwk::Renderer::SFML2::MeasureText(Gwk::Font* pFont, const Gwk::String& text)
+Gwk::Point Gwk::Renderer::SFML2::MeasureText(Gwk::Font* font, const Gwk::String& text)
 {
     // If the font doesn't exist, or the font size should be changed
-    if (!pFont->data || fabs(pFont->realsize-pFont->size*Scale()) > 2)
+    if (!font->data || fabs(font->realsize-font->size*Scale()) > 2)
     {
-        FreeFont(pFont);
-        LoadFont(pFont);
+        FreeFont(font);
+        LoadFont(font);
     }
 
-    const sf::Font* pSFFont = reinterpret_cast<sf::Font*>(pFont->data);
+    const sf::Font* sFFont = reinterpret_cast<sf::Font*>(font->data);
 
     sf::Text sfStr;
     sfStr.setString(text);
-    sfStr.setFont(*pSFFont);
+    sfStr.setFont(*sFFont);
     sfStr.setScale(Scale(), Scale());
-    sfStr.setCharacterSize(pFont->realsize);
+    sfStr.setCharacterSize(font->realsize);
     sf::FloatRect sz = sfStr.getLocalBounds();
     return Gwk::Point(sz.left+sz.width, sz.top+sz.height);
 }
 
-void Gwk::Renderer::SFML2::LoadTexture(Gwk::Texture* pTexture)
+void Gwk::Renderer::SFML2::LoadTexture(Gwk::Texture* texture)
 {
-    if (!pTexture)
+    if (!texture)
         return;
 
-    if (pTexture->data)
-        FreeTexture(pTexture);
+    if (texture->data)
+        FreeTexture(texture);
 
     sf::Texture* tex = new sf::Texture();
     tex->setSmooth(true);
-    if (!tex->loadFromFile(pTexture->name))
+    if (!tex->loadFromFile(texture->name))
     {
-        delete(tex);
-        pTexture->failed = true;
+        delete tex;
+        texture->failed = true;
         return;
     }
 
-    pTexture->height = tex->getSize().x;
-    pTexture->width = tex->getSize().y;
-    pTexture->data = new TextureData(tex);
+    texture->height = tex->getSize().x;
+    texture->width = tex->getSize().y;
+    texture->data = new TextureData(tex);
 }
 
-void Gwk::Renderer::SFML2::FreeTexture(Gwk::Texture* pTexture)
+void Gwk::Renderer::SFML2::FreeTexture(Gwk::Texture* texture)
 {
-    TextureData* data = reinterpret_cast<TextureData*>(pTexture->data);
+    TextureData* data = reinterpret_cast<TextureData*>(texture->data);
 
-    if (data)
-        delete data;
+    delete data;
 
-    pTexture->data = NULL;
+    texture->data = NULL;
 }
 
-Gwk::Color Gwk::Renderer::SFML2::PixelColour(Gwk::Texture* pTexture, unsigned int x,
+Gwk::Color Gwk::Renderer::SFML2::PixelColour(Gwk::Texture* texture, unsigned int x,
                                              unsigned int y, const Gwk::Color& col_default)
 {
-    TextureData* data = static_cast<TextureData*>(pTexture->data);
+    TextureData* data = static_cast<TextureData*>(texture->data);
 
     if (!data->texture && !data->image)
         return col_default;

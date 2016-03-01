@@ -8,26 +8,26 @@ GWK_CONTROL_CONSTRUCTOR( ControlToolbox )
 	SetMargin( Margin( 5, 5, 5, 5 ) );
 	SetText( "Controls" );
 
-	Controls::Layout::Tile* pTileLayout = new Controls::Layout::Tile( this );
-	pTileLayout->SetTileSize( 22, 22 );
+	Controls::Layout::Tile* tileLayout = new Controls::Layout::Tile( this );
+	tileLayout->SetTileSize( 22, 22 );
 
 	for (ControlFactory::List::iterator it = ControlFactory::GetList().begin();
 		 it != ControlFactory::GetList().end();
 		 ++it)
 	{
-		ControlFactory::Base* pControlFactory = *it;
+		ControlFactory::Base* controlFactory = *it;
 
-		if ( pControlFactory->Name() == "DesignerCanvas" )
+		if ( controlFactory->Name() == "DesignerCanvas" )
 			continue;
 
-		Controls::Button* pButton = new Controls::Button( pTileLayout );
-		pButton->SetSize( 20, 20 );
-		pButton->SetToolTip( pControlFactory->Name() );
-		pButton->SetImage( "img/controls/" + pControlFactory->Name() + ".png" );
-		pButton->SetShouldDrawBackground( false );
+		Controls::Button* button = new Controls::Button( tileLayout );
+		button->SetSize( 20, 20 );
+		button->SetToolTip( controlFactory->Name() );
+		button->SetImage( "img/controls/" + controlFactory->Name() + ".png" );
+		button->SetShouldDrawBackground( false );
 
 		// Make drag and droppable. Pass the ControlFactory as the userdata
-		pButton->DragAndDrop_SetPackage( true, "ControlSpawn", pControlFactory );
+		button->DragAndDrop_SetPackage( true, "ControlSpawn", controlFactory );
 	}
 
 }

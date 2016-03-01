@@ -16,10 +16,10 @@ namespace Gwk
 //            
 //            virtual Gwk::Controls::Base* CreateInstance(Gwk::Controls::Base* parent)
 //            {
-//                Gwk::Controls::Button* pControl = new Gwk::Controls::Button(parent);
-//                pControl->SetSize(100, 20);
-//                pControl->SetText("New Button");
-//                return pControl;
+//                Gwk::Controls::Button* control = new Gwk::Controls::Button(parent);
+//                control->SetSize(100, 20);
+//                control->SetText("New Button");
+//                return control;
 //            }
 //
 //        };

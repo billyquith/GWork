@@ -22,14 +22,14 @@ namespace Gwk
         {
             GWK_CONTROL_INLINE(WindowCloseButton, Button)
             {
-                m_pWindow = NULL;
+                m_window = NULL;
                 SetSize(31, 31);
                 SetText("");
             }
 
             virtual void Render(Skin::Base* skin) override
             {
-                if (!m_pWindow)
+                if (!m_window)
                     return;
 
                 skin->DrawWindowCloseButton(this,
@@ -40,12 +40,12 @@ namespace Gwk
 
             void SetWindow(Gwk::Controls::Base* p)
             {
-                m_pWindow = p;
+                m_window = p;
             }
 
         protected:
 
-            Controls::Base* m_pWindow;
+            Controls::Base* m_window;
         };
 
 
@@ -58,7 +58,7 @@ namespace Gwk
 
             virtual void Render(Skin::Base* skin) override
             {
-                if (!m_pWindow)
+                if (!m_window)
                     return;
 
                 skin->DrawWindowMaximizeButton(this,
@@ -87,7 +87,7 @@ namespace Gwk
 
             virtual void Render(Skin::Base* skin)
             {
-                if (!m_pWindow)
+                if (!m_window)
                     return;
 
                 skin->DrawWindowMinimizeButton(this,

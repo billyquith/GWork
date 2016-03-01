@@ -17,7 +17,7 @@ using namespace Gwk::Controls;
 
 GWK_CONTROL_CONSTRUCTOR(Button)
 {
-    m_Image = NULL;
+    m_image = NULL;
     m_bDepressed = false;
     m_bCenterImage = false;
     SetSize(100, 20);
@@ -114,25 +114,25 @@ void Button::SetImage(const String& strName, bool bCenter)
 {
     if (strName.empty())
     {
-        if (m_Image)
+        if (m_image)
         {
-            delete m_Image;
-            m_Image = NULL;
+            delete m_image;
+            m_image = NULL;
         }
 
         return;
     }
 
-    if (!m_Image)
-        m_Image = new ImagePanel(this);
+    if (!m_image)
+        m_image = new ImagePanel(this);
 
-    m_Image->SetImage(strName);
-    m_Image->SizeToContents();
-    m_Image->SetMargin(Margin(2, 0, 2, 0));
+    m_image->SetImage(strName);
+    m_image->SizeToContents();
+    m_image->SetMargin(Margin(2, 0, 2, 0));
     m_bCenterImage = bCenter;
     // Ugh.
     Padding padding = GetTextPadding();
-    padding.left = m_Image->Right()+2;
+    padding.left = m_image->Right()+2;
     SetTextPadding(padding);
 }
 
@@ -156,9 +156,9 @@ void Button::SizeToContents()
 {
     ParentClass::SizeToContents();
 
-    if (m_Image)
+    if (m_image)
     {
-        int height = m_Image->Height()+4;
+        int height = m_image->Height()+4;
 
         if (Height() < height)
             SetHeight(height);
@@ -192,16 +192,16 @@ void Button::UpdateColours()
     SetTextColor(GetSkin()->Colors.Button.Normal);
 }
 
-void Button::PostLayout(Skin::Base* pSkin)
+void Button::PostLayout(Skin::Base* skin)
 {
-    ParentClass::PostLayout(pSkin);
+    ParentClass::PostLayout(skin);
 
-    if (m_Image)
+    if (m_image)
     {
         if (m_bCenterImage)
-            m_Image->Position(Docking::Center);
+            m_image->Position(Docking::Center);
         else
-            m_Image->Position(Docking::Left|Docking::CenterV);
+            m_image->Position(Docking::Left|Docking::CenterV);
     }
 }
 
@@ -216,14 +216,14 @@ void Button::OnMouseDoubleClickLeft(int x, int y)
 
 void Button::SetImageAlpha(float f)
 {
-    if (!m_Image)
+    if (!m_image)
         return;
 
-    m_Image->SetDrawColor(Gwk::Color(255, 255, 255, 255.0f*f));
+    m_image->SetDrawColor(Gwk::Color(255, 255, 255, 255.0f*f));
 }
 
-void Button::SetAction(Event::Handler* pObject, Handler::FunctionWithInformation pFunction,
+void Button::SetAction(Event::Handler* object, Handler::FunctionWithInformation function,
                        const Gwk::Event::Packet& packet)
 {
-    onPress.Add(pObject, pFunction, packet);
+    onPress.Add(object, function, packet);
 }

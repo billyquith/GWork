@@ -25,22 +25,22 @@ namespace Gwk
             {
                 GWK_CONTROL_INLINE(ColourButton, Button)
                 {
-                    m_Color = Colors::Black;
+                    m_color = Colors::Black;
                     SetText("");
                 }
 
                 void Render(Skin::Base* skin) override
                 {
-                    skin->GetRender()->SetDrawColor(m_Color);
+                    skin->GetRender()->SetDrawColor(m_color);
                     skin->GetRender()->DrawFilledRect(GetRenderBounds());
                 }
 
                 void SetColor(const Gwk::Color& col)
                 {
-                    m_Color = col;
+                    m_color = col;
                 }
 
-                Gwk::Color m_Color;
+                Gwk::Color m_color;
             };
 
 
@@ -52,30 +52,30 @@ namespace Gwk
             {
                 GWK_CONTROL_INLINE(ColorSelector, Property::Text)
                 {
-                    m_Button = new Controls::Internal::ColourButton(m_TextBox);
-                    m_Button->Dock(Docking::Right);
-                    m_Button->SetWidth(20);
-                    m_Button->onPress.Add(this, &ThisClass::OnButtonPress);
-                    m_Button->SetMargin(Margin(1, 1, 1, 2));
+                    m_button = new Controls::Internal::ColourButton(m_textBox);
+                    m_button->Dock(Docking::Right);
+                    m_button->SetWidth(20);
+                    m_button->onPress.Add(this, &ThisClass::OnButtonPress);
+                    m_button->SetMargin(Margin(1, 1, 1, 2));
                 }
 
                 void OnButtonPress(Controls::Base* control)
                 {
-                    Gwk::Controls::Menu* pMenu = new Menu(GetCanvas());
-                    pMenu->SetSize(256, 180);
-                    pMenu->SetDeleteOnClose(true);
-                    pMenu->SetDisableIconMargin(true);
+                    Gwk::Controls::Menu* menu = new Menu(GetCanvas());
+                    menu->SetSize(256, 180);
+                    menu->SetDeleteOnClose(true);
+                    menu->SetDisableIconMargin(true);
                     
-                    Gwk::Controls::HSVColorPicker* picker = new Gwk::Controls::HSVColorPicker(pMenu);
+                    Gwk::Controls::HSVColorPicker* picker = new Gwk::Controls::HSVColorPicker(menu);
                     picker->Dock(Docking::Fill);
                     picker->SetSize(256, 128);
                     float defaultColor[3];
-                    Gwk::Utility::Strings::To::Floats(m_TextBox->GetText(), defaultColor, 3);
+                    Gwk::Utility::Strings::To::Floats(m_textBox->GetText(), defaultColor, 3);
                     picker->SetColor(Gwk::Color(defaultColor[0], defaultColor[1], defaultColor[2], 255),
                                      false, true);
                     picker->onColorChanged.Add(this, &ThisClass::ColorChanged);
                     
-                    pMenu->Open(Docking::Right|Docking::Top);
+                    menu->Open(Docking::Right|Docking::Top);
                 }
 
                 void ColorChanged(Controls::Base* control)
@@ -83,23 +83,23 @@ namespace Gwk
                     Gwk::Controls::HSVColorPicker* picker =
                         gwk_cast<Gwk::Controls::HSVColorPicker>(control);
                     Color col = picker->GetColor();
-                    m_TextBox->SetText(Utility::Format("%u,%u,%u", col.r, col.g, col.b));
+                    m_textBox->SetText(Utility::Format("%u,%u,%u", col.r, col.g, col.b));
                     DoChanged();
                 }
 
                 virtual String GetPropertyValue() override
                 {
-                    return m_TextBox->GetText();
+                    return m_textBox->GetText();
                 }
 
                 virtual void SetPropertyValue(const String& v, bool bFireChangeEvents) override
                 {
-                    m_TextBox->SetText(v, bFireChangeEvents);
+                    m_textBox->SetText(v, bFireChangeEvents);
                 }
 
                 virtual bool IsEditing() override
                 {
-                    return m_TextBox == Gwk::KeyboardFocus;
+                    return m_textBox == Gwk::KeyboardFocus;
                 }
 
                 virtual void DoChanged() override
@@ -107,16 +107,16 @@ namespace Gwk
                     ParentClass::DoChanged();
                     unsigned int r,g,b;
 #ifdef _WIN32
-                    if (sscanf_s(m_TextBox->GetText().c_str(), "%u,%u,%u", &r, &g, &b) == 3)
+                    if (sscanf_s(m_textBox->GetText().c_str(), "%u,%u,%u", &r, &g, &b) == 3)
 #else
-                    if (sscanf(m_TextBox->GetText().c_str(), "%u,%u,%u", &r, &g, &b) == 3)
+                    if (sscanf(m_textBox->GetText().c_str(), "%u,%u,%u", &r, &g, &b) == 3)
 #endif
                     {
-                        m_Button->SetColor(Gwk::Color(r,g,b));
+                        m_button->SetColor(Gwk::Color(r,g,b));
                     }
                 }
 
-                Controls::Internal::ColourButton*       m_Button;
+                Controls::Internal::ColourButton*       m_button;
             };
 
 

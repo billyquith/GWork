@@ -25,7 +25,7 @@ public:
 
     virtual void Think()
     {
-        gwk_cast<TextBox>(m_Control)->UpdateCaretColor();
+        gwk_cast<TextBox>(m_control)->UpdateCaretColor();
     }
 
 };
@@ -41,9 +41,9 @@ GWK_CONTROL_CONSTRUCTOR(TextBox)
     SetKeyboardInputEnabled(true);
     SetAlignment(Docking::Left|Docking::CenterV);
     SetPadding(Padding(4, 2, 4, 2));
-    m_iCursorPos = 0;
-    m_iCursorEnd = 0;
-    m_iCursorLine = 0;
+    m_cursorPos = 0;
+    m_cursorEnd = 0;
+    m_cursorLine = 0;
     m_bEditable = true;
     m_bSelectAll = false;
     SetTextColor(Gwk::Color(50, 50, 50, 255));         // TODO: From Skin
@@ -75,18 +75,18 @@ void TextBox::InsertText(const Gwk::String& strInsert)
     if (HasSelection())
         EraseSelection();
 
-    if (m_iCursorPos > TextLength())
-        m_iCursorPos = TextLength();
+    if (m_cursorPos > TextLength())
+        m_cursorPos = TextLength();
 
-    if (!IsTextAllowed(strInsert, m_iCursorPos))
+    if (!IsTextAllowed(strInsert, m_cursorPos))
         return;
 
     String str = GetText();
-    str.insert(m_iCursorPos, strInsert);
+    str.insert(m_cursorPos, strInsert);
     SetText(str);
-    m_iCursorPos += (int)strInsert.size();
-    m_iCursorEnd = m_iCursorPos;
-    m_iCursorLine = 0;
+    m_cursorPos += (int)strInsert.size();
+    m_cursorEnd = m_cursorPos;
+    m_cursorLine = 0;
     RefreshCursorBounds();
 }
 
@@ -103,11 +103,11 @@ void TextBox::UpdateCaretColor()
 
     Gwk::Color targetcolor = Gwk::Color(230, 230, 230, 255);
 
-    if (m_CaretColor == targetcolor)
+    if (m_caretColor == targetcolor)
         targetcolor = Gwk::Color(20, 20, 20, 255);
 
     m_fNextCaretColorChange = Gwk::Platform::GetTimeInSeconds()+0.5;
-    m_CaretColor = targetcolor;
+    m_caretColor = targetcolor;
     Redraw();
 }
 
@@ -122,28 +122,28 @@ void TextBox::Render(Skin::Base* skin)
         return;
 
     // Draw selection.. if selected..
-    if (m_iCursorPos != m_iCursorEnd)
+    if (m_cursorPos != m_cursorEnd)
     {
         skin->GetRender()->SetDrawColor(Gwk::Color(50, 170, 255, 200));
         skin->GetRender()->DrawFilledRect(m_rectSelectionBounds);
     }
 
     // Draw caret
-    skin->GetRender()->SetDrawColor(m_CaretColor);
+    skin->GetRender()->SetDrawColor(m_caretColor);
     skin->GetRender()->DrawFilledRect(m_rectCaretBounds);
 }
 
 void TextBox::RefreshCursorBounds()
 {
     m_fNextCaretColorChange = Gwk::Platform::GetTimeInSeconds()+1.5f;
-    m_CaretColor = Gwk::Color(30, 30, 30, 255);
+    m_caretColor = Gwk::Color(30, 30, 30, 255);
     MakeCaratVisible();
-    Gwk::Rect pA = GetCharacterPosition(m_iCursorPos);
-    Gwk::Rect pB = GetCharacterPosition(m_iCursorEnd);
+    Gwk::Rect pA = GetCharacterPosition(m_cursorPos);
+    Gwk::Rect pB = GetCharacterPosition(m_cursorEnd);
     m_rectSelectionBounds.x = Gwk::Min(pA.x, pB.x);
-    m_rectSelectionBounds.y = m_Text->Y()-1;
+    m_rectSelectionBounds.y = m_text->Y()-1;
     m_rectSelectionBounds.w = Gwk::Max(pA.x, pB.x)-m_rectSelectionBounds.x;
-    m_rectSelectionBounds.h = m_Text->Height()+2;
+    m_rectSelectionBounds.h = m_text->Height()+2;
     m_rectCaretBounds.x = pA.x;
     m_rectCaretBounds.y = pA.y;
     m_rectCaretBounds.w = 1;
@@ -151,12 +151,12 @@ void TextBox::RefreshCursorBounds()
     Redraw();
 }
 
-void TextBox::OnPaste(Gwk::Controls::Base* /*pCtrl*/)
+void TextBox::OnPaste(Gwk::Controls::Base* /*ctrl*/)
 {
     InsertText(Platform::GetClipboardText());
 }
 
-void TextBox::OnCopy(Gwk::Controls::Base* /*pCtrl*/)
+void TextBox::OnCopy(Gwk::Controls::Base* /*ctrl*/)
 {
     if (!HasSelection())
         return;
@@ -164,7 +164,7 @@ void TextBox::OnCopy(Gwk::Controls::Base* /*pCtrl*/)
     Platform::SetClipboardText(GetSelection());
 }
 
-void TextBox::OnCut(Gwk::Controls::Base* /*pCtrl*/)
+void TextBox::OnCut(Gwk::Controls::Base* /*ctrl*/)
 {
     if (!HasSelection())
         return;
@@ -173,11 +173,11 @@ void TextBox::OnCut(Gwk::Controls::Base* /*pCtrl*/)
     EraseSelection();
 }
 
-void TextBox::OnSelectAll(Gwk::Controls::Base* /*pCtrl*/)
+void TextBox::OnSelectAll(Gwk::Controls::Base* /*ctrl*/)
 {
-    m_iCursorEnd = 0;
-    m_iCursorPos = TextLength();
-    m_iCursorLine = 0;
+    m_cursorEnd = 0;
+    m_cursorPos = TextLength();
+    m_cursorLine = 0;
     RefreshCursorBounds();
 }
 
@@ -191,8 +191,8 @@ String TextBox::GetSelection()
     if (!HasSelection())
         return "";
 
-    int iStart = Gwk::Min(m_iCursorPos, m_iCursorEnd);
-    int iEnd = Gwk::Max(m_iCursorPos, m_iCursorEnd);
+    int iStart = Gwk::Min(m_cursorPos, m_cursorEnd);
+    int iEnd = Gwk::Max(m_cursorPos, m_cursorEnd);
     const String& str = GetText();
     return str.substr(iStart, iEnd-iStart);
 }
@@ -226,10 +226,10 @@ bool TextBox::OnKeyBackspace(bool bDown)
         return true;
     }
 
-    if (m_iCursorPos == 0)
+    if (m_cursorPos == 0)
         return true;
 
-    DeleteText(m_iCursorPos-1, 1);
+    DeleteText(m_cursorPos-1, 1);
     return true;
 }
 
@@ -244,10 +244,10 @@ bool TextBox::OnKeyDelete(bool bDown)
         return true;
     }
 
-    if (m_iCursorPos >= TextLength())
+    if (m_cursorPos >= TextLength())
         return true;
 
-    DeleteText(m_iCursorPos, 1);
+    DeleteText(m_cursorPos, 1);
     return true;
 }
 
@@ -256,11 +256,11 @@ bool TextBox::OnKeyLeft(bool bDown)
     if (!bDown)
         return true;
 
-    if (m_iCursorPos > 0)
-        m_iCursorPos--;
+    if (m_cursorPos > 0)
+        m_cursorPos--;
 
     if (!Gwk::Input::IsShiftDown())
-        m_iCursorEnd = m_iCursorPos;
+        m_cursorEnd = m_cursorPos;
 
     RefreshCursorBounds();
     return true;
@@ -271,11 +271,11 @@ bool TextBox::OnKeyRight(bool bDown)
     if (!bDown)
         return true;
 
-    if (m_iCursorPos < TextLength())
-        m_iCursorPos++;
+    if (m_cursorPos < TextLength())
+        m_cursorPos++;
 
     if (!Gwk::Input::IsShiftDown())
-        m_iCursorEnd = m_iCursorPos;
+        m_cursorEnd = m_cursorPos;
 
     RefreshCursorBounds();
     return true;
@@ -286,10 +286,10 @@ bool TextBox::OnKeyHome(bool bDown)
     if (!bDown)
         return true;
 
-    m_iCursorPos = 0;
+    m_cursorPos = 0;
 
     if (!Gwk::Input::IsShiftDown())
-        m_iCursorEnd = m_iCursorPos;
+        m_cursorEnd = m_cursorPos;
 
     RefreshCursorBounds();
     return true;
@@ -297,10 +297,10 @@ bool TextBox::OnKeyHome(bool bDown)
 
 bool TextBox::OnKeyEnd(bool /*bDown*/)
 {
-    m_iCursorPos = TextLength();
+    m_cursorPos = TextLength();
 
     if (!Gwk::Input::IsShiftDown())
-        m_iCursorEnd = m_iCursorPos;
+        m_cursorEnd = m_cursorPos;
 
     RefreshCursorBounds();
     return true;
@@ -308,20 +308,20 @@ bool TextBox::OnKeyEnd(bool /*bDown*/)
 
 void TextBox::SetCursorPos(int i)
 {
-    if (m_iCursorPos == i)
+    if (m_cursorPos == i)
         return;
 
-    m_iCursorPos = i;
-    m_iCursorLine = 0;
+    m_cursorPos = i;
+    m_cursorLine = 0;
     RefreshCursorBounds();
 }
 
 void TextBox::SetCursorEnd(int i)
 {
-    if (m_iCursorEnd == i)
+    if (m_cursorEnd == i)
         return;
 
-    m_iCursorEnd = i;
+    m_cursorEnd = i;
     RefreshCursorBounds();
 }
 
@@ -334,26 +334,26 @@ void TextBox::DeleteText(int iStartPos, int iLength)
     str.erase(iStartPos, iLength);
     SetText(str);
 
-    if (m_iCursorPos > iStartPos)
-        SetCursorPos(m_iCursorPos-iLength);
+    if (m_cursorPos > iStartPos)
+        SetCursorPos(m_cursorPos-iLength);
 
-    SetCursorEnd(m_iCursorPos);
+    SetCursorEnd(m_cursorPos);
 }
 
 bool TextBox::HasSelection()
 {
-    return m_iCursorPos != m_iCursorEnd;
+    return m_cursorPos != m_cursorEnd;
 }
 
 void TextBox::EraseSelection()
 {
-    int iStart = Gwk::Min(m_iCursorPos, m_iCursorEnd);
-    int iEnd = Gwk::Max(m_iCursorPos, m_iCursorEnd);
+    int iStart = Gwk::Min(m_cursorPos, m_cursorEnd);
+    int iEnd = Gwk::Max(m_cursorPos, m_cursorEnd);
     DeleteText(iStart, iEnd-iStart);
     // Move the cursor to the start of the selection,
     // since the end is probably outside of the string now.
-    m_iCursorPos = iStart;
-    m_iCursorEnd = iStart;
+    m_cursorPos = iStart;
+    m_cursorEnd = iStart;
 }
 
 void TextBox::OnMouseClickLeft(int x, int y, bool bDown)
@@ -365,7 +365,7 @@ void TextBox::OnMouseClickLeft(int x, int y, bool bDown)
         return;
     }
 
-    int iChar = m_Text->GetClosestCharacter(m_Text->CanvasPosToLocal(Gwk::Point(x, y)));
+    int iChar = m_text->GetClosestCharacter(m_text->CanvasPosToLocal(Gwk::Point(x, y)));
 
     if (bDown)
     {
@@ -391,21 +391,21 @@ void TextBox::OnMouseMoved(int x, int y, int /*deltaX*/, int /*deltaY*/)
     if (Gwk::MouseFocus != this)
         return;
 
-    int iChar = m_Text->GetClosestCharacter(m_Text->CanvasPosToLocal(Gwk::Point(x, y)));
+    int iChar = m_text->GetClosestCharacter(m_text->CanvasPosToLocal(Gwk::Point(x, y)));
     SetCursorPos(iChar);
 }
 
 void TextBox::MakeCaratVisible()
 {
-    if (m_Text->Width() < Width())
+    if (m_text->Width() < Width())
     {
-        m_Text->Position(m_iAlign);
+        m_text->Position(m_align);
     }
     else
     {
-        int iCaratPos = m_Text->GetCharacterPosition(m_iCursorPos).x;
-        int iRealCaratPos = iCaratPos+m_Text->X();
-        int iSlidingZone = m_Text->GetFont()->size+1;   // Width()*0.1f
+        int iCaratPos = m_text->GetCharacterPosition(m_cursorPos).x;
+        int iRealCaratPos = iCaratPos+m_text->X();
+        int iSlidingZone = m_text->GetFont()->size+1;   // Width()*0.1f
 
         // If the carat is already in a semi-good position, leave it.
         if (iRealCaratPos >= iSlidingZone && iRealCaratPos <= Width()-iSlidingZone)
@@ -420,8 +420,8 @@ void TextBox::MakeCaratVisible()
             x = -iCaratPos+iSlidingZone;
 
         // Don't show too much whitespace to the right
-        if (x+m_Text->Width() < Width()-GetPadding().right)
-            x = -m_Text->Width()+(Width()-GetPadding().right);
+        if (x+m_text->Width() < Width()-GetPadding().right)
+            x = -m_text->Width()+(Width()-GetPadding().right);
 
         // Or the left
         if (x > GetPadding().left)
@@ -429,16 +429,16 @@ void TextBox::MakeCaratVisible()
 
         int y = 0;
 
-        if (m_iAlign&Docking::Top)
+        if (m_align&Docking::Top)
             y = GetPadding().top;
 
-        if (m_iAlign&Docking::Bottom)
-            y = Height()-m_Text->Height()-GetPadding().bottom;
+        if (m_align&Docking::Bottom)
+            y = Height()-m_text->Height()-GetPadding().bottom;
 
-        if (m_iAlign&Docking::CenterV)
-            y = (Height()-m_Text->Height()) / 2;
+        if (m_align&Docking::CenterV)
+            y = (Height()-m_text->Height()) / 2;
 
-        m_Text->SetPos(x, y);
+        m_text->SetPos(x, y);
     }
 }
 
@@ -454,11 +454,11 @@ void TextBox::PostLayout(Skin::Base* skin)
 
 void TextBox::OnTextChanged()
 {
-    if (m_iCursorPos > TextLength())
-        m_iCursorPos = TextLength();
+    if (m_cursorPos > TextLength())
+        m_cursorPos = TextLength();
 
-    if (m_iCursorEnd > TextLength())
-        m_iCursorEnd = TextLength();
+    if (m_cursorEnd > TextLength())
+        m_cursorEnd = TextLength();
 
     onTextChanged.Call(this);
 }
@@ -470,15 +470,15 @@ void TextBox::OnEnter()
 
 void TextBox::MoveCaretToEnd()
 {
-    m_iCursorPos = TextLength();
-    m_iCursorEnd = TextLength();
+    m_cursorPos = TextLength();
+    m_cursorEnd = TextLength();
     RefreshCursorBounds();
 }
 
 void TextBox::MoveCaretToStart()
 {
-    m_iCursorPos = 0;
-    m_iCursorEnd = 0;
+    m_cursorPos = 0;
+    m_cursorEnd = 0;
     RefreshCursorBounds();
 }
 
@@ -504,33 +504,33 @@ void TextBoxMultiline::Render(Skin::Base* skin)
     if (!HasFocus())
         return;
 
-    if (m_iCursorPos != m_iCursorEnd)
+    if (m_cursorPos != m_cursorEnd)
     {
-        int iCursorStartLine = m_Text->GetLineFromChar(m_iCursorPos);
-        int iCursorEndLine = m_Text->GetLineFromChar(m_iCursorEnd);
+        int iCursorStartLine = m_text->GetLineFromChar(m_cursorPos);
+        int iCursorEndLine = m_text->GetLineFromChar(m_cursorEnd);
 
-        if (iCursorStartLine > m_Text->NumLines()-1)
-            iCursorStartLine =  m_Text->NumLines()-1;
-        if (iCursorEndLine > m_Text->NumLines()-1)
-            iCursorEndLine =  m_Text->NumLines()-1;
+        if (iCursorStartLine > m_text->NumLines()-1)
+            iCursorStartLine =  m_text->NumLines()-1;
+        if (iCursorEndLine > m_text->NumLines()-1)
+            iCursorEndLine =  m_text->NumLines()-1;
 
-        int iSelectionStartLine = (m_iCursorPos < m_iCursorEnd) ? iCursorStartLine : iCursorEndLine;
-        int iSelectionEndLine =   (m_iCursorPos < m_iCursorEnd) ? iCursorEndLine : iCursorStartLine;
+        int iSelectionStartLine = (m_cursorPos < m_cursorEnd) ? iCursorStartLine : iCursorEndLine;
+        int iSelectionEndLine =   (m_cursorPos < m_cursorEnd) ? iCursorEndLine : iCursorStartLine;
 
-        int iSelectionStartPos =  (m_iCursorPos < m_iCursorEnd) ? m_iCursorPos : m_iCursorEnd;
-        int iSelectionEndPos =    (m_iCursorPos < m_iCursorEnd) ? m_iCursorEnd : m_iCursorPos;
+        int iSelectionStartPos =  (m_cursorPos < m_cursorEnd) ? m_cursorPos : m_cursorEnd;
+        int iSelectionEndPos =    (m_cursorPos < m_cursorEnd) ? m_cursorEnd : m_cursorPos;
 
 //        int iFirstChar = 0;
 //        int iLastChar = 0;
         skin->GetRender()->SetDrawColor(Gwk::Color(50, 170, 255, 200));
-        m_rectSelectionBounds.h = m_Text->GetFont()->size+2;
+        m_rectSelectionBounds.h = m_text->GetFont()->size+2;
 
         for (int iLine = iSelectionStartLine; iLine <= iSelectionEndLine; ++iLine)
         {
-//            ControlsInternal::Text* line = m_Text->GetLine(iLine);
-            Gwk::Rect box = m_Text->GetLineBox(iLine);
-            box.x += m_Text->X();
-            box.y += m_Text->Y();
+//            ControlsInternal::Text* line = m_text->GetLine(iLine);
+            Gwk::Rect box = m_text->GetLineBox(iLine);
+            box.x += m_text->X();
+            box.y += m_text->Y();
 
             if (iLine == iSelectionStartLine)
             {
@@ -561,22 +561,22 @@ void TextBoxMultiline::Render(Skin::Base* skin)
     }
 
     // Draw selection.. if selected..
-    if (m_iCursorPos != m_iCursorEnd)
+    if (m_cursorPos != m_cursorEnd)
     {
         //skin->GetRender()->SetDrawColor( Gwk::Color( 50, 170, 255, 200 ) );
         //skin->GetRender()->DrawFilledRect( m_rectSelectionBounds );
     }
 
     // Draw caret
-    skin->GetRender()->SetDrawColor(m_CaretColor);
+    skin->GetRender()->SetDrawColor(m_caretColor);
     skin->GetRender()->DrawFilledRect(m_rectCaretBounds);
 }
 
 void TextBoxMultiline::MakeCaratVisible()
 {
-    if (m_Text->Height() < Height())
+    if (m_text->Height() < Height())
     {
-        m_Text->Position(m_iAlign);
+        m_text->Position(m_align);
     }
     else
     {
@@ -586,10 +586,10 @@ void TextBoxMultiline::MakeCaratVisible()
         //if ( pos & Docking::Bottom ) y = bounds.y + ( bounds.h - Height() - ypadding );
         //if ( pos & Docking::CenterV ) y = bounds.y + ( bounds.h - Height() )  * 0.5;
 
-        Rect pos = m_Text->GetCharacterPosition(m_iCursorPos);
+        Rect pos = m_text->GetCharacterPosition(m_cursorPos);
         int iCaratPos = pos.y; // + pos.h;
-        int iRealCaratPos = iCaratPos+m_Text->Y();
-        //int iSlidingZone =  m_Text->GetFont()->size; //Width()*0.1f
+        int iRealCaratPos = iCaratPos+m_text->Y();
+        //int iSlidingZone =  m_text->GetFont()->size; //Width()*0.1f
 
         // If the carat is already in a semi-good position, leave it.
 //        int mi = GetPadding().top;
@@ -612,28 +612,28 @@ void TextBoxMultiline::MakeCaratVisible()
             y = -iCaratPos+GetPadding().top;
 
         // Don't show too much whitespace to the bottom
-        if (y+m_Text->Height() < Height()-GetPadding().bottom)
-            y = -m_Text->Height()+(Height()-GetPadding().bottom);
+        if (y+m_text->Height() < Height()-GetPadding().bottom)
+            y = -m_text->Height()+(Height()-GetPadding().bottom);
 
         // Or the top
         if (y > GetPadding().top)
             y = GetPadding().top;
 
         int x = 0;
-        if (m_iAlign&Docking::Left)
+        if (m_align&Docking::Left)
             x = GetPadding().left;
-        if (m_iAlign&Docking::Right)
-            x = Width()-m_Text->Width()-GetPadding().right;
-        if (m_iAlign&Docking::CenterH)
-            x = (Width()-m_Text->Width())*0.5;
+        if (m_align&Docking::Right)
+            x = Width()-m_text->Width()-GetPadding().right;
+        if (m_align&Docking::CenterH)
+            x = (Width()-m_text->Width())*0.5;
 
-        m_Text->SetPos(x, y);
+        m_text->SetPos(x, y);
     }
 }
 
 int TextBoxMultiline::GetCurrentLine()
 {
-    return m_Text->GetLineFromChar(m_iCursorPos);
+    return m_text->GetLineFromChar(m_cursorPos);
 }
 
 bool TextBoxMultiline::OnKeyHome(bool bDown)
@@ -642,12 +642,12 @@ bool TextBoxMultiline::OnKeyHome(bool bDown)
         return true;
 
     int iCurrentLine = GetCurrentLine();
-    int iChar = m_Text->GetStartCharFromLine(iCurrentLine);
-    m_iCursorLine = 0;
-    m_iCursorPos = iChar;
+    int iChar = m_text->GetStartCharFromLine(iCurrentLine);
+    m_cursorLine = 0;
+    m_cursorPos = iChar;
 
     if (!Gwk::Input::IsShiftDown())
-        m_iCursorEnd = m_iCursorPos;
+        m_cursorEnd = m_cursorPos;
 
     RefreshCursorBounds();
     return true;
@@ -659,19 +659,19 @@ bool TextBoxMultiline::OnKeyEnd(bool bDown)
         return true;
 
     int iCurrentLine = GetCurrentLine();
-    int iChar = m_Text->GetEndCharFromLine(iCurrentLine);
-    m_iCursorLine = 0;
-    m_iCursorPos = iChar;
+    int iChar = m_text->GetEndCharFromLine(iCurrentLine);
+    m_cursorLine = 0;
+    m_cursorPos = iChar;
 
-    int iLastLine = m_Text->NumLines()-1;
+    int iLastLine = m_text->NumLines()-1;
 
     if (iCurrentLine < iLastLine && iChar > 0)
-        m_iCursorPos = iChar-1; // NAUGHTY
+        m_cursorPos = iChar-1; // NAUGHTY
     else
-        m_iCursorPos = m_Text->Length();
+        m_cursorPos = m_text->Length();
 
     if (!Gwk::Input::IsShiftDown())
-        m_iCursorEnd = m_iCursorPos;
+        m_cursorEnd = m_cursorPos;
 
     RefreshCursorBounds();
     return true;
@@ -681,20 +681,20 @@ bool TextBoxMultiline::OnKeyUp(bool bDown)
 {
     if (!bDown)
         return true;
-    //if ( m_iCursorLine == 0 )
-    m_iCursorLine = m_Text->GetCharPosOnLine(m_iCursorPos);
+    //if ( m_cursorLine == 0 )
+    m_cursorLine = m_text->GetCharPosOnLine(m_cursorPos);
 
-    int iLine = m_Text->GetLineFromChar(m_iCursorPos);
+    int iLine = m_text->GetLineFromChar(m_cursorPos);
 
     if (iLine == 0)
         return true;
 
-    m_iCursorPos = m_Text->GetStartCharFromLine(iLine-1);
-    m_iCursorPos += Clamp(m_iCursorLine, 0, m_Text->GetLine(iLine-1)->Length()-1);
-    m_iCursorPos = Clamp(m_iCursorPos, 0, m_Text->Length());
+    m_cursorPos = m_text->GetStartCharFromLine(iLine-1);
+    m_cursorPos += Clamp(m_cursorLine, 0, m_text->GetLine(iLine-1)->Length()-1);
+    m_cursorPos = Clamp(m_cursorPos, 0, m_text->Length());
 
     if (!Gwk::Input::IsShiftDown())
-        m_iCursorEnd = m_iCursorPos;
+        m_cursorEnd = m_cursorPos;
 
     RefreshCursorBounds();
     return true;
@@ -704,23 +704,23 @@ bool TextBoxMultiline::OnKeyDown(bool bDown)
 {
     if (!bDown)
         return true;
-    //if ( m_iCursorLine == 0 )
-    m_iCursorLine = m_Text->GetCharPosOnLine(m_iCursorPos);
+    //if ( m_cursorLine == 0 )
+    m_cursorLine = m_text->GetCharPosOnLine(m_cursorPos);
 
-    int iLine = m_Text->GetLineFromChar(m_iCursorPos);
-    int iLastLine = m_Text->NumLines()-1;
+    int iLine = m_text->GetLineFromChar(m_cursorPos);
+    int iLastLine = m_text->NumLines()-1;
     if (iLine >= iLastLine || iLastLine < 1)
         return true;
 
-    m_iCursorPos = m_Text->GetStartCharFromLine(iLine+1);
+    m_cursorPos = m_text->GetStartCharFromLine(iLine+1);
     if (iLine+1 >= iLastLine)
-        m_iCursorPos += Clamp(m_iCursorLine, 0, m_Text->GetLine(iLine+1)->Length());
+        m_cursorPos += Clamp(m_cursorLine, 0, m_text->GetLine(iLine+1)->Length());
     else
-        m_iCursorPos += Clamp(m_iCursorLine, 0, m_Text->GetLine(iLine+1)->Length()-1);
-    m_iCursorPos = Clamp(m_iCursorPos, 0, m_Text->Length());
+        m_cursorPos += Clamp(m_cursorLine, 0, m_text->GetLine(iLine+1)->Length()-1);
+    m_cursorPos = Clamp(m_cursorPos, 0, m_text->Length());
 
     if (!Gwk::Input::IsShiftDown())
-        m_iCursorEnd = m_iCursorPos;
+        m_cursorEnd = m_cursorPos;
 
     RefreshCursorBounds();
     return true;
@@ -744,7 +744,7 @@ void PasswordTextBox::SetText(const String& str, bool bDoEvents)
         passwordChars += m_passwordChar;
     }
 
-    m_Text->SetString(passwordChars);
+    m_text->SetString(passwordChars);
     Redraw();
 
     if (bDoEvents)

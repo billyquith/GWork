@@ -30,91 +30,91 @@ namespace Gwk
 
                     for (int i = 0; i < MaxColumns; i++)
                     {
-                        m_Columns[i] = NULL;
+                        m_columns[i] = NULL;
                     }
 
-                    m_ColumnCount = 0;
+                    m_columnCount = 0;
                 }
 
                 void SetColumnCount(int iCount)
                 {
-                    if (iCount == m_ColumnCount)
+                    if (iCount == m_columnCount)
                         return;
 
                     if (iCount >= MaxColumns)
-                        m_ColumnCount = MaxColumns;
+                        m_columnCount = MaxColumns;
 
                     for (int i = 0; i < MaxColumns; i++)
                     {
                         if (i < iCount)
                         {
-                            if (!m_Columns[i])
+                            if (!m_columns[i])
                             {
-                                m_Columns[i] = new Label(this);
-                                m_Columns[i]->Dock(Docking::Left);
-                                m_Columns[i]->SetPadding(Padding(3, 3, 3, 3));
+                                m_columns[i] = new Label(this);
+                                m_columns[i]->Dock(Docking::Left);
+                                m_columns[i]->SetPadding(Padding(3, 3, 3, 3));
                             }
                         }
-                        else if (m_Columns[i])
+                        else if (m_columns[i])
                         {
-                            m_Columns[i]->DelayedDelete();
-                            m_Columns[i] = NULL;
+                            m_columns[i]->DelayedDelete();
+                            m_columns[i] = NULL;
                         }
 
-                        m_ColumnCount = iCount;
+                        m_columnCount = iCount;
                     }
                 }
 
                 void SetColumnWidth(int i, int iWidth)
                 {
-                    if (!m_Columns[i])
+                    if (!m_columns[i])
                         return;
 
-                    if (m_Columns[i]->Width() == iWidth)
+                    if (m_columns[i]->Width() == iWidth)
                         return;
 
-                    m_Columns[i]->SetWidth(iWidth);
+                    m_columns[i]->SetWidth(iWidth);
                 }
 
                 void SetCellText(int i, const String& strString)
                 {
-                    if (!m_Columns[i])
+                    if (!m_columns[i])
                         return;
 
-                    m_Columns[i]->SetText(strString);
+                    m_columns[i]->SetText(strString);
                 }
 
-                void SetCellContents(int i, Base* pControl, bool bEnableMouseInput = false)
+                void SetCellContents(int i, Base* control, bool bEnableMouseInput = false)
                 {
-                    if (!m_Columns[i])
+                    if (!m_columns[i])
                         return;
 
-                    pControl->SetParent(m_Columns[i]);
-                    m_Columns[i]->SetMouseInputEnabled(bEnableMouseInput);
+                    control->SetParent(m_columns[i]);
+                    m_columns[i]->SetMouseInputEnabled(bEnableMouseInput);
                 }
 
                 Label* GetCellContents(int i)
                 {
-                    return m_Columns[i];
+                    return m_columns[i];
                 }
 
                 void SizeToContents()
                 {
                     int iHeight = 0;
 
-                    for (int i = 0; i < m_ColumnCount; i++)
+                    for (int i = 0; i < m_columnCount; i++)
                     {
-                        if (!m_Columns[i])
+                        if (!m_columns[i])
                             continue;
 
                         // Note, more than 1 child here, because the
                         // label has a child built in ( The Text )
-                        if (m_Columns[i]->NumChildren() > 1)
-                            m_Columns[i]->SizeToChildren();
+                        if (m_columns[i]->NumChildren() > 1)
+                            m_columns[i]->SizeToChildren();
                         else
-                            m_Columns[i]->SizeToContents();
+                            m_columns[i]->SizeToContents();
 
-                        iHeight = Gwk::Max(iHeight, m_Columns[i]->Height());
+                        iHeight = Gwk::Max(iHeight, m_columns[i]->Height());
                     }
 
                     SetHeight(iHeight);
@@ -122,19 +122,19 @@ namespace Gwk
 
                 void SetTextColor(const Gwk::Color& color)
                 {
-                    for (int i = 0; i < m_ColumnCount; i++)
+                    for (int i = 0; i < m_columnCount; i++)
                     {
-                        if (!m_Columns[i])
+                        if (!m_columns[i])
                             continue;
 
-                        m_Columns[i]->SetTextColor(color);
+                        m_columns[i]->SetTextColor(color);
                     }
                 }
 
                 // You might hate this. Actually I know you will
                 virtual const String& GetText(int i)
                 {
-                    return m_Columns[i]->GetText();
+                    return m_columns[i]->GetText();
                 }
 
                 virtual void SetSelected(bool /*b*/)
@@ -159,8 +159,8 @@ namespace Gwk
             private:
 
                 bool m_bEvenRow;
-                int m_ColumnCount;
-                Label*  m_Columns[MaxColumns];
+                int m_columnCount;
+                Label*  m_columns[MaxColumns];
 
                 friend class Table;
 
@@ -174,12 +174,12 @@ namespace Gwk
 
                 GWK_CONTROL_INLINE(Table, Base)
                 {
-                    m_iColumnCount = 1;
-                    m_iDefaultRowHeight = 22;
+                    m_columnCount = 1;
+                    m_defaultRowHeight = 22;
 
                     for (int i = 0; i < TableRow::MaxColumns; i++)
                     {
-                        m_ColumnWidth[i] = 0;
+                        m_columnWidth[i] = 0;
                     }
 
                     m_bSizeToContents = false;
@@ -187,28 +187,28 @@ namespace Gwk
 
                 void SetColumnCount(int i)
                 {
-                    if (m_iColumnCount == i)
+                    if (m_columnCount == i)
                         return;
 
                     for (Base::List::iterator it = Children.begin(); it != Children.end(); ++it)
                     {
-                        TableRow* pRow = gwk_cast<TableRow>(*it);
+                        TableRow* row = gwk_cast<TableRow>(*it);
 
-                        if (!pRow)
+                        if (!row)
                             continue;
 
-                        pRow->SetColumnCount(i);
+                        row->SetColumnCount(i);
                     }
 
-                    m_iColumnCount = i;
+                    m_columnCount = i;
                 }
 
                 void SetColumnWidth(int i, int iWidth)
                 {
-                    if (m_ColumnWidth[i] == iWidth)
+                    if (m_columnWidth[i] == iWidth)
                         return;
 
-                    m_ColumnWidth[i] = iWidth;
+                    m_columnWidth[i] = iWidth;
                     Invalidate();
                 }
 
@@ -219,12 +219,12 @@ namespace Gwk
                     return row;
                 }
 
-                void AddRow(TableRow* pRow)
+                void AddRow(TableRow* row)
                 {
-                    pRow->SetParent(this);
-                    pRow->SetColumnCount(m_iColumnCount);
-                    pRow->SetHeight(m_iDefaultRowHeight);
-                    pRow->Dock(Docking::Top);
+                    row->SetParent(this);
+                    row->SetColumnCount(m_columnCount);
+                    row->SetHeight(m_defaultRowHeight);
+                    row->Dock(Docking::Top);
                     Invalidate();
                 }
 
@@ -238,21 +238,21 @@ namespace Gwk
                     return NumChildren();
                 }
 
-                void Remove(TableRow* pRow)
+                void Remove(TableRow* row)
                 {
-                    pRow->DelayedDelete();
+                    row->DelayedDelete();
                 }
 
                 void Clear()
                 {
                     for (Base::List::iterator it = Children.begin(); it != Children.end(); ++it)
                     {
-                        TableRow* pRow = gwk_cast<TableRow>(*it);
+                        TableRow* row = gwk_cast<TableRow>(*it);
 
-                        if (!pRow)
+                        if (!row)
                             continue;
 
-                        Remove(pRow);
+                        Remove(row);
                     }
                 }
 
@@ -266,11 +266,11 @@ namespace Gwk
                     int iSizeRemainder = Width();
                     int iAutoSizeColumns = 0;
 
-                    for (int i = 0; i < TableRow::MaxColumns && i < m_iColumnCount; i++)
+                    for (int i = 0; i < TableRow::MaxColumns && i < m_columnCount; i++)
                     {
-                        iSizeRemainder -= m_ColumnWidth[i];
+                        iSizeRemainder -= m_columnWidth[i];
 
-                        if (m_ColumnWidth[i] == 0)
+                        if (m_columnWidth[i] == 0)
                             iAutoSizeColumns++;
                     }
 
@@ -281,21 +281,21 @@ namespace Gwk
 
                     for (Base::List::iterator it = Children.begin(); it != Children.end(); ++it)
                     {
-                        TableRow* pRow = gwk_cast<TableRow>(*it);
+                        TableRow* row = gwk_cast<TableRow>(*it);
 
-                        if (!pRow)
+                        if (!row)
                             continue;
 
-                        pRow->SizeToContents();
-                        pRow->SetEven(bEven);
+                        row->SizeToContents();
+                        row->SetEven(bEven);
                         bEven = !bEven;
 
-                        for (int i = 0; i < TableRow::MaxColumns && i < m_iColumnCount; i++)
+                        for (int i = 0; i < TableRow::MaxColumns && i < m_columnCount; i++)
                         {
-                            if (m_ColumnWidth[i] == 0)
-                                pRow->SetColumnWidth(i, iSizeRemainder);
+                            if (m_columnWidth[i] == 0)
+                                row->SetColumnWidth(i, iSizeRemainder);
                             else
-                                pRow->SetColumnWidth(i, m_ColumnWidth[i]);
+                                row->SetColumnWidth(i, m_columnWidth[i]);
                         }
                     }
 
@@ -321,28 +321,28 @@ namespace Gwk
                 {
                     for (int i = 0; i < TableRow::MaxColumns; i++)
                     {
-                        m_ColumnWidth[i] = 10;
+                        m_columnWidth[i] = 10;
                     }
 
                     for (Base::List::iterator it = Children.begin(); it != Children.end(); ++it)
                     {
-                        TableRow* pRow = gwk_cast<TableRow>(*it);
+                        TableRow* row = gwk_cast<TableRow>(*it);
 
-                        if (!pRow)
+                        if (!row)
                             continue;
 
-                        pRow->SizeToContents();
+                        row->SizeToContents();
 
                         for (int i = 0; i < TableRow::MaxColumns; i++)
                         {
-                            if (pRow->m_Columns[i])
+                            if (row->m_columns[i])
                             {
-                                m_ColumnWidth[i] = Gwk::Max(m_ColumnWidth[i],
-                                                             pRow->m_Columns[i]->Width());
+                                m_columnWidth[i] = Gwk::Max(m_columnWidth[i],
+                                                             row->m_columns[i]->Width());
                             }
                         }
 
-                        // iBottom += pRow->Height();
+                        // iBottom += row->Height();
                     }
 
                     InvalidateParent();
@@ -351,10 +351,10 @@ namespace Gwk
             private:
 
                 bool m_bSizeToContents;
-                int m_iColumnCount;
-                int m_iDefaultRowHeight;
+                int m_columnCount;
+                int m_defaultRowHeight;
 
-                int m_ColumnWidth[ TableRow::MaxColumns ];
+                int m_columnWidth[ TableRow::MaxColumns ];
             };
 
 

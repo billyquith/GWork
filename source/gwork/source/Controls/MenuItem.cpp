@@ -32,10 +32,10 @@ public:
 
 GWK_CONTROL_CONSTRUCTOR(MenuItem)
 {
-    m_Menu = NULL;
+    m_menu = NULL;
     m_bOnStrip = false;
-    m_SubmenuArrow = NULL;
-    m_Accelerator = NULL;
+    m_submenuArrow = NULL;
+    m_accelerator = NULL;
     SetTabable(false);
     SetCheckable(false);
     SetChecked(false);
@@ -50,35 +50,35 @@ void MenuItem::Render(Skin::Base* skin)
     skin->DrawMenuItem(this, IsMenuOpen(), m_bCheckable ? m_bChecked : false);
 
     // HACK!
-    if (m_Accelerator)
-        m_Accelerator->SetTextColorOverride(GetTextColor());
+    if (m_accelerator)
+        m_accelerator->SetTextColorOverride(GetTextColor());
 }
 
 void MenuItem::Layout(Skin::Base* skin)
 {
-    if (m_SubmenuArrow)
-        m_SubmenuArrow->Position(Docking::Right|Docking::CenterV, 4, 0);
+    if (m_submenuArrow)
+        m_submenuArrow->Position(Docking::Right|Docking::CenterV, 4, 0);
 
     ParentClass::Layout(skin);
 }
 
 Menu* MenuItem::GetMenu()
 {
-    if (!m_Menu)
+    if (!m_menu)
     {
-        m_Menu = new Menu(GetCanvas());
-        m_Menu->SetHidden(true);
+        m_menu = new Menu(GetCanvas());
+        m_menu->SetHidden(true);
 
         if (!m_bOnStrip)
         {
-            m_SubmenuArrow = new RightArrow(this);
-            m_SubmenuArrow->SetSize(15, 15);
+            m_submenuArrow = new RightArrow(this);
+            m_submenuArrow->SetSize(15, 15);
         }
 
         Invalidate();
     }
 
-    return m_Menu;
+    return m_menu;
 }
 
 void MenuItem::SetChecked(bool bCheck)
@@ -97,7 +97,7 @@ void MenuItem::SetChecked(bool bCheck)
 
 void MenuItem::OnPress()
 {
-    if (m_Menu)
+    if (m_menu)
     {
         ToggleMenu();
     }
@@ -121,27 +121,27 @@ void MenuItem::ToggleMenu()
 
 bool MenuItem::IsMenuOpen()
 {
-    if (!m_Menu)
+    if (!m_menu)
         return false;
 
-    return !m_Menu->Hidden();
+    return !m_menu->Hidden();
 }
 
 void MenuItem::OpenMenu()
 {
-    if (!m_Menu)
+    if (!m_menu)
         return;
 
-    m_Menu->SetHidden(false);
-    m_Menu->BringToFront();
+    m_menu->SetHidden(false);
+    m_menu->BringToFront();
     Gwk::Point p = LocalPosToCanvas(Gwk::Point(0, 0));
 
     // Strip menus open downwards
     if (m_bOnStrip)
-        m_Menu->SetPos(p.x, p.y+Height()+1);
+        m_menu->SetPos(p.x, p.y+Height()+1);
     // Submenus open sidewards
     else
-        m_Menu->SetPos(p.x+Width(), p.y);
+        m_menu->SetPos(p.x+Width(), p.y);
 
     // TODO: Option this.
     // TODO: Make sure on screen, open the other side of the
@@ -150,29 +150,29 @@ void MenuItem::OpenMenu()
 
 void MenuItem::CloseMenu()
 {
-    if (!m_Menu)
+    if (!m_menu)
         return;
 
-    m_Menu->Close();
-    m_Menu->CloseAll();
+    m_menu->Close();
+    m_menu->CloseAll();
 }
 
 void MenuItem::SetAccelerator(const String& strAccelerator)
 {
-    if (m_Accelerator)
+    if (m_accelerator)
     {
-        m_Accelerator->DelayedDelete();
-        m_Accelerator = NULL;
+        m_accelerator->DelayedDelete();
+        m_accelerator = NULL;
     }
 
     if (strAccelerator.empty())
         return;
 
-    m_Accelerator = new Controls::Label(this);
-    m_Accelerator->Dock(Docking::Right);
-    m_Accelerator->SetAlignment(Docking::Right|Docking::CenterV);
-    m_Accelerator->SetText(strAccelerator);
-    m_Accelerator->SetMargin(Margin(0, 0, 16, 0));
+    m_accelerator = new Controls::Label(this);
+    m_accelerator->Dock(Docking::Right);
+    m_accelerator->SetAlignment(Docking::Right|Docking::CenterV);
+    m_accelerator->SetText(strAccelerator);
+    m_accelerator->SetMargin(Margin(0, 0, 16, 0));
     // TODO.
 }
 
@@ -180,9 +180,9 @@ void MenuItem::SizeToContents()
 {
     ParentClass::SizeToContents();
 
-    if (m_Accelerator)
+    if (m_accelerator)
     {
-        m_Accelerator->SizeToContents();
-        SetWidth(Width()+m_Accelerator->Width());
+        m_accelerator->SizeToContents();
+        SetWidth(Width()+m_accelerator->Width());
     }
 }

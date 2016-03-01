@@ -25,7 +25,7 @@ namespace Gwk
         {
         public:
 
-            DirectX9(IDirect3DDevice9* pDevice = NULL);
+            DirectX9(IDirect3DDevice9* device = NULL);
             ~DirectX9();
 
             virtual void Begin();
@@ -36,20 +36,20 @@ namespace Gwk
 
             virtual void DrawFilledRect(Gwk::Rect rect);
 
-            virtual void LoadFont(Gwk::Font* pFont);
-            virtual void FreeFont(Gwk::Font* pFont);
-            virtual void RenderText(Gwk::Font* pFont, Gwk::Point pos,
+            virtual void LoadFont(Gwk::Font* font);
+            virtual void FreeFont(Gwk::Font* font);
+            virtual void RenderText(Gwk::Font* font, Gwk::Point pos,
                                     const Gwk::String& text);
-            virtual Gwk::Point MeasureText(Gwk::Font* pFont, const Gwk::String& text);
+            virtual Gwk::Point MeasureText(Gwk::Font* font, const Gwk::String& text);
 
             void StartClip();
             void EndClip();
 
-            void DrawTexturedRect(Gwk::Texture* pTexture, Gwk::Rect pTargetRect, float u1 = 0.0f,
+            void DrawTexturedRect(Gwk::Texture* texture, Gwk::Rect targetRect, float u1 = 0.0f,
                                   float v1 = 0.0f, float u2 = 1.0f, float v2 = 1.0f);
-            void        LoadTexture(Gwk::Texture* pTexture);
-            void        FreeTexture(Gwk::Texture* pTexture);
-            Gwk::Color PixelColour(Gwk::Texture* pTexture, unsigned int x, unsigned int y,
+            void        LoadTexture(Gwk::Texture* texture);
+            void        FreeTexture(Gwk::Texture* texture);
+            Gwk::Color PixelColour(Gwk::Texture* texture, unsigned int x, unsigned int y,
                                     const Gwk::Color& col_default);
 
         public:
@@ -58,26 +58,26 @@ namespace Gwk
             // Self Initialization
             //
 
-            virtual bool InitializeContext(Gwk::WindowProvider* pWindow);
-            virtual bool ShutdownContext(Gwk::WindowProvider* pWindow);
-            virtual bool PresentContext(Gwk::WindowProvider* pWindow);
-            virtual bool ResizedContext(Gwk::WindowProvider* pWindow, int w, int h);
-            virtual bool BeginContext(Gwk::WindowProvider* pWindow);
-            virtual bool EndContext(Gwk::WindowProvider* pWindow);
+            virtual bool InitializeContext(Gwk::WindowProvider* window);
+            virtual bool ShutdownContext(Gwk::WindowProvider* window);
+            virtual bool PresentContext(Gwk::WindowProvider* window);
+            virtual bool ResizedContext(Gwk::WindowProvider* window, int w, int h);
+            virtual bool BeginContext(Gwk::WindowProvider* window);
+            virtual bool EndContext(Gwk::WindowProvider* window);
 
         protected:
 
-            virtual void FillPresentParameters(Gwk::WindowProvider* pWindow,
+            virtual void FillPresentParameters(Gwk::WindowProvider* window,
                                                D3DPRESENT_PARAMETERS& Params);
 
         protected:
 
-            void*               m_pCurrentTexture;
-            IDirect3DDevice9*   m_pDevice;
-            IDirect3D9*         m_pD3D;
-            DWORD m_Color;
-            Gwk::Font::List m_FontList;
-            // Gwk::Texture::List	m_TextureList;
+            void*               m_currentTexture;
+            IDirect3DDevice9*   m_device;
+            IDirect3D9*         m_D3D;
+            DWORD m_color;
+            Gwk::Font::List m_fontList;
+            // Gwk::Texture::List	m_textureList;
 
             void Flush();
             void AddVert(int x, int y);
@@ -94,8 +94,8 @@ namespace Gwk
 
 
             static const int MaxVerts = 1024;
-            VertexFormat m_pVerts[MaxVerts];
-            int m_iVertNum;
+            VertexFormat m_verts[MaxVerts];
+            int m_vertNum;
 
         };
 

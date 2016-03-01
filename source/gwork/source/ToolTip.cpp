@@ -12,51 +12,51 @@
 namespace Gwk {
     namespace ToolTip
     {
-        Controls::Base* g_ToolTip = NULL;
+        Controls::Base* g_toolTip = NULL;
 
         GWK_EXPORT bool TooltipActive()
         {
-            return g_ToolTip != NULL;
+            return g_toolTip != NULL;
         }
 
-        void Enable(Controls::Base* pControl)
+        void Enable(Controls::Base* control)
         {
-            if (!pControl->GetToolTip())
+            if (!control->GetToolTip())
                 return;
 
-            g_ToolTip = pControl;
+            g_toolTip = control;
         }
 
-        void Disable(Controls::Base* pControl)
+        void Disable(Controls::Base* control)
         {
-            if (g_ToolTip == pControl)
-                g_ToolTip = NULL;
+            if (g_toolTip == control)
+                g_toolTip = NULL;
         }
 
         void RenderToolTip(Skin::Base* skin)
         {
-            if (!g_ToolTip)
+            if (!g_toolTip)
                 return;
 
             Gwk::Renderer::Base* render = skin->GetRender();
-            Gwk::Point pOldRenderOffset = render->GetRenderOffset();
+            Gwk::Point oldRenderOffset = render->GetRenderOffset();
             Gwk::Point MousePos = Input::GetMousePosition();
-            Gwk::Rect Bounds = g_ToolTip->GetToolTip()->GetBounds();
+            Gwk::Rect Bounds = g_toolTip->GetToolTip()->GetBounds();
             Gwk::Rect rOffset = Gwk::Rect(MousePos.x-Bounds.w*0.5f, MousePos.y-Bounds.h-10,
                                             Bounds.w,
                                             Bounds.h);
-            rOffset = Utility::ClampRectToRect(rOffset, g_ToolTip->GetCanvas()->GetBounds());
+            rOffset = Utility::ClampRectToRect(rOffset, g_toolTip->GetCanvas()->GetBounds());
             // Calculate offset on screen bounds
             render->AddRenderOffset(rOffset);
             render->EndClip();
-            skin->DrawToolTip(g_ToolTip->GetToolTip());
-            g_ToolTip->GetToolTip()->DoRender(skin);
-            render->SetRenderOffset(pOldRenderOffset);
+            skin->DrawToolTip(g_toolTip->GetToolTip());
+            g_toolTip->GetToolTip()->DoRender(skin);
+            render->SetRenderOffset(oldRenderOffset);
         }
 
-        void ControlDeleted(Controls::Base* pControl)
+        void ControlDeleted(Controls::Base* control)
         {
-            Disable(pControl);
+            Disable(control);
         }
 
     }

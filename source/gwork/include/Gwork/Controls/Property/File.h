@@ -23,12 +23,12 @@ namespace Gwk
             {
                 GWK_CONTROL_INLINE(File, Property::Text)
                 {
-                    Controls::Button* pButton = new Controls::Button(this);
-                    pButton->Dock(Docking::Right);
-                    pButton->SetText("...");
-                    pButton->SetWidth(20);
-                    pButton->onPress.Add(this, &ThisClass::OnButtonPress);
-                    pButton->SetMargin(Margin(1, 1, 1, 2));
+                    Controls::Button* button = new Controls::Button(this);
+                    button->Dock(Docking::Right);
+                    button->SetText("...");
+                    button->SetWidth(20);
+                    button->onPress.Add(this, &ThisClass::OnButtonPress);
+                    button->SetMargin(Margin(1, 1, 1, 2));
                     m_strDialogName = "Find File";
                     m_strFileExtension = "*.*";
                 }
@@ -43,9 +43,9 @@ namespace Gwk
                 {
                     String fileChosen;
                     if (Dialogs::FileOpen(true, m_strDialogName,
-                                          m_TextBox->GetText(), m_strFileExtension, fileChosen))
+                                          m_textBox->GetText(), m_strFileExtension, fileChosen))
                     {
-                        m_TextBox->SetText(fileChosen);
+                        m_textBox->SetText(fileChosen);
                     }
                 }
 

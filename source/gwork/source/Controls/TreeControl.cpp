@@ -15,21 +15,21 @@ using namespace Gwk::Controls;
 
 GWK_CONTROL_CONSTRUCTOR(TreeControl)
 {
-    m_TreeControl = this;
-    m_ToggleButton->DelayedDelete();
-    m_ToggleButton = NULL;
-    m_Title->DelayedDelete();
-    m_Title = NULL;
-    m_InnerPanel->DelayedDelete();
-    m_InnerPanel = NULL;
+    m_treeControl = this;
+    m_toggleButton->DelayedDelete();
+    m_toggleButton = NULL;
+    m_title->DelayedDelete();
+    m_title = NULL;
+    m_innerPanel->DelayedDelete();
+    m_innerPanel = NULL;
     m_bAllowMultipleSelection = false;
-    m_ScrollControl = new ScrollControl(this);
-    m_ScrollControl->Dock(Docking::Fill);
-    m_ScrollControl->SetScroll(false, true);
-    m_ScrollControl->SetAutoHideBars(true);
-    m_ScrollControl->SetMargin(Margin(1, 1, 1, 1));
-    m_InnerPanel = m_ScrollControl;
-    m_ScrollControl->SetInnerSize(1000, 1000);
+    m_scrollControl = new ScrollControl(this);
+    m_scrollControl->Dock(Docking::Fill);
+    m_scrollControl->SetScroll(false, true);
+    m_scrollControl->SetAutoHideBars(true);
+    m_scrollControl->SetMargin(Margin(1, 1, 1, 1));
+    m_innerPanel = m_scrollControl;
+    m_scrollControl->SetInnerSize(1000, 1000);
 }
 
 void TreeControl::Render(Skin::Base* skin)
@@ -38,15 +38,15 @@ void TreeControl::Render(Skin::Base* skin)
         skin->DrawTreeControl(this);
 }
 
-void TreeControl::OnChildBoundsChanged(Gwk::Rect /*oldChildBounds*/, Base* /*pChild*/)
+void TreeControl::OnChildBoundsChanged(Gwk::Rect /*oldChildBounds*/, Base* /*child*/)
 {
-    m_ScrollControl->UpdateScrollBars();
+    m_scrollControl->UpdateScrollBars();
     Invalidate();
 }
 
 void TreeControl::Clear()
 {
-    m_ScrollControl->Clear();
+    m_scrollControl->Clear();
 }
 
 void TreeControl::Layout(Skin::Base* skin)
@@ -59,9 +59,9 @@ void TreeControl::PostLayout(Skin::Base* skin)
     ParentClass::ParentClass::PostLayout(skin);
 }
 
-void TreeControl::OnNodeAdded(TreeNode* pNode)
+void TreeControl::OnNodeAdded(TreeNode* node)
 {
-    pNode->onNamePress.Add(this, &TreeControl::OnNodeSelection);
+    node->onNamePress.Add(this, &TreeControl::OnNodeSelection);
 }
 
 void TreeControl::OnNodeSelection(Controls::Base* /*control*/)

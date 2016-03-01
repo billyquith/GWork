@@ -12,7 +12,7 @@ class Properties : public Controls::Base
 {
 	GWK_CONTROL( Properties, Controls::Base );
 
-		void WatchCanvas( DocumentCanvas* pCanvas );
+		void WatchCanvas( DocumentCanvas* canvas );
 
 	protected:
 
@@ -21,11 +21,11 @@ class Properties : public Controls::Base
 
 		void OnPropertyChanged( Event::Info info );
 
-		void AddPropertiesFromControl( Controls::Base* pControl, bool bAllowDifferent );
+		void AddPropertiesFromControl( Controls::Base* control, bool bAllowDifferent );
 
-		DocumentCanvas*				m_pCanvas;
-		Controls::PropertyTree*		m_Props;
-		ControlList					m_SelectedControls;
+		DocumentCanvas*				m_canvas;
+		Controls::PropertyTree*		m_props;
+		ControlList					m_selectedControls;
 
 
 };

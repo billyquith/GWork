@@ -49,8 +49,8 @@ int main(int argc, char** argv)
     canvas->SetBackgroundColor(Gwk::Color(150, 170, 170, 255));
 
     // Create our unittest control (which is a Window with controls in it)
-    UnitTest* pUnit = new UnitTest(canvas);
-    pUnit->SetPos(10, 10);
+    UnitTest* unit = new UnitTest(canvas);
+    unit->SetPos(10, 10);
 
     Gwk::Input::SDL2 GworkInput;
     GworkInput.Initialize(canvas);

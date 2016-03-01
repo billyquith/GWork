@@ -180,9 +180,9 @@ Base::Base()
     GetList().push_back(this);
 }
 
-void Base::AddProperty(Property* pProp)
+void Base::AddProperty(Property* prop)
 {
-    m_Properties.push_back(pProp);
+    m_properties.push_back(prop);
 }
 
 Base* Base::GetBaseFactory()
@@ -210,30 +210,30 @@ Property* Base::GetProperty(const Gwk::String& name)
         return *it;
     }
 
-    Base* pBase = GetBaseFactory();
+    Base* base = GetBaseFactory();
 
-    if (!pBase)
+    if (!base)
         return NULL;
 
-    return pBase->GetProperty(name);
+    return base->GetProperty(name);
 }
 
 void Base::SetControlValue(Gwk::Controls::Base* ctrl, const Gwk::String& name,
                            const Gwk::String& str)
 {
-    Property* pProp = GetProperty(name);
+    Property* prop = GetProperty(name);
 
-    if (!pProp)
+    if (!prop)
     {
-        Base* pBase = GetBaseFactory();
+        Base* base = GetBaseFactory();
 
-        if (!pBase)
+        if (!base)
             return;
 
-        return pBase->SetControlValue(ctrl, name, str);
+        return base->SetControlValue(ctrl, name, str);
     }
 
-    pProp->SetValueFromString(ctrl, str);
+    prop->SetValueFromString(ctrl, str);
 }
 
 void Base::AddChild(Gwk::Controls::Base* ctrl, Gwk::Controls::Base* child,
@@ -247,23 +247,23 @@ void Base::AddChild(Gwk::Controls::Base* ctrl, Gwk::Controls::Base* child, int i
     child->SetParent(ctrl);
 }
 
-Controls::Base* Clone(Controls::Base* pSource, ControlFactory::Base* pFactory)
+Controls::Base* Clone(Controls::Base* source, ControlFactory::Base* factory)
 {
-    Controls::Base* pControl = pFactory->CreateInstance(pSource->GetParent());
+    Controls::Base* control = factory->CreateInstance(source->GetParent());
 
-    while (pFactory)
+    while (factory)
     {
         for (ControlFactory::Property::List::const_iterator
-             it = pFactory->Properties().begin(), itEnd = pFactory->Properties().end();
+             it = factory->Properties().begin(), itEnd = factory->Properties().end();
              it != itEnd; ++it)
         {
-            (*it)->SetValueFromString(pControl, (*it)->GetValueAsString(pSource));
+            (*it)->SetValueFromString(control, (*it)->GetValueAsString(source));
         }
 
-        pFactory = pFactory->GetBaseFactory();
+        factory = factory->GetBaseFactory();
     }
 
-    return pControl;
+    return control;
 }
 
 void Base::SetParentPage(Gwk::Controls::Base* ctrl, int i)

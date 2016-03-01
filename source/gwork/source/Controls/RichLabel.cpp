@@ -26,7 +26,7 @@ void RichLabel::AddLineBreak()
 {
     DividedText t;
     t.type = Type_Newline;
-    m_TextBlocks.push_back(t);
+    m_textBlocks.push_back(t);
 }
 
 void RichLabel::AddText(const Gwk::String& text, Gwk::Color color, Gwk::Font* font)
@@ -47,7 +47,7 @@ void RichLabel::AddText(const Gwk::String& text, Gwk::Color color, Gwk::Font* fo
         t.text = lst[i];
         t.color = color;
         t.font = font;
-        m_TextBlocks.push_back(t);
+        m_textBlocks.push_back(t);
         m_bNeedsRebuild = true;
         Invalidate();
     }
@@ -59,7 +59,7 @@ bool RichLabel::SizeToChildren(bool w, bool h)
     return ParentClass::SizeToChildren(w, h);
 }
 
-void RichLabel::SplitLabel(const Gwk::String& text, Gwk::Font* pFont,
+void RichLabel::SplitLabel(const Gwk::String& text, Gwk::Font* font,
                            const DividedText& txt, int& x, int& y, int& lineheight)
 {
     Gwk::Utility::Strings::List lst;
@@ -71,14 +71,14 @@ void RichLabel::SplitLabel(const Gwk::String& text, Gwk::Font* pFont,
     int iSpaceLeft = Width()-x;
     // Does the whole word fit in?
     {
-        Gwk::Point StringSize = GetSkin()->GetRender()->MeasureText(pFont, text);
+        Gwk::Point StringSize = GetSkin()->GetRender()->MeasureText(font, text);
 
         if (iSpaceLeft > StringSize.x)
             return CreateLabel(text, txt, x, y, lineheight, true);
     }
     // If the first word is bigger than the line, just give up.
     {
-        Gwk::Point WordSize = GetSkin()->GetRender()->MeasureText(pFont, lst[0]);
+        Gwk::Point WordSize = GetSkin()->GetRender()->MeasureText(font, lst[0]);
 
         if (WordSize.x >= iSpaceLeft)
         {
@@ -88,14 +88,14 @@ void RichLabel::SplitLabel(const Gwk::String& text, Gwk::Font* pFont,
                 return;
 
             Gwk::String LeftOver = text.substr(lst[0].size()+1);
-            return SplitLabel(LeftOver, pFont, txt, x, y, lineheight);
+            return SplitLabel(LeftOver, font, txt, x, y, lineheight);
         }
     }
     Gwk::String strNewString = "";
 
     for (size_t i = 0; i < lst.size(); i++)
     {
-        Gwk::Point WordSize = GetSkin()->GetRender()->MeasureText(pFont, strNewString+lst[i]);
+        Gwk::Point WordSize = GetSkin()->GetRender()->MeasureText(font, strNewString+lst[i]);
 
         if (WordSize.x > iSpaceLeft)
         {
@@ -109,7 +109,7 @@ void RichLabel::SplitLabel(const Gwk::String& text, Gwk::Font* pFont,
     }
 
     Gwk::String LeftOver = text.substr(strNewString.size()+1);
-    return SplitLabel(LeftOver, pFont, txt, x, y, lineheight);
+    return SplitLabel(LeftOver, font, txt, x, y, lineheight);
 }
 
 void RichLabel::CreateLabel(const Gwk::String& text, const DividedText& txt, int& x, int& y,
@@ -118,15 +118,15 @@ void RichLabel::CreateLabel(const Gwk::String& text, const DividedText& txt, int
     //
     // Use default font or is one set?
     //
-    Gwk::Font* pFont = GetSkin()->GetDefaultFont();
+    Gwk::Font* font = GetSkin()->GetDefaultFont();
 
     if (txt.font)
-        pFont = txt.font;
+        font = txt.font;
 
     //
     // This string is too long for us, split it up.
     //
-    Gwk::Point p = GetSkin()->GetRender()->MeasureText(pFont, text);
+    Gwk::Point p = GetSkin()->GetRender()->MeasureText(font, text);
 
     if (lineheight == -1)
         lineheight = p.y;
@@ -134,7 +134,7 @@ void RichLabel::CreateLabel(const Gwk::String& text, const DividedText& txt, int
     if (!NoSplit)
     {
         if (x+p.x > Width())
-            return SplitLabel(text, pFont, txt, x, y, lineheight);
+            return SplitLabel(text, font, txt, x, y, lineheight);
     }
 
     //
@@ -143,15 +143,15 @@ void RichLabel::CreateLabel(const Gwk::String& text, const DividedText& txt, int
     if (x+p.x >= Width())
         CreateNewline(x, y, lineheight);
 
-    Gwk::Controls::Label*  pLabel = new Gwk::Controls::Label(this);
-    pLabel->SetText(x == 0 ? Gwk::Utility::Strings::TrimLeft<Gwk::String>(text,
+    Gwk::Controls::Label*  label = new Gwk::Controls::Label(this);
+    label->SetText(x == 0 ? Gwk::Utility::Strings::TrimLeft<Gwk::String>(text,
                                                                                    " ") : text);
-    pLabel->SetTextColor(txt.color);
-    pLabel->SetFont(pFont);
-    pLabel->SizeToContents();
-    pLabel->SetPos(x, y);
-    // lineheight = (lineheight + pLabel->Height()) / 2;
-    x += pLabel->Width();
+    label->SetTextColor(txt.color);
+    label->SetFont(font);
+    label->SizeToContents();
+    label->SetPos(x, y);
+    // lineheight = (lineheight + label->Height()) / 2;
+    x += label->Width();
 
     if (x >= Width())
         CreateNewline(x, y, lineheight);
@@ -170,7 +170,7 @@ void RichLabel::Rebuild()
     int y = 0;
     int lineheight = -1;
 
-    for (DividedText::List::iterator it = m_TextBlocks.begin(); it != m_TextBlocks.end(); ++it)
+    for (DividedText::List::iterator it = m_textBlocks.begin(); it != m_textBlocks.end(); ++it)
     {
         if (it->type == Type_Newline)
         {

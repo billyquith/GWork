@@ -50,14 +50,14 @@ namespace Gwk
         //
         GWK_EXPORT void* CreatePlatformWindow(int x, int y, int w, int h,
                                               const Gwk::String& windowTitle);
-        GWK_EXPORT void DestroyPlatformWindow(void* pPtr);
-        GWK_EXPORT void SetBoundsPlatformWindow(void* pPtr, int x, int y, int w, int h);
+        GWK_EXPORT void DestroyPlatformWindow(void* ptr);
+        GWK_EXPORT void SetBoundsPlatformWindow(void* ptr, int x, int y, int w, int h);
         // Returns true for redraw.
-        GWK_EXPORT bool MessagePump(void* pWindow);
-        GWK_EXPORT bool HasFocusPlatformWindow(void* pPtr);
-        GWK_EXPORT void SetWindowMaximized(void* pPtr, bool bMaximized, Gwk::Point& pNewPos,
-                                           Gwk::Point& pNewSize);
-        GWK_EXPORT void SetWindowMinimized(void* pPtr, bool bMinimized);
+        GWK_EXPORT bool MessagePump(void* window);
+        GWK_EXPORT bool HasFocusPlatformWindow(void* ptr);
+        GWK_EXPORT void SetWindowMaximized(void* ptr, bool bMaximized, Gwk::Point& newPos,
+                                           Gwk::Point& newSize);
+        GWK_EXPORT void SetWindowMinimized(void* ptr, bool bMinimized);
         
         //! If the user created the window, notify the plaform so it can do its housekeeping.
         GWK_EXPORT void SetPlatformWindow(void* handle);

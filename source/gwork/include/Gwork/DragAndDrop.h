@@ -22,15 +22,15 @@ namespace Gwk
         extern GWK_EXPORT Gwk::Controls::Base*    SourceControl;
         extern GWK_EXPORT Gwk::Controls::Base*    HoveredControl;
 
-        bool GWK_EXPORT Start(Gwk::Controls::Base* pControl, Package* pPackage);
+        bool GWK_EXPORT Start(Gwk::Controls::Base* control, Package* package);
 
-        bool GWK_EXPORT OnMouseButton(Gwk::Controls::Base* pHoveredControl, int x, int y,
+        bool GWK_EXPORT OnMouseButton(Gwk::Controls::Base* hoveredControl, int x, int y,
                                        bool bDown);
-        void GWK_EXPORT OnMouseMoved(Gwk::Controls::Base* pHoveredControl, int x, int y);
+        void GWK_EXPORT OnMouseMoved(Gwk::Controls::Base* hoveredControl, int x, int y);
 
-        void GWK_EXPORT RenderOverlay(Gwk::Controls::Canvas* pCanvas, Skin::Base* skin);
+        void GWK_EXPORT RenderOverlay(Gwk::Controls::Canvas* canvas, Skin::Base* skin);
 
-        void GWK_EXPORT ControlDeleted(Gwk::Controls::Base* pControl);
+        void GWK_EXPORT ControlDeleted(Gwk::Controls::Base* control);
     }
 
 }

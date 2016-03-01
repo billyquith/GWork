@@ -79,11 +79,11 @@ namespace Gwk
 
             virtual Gwk::Controls::Base* CreateInstance(Gwk::Controls::Base* parent) override
             {
-                Gwk::Controls::HorizontalSlider* pControl =
+                Gwk::Controls::HorizontalSlider* control =
                     new Gwk::Controls::HorizontalSlider(parent);
-                pControl->SetSize(100, 20);
-                pControl->SetRange(0, 1);
-                return pControl;
+                control->SetSize(100, 20);
+                control->SetRange(0, 1);
+                return control;
             }
 
         };

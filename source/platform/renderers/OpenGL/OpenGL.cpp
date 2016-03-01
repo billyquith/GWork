@@ -17,13 +17,13 @@ namespace Gwk
     {
         OpenGL::OpenGL()
         {
-            m_iVertNum = 0;
-            m_pContext = NULL;
+            m_vertNum = 0;
+            m_context = NULL;
             ::FreeImage_Initialise();
 
             for (int i = 0; i < MaxVerts; i++)
             {
-                m_Vertices[ i ].z = 0.5f;
+                m_vertices[ i ].z = 0.5f;
             }
         }
 
@@ -50,34 +50,34 @@ namespace Gwk
 
         void OpenGL::Flush()
         {
-            if (m_iVertNum == 0)
+            if (m_vertNum == 0)
                 return;
 
-            glVertexPointer(3, GL_FLOAT,  sizeof(Vertex), (void*)&m_Vertices[0].x);
+            glVertexPointer(3, GL_FLOAT,  sizeof(Vertex), (void*)&m_vertices[0].x);
             glEnableClientState(GL_VERTEX_ARRAY);
-            glColorPointer(4, GL_UNSIGNED_BYTE, sizeof(Vertex), (void*)&m_Vertices[0].r);
+            glColorPointer(4, GL_UNSIGNED_BYTE, sizeof(Vertex), (void*)&m_vertices[0].r);
             glEnableClientState(GL_COLOR_ARRAY);
-            glTexCoordPointer(2, GL_FLOAT, sizeof(Vertex), (void*)&m_Vertices[0].u);
+            glTexCoordPointer(2, GL_FLOAT, sizeof(Vertex), (void*)&m_vertices[0].u);
             glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-            glDrawArrays(GL_TRIANGLES, 0, (GLsizei)m_iVertNum);
-            m_iVertNum = 0;
+            glDrawArrays(GL_TRIANGLES, 0, (GLsizei)m_vertNum);
+            m_vertNum = 0;
             glFlush();
         }
 
         void OpenGL::AddVert(int x, int y, float u, float v)
         {
-            if (m_iVertNum >= MaxVerts-1)
+            if (m_vertNum >= MaxVerts-1)
                 Flush();
 
-            m_Vertices[ m_iVertNum ].x = (float)x;
-            m_Vertices[ m_iVertNum ].y = (float)y;
-            m_Vertices[ m_iVertNum ].u = u;
-            m_Vertices[ m_iVertNum ].v = v;
-            m_Vertices[ m_iVertNum ].r = m_Color.r;
-            m_Vertices[ m_iVertNum ].g = m_Color.g;
-            m_Vertices[ m_iVertNum ].b = m_Color.b;
-            m_Vertices[ m_iVertNum ].a = m_Color.a;
-            m_iVertNum++;
+            m_vertices[ m_vertNum ].x = (float)x;
+            m_vertices[ m_vertNum ].y = (float)y;
+            m_vertices[ m_vertNum ].u = u;
+            m_vertices[ m_vertNum ].v = v;
+            m_vertices[ m_vertNum ].r = m_color.r;
+            m_vertices[ m_vertNum ].g = m_color.g;
+            m_vertices[ m_vertNum ].b = m_color.b;
+            m_vertices[ m_vertNum ].a = m_color.a;
+            m_vertNum++;
         }
 
         void OpenGL::DrawFilledRect(Gwk::Rect rect)
@@ -103,7 +103,7 @@ namespace Gwk
         void OpenGL::SetDrawColor(Gwk::Color color)
         {
             glColor4ubv((GLubyte*)&color);
-            m_Color = color;
+            m_color = color;
         }
 
         void OpenGL::StartClip()
@@ -127,10 +127,10 @@ namespace Gwk
             glDisable(GL_SCISSOR_TEST);
         }
 
-        void OpenGL::DrawTexturedRect(Gwk::Texture* pTexture, Gwk::Rect rect, float u1, float v1,
+        void OpenGL::DrawTexturedRect(Gwk::Texture* texture, Gwk::Rect rect, float u1, float v1,
                                       float u2, float v2)
         {
-            GLuint* tex = (GLuint*)pTexture->data;
+            GLuint* tex = (GLuint*)texture->data;
 
             // Missing image, not loaded properly?
             if (!tex)
@@ -157,9 +157,9 @@ namespace Gwk
             AddVert(rect.x, rect.y+rect.h, u1, v2);
         }
 
-        void OpenGL::LoadTexture(Gwk::Texture* pTexture)
+        void OpenGL::LoadTexture(Gwk::Texture* texture)
         {
-            const std::string &fileName = pTexture->name;
+            const std::string &fileName = texture->name;
             FREE_IMAGE_FORMAT imageFormat = FreeImage_GetFileType(fileName.c_str());
 
             if (imageFormat == FIF_UNKNOWN)
@@ -168,7 +168,7 @@ namespace Gwk
             // Image failed to load..
             if (imageFormat == FIF_UNKNOWN)
             {
-                pTexture->failed = true;
+                texture->failed = true;
                 return;
             }
 
@@ -177,7 +177,7 @@ namespace Gwk
 
             if (!bits)
             {
-                pTexture->failed = true;
+                texture->failed = true;
                 return;
             }
 
@@ -187,7 +187,7 @@ namespace Gwk
 
             if (!bits32)
             {
-                pTexture->failed = true;
+                texture->failed = true;
                 return;
             }
 
@@ -198,9 +198,9 @@ namespace Gwk
             GLuint* pglTexture = new GLuint;
 
             // Sort out our Gwork texture
-            pTexture->data = pglTexture;
-            pTexture->width = FreeImage_GetWidth(bits32);
-            pTexture->height = FreeImage_GetHeight(bits32);
+            texture->data = pglTexture;
+            texture->width = FreeImage_GetWidth(bits32);
+            texture->height = FreeImage_GetHeight(bits32);
 
             // Create the opengl texture
             glGenTextures(1, pglTexture);
@@ -212,27 +212,27 @@ namespace Gwk
 #else
             GLenum format = GL_BGRA;
 #endif
-            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, pTexture->width, pTexture->height, 0, format,
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, texture->width, texture->height, 0, format,
                          GL_UNSIGNED_BYTE, (const GLvoid*)FreeImage_GetBits(bits32));
             FreeImage_Unload(bits32);
         }
 
-        void OpenGL::FreeTexture(Gwk::Texture* pTexture)
+        void OpenGL::FreeTexture(Gwk::Texture* texture)
         {
-            GLuint* tex = (GLuint*)pTexture->data;
+            GLuint* tex = (GLuint*)texture->data;
 
             if (!tex)
                 return;
 
             glDeleteTextures(1, tex);
             delete tex;
-            pTexture->data = NULL;
+            texture->data = NULL;
         }
 
-        Gwk::Color OpenGL::PixelColour(Gwk::Texture* pTexture, unsigned int x, unsigned int y,
+        Gwk::Color OpenGL::PixelColour(Gwk::Texture* texture, unsigned int x, unsigned int y,
                                         const Gwk::Color& col_default)
         {
-            GLuint* tex = (GLuint*)pTexture->data;
+            GLuint* tex = (GLuint*)texture->data;
 
             if (!tex)
                 return col_default;
@@ -240,9 +240,9 @@ namespace Gwk
             unsigned int iPixelSize = sizeof(unsigned char)*4;
             glBindTexture(GL_TEXTURE_2D, *tex);
             unsigned char* data =
-                (unsigned char*)malloc(iPixelSize*pTexture->width*pTexture->height);
+                (unsigned char*)malloc(iPixelSize*texture->width*texture->height);
             glGetTexImage(GL_TEXTURE_2D, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
-            unsigned int iOffset = (y*pTexture->width+x)*4;
+            unsigned int iOffset = (y*texture->width+x)*4;
             Gwk::Color c;
             c.r = data[0+iOffset];
             c.g = data[1+iOffset];
@@ -258,15 +258,15 @@ namespace Gwk
             return c;
         }
 
-        bool OpenGL::InitializeContext(Gwk::WindowProvider* pWindow)
+        bool OpenGL::InitializeContext(Gwk::WindowProvider* window)
         {
 #ifdef _WIN32
-            HWND pHwnd = (HWND)pWindow->GetWindow();
+            HWND hwnd = (HWND)window->GetWindow();
 
-            if (!pHwnd)
+            if (!hwnd)
                 return false;
 
-            HDC hDC = GetDC(pHwnd);
+            HDC hDC = GetDC(hwnd);
             //
             // Set the pixel format
             //
@@ -286,7 +286,7 @@ namespace Gwk
             wglMakeCurrent(hDC, hRC);
             RECT r;
 
-            if (GetClientRect(pHwnd, &r))
+            if (GetClientRect(hwnd, &r))
             {
                 glMatrixMode(GL_PROJECTION);
                 glLoadIdentity();
@@ -295,42 +295,42 @@ namespace Gwk
                 glViewport(0, 0, r.right-r.left, r.bottom-r.top);
             }
 
-            m_pContext = (void*)hRC;
+            m_context = (void*)hRC;
             return true;
 #endif // ifdef _WIN32
             return false;
         }
 
-        bool OpenGL::ShutdownContext(Gwk::WindowProvider* pWindow)
+        bool OpenGL::ShutdownContext(Gwk::WindowProvider* window)
         {
 #ifdef _WIN32
-            wglDeleteContext((HGLRC)m_pContext);
+            wglDeleteContext((HGLRC)m_context);
             return true;
 #endif
             return false;
         }
 
-        bool OpenGL::PresentContext(Gwk::WindowProvider* pWindow)
+        bool OpenGL::PresentContext(Gwk::WindowProvider* window)
         {
 #ifdef _WIN32
-            HWND pHwnd = (HWND)pWindow->GetWindow();
+            HWND hwnd = (HWND)window->GetWindow();
 
-            if (!pHwnd)
+            if (!hwnd)
                 return false;
 
-            HDC hDC = GetDC(pHwnd);
+            HDC hDC = GetDC(hwnd);
             SwapBuffers(hDC);
             return true;
 #endif
             return false;
         }
 
-        bool OpenGL::ResizedContext(Gwk::WindowProvider* pWindow, int w, int h)
+        bool OpenGL::ResizedContext(Gwk::WindowProvider* window, int w, int h)
         {
 #ifdef _WIN32
             RECT r;
 
-            if (GetClientRect((HWND)pWindow->GetWindow(), &r))
+            if (GetClientRect((HWND)window->GetWindow(), &r))
             {
                 glMatrixMode(GL_PROJECTION);
                 glLoadIdentity();
@@ -344,14 +344,14 @@ namespace Gwk
             return false;
         }
 
-        bool OpenGL::BeginContext(Gwk::WindowProvider* pWindow)
+        bool OpenGL::BeginContext(Gwk::WindowProvider* window)
         {
             glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
             glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
             return true;
         }
 
-        bool OpenGL::EndContext(Gwk::WindowProvider* pWindow)
+        bool OpenGL::EndContext(Gwk::WindowProvider* window)
         {
             return true;
         }

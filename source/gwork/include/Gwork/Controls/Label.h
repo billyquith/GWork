@@ -31,7 +31,7 @@ namespace Gwk
 
             virtual const String& GetText() const
             {
-                return m_Text->GetText();
+                return m_text->GetText();
             }
 
             virtual void Render(Skin::Base* /*skin*/) override
@@ -48,57 +48,57 @@ namespace Gwk
 
             virtual void SetFont(Gwk::String strFacename, int iSize, bool bBold);
 
-            virtual void SetFont(Gwk::Font* pFont)
+            virtual void SetFont(Gwk::Font* font)
             {
-                m_Text->SetFont(pFont);
+                m_text->SetFont(font);
             }
 
             virtual Gwk::Font* GetFont()
             {
-                return m_Text->GetFont();
+                return m_text->GetFont();
             }
 
             virtual void SetTextColor(const Gwk::Color& col)
             {
-                m_Text->SetTextColor(col);
+                m_text->SetTextColor(col);
             }
 
             virtual void SetTextColorOverride(const Gwk::Color& col)
             {
-                m_Text->SetTextColorOverride(col);
+                m_text->SetTextColorOverride(col);
             }
 
             inline const Gwk::Color& GetTextColor() const
             {
-                return m_Text->TextColor();
+                return m_text->TextColor();
             }
 
-            virtual int TextWidth()         { return m_Text->Width(); }
-            virtual int TextRight()         { return m_Text->Right(); }
-            virtual int TextHeight()        { return m_Text->Height(); }
+            virtual int TextWidth()         { return m_text->Width(); }
+            virtual int TextRight()         { return m_text->Right(); }
+            virtual int TextHeight()        { return m_text->Height(); }
 
-            virtual int TextX()             { return m_Text->X(); }
-            virtual int TextY()             { return m_Text->Y(); }
+            virtual int TextX()             { return m_text->X(); }
+            virtual int TextY()             { return m_text->Y(); }
 
-            virtual int TextLength()        { return m_Text->Length(); }
+            virtual int TextLength()        { return m_text->Length(); }
             
             Gwk::Rect GetCharacterPosition(int iChar);
 
             virtual void SetTextPadding(const Padding& padding)
             {
-                m_Text->SetPadding(padding);
+                m_text->SetPadding(padding);
                 Invalidate();
                 InvalidateParent();
             }
 
             virtual const Padding& GetTextPadding()
             {
-                return m_Text->GetPadding();
+                return m_text->GetPadding();
             }
 
             int Alignment() const
             {
-                return m_iAlign;
+                return m_align;
             }
 
             virtual void MakeColorNormal()
@@ -133,12 +133,12 @@ namespace Gwk
 
             virtual bool Wrap()
             {
-                return m_Text->Wrap();
+                return m_text->Wrap();
             }
 
             virtual void SetWrap(bool b)
             {
-                m_Text->SetWrap(b);
+                m_text->SetWrap(b);
             }
 
             virtual void OnBoundsChanged(Gwk::Rect oldChildBounds) override;
@@ -147,9 +147,9 @@ namespace Gwk
 
             virtual void OnTextChanged() {}
 
-            Gwk::Font*                 m_CreatedFont;
-            ControlsInternal::Text*     m_Text;
-            int m_iAlign;
+            Gwk::Font*                 m_createdFont;
+            ControlsInternal::Text*     m_text;
+            int m_align;
 
         };
 

@@ -45,8 +45,8 @@ namespace Gwk
 //                    if (str == "")
 //                        return;
 //
-//                    Gwk::Font* pFont = gwk_cast<Controls::Label>(ctrl)->GetFont();
-//                    gwk_cast<Controls::Label>(ctrl)->SetFont(str, pFont->size, pFont->bold);
+//                    Gwk::Font* font = gwk_cast<Controls::Label>(ctrl)->GetFont();
+//                    gwk_cast<Controls::Label>(ctrl)->SetFont(str, font->size, font->bold);
 //                }
 //
 //            };
@@ -69,12 +69,12 @@ namespace Gwk
 //                    if (sscanf(str.c_str(), "%i", &size) != 1)
 //                        return;
 //
-//                    Gwk::Font* pFont = gwk_cast<Controls::Label>(ctrl)->GetFont();
+//                    Gwk::Font* font = gwk_cast<Controls::Label>(ctrl)->GetFont();
 //
-//                    if (size == pFont->size)
+//                    if (size == font->size)
 //                        return;
 //
-//                    gwk_cast<Controls::Label>(ctrl)->SetFont(pFont->facename, size, pFont->bold);
+//                    gwk_cast<Controls::Label>(ctrl)->SetFont(font->facename, size, font->bold);
 //                }
 //
 //            };
@@ -95,12 +95,12 @@ namespace Gwk
 //                void SetValueFromString(Controls::Base* ctrl, const String& str) override
 //                {
 //                    bool bTrue = (str == True);
-//                    Gwk::Font* pFont = gwk_cast<Controls::Label>(ctrl)->GetFont();
+//                    Gwk::Font* font = gwk_cast<Controls::Label>(ctrl)->GetFont();
 //
-//                    if (bTrue == pFont->bold)
+//                    if (bTrue == font->bold)
 //                        return;
 //
-//                    gwk_cast<Controls::Label>(ctrl)->SetFont(pFont->facename, pFont->size,
+//                    gwk_cast<Controls::Label>(ctrl)->SetFont(font->facename, font->size,
 //                                                              bTrue ? true : false);
 //                }
 //
@@ -260,10 +260,10 @@ namespace Gwk
 //
 //            virtual Gwk::Controls::Base* CreateInstance(Gwk::Controls::Base* parent) override
 //            {
-//                Gwk::Controls::Label* pControl = new Gwk::Controls::Label(parent);
-//                pControl->SetSize(100, 20);
-//                pControl->SetText("New Label");
-//                return pControl;
+//                Gwk::Controls::Label* control = new Gwk::Controls::Label(parent);
+//                control->SetSize(100, 20);
+//                control->SetText("New Label");
+//                return control;
 //            }
 //
 //        };
@@ -281,10 +281,10 @@ namespace Gwk
 //
 //            virtual Gwk::Controls::Base* CreateInstance(Gwk::Controls::Base* parent) override
 //            {
-//                Gwk::Controls::Label* pControl = new Gwk::Controls::LabelClickable(parent);
-//                pControl->SetSize(100, 20);
-//                pControl->SetText("LabelClickable");
-//                return pControl;
+//                Gwk::Controls::Label* control = new Gwk::Controls::LabelClickable(parent);
+//                control->SetSize(100, 20);
+//                control->SetText("LabelClickable");
+//                return control;
 //            }
 //
 //        };

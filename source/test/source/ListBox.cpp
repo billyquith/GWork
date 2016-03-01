@@ -44,32 +44,32 @@ public:
             ctrl->SetAllowMultiSelect(true);
             ctrl->onRowSelected.Add(this, &ThisClass::RowSelected);
             {
-                Gwk::Controls::Layout::TableRow* pRow = ctrl->AddItem("Baked Beans");
-                pRow->SetCellText(1, "Heinz");
-                pRow->SetCellText(2, "£3.50");
+                Gwk::Controls::Layout::TableRow* row = ctrl->AddItem("Baked Beans");
+                row->SetCellText(1, "Heinz");
+                row->SetCellText(2, "£3.50");
             }
             {
-                Gwk::Controls::Layout::TableRow* pRow = ctrl->AddItem("Bananas");
-                pRow->SetCellText(1, "Trees");
-                pRow->SetCellText(2, "$1.27");
+                Gwk::Controls::Layout::TableRow* row = ctrl->AddItem("Bananas");
+                row->SetCellText(1, "Trees");
+                row->SetCellText(2, "$1.27");
             }
             {
-                Gwk::Controls::Layout::TableRow* pRow = ctrl->AddItem("Chicken");
-                pRow->SetCellText(1, Gwk::Utility::Narrow(L"\u5355\u5143\u6D4B\u8BD5"));
-                pRow->SetCellText(2, Gwk::Utility::Narrow(L"\u20AC8.95"));
+                Gwk::Controls::Layout::TableRow* row = ctrl->AddItem("Chicken");
+                row->SetCellText(1, Gwk::Utility::Narrow(L"\u5355\u5143\u6D4B\u8BD5"));
+                row->SetCellText(2, Gwk::Utility::Narrow(L"\u20AC8.95"));
             }
         }
     }
 
 
-    void RowSelected(Gwk::Controls::Base* pControl)
+    void RowSelected(Gwk::Controls::Base* control)
     {
-        Gwk::Controls::ListBox* ctrl = (Gwk::Controls::ListBox*)pControl;
+        Gwk::Controls::ListBox* ctrl = (Gwk::Controls::ListBox*)control;
         UnitPrint(Utility::Format("Listbox Item Selected: %s",
                                   ctrl->GetSelectedRow()->GetText(0).c_str()));
     }
 
-    Gwk::Font m_Font;
+    Gwk::Font m_font;
 };
 
 

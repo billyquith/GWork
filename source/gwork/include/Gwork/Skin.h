@@ -34,14 +34,14 @@ namespace Gwk
 
             Base(Gwk::Renderer::Base* renderer = NULL)
             {
-                m_DefaultFont.facename = "Arial";
-                m_DefaultFont.size = 10.0f;
-                m_Render = renderer;
+                m_defaultFont.facename = "Arial";
+                m_defaultFont.size = 10.0f;
+                m_render = renderer;
             }
 
             virtual ~Base()
             {
-                ReleaseFont(&m_DefaultFont);
+                ReleaseFont(&m_defaultFont);
             }
 
             virtual void ReleaseFont(Gwk::Font* fnt)
@@ -49,10 +49,10 @@ namespace Gwk
                 if (!fnt)
                     return;
 
-                if (!m_Render)
+                if (!m_render)
                     return;
 
-                m_Render->FreeFont(fnt);
+                m_render->FreeFont(fnt);
             }
 
             virtual void DrawGenericPanel(Controls::Base* control) = 0;
@@ -138,12 +138,12 @@ namespace Gwk
 
             virtual void SetRender(Gwk::Renderer::Base* renderer)
             {
-                m_Render = renderer;
+                m_render = renderer;
             }
 
             virtual Gwk::Renderer::Base* GetRender()
             {
-                return m_Render;
+                return m_render;
             }
 
             virtual void DrawArrowDown(Gwk::Rect rect);
@@ -273,19 +273,19 @@ namespace Gwk
 
             virtual Gwk::Font* GetDefaultFont()
             {
-                return &m_DefaultFont;
+                return &m_defaultFont;
             }
 
             virtual void SetDefaultFont(const Gwk::String& strFacename, float fSize = 10.0f)
             {
-                m_DefaultFont.facename = strFacename;
-                m_DefaultFont.size = fSize;
+                m_defaultFont.facename = strFacename;
+                m_defaultFont.size = fSize;
             }
 
         protected:
 
-            Gwk::Font m_DefaultFont;
-            Gwk::Renderer::Base* m_Render;
+            Gwk::Font m_defaultFont;
+            Gwk::Renderer::Base* m_render;
 
         };
 

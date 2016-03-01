@@ -18,22 +18,22 @@ namespace Gwk
 
             virtual Gwk::Controls::Base* CreateInstance(Gwk::Controls::Base* parent) override
             {
-                Gwk::Controls::SplitterVertical* pControl =
+                Gwk::Controls::SplitterVertical* control =
                     new Gwk::Controls::SplitterVertical(parent);
-                pControl->SetSize(200, 200);
-                return pControl;
+                control->SetSize(200, 200);
+                return control;
             }
 
             void AddChild(Gwk::Controls::Base* ctrl, Gwk::Controls::Base* child, Gwk::Point& pos)
             {
-                Gwk::Controls::SplitterVertical* pSplitter =
+                Gwk::Controls::SplitterVertical* splitter =
                     gwk_cast<Gwk::Controls::SplitterVertical>(ctrl);
-                child->SetParent(pSplitter);
+                child->SetParent(splitter);
 
-                if (pos.y < pSplitter->SplitterPos())
-                    pSplitter->SetPanels(child, NULL);
+                if (pos.y < splitter->SplitterPos())
+                    splitter->SetPanels(child, NULL);
                 else
-                    pSplitter->SetPanels(NULL, child);
+                    splitter->SetPanels(NULL, child);
             }
 
             void AddChild(Gwk::Controls::Base* ctrl, Gwk::Controls::Base* child, int iPage)

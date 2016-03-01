@@ -47,12 +47,12 @@ public:
             label->SetPos(10, 10+25*4);
         }
         {
-            m_Font.facename = "Impact";
-            m_Font.size = 50;
+            m_font.facename = "Impact";
+            m_font.size = 50;
             Gwk::Controls::TextBox* label = new Gwk::Controls::TextBox(this);
             label->SetText("Different Font");
             label->SetPos(10, 10+25*5);
-            label->SetFont(&m_Font);
+            label->SetFont(&m_font);
             label->SetSize(200, 55);
         }
         {
@@ -64,21 +64,21 @@ public:
         }
     }
 
-    void OnEdit(Gwk::Controls::Base* pControl)
+    void OnEdit(Gwk::Controls::Base* control)
     {
-        Gwk::Controls::TextBox* textbox = (Gwk::Controls::TextBox*)(pControl);
+        Gwk::Controls::TextBox* textbox = (Gwk::Controls::TextBox*)(control);
         UnitPrint(Utility::Format("Textbox Edit: [%s]\n",
                                   textbox->GetText().c_str()));
     }
 
-    void OnSubmit(Gwk::Controls::Base* pControl)
+    void OnSubmit(Gwk::Controls::Base* control)
     {
-        Gwk::Controls::TextBox* textbox = (Gwk::Controls::TextBox*)(pControl);
+        Gwk::Controls::TextBox* textbox = (Gwk::Controls::TextBox*)(control);
         UnitPrint(Utility::Format("Textbox Submit: [%s]\n",
                                   textbox->GetText().c_str()));
     }
 
-    Gwk::Font m_Font;
+    Gwk::Font m_font;
 };
 
 

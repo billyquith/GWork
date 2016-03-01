@@ -28,17 +28,17 @@ namespace Gwk
 
             virtual int GetBarSize() override
             {
-                return m_Bar->Height();
+                return m_bar->Height();
             }
 
             virtual int GetBarPos() override
             {
-                return m_Bar->Y()-Width();
+                return m_bar->Y()-Width();
             }
 
             virtual void SetBarSize(int size) override
             {
-                m_Bar->SetHeight(size);
+                m_bar->SetHeight(size);
             }
 
             virtual int GetButtonSize() override

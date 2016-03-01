@@ -22,48 +22,48 @@ namespace Gwk
             struct Single
             {
                 Single()
-                :   texture(NULL)
+                :   m_texture(NULL)
                 {}
 
-                void Init( Texture* pTexture, float x, float y, float w, float h )
+                void Init( Texture* texture, float x, float y, float w, float h )
                 {
-                    texture = pTexture;
+                    m_texture = texture;
                     float const texw = texture->width;
                     float const texh = texture->height;
-                    uv[0] = x / texw;
-                    uv[1] = y / texh;
-                    uv[2] = ( x + w ) / texw;
-                    uv[3] = ( y + h ) / texh;
-                    iWidth = w;
-                    iHeight = h;
+                    m_uv[0] = x / texw;
+                    m_uv[1] = y / texh;
+                    m_uv[2] = ( x + w ) / texw;
+                    m_uv[3] = ( y + h ) / texh;
+                    m_width = w;
+                    m_height = h;
                 }
 
                 void Draw( Gwk::Renderer::Base* render, Gwk::Rect r, const Gwk::Color & col = Gwk::Colors::White )
                 {
-                    if ( !texture )
+                    if ( !m_texture )
                         return;
 
                     render->SetDrawColor( col );
-                    render->DrawTexturedRect( texture, r, uv[0], uv[1], uv[2], uv[3] );
+                    render->DrawTexturedRect( m_texture, r, m_uv[0], m_uv[1], m_uv[2], m_uv[3] );
                 }
 
                 void DrawCenter( Gwk::Renderer::Base* render, Gwk::Rect r, const Gwk::Color & col = Gwk::Colors::White )
                 {
-                    if ( !texture )
+                    if ( !m_texture )
                         return;
 
-                    r.x += ( r.w - iWidth )/2;
-                    r.y += ( r.h - iHeight )/2;
-                    r.w = iWidth;
-                    r.h = iHeight;
+                    r.x += ( r.w - m_width )/2;
+                    r.y += ( r.h - m_height )/2;
+                    r.w = m_width;
+                    r.h = m_height;
                     Draw( render, r, col );
                 }
 
 
-                Texture*    texture;    //!< Texture to use.
-                float       uv[4];      //!< Rectangle texture UVs: (TL.xy, BR.xy).
-                int         iWidth;     //!< Width of draw rectangle.
-                int         iHeight;    //!< Height of draw rectangle.
+                Texture*    m_texture;  //!< Texture to use.
+                float       m_uv[4];      //!< Rectangle texture UVs: (TL.xy, BR.xy).
+                int         m_width;     //!< Width of draw rectangle.
+                int         m_height;    //!< Height of draw rectangle.
             };
 
             //! Handle drawing a skinned textured rectangle. This consists of nine areas:
@@ -78,39 +78,38 @@ namespace Gwk
             struct Bordered
             {
                 Bordered()
-                {
-                    texture = NULL;
-                }
+                :   m_texture(NULL)
+                {}
 
-                void Init( Texture* pTexture, float x, float y, float w, float h, Margin in_margin, float DrawMarginScale = 1.0f )
+                void Init( Texture* texture, float x, float y, float w, float h, Margin in_margin, float DrawMarginScale = 1.0f )
                 {
-                    texture = pTexture;
-                    margin = in_margin;
-                    SetRect( 0, x, y, margin.left, margin.top );
-                    SetRect( 1, x + margin.left, y, w - margin.left - margin.right, margin.top );
-                    SetRect( 2, ( x + w ) - margin.right, y, margin.right, margin.top );
-                    SetRect( 3, x, y + margin.top, margin.left, h - margin.top - margin.bottom );
-                    SetRect( 4, x + margin.left,  y + margin.top, w - margin.left - margin.right, h - margin.top - margin.bottom );
-                    SetRect( 5, ( x + w ) - margin.right,  y + margin.top, margin.right, h - margin.top - margin.bottom );
-                    SetRect( 6, x, ( y + h ) - margin.bottom, margin.left, margin.bottom );
-                    SetRect( 7, x + margin.left, ( y + h ) - margin.bottom, w - margin.left - margin.right, margin.bottom );
-                    SetRect( 8, ( x + w ) - margin.right, ( y + h ) - margin.bottom, margin.right, margin.bottom );
-                    margin.left *= DrawMarginScale;
-                    margin.right *= DrawMarginScale;
-                    margin.top *= DrawMarginScale;
-                    margin.bottom *= DrawMarginScale;
-                    width = w - x;
-                    height = h - y;
+                    m_texture = texture;
+                    m_margin = in_margin;
+                    SetRect( 0, x, y, m_margin.left, m_margin.top );
+                    SetRect( 1, x + m_margin.left, y, w - m_margin.left - m_margin.right, m_margin.top );
+                    SetRect( 2, ( x + w ) - m_margin.right, y, m_margin.right, m_margin.top );
+                    SetRect( 3, x, y + m_margin.top, m_margin.left, h - m_margin.top - m_margin.bottom );
+                    SetRect( 4, x + m_margin.left,  y + m_margin.top, w - m_margin.left - m_margin.right, h - m_margin.top - m_margin.bottom );
+                    SetRect( 5, ( x + w ) - m_margin.right,  y + m_margin.top, m_margin.right, h - m_margin.top - m_margin.bottom );
+                    SetRect( 6, x, ( y + h ) - m_margin.bottom, m_margin.left, m_margin.bottom );
+                    SetRect( 7, x + m_margin.left, ( y + h ) - m_margin.bottom, w - m_margin.left - m_margin.right, m_margin.bottom );
+                    SetRect( 8, ( x + w ) - m_margin.right, ( y + h ) - m_margin.bottom, m_margin.right, m_margin.bottom );
+                    m_margin.left *= DrawMarginScale;
+                    m_margin.right *= DrawMarginScale;
+                    m_margin.top *= DrawMarginScale;
+                    m_margin.bottom *= DrawMarginScale;
+                    m_width = w - x;
+                    m_height = h - y;
                 }
 
                 void SetRect( int iNum, float x, float y, float w, float h )
                 {
-                    float const texw = texture->width;
-                    float const texh = texture->height;
-                    rects[iNum].uv[0] = x / texw;
-                    rects[iNum].uv[1] = y / texh;
-                    rects[iNum].uv[2] = ( x + w ) / texw;
-                    rects[iNum].uv[3] = ( y + h ) / texh;
+                    float const texw = m_texture->width;
+                    float const texh = m_texture->height;
+                    m_rects[iNum].m_uv[0] = x / texw;
+                    m_rects[iNum].m_uv[1] = y / texh;
+                    m_rects[iNum].m_uv[2] = ( x + w ) / texw;
+                    m_rects[iNum].m_uv[3] = ( y + h ) / texh;
                 }
 
                 //
@@ -124,57 +123,65 @@ namespace Gwk
                 void Draw( Gwk::Renderer::Base* render, Gwk::Rect r,
                            const Gwk::Color & col = Gwk::Colors::White, unsigned int draw = ~0 )
                 {
-                    if (!texture)
+                    if (!m_texture)
                         return;
 
                     render->SetDrawColor( col );
 
-                    if (r.w < width && r.h < height)
+                    if (r.w < m_width && r.h < m_height)
                     {
-                        render->DrawTexturedRect(texture,
-                                                 r,
-                                                 rects[0].uv[0], rects[0].uv[1], rects[8].uv[2], rects[8].uv[3]);
+                        render->DrawTexturedRect(m_texture, r,
+                                                 m_rects[0].m_uv[0], m_rects[0].m_uv[1], m_rects[8].m_uv[2], m_rects[8].m_uv[3]);
                         return;
                     }
 
-                    if (draw & (1<<0)) { DrawRect( render, 0, r.x, r.y, margin.left, margin.top ); }
+                    if (draw & (1<<0))
+                        DrawRect( render, 0, r.x, r.y, m_margin.left, m_margin.top );
 
-                    if (draw & (1<<1)) { DrawRect( render, 1, r.x + margin.left, r.y, r.w - margin.left - margin.right, margin.top ); }
+                    if (draw & (1<<1))
+                        DrawRect( render, 1, r.x + m_margin.left, r.y, r.w - m_margin.left - m_margin.right, m_margin.top );
 
-                    if (draw & (1<<2)) { DrawRect( render, 2, ( r.x + r.w ) - margin.right, r.y, margin.right, margin.top ); }
+                    if (draw & (1<<2))
+                        DrawRect( render, 2, ( r.x + r.w ) - m_margin.right, r.y, m_margin.right, m_margin.top );
 
-                    if (draw & (1<<3)) { DrawRect( render, 3, r.x, r.y + margin.top, margin.left, r.h - margin.top - margin.bottom ); }
+                    if (draw & (1<<3))
+                        DrawRect( render, 3, r.x, r.y + m_margin.top, m_margin.left, r.h - m_margin.top - m_margin.bottom );
 
-                    if (draw & (1<<4)) { DrawRect( render, 4, r.x + margin.left, r.y + margin.top, r.w - margin.left - margin.right, r.h - margin.top - margin.bottom ); }
+                    if (draw & (1<<4))
+                        DrawRect( render, 4, r.x + m_margin.left, r.y + m_margin.top,
+                                             r.w - m_margin.left - m_margin.right, r.h - m_margin.top - m_margin.bottom );
+                    
+                    if (draw & (1<<5))
+                        DrawRect( render, 5, ( r.x + r.w ) - m_margin.right, r.y + m_margin.top, m_margin.right, r.h - m_margin.top - m_margin.bottom );
 
-                    if (draw & (1<<5)) { DrawRect( render, 5, ( r.x + r.w ) - margin.right, r.y + margin.top, margin.right, r.h - margin.top - margin.bottom ); }
+                    if (draw & (1<<6))
+                        DrawRect( render, 6, r.x, ( r.y + r.h ) - m_margin.bottom, m_margin.left, m_margin.bottom );
 
-                    if (draw & (1<<6)) { DrawRect( render, 6, r.x, ( r.y + r.h ) - margin.bottom, margin.left, margin.bottom ); }
+                    if (draw & (1<<7))
+                        DrawRect( render, 7, r.x + m_margin.left, ( r.y + r.h ) - m_margin.bottom, r.w - m_margin.left - m_margin.right, m_margin.bottom );
 
-                    if (draw & (1<<7)) { DrawRect( render, 7, r.x + margin.left, ( r.y + r.h ) - margin.bottom, r.w - margin.left - margin.right, margin.bottom ); }
-
-                    if (draw & (1<<8)) { DrawRect( render, 8, ( r.x + r.w ) - margin.right, ( r.y + r.h ) - margin.bottom, margin.right, margin.bottom ); }
+                    if (draw & (1<<8))
+                        DrawRect( render, 8, ( r.x + r.w ) - m_margin.right, ( r.y + r.h ) - m_margin.bottom, m_margin.right, m_margin.bottom );
                 }
 
                 void DrawRect( Gwk::Renderer::Base* render, int i, int x, int y, int w, int h )
                 {
-                    render->DrawTexturedRect( texture,
+                    render->DrawTexturedRect( m_texture,
                                               Gwk::Rect( x, y, w, h ),
-                                              rects[i].uv[0], rects[i].uv[1], rects[i].uv[2], rects[i].uv[3] );
+                                              m_rects[i].m_uv[0], m_rects[i].m_uv[1], m_rects[i].m_uv[2], m_rects[i].m_uv[3] );
                 }
 
-                Texture*    texture;
+                Texture *m_texture;
 
                 struct SubRect
                 {
-                    float uv[4];
+                    float m_uv[4];
                 };
 
-                SubRect rects[9];
-                Margin margin;
-
-                float width;
-                float height;
+                SubRect m_rects[9];
+                Margin m_margin;
+                float m_width;
+                float m_height;
             };
         }
     }

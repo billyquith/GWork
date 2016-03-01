@@ -14,13 +14,13 @@ using namespace Gwk;
 
 #ifndef GWK_NO_ANIMATION
 
-static Gwk::Anim::Animation::List g_Animations;
-static Gwk::Anim::Animation::ChildList g_AnimationsListed;
+static Gwk::Anim::Animation::List g_animations;
+static Gwk::Anim::Animation::ChildList g_animationsListed;
 
 void Gwk::Anim::Add(Gwk::Controls::Base* control, Animation* animation)
 {
-    animation->m_Control = control;
-    g_Animations[control].push_back(animation);
+    animation->m_control = control;
+    g_animations[control].push_back(animation);
 }
 
 void Gwk::Anim::Cancel(Gwk::Controls::Base* control)
@@ -35,18 +35,18 @@ void Gwk::Anim::Cancel(Gwk::Controls::Base* control)
      *
      *  bool operator() ( Gwk::Anim::Animation* anim )
      *  {
-     *      return anim->m_Control == control;
+     *      return anim->m_control == control;
      *  }
      *
      *  Gwk::Controls::Base* control;
      * };
      *
-     * std::remove_if ( g_Animations.begin(), g_Animations.end(),
+     * std::remove_if ( g_animations.begin(), g_animations.end(),
      * AnimDeletePredicate( control ) );
      */
     Gwk::Anim::Animation::List::iterator iAnimations;
 
-    if ((iAnimations = g_Animations.find(control)) != g_Animations.end())
+    if ((iAnimations = g_animations.find(control)) != g_animations.end())
     {
         Gwk::Anim::Animation::ChildList& ChildAnimationsForControl = iAnimations->second;
         Gwk::Anim::Animation::ChildList::iterator iAnimationChild =
@@ -61,15 +61,15 @@ void Gwk::Anim::Cancel(Gwk::Controls::Base* control)
             while (++iAnimationChild != ChildAnimationsForControl.end());
         }
 
-        g_Animations.erase(iAnimations);
+        g_animations.erase(iAnimations);
     }
 }
 
 void Gwk::Anim::Think()
 {
-    Gwk::Anim::Animation::List::iterator it = g_Animations.begin();
+    Gwk::Anim::Animation::List::iterator it = g_animations.begin();
 
-    if (it != g_Animations.end())
+    if (it != g_animations.end())
     {
         Gwk::Anim::Animation::ChildList::iterator itChild;
         Gwk::Anim::Animation* anim;
@@ -96,7 +96,7 @@ void Gwk::Anim::Think()
                 while (itChild != it->second.end());
             }
         }
-        while (++it != g_Animations.end());
+        while (++it != g_animations.end());
     }
 }
 

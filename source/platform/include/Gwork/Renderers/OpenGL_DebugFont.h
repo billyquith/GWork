@@ -24,16 +24,16 @@ namespace Gwk
 
             void Init();
 
-            void RenderText(Gwk::Font* pFont, Gwk::Point pos,
+            void RenderText(Gwk::Font* font, Gwk::Point pos,
                             const Gwk::String& text);
-            Gwk::Point MeasureText(Gwk::Font* pFont, const Gwk::String& text);
+            Gwk::Point MeasureText(Gwk::Font* font, const Gwk::String& text);
 
         protected:
 
             void CreateDebugFont();
             void DestroyDebugFont();
 
-            Gwk::Texture*  m_pFontTexture;
+            Gwk::Texture*  m_fontTexture;
             float m_fFontScale[2];
             float m_fLetterSpacing;
 

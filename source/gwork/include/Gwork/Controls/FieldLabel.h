@@ -20,13 +20,13 @@ namespace Gwk
         {
         public:
 
-            static inline FieldLabel* Setup(Controls::Base* pControl, const Gwk::String& text)
+            static inline FieldLabel* Setup(Controls::Base* control, const Gwk::String& text)
             {
-                FieldLabel* plbl = new FieldLabel(pControl->GetParent());
+                FieldLabel* plbl = new FieldLabel(control->GetParent());
                 plbl->SetText(text);
-                plbl->SetSize(pControl->Width(), pControl->Height());
-                plbl->Dock(pControl->GetDock());
-                plbl->SetField(pControl);
+                plbl->SetSize(control->Width(), control->Height());
+                plbl->Dock(control->GetDock());
+                plbl->SetField(control);
                 return plbl;
             }
 
@@ -34,27 +34,27 @@ namespace Gwk
 
             GWK_CONTROL_INLINE(FieldLabel, Controls::Label)
             {
-                m_pField = NULL;
+                m_field = NULL;
                 SetMargin(Margin(0, 1, 0, 1));
                 SetAlignment(Docking::CenterV|Docking::Left);
             }
 
-            void SetField(Controls::Base* pField)
+            void SetField(Controls::Base* field)
             {
-                pField->SetParent(this);
-                pField->Dock(Docking::Right);
-                m_pField = pField;
+                field->SetParent(this);
+                field->Dock(Docking::Right);
+                m_field = field;
             }
 
             void Layout(Gwk::Skin::Base* pskin) override
             {
-                m_pField->SetWidth(Width()-70);
+                m_field->SetWidth(Width()-70);
                 ParentClass::Layout(pskin);
             }
 
         protected:
 
-            Controls::Base* m_pField;
+            Controls::Base* m_field;
 
         };
 

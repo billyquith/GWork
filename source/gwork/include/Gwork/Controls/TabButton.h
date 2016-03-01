@@ -28,27 +28,27 @@ namespace Gwk
 
             void SetPage(Base* page)
             {
-                m_Page = page;
+                m_page = page;
             }
 
             Base* GetPage()
             {
-                return m_Page;
+                return m_page;
             }
 
             void        SetTabControl(TabControl* ctrl);
             TabControl* GetTabControl()
             {
-                return m_Control;
+                return m_control;
             }
 
             bool IsActive()
             {
-                return m_Page && m_Page->Visible();
+                return m_page && m_page->Visible();
             }
 
             virtual bool DragAndDrop_ShouldStartDrag() override;
-            virtual void DragAndDrop_StartDragging(Gwk::DragAndDrop::Package* /*pPackage*/,
+            virtual void DragAndDrop_StartDragging(Gwk::DragAndDrop::Package* /*package*/,
                                                    int /*x*/, int /*y*/) override
             {
                 SetHidden(true);
@@ -73,8 +73,8 @@ namespace Gwk
 
         private:
 
-            Base*       m_Page;
-            TabControl* m_Control;
+            Base*       m_page;
+            TabControl* m_control;
 
         };
 

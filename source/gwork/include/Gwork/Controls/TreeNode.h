@@ -48,9 +48,9 @@ namespace Gwk
                 m_bRoot = b;
             }
 
-            virtual void SetTreeControl(TreeControl* pCtrl)
+            virtual void SetTreeControl(TreeControl* ctrl)
             {
-                m_TreeControl = pCtrl;
+                m_treeControl = ctrl;
             }
 
             virtual void SetSelectable(bool b)
@@ -85,9 +85,9 @@ namespace Gwk
 
         protected:
 
-            TreeControl*    m_TreeControl;
-            Button*         m_ToggleButton;
-            Button*         m_Title;
+            TreeControl*    m_treeControl;
+            Button*         m_toggleButton;
+            Button*         m_title;
 
             bool m_bRoot;
             bool m_bSelected;

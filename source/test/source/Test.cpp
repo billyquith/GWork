@@ -24,7 +24,7 @@
 
 using namespace Gwk;
 
-Gwk::Controls::TabButton* pButton = NULL;
+Gwk::Controls::TabButton* button = NULL;
 
 
 //class MyVistor : public ponder::ClassVisitor
@@ -156,7 +156,7 @@ Gwk::Controls::TabButton* pButton = NULL;
 //
 GWK_CONTROL_CONSTRUCTOR(UnitTest)
 {
-    m_pLastControl = NULL;
+    m_lastControl = NULL;
     Dock(Docking::Fill);
     SetSize(1024, 768);
 
@@ -169,37 +169,37 @@ GWK_CONTROL_CONSTRUCTOR(UnitTest)
     GetLeft()->SetWidth(150);
 
     // Create control property viewer
-    m_ControlProperties = new Controls::PropertyTree(GetRight());
+    m_controlProperties = new Controls::PropertyTree(GetRight());
     auto treeCampInfo = new Controls::PropertyTree(GetRight());
-    pButton = GetRight()->GetTabControl()->AddPage("Properties", m_ControlProperties);
+    button = GetRight()->GetTabControl()->AddPage("Properties", m_controlProperties);
     GetRight()->GetTabControl()->AddPage("Classes", treeCampInfo);
 //    PopulateClassInfo(treeCampInfo);
 
     // Create output log and status bar.
-    m_TextOutput = new Controls::ListBox(GetBottom());
-    pButton = GetBottom()->GetTabControl()->AddPage("Output", m_TextOutput);
+    m_textOutput = new Controls::ListBox(GetBottom());
+    button = GetBottom()->GetTabControl()->AddPage("Output", m_textOutput);
     GetBottom()->SetHeight(200);
-    m_StatusBar = new Controls::StatusBar(this);
-    m_StatusBar->Dock(Docking::Bottom);
+    m_statusBar = new Controls::StatusBar(this);
+    m_statusBar->Dock(Docking::Bottom);
 
     // Where to put the demo controls.
-//    auto pCenter = new ControlContainer(this);
-    auto pCenter = new Controls::Layout::Center(this);
-    pCenter->Dock(Docking::Fill);
+//    auto center = new ControlContainer(this);
+    auto center = new Controls::Layout::Center(this);
+    center->Dock(Docking::Fill);
 //    auto listen = new ControlListener();
-//    listen->m_props = m_ControlProperties;
-//    listen->m_parent = pCenter;
+//    listen->m_props = m_controlProperties;
+//    listen->m_parent = center;
 //    Hook::AddHook(listen);
 
 #define ADD_UNIT_TEST(NAME) \
     GUnit* RegisterUnitTest_##NAME(Gwk::Controls::Base *tab); \
     { \
-        Controls::Button* pButton = cat->Add(#NAME); \
-        pButton->SetName(#NAME); \
-        GUnit* test = RegisterUnitTest_##NAME(pCenter); \
+        Controls::Button* button = cat->Add(#NAME); \
+        button->SetName(#NAME); \
+        GUnit* test = RegisterUnitTest_##NAME(center); \
         test->Hide(); \
         test->SetUnitTest(this); \
-        pButton->onPress.Add(this, &ThisClass::OnCategorySelect, Gwk::Event::Packet(test)); \
+        button->onPress.Add(this, &ThisClass::OnCategorySelect, Gwk::Event::Packet(test)); \
     }
 
     // Create Controls using Gwork API.
@@ -251,10 +251,10 @@ GWK_CONTROL_CONSTRUCTOR(UnitTest)
 ////        ADD_UNIT_TEST(LabelMultiline);
 //    }
     
-    m_StatusBar->SendToBack();
+    m_statusBar->SendToBack();
     PrintText("Unit Test Started.");
     m_fLastSecond = Gwk::Platform::GetTimeInSeconds();
-    m_iFrames = 0;
+    m_frames = 0;
     
     apiList->GetNamedChildren("MenuStrip").DoAction();
 
@@ -263,33 +263,33 @@ GWK_CONTROL_CONSTRUCTOR(UnitTest)
 
 void UnitTest::OnCategorySelect(Gwk::Event::Info info)
 {
-    if (m_pLastControl)
-        m_pLastControl->Hide();
+    if (m_lastControl)
+        m_lastControl->Hide();
 
     info.Packet->Control->Show();
-    m_pLastControl = info.Packet->Control;
+    m_lastControl = info.Packet->Control;
     
-    if (m_ControlProperties)
+    if (m_controlProperties)
     {
-        m_ControlProperties->Clear();
+        m_controlProperties->Clear();
     }
 }
 
 void UnitTest::PrintText(const Gwk::String& str)
 {
-    m_TextOutput->AddItem(str);
-    m_TextOutput->ScrollToBottom();
+    m_textOutput->AddItem(str);
+    m_textOutput->ScrollToBottom();
 }
 
 void UnitTest::Render(Gwk::Skin::Base* skin)
 {
-    m_iFrames++;
+    m_frames++;
 
     if (m_fLastSecond < Gwk::Platform::GetTimeInSeconds())
     {
-        m_StatusBar->SetText(Gwk::Utility::Format("Gwork Unit Test - %i fps", m_iFrames*2));
+        m_statusBar->SetText(Gwk::Utility::Format("Gwork Unit Test - %i fps", m_frames*2));
         m_fLastSecond = Gwk::Platform::GetTimeInSeconds()+0.5f;
-        m_iFrames = 0;
+        m_frames = 0;
     }
 
     ParentClass::Render(skin);
@@ -297,6 +297,6 @@ void UnitTest::Render(Gwk::Skin::Base* skin)
 
 void GUnit::UnitPrint(Gwk::String str)
 {
-    m_pUnitTest->PrintText(str);
+    m_unitTest->PrintText(str);
 }
 

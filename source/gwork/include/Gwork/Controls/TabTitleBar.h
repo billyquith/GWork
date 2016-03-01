@@ -36,15 +36,15 @@ namespace Gwk
                 skin->DrawTabTitleBar(this);
             }
 
-            void DragAndDrop_StartDragging(Gwk::DragAndDrop::Package* pPackage, int x, int y) override
+            void DragAndDrop_StartDragging(Gwk::DragAndDrop::Package* package, int x, int y) override
             {
                 DragAndDrop::SourceControl = GetParent();
-                DragAndDrop::SourceControl->DragAndDrop_StartDragging(pPackage, x, y);
+                DragAndDrop::SourceControl->DragAndDrop_StartDragging(package, x, y);
             }
 
-            void UpdateFromTab(TabButton* pButton)
+            void UpdateFromTab(TabButton* button)
             {
-                SetText(pButton->GetText());
+                SetText(button->GetText());
                 SizeToContents();
             }
 

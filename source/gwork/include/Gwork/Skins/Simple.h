@@ -59,8 +59,8 @@ namespace Gwk
                 m_colToolTipBackground      = Gwk::Color(255, 255, 225, 255);
                 m_colToolTipBorder          = Gwk::Color(0, 0, 0, 255);
                 m_colModal = Gwk::Color(25, 25, 25, 150);
-                m_DefaultFont.facename  = "Microsoft Sans Serif";
-                m_DefaultFont.size      = 11;
+                m_defaultFont.facename  = "Microsoft Sans Serif";
+                m_defaultFont.size      = 11;
             }
 
             virtual void DrawGenericPanel(Controls::Base* control)
@@ -102,15 +102,15 @@ namespace Gwk
             {
                 if (bSubmenuOpen || control->IsHovered())
                 {
-                    m_Render->SetDrawColor(m_colHighlightBG);
-                    m_Render->DrawFilledRect(control->GetRenderBounds());
-                    m_Render->SetDrawColor(m_colHighlightBorder);
-                    m_Render->DrawLinedRect(control->GetRenderBounds());
+                    m_render->SetDrawColor(m_colHighlightBG);
+                    m_render->DrawFilledRect(control->GetRenderBounds());
+                    m_render->SetDrawColor(m_colHighlightBorder);
+                    m_render->DrawLinedRect(control->GetRenderBounds());
                 }
 
                 if (bChecked)
                 {
-                    m_Render->SetDrawColor(Color(0, 0, 0, 255));
+                    m_render->SetDrawColor(Color(0, 0, 0, 255));
                     Gwk::Rect r(control->Width()/2-2, control->Height()/2-2, 5, 5);
                     DrawCheck(r);
                 }
@@ -120,28 +120,28 @@ namespace Gwk
             {
                 int w = control->Width();
                 int h = control->Height();
-                m_Render->SetDrawColor(Gwk::Color(246, 248, 252, 255));
-                m_Render->DrawFilledRect(Gwk::Rect(0, 0, w, h));
-                m_Render->SetDrawColor(Gwk::Color(218, 224, 241, 150));
-                m_Render->DrawFilledRect(Gwk::Rect(0, h*0.4f, w, h*0.6f));
-                m_Render->DrawFilledRect(Gwk::Rect(0, h/2, w, h/2));
+                m_render->SetDrawColor(Gwk::Color(246, 248, 252, 255));
+                m_render->DrawFilledRect(Gwk::Rect(0, 0, w, h));
+                m_render->SetDrawColor(Gwk::Color(218, 224, 241, 150));
+                m_render->DrawFilledRect(Gwk::Rect(0, h*0.4f, w, h*0.6f));
+                m_render->DrawFilledRect(Gwk::Rect(0, h/2, w, h/2));
             }
 
             virtual void DrawMenu(Gwk::Controls::Base* control, bool bPaddingDisabled)
             {
                 int w = control->Width();
                 int h = control->Height();
-                m_Render->SetDrawColor(m_colControlBright);
-                m_Render->DrawFilledRect(Gwk::Rect(0, 0, w, h));
+                m_render->SetDrawColor(m_colControlBright);
+                m_render->DrawFilledRect(Gwk::Rect(0, 0, w, h));
 
                 if (!bPaddingDisabled)
                 {
-                    m_Render->SetDrawColor(m_colControl);
-                    m_Render->DrawFilledRect(Gwk::Rect(1, 0, 22, h));
+                    m_render->SetDrawColor(m_colControl);
+                    m_render->DrawFilledRect(Gwk::Rect(1, 0, 22, h));
                 }
 
-                m_Render->SetDrawColor(m_colControlOutlineNormal);
-                m_Render->DrawLinedRect(Gwk::Rect(0, 0, w, h));
+                m_render->SetDrawColor(m_colControlOutlineNormal);
+                m_render->DrawLinedRect(Gwk::Rect(0, 0, w, h));
             }
 
             virtual void DrawShadow(Gwk::Controls::Base* control)
@@ -150,47 +150,47 @@ namespace Gwk
                 int h = control->Height();
                 int x = 4;
                 int y = 6;
-                m_Render->SetDrawColor(Gwk::Color(0, 0, 0, 10));
-                m_Render->DrawFilledRect(Gwk::Rect(x, y, w, h));
+                m_render->SetDrawColor(Gwk::Color(0, 0, 0, 10));
+                m_render->DrawFilledRect(Gwk::Rect(x, y, w, h));
                 x += 2;
-                m_Render->DrawFilledRect(Gwk::Rect(x, y, w, h));
+                m_render->DrawFilledRect(Gwk::Rect(x, y, w, h));
                 y += 2;
-                m_Render->DrawFilledRect(Gwk::Rect(x, y, w, h));
+                m_render->DrawFilledRect(Gwk::Rect(x, y, w, h));
             }
 
             virtual void DrawButton(int w, int h, bool bDepressed, bool bHovered,
                                     bool bSquared = false)
             {
                 if (bDepressed)
-                    m_Render->SetDrawColor(m_colControlDark);
+                    m_render->SetDrawColor(m_colControlDark);
                 else if (bHovered)
-                    m_Render->SetDrawColor(m_colControlBright);
+                    m_render->SetDrawColor(m_colControlBright);
                 else
-                    m_Render->SetDrawColor(m_colControl);
-                m_Render->DrawFilledRect(Gwk::Rect(1, 1, w-2, h-2));
+                    m_render->SetDrawColor(m_colControl);
+                m_render->DrawFilledRect(Gwk::Rect(1, 1, w-2, h-2));
 
                 if (bDepressed)
-                    m_Render->SetDrawColor(m_colControlDark);
+                    m_render->SetDrawColor(m_colControlDark);
                 else if (bHovered)
-                    m_Render->SetDrawColor(m_colControl);
+                    m_render->SetDrawColor(m_colControl);
                 else
-                    m_Render->SetDrawColor(m_colControlDark);
-                m_Render->DrawFilledRect(Gwk::Rect(1, h/2, w-2, h/2-2));
+                    m_render->SetDrawColor(m_colControlDark);
+                m_render->DrawFilledRect(Gwk::Rect(1, h/2, w-2, h/2-2));
 
                 if (!bDepressed)
                 {
-                    m_Render->SetDrawColor(m_colControlBright);
-                    m_Render->DrawShavedCornerRect(Gwk::Rect(1, 1, w-2, h-2), bSquared);
+                    m_render->SetDrawColor(m_colControlBright);
+                    m_render->DrawShavedCornerRect(Gwk::Rect(1, 1, w-2, h-2), bSquared);
                 }
                 else
                 {
-                    m_Render->SetDrawColor(m_colControlDarker);
-                    m_Render->DrawShavedCornerRect(Gwk::Rect(1, 1, w-2, h-2), bSquared);
+                    m_render->SetDrawColor(m_colControlDarker);
+                    m_render->DrawShavedCornerRect(Gwk::Rect(1, 1, w-2, h-2), bSquared);
                 }
 
                 // Border
-                m_Render->SetDrawColor(m_colControlOutlineNormal);
-                m_Render->DrawShavedCornerRect(Gwk::Rect(0, 0, w, h), bSquared);
+                m_render->SetDrawColor(m_colControlOutlineNormal);
+                m_render->DrawShavedCornerRect(Gwk::Rect(0, 0, w, h), bSquared);
             }
 
             virtual void DrawRadioButton(Gwk::Controls::Base* control, bool bSelected,
@@ -200,33 +200,33 @@ namespace Gwk
 
                 // Inside colour
                 if (control->IsHovered())
-                    m_Render->SetDrawColor(Gwk::Color(220, 242, 254, 255));
+                    m_render->SetDrawColor(Gwk::Color(220, 242, 254, 255));
                 else
-                    m_Render->SetDrawColor(m_colControlBright);
-                m_Render->DrawFilledRect(Gwk::Rect(1, 1, rect.w-2, rect.h-2));
+                    m_render->SetDrawColor(m_colControlBright);
+                m_render->DrawFilledRect(Gwk::Rect(1, 1, rect.w-2, rect.h-2));
 
                 // Border
                 if (control->IsHovered())
-                    m_Render->SetDrawColor(Gwk::Color(85, 130, 164, 255));
+                    m_render->SetDrawColor(Gwk::Color(85, 130, 164, 255));
                 else
-                    m_Render->SetDrawColor(m_colControlOutlineLight);
-                m_Render->DrawShavedCornerRect(rect);
-                m_Render->SetDrawColor(Gwk::Color(0,  50,  60, 15));
-                m_Render->DrawFilledRect(Gwk::Rect(rect.x+2, rect.y+2, rect.w-4, rect.h-4));
-                m_Render->DrawFilledRect(Gwk::Rect(rect.x+2, rect.y+2, rect.w*0.3f, rect.h-4));
-                m_Render->DrawFilledRect(Gwk::Rect(rect.x+2, rect.y+2, rect.w-4, rect.h*0.3f));
+                    m_render->SetDrawColor(m_colControlOutlineLight);
+                m_render->DrawShavedCornerRect(rect);
+                m_render->SetDrawColor(Gwk::Color(0,  50,  60, 15));
+                m_render->DrawFilledRect(Gwk::Rect(rect.x+2, rect.y+2, rect.w-4, rect.h-4));
+                m_render->DrawFilledRect(Gwk::Rect(rect.x+2, rect.y+2, rect.w*0.3f, rect.h-4));
+                m_render->DrawFilledRect(Gwk::Rect(rect.x+2, rect.y+2, rect.w-4, rect.h*0.3f));
 
                 if (control->IsHovered())
-                    m_Render->SetDrawColor(Gwk::Color(121, 198, 249, 255));
+                    m_render->SetDrawColor(Gwk::Color(121, 198, 249, 255));
                 else
-                    m_Render->SetDrawColor(Gwk::Color(0, 50, 60, 50));
-                m_Render->DrawFilledRect(Gwk::Rect(rect.x+2, rect.y+3, 1, rect.h-5));
-                m_Render->DrawFilledRect(Gwk::Rect(rect.x+3, rect.y+2, rect.w-5, 1));
+                    m_render->SetDrawColor(Gwk::Color(0, 50, 60, 50));
+                m_render->DrawFilledRect(Gwk::Rect(rect.x+2, rect.y+3, 1, rect.h-5));
+                m_render->DrawFilledRect(Gwk::Rect(rect.x+3, rect.y+2, rect.w-5, 1));
 
                 if (bSelected)
                 {
-                    m_Render->SetDrawColor(Gwk::Color(40, 230, 30, 255));
-                    m_Render->DrawFilledRect(Gwk::Rect(rect.x+2, rect.y+2, rect.w-4, rect.h-4));
+                    m_render->SetDrawColor(Gwk::Color(40, 230, 30, 255));
+                    m_render->DrawFilledRect(Gwk::Rect(rect.x+2, rect.y+2, rect.w-4, rect.h-4));
                 }
             }
 
@@ -237,38 +237,38 @@ namespace Gwk
 
                 // Inside colour
                 if (control->IsHovered())
-                    m_Render->SetDrawColor(Gwk::Color(220, 242, 254, 255));
+                    m_render->SetDrawColor(Gwk::Color(220, 242, 254, 255));
                 else
-                    m_Render->SetDrawColor(m_colControlBright);
-                m_Render->DrawFilledRect(rect);
+                    m_render->SetDrawColor(m_colControlBright);
+                m_render->DrawFilledRect(rect);
 
                 // Border
                 if (control->IsHovered())
-                    m_Render->SetDrawColor(Gwk::Color(85, 130, 164, 255));
+                    m_render->SetDrawColor(Gwk::Color(85, 130, 164, 255));
                 else
-                    m_Render->SetDrawColor(m_colControlOutlineLight);
-                m_Render->DrawLinedRect(rect);
-                m_Render->SetDrawColor(Gwk::Color(0,  50,  60, 15));
-                m_Render->DrawFilledRect(Gwk::Rect(rect.x+2, rect.y+2, rect.w-4, rect.h-4));
-                m_Render->DrawFilledRect(Gwk::Rect(rect.x+2, rect.y+2, rect.w*0.3f, rect.h-4));
-                m_Render->DrawFilledRect(Gwk::Rect(rect.x+2, rect.y+2, rect.w-4, rect.h*0.3f));
+                    m_render->SetDrawColor(m_colControlOutlineLight);
+                m_render->DrawLinedRect(rect);
+                m_render->SetDrawColor(Gwk::Color(0,  50,  60, 15));
+                m_render->DrawFilledRect(Gwk::Rect(rect.x+2, rect.y+2, rect.w-4, rect.h-4));
+                m_render->DrawFilledRect(Gwk::Rect(rect.x+2, rect.y+2, rect.w*0.3f, rect.h-4));
+                m_render->DrawFilledRect(Gwk::Rect(rect.x+2, rect.y+2, rect.w-4, rect.h*0.3f));
 
                 if (control->IsHovered())
-                    m_Render->SetDrawColor(Gwk::Color(121, 198, 249, 255));
+                    m_render->SetDrawColor(Gwk::Color(121, 198, 249, 255));
                 else
-                    m_Render->SetDrawColor(Gwk::Color(0, 50, 60, 50));
-                m_Render->DrawFilledRect(Gwk::Rect(rect.x+2, rect.y+2, 1, rect.h-4));
-                m_Render->DrawFilledRect(Gwk::Rect(rect.x+2, rect.y+2, rect.w-4, 1));
+                    m_render->SetDrawColor(Gwk::Color(0, 50, 60, 50));
+                m_render->DrawFilledRect(Gwk::Rect(rect.x+2, rect.y+2, 1, rect.h-4));
+                m_render->DrawFilledRect(Gwk::Rect(rect.x+2, rect.y+2, rect.w-4, 1));
 
                 if (bDepressed)
                 {
-                    m_Render->SetDrawColor(Color(100, 100, 100, 255));
+                    m_render->SetDrawColor(Color(100, 100, 100, 255));
                     Gwk::Rect r(control->Width()/2-2, control->Height()/2-2, 5, 5);
                     DrawCheck(r);
                 }
                 else if (bSelected)
                 {
-                    m_Render->SetDrawColor(Color(0, 0, 0, 255));
+                    m_render->SetDrawColor(Color(0, 0, 0, 255));
                     Gwk::Rect r(control->Width()/2-2, control->Height()/2-2, 5, 5);
                     DrawCheck(r);
                 }
@@ -282,20 +282,20 @@ namespace Gwk
                 rect.h -= textHeight/2;
                 Gwk::Color m_colDarker         = Gwk::Color(0,  50,  60, 50);
                 Gwk::Color m_colLighter        = Gwk::Color(255, 255, 255, 150);
-                m_Render->SetDrawColor(m_colLighter);
-                m_Render->DrawFilledRect(Gwk::Rect(rect.x+1, rect.y+1, textStart-3, 1));
-                m_Render->DrawFilledRect(Gwk::Rect(rect.x+1+textStart+textWidth, rect.y+1,
+                m_render->SetDrawColor(m_colLighter);
+                m_render->DrawFilledRect(Gwk::Rect(rect.x+1, rect.y+1, textStart-3, 1));
+                m_render->DrawFilledRect(Gwk::Rect(rect.x+1+textStart+textWidth, rect.y+1,
                                                     rect.w-textStart+textWidth-2, 1));
-                m_Render->DrawFilledRect(Gwk::Rect(rect.x+1, (rect.y+rect.h)-1, rect.w-2, 1));
-                m_Render->DrawFilledRect(Gwk::Rect(rect.x+1, rect.y+1, 1, rect.h));
-                m_Render->DrawFilledRect(Gwk::Rect((rect.x+rect.w)-2, rect.y+1, 1, rect.h-1));
-                m_Render->SetDrawColor(m_colDarker);
-                m_Render->DrawFilledRect(Gwk::Rect(rect.x+1, rect.y, textStart-3, 1));
-                m_Render->DrawFilledRect(Gwk::Rect(rect.x+1+textStart+textWidth, rect.y,
+                m_render->DrawFilledRect(Gwk::Rect(rect.x+1, (rect.y+rect.h)-1, rect.w-2, 1));
+                m_render->DrawFilledRect(Gwk::Rect(rect.x+1, rect.y+1, 1, rect.h));
+                m_render->DrawFilledRect(Gwk::Rect((rect.x+rect.w)-2, rect.y+1, 1, rect.h-1));
+                m_render->SetDrawColor(m_colDarker);
+                m_render->DrawFilledRect(Gwk::Rect(rect.x+1, rect.y, textStart-3, 1));
+                m_render->DrawFilledRect(Gwk::Rect(rect.x+1+textStart+textWidth, rect.y,
                                                     rect.w-textStart-textWidth-2, 1));
-                m_Render->DrawFilledRect(Gwk::Rect(rect.x+1, (rect.y+rect.h)-1, rect.w-2, 1));
-                m_Render->DrawFilledRect(Gwk::Rect(rect.x, rect.y+1, 1, rect.h-1));
-                m_Render->DrawFilledRect(Gwk::Rect((rect.x+rect.w)-1, rect.y+1, 1, rect.h-1));
+                m_render->DrawFilledRect(Gwk::Rect(rect.x+1, (rect.y+rect.h)-1, rect.w-2, 1));
+                m_render->DrawFilledRect(Gwk::Rect(rect.x, rect.y+1, 1, rect.h-1));
+                m_render->DrawFilledRect(Gwk::Rect((rect.x+rect.w)-1, rect.y+1, 1, rect.h-1));
             }
 
             virtual void DrawTextBox(Gwk::Controls::Base* control)
@@ -304,19 +304,19 @@ namespace Gwk
                 bool bHasFocus = control->HasFocus();
 
                 // Box inside
-                m_Render->SetDrawColor(Gwk::Color(255, 255, 255, 255));
-                m_Render->DrawFilledRect(Gwk::Rect(1, 1, rect.w-2, rect.h-2));
-                m_Render->SetDrawColor(m_colControlOutlineLight);
-                m_Render->DrawFilledRect(Gwk::Rect(rect.x+1, rect.y, rect.w-2, 1));
-                m_Render->DrawFilledRect(Gwk::Rect(rect.x, rect.y+1, 1, rect.h-2));
-                m_Render->SetDrawColor(m_colControlOutlineLighter);
-                m_Render->DrawFilledRect(Gwk::Rect(rect.x+1, (rect.y+rect.h)-1, rect.w-2, 1));
-                m_Render->DrawFilledRect(Gwk::Rect((rect.x+rect.w)-1, rect.y+1, 1, rect.h-2));
+                m_render->SetDrawColor(Gwk::Color(255, 255, 255, 255));
+                m_render->DrawFilledRect(Gwk::Rect(1, 1, rect.w-2, rect.h-2));
+                m_render->SetDrawColor(m_colControlOutlineLight);
+                m_render->DrawFilledRect(Gwk::Rect(rect.x+1, rect.y, rect.w-2, 1));
+                m_render->DrawFilledRect(Gwk::Rect(rect.x, rect.y+1, 1, rect.h-2));
+                m_render->SetDrawColor(m_colControlOutlineLighter);
+                m_render->DrawFilledRect(Gwk::Rect(rect.x+1, (rect.y+rect.h)-1, rect.w-2, 1));
+                m_render->DrawFilledRect(Gwk::Rect((rect.x+rect.w)-1, rect.y+1, 1, rect.h-2));
 
                 if (bHasFocus)
                 {
-                    m_Render->SetDrawColor(Gwk::Color(50, 200, 255, 150));
-                    m_Render->DrawLinedRect(rect);
+                    m_render->SetDrawColor(Gwk::Color(50, 200, 255, 150));
+                    m_render->DrawLinedRect(rect);
                 }
             }
 
@@ -326,31 +326,31 @@ namespace Gwk
                 bool bHovered = control->IsHovered();
 
                 if (bHovered)
-                    m_Render->SetDrawColor(m_colControlBright);
+                    m_render->SetDrawColor(m_colControlBright);
                 else
-                    m_Render->SetDrawColor(m_colControl);
-                m_Render->DrawFilledRect(Gwk::Rect(1, 1, rect.w-2, rect.h-1));
+                    m_render->SetDrawColor(m_colControl);
+                m_render->DrawFilledRect(Gwk::Rect(1, 1, rect.w-2, rect.h-1));
 
                 if (bHovered)
-                    m_Render->SetDrawColor(m_colControl);
+                    m_render->SetDrawColor(m_colControl);
                 else
-                    m_Render->SetDrawColor(m_colControlDark);
-                m_Render->DrawFilledRect(Gwk::Rect(1, rect.h/2, rect.w-2, rect.h/2-1));
-                m_Render->SetDrawColor(m_colControlBright);
-                m_Render->DrawShavedCornerRect(Gwk::Rect(1, 1, rect.w-2, rect.h));
-                m_Render->SetDrawColor(m_colBorderColor);
-                m_Render->DrawShavedCornerRect(Gwk::Rect(0, 0, rect.w, rect.h));
+                    m_render->SetDrawColor(m_colControlDark);
+                m_render->DrawFilledRect(Gwk::Rect(1, rect.h/2, rect.w-2, rect.h/2-1));
+                m_render->SetDrawColor(m_colControlBright);
+                m_render->DrawShavedCornerRect(Gwk::Rect(1, 1, rect.w-2, rect.h));
+                m_render->SetDrawColor(m_colBorderColor);
+                m_render->DrawShavedCornerRect(Gwk::Rect(0, 0, rect.w, rect.h));
             }
 
             virtual void DrawTabControl(Gwk::Controls::Base* control)
             {
                 Gwk::Rect rect = control->GetRenderBounds();
-                m_Render->SetDrawColor(m_colControl);
-                m_Render->DrawFilledRect(rect);
-                m_Render->SetDrawColor(m_colBorderColor);
-                m_Render->DrawLinedRect(rect);
-                //m_Render->SetDrawColor( m_colControl );
-                //m_Render->DrawFilledRect( CurrentButtonRect );
+                m_render->SetDrawColor(m_colControl);
+                m_render->DrawFilledRect(rect);
+                m_render->SetDrawColor(m_colBorderColor);
+                m_render->DrawLinedRect(rect);
+                //m_render->SetDrawColor( m_colControl );
+                //m_render->DrawFilledRect( CurrentButtonRect );
             }
 
             virtual void DrawWindow(Gwk::Controls::Base* control, int topHeight, bool inFocus)
@@ -359,45 +359,45 @@ namespace Gwk
 
                 // Titlebar
                 if (inFocus)
-                    m_Render->SetDrawColor(Gwk::Color(87, 164, 232, 230));
+                    m_render->SetDrawColor(Gwk::Color(87, 164, 232, 230));
                 else
-                    m_Render->SetDrawColor(Gwk::Color(87*0.70, 164*0.70, 232*0.70, 230));
+                    m_render->SetDrawColor(Gwk::Color(87*0.70, 164*0.70, 232*0.70, 230));
                 int iBorderSize = 5;
-                m_Render->DrawFilledRect(Gwk::Rect(rect.x+1, rect.y+1, rect.w-2, topHeight-1));
-                m_Render->DrawFilledRect(Gwk::Rect(rect.x+1, rect.y+topHeight-1,
+                m_render->DrawFilledRect(Gwk::Rect(rect.x+1, rect.y+1, rect.w-2, topHeight-1));
+                m_render->DrawFilledRect(Gwk::Rect(rect.x+1, rect.y+topHeight-1,
                                                     iBorderSize, rect.h-2-topHeight));
-                m_Render->DrawFilledRect(Gwk::Rect(rect.x+rect.w-iBorderSize, rect.y+topHeight-1,
+                m_render->DrawFilledRect(Gwk::Rect(rect.x+rect.w-iBorderSize, rect.y+topHeight-1,
                                                     iBorderSize, rect.h-2-topHeight));
-                m_Render->DrawFilledRect(Gwk::Rect(rect.x+1, rect.y+rect.h-iBorderSize,
+                m_render->DrawFilledRect(Gwk::Rect(rect.x+1, rect.y+rect.h-iBorderSize,
                                                     rect.w-2, iBorderSize));
                 // Main inner
-                m_Render->SetDrawColor(Gwk::Color(m_colControlDark.r,
+                m_render->SetDrawColor(Gwk::Color(m_colControlDark.r,
                                                    m_colControlDark.g,
                                                    m_colControlDark.b,
                                                    230));
-                m_Render->DrawFilledRect(Gwk::Rect(rect.x + iBorderSize + 1,
+                m_render->DrawFilledRect(Gwk::Rect(rect.x + iBorderSize + 1,
                                                     rect.y + topHeight,
                                                     rect.w - iBorderSize*2 - 2,
                                                     rect.h - topHeight - iBorderSize - 1));
                 // Light inner border
-                m_Render->SetDrawColor(Gwk::Color(255, 255, 255, 100));
-                m_Render->DrawShavedCornerRect(Gwk::Rect(rect.x+1, rect.y+1, rect.w-2, rect.h-2));
+                m_render->SetDrawColor(Gwk::Color(255, 255, 255, 100));
+                m_render->DrawShavedCornerRect(Gwk::Rect(rect.x+1, rect.y+1, rect.w-2, rect.h-2));
                 // Dark line between titlebar and main
-                m_Render->SetDrawColor(m_colBorderColor);
+                m_render->SetDrawColor(m_colBorderColor);
                 // Inside border
-                m_Render->SetDrawColor(m_colControlOutlineNormal);
-                m_Render->DrawLinedRect(Gwk::Rect(rect.x+iBorderSize, rect.y+topHeight-1,
+                m_render->SetDrawColor(m_colControlOutlineNormal);
+                m_render->DrawLinedRect(Gwk::Rect(rect.x+iBorderSize, rect.y+topHeight-1,
                                                    rect.w-10, rect.h-topHeight-(iBorderSize-1)));
                 // Dark outer border
-                m_Render->SetDrawColor(m_colBorderColor);
-                m_Render->DrawShavedCornerRect(Gwk::Rect(rect.x, rect.y, rect.w, rect.h));
+                m_render->SetDrawColor(m_colBorderColor);
+                m_render->DrawShavedCornerRect(Gwk::Rect(rect.x, rect.y, rect.w, rect.h));
             }
 
             virtual void DrawHighlight(Gwk::Controls::Base* control)
             {
                 Gwk::Rect rect = control->GetRenderBounds();
-                m_Render->SetDrawColor(Gwk::Color(255, 100, 255, 255));
-                m_Render->DrawFilledRect(rect);
+                m_render->SetDrawColor(Gwk::Color(255, 100, 255, 255));
+                m_render->DrawFilledRect(rect);
             }
 
             virtual void DrawScrollBar(Gwk::Controls::Base* control, bool isHorizontal,
@@ -406,10 +406,10 @@ namespace Gwk
                 Gwk::Rect rect = control->GetRenderBounds();
 
                 if (bDepressed)
-                    m_Render->SetDrawColor(m_colControlDarker);
+                    m_render->SetDrawColor(m_colControlDarker);
                 else
-                    m_Render->SetDrawColor(m_colControlBright);
-                m_Render->DrawFilledRect(rect);
+                    m_render->SetDrawColor(m_colControlBright);
+                m_render->DrawFilledRect(rect);
             }
 
             virtual void DrawScrollBarBar(Controls::Base* control, bool bDepressed, bool isHovered,
@@ -422,11 +422,11 @@ namespace Gwk
             virtual void DrawTabTitleBar(Gwk::Controls::Base* control)
             {
                 Gwk::Rect rect = control->GetRenderBounds();
-                m_Render->SetDrawColor(Gwk::Color(177, 193, 214, 255));
-                m_Render->DrawFilledRect(rect);
-                m_Render->SetDrawColor(m_colBorderColor);
+                m_render->SetDrawColor(Gwk::Color(177, 193, 214, 255));
+                m_render->DrawFilledRect(rect);
+                m_render->SetDrawColor(m_colBorderColor);
                 rect.h += 1;
-                m_Render->DrawLinedRect(rect);
+                m_render->DrawLinedRect(rect);
             }
 
             virtual void DrawProgressBar(Gwk::Controls::Base* control, bool isHorizontal,
@@ -438,42 +438,42 @@ namespace Gwk
                 if (isHorizontal)
                 {
                     //Background
-                    m_Render->SetDrawColor(m_colControlDark);
-                    m_Render->DrawFilledRect(Gwk::Rect(1, 1, rect.w-2, rect.h-2));
+                    m_render->SetDrawColor(m_colControlDark);
+                    m_render->DrawFilledRect(Gwk::Rect(1, 1, rect.w-2, rect.h-2));
                     //Right half
-                    m_Render->SetDrawColor(FillColour);
-                    m_Render->DrawFilledRect(Gwk::Rect(1, 1, rect.w*progress-2, rect.h-2));
-                    m_Render->SetDrawColor(Gwk::Color(255, 255, 255, 150));
-                    m_Render->DrawFilledRect(Gwk::Rect(1, 1, rect.w-2, rect.h*0.45f));
+                    m_render->SetDrawColor(FillColour);
+                    m_render->DrawFilledRect(Gwk::Rect(1, 1, rect.w*progress-2, rect.h-2));
+                    m_render->SetDrawColor(Gwk::Color(255, 255, 255, 150));
+                    m_render->DrawFilledRect(Gwk::Rect(1, 1, rect.w-2, rect.h*0.45f));
                 }
                 else
                 {
                     //Background
-                    m_Render->SetDrawColor(m_colControlDark);
-                    m_Render->DrawFilledRect(Gwk::Rect(1, 1, rect.w-2, rect.h-2));
+                    m_render->SetDrawColor(m_colControlDark);
+                    m_render->DrawFilledRect(Gwk::Rect(1, 1, rect.w-2, rect.h-2));
                     //Top half
-                    m_Render->SetDrawColor(FillColour);
-                    m_Render->DrawFilledRect(Gwk::Rect(1, 1+(rect.h*(1-progress)),
+                    m_render->SetDrawColor(FillColour);
+                    m_render->DrawFilledRect(Gwk::Rect(1, 1+(rect.h*(1-progress)),
                                                         rect.w-2, rect.h*progress-2));
-                    m_Render->SetDrawColor(Gwk::Color(255, 255, 255, 150));
-                    m_Render->DrawFilledRect(Gwk::Rect(1, 1, rect.w*0.45f, rect.h-2));
+                    m_render->SetDrawColor(Gwk::Color(255, 255, 255, 150));
+                    m_render->DrawFilledRect(Gwk::Rect(1, 1, rect.w*0.45f, rect.h-2));
                 }
 
-                m_Render->SetDrawColor(Gwk::Color(255, 255, 255, 150));
-                m_Render->DrawShavedCornerRect(Gwk::Rect(1, 1, rect.w-2, rect.h-2));
-                m_Render->SetDrawColor(Gwk::Color(255, 255, 255, 70));
-                m_Render->DrawShavedCornerRect(Gwk::Rect(2, 2, rect.w-4, rect.h-4));
-                m_Render->SetDrawColor(m_colBorderColor);
-                m_Render->DrawShavedCornerRect(rect);
+                m_render->SetDrawColor(Gwk::Color(255, 255, 255, 150));
+                m_render->DrawShavedCornerRect(Gwk::Rect(1, 1, rect.w-2, rect.h-2));
+                m_render->SetDrawColor(Gwk::Color(255, 255, 255, 70));
+                m_render->DrawShavedCornerRect(Gwk::Rect(2, 2, rect.w-4, rect.h-4));
+                m_render->SetDrawColor(m_colBorderColor);
+                m_render->DrawShavedCornerRect(rect);
             }
 
             virtual void DrawListBox(Gwk::Controls::Base* control)
             {
                 Gwk::Rect rect = control->GetRenderBounds();
-                m_Render->SetDrawColor(m_colControlBright);
-                m_Render->DrawFilledRect(rect);
-                m_Render->SetDrawColor(m_colBorderColor);
-                m_Render->DrawLinedRect(rect);
+                m_render->SetDrawColor(m_colControlBright);
+                m_render->DrawFilledRect(rect);
+                m_render->SetDrawColor(m_colBorderColor);
+                m_render->DrawLinedRect(rect);
             }
 
             virtual void DrawListBoxLine(Gwk::Controls::Base* control, bool bSelected, bool bEven)
@@ -482,13 +482,13 @@ namespace Gwk
 
                 if (bSelected)
                 {
-                    m_Render->SetDrawColor(m_colHighlightBorder);
-                    m_Render->DrawFilledRect(rect);
+                    m_render->SetDrawColor(m_colHighlightBorder);
+                    m_render->DrawFilledRect(rect);
                 }
                 else if (control->IsHovered())
                 {
-                    m_Render->SetDrawColor(m_colHighlightBG);
-                    m_Render->DrawFilledRect(rect);
+                    m_render->SetDrawColor(m_colHighlightBG);
+                    m_render->DrawFilledRect(rect);
                 }
             }
 
@@ -508,10 +508,10 @@ namespace Gwk
                     rect.w -= rect.w*0.8f;
                 }
 
-                m_Render->SetDrawColor(m_colBGDark);
-                m_Render->DrawFilledRect(rect);
-                m_Render->SetDrawColor(m_colControlDarker);
-                m_Render->DrawLinedRect(rect);
+                m_render->SetDrawColor(m_colBGDark);
+                m_render->DrawFilledRect(rect);
+                m_render->SetDrawColor(m_colControlDarker);
+                m_render->DrawLinedRect(rect);
             }
 
             virtual void DrawComboBox(Gwk::Controls::Base* control, bool bIsDown, bool bIsMenuOpen)
@@ -533,12 +533,12 @@ namespace Gwk
 
                 for (int i = 0; i < rect.w/2; i++)
                 {
-                    m_Render->SetDrawColor(Gwk::Color(0, 0, 0, 255));
+                    m_render->SetDrawColor(Gwk::Color(0, 0, 0, 255));
 
                     if (!skip)
                     {
-                        m_Render->DrawPixel(rect.x+(i*2), rect.y);
-                        m_Render->DrawPixel(rect.x+(i*2), rect.y+rect.h-1);
+                        m_render->DrawPixel(rect.x+(i*2), rect.y);
+                        m_render->DrawPixel(rect.x+(i*2), rect.y+rect.h-1);
                     }
                     else
                     {
@@ -550,12 +550,12 @@ namespace Gwk
 
                 for (int i = 0; i < rect.h/2; i++)
                 {
-                    m_Render->SetDrawColor(Gwk::Color(0, 0, 0, 255));
+                    m_render->SetDrawColor(Gwk::Color(0, 0, 0, 255));
 
                     if (!skip)
                     {
-                        m_Render->DrawPixel(rect.x, rect.y+i*2);
-                        m_Render->DrawPixel(rect.x+rect.w-1, rect.y+i*2);
+                        m_render->DrawPixel(rect.x, rect.y+i*2);
+                        m_render->DrawPixel(rect.x+rect.w-1, rect.y+i*2);
                     }
                     else
                     {
@@ -571,17 +571,17 @@ namespace Gwk
                 rct.y -= 3;
                 rct.w += 6;
                 rct.h += 6;
-                m_Render->SetDrawColor(m_colToolTipBackground);
-                m_Render->DrawFilledRect(rct);
-                m_Render->SetDrawColor(m_colToolTipBorder);
-                m_Render->DrawLinedRect(rct);
+                m_render->SetDrawColor(m_colToolTipBackground);
+                m_render->DrawFilledRect(rct);
+                m_render->SetDrawColor(m_colToolTipBorder);
+                m_render->DrawLinedRect(rct);
             }
 
             virtual void DrawScrollButton(Gwk::Controls::Base* control, int iDirection,
                                           bool bDepressed, bool bHovered, bool bDisabled)
             {
                 DrawButton(control, bDepressed, false, false);
-                m_Render->SetDrawColor(Gwk::Color(0, 0, 0, 240));
+                m_render->SetDrawColor(Gwk::Color(0, 0, 0, 240));
                 Gwk::Rect r(control->Width()/2-2, control->Height()/2-2, 5, 5);
 
                 if (iDirection == Gwk::Docking::Top)
@@ -598,7 +598,7 @@ namespace Gwk
                                             bool bDown, bool bOpen, bool bDisabled)
             {
                 //DrawButton( control->Width(), control->Height(), bDepressed, false, true );
-                m_Render->SetDrawColor(Gwk::Color(0, 0, 0, 240));
+                m_render->SetDrawColor(Gwk::Color(0, 0, 0, 240));
                 Gwk::Rect r(control->Width()/2-2, control->Height()/2-2, 5, 5);
                 DrawArrowDown(r);
             }
@@ -607,7 +607,7 @@ namespace Gwk
                                                  bool bUp)
             {
                 //DrawButton( control->Width(), control->Height(), bDepressed, false, true );
-                m_Render->SetDrawColor(Gwk::Color(0, 0, 0, 240));
+                m_render->SetDrawColor(Gwk::Color(0, 0, 0, 240));
                 Gwk::Rect r(control->Width()/2-2, control->Height()/2-2, 5, 5);
 
                 if (bUp)
@@ -623,19 +623,19 @@ namespace Gwk
                 rect.y += 2;
                 rect.w -= 4;
                 rect.h -= 4;
-                m_Render->SetDrawColor(m_colControlBright);
-                m_Render->DrawFilledRect(rect);
-                m_Render->SetDrawColor(m_colBorderColor);
-                m_Render->DrawLinedRect(rect);
-                m_Render->SetDrawColor(m_colBorderColor);
+                m_render->SetDrawColor(m_colControlBright);
+                m_render->DrawFilledRect(rect);
+                m_render->SetDrawColor(m_colBorderColor);
+                m_render->DrawLinedRect(rect);
+                m_render->SetDrawColor(m_colBorderColor);
 
                 if (!bOpen)   // ! because the button shows intention, not the current state
-                    m_Render->DrawFilledRect(Gwk::Rect(rect.x+rect.w/2,
+                    m_render->DrawFilledRect(Gwk::Rect(rect.x+rect.w/2,
                                                         rect.y+2,
                                                         1,
                                                         rect.h-4));
 
-                m_Render->DrawFilledRect(Gwk::Rect(rect.x+2,
+                m_render->DrawFilledRect(Gwk::Rect(rect.x+2,
                                                     rect.y+rect.h/2,
                                                     rect.w-4,
                                                     1));
@@ -644,10 +644,10 @@ namespace Gwk
             virtual void DrawTreeControl(Controls::Base* control)
             {
                 Gwk::Rect rect = control->GetRenderBounds();
-                m_Render->SetDrawColor(m_colControlBright);
-                m_Render->DrawFilledRect(rect);
-                m_Render->SetDrawColor(m_colBorderColor);
-                m_Render->DrawLinedRect(rect);
+                m_render->SetDrawColor(m_colControlBright);
+                m_render->DrawFilledRect(rect);
+                m_render->SetDrawColor(m_colBorderColor);
+                m_render->DrawLinedRect(rect);
             }
 
             void DrawTreeNode(Controls::Base* ctrl, bool bOpen, bool bSelected, int iLabelHeight,

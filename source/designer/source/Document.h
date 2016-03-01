@@ -15,7 +15,7 @@ class Document : public Controls::Base
 {
 	GWK_CONTROL( Document, Controls::Base );
 
-	virtual void Initialize( Controls::TabButton* pTab );
+	virtual void Initialize( Controls::TabButton* tab );
 
 	virtual void DoSaveAs( ImportExport::Base* exporter );
 	virtual void DoSave( ImportExport::Base* exporter );
@@ -28,12 +28,12 @@ protected:
 	void DoSaveFromDialog( Event::Info info );
 	void OnHierachyChanged( Event::Info info );
 
-	Controls::TabButton*	m_pTab;
-	DocumentCanvas*			m_pCanvas;
-	Hierarchy*				m_pHierarchy;
+	Controls::TabButton*	m_tab;
+	DocumentCanvas*			m_canvas;
+	Hierarchy*				m_hierarchy;
 
 	Gwk::String			m_strFilename;
 
-	ImportExport::Base*		m_Exporter;
-	ImportExport::Base*		m_Importer;
+	ImportExport::Base*		m_exporter;
+	ImportExport::Base*		m_importer;
 };

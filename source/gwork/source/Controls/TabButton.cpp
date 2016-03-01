@@ -19,8 +19,8 @@ using namespace Gwk::Controls;
 
 GWK_CONTROL_CONSTRUCTOR(TabButton)
 {
-    m_Page = NULL;
-    m_Control = NULL;
+    m_page = NULL;
+    m_control = NULL;
     DragAndDrop_SetPackage(true, "TabButtonMove");
     SetAlignment(Docking::Top|Docking::Left);
     SetTextPadding(Padding(2, 2, 2, 2));
@@ -28,7 +28,7 @@ GWK_CONTROL_CONSTRUCTOR(TabButton)
 
 void TabButton::Layout(Skin::Base* skin)
 {
-    int iParentDock = m_Control->GetTabStrip()->GetDock();
+    int iParentDock = m_control->GetTabStrip()->GetDock();
 
     if (iParentDock == Docking::Bottom)
         SetPadding(Padding(3, 1, 5, 4));
@@ -42,23 +42,23 @@ void TabButton::Layout(Skin::Base* skin)
 
 void TabButton::Render(Skin::Base* skin)
 {
-    skin->DrawTabButton(this, IsActive(), m_Control->GetTabStrip()->GetDock());
+    skin->DrawTabButton(this, IsActive(), m_control->GetTabStrip()->GetDock());
 }
 
 void TabButton::SetTabControl(TabControl* ctrl)
 {
-    if (m_Control == ctrl)
+    if (m_control == ctrl)
         return;
 
-    if (m_Control)
-        m_Control->OnLoseTab(this);
+    if (m_control)
+        m_control->OnLoseTab(this);
 
-    m_Control = ctrl;
+    m_control = ctrl;
 }
 
 bool TabButton::DragAndDrop_ShouldStartDrag()
 {
-    return m_Control->DoesAllowDrag();
+    return m_control->DoesAllowDrag();
 }
 
 bool TabButton::OnKeyUp(bool bDown)
@@ -78,13 +78,13 @@ bool TabButton::OnKeyLeft(bool bDown)
     if (bDown)
     {
         Base::List::reverse_iterator it = std::find(
-            m_Parent->Children.rbegin(), m_Parent->Children.rend(), this);
+            m_parent->Children.rbegin(), m_parent->Children.rend(), this);
 
-        if (it != m_Parent->Children.rend() && (++it != m_Parent->Children.rend()))
+        if (it != m_parent->Children.rend() && (++it != m_parent->Children.rend()))
         {
-            Base* pNextTab = *it;
-            GetTabControl()->OnTabPressed(pNextTab);
-            Gwk::KeyboardFocus = pNextTab;
+            Base* nextTab = *it;
+            GetTabControl()->OnTabPressed(nextTab);
+            Gwk::KeyboardFocus = nextTab;
         }
     }
 
@@ -95,14 +95,14 @@ bool TabButton::OnKeyRight(bool bDown)
 {
     if (bDown)
     {
-        Base::List::iterator it = std::find(m_Parent->Children.begin(),
-                                            m_Parent->Children.end(), this);
+        Base::List::iterator it = std::find(m_parent->Children.begin(),
+                                            m_parent->Children.end(), this);
 
-        if (it != m_Parent->Children.end() && (++it != m_Parent->Children.end()))
+        if (it != m_parent->Children.end() && (++it != m_parent->Children.end()))
         {
-            Base* pNextTab = *it;
-            GetTabControl()->OnTabPressed(pNextTab);
-            Gwk::KeyboardFocus = pNextTab;
+            Base* nextTab = *it;
+            GetTabControl()->OnTabPressed(nextTab);
+            Gwk::KeyboardFocus = nextTab;
         }
     }
 

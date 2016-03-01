@@ -48,10 +48,10 @@ namespace Gwk
 
             virtual ToolBarButton* Add(const String& Text, const String& Icon)
             {
-                ToolBarButton* pButton = new ToolBarButton(this);
-                pButton->SetToolTip(Text);
-                pButton->SetImage(Icon);
-                return pButton;
+                ToolBarButton* button = new ToolBarButton(this);
+                button->SetToolTip(Text);
+                button->SetImage(Icon);
+                return button;
             }
 
         };

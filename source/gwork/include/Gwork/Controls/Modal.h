@@ -28,7 +28,7 @@ namespace Gwk
                 SetBounds(0, 0, GetParent()->Width(), GetParent()->Height());
                 
                 // RecurseLayout() may not be called before Position is set.
-                m_InnerBounds = m_Bounds;
+                m_innerBounds = m_bounds;
             }
 
             virtual void Layout(Skin::Base* /*skin*/) override

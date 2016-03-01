@@ -23,12 +23,12 @@ namespace Gwk
             {
                 GWK_CONTROL_INLINE(Folder, Property::Text)
                 {
-                    Controls::Button* pButton = new Controls::Button(this);
-                    pButton->Dock(Docking::Right);
-                    pButton->SetText("...");
-                    pButton->SetWidth(20);
-                    pButton->onPress.Add(this, &ThisClass::OnButtonPress);
-                    pButton->SetMargin(Margin(1, 1, 1, 2));
+                    Controls::Button* button = new Controls::Button(this);
+                    button->Dock(Docking::Right);
+                    button->SetText("...");
+                    button->SetWidth(20);
+                    button->onPress.Add(this, &ThisClass::OnButtonPress);
+                    button->SetMargin(Margin(1, 1, 1, 2));
                     m_strDialogName = "Find Folder";
                 }
 
@@ -36,9 +36,9 @@ namespace Gwk
                 {
                     String folder;
                     if (Dialogs::FolderOpen(true, m_strDialogName,
-                                            m_TextBox->GetText(), folder))
+                                            m_textBox->GetText(), folder))
                     {
-                        m_TextBox->SetText(folder);
+                        m_textBox->SetText(folder);
                     }
                 }
 

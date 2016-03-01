@@ -80,17 +80,17 @@ public:
             // around
             // for the lifetime of the label. Rethink, or is that ideal?
             //
-            m_Font.facename = "OpenSans";// TODO: "Comic Sans MS";
-            m_Font.size = 25;
+            m_font.facename = "OpenSans";// TODO: "Comic Sans MS";
+            m_font.size = 25;
             Gwk::Controls::Label* label = new Gwk::Controls::Label(this);
             label->SetText("Custom Font (Comic Sans 25)");
-            label->SetFont(&m_Font);
+            label->SetFont(&m_font);
             label->SizeToContents();
             label->SetPos(10, 170);
         }
     }
 
-    Gwk::Font m_Font;
+    Gwk::Font m_font;
 };
 
 

@@ -25,7 +25,7 @@ namespace Gwk
         {
         public:
             
-            AllegroCTT() : m_oldTarget(NULL) {}
+            AllegroCTT() : m_oSWindowldTarget(NULL) {}
             ~AllegroCTT() {}
             
             void Initialize() {}
@@ -53,7 +53,7 @@ namespace Gwk
             typedef std::map< CacheHandle, CacheEntry > CacheMap;
             CacheMap m_cache;
             
-            ALLEGRO_BITMAP *m_oldTarget;
+            ALLEGRO_BITMAP *m_oSWindowldTarget;
         };
 
         void AllegroCTT::ShutDown()
@@ -80,8 +80,8 @@ namespace Gwk
             if (it != m_cache.end())
             {
                 // Prepare for rendering.
-                assert(m_oldTarget==NULL);
-                m_oldTarget = al_get_target_bitmap();
+                assert(m_oSWindowldTarget==NULL);
+                m_oSWindowldTarget = al_get_target_bitmap();
                 al_set_target_bitmap((*it).second.m_bitmap);
                 al_clear_to_color(al_map_rgb_f(1.f,1.f,1.f));
             }
@@ -90,8 +90,8 @@ namespace Gwk
         void AllegroCTT::FinishCacheTexture(CacheHandle control)
         {
             // Prepare for rendering.
-            al_set_target_bitmap(m_oldTarget);
-            m_oldTarget = NULL;
+            al_set_target_bitmap(m_oSWindowldTarget);
+            m_oSWindowldTarget = NULL;
         }
         
         void AllegroCTT::DrawCachedControlTexture(CacheHandle control)
@@ -121,7 +121,7 @@ namespace Gwk
 
         void Allegro::SetDrawColor(Gwk::Color color)
         {
-            m_Color = al_map_rgba(color.r, color.g, color.b, color.a);
+            m_color = al_map_rgba(color.r, color.g, color.b, color.a);
         }
 
         void Allegro::LoadFont(Gwk::Font* font)
@@ -138,33 +138,33 @@ namespace Gwk
             font->data = afont;
         }
 
-        void Allegro::FreeFont(Gwk::Font* pFont)
+        void Allegro::FreeFont(Gwk::Font* font)
         {
-            if (pFont->data)
+            if (font->data)
             {
-                al_destroy_font((ALLEGRO_FONT*)pFont->data);
-                pFont->data = NULL;
+                al_destroy_font((ALLEGRO_FONT*)font->data);
+                font->data = NULL;
             }
         }
 
-        void Allegro::RenderText(Gwk::Font* pFont, Gwk::Point pos,
+        void Allegro::RenderText(Gwk::Font* font, Gwk::Point pos,
                                  const Gwk::String& text)
         {
-            ALLEGRO_FONT *afont = (ALLEGRO_FONT*)pFont->data;
+            ALLEGRO_FONT *afont = (ALLEGRO_FONT*)font->data;
             Translate(pos.x, pos.y);
-            al_draw_text(afont, m_Color, pos.x, pos.y, ALLEGRO_ALIGN_LEFT, text.c_str());
+            al_draw_text(afont, m_color, pos.x, pos.y, ALLEGRO_ALIGN_LEFT, text.c_str());
         }
 
-        Gwk::Point Allegro::MeasureText(Gwk::Font* pFont, const Gwk::String& text)
+        Gwk::Point Allegro::MeasureText(Gwk::Font* font, const Gwk::String& text)
         {
-            ALLEGRO_FONT* afont = (ALLEGRO_FONT*)pFont->data;
+            ALLEGRO_FONT* afont = (ALLEGRO_FONT*)font->data;
 
             // If the font doesn't exist, or the font size should be changed
-            if (!afont || pFont->realsize != pFont->size*Scale())
+            if (!afont || font->realsize != font->size*Scale())
             {
-                FreeFont(pFont);
-                LoadFont(pFont);
-                afont = (ALLEGRO_FONT*)pFont->data;
+                FreeFont(font);
+                LoadFont(font);
+                afont = (ALLEGRO_FONT*)font->data;
             }
 
             if (!afont)
@@ -186,58 +186,58 @@ namespace Gwk
                                       al_get_bitmap_width(targ), al_get_bitmap_height(targ));
         }
 
-        void Allegro::LoadTexture(Gwk::Texture* pTexture)
+        void Allegro::LoadTexture(Gwk::Texture* texture)
         {
-            if (!pTexture)
+            if (!texture)
                 return;
 
-            if (pTexture->data)
-                FreeTexture(pTexture);
+            if (texture->data)
+                FreeTexture(texture);
 
-            ALLEGRO_BITMAP* bmp = al_load_bitmap(pTexture->name.c_str());
+            ALLEGRO_BITMAP* bmp = al_load_bitmap(texture->name.c_str());
 
             if (bmp)
             {
-                pTexture->data = bmp;
-                pTexture->width = al_get_bitmap_width(bmp);
-                pTexture->height = al_get_bitmap_height(bmp);
-                pTexture->failed = false;
+                texture->data = bmp;
+                texture->width = al_get_bitmap_width(bmp);
+                texture->height = al_get_bitmap_height(bmp);
+                texture->failed = false;
             }
             else
             {
-                pTexture->data = NULL;
-                pTexture->failed = true;
+                texture->data = NULL;
+                texture->failed = true;
             }
         }
 
-        void Allegro::FreeTexture(Gwk::Texture* pTexture)
+        void Allegro::FreeTexture(Gwk::Texture* texture)
         {
-            al_destroy_bitmap((ALLEGRO_BITMAP*)pTexture->data);
-            pTexture->data = NULL;
+            al_destroy_bitmap((ALLEGRO_BITMAP*)texture->data);
+            texture->data = NULL;
         }
 
-        void Allegro::DrawTexturedRect(Gwk::Texture* pTexture, Gwk::Rect rect,
+        void Allegro::DrawTexturedRect(Gwk::Texture* texture, Gwk::Rect rect,
                                        float u1, float v1,
                                        float u2, float v2)
         {
-            ALLEGRO_BITMAP* bmp = (ALLEGRO_BITMAP*)pTexture->data;
+            ALLEGRO_BITMAP* bmp = (ALLEGRO_BITMAP*)texture->data;
 
             if (!bmp)
                 return DrawMissingImage(rect);
 
             Translate(rect);
-            const unsigned int w = pTexture->width;
-            const unsigned int h = pTexture->height;
+            const unsigned int w = texture->width;
+            const unsigned int h = texture->height;
             al_draw_scaled_bitmap(bmp,
                                   u1*w, v1*h, (u2-u1)*w, (v2-v1)*h,  // source
                                   rect.x, rect.y, rect.w, rect.h,    // destination
                                   0);
         }
 
-        Gwk::Color Allegro::PixelColour(Gwk::Texture* pTexture, unsigned int x, unsigned int y,
+        Gwk::Color Allegro::PixelColour(Gwk::Texture* texture, unsigned int x, unsigned int y,
                                          const Gwk::Color& col_default)
         {
-            ALLEGRO_BITMAP* bmp = (ALLEGRO_BITMAP*)pTexture->data;
+            ALLEGRO_BITMAP* bmp = (ALLEGRO_BITMAP*)texture->data;
 
             if (!bmp)
                 return col_default;
@@ -252,7 +252,7 @@ namespace Gwk
         {
             Translate(rect);
             const float fx = rect.x+0.5f, fy = rect.y+0.5f;
-            al_draw_filled_rectangle(fx, fy, fx+rect.w, fy+rect.h, m_Color);
+            al_draw_filled_rectangle(fx, fy, fx+rect.w, fy+rect.h, m_color);
         }
 
         void Allegro::DrawLinedRect(Gwk::Rect rect)
@@ -260,7 +260,7 @@ namespace Gwk
             Translate(rect);
             // Width of 0 draws a line, not a rect of width 1.
             const float fx = rect.x+0.5f, fy = rect.y+0.5f;
-            al_draw_rectangle(fx, fy, fx+rect.w, fy+rect.h, m_Color, 0.f);
+            al_draw_rectangle(fx, fy, fx+rect.w, fy+rect.h, m_color, 0.f);
         }
 
         void Allegro::DrawShavedCornerRect(Gwk::Rect rect, bool bSlight)
@@ -269,7 +269,7 @@ namespace Gwk
             rect.w -= 1;
             rect.h -= 1;
             
-#define SET_VERT(I, X,Y)            vtx[I].x = (X), vtx[I].y = (Y), vtx[I].color = m_Color
+#define SET_VERT(I, X,Y)            vtx[I].x = (X), vtx[I].y = (Y), vtx[I].color = m_color
 #define ADD_LINE(I, X0,Y0, X1,Y1)   SET_VERT(I, X0,Y0); SET_VERT(I+1, X1,Y1)
 
             const float fx = rect.x+0.5f, fy = rect.y+0.5f;
@@ -317,21 +317,21 @@ namespace Gwk
         //
         //    void Allegro::DrawPixel(int x, int y)
         //    {
-        //        al_put_pixel(x+0.5f, y+0.5f, m_Color);
+        //        al_put_pixel(x+0.5f, y+0.5f, m_color);
         //    }
 
-        bool Allegro::BeginContext(Gwk::WindowProvider* pWindow)
+        bool Allegro::BeginContext(Gwk::WindowProvider* window)
         {
             al_clear_to_color(al_map_rgba_f(0.f, 0.f, 0.f, 0.f));
             return true;
         }
 
-        bool Allegro::EndContext(Gwk::WindowProvider* pWindow)
+        bool Allegro::EndContext(Gwk::WindowProvider* window)
         {
             return true;
         }
 
-        bool Allegro::PresentContext(Gwk::WindowProvider* pWindow)
+        bool Allegro::PresentContext(Gwk::WindowProvider* window)
         {
             al_flip_display();
             return true;

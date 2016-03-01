@@ -30,7 +30,7 @@ namespace Gwk
         {
         public:
 
-            GDIPlus(HWND pHWND = NULL);
+            GDIPlus(HWND hWND = NULL);
             ~GDIPlus();
 
             virtual void Begin();
@@ -40,20 +40,20 @@ namespace Gwk
 
             virtual void DrawFilledRect(Gwk::Rect rect);
 
-            virtual void LoadFont(Gwk::Font* pFont);
-            virtual void FreeFont(Gwk::Font* pFont);
-            virtual void RenderText(Gwk::Font* pFont, Gwk::Point pos,
+            virtual void LoadFont(Gwk::Font* font);
+            virtual void FreeFont(Gwk::Font* font);
+            virtual void RenderText(Gwk::Font* font, Gwk::Point pos,
                                     const Gwk::String& text);
-            virtual Gwk::Point MeasureText(Gwk::Font* pFont, const Gwk::String& text);
+            virtual Gwk::Point MeasureText(Gwk::Font* font, const Gwk::String& text);
 
             void StartClip();
             void EndClip();
 
-            void DrawTexturedRect(Gwk::Texture* pTexture, Gwk::Rect pTargetRect, float u1 = 0.0f,
+            void DrawTexturedRect(Gwk::Texture* texture, Gwk::Rect targetRect, float u1 = 0.0f,
                                   float v1 = 0.0f, float u2 = 1.0f, float v2 = 1.0f);
-            void        LoadTexture(Gwk::Texture* pTexture);
-            void        FreeTexture(Gwk::Texture* pTexture);
-            Gwk::Color PixelColour(Gwk::Texture* pTexture, unsigned int x, unsigned int y,
+            void        LoadTexture(Gwk::Texture* texture);
+            void        FreeTexture(Gwk::Texture* texture);
+            Gwk::Color PixelColour(Gwk::Texture* texture, unsigned int x, unsigned int y,
                                     const Gwk::Color& col_default);
 
         public:
@@ -62,21 +62,21 @@ namespace Gwk
             // Self Initialization
             //
 
-            virtual bool InitializeContext(Gwk::WindowProvider* pWindow);
-            virtual bool ShutdownContext(Gwk::WindowProvider* pWindow);
-            virtual bool PresentContext(Gwk::WindowProvider* pWindow);
-            virtual bool ResizedContext(Gwk::WindowProvider* pWindow, int w, int h);
-            virtual bool BeginContext(Gwk::WindowProvider* pWindow);
-            virtual bool EndContext(Gwk::WindowProvider* pWindow);
+            virtual bool InitializeContext(Gwk::WindowProvider* window);
+            virtual bool ShutdownContext(Gwk::WindowProvider* window);
+            virtual bool PresentContext(Gwk::WindowProvider* window);
+            virtual bool ResizedContext(Gwk::WindowProvider* window, int w, int h);
+            virtual bool BeginContext(Gwk::WindowProvider* window);
+            virtual bool EndContext(Gwk::WindowProvider* window);
 
         protected:
 
-            int m_iWidth;
-            int m_iHeight;
+            int m_width;
+            int m_height;
 
-            Gdiplus::Color m_Colour;
+            Gdiplus::Color m_colour;
 
-            HWND m_HWND;
+            HWND m_hWND;
             HDC m_hDC;
             ULONG_PTR m_gdiplusToken;
 
@@ -88,7 +88,7 @@ namespace Gwk
         {
         public:
 
-            GDIPlusBuffered(HWND pHWND = NULL);
+            GDIPlusBuffered(HWND hWND = NULL);
             ~GDIPlusBuffered();
 
             virtual void Begin();
@@ -99,7 +99,7 @@ namespace Gwk
             void CreateBackbuffer();
             void DestroyBackbuffer();
 
-            Gdiplus::Bitmap*            m_Bitmap;
+            Gdiplus::Bitmap*            m_bitmap;
 
         };
 

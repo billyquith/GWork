@@ -18,11 +18,11 @@ using namespace Gwk::Controls;
 
 GWK_CONTROL_CONSTRUCTOR(DockedTabControl)
 {
-    m_WindowControl = NULL;
+    m_windowControl = NULL;
     Dock(Docking::Fill);
-    m_pTitleBar = new TabTitleBar(this);
-    m_pTitleBar->Dock(Docking::Top);
-    m_pTitleBar->SetHidden(true);
+    m_titleBar = new TabTitleBar(this);
+    m_titleBar->Dock(Docking::Top);
+    m_titleBar->SetHidden(true);
     SetAllowReorder(true);
 }
 
@@ -38,12 +38,12 @@ void DockedTabControl::UpdateTitleBar()
     if (!GetCurrentButton())
         return;
 
-    m_pTitleBar->UpdateFromTab(GetCurrentButton());
+    m_titleBar->UpdateFromTab(GetCurrentButton());
 }
 
-void DockedTabControl::DragAndDrop_StartDragging(Gwk::DragAndDrop::Package* pPackage, int x, int y)
+void DockedTabControl::DragAndDrop_StartDragging(Gwk::DragAndDrop::Package* package, int x, int y)
 {
-    ParentClass::DragAndDrop_StartDragging(pPackage, x, y);
+    ParentClass::DragAndDrop_StartDragging(package, x, y);
     SetHidden(true);
     // This hiding our parent thing is kind of lousy.
     GetParent()->SetHidden(true);
@@ -60,32 +60,32 @@ void DockedTabControl::DragAndDrop_EndDragging(bool bSuccess, int /*x*/, int /*y
      *  if ( !bSuccess )
      *  {
      *      // Create our window control
-     *      if ( !m_WindowControl )
+     *      if ( !m_windowControl )
      *      {
-     *          m_WindowControl = new WindowControl( GetCanvas() );
-     *          m_WindowControl->SetBounds( x, y, Width(), Height() );
+     *          m_windowControl = new WindowControl( GetCanvas() );
+     *          m_windowControl->SetBounds( x, y, Width(), Height() );
      *      }
      *
-     *      m_WindowControl->SetPosition( x, y );
-     *      SetParent( m_WindowControl );
+     *      m_windowControl->SetPosition( x, y );
+     *      SetParent( m_windowControl );
      *      SetPosition( 0, 0 );
      *      Dock( Docking::Fill );
      *  }
      */
 }
 
-void DockedTabControl::MoveTabsTo(DockedTabControl* pTarget)
+void DockedTabControl::MoveTabsTo(DockedTabControl* target)
 {
     Base::List Children = GetTabStrip()->Children;
 
     for (Base::List::iterator iter = Children.begin(); iter != Children.end(); ++iter)
     {
-        TabButton* pButton = gwk_cast<TabButton>(*iter);
+        TabButton* button = gwk_cast<TabButton>(*iter);
 
-        if (!pButton)
+        if (!button)
             continue;
 
-        pTarget->AddPage(pButton);
+        target->AddPage(button);
     }
 
     Invalidate();

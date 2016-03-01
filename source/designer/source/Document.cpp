@@ -28,47 +28,47 @@ GWK_CONTROL_CONSTRUCTOR( Document )
 	SetPadding( Padding( 1, 1, 1, 1 ) );
 
 	// The main horizontal splitter separates the document from the tree/properties
-	Controls::SplitterHorizontal* pSplitter = new Controls::SplitterHorizontal( this );
-	pSplitter->Dock( Docking::Fill );
-	pSplitter->SetScaling( true, 200 );
+	Controls::SplitterHorizontal* splitter = new Controls::SplitterHorizontal( this );
+	splitter->Dock( Docking::Fill );
+	splitter->SetScaling( true, 200 );
 
 	// The white background
-	DocumentInner* pInner = new DocumentInner( this );
-	pInner->Dock( Docking::Fill );
+	DocumentInner* inner = new DocumentInner( this );
+	inner->Dock( Docking::Fill );
 
 	// The vertical splitter on the right containing the tree/properties
-	Controls::SplitterVertical* pRightSplitter = new Controls::SplitterVertical( this );
-	pRightSplitter->Dock( Docking::Fill );
-	pRightSplitter->SetSize( 200, 200 );
-	pRightSplitter->SetScaling( false, 200 );
+	Controls::SplitterVertical* rightSplitter = new Controls::SplitterVertical( this );
+	rightSplitter->Dock( Docking::Fill );
+	rightSplitter->SetSize( 200, 200 );
+	rightSplitter->SetScaling( false, 200 );
 
-	pSplitter->SetPanels( pInner, pRightSplitter );
+	splitter->SetPanels( inner, rightSplitter );
 
 	
 	// The actual canvas onto which we drop controls
 	{
-		m_pCanvas = new DocumentCanvas( pInner );
-		m_pCanvas->Dock( Docking::Fill );
-		m_pCanvas->onHierachyChanged.Add( this, &ThisClass::OnHierachyChanged );
+		m_canvas = new DocumentCanvas( inner );
+		m_canvas->Dock( Docking::Fill );
+		m_canvas->onHierachyChanged.Add( this, &ThisClass::OnHierachyChanged );
 	}
 
 
 	// The controls on the right
 	{
-		m_pHierarchy = new Hierarchy( pRightSplitter );
-		m_pHierarchy->WatchCanvas( m_pCanvas );
-		m_pHierarchy->Dock( Docking::Fill );
+		m_hierarchy = new Hierarchy( rightSplitter );
+		m_hierarchy->WatchCanvas( m_canvas );
+		m_hierarchy->Dock( Docking::Fill );
 
-		Properties* pProperties = new Properties( pRightSplitter );
-		pProperties->WatchCanvas( m_pCanvas );
-		pProperties->Dock( Docking::Fill );
+		Properties* properties = new Properties( rightSplitter );
+		properties->WatchCanvas( m_canvas );
+		properties->Dock( Docking::Fill );
 
-		pRightSplitter->SetPanels( m_pHierarchy, pProperties );
+		rightSplitter->SetPanels( m_hierarchy, properties );
 	}
 
 }
 
-void Document::Initialize( Controls::TabButton* pTab )
+void Document::Initialize( Controls::TabButton* tab )
 {
 
 }
@@ -76,12 +76,12 @@ void Document::Initialize( Controls::TabButton* pTab )
 void Document::DoSaveFromDialog( Event::Info info )
 {
 	if ( info.String == "" ) return;
-	if ( !m_Exporter ) return;
+	if ( !m_exporter ) return;
 
 	m_strFilename = info.String;
 	
-	m_Exporter->Export( m_pCanvas, m_strFilename );
-	m_Exporter = NULL;
+	m_exporter->Export( m_canvas, m_strFilename );
+	m_exporter = NULL;
 }
 
 void Document::DoSave( ImportExport::Base* exporter )
@@ -92,31 +92,31 @@ void Document::DoSave( ImportExport::Base* exporter )
 		return DoSaveAs( exporter );
 	}
 
-	exporter->Export( m_pCanvas, m_strFilename );
+	exporter->Export( m_canvas, m_strFilename );
 }
 
 void Document::DoSaveAs( ImportExport::Base* exporter )
 {
-	m_Exporter = exporter;
+	m_exporter = exporter;
 
 	Gwk::Dialogs::FileSave( true, m_strFilename, "", "Gwork Designer File|*.gwk", this, &ThisClass::DoSaveFromDialog );
 }
 
 void Document::LoadFromFile( const Gwk::String& str, ImportExport::Base* exporter )
 {
-	exporter->Import( m_pCanvas, str );
+	exporter->Import( m_canvas, str );
 
-	m_pHierarchy->CompleteRefresh();
+	m_hierarchy->CompleteRefresh();
 }
 
 void Document::OnHierachyChanged( Event::Info info )
 {
-	m_pHierarchy->CompleteRefresh();
+	m_hierarchy->CompleteRefresh();
 }
 
 void Document::Command( const Gwk::String& str )
 {
-	m_pCanvas->Command( str );
+	m_canvas->Command( str );
 
-	m_pHierarchy->CompleteRefresh();
+	m_hierarchy->CompleteRefresh();
 }

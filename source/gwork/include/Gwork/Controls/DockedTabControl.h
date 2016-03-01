@@ -24,22 +24,22 @@ namespace Gwk
 
             void SetShowTitlebar(bool bShow)
             {
-                m_pTitleBar->SetHidden(!bShow);
+                m_titleBar->SetHidden(!bShow);
             }
 
             void Layout(Skin::Base* skin) override;
             void UpdateTitleBar();
 
-            virtual void DragAndDrop_StartDragging(Gwk::DragAndDrop::Package* pPackage,
+            virtual void DragAndDrop_StartDragging(Gwk::DragAndDrop::Package* package,
                                                    int x, int y) override;
             virtual void DragAndDrop_EndDragging(bool bSuccess, int x, int y) override;
 
-            void MoveTabsTo(DockedTabControl* pTarget);
+            void MoveTabsTo(DockedTabControl* target);
 
         private:
 
-            TabTitleBar*    m_pTitleBar;
-            Base*           m_WindowControl;
+            TabTitleBar*    m_titleBar;
+            Base*           m_windowControl;
 
         };
 

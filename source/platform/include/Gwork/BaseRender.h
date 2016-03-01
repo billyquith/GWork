@@ -65,16 +65,16 @@ namespace Gwk
             virtual void StartClip()    {}
             virtual void EndClip()      {}
 
-            virtual void LoadTexture(Gwk::Texture* pTexture)   {}
-            virtual void FreeTexture(Gwk::Texture* pTexture)   {}
+            virtual void LoadTexture(Gwk::Texture* texture)   {}
+            virtual void FreeTexture(Gwk::Texture* texture)   {}
 
-            virtual void DrawTexturedRect(Gwk::Texture* pTexture, Gwk::Rect pTargetRect,
+            virtual void DrawTexturedRect(Gwk::Texture* texture, Gwk::Rect targetRect,
                                           float u1 = 0.0f, float v1 = 0.0f,
                                           float u2 = 1.0f, float v2 = 1.0f) {}
 
-            virtual void DrawMissingImage(Gwk::Rect pTargetRect);
+            virtual void DrawMissingImage(Gwk::Rect targetRect);
 
-            virtual Gwk::Color PixelColour(Gwk::Texture* pTexture,
+            virtual Gwk::Color PixelColour(Gwk::Texture* texture,
                                            unsigned int x, unsigned int y,
                                            const Gwk::Color& col_default =
                                                                 Gwk::Color(255,255,255,255))
@@ -84,17 +84,17 @@ namespace Gwk
 
             virtual ICacheToTexture* GetCTT()
             {
-                return NULL;
+                return m_RTT;
             }
 
-            virtual void LoadFont(Gwk::Font* pFont)    {}
-            virtual void FreeFont(Gwk::Font* pFont)    {}
+            virtual void LoadFont(Gwk::Font* font)    {}
+            virtual void FreeFont(Gwk::Font* font)    {}
 
-            virtual void RenderText(Gwk::Font* pFont,
+            virtual void RenderText(Gwk::Font* font,
                                     Gwk::Point pos,
                                     const Gwk::String& text);
             
-            virtual Gwk::Point MeasureText(Gwk::Font* pFont,
+            virtual Gwk::Point MeasureText(Gwk::Font* font,
                                            const Gwk::String& text);
 
             /// \sect{Render Specialisation}
@@ -120,18 +120,18 @@ namespace Gwk
             //
             void SetRenderOffset(const Gwk::Point& offset)
             {
-                m_RenderOffset = offset;
+                m_renderOffset = offset;
             }
 
             void AddRenderOffset(const Gwk::Rect& offset)
             {
-                m_RenderOffset.x += offset.x;
-                m_RenderOffset.y += offset.y;
+                m_renderOffset.x += offset.x;
+                m_renderOffset.y += offset.y;
             }
 
             const Gwk::Point& GetRenderOffset() const
             {
-                return m_RenderOffset;
+                return m_renderOffset;
             }
 
             void                SetClipRegion(Gwk::Rect rect);
@@ -145,32 +145,32 @@ namespace Gwk
             //
             // Self Initialization, shutdown
             //
-            virtual bool InitializeContext(Gwk::WindowProvider* pWindow)
+            virtual bool InitializeContext(Gwk::WindowProvider* window)
             {
                 return false;
             }
 
-            virtual bool ShutdownContext(Gwk::WindowProvider* pWindow)
+            virtual bool ShutdownContext(Gwk::WindowProvider* window)
             {
                 return false;
             }
 
-            virtual bool ResizedContext(Gwk::WindowProvider* pWindow, int w, int h)
+            virtual bool ResizedContext(Gwk::WindowProvider* window, int w, int h)
             {
                 return false;
             }
 
-            virtual bool BeginContext(Gwk::WindowProvider* pWindow)
+            virtual bool BeginContext(Gwk::WindowProvider* window)
             {
                 return false;
             }
 
-            virtual bool EndContext(Gwk::WindowProvider* pWindow)
+            virtual bool EndContext(Gwk::WindowProvider* window)
             {
                 return false;
             }
 
-            virtual bool PresentContext(Gwk::WindowProvider* pWindow)
+            virtual bool PresentContext(Gwk::WindowProvider* window)
             {
                 return false;
             }
@@ -181,7 +181,7 @@ namespace Gwk
             
         private:
             
-            Gwk::Point m_RenderOffset;
+            Gwk::Point m_renderOffset;
             
             Gwk::Rect m_rectClipRegion;
             ICacheToTexture* m_RTT;            

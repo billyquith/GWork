@@ -42,14 +42,14 @@ HWND CreateGameWindow(void)
     return hWindow;
 }
 
-HWND g_pHWND = NULL;
+HWND g_hWND = NULL;
 
 int main()
 {
     //
     // Create a new window
     //
-    g_pHWND = CreateGameWindow();
+    g_hWND = CreateGameWindow();
     //
     // Create a Gwork GDI+ Renderer
     // Note: we're using the buffered version.
@@ -57,31 +57,31 @@ int main()
     // This prevents all the crazy flickering (test with Gwk::Renderer::GDIPlus
     // to see)
     //
-    Gwk::Renderer::GDIPlusBuffered* pRenderer = new Gwk::Renderer::GDIPlusBuffered(g_pHWND);
+    Gwk::Renderer::GDIPlusBuffered* renderer = new Gwk::Renderer::GDIPlusBuffered(g_hWND);
     //
     // Create a Gwork skin
     //
     // Gwk::Skin::Simple skin;
-    Gwk::Skin::TexturedBase* skin = new Gwk::Skin::TexturedBase(pRenderer);
+    Gwk::Skin::TexturedBase* skin = new Gwk::Skin::TexturedBase(renderer);
     skin->Init("DefaultSkin.png");
     //
     // Create a Canvas (it's root, on which all other Gwork panels are created)
     //
-    Gwk::Controls::Canvas* pCanvas = new Gwk::Controls::Canvas(skin);
-    pCanvas->SetSize(998, 650-24);
-    pCanvas->SetDrawBackground(true);
-    pCanvas->SetBackgroundColor(Gwk::Color(150, 170, 170, 255));
+    Gwk::Controls::Canvas* canvas = new Gwk::Controls::Canvas(skin);
+    canvas->SetSize(998, 650-24);
+    canvas->SetDrawBackground(true);
+    canvas->SetBackgroundColor(Gwk::Color(150, 170, 170, 255));
     //
     // Create our unittest control (which is a Window with controls in it)
     //
-    UnitTest* pUnit = new UnitTest(pCanvas);
-    pUnit->SetPos(10, 10);
+    UnitTest* unit = new UnitTest(canvas);
+    unit->SetPos(10, 10);
     //
     // Create a Windows Control helper
     // (Processes Windows MSG's and fires input at Gwork)
     //
     Gwk::Input::Windows GworkInput;
-    GworkInput.Initialize(pCanvas);
+    GworkInput.Initialize(canvas);
     //
     // Begin the main game loop
     //
@@ -90,7 +90,7 @@ int main()
     while (true)
     {
         // Skip out if the window is closed
-        if (!IsWindowVisible(g_pHWND))
+        if (!IsWindowVisible(g_hWND))
             break;
 
         // If we have a message from windows..
@@ -107,7 +107,7 @@ int main()
             {
                 // This doesn't actually draw it, it just marks it
                 // so it will redraw when next checked (NeedsRedraw)
-                pCanvas->Redraw();
+                canvas->Redraw();
             }
 
             // Handle the regular window stuff..
@@ -121,11 +121,11 @@ int main()
         //  every frame. But we have the option of only
         //  drawing it when it needs it too.
         //
-        if (pCanvas->NeedsRedraw())
-            pCanvas->RenderCanvas();
+        if (canvas->NeedsRedraw())
+            canvas->RenderCanvas();
     }
 
-    delete pCanvas;
+    delete canvas;
     delete skin;
-    delete pRenderer;
+    delete renderer;
 }

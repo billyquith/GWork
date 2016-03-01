@@ -91,8 +91,8 @@ namespace Gwk
 
         protected:
 
-            ControlsInternal::ScrollBarButton* m_ScrollButton[2];
-            ControlsInternal::ScrollBarBar* m_Bar;
+            ControlsInternal::ScrollBarButton* m_scrollButton[2];
+            ControlsInternal::ScrollBarBar* m_bar;
 
             bool m_bDepressed;
             float m_fScrolledAmount;

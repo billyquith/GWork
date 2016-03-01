@@ -5,18 +5,18 @@ using namespace Gwk;
 
 GWK_CONTROL_CONSTRUCTOR( Cage )
 {
-	m_Control = NULL;
-	m_iBorder = 5;
+	m_control = NULL;
+	m_border = 5;
 }
 
 void Cage::Render( Gwk::Skin::Base* skin )
 {
 	Gwk::Rect bounds = GetRenderBounds();
 
-	bounds.x += m_iBorder;
-	bounds.y += m_iBorder;
-	bounds.w -= m_iBorder * 2;
-	bounds.h -= m_iBorder * 2;
+	bounds.x += m_border;
+	bounds.y += m_border;
+	bounds.w -= m_border * 2;
+	bounds.h -= m_border * 2;
 
 	skin->GetRender()->SetDrawColor( Color( 130, 30, 30, 10 ) );
 	skin->GetRender()->DrawFilledRect( bounds );
@@ -29,33 +29,33 @@ void Cage::Render( Gwk::Skin::Base* skin )
 
 void Cage::PostLayout( Skin::Base* skin )
 {
-	if ( !m_Control ) return;
+	if ( !m_control ) return;
 
-	Gwk::Point canvaspos = m_Control->LocalPosToCanvas();
+	Gwk::Point canvaspos = m_control->LocalPosToCanvas();
 	Gwk::Point parentpos = GetParent()->CanvasPosToLocal( canvaspos );
 
-	parentpos.x -= m_iBorder;
-	parentpos.y -= m_iBorder;
+	parentpos.x -= m_border;
+	parentpos.y -= m_border;
 
 	SetPos( parentpos );
 
-	Gwk::Point size = m_Control->GetSize();
-	size.x += m_iBorder * 2;
-	size.y += m_iBorder * 2;
+	Gwk::Point size = m_control->GetSize();
+	size.x += m_border * 2;
+	size.y += m_border * 2;
 
 	SetSize( size );
 }
 
-void Cage::Setup( Controls::Base* pControl )
+void Cage::Setup( Controls::Base* control )
 {
-	m_Control = pControl;
+	m_control = control;
 }
 
 void Cage::SetDepressed( bool b )
 {
 	ParentClass::SetDepressed( b );
 
-	m_DragPoint = m_Control->GetPos();
+	m_dragPoint = m_control->GetPos();
 	m_bDragged = false;
 }
 
@@ -63,8 +63,8 @@ void Cage::OnMouseMoved( int x, int y, int deltaX, int deltaY )
 {
 	if ( !IsDepressed() ) return;
 
-	Controls::Base*	pControlParent = m_Control->GetParent();
-	Gwk::Point pntRemainder = m_DragPoint - m_Control->GetPos();
+	Controls::Base*	controlParent = m_control->GetParent();
+	Gwk::Point pntRemainder = m_dragPoint - m_control->GetPos();
 
 	//
 	// This event is used by the SelectionLayer to scan
@@ -80,9 +80,9 @@ void Cage::OnMouseMoved( int x, int y, int deltaX, int deltaY )
 	//
 	// If the parent changed then fix up the drag position
 	//
-	if ( pControlParent != m_Control->GetParent() )
+	if ( controlParent != m_control->GetParent() )
 	{
-		m_DragPoint = m_Control->GetPos() + pntRemainder;
+		m_dragPoint = m_control->GetPos() + pntRemainder;
 
 	}
 
@@ -93,14 +93,14 @@ void Cage::OnMouseMoved( int x, int y, int deltaX, int deltaY )
 	}
 	m_bDragged = true;
 
-	m_DragPoint += Gwk::Point( deltaX, deltaY );
+	m_dragPoint += Gwk::Point( deltaX, deltaY );
 
-	Gwk::Point pos = m_DragPoint;
+	Gwk::Point pos = m_dragPoint;
 
 	pos.x = ((int)((float)pos.x / 10.0f)) * 10;
 	pos.y = ((int)((float)pos.y / 10.0f)) * 10;
 
-	pos -= m_Control->GetPos();
+	pos -= m_control->GetPos();
 
 	{
 		Event::Information info;

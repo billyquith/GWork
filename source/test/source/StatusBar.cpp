@@ -18,10 +18,10 @@ public:
     GWK_CONTROL_INLINE(StatusBar, GUnit)
     {
         Dock(Docking::Fill);
-        Gwk::Controls::StatusBar* pStatus = new Gwk::Controls::StatusBar(this);
-        Gwk::Controls::Label* pRight = new Gwk::Controls::Label(pStatus);
-        pRight->SetText("Label Added to Right");
-        pStatus->AddControl(pRight, true);
+        Gwk::Controls::StatusBar* status = new Gwk::Controls::StatusBar(this);
+        Gwk::Controls::Label* right = new Gwk::Controls::Label(status);
+        right->SetText("Label Added to Right");
+        status->AddControl(right, true);
     }
 
     void Layout(Gwk::Skin::Base* skin)
