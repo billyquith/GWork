@@ -2,11 +2,7 @@
 // SDL2 Renderer for Gwork - http://www.libsdl.org/
 // Added by BQ.
 
-#include <Gwork/Gwork.h>
 #include <Gwork/BaseRender.h>
-#include <Gwork/Utility.h>
-#include <Gwork/Font.h>
-#include <Gwork/Texture.h>
 #include <Gwork/Renderers/SDL2.h>
 #include <SDL_image.h>
 #include <SDL_ttf.h>

@@ -1,10 +1,13 @@
 # Gwork util library
 
+find_package(Ponder REQUIRED) # TODO - temporary hack whilst testing
+
 include_directories(
     ${CMAKE_SOURCE_DIR}/source/platform/include
     ${CMAKE_SOURCE_DIR}/source/gwork/include
     ${GWK_RENDER_INCLUDES}
     ${CMAKE_SOURCE_DIR}/source/util/include
+    ${PONDER_INCLUDE_DIRS}
 )
 
 set(GWK_UTIL_SOURCES

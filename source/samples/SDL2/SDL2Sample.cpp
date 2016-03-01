@@ -18,24 +18,24 @@
 int main(int argc, char** argv)
 {
     if(SDL_Init(SDL_INIT_EVERYTHING) != 0)
-        return -1;
+        return EXIT_FAILURE;
     
     if (TTF_Init() != 0)
-        return -1;
+        return EXIT_FAILURE;
         
     //Setup our window and renderer
     const int SCREEN_WIDTH = 1024, SCREEN_HEIGHT = 768;
-	SDL_Window *window = SDL_CreateWindow("SDL2", 100, 100,
+	SDL_Window *window = SDL_CreateWindow("Gwork: SDL2", 100, 100,
                                           SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
 	if (!window)
-		return -1;
+		return EXIT_FAILURE;
 
     // Create a Gwork Allegro Renderer
-    Gwk::Renderer::SDL2 *pRenderer = new Gwk::Renderer::SDL2(window);
+    Gwk::Renderer::SDL2 *renderer = new Gwk::Renderer::SDL2(window);
 
     // Create a Gwork skin
-    Gwk::Skin::TexturedBase skin(pRenderer);
-    skin.SetRender(pRenderer);
+    Gwk::Skin::TexturedBase skin(renderer);
+    skin.SetRender(renderer);
     skin.Init("DefaultSkin.png");
     
     // Note, you can get fonts that cover many languages/locales to do Chinese,
@@ -43,39 +43,39 @@ int main(int argc, char** argv)
     skin.SetDefaultFont("OpenSans.ttf", 11);
     
     // Create a Canvas (it's root, on which all other Gwork panels are created)
-    Gwk::Controls::Canvas* pCanvas = new Gwk::Controls::Canvas(&skin);
-    pCanvas->SetSize(SCREEN_WIDTH, SCREEN_HEIGHT);
-    pCanvas->SetDrawBackground(true);
-    pCanvas->SetBackgroundColor(Gwk::Color(150, 170, 170, 255));
+    Gwk::Controls::Canvas* canvas = new Gwk::Controls::Canvas(&skin);
+    canvas->SetSize(SCREEN_WIDTH, SCREEN_HEIGHT);
+    canvas->SetDrawBackground(true);
+    canvas->SetBackgroundColor(Gwk::Color(150, 170, 170, 255));
 
     // Create our unittest control (which is a Window with controls in it)
-    UnitTest* pUnit = new UnitTest(pCanvas);
+    UnitTest* pUnit = new UnitTest(canvas);
     pUnit->SetPos(10, 10);
 
     Gwk::Input::SDL2 GworkInput;
-    GworkInput.Initialize(pCanvas);
-    bool bQuit = false;
+    GworkInput.Initialize(canvas);
+    bool haveQuit = false;
 
-    while (!bQuit)
+    while (!haveQuit)
     {
         SDL_Event evt;
         while (SDL_PollEvent(&evt))
         {
             if (evt.type == SDL_QUIT)
-                bQuit = true;
+                haveQuit = true;
 
             GworkInput.ProcessEvent(&evt);
         }
         
-        pRenderer->BeginContext(NULL);
-        pCanvas->RenderCanvas();
-        pRenderer->PresentContext(NULL);
-        pRenderer->EndContext(NULL);
+        renderer->BeginContext(NULL);
+        canvas->RenderCanvas();
+        renderer->PresentContext(NULL);
+        renderer->EndContext(NULL);
     }
 
     //TTF_Quit();   TODO: Currently crashes. Gwork needs work.
     SDL_DestroyWindow(window);
     SDL_Quit();
     
-    return 0;
+    return EXIT_SUCCESS;
 }
