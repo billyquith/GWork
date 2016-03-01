@@ -302,7 +302,7 @@ namespace Gwk
                     InvalidateParent();
                 }
 
-                void PostLayout(Skin::Base* /*skin*/)
+                void PostLayout(Skin::Base* /*skin*/) override
                 {
                     if (m_bSizeToContents)
                     {

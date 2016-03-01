@@ -97,7 +97,7 @@ class PropertyRowLabel : public Label
         m_propertyRow = NULL;
     }
 
-    void UpdateColours()
+    void UpdateColours() override
     {
         if (IsDisabled())
             return SetTextColor(GetSkin()->Colors.Button.Disabled);

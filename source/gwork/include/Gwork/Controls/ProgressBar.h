@@ -36,8 +36,8 @@ namespace Gwk
                 m_bHorizontal = true;
             }
 
-            virtual void  SetValue(float val);
-            virtual float GetValue() const
+            virtual void  SetProgress(float val);
+            virtual float GetProgress() const
             {
                 return m_fProgress;
             }

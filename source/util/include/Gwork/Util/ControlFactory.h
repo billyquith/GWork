@@ -303,7 +303,7 @@ namespace Gwk
 
 #define GWK_CONTROL_FACTORY_PROPERTY(PROP_NAME, DESCRIPTION) \
 public: \
-    Gwk::String Name() const { return #PROP_NAME; } \
-    Gwk::String Description() const { return DESCRIPTION; }
+    Gwk::String Name() const  override { return #PROP_NAME; } \
+    Gwk::String Description() const override { return DESCRIPTION; }
 
 

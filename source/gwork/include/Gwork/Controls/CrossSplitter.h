@@ -70,7 +70,7 @@ namespace Gwk
             float m_fVVal;
             int m_fBarSize;
 
-            char m_zoomedSection;
+            int m_zoomedSection;
 
             Gwk::Event::Caller onZoomed;
             Gwk::Event::Caller onUnZoomed;

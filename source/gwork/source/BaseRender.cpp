@@ -18,8 +18,8 @@ namespace Gwk
     namespace Renderer
     {
         Base::Base()
-        :   m_renderOffset(Gwk::Point(0, 0))
-        ,   m_fScale(1.0f)
+        :   m_fScale(1.0f)
+        ,   m_renderOffset(Gwk::Point(0, 0))
         ,   m_RTT(NULL)
         {
         }
@@ -145,7 +145,7 @@ namespace Gwk
 
             for (unsigned int i = 0; i < text.length(); i++)
             {
-                wchar_t chr = text[i];
+                UnicodeChar chr = text[i];
 
                 if (chr == ' ')
                     continue;

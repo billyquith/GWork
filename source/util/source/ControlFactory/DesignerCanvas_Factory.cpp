@@ -21,7 +21,7 @@ namespace Gwk
             {
             }
 
-            virtual Gwk::Controls::Base* CreateInstance(Gwk::Controls::Base* parent)
+            Gwk::Controls::Base* CreateInstance(Gwk::Controls::Base* parent) override
             {
                 return NULL;
             }

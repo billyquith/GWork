@@ -24,7 +24,7 @@ namespace Gwk
                 return control;
             }
 
-            void AddChild(Gwk::Controls::Base* ctrl, Gwk::Controls::Base* child, Gwk::Point& pos)
+            void AddChild(Gwk::Controls::Base* ctrl, Gwk::Controls::Base* child, const Gwk::Point& pos)  override
             {
                 Gwk::Controls::SplitterVertical* splitter =
                     gwk_cast<Gwk::Controls::SplitterVertical>(ctrl);
@@ -36,7 +36,7 @@ namespace Gwk
                     splitter->SetPanels(NULL, child);
             }
 
-            void AddChild(Gwk::Controls::Base* ctrl, Gwk::Controls::Base* child, int iPage)
+            void AddChild(Gwk::Controls::Base* ctrl, Gwk::Controls::Base* child, int iPage) override
             {
                 child->SetParent(ctrl);
             }

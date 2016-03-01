@@ -16,7 +16,7 @@ namespace Gwk
             {
             }
 
-            virtual Gwk::Controls::Base* CreateInstance(Gwk::Controls::Base* parent)
+            Gwk::Controls::Base* CreateInstance(Gwk::Controls::Base* parent) override
             {
                 Gwk::Controls::FolderPicker* control = new Gwk::Controls::FolderPicker(parent);
                 control->SetSize(100, 20);

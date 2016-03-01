@@ -39,7 +39,7 @@ public:
 
     void UnitPrint(Gwk::String str);
 
-    void Layout(Gwk::Skin::Base* skin)
+    void Layout(Gwk::Skin::Base* skin) override
     {
         if (GetDock() != Gwk::Docking::None)
             return;
@@ -59,13 +59,13 @@ public:
 
     void PrintText(const Gwk::String& str);
 
-    void Render(Gwk::Skin::Base* skin);
+    void Render(Gwk::Skin::Base* skin) override;
 
 private:
 
     void OnCategorySelect(Gwk::Event::Info info);
 
-    Gwk::Controls::TabControl* m_tabControl;
+//    Gwk::Controls::TabControl* m_tabControl;
     Gwk::Controls::ListBox*    m_textOutput;
     Gwk::Controls::PropertyTree* m_controlProperties;
     Gwk::Controls::StatusBar*  m_statusBar;

@@ -87,9 +87,7 @@ public:
         m_splitter->UnZoom();
     }
 
-    void Layout(Gwk::Skin::Base* skin)
-    {
-    }
+    void Layout(Gwk::Skin::Base* skin) override {}
 
     bool m_bSplittersVisible;
     int m_curZoom;

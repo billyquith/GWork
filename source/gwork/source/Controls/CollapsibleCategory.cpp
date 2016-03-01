@@ -22,7 +22,7 @@ class CategoryButton : public Button
         m_bAlt = false;
     }
     
-    virtual void Render(Skin::Base* skin)
+    void Render(Skin::Base* skin) override
     {
         if (m_bAlt)
         {
@@ -46,7 +46,7 @@ class CategoryButton : public Button
         skin->GetRender()->DrawFilledRect(this->GetRenderBounds());
     }
     
-    void UpdateColours()
+    void UpdateColours() override
     {
         if (m_bAlt)
         {
@@ -81,7 +81,7 @@ class CategoryHeaderButton : public Button
         SetAlignment(Docking::Center);
     }
     
-    void UpdateColours()
+    void UpdateColours() override
     {
         if (IsDepressed() || GetToggleState())
             return SetTextColor(GetSkin()->Colors.Category.Header_Closed);

@@ -25,7 +25,7 @@ public:
     {
     }
 
-    void Render(Skin::Base* skin)
+    void Render(Skin::Base* skin) override
     {
         skin->DrawTabControl(this);
     }
