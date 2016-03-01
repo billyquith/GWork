@@ -42,35 +42,35 @@ namespace Gwk
         private:
 
             // Drag n Drop
-            virtual bool DragAndDrop_HandleDrop(Gwk::DragAndDrop::Package* pPackage, int x, int y) override;
-            virtual bool DragAndDrop_CanAcceptPackage(Gwk::DragAndDrop::Package* pPackage) override;
-            virtual void DragAndDrop_HoverEnter(Gwk::DragAndDrop::Package* pPackage, int x, int y) override;
-            virtual void DragAndDrop_HoverLeave(Gwk::DragAndDrop::Package* pPackage) override;
-            virtual void DragAndDrop_Hover(Gwk::DragAndDrop::Package* pPackage, int x, int y) override;
+            virtual bool DragAndDrop_HandleDrop(Gwk::DragAndDrop::Package* package, int x, int y) override;
+            virtual bool DragAndDrop_CanAcceptPackage(Gwk::DragAndDrop::Package* package) override;
+            virtual void DragAndDrop_HoverEnter(Gwk::DragAndDrop::Package* package, int x, int y) override;
+            virtual void DragAndDrop_HoverLeave(Gwk::DragAndDrop::Package* package) override;
+            virtual void DragAndDrop_Hover(Gwk::DragAndDrop::Package* package, int x, int y) override;
 
             virtual void SetupChildDock(Docking::Area iPos);
 
             virtual void DoRedundancyCheck();
             virtual void DoConsolidateCheck();
-            virtual void OnRedundantChildDock(DockBase* pDockBase);
+            virtual void OnRedundantChildDock(DockBase* dockBase);
 
             virtual Docking::Area GetDroppedTabDirection(int x, int y);
-            virtual void OnTabRemoved(Gwk::Controls::Base* pControl);
+            virtual void OnTabRemoved(Gwk::Controls::Base* control);
 
             DockBase*  GetChildDock(Docking::Area iPos);
             DockBase** GetChildDockPtr(Docking::Area iPos);
 
-            DockBase*       m_Left;
-            DockBase*       m_Right;
-            DockBase*       m_Top;
-            DockBase*       m_Bottom;
+            DockBase*       m_left;
+            DockBase*       m_right;
+            DockBase*       m_top;
+            DockBase*       m_bottom;
 
             // Only CHILD dockpanels have a tabcontrol.
-            DockedTabControl*       m_DockedTabControl;
+            DockedTabControl*       m_dockedTabControl;
 
             bool m_bDrawHover;
             bool m_bDropFar;
-            Gwk::Rect m_HoverRect;
+            Gwk::Rect m_hoverRect;
 
         };
 

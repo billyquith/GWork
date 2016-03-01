@@ -70,7 +70,7 @@ namespace Gwk
             virtual void SetImage(const String& strName, bool bCenter = false);
 
             virtual void SizeToContents() override;
-            virtual void PostLayout(Skin::Base* pSkin) override;
+            virtual void PostLayout(Skin::Base* skin) override;
             virtual void UpdateColours() override;
 
             virtual void SetImageAlpha(float fMultiply);
@@ -80,8 +80,8 @@ namespace Gwk
                 OnPress();
             }
 
-            virtual void SetAction(Event::Handler* pObject,
-                                   Handler::FunctionWithInformation pFunction,
+            virtual void SetAction(Event::Handler* object,
+                                   Handler::FunctionWithInformation function,
                                    const Gwk::Event::Packet& packet) override;
 
         public:
@@ -97,7 +97,7 @@ namespace Gwk
 
         protected:
 
-            ImagePanel*     m_Image;    ///< Optional image to be displayed on button.
+            ImagePanel*     m_image;    ///< Optional image to be displayed on button.
 
             bool m_bDepressed;          ///< Is button currently being pressed?
             bool m_bToggle;             ///< Is this a toggling button, i.e. on or off.

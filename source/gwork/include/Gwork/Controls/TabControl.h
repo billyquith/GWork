@@ -28,24 +28,24 @@ namespace Gwk
         {
             GWK_CONTROL(TabControl, Base);
 
-            virtual TabButton* AddPage(const String strText, Controls::Base* pPage = NULL);
+            virtual TabButton* AddPage(const String strText, Controls::Base* page = NULL);
 
-            virtual void AddPage(TabButton* pButton);
-            virtual void RemovePage(TabButton* pButton);
+            virtual void AddPage(TabButton* button);
+            virtual void RemovePage(TabButton* button);
 
             virtual void OnTabPressed(Controls::Base* control);
-            virtual void OnLoseTab(TabButton* pButton);
+            virtual void OnLoseTab(TabButton* button);
 
             virtual int        TabCount(void);
             virtual TabButton* GetTab(int iNum);
             virtual TabButton* GetCurrentButton()
             {
-                return m_pCurrentButton;
+                return m_currentButton;
             }
 
             virtual TabStrip* GetTabStrip()
             {
-                return m_TabStrip;
+                return m_tabStrip;
             }
 
             virtual void SetTabStripPosition(Docking::Area dockSide);
@@ -65,14 +65,14 @@ namespace Gwk
             virtual void PostLayout(Skin::Base* skin) override;
             void         HandleOverflow();
 
-            void ScrollPressLeft(Base* pFrom);
-            void ScrollPressRight(Base* pFrom);
+            void ScrollPressLeft(Base* from);
+            void ScrollPressRight(Base* from);
 
-            TabStrip*       m_TabStrip;
-            TabButton*      m_pCurrentButton;
+            TabStrip*       m_tabStrip;
+            TabButton*      m_currentButton;
 
-            ControlsInternal::ScrollBarButton*  m_pScroll[2];
-            int m_iScrollOffset;
+            ControlsInternal::ScrollBarButton*  m_scroll[2];
+            int m_scrollOffset;
 
 
         };

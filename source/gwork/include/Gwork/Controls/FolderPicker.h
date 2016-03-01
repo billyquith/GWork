@@ -24,29 +24,29 @@ namespace Gwk
 
             GWK_CONTROL_INLINE(FolderPicker, Controls::Base)
             {
-                m_Button = new Controls::Button(this);
-                m_Button->Dock(Docking::Right);
-                m_Button->SetMargin(Margin(2, 0, 0, 0));
-                m_Button->SetText("..");
-                m_Button->SetSize(20, 20);
-                m_Button->onPress.Add(this, &FolderPicker::OnBrowse);
-                m_TextBox = new Controls::TextBox(this);
-                m_TextBox->Dock(Docking::Fill);
+                m_button = new Controls::Button(this);
+                m_button->Dock(Docking::Right);
+                m_button->SetMargin(Margin(2, 0, 0, 0));
+                m_button->SetText("..");
+                m_button->SetSize(20, 20);
+                m_button->onPress.Add(this, &FolderPicker::OnBrowse);
+                m_textBox = new Controls::TextBox(this);
+                m_textBox->Dock(Docking::Fill);
                 this->SetSize(100, 20);
-                m_BrowseName = "Find Folder";
+                m_browseName = "Find Folder";
             }
 
 
             void SetFolder(const String& strValue)
             {
-                m_TextBox->SetText(strValue);
-                m_TextBox->MoveCaretToEnd();
+                m_textBox->SetText(strValue);
+                m_textBox->MoveCaretToEnd();
                 onFolderChanged.Call(this);
             }
 
             const Gwk::String& GetFolder()
             {
-                return m_TextBox->GetText();
+                return m_textBox->GetText();
             }
 
             void OnBrowse()
@@ -72,9 +72,9 @@ namespace Gwk
 
         private:
 
-            Controls::TextBox*  m_TextBox;
-            Controls::Button*   m_Button;
-            Gwk::String         m_BrowseName;
+            Controls::TextBox*  m_textBox;
+            Controls::Button*   m_button;
+            Gwk::String         m_browseName;
         };
 
 

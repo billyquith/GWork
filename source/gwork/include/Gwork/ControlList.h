@@ -35,17 +35,17 @@ namespace Gwk
 
         typedef std::list<TYPE> List;
 
-        void Add(TYPE pControl)
+        void Add(TYPE control)
         {
-            if (Contains(pControl))
+            if (Contains(control))
                 return;
 
-            list.push_back(pControl);
+            list.push_back(control);
         }
 
-        void Remove(TYPE pControl)
+        void Remove(TYPE control)
         {
-            list.remove(pControl);
+            list.remove(control);
         }
 
         void Add(const List& list)
@@ -61,9 +61,9 @@ namespace Gwk
             Add(list.list);
         }
 
-        bool Contains(TYPE pControl) const
+        bool Contains(TYPE control) const
         {
-            typename List::const_iterator it = std::find(list.begin(), list.end(), pControl);
+            typename List::const_iterator it = std::find(list.begin(), list.end(), control);
             return it != list.end();
         }
 
@@ -105,7 +105,7 @@ namespace Gwk
 
     protected:
 
-        void SetActionInternal(Gwk::Event::Handler*pObject,
+        void SetActionInternal(Gwk::Event::Handler*object,
                                void ( Gwk::Event::Handler::*f )(Gwk::Event::Info),
                                const Gwk::Event::Packet&packet);
     };

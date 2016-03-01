@@ -19,93 +19,93 @@ public:
         Dock(Docking::Fill);
         Gwk::Controls::MenuStrip* menu = new Gwk::Controls::MenuStrip(this);
         {
-            Gwk::Controls::MenuItem* pRoot = menu->AddItem("File");
-            pRoot->GetMenu()->AddItem("New", "test16.png", "Ctrl + N")->SetAction(this,
+            Gwk::Controls::MenuItem* root = menu->AddItem("File");
+            root->GetMenu()->AddItem("New", "test16.png", "Ctrl + N")->SetAction(this,
                                                                                     &ThisClass::MenuItemSelect);
-            pRoot->GetMenu()->AddItem("Load", "test16.png", "Ctrl+")->SetAction(this,
+            root->GetMenu()->AddItem("Load", "test16.png", "Ctrl+")->SetAction(this,
                                                                                    &ThisClass::MenuItemSelect);
-            pRoot->GetMenu()->AddItem("Save", "", "CTRL+S")->SetAction(this,
+            root->GetMenu()->AddItem("Save", "", "CTRL+S")->SetAction(this,
                                                                         &ThisClass::MenuItemSelect);
-            pRoot->GetMenu()->AddItem("Save As..", "", "Ctrl+Shift+S")->SetAction(this,
+            root->GetMenu()->AddItem("Save As..", "", "Ctrl+Shift+S")->SetAction(this,
                                                                                    &ThisClass::MenuItemSelect);
-            pRoot->GetMenu()->AddItem("Quit", "", "Ctrl+Q")->SetAction(this,
+            root->GetMenu()->AddItem("Quit", "", "Ctrl+Q")->SetAction(this,
                                                                         &ThisClass::MenuItemSelect);
         }
         {
-            Gwk::Controls::MenuItem* pRoot = menu->AddItem(
+            Gwk::Controls::MenuItem* root = menu->AddItem(
                 Utility::Narrow(L"\u043F\u0438\u0440\u0430\u0442\u0441\u0442\u0432\u043E"));
-            pRoot->GetMenu()
+            root->GetMenu()
                 ->AddItem(Utility::Narrow(L"\u5355\u5143\u6D4B\u8BD5"))
                 ->SetAction(this, &ThisClass::MenuItemSelect);
-            pRoot->GetMenu()
+            root->GetMenu()
                 ->AddItem(Utility::Narrow(L"\u0111\u01A1n v\u1ECB th\u1EED nghi\u1EC7m"))
                 ->SetAction(this, &ThisClass::MenuItemSelect);
         }
         {
-            Gwk::Controls::MenuItem* pRoot = menu->AddItem("Submenu");
-            Gwk::Controls::MenuItem* pCheckable = pRoot->GetMenu()->AddItem("Checkable");
-            pCheckable->SetCheckable(true);
-            pCheckable->SetChecked(true);
+            Gwk::Controls::MenuItem* root = menu->AddItem("Submenu");
+            Gwk::Controls::MenuItem* checkable = root->GetMenu()->AddItem("Checkable");
+            checkable->SetCheckable(true);
+            checkable->SetChecked(true);
             {
-                Gwk::Controls::MenuItem* pRootB = pRoot->GetMenu()->AddItem("Two");
-                pRootB->GetMenu()->AddItem("Two.One");
-                pRootB->GetMenu()->AddItem("Two.Two");
-                pRootB->GetMenu()->AddItem("Two.Three");
-                pRootB->GetMenu()->AddItem("Two.Four");
-                pRootB->GetMenu()->AddItem("Two.Five");
-                pRootB->GetMenu()->AddItem("Two.Six");
-                pRootB->GetMenu()->AddItem("Two.Seven");
-                pRootB->GetMenu()->AddItem("Two.Eight");
-                pRootB->GetMenu()->AddItem("Two.Nine", "test16.png");
+                Gwk::Controls::MenuItem* rootB = root->GetMenu()->AddItem("Two");
+                rootB->GetMenu()->AddItem("Two.One");
+                rootB->GetMenu()->AddItem("Two.Two");
+                rootB->GetMenu()->AddItem("Two.Three");
+                rootB->GetMenu()->AddItem("Two.Four");
+                rootB->GetMenu()->AddItem("Two.Five");
+                rootB->GetMenu()->AddItem("Two.Six");
+                rootB->GetMenu()->AddItem("Two.Seven");
+                rootB->GetMenu()->AddItem("Two.Eight");
+                rootB->GetMenu()->AddItem("Two.Nine", "test16.png");
             }
-            pRoot->GetMenu()->AddItem("Three");
-            pRoot->GetMenu()->AddItem("Four");
-            pRoot->GetMenu()->AddItem("Five");
+            root->GetMenu()->AddItem("Three");
+            root->GetMenu()->AddItem("Four");
+            root->GetMenu()->AddItem("Five");
             {
-                Gwk::Controls::MenuItem* pRootB = pRoot->GetMenu()->AddItem("Six");
-                pRootB->GetMenu()->AddItem("Six.One");
-                pRootB->GetMenu()->AddItem("Six.Two");
-                pRootB->GetMenu()->AddItem("Six.Three");
-                pRootB->GetMenu()->AddItem("Six.Four");
-                pRootB->GetMenu()->AddItem("Six.Five", "test16.png");
+                Gwk::Controls::MenuItem* rootB = root->GetMenu()->AddItem("Six");
+                rootB->GetMenu()->AddItem("Six.One");
+                rootB->GetMenu()->AddItem("Six.Two");
+                rootB->GetMenu()->AddItem("Six.Three");
+                rootB->GetMenu()->AddItem("Six.Four");
+                rootB->GetMenu()->AddItem("Six.Five", "test16.png");
                 {
-                    Gwk::Controls::MenuItem* pRootC = pRootB->GetMenu()->AddItem("Six.Six");
-                    pRootC->GetMenu()->AddItem("Sheep");
-                    pRootC->GetMenu()->AddItem("Goose");
+                    Gwk::Controls::MenuItem* rootC = rootB->GetMenu()->AddItem("Six.Six");
+                    rootC->GetMenu()->AddItem("Sheep");
+                    rootC->GetMenu()->AddItem("Goose");
                     {
-                        Gwk::Controls::MenuItem* pRootD = pRootC->GetMenu()->AddItem("Camel");
-                        pRootD->GetMenu()->AddItem("Eyes");
-                        pRootD->GetMenu()->AddItem("Nose");
+                        Gwk::Controls::MenuItem* rootD = rootC->GetMenu()->AddItem("Camel");
+                        rootD->GetMenu()->AddItem("Eyes");
+                        rootD->GetMenu()->AddItem("Nose");
                         {
-                            Gwk::Controls::MenuItem* pRootE = pRootD->GetMenu()->AddItem("Hair");
-                            pRootE->GetMenu()->AddItem("Blonde");
-                            pRootE->GetMenu()->AddItem("Black");
+                            Gwk::Controls::MenuItem* rootE = rootD->GetMenu()->AddItem("Hair");
+                            rootE->GetMenu()->AddItem("Blonde");
+                            rootE->GetMenu()->AddItem("Black");
                             {
-                                Gwk::Controls::MenuItem* pRootF =
-                                    pRootE->GetMenu()->AddItem("Red");
-                                pRootF->GetMenu()->AddItem("Light");
-                                pRootF->GetMenu()->AddItem("Medium");
-                                pRootF->GetMenu()->AddItem("Dark");
+                                Gwk::Controls::MenuItem* rootF =
+                                    rootE->GetMenu()->AddItem("Red");
+                                rootF->GetMenu()->AddItem("Light");
+                                rootF->GetMenu()->AddItem("Medium");
+                                rootF->GetMenu()->AddItem("Dark");
                             }
-                            pRootE->GetMenu()->AddItem("Brown");
+                            rootE->GetMenu()->AddItem("Brown");
                         }
-                        pRootD->GetMenu()->AddItem("Ears");
+                        rootD->GetMenu()->AddItem("Ears");
                     }
-                    pRootC->GetMenu()->AddItem("Duck");
+                    rootC->GetMenu()->AddItem("Duck");
                 }
-                pRootB->GetMenu()->AddItem("Six.Seven");
-                pRootB->GetMenu()->AddItem("Six.Eight");
-                pRootB->GetMenu()->AddItem("Six.Nine");
+                rootB->GetMenu()->AddItem("Six.Seven");
+                rootB->GetMenu()->AddItem("Six.Eight");
+                rootB->GetMenu()->AddItem("Six.Nine");
             }
-            pRoot->GetMenu()->AddItem("Seven");
+            root->GetMenu()->AddItem("Seven");
         }
     }
 
 
-    void MenuItemSelect(Base* pControl)
+    void MenuItemSelect(Base* control)
     {
-        Gwk::Controls::MenuItem* pMenuItem = (Gwk::Controls::MenuItem*)pControl;
-        UnitPrint(Utility::Format("Menu Selected: %s", pMenuItem->GetText().c_str()));
+        Gwk::Controls::MenuItem* menuItem = (Gwk::Controls::MenuItem*)control;
+        UnitPrint(Utility::Format("Menu Selected: %s", menuItem->GetText().c_str()));
     }
 
 };

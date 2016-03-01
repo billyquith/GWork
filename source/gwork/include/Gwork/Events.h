@@ -33,8 +33,8 @@ namespace Gwk
          */
         struct Packet
         {
-            Packet(Gwk::Controls::Base* pControl = NULL)
-                :   Control(pControl)
+            Packet(Gwk::Controls::Base* control = NULL)
+                :   Control(control)
             {}
 
             Gwk::Controls::Base   *Control;
@@ -113,17 +113,17 @@ namespace Gwk
             Handler();  // Class needs to be derived.
 
             void CleanLinks();
-            std::list<Caller*> m_Callers;
+            std::list<Caller*> m_callers;
 
         public:
 
-            typedef void (Handler::*Function)                   (Gwk::Controls::Base* pFromPanel);
+            typedef void (Handler::*Function)                   (Gwk::Controls::Base* fromPanel);
             typedef void (Handler::*FunctionBlank)              ();
             typedef void (Handler::*FunctionWithInformation)    (Gwk::Event::Info info);
 
         };
 
-
+        //
         /// Event callback management.
         //
         class GWK_EXPORT Caller
@@ -162,16 +162,16 @@ namespace Gwk
                 AddInternal(ob, static_cast<Handler::FunctionBlank>(f));
             }
 
-            void RemoveHandler(Event::Handler* pObject);
+            void RemoveHandler(Event::Handler* object);
 
         protected:
 
             void CleanLinks();
-            void AddInternal(Event::Handler* pObject, Handler::Function pFunction);
-            void AddInternal(Event::Handler* pObject, Handler::FunctionWithInformation pFunction);
-            void AddInternal(Event::Handler* pObject, Handler::FunctionWithInformation pFunction,
+            void AddInternal(Event::Handler* object, Handler::Function function);
+            void AddInternal(Event::Handler* object, Handler::FunctionWithInformation function);
+            void AddInternal(Event::Handler* object, Handler::FunctionWithInformation function,
                              const Gwk::Event::Packet& packet);
-            void AddInternal(Event::Handler* pObject, Handler::FunctionBlank pFunction);
+            void AddInternal(Event::Handler* object, Handler::FunctionBlank function);
 
             struct HandlerInstance
             {
@@ -179,19 +179,18 @@ namespace Gwk
                     :   fnFunction(NULL)
                     ,   fnFunctionInfo(NULL)
                     ,   fnFunctionBlank(NULL)
-                    ,   pObject(NULL)
+                    ,   object(NULL)
                 {}
 
                 Handler::Function fnFunction;
                 Handler::FunctionWithInformation fnFunctionInfo;
                 Handler::FunctionBlank fnFunctionBlank;
 
-                Event::Handler*         pObject;
+                Event::Handler*         object;
                 Gwk::Event::Packet Packet;
             };
 
-
-            std::list<HandlerInstance> m_Handlers;
+            std::list<HandlerInstance> m_handlers;
         };
 
 

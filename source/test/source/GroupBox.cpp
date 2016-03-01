@@ -38,11 +38,11 @@ public:
 
     GWK_CONTROL_INLINE(GroupBox, GUnit)
     {
-        Gwk::Controls::GroupBox* pGroup = new Gwk::Controls::GroupBox(this);
-        pGroup->SetText("Group Box");
-        pGroup->SetSize(300, 200);
+        Gwk::Controls::GroupBox* group = new Gwk::Controls::GroupBox(this);
+        group->SetText("Group Box");
+        group->SetSize(300, 200);
 
-		Gwk::Controls::Label* label = new Gwk::Controls::Label( pGroup );
+		Gwk::Controls::Label* label = new Gwk::Controls::Label( group );
 		label->SetText(c_text);
 		label->SetWrap( true );
 		label->Dock(Docking::Fill);

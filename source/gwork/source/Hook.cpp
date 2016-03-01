@@ -13,21 +13,21 @@
 using namespace Gwk;
 using namespace Gwk::Hook;
 
-std::list<BaseHook*> g_HookList;
+std::list<BaseHook*> g_hookList;
 
-void Gwk::Hook::AddHook(BaseHook* pHook)
+void Gwk::Hook::AddHook(BaseHook* hook)
 {
-    g_HookList.push_back(pHook);
+    g_hookList.push_back(hook);
 }
 
-void Gwk::Hook::RemoveHook(BaseHook* pHook)
+void Gwk::Hook::RemoveHook(BaseHook* hook)
 {
-    g_HookList.remove(pHook);
+    g_hookList.remove(hook);
 }
 
 HookList& Gwk::Hook::GetHookList()
 {
-    return g_HookList;
+    return g_hookList;
 }
 
 #endif // if GWK_HOOKSYSTEM

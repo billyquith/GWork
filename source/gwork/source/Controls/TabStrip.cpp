@@ -20,22 +20,22 @@ using namespace Gwk::Controls;
 
 GWK_CONTROL_CONSTRUCTOR(TabStrip)
 {
-    m_TabDragControl = NULL;
+    m_tabDragControl = NULL;
     m_bAllowReorder = false;
 }
 
-bool TabStrip::DragAndDrop_HandleDrop(Gwk::DragAndDrop::Package* /*pPackage*/, int x, int y)
+bool TabStrip::DragAndDrop_HandleDrop(Gwk::DragAndDrop::Package* /*package*/, int x, int y)
 {
     Gwk::Point LocalPos = CanvasPosToLocal(Gwk::Point(x, y));
-    TabButton* pButton = gwk_cast<TabButton>(DragAndDrop::SourceControl);
-    TabControl* pTabControl = gwk_cast<TabControl>(GetParent());
+    TabButton* button = gwk_cast<TabButton>(DragAndDrop::SourceControl);
+    TabControl* tabControl = gwk_cast<TabControl>(GetParent());
 
-    if (pTabControl && pButton)
+    if (tabControl && button)
     {
-        if (pButton->GetTabControl() != pTabControl)
+        if (button->GetTabControl() != tabControl)
         {
             // We've moved tab controls!
-            pTabControl->AddPage(pButton);
+            tabControl->AddPage(button);
         }
     }
 
@@ -54,12 +54,12 @@ bool TabStrip::DragAndDrop_HandleDrop(Gwk::DragAndDrop::Package* /*pPackage*/, i
     return true;
 }
 
-bool TabStrip::DragAndDrop_CanAcceptPackage(Gwk::DragAndDrop::Package* pPackage)
+bool TabStrip::DragAndDrop_CanAcceptPackage(Gwk::DragAndDrop::Package* package)
 {
     if (!m_bAllowReorder)
         return false;
 
-    if (pPackage->name == "TabButtonMove")
+    if (package->name == "TabButtonMove")
         return true;
 
     return false;
@@ -67,77 +67,77 @@ bool TabStrip::DragAndDrop_CanAcceptPackage(Gwk::DragAndDrop::Package* pPackage)
 
 void TabStrip::Layout(Skin::Base* skin)
 {
-    Gwk::Point pLargestTab(5, 5);
+    Gwk::Point largestTab(5, 5);
     int iNum = 0;
 
     for (Base::List::iterator iter = Children.begin(); iter != Children.end(); ++iter)
     {
-        TabButton* pButton = gwk_cast<TabButton>(*iter);
+        TabButton* button = gwk_cast<TabButton>(*iter);
 
-        if (!pButton)
+        if (!button)
             continue;
 
-        pButton->SizeToContents();
+        button->SizeToContents();
         Margin m;
         int iNotFirst = iNum > 0 ? -1 : 0;
 
-        if (m_iDock == Docking::Top)
+        if (m_dock == Docking::Top)
         {
             m.left = iNotFirst;
-            pButton->Dock(Docking::Left);
+            button->Dock(Docking::Left);
         }
 
-        if (m_iDock == Docking::Left)
+        if (m_dock == Docking::Left)
         {
             m.top = iNotFirst;
-            pButton->Dock(Docking::Top);
+            button->Dock(Docking::Top);
         }
 
-        if (m_iDock == Docking::Right)
+        if (m_dock == Docking::Right)
         {
             m.top = iNotFirst;
-            pButton->Dock(Docking::Top);
+            button->Dock(Docking::Top);
         }
 
-        if (m_iDock == Docking::Bottom)
+        if (m_dock == Docking::Bottom)
         {
             m.left = iNotFirst;
-            pButton->Dock(Docking::Left);
+            button->Dock(Docking::Left);
         }
 
-        pLargestTab.x = Gwk::Max(pLargestTab.x, pButton->Width());
-        pLargestTab.y = Gwk::Max(pLargestTab.y, pButton->Height());
-        pButton->SetMargin(m);
+        largestTab.x = Gwk::Max(largestTab.x, button->Width());
+        largestTab.y = Gwk::Max(largestTab.y, button->Height());
+        button->SetMargin(m);
         iNum++;
     }
 
-    if (m_iDock == Docking::Top || m_iDock == Docking::Bottom)
-        SetSize(Width(), pLargestTab.y);
+    if (m_dock == Docking::Top || m_dock == Docking::Bottom)
+        SetSize(Width(), largestTab.y);
 
-    if (m_iDock == Docking::Left || m_iDock == Docking::Right)
-        SetSize(pLargestTab.x, Height());
+    if (m_dock == Docking::Left || m_dock == Docking::Right)
+        SetSize(largestTab.x, Height());
 
     ParentClass::Layout(skin);
 }
 
-void TabStrip::DragAndDrop_HoverEnter(Gwk::DragAndDrop::Package* /*pPackage*/, int /*x*/,
+void TabStrip::DragAndDrop_HoverEnter(Gwk::DragAndDrop::Package* /*package*/, int /*x*/,
                                       int /*y*/)
 {
-    if (m_TabDragControl)
+    if (m_tabDragControl)
         Debug::Msg("ERROR! TabStrip::DragAndDrop_HoverEnter\n");
 
-    m_TabDragControl = new ControlsInternal::Highlight(this);
-    m_TabDragControl->SetMouseInputEnabled(false);
-    m_TabDragControl->SetSize(3, Height());
+    m_tabDragControl = new ControlsInternal::Highlight(this);
+    m_tabDragControl->SetMouseInputEnabled(false);
+    m_tabDragControl->SetSize(3, Height());
 }
 
-void TabStrip::DragAndDrop_HoverLeave(Gwk::DragAndDrop::Package* /*pPackage*/)
+void TabStrip::DragAndDrop_HoverLeave(Gwk::DragAndDrop::Package* /*package*/)
 {
-    delete m_TabDragControl;
-    m_TabDragControl = NULL;
+    delete m_tabDragControl;
+    m_tabDragControl = NULL;
 }
 
-void TabStrip::DragAndDrop_Hover(Gwk::DragAndDrop::Package* /*pPackage*/, int x, int y)
+void TabStrip::DragAndDrop_Hover(Gwk::DragAndDrop::Package* /*package*/, int x, int y)
 {
     Gwk::Point LocalPos = CanvasPosToLocal(Gwk::Point(x, y));
     Base* DroppedOn = GetControlAt(LocalPos.x, LocalPos.y);
@@ -145,19 +145,19 @@ void TabStrip::DragAndDrop_Hover(Gwk::DragAndDrop::Package* /*pPackage*/, int x,
     if (DroppedOn && DroppedOn != this)
     {
         Gwk::Point DropPos = DroppedOn->CanvasPosToLocal(Gwk::Point(x, y));
-        m_TabDragControl->SetBounds(Gwk::Rect(0, 0, 3, Height()));
-        m_TabDragControl->BringToFront();
-        m_TabDragControl->SetPos(DroppedOn->X()-1, 0);
+        m_tabDragControl->SetBounds(Gwk::Rect(0, 0, 3, Height()));
+        m_tabDragControl->BringToFront();
+        m_tabDragControl->SetPos(DroppedOn->X()-1, 0);
 
         if (DropPos.x > DroppedOn->Width()/2)
-            m_TabDragControl->MoveBy(DroppedOn->Width()-1, 0);
+            m_tabDragControl->MoveBy(DroppedOn->Width()-1, 0);
 
-        m_TabDragControl->Dock(Docking::None);
+        m_tabDragControl->Dock(Docking::None);
     }
     else
     {
-        m_TabDragControl->Dock(Docking::Left);
-        m_TabDragControl->BringToFront();
+        m_tabDragControl->Dock(Docking::Left);
+        m_tabDragControl->BringToFront();
     }
 }
 
@@ -165,16 +165,16 @@ void TabStrip::SetTabPosition(Docking::Area pos)
 {
     Dock(pos);
 
-    if (m_iDock == Docking::Top)
+    if (m_dock == Docking::Top)
         SetPadding(Padding(5, 0, 0, 0));
 
-    if (m_iDock == Docking::Left)
+    if (m_dock == Docking::Left)
         SetPadding(Padding(0, 5, 0, 0));
 
-    if (m_iDock == Docking::Right)
+    if (m_dock == Docking::Right)
         SetPadding(Padding(0, 5, 0, 0));
 
-    if (m_iDock == Docking::Bottom)
+    if (m_dock == Docking::Bottom)
         SetPadding(Padding(5, 0, 0, 0));
 
     InvalidateChildren(true);

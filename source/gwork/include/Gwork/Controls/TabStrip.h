@@ -27,12 +27,12 @@ namespace Gwk
 
             virtual void Layout(Skin::Base* skin) override;
 
-            virtual bool DragAndDrop_HandleDrop(Gwk::DragAndDrop::Package* pPackage, int x, int y) override;
-            virtual bool DragAndDrop_CanAcceptPackage(Gwk::DragAndDrop::Package* pPackage) override;
+            virtual bool DragAndDrop_HandleDrop(Gwk::DragAndDrop::Package* package, int x, int y) override;
+            virtual bool DragAndDrop_CanAcceptPackage(Gwk::DragAndDrop::Package* package) override;
 
-            virtual void DragAndDrop_HoverEnter(Gwk::DragAndDrop::Package* pPackage, int x, int y) override;
-            virtual void DragAndDrop_HoverLeave(Gwk::DragAndDrop::Package* pPackage) override;
-            virtual void DragAndDrop_Hover(Gwk::DragAndDrop::Package* pPackage, int x, int y) override;
+            virtual void DragAndDrop_HoverEnter(Gwk::DragAndDrop::Package* package, int x, int y) override;
+            virtual void DragAndDrop_HoverLeave(Gwk::DragAndDrop::Package* package) override;
+            virtual void DragAndDrop_Hover(Gwk::DragAndDrop::Package* package, int x, int y) override;
 
             virtual void SetTabPosition(Docking::Area pos);
 
@@ -53,7 +53,7 @@ namespace Gwk
 
         private:
 
-            Base*   m_TabDragControl;
+            Base*   m_tabDragControl;
             bool m_bAllowReorder;
 
         };

@@ -40,5 +40,5 @@ class DesignerBase : public Controls::Base
 		Document* CurrentDocument();
 
 
-		Controls::TabControl*			m_DocumentHolder;
+		Controls::TabControl*			m_documentHolder;
 };

@@ -14,38 +14,38 @@ using namespace Gwk::Controls;
 
 GWK_CONTROL_CONSTRUCTOR(VerticalScrollBar)
 {
-    m_Bar->SetVertical();
-    m_ScrollButton[SCROLL_BUTTON_UP]->SetDirectionUp();
-    m_ScrollButton[SCROLL_BUTTON_UP]->onPress.Add(this, &VerticalScrollBar::NudgeUp);
-    m_ScrollButton[SCROLL_BUTTON_DOWN]->SetDirectionDown();
-    m_ScrollButton[SCROLL_BUTTON_DOWN]->onPress.Add(this, &VerticalScrollBar::NudgeDown);
-    m_Bar->onDragged.Add(this, &VerticalScrollBar::OnBarMoved);
+    m_bar->SetVertical();
+    m_scrollButton[SCROLL_BUTTON_UP]->SetDirectionUp();
+    m_scrollButton[SCROLL_BUTTON_UP]->onPress.Add(this, &VerticalScrollBar::NudgeUp);
+    m_scrollButton[SCROLL_BUTTON_DOWN]->SetDirectionDown();
+    m_scrollButton[SCROLL_BUTTON_DOWN]->onPress.Add(this, &VerticalScrollBar::NudgeDown);
+    m_bar->onDragged.Add(this, &VerticalScrollBar::OnBarMoved);
 }
 
 void VerticalScrollBar::Layout(Skin::Base* skin)
 {
     ParentClass::Layout(skin);
-    m_ScrollButton[SCROLL_BUTTON_UP]->Dock(Docking::Top);
-    m_ScrollButton[SCROLL_BUTTON_UP]->SetHeight(Width());
-    m_ScrollButton[SCROLL_BUTTON_DOWN]->Dock(Docking::Bottom);
-    m_ScrollButton[SCROLL_BUTTON_DOWN]->SetHeight(Width());
-    m_Bar->SetWidth(GetButtonSize());
+    m_scrollButton[SCROLL_BUTTON_UP]->Dock(Docking::Top);
+    m_scrollButton[SCROLL_BUTTON_UP]->SetHeight(Width());
+    m_scrollButton[SCROLL_BUTTON_DOWN]->Dock(Docking::Bottom);
+    m_scrollButton[SCROLL_BUTTON_DOWN]->SetHeight(Width());
+    m_bar->SetWidth(GetButtonSize());
     // Add padding
-    m_Bar->SetPadding(Padding(0, GetButtonSize(), 0, GetButtonSize()));
+    m_bar->SetPadding(Padding(0, GetButtonSize(), 0, GetButtonSize()));
     // Calculate bar sizes
     float barHeight = (m_fViewableContentSize/m_fContentSize)*(Height()-GetButtonSize());
 
     if (barHeight < GetButtonSize()/2)
         barHeight = GetButtonSize()/2;
 
-    m_Bar->SetHeight(barHeight);
-    m_Bar->SetHidden(Height()-(GetButtonSize()*2) <= barHeight);
+    m_bar->SetHeight(barHeight);
+    m_bar->SetHidden(Height()-(GetButtonSize()*2) <= barHeight);
 
     if (Hidden())
         SetScrolledAmount(0, true);
 
     // Based on our last scroll amount, produce a position for the bar
-    if (!m_Bar->IsDepressed())
+    if (!m_bar->IsDepressed())
         SetScrolledAmount(GetScrolledAmount(), true);
 }
 
@@ -90,9 +90,9 @@ void VerticalScrollBar::OnMouseClickLeft(int x, int y, bool bDown)
     {
         Gwk::Point clickPos = CanvasPosToLocal(Gwk::Point(x, y));
 
-        if (clickPos.y < m_Bar->Y())
+        if (clickPos.y < m_bar->Y())
             NudgeUp(this);
-        else if (clickPos.y > m_Bar->Y()+m_Bar->Height())
+        else if (clickPos.y > m_bar->Y()+m_bar->Height())
             NudgeDown(this);
 
         m_bDepressed = false;
@@ -102,8 +102,8 @@ void VerticalScrollBar::OnMouseClickLeft(int x, int y, bool bDown)
 
 float VerticalScrollBar::CalculateScrolledAmount()
 {
-    return (float)(m_Bar->Y()-
-                   GetButtonSize())/(float)(Height()-m_Bar->Height()-(GetButtonSize()*2));
+    return (float)(m_bar->Y()-
+                   GetButtonSize())/(float)(Height()-m_bar->Height()-(GetButtonSize()*2));
 }
 
 bool VerticalScrollBar::SetScrolledAmount(float amount, bool forceUpdate)
@@ -115,8 +115,8 @@ bool VerticalScrollBar::SetScrolledAmount(float amount, bool forceUpdate)
 
     if (forceUpdate)
     {
-        int newY = GetButtonSize()+(amount*((Height()-m_Bar->Height())-(GetButtonSize()*2)));
-        m_Bar->MoveTo(m_Bar->X(), newY);
+        int newY = GetButtonSize()+(amount*((Height()-m_bar->Height())-(GetButtonSize()*2)));
+        m_bar->MoveTo(m_bar->X(), newY);
     }
 
     return true;
@@ -124,7 +124,7 @@ bool VerticalScrollBar::SetScrolledAmount(float amount, bool forceUpdate)
 
 void VerticalScrollBar::OnBarMoved(Controls::Base* control)
 {
-    if (m_Bar->IsDepressed())
+    if (m_bar->IsDepressed())
     {
         SetScrolledAmount(CalculateScrolledAmount(), false);
         ParentClass::OnBarMoved(control);

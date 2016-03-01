@@ -63,21 +63,21 @@ const int TreeIndentation = 14;
 
 GWK_CONTROL_CONSTRUCTOR(TreeNode)
 {
-    m_TreeControl = NULL;
-    m_ToggleButton = new OpenToggleButton(this);
-    m_ToggleButton->SetBounds(0, 0, 15, 15);
-    m_ToggleButton->onToggle.Add(this, &TreeNode::OnToggleButtonPress);
-    m_Title = new TreeNodeText(this);
-    m_Title->Dock(Docking::Top);
-    m_Title->SetMargin(Margin(16, 0, 0, 0));
-    m_Title->onDoubleClick.Add(this, &TreeNode::OnDoubleClickName);
-    m_Title->onDown.Add(this, &TreeNode::OnClickName);
-    m_Title->onRightPress.Add(this, &TreeNode::OnRightPress);
-    m_InnerPanel = new Base(this);
-    m_InnerPanel->Dock(Docking::Top);
-    m_InnerPanel->SetHeight(100);
-    m_InnerPanel->SetMargin(Margin(TreeIndentation, 1, 0, 0));
-    m_InnerPanel->Hide();
+    m_treeControl = NULL;
+    m_toggleButton = new OpenToggleButton(this);
+    m_toggleButton->SetBounds(0, 0, 15, 15);
+    m_toggleButton->onToggle.Add(this, &TreeNode::OnToggleButtonPress);
+    m_title = new TreeNodeText(this);
+    m_title->Dock(Docking::Top);
+    m_title->SetMargin(Margin(16, 0, 0, 0));
+    m_title->onDoubleClick.Add(this, &TreeNode::OnDoubleClickName);
+    m_title->onDown.Add(this, &TreeNode::OnClickName);
+    m_title->onRightPress.Add(this, &TreeNode::OnRightPress);
+    m_innerPanel = new Base(this);
+    m_innerPanel->Dock(Docking::Top);
+    m_innerPanel->SetHeight(100);
+    m_innerPanel->SetMargin(Margin(TreeIndentation, 1, 0, 0));
+    m_innerPanel->Hide();
     m_bRoot = false;
     m_bSelected = false;
     m_bSelectable = true;
@@ -87,17 +87,17 @@ void TreeNode::Render(Skin::Base* skin)
 {
     int iBottom = 0;
 
-    if (m_InnerPanel->Children.size() > 0)
-        iBottom = m_InnerPanel->Children.back()->Y() + m_InnerPanel->Y();
+    if (m_innerPanel->Children.size() > 0)
+        iBottom = m_innerPanel->Children.back()->Y() + m_innerPanel->Y();
 
     skin->DrawTreeNode(this,
-                       m_InnerPanel->Visible(),
+                       m_innerPanel->Visible(),
                        IsSelected(),
-                       m_Title->Height(),
-                       m_Title->TextRight(),
-                       m_ToggleButton->Y() + m_ToggleButton->Height()/2,
+                       m_title->Height(),
+                       m_title->TextRight(),
+                       m_toggleButton->Y() + m_toggleButton->Height()/2,
                        iBottom,
-                       GetParent() == m_TreeControl);
+                       GetParent() == m_treeControl);
 }
 
 TreeNode* TreeNode::AddNode(const String& strLabel)
@@ -106,31 +106,31 @@ TreeNode* TreeNode::AddNode(const String& strLabel)
     node->SetText(strLabel);
     node->Dock(Docking::Top);
     node->SetRoot(gwk_cast<TreeControl>(this) != NULL);
-    node->SetTreeControl(m_TreeControl);
+    node->SetTreeControl(m_treeControl);
 
-    if (m_TreeControl)
-        m_TreeControl->OnNodeAdded(node);
+    if (m_treeControl)
+        m_treeControl->OnNodeAdded(node);
 
     return node;
 }
 
 void TreeNode::Layout(Skin::Base* skin)
 {
-    if (m_ToggleButton)
+    if (m_toggleButton)
     {
-        if (m_Title)
-            m_ToggleButton->SetPos(0, (m_Title->Height()-m_ToggleButton->Height()) / 2);
+        if (m_title)
+            m_toggleButton->SetPos(0, (m_title->Height()-m_toggleButton->Height()) / 2);
 
-        if (m_InnerPanel->NumChildren() == 0)
+        if (m_innerPanel->NumChildren() == 0)
         {
-            m_ToggleButton->Hide();
-            m_ToggleButton->SetToggleState(false);
-            m_InnerPanel->Hide();
+            m_toggleButton->Hide();
+            m_toggleButton->SetToggleState(false);
+            m_innerPanel->Hide();
         }
         else
         {
-            m_ToggleButton->Show();
-            m_InnerPanel->SizeToChildren(false, true);
+            m_toggleButton->Show();
+            m_innerPanel->SizeToChildren(false, true);
         }
     }
 
@@ -145,35 +145,35 @@ void TreeNode::PostLayout(Skin::Base* /*skin*/)
 
 void TreeNode::SetText(const String& text)
 {
-    m_Title->SetText(text);
+    m_title->SetText(text);
 }
 
 const String& TreeNode::GetText()
 {
-    return m_Title->GetText();
+    return m_title->GetText();
 }
 
 void TreeNode::SetImage(const String& text)
 {
-    m_Title->SetImage(text);
+    m_title->SetImage(text);
 }
 
 void TreeNode::Open()
 {
-    m_InnerPanel->Show();
+    m_innerPanel->Show();
 
-    if (m_ToggleButton)
-        m_ToggleButton->SetToggleState(true);
+    if (m_toggleButton)
+        m_toggleButton->SetToggleState(true);
 
     Invalidate();
 }
 
 void TreeNode::Close()
 {
-    m_InnerPanel->Hide();
+    m_innerPanel->Hide();
 
-    if (m_ToggleButton)
-        m_ToggleButton->SetToggleState(false);
+    if (m_toggleButton)
+        m_toggleButton->SetToggleState(false);
 
     Invalidate();
 }
@@ -185,23 +185,23 @@ void TreeNode::ExpandAll()
 
     for (Base::List::iterator iter = children.begin(); iter != children.end(); ++iter)
     {
-        TreeNode* pChild = gwk_cast<TreeNode>(*iter);
+        TreeNode* child = gwk_cast<TreeNode>(*iter);
 
-        if (!pChild)
+        if (!child)
             continue;
 
-        pChild->ExpandAll();
+        child->ExpandAll();
     }
 }
 
 Button* TreeNode::GetButton()
 {
-    return m_Title;
+    return m_title;
 }
 
 void TreeNode::OnToggleButtonPress(Base* /*control*/)
 {
-    if (m_ToggleButton->GetToggleState())
+    if (m_toggleButton->GetToggleState())
         Open();
     else
         Close();
@@ -209,10 +209,10 @@ void TreeNode::OnToggleButtonPress(Base* /*control*/)
 
 void TreeNode::OnDoubleClickName(Base* /*control*/)
 {
-    if (!m_ToggleButton->Visible())
+    if (!m_toggleButton->Visible())
         return;
 
-    m_ToggleButton->Toggle();
+    m_toggleButton->Toggle();
 }
 
 void TreeNode::OnClickName(Base* /*control*/)
@@ -236,8 +236,8 @@ void TreeNode::SetSelected(bool b, bool FireEvents)
 
     m_bSelected = b;
 
-    if (m_Title)
-        m_Title->SetToggleState(m_bSelected);
+    if (m_title)
+        m_title->SetToggleState(m_bSelected);
 
     if (FireEvents)
     {
@@ -256,23 +256,23 @@ void TreeNode::DeselectAll()
 {
     m_bSelected = false;
 
-    if (m_Title)
-        m_Title->SetToggleState(m_bSelected);
+    if (m_title)
+        m_title->SetToggleState(m_bSelected);
 
     Base::List& children = GetChildNodes();
 
     for (Base::List::iterator iter = children.begin(); iter != children.end(); ++iter)
     {
-        TreeNode* pChild = gwk_cast<TreeNode>(*iter);
+        TreeNode* child = gwk_cast<TreeNode>(*iter);
 
-        if (!pChild)
+        if (!child)
             continue;
 
-        pChild->DeselectAll();
+        child->DeselectAll();
     }
 }
 
 Controls::Base::List& TreeNode::GetChildNodes()
 {
-    return m_InnerPanel->GetChildren();
+    return m_innerPanel->GetChildren();
 }

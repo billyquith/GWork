@@ -16,12 +16,12 @@ using namespace Gwk::Controls;
 
 GWK_CONTROL_CONSTRUCTOR(Properties)
 {
-    m_SplitterBar = new SplitterBar(this);
-    m_SplitterBar->SetPos(80, 0);
-    m_SplitterBar->SetCursor(Gwk::CursorType::SizeWE);
-    m_SplitterBar->onDragged.Add(this, &Properties::OnSplitterMoved);
-    m_SplitterBar->SetShouldDrawBackground(false);
-    m_SplitterBar->DoNotIncludeInSize();
+    m_splitterBar = new SplitterBar(this);
+    m_splitterBar->SetPos(80, 0);
+    m_splitterBar->SetCursor(Gwk::CursorType::SizeWE);
+    m_splitterBar->onDragged.Add(this, &Properties::OnSplitterMoved);
+    m_splitterBar->SetShouldDrawBackground(false);
+    m_splitterBar->DoNotIncludeInSize();
 }
 
 void Properties::PostLayout(Gwk::Skin::Base* /*skin*/)
@@ -29,7 +29,7 @@ void Properties::PostLayout(Gwk::Skin::Base* /*skin*/)
     if (SizeToChildren(false, true))
         InvalidateParent();
 
-    m_SplitterBar->SetSize(3, Height());
+    m_splitterBar->SetSize(3, Height());
 }
 
 void Properties::OnSplitterMoved(Controls::Base* /*control*/)
@@ -39,7 +39,7 @@ void Properties::OnSplitterMoved(Controls::Base* /*control*/)
 
 int Properties::GetSplitWidth()
 {
-    return m_SplitterBar->X();
+    return m_splitterBar->X();
 }
 
 PropertyRow* Properties::Add(const String& text, const String& value)
@@ -47,14 +47,14 @@ PropertyRow* Properties::Add(const String& text, const String& value)
     return Add(text, new Property::Text(this), value);
 }
 
-PropertyRow* Properties::Add(const String& text, Property::Base* pProp, const String& value)
+PropertyRow* Properties::Add(const String& text, Property::Base* prop, const String& value)
 {
     PropertyRow* row = new PropertyRow(this);
     row->Dock(Docking::Top);
     row->GetLabel()->SetText(text);
-    row->SetProperty(pProp);
-    pProp->SetPropertyValue(value, true);
-    m_SplitterBar->BringToFront();
+    row->SetProperty(prop);
+    prop->SetPropertyValue(value, true);
+    m_splitterBar->BringToFront();
     return row;
 }
 
@@ -94,7 +94,7 @@ class PropertyRowLabel : public Label
     GWK_CONTROL_INLINE(PropertyRowLabel, Label)
     {
         SetAlignment(Docking::Left|Docking::CenterV);
-        m_pPropertyRow = NULL;
+        m_propertyRow = NULL;
     }
 
     void UpdateColours()
@@ -102,10 +102,10 @@ class PropertyRowLabel : public Label
         if (IsDisabled())
             return SetTextColor(GetSkin()->Colors.Button.Disabled);
 
-        if (m_pPropertyRow && m_pPropertyRow->IsEditing())
+        if (m_propertyRow && m_propertyRow->IsEditing())
             return SetTextColor(GetSkin()->Colors.Properties.Label_Selected);
 
-        if (m_pPropertyRow && m_pPropertyRow->IsHovered())
+        if (m_propertyRow && m_propertyRow->IsHovered())
             return SetTextColor(GetSkin()->Colors.Properties.Label_Hover);
 
         SetTextColor(GetSkin()->Colors.Properties.Label_Normal);
@@ -113,24 +113,24 @@ class PropertyRowLabel : public Label
 
     void SetPropertyRow(PropertyRow* p)
     {
-        m_pPropertyRow = p;
+        m_propertyRow = p;
     }
 
 protected:
 
-    PropertyRow*    m_pPropertyRow;
+    PropertyRow*    m_propertyRow;
 };
 
 
 GWK_CONTROL_CONSTRUCTOR(PropertyRow)
 {
-    m_Property = NULL;
-    PropertyRowLabel* pLabel = new PropertyRowLabel(this);
-    pLabel->SetPropertyRow(this);
-    pLabel->Dock(Docking::Left);
-    pLabel->SetAlignment(Docking::Left|Docking::CenterV);
-    pLabel->SetMargin(Margin(2, 0, 0, 0));
-    m_Label = pLabel;
+    m_property = NULL;
+    PropertyRowLabel* label = new PropertyRowLabel(this);
+    label->SetPropertyRow(this);
+    label->Dock(Docking::Left);
+    label->SetAlignment(Docking::Left|Docking::CenterV);
+    label->SetMargin(Margin(2, 0, 0, 0));
+    m_label = label;
 }
 
 void PropertyRow::Render(Gwk::Skin::Base* skin)
@@ -149,29 +149,29 @@ void PropertyRow::Render(Gwk::Skin::Base* skin)
     }
 
     /* SORRY */
-    skin->DrawPropertyRow(this, m_Label->Right(), IsEditing(), IsHovered()|
-                          m_Property->IsHovered());
+    skin->DrawPropertyRow(this, m_label->Right(), IsEditing(), IsHovered()|
+                          m_property->IsHovered());
 }
 
 void PropertyRow::Layout(Gwk::Skin::Base* /*skin*/)
 {
-    Properties* pParent = gwk_cast<Properties>(GetParent());
+    Properties* parent = gwk_cast<Properties>(GetParent());
 
-    if (!pParent)
+    if (!parent)
         return;
 
-    m_Label->SetWidth(pParent->GetSplitWidth());
+    m_label->SetWidth(parent->GetSplitWidth());
 
-    if (m_Property)
-        SetHeight( Max(m_Label->Height(), m_Property->Height()) );
+    if (m_property)
+        SetHeight( Max(m_label->Height(), m_property->Height()) );
 }
 
 void PropertyRow::SetProperty(Property::Base* prop)
 {
-    m_Property = prop;
-    m_Property->SetParent(this);
-    m_Property->Dock(Docking::Fill);
-    m_Property->onChange.Add(this, &ThisClass::OnPropertyValueChanged);
+    m_property = prop;
+    m_property->SetParent(this);
+    m_property->Dock(Docking::Fill);
+    m_property->onChange.Add(this, &ThisClass::OnPropertyValueChanged);
 }
 
 void PropertyRow::OnPropertyValueChanged(Gwk::Controls::Base* /*control*/)
@@ -183,10 +183,10 @@ void PropertyRow::OnPropertyValueChanged(Gwk::Controls::Base* /*control*/)
 
 void PropertyRow::OnEditingChanged()
 {
-    m_Label->Redraw();
+    m_label->Redraw();
 }
 
 void PropertyRow::OnHoverChanged()
 {
-    m_Label->Redraw();
+    m_label->Redraw();
 }

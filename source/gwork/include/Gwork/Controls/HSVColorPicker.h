@@ -29,13 +29,13 @@ namespace Gwk
             Gwk::Color GetColor();
             Gwk::Color GetDefaultColor()
             {
-                return m_Before->GetColor();
+                return m_before->GetColor();
             }
 
             void SetColor(Gwk::Color color, bool onlyHue = false, bool reset = false);
 
-            void ColorBoxChanged(Gwk::Controls::Base* pControl);
-            void ColorSliderChanged(Gwk::Controls::Base* pControl);
+            void ColorBoxChanged(Gwk::Controls::Base* control);
+            void ColorSliderChanged(Gwk::Controls::Base* control);
             void NumericTyped(Gwk::Controls::Base* control);
 
             void UpdateControls(Gwk::Color newColor);
@@ -44,10 +44,10 @@ namespace Gwk
 
         protected:
 
-            ColorLerpBox* m_LerpBox;
-            ColorSlider* m_ColorSlider;
-            ControlsInternal::ColorDisplay* m_Before;
-            ControlsInternal::ColorDisplay* m_After;
+            ColorLerpBox* m_lerpBox;
+            ColorSlider* m_colorSlider;
+            ControlsInternal::ColorDisplay* m_before;
+            ControlsInternal::ColorDisplay* m_after;
         };
 
 

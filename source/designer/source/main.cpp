@@ -25,14 +25,14 @@ int main(int, char **)
 
 	skin.SetDefaultFont( "OpenSans.ttf", 11 );
 
-	DesignerBase* pDesignerBase = new DesignerBase( &window_canvas );
+	DesignerBase* designerBase = new DesignerBase( &window_canvas );
 
 	while ( !window_canvas.WantsQuit() )
 	{
 		window_canvas.DoThink();
 	}
 	
-	delete pDesignerBase;
+	delete designerBase;
 	
 	return 0;
 }

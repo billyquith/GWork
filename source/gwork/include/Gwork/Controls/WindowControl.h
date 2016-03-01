@@ -60,13 +60,13 @@ namespace Gwk
 
         protected:
 
-            Gwk::ControlsInternal::Dragger*    m_TitleBar;
-            Gwk::Controls::Label*              m_Title;
-            Gwk::Controls::WindowCloseButton*  m_CloseButton;
+            Gwk::ControlsInternal::Dragger*    m_titleBar;
+            Gwk::Controls::Label*              m_title;
+            Gwk::Controls::WindowCloseButton*  m_closeButton;
 
             bool m_bDeleteOnClose;
 
-            ControlsInternal::Modal* m_Modal;
+            ControlsInternal::Modal* m_modal;
         };
 
 

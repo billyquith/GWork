@@ -24,39 +24,39 @@ namespace Gwk
 
                 GWK_CONTROL_INLINE(Checkbox, Property::Base)
                 {
-                    m_Checkbox = new Gwk::Controls::CheckBox(this);
-                    m_Checkbox->SetShouldDrawBackground(false);
-                    m_Checkbox->onCheckChanged.Add(this, &ParentClass::OnPropertyValueChanged);
-                    m_Checkbox->SetTabable(true);
-                    m_Checkbox->SetKeyboardInputEnabled(true);
-                    m_Checkbox->SetPos(2, 1);
+                    m_checkbox = new Gwk::Controls::CheckBox(this);
+                    m_checkbox->SetShouldDrawBackground(false);
+                    m_checkbox->onCheckChanged.Add(this, &ParentClass::OnPropertyValueChanged);
+                    m_checkbox->SetTabable(true);
+                    m_checkbox->SetKeyboardInputEnabled(true);
+                    m_checkbox->SetPos(2, 1);
                     SetHeight(18);
                 }
 
                 virtual String GetPropertyValue() override
                 {
-                    return m_Checkbox->IsChecked() ? "1" : "0";
+                    return m_checkbox->IsChecked() ? "1" : "0";
                 }
 
                 virtual void SetPropertyValue(const String& v, bool bFireChangeEvents) override
                 {
                     if (v == "1" || v == "true" || v == "TRUE" || v == "yes" || v == "YES")
-                        return m_Checkbox->SetChecked(true);
+                        return m_checkbox->SetChecked(true);
 
-                    return m_Checkbox->SetChecked(false);
+                    return m_checkbox->SetChecked(false);
                 }
 
                 virtual bool IsEditing() override
                 {
-                    return m_Checkbox->HasFocus();
+                    return m_checkbox->HasFocus();
                 }
 
                 virtual bool IsHovered() override
                 {
-                    return ParentClass::IsHovered() || m_Checkbox->IsHovered();
+                    return ParentClass::IsHovered() || m_checkbox->IsHovered();
                 }
 
-                Gwk::Controls::CheckBox* m_Checkbox;
+                Gwk::Controls::CheckBox* m_checkbox;
             };
 
 

@@ -6,53 +6,53 @@ GWK_CONTROL_CONSTRUCTOR( Properties )
 {
 	SetSize( 200, 200 );
 
-	m_Props = new Controls::PropertyTree( this );
-	m_Props->Dock( Docking::Fill );
+	m_props = new Controls::PropertyTree( this );
+	m_props->Dock( Docking::Fill );
 
 
 }
 
-void Properties::WatchCanvas( DocumentCanvas* pCanvas )
+void Properties::WatchCanvas( DocumentCanvas* canvas )
 {
-	m_pCanvas = pCanvas;
-	m_pCanvas->onSelectionChanged.Add( this, &ThisClass::OnCanvasSelectionChanged );
-	m_pCanvas->onPropertiesChanged.Add( this, &ThisClass::OnPropertiesChanged );
+	m_canvas = canvas;
+	m_canvas->onSelectionChanged.Add( this, &ThisClass::OnCanvasSelectionChanged );
+	m_canvas->onPropertiesChanged.Add( this, &ThisClass::OnPropertiesChanged );
 
 	
-	//m_pCanvas->onChildAdded.Add( this, &ThisClass::OnCanvasChildAdded );
+	//m_canvas->onChildAdded.Add( this, &ThisClass::OnCanvasChildAdded );
 
 }
 
 
 void Properties::OnCanvasSelectionChanged( Event::Info info )
 {
-	m_Props->Clear();
+	m_props->Clear();
 
-	m_SelectedControls = info.ControlList;
+	m_selectedControls = info.ControlList;
 
-	for ( ControlList::List::const_iterator it = m_SelectedControls.list.begin(); it != m_SelectedControls.list.end(); ++it )
+	for ( ControlList::List::const_iterator it = m_selectedControls.list.begin(); it != m_selectedControls.list.end(); ++it )
 	{
 		AddPropertiesFromControl( *it, true );
 	}
 
-	m_Props->ExpandAll();
+	m_props->ExpandAll();
 }
 
-void Properties::AddPropertiesFromControl( Controls::Base* pControl, bool bAllowDifferent )
+void Properties::AddPropertiesFromControl( Controls::Base* control, bool bAllowDifferent )
 {
-	if ( !pControl->UserData.Exists( "ControlFactory" ) )
+	if ( !control->UserData.Exists( "ControlFactory" ) )
 		return;
 
-	ControlFactory::Base* cf = pControl->UserData.Get<ControlFactory::Base*>( "ControlFactory" );
+	ControlFactory::Base* cf = control->UserData.Get<ControlFactory::Base*>( "ControlFactory" );
 
 	//
 	// Foreach control control factory on this control
 	//
 	while ( cf )
 	{
-		Controls::Properties* properties = m_Props->Find( cf->Name() );
+		Controls::Properties* properties = m_props->Find( cf->Name() );
 
-		if ( !properties ) properties = m_Props->Add( cf->Name() );
+		if ( !properties ) properties = m_props->Add( cf->Name() );
 
 		//
 		// And foreach property in that control factory
@@ -62,7 +62,7 @@ void Properties::AddPropertiesFromControl( Controls::Base* pControl, bool bAllow
 		for ( ; it != itEnd; ++it )
 		{
 			Gwk::String strPropertyName = (*it)->Name();
-			Gwk::String strValue = (*it)->GetValueAsString(pControl);
+			Gwk::String strValue = (*it)->GetValueAsString(control);
 
 			//
 			// Add a property row to our control
@@ -110,14 +110,14 @@ void Properties::AddPropertiesFromControl( Controls::Base* pControl, bool bAllow
 
 void Properties::OnPropertyChanged( Event::Info info )
 {
-	for ( ControlList::List::const_iterator it = m_SelectedControls.list.begin(); it != m_SelectedControls.list.end(); ++it )
+	for ( ControlList::List::const_iterator it = m_selectedControls.list.begin(); it != m_selectedControls.list.end(); ++it )
 	{
-		Controls::Base* pControl = (*it);
-		ControlFactory::Base* cf = pControl->UserData.Get<ControlFactory::Base*>( "ControlFactory" );
+		Controls::Base* control = (*it);
+		ControlFactory::Base* cf = control->UserData.Get<ControlFactory::Base*>( "ControlFactory" );
 
 		while ( cf )
 		{
-			cf->SetControlValue( pControl, info.ControlCaller->GetName(), info.String );
+			cf->SetControlValue( control, info.ControlCaller->GetName(), info.String );
 			cf = cf->GetBaseFactory();
 		}
 	}
@@ -125,12 +125,12 @@ void Properties::OnPropertyChanged( Event::Info info )
 
 void Properties::OnPropertiesChanged( Event::Info info )
 {
-	m_SelectedControls = info.ControlList;
+	m_selectedControls = info.ControlList;
 	
-	for ( ControlList::List::const_iterator it = m_SelectedControls.list.begin(); it != m_SelectedControls.list.end(); ++it )
+	for ( ControlList::List::const_iterator it = m_selectedControls.list.begin(); it != m_selectedControls.list.end(); ++it )
 	{
-		AddPropertiesFromControl( *it, it != m_SelectedControls.list.begin() );
+		AddPropertiesFromControl( *it, it != m_selectedControls.list.begin() );
 	}
 
-	m_Props->ExpandAll();
+	m_props->ExpandAll();
 }

@@ -26,20 +26,20 @@
 namespace Gwk {
 namespace Controls {
 
-Base::Base(Base* pParent, const Gwk::String& Name)
+Base::Base(Base* parent, const Gwk::String& Name)
 {
-    m_Parent = NULL;
-    m_ActualParent = NULL;
-    m_InnerPanel = NULL;
-    m_Skin = NULL;
+    m_parent = NULL;
+    m_actualParent = NULL;
+    m_innerPanel = NULL;
+    m_skin = NULL;
     SetName(Name);
-    SetParent(pParent);
+    SetParent(parent);
     m_bHidden = false;
-    m_Bounds = Gwk::Rect(0, 0, 10, 10);
-    m_Padding = Padding(0, 0, 0, 0);
-    m_Margin = Margin(0, 0, 0, 0);
-    m_iDock = Docking::None;
-    m_DragAndDrop_Package = NULL;
+    m_bounds = Gwk::Rect(0, 0, 10, 10);
+    m_padding = Padding(0, 0, 0, 0);
+    m_margin = Margin(0, 0, 0, 0);
+    m_dock = Docking::None;
+    m_dragAndDrop_Package = NULL;
     RestrictToParent(false);
     SetMouseInputEnabled(true);
     SetKeyboardInputEnabled(false);
@@ -66,19 +66,19 @@ Base::~Base()
 
     while (iter != Children.end())
     {
-        Base* pChild = *iter;
+        Base* child = *iter;
         iter = Children.erase(iter);
-        delete pChild;
+        delete child;
     }
 
-    for (AccelMap::iterator accelIt = m_Accelerators.begin();
-         accelIt != m_Accelerators.end();
+    for (AccelMap::iterator accelIt = m_accelerators.begin();
+         accelIt != m_accelerators.end();
          ++accelIt)
     {
         delete accelIt->second;
     }
 
-    m_Accelerators.clear();
+    m_accelerators.clear();
     SetParent(NULL);
 
     if (Gwk::HoveredControl == this)
@@ -96,10 +96,10 @@ Base::~Base()
     Anim::Cancel(this);
 #endif
 
-    if (m_DragAndDrop_Package)
+    if (m_dragAndDrop_Package)
     {
-        delete m_DragAndDrop_Package;
-        m_DragAndDrop_Package = NULL;
+        delete m_dragAndDrop_Package;
+        m_dragAndDrop_Package = NULL;
     }
 }
 
@@ -117,42 +117,42 @@ void Base::DelayedDelete()
 
 Canvas* Base::GetCanvas()
 {
-    Base* pCanvas = m_Parent;
+    Base* canvas = m_parent;
 
-    if (!pCanvas)
+    if (!canvas)
         return NULL;
 
-    return pCanvas->GetCanvas();
+    return canvas->GetCanvas();
 }
 
-void Base::SetParent(Base* pParent)
+void Base::SetParent(Base* parent)
 {
-    if (m_Parent == pParent)
+    if (m_parent == parent)
         return;
 
-    if (m_Parent)
-        m_Parent->RemoveChild(this);
+    if (m_parent)
+        m_parent->RemoveChild(this);
 
-    m_Parent = pParent;
-    m_ActualParent = NULL;
+    m_parent = parent;
+    m_actualParent = NULL;
 
-    if (m_Parent)
-        m_Parent->AddChild(this);
+    if (m_parent)
+        m_parent->AddChild(this);
 }
 
 void Base::Dock(Docking::Area dock)
 {
-    if (m_iDock == dock)
+    if (m_dock == dock)
         return;
 
-    m_iDock = dock;
+    m_dock = dock;
     Invalidate();
     InvalidateParent();
 }
 
 Docking::Area Base::GetDock() const
 {
-    return m_iDock;
+    return m_dock;
 }
 
 bool Base::Hidden() const
@@ -181,10 +181,10 @@ void Base::InvalidateChildren(bool bRecursive)
             (*it)->InvalidateChildren(bRecursive);
     }
 
-    if (m_InnerPanel)
+    if (m_innerPanel)
     {
-        for (Base::List::iterator it = m_InnerPanel->Children.begin();
-             it != m_InnerPanel->Children.end();
+        for (Base::List::iterator it = m_innerPanel->Children.begin();
+             it != m_innerPanel->Children.end();
              ++it)
         {
             (*it)->Invalidate();
@@ -225,27 +225,27 @@ void Base::Position(unsigned int pos, int xpadding, int ypadding)
 
 void Base::SendToBack()
 {
-    if (!m_ActualParent)
+    if (!m_actualParent)
         return;
 
-    if (m_ActualParent->Children.front() == this)
+    if (m_actualParent->Children.front() == this)
         return;
 
-    m_ActualParent->Children.remove(this);
-    m_ActualParent->Children.push_front(this);
+    m_actualParent->Children.remove(this);
+    m_actualParent->Children.push_front(this);
     InvalidateParent();
 }
 
 void Base::BringToFront()
 {
-    if (!m_ActualParent)
+    if (!m_actualParent)
         return;
 
-    if (m_ActualParent->Children.back() == this)
+    if (m_actualParent->Children.back() == this)
         return;
 
-    m_ActualParent->Children.remove(this);
-    m_ActualParent->Children.push_back(this);
+    m_actualParent->Children.remove(this);
+    m_actualParent->Children.push_back(this);
     InvalidateParent();
     Redraw();
 }
@@ -256,71 +256,71 @@ Controls::Base* Base::FindChildByName(const Gwk::String& name, bool bRecursive)
 
     for (iter = Children.begin(); iter != Children.end(); ++iter)
     {
-        Base* pChild = *iter;
+        Base* child = *iter;
 
-        if (!pChild->GetName().empty() && pChild->GetName() == name)
-            return pChild;
+        if (!child->GetName().empty() && child->GetName() == name)
+            return child;
 
         if (bRecursive)
         {
-            Controls::Base* pSubChild = pChild->FindChildByName(name, true);
+            Controls::Base* subChild = child->FindChildByName(name, true);
 
-            if (pSubChild)
-                return pSubChild;
+            if (subChild)
+                return subChild;
         }
     }
 
     return NULL;
 }
 
-void Base::BringNextToControl(Controls::Base* pChild, bool bBehind)
+void Base::BringNextToControl(Controls::Base* child, bool bBehind)
 {
-    if (!m_ActualParent)
+    if (!m_actualParent)
         return;
 
-    m_ActualParent->Children.remove(this);
+    m_actualParent->Children.remove(this);
     Base::List::iterator it = std::find(
-        m_ActualParent->Children.begin(), m_ActualParent->Children.end(), pChild);
+        m_actualParent->Children.begin(), m_actualParent->Children.end(), child);
 
-    if (it == m_ActualParent->Children.end())
+    if (it == m_actualParent->Children.end())
         return BringToFront();
 
     if (bBehind)
     {
         ++it;
 
-        if (it == m_ActualParent->Children.end())
+        if (it == m_actualParent->Children.end())
             return BringToFront();
     }
 
-    m_ActualParent->Children.insert(it, this);
+    m_actualParent->Children.insert(it, this);
     InvalidateParent();
 }
 
-void Base::AddChild(Base* pChild)
+void Base::AddChild(Base* child)
 {
-    if (m_InnerPanel)
+    if (m_innerPanel)
     {
-        m_InnerPanel->AddChild(pChild);
+        m_innerPanel->AddChild(child);
         return;
     }
 
-    Children.push_back(pChild);
-    OnChildAdded(pChild);
-    pChild->m_ActualParent = this;
+    Children.push_back(child);
+    OnChildAdded(child);
+    child->m_actualParent = this;
 }
 
-void Base::RemoveChild(Base* pChild)
+void Base::RemoveChild(Base* child)
 {
     // If we removed our innerpanel, remove our pointer to it
-    if (m_InnerPanel == pChild)
-        m_InnerPanel = NULL;
+    if (m_innerPanel == child)
+        m_innerPanel = NULL;
 
-    if (m_InnerPanel)
-        m_InnerPanel->RemoveChild(pChild);
+    if (m_innerPanel)
+        m_innerPanel->RemoveChild(child);
 
-    Children.remove(pChild);
-    OnChildRemoved(pChild);
+    Children.remove(child);
+    OnChildRemoved(child);
 }
 
 void Base::RemoveAllChildren()
@@ -333,7 +333,7 @@ void Base::RemoveAllChildren()
 
 unsigned int Base::NumChildren()
 {
-    // Include m_InnerPanel's children here?
+    // Include m_innerPanel's children here?
     return (unsigned int)Children.size();
 }
 
@@ -354,23 +354,23 @@ Controls::Base* Base::GetChild(unsigned int i)
     return NULL;
 }
 
-void Base::OnChildAdded(Base* /*pChild*/)
+void Base::OnChildAdded(Base* /*child*/)
 {
     Invalidate();
 }
 
-void Base::OnChildRemoved(Base* /*pChild*/)
+void Base::OnChildRemoved(Base* /*child*/)
 {
     Invalidate();
 }
 
 Skin::Base* Base::GetSkin(void)
 {
-    if (m_Skin)
-        return m_Skin;
+    if (m_skin)
+        return m_skin;
 
-    if (m_Parent)
-        return m_Parent->GetSkin();
+    if (m_parent)
+        return m_parent->GetSkin();
 
     Debug::AssertCheck(0, "Base::GetSkin Returning NULL!\n");
     return NULL;
@@ -385,19 +385,19 @@ void Base::MoveTo(int x, int y)
 {
     if (m_bRestrictToParent && GetParent())
     {
-        Base* pParent = GetParent();
+        Base* parent = GetParent();
 
-        if (x-GetPadding().left < pParent->GetMargin().left)
-            x = pParent->GetMargin().left+GetPadding().left;
+        if (x-GetPadding().left < parent->GetMargin().left)
+            x = parent->GetMargin().left+GetPadding().left;
 
-        if (y-GetPadding().top < pParent->GetMargin().top)
-            y = pParent->GetMargin().top+GetPadding().top;
+        if (y-GetPadding().top < parent->GetMargin().top)
+            y = parent->GetMargin().top+GetPadding().top;
 
-        if (x+Width()+GetPadding().right > pParent->Width()-pParent->GetMargin().right)
-            x = pParent->Width()-pParent->GetMargin().right-Width()-GetPadding().right;
+        if (x+Width()+GetPadding().right > parent->Width()-parent->GetMargin().right)
+            x = parent->Width()-parent->GetMargin().right-Width()-GetPadding().right;
 
-        if (y+Height()+GetPadding().bottom > pParent->Height()-pParent->GetMargin().bottom)
-            y = pParent->Height()-pParent->GetMargin().bottom-Height()-GetPadding().bottom;
+        if (y+Height()+GetPadding().bottom > parent->Height()-parent->GetMargin().bottom)
+            y = parent->Height()-parent->GetMargin().bottom-Height()-GetPadding().bottom;
     }
 
     SetBounds(x, y, Width(), Height());
@@ -420,11 +420,11 @@ bool Base::SetSize(const Point& p)
 
 bool Base::SetBounds(const Gwk::Rect& bounds)
 {
-    if (m_Bounds == bounds)
+    if (m_bounds == bounds)
         return false;
     
     const Gwk::Rect oldBounds = GetBounds();
-    m_Bounds = bounds;
+    m_bounds = bounds;
     OnBoundsChanged(oldBounds);
     return true;
 }
@@ -442,7 +442,7 @@ void Base::OnBoundsChanged(Gwk::Rect oldBounds)
     if (GetParent())
         GetParent()->OnChildBoundsChanged(oldBounds, this);
 
-    if (m_Bounds.w != oldBounds.w || m_Bounds.h != oldBounds.h)
+    if (m_bounds.w != oldBounds.w || m_bounds.h != oldBounds.h)
         Invalidate();
 
     Redraw();
@@ -457,7 +457,7 @@ void Base::OnScaleChanged()
     }
 }
 
-void Base::OnChildBoundsChanged(Gwk::Rect /*oldChildBounds*/, Base* /*pChild*/)
+void Base::OnChildBoundsChanged(Gwk::Rect /*oldChildBounds*/, Base* /*child*/)
 {
 }
 
@@ -465,7 +465,7 @@ void Base::Render(Gwk::Skin::Base* /*skin*/)
 {
 }
 
-void Base::DoCacheRender(Gwk::Skin::Base* skin, Gwk::Controls::Base* pMaster)
+void Base::DoCacheRender(Gwk::Skin::Base* skin, Gwk::Controls::Base* master)
 {
     Gwk::Renderer::Base* render = skin->GetRender();
     Gwk::Renderer::ICacheToTexture* cache = render->GetCTT();
@@ -473,10 +473,10 @@ void Base::DoCacheRender(Gwk::Skin::Base* skin, Gwk::Controls::Base* pMaster)
     if (!cache)
         return;
 
-    Gwk::Point pOldRenderOffset = render->GetRenderOffset();
+    Gwk::Point oldRenderOffset = render->GetRenderOffset();
     Gwk::Rect rOldRegion = render->ClipRegion();
 
-    if (this != pMaster)
+    if (this != master)
     {
         render->AddRenderOffset(GetBounds());
         render->AddClipRegion(GetBounds());
@@ -503,13 +503,13 @@ void Base::DoCacheRender(Gwk::Skin::Base* skin, Gwk::Controls::Base* pMaster)
                 // Now render my kids
                 for (Base::List::iterator iter = Children.begin(); iter != Children.end(); ++iter)
                 {
-                    Base* pChild = *iter;
+                    Base* child = *iter;
 
-                    if (!pChild->Hidden())
+                    if (!child->Hidden())
                     {
                         // Draw child control using normal render. If it is cached it will
                         // be handled in the same way as this one.
-                        pChild->DoRender(skin);
+                        child->DoRender(skin);
                     }
                 }
             }
@@ -527,7 +527,7 @@ void Base::DoCacheRender(Gwk::Skin::Base* skin, Gwk::Controls::Base* pMaster)
     render->SetClipRegion(rOldRegion);
     render->StartClip();
     {
-        render->SetRenderOffset(pOldRenderOffset);
+        render->SetRenderOffset(oldRenderOffset);
         cache->DrawCachedControlTexture(this);
     }
     render->EndClip();
@@ -537,8 +537,8 @@ void Base::DoRender(Gwk::Skin::Base* skin)
 {
     // If this control has a different skin,
     // then so does its children.
-    if (m_Skin)
-        skin = m_Skin;
+    if (m_skin)
+        skin = m_skin;
 
     // Do think
     Think();
@@ -556,7 +556,7 @@ void Base::DoRender(Gwk::Skin::Base* skin)
 void Base::RenderRecursive(Gwk::Skin::Base* skin, const Gwk::Rect& cliprect)
 {
     Gwk::Renderer::Base* render = skin->GetRender();
-    Gwk::Point pOldRenderOffset = render->GetRenderOffset();
+    Gwk::Point oldRenderOffset = render->GetRenderOffset();
     render->AddRenderOffset(cliprect);
     RenderUnder(skin);
     Gwk::Rect rOldRegion = render->ClipRegion();
@@ -571,7 +571,7 @@ void Base::RenderRecursive(Gwk::Skin::Base* skin, const Gwk::Rect& cliprect)
 
         if (!render->ClipRegionVisible())
         {
-            render->SetRenderOffset(pOldRenderOffset);
+            render->SetRenderOffset(oldRenderOffset);
             render->SetClipRegion(rOldRegion);
             return;
         }
@@ -589,12 +589,12 @@ void Base::RenderRecursive(Gwk::Skin::Base* skin, const Gwk::Rect& cliprect)
             // Now render my kids
             for (Base::List::iterator iter = Children.begin(); iter != Children.end(); ++iter)
             {
-                Base* pChild = *iter;
+                Base* child = *iter;
 
-                if (pChild->Hidden())
+                if (child->Hidden())
                     continue;
 
-                pChild->DoRender(skin);
+                child->DoRender(skin);
             }
         }
     }
@@ -610,16 +610,16 @@ void Base::RenderRecursive(Gwk::Skin::Base* skin, const Gwk::Rect& cliprect)
             RenderFocus(skin);
         }
         render->EndClip();
-        render->SetRenderOffset(pOldRenderOffset);
+        render->SetRenderOffset(oldRenderOffset);
     }
 }
 
 void Base::SetSkin(Skin::Base* skin, bool doChildren)
 {
-    if (m_Skin == skin)
+    if (m_skin == skin)
         return;
 
-    m_Skin = skin;
+    m_skin = skin;
     Invalidate();
     Redraw();
     OnSkinChanged(skin);
@@ -640,8 +640,8 @@ void Base::OnSkinChanged(Skin::Base* /*skin*/)
 
 bool Base::OnMouseWheeled(int iDelta)
 {
-    if (m_ActualParent)
-        return m_ActualParent->OnMouseWheeled(iDelta);
+    if (m_actualParent)
+        return m_actualParent->OnMouseWheeled(iDelta);
 
     return false;
 }
@@ -716,9 +716,9 @@ bool Base::IsOnTop()
         return false;
 
     Base::List::iterator iter = GetParent()->Children.begin();
-    Base* pChild = *iter;
+    Base* child = *iter;
 
-    if (pChild == this)
+    if (child == this)
         return true;
 
     return false;
@@ -730,7 +730,7 @@ void Base::Touch()
         GetParent()->OnChildTouched(this);
 }
 
-void Base::OnChildTouched(Controls::Base* /*pChild*/)
+void Base::OnChildTouched(Controls::Base* /*child*/)
 {
     Touch();
 }
@@ -745,12 +745,12 @@ Base* Base::GetControlAt(int x, int y, bool bOnlyIfMouseEnabled)
 
     for (Base::List::reverse_iterator iter = Children.rbegin(); iter != Children.rend(); ++iter)
     {
-        Base* pChild = *iter;
-        Base* pFound = NULL;
-        pFound = pChild->GetControlAt(x-pChild->X(), y-pChild->Y(), bOnlyIfMouseEnabled);
+        Base* child = *iter;
+        Base* found = NULL;
+        found = child->GetControlAt(x-child->X(), y-child->Y(), bOnlyIfMouseEnabled);
 
-        if (pFound)
-            return pFound;
+        if (found)
+            return found;
     }
 
     if (bOnlyIfMouseEnabled && !GetMouseInputEnabled())
@@ -767,8 +767,8 @@ void Base::Layout(Skin::Base* skin)
 
 void Base::RecurseLayout(Skin::Base* skin)
 {
-    if (m_Skin)
-        skin = m_Skin;
+    if (m_skin)
+        skin = m_skin;
 
     if (Hidden())
         return;
@@ -782,43 +782,43 @@ void Base::RecurseLayout(Skin::Base* skin)
     Gwk::Rect rBounds = GetRenderBounds();
 
     // Adjust bounds for padding
-    rBounds.x += m_Padding.left;
-    rBounds.w -= m_Padding.left + m_Padding.right;
-    rBounds.y += m_Padding.top;
-    rBounds.h -= m_Padding.top + m_Padding.bottom;
+    rBounds.x += m_padding.left;
+    rBounds.w -= m_padding.left + m_padding.right;
+    rBounds.y += m_padding.top;
+    rBounds.h -= m_padding.top + m_padding.bottom;
 
     for (Base::List::iterator iter = Children.begin(); iter != Children.end(); ++iter)
     {
-        Base* pChild = *iter;
+        Base* child = *iter;
 
-        if (pChild->Hidden())
+        if (child->Hidden())
             continue;
 
-        int iDock = pChild->GetDock();
+        int iDock = child->GetDock();
 
         if (iDock & Docking::Fill)
             continue;
 
         if (iDock & Docking::Top)
         {
-            const Margin& margin = pChild->GetMargin();
-            pChild->SetBounds(rBounds.x+margin.left,
+            const Margin& margin = child->GetMargin();
+            child->SetBounds(rBounds.x+margin.left,
                               rBounds.y+margin.top,
                               rBounds.w-margin.left-margin.right,
-                              pChild->Height());
-            int iHeight = margin.top+margin.bottom+pChild->Height();
+                              child->Height());
+            int iHeight = margin.top+margin.bottom+child->Height();
             rBounds.y += iHeight;
             rBounds.h -= iHeight;
         }
 
         if (iDock & Docking::Left)
         {
-            const Margin& margin = pChild->GetMargin();
-            pChild->SetBounds(rBounds.x+margin.left,
+            const Margin& margin = child->GetMargin();
+            child->SetBounds(rBounds.x+margin.left,
                               rBounds.y+margin.top,
-                              pChild->Width(),
+                              child->Width(),
                               rBounds.h-margin.top-margin.bottom);
-            int iWidth = margin.left+margin.right+pChild->Width();
+            int iWidth = margin.left+margin.right+child->Width();
             rBounds.x += iWidth;
             rBounds.w -= iWidth;
         }
@@ -826,46 +826,46 @@ void Base::RecurseLayout(Skin::Base* skin)
         if (iDock & Docking::Right)
         {
             // TODO: THIS MARGIN CODE MIGHT NOT BE FULLY FUNCTIONAL
-            const Margin& margin = pChild->GetMargin();
-            pChild->SetBounds((rBounds.x+rBounds.w)-pChild->Width()-margin.right,
+            const Margin& margin = child->GetMargin();
+            child->SetBounds((rBounds.x+rBounds.w)-child->Width()-margin.right,
                               rBounds.y+margin.top,
-                              pChild->Width(),
+                              child->Width(),
                               rBounds.h-margin.top-margin.bottom);
-            int iWidth = margin.left+margin.right+pChild->Width();
+            int iWidth = margin.left+margin.right+child->Width();
             rBounds.w -= iWidth;
         }
 
         if (iDock & Docking::Bottom)
         {
             // TODO: THIS MARGIN CODE MIGHT NOT BE FULLY FUNCTIONAL
-            const Margin& margin = pChild->GetMargin();
-            pChild->SetBounds(rBounds.x+margin.left,
-                              (rBounds.y+rBounds.h)-pChild->Height()-margin.bottom,
+            const Margin& margin = child->GetMargin();
+            child->SetBounds(rBounds.x+margin.left,
+                              (rBounds.y+rBounds.h)-child->Height()-margin.bottom,
                               rBounds.w-margin.left-margin.right,
-                              pChild->Height());
-            rBounds.h -= pChild->Height()+margin.bottom+margin.top;
+                              child->Height());
+            rBounds.h -= child->Height()+margin.bottom+margin.top;
         }
 
-        pChild->RecurseLayout(skin);
+        child->RecurseLayout(skin);
     }
 
-    m_InnerBounds = rBounds; 
+    m_innerBounds = rBounds; 
 
     //
     // Fill uses the left over space, so do that now.
     //
     for (Base::List::iterator iter = Children.begin(); iter != Children.end(); ++iter)
     {
-        Base* pChild = *iter;
-        int iDock = pChild->GetDock();
+        Base* child = *iter;
+        int iDock = child->GetDock();
 
         if (!(iDock&Docking::Fill))
             continue;
 
-        const Margin& margin = pChild->GetMargin();
-        pChild->SetBounds(rBounds.x+margin.left, rBounds.y+margin.top,
+        const Margin& margin = child->GetMargin();
+        child->SetBounds(rBounds.x+margin.left, rBounds.y+margin.top,
                           rBounds.w-margin.left-margin.right, rBounds.h-margin.top-margin.bottom);
-        pChild->RecurseLayout(skin);
+        child->RecurseLayout(skin);
     }
 
     PostLayout(skin);
@@ -883,11 +883,11 @@ void Base::RecurseLayout(Skin::Base* skin)
         GetCanvas()->NextTab = NULL;
 }
 
-bool Base::IsChild(Controls::Base* pChild)
+bool Base::IsChild(Controls::Base* child)
 {
     for (Base::List::iterator iter = Children.begin(); iter != Children.end(); ++iter)
     {
-        if (pChild == (*iter))
+        if (child == (*iter))
             return true;
     }
 
@@ -896,7 +896,7 @@ bool Base::IsChild(Controls::Base* pChild)
 
 Gwk::Point Base::LocalPosToCanvas(const Gwk::Point& pnt)
 {
-    if (m_Parent)
+    if (m_parent)
     {
         int x = pnt.x+X();
         int y = pnt.y+Y();
@@ -904,13 +904,13 @@ Gwk::Point Base::LocalPosToCanvas(const Gwk::Point& pnt)
         // If our parent has an innerpanel and we're a child of it
         // add its offset onto us.
         //
-        if (m_Parent->m_InnerPanel && m_Parent->m_InnerPanel->IsChild(this))
+        if (m_parent->m_innerPanel && m_parent->m_innerPanel->IsChild(this))
         {
-            x += m_Parent->m_InnerPanel->X();
-            y += m_Parent->m_InnerPanel->Y();
+            x += m_parent->m_innerPanel->X();
+            y += m_parent->m_innerPanel->Y();
         }
 
-        return m_Parent->LocalPosToCanvas(Gwk::Point(x, y));
+        return m_parent->LocalPosToCanvas(Gwk::Point(x, y));
     }
 
     return pnt;
@@ -918,7 +918,7 @@ Gwk::Point Base::LocalPosToCanvas(const Gwk::Point& pnt)
 
 Gwk::Point Base::CanvasPosToLocal(const Gwk::Point& pnt)
 {
-    if (m_Parent)
+    if (m_parent)
     {
         int x = pnt.x-X();
         int y = pnt.y-Y();
@@ -926,13 +926,13 @@ Gwk::Point Base::CanvasPosToLocal(const Gwk::Point& pnt)
         // If our parent has an innerpanel and we're a child of it
         // add its offset onto us.
         //
-        if (m_Parent->m_InnerPanel && m_Parent->m_InnerPanel->IsChild(this))
+        if (m_parent->m_innerPanel && m_parent->m_innerPanel->IsChild(this))
         {
-            x -= m_Parent->m_InnerPanel->X();
-            y -= m_Parent->m_InnerPanel->Y();
+            x -= m_parent->m_innerPanel->X();
+            y -= m_parent->m_innerPanel->Y();
         }
 
-        return m_Parent->CanvasPosToLocal(Gwk::Point(x, y));
+        return m_parent->CanvasPosToLocal(Gwk::Point(x, y));
     }
 
     return pnt;
@@ -940,10 +940,10 @@ Gwk::Point Base::CanvasPosToLocal(const Gwk::Point& pnt)
 
 bool Base::IsMenuComponent()
 {
-    if (!m_Parent)
+    if (!m_parent)
         return false;
 
-    return m_Parent->IsMenuComponent();
+    return m_parent->IsMenuComponent();
 }
 
 void Base::CloseMenus()
@@ -956,23 +956,23 @@ void Base::CloseMenus()
 
 void Base::UpdateRenderBounds()
 {
-    m_RenderBounds.x = 0;
-    m_RenderBounds.y = 0;
-    m_RenderBounds.w = m_Bounds.w;
-    m_RenderBounds.h = m_Bounds.h;
+    m_renderBounds.x = 0;
+    m_renderBounds.y = 0;
+    m_renderBounds.w = m_bounds.w;
+    m_renderBounds.h = m_bounds.h;
 }
 
 void Base::UpdateCursor()
 {
-    Platform::SetCursor(m_Cursor);
+    Platform::SetCursor(m_cursor);
 }
 
 DragAndDrop::Package* Base::DragAndDrop_GetPackage(int /*x*/, int /*y*/)
 {
-    return m_DragAndDrop_Package;
+    return m_dragAndDrop_Package;
 }
 
-bool Base::DragAndDrop_HandleDrop(Gwk::DragAndDrop::Package* /*pPackage*/, int /*x*/, int /*y*/)
+bool Base::DragAndDrop_HandleDrop(Gwk::DragAndDrop::Package* /*package*/, int /*x*/, int /*y*/)
 {
     DragAndDrop::SourceControl->SetParent(this);
     return true;
@@ -980,26 +980,26 @@ bool Base::DragAndDrop_HandleDrop(Gwk::DragAndDrop::Package* /*pPackage*/, int /
 
 bool Base::DragAndDrop_Draggable()
 {
-    if (!m_DragAndDrop_Package)
+    if (!m_dragAndDrop_Package)
         return false;
 
-    return m_DragAndDrop_Package->draggable;
+    return m_dragAndDrop_Package->draggable;
 }
 
-void Base::DragAndDrop_SetPackage(bool bDraggable, const String& strName, void* pUserData)
+void Base::DragAndDrop_SetPackage(bool bDraggable, const String& strName, void* userData)
 {
-    if (!m_DragAndDrop_Package)
-        m_DragAndDrop_Package = new Gwk::DragAndDrop::Package();
+    if (!m_dragAndDrop_Package)
+        m_dragAndDrop_Package = new Gwk::DragAndDrop::Package();
 
-    m_DragAndDrop_Package->draggable = bDraggable;
-    m_DragAndDrop_Package->name = strName;
-    m_DragAndDrop_Package->userdata = pUserData;
+    m_dragAndDrop_Package->draggable = bDraggable;
+    m_dragAndDrop_Package->name = strName;
+    m_dragAndDrop_Package->userdata = userData;
 }
 
-void Base::DragAndDrop_StartDragging(Gwk::DragAndDrop::Package* pPackage, int x, int y)
+void Base::DragAndDrop_StartDragging(Gwk::DragAndDrop::Package* package, int x, int y)
 {
-    pPackage->holdoffset = CanvasPosToLocal(Gwk::Point(x, y));
-    pPackage->drawcontrol = this;
+    package->holdoffset = CanvasPosToLocal(Gwk::Point(x, y));
+    package->drawcontrol = this;
 }
 
 bool Base::SizeToChildren(bool w, bool h)
@@ -1016,16 +1016,16 @@ Gwk::Point Base::ChildrenSize()
 
     for (Base::List::iterator iter = Children.begin(); iter != Children.end(); ++iter)
     {
-        Base* pChild = *iter;
+        Base* child = *iter;
 
-        if (pChild->Hidden())
+        if (child->Hidden())
             continue;
 
-        if (!pChild->ShouldIncludeInSize())
+        if (!child->ShouldIncludeInSize())
             continue;
 
-        size.x = Gwk::Max(size.x, pChild->Right());
-        size.y = Gwk::Max(size.y, pChild->Bottom());
+        size.x = Gwk::Max(size.x, child->Right());
+        size.y = Gwk::Max(size.y, child->Bottom());
     }
 
     return size;
@@ -1033,26 +1033,26 @@ Gwk::Point Base::ChildrenSize()
 
 void Base::SetPadding(const Padding& padding)
 {
-    if (m_Padding.left == padding.left &&
-        m_Padding.top == padding.top &&
-        m_Padding.right == padding.right &&
-        m_Padding.bottom == padding.bottom)
+    if (m_padding.left == padding.left &&
+        m_padding.top == padding.top &&
+        m_padding.right == padding.right &&
+        m_padding.bottom == padding.bottom)
         return;
 
-    m_Padding = padding;
+    m_padding = padding;
     Invalidate();
     InvalidateParent();
 }
 
 void Base::SetMargin(const Margin& margin)
 {
-    if (m_Margin.top == margin.top &&
-        m_Margin.left == margin.left &&
-        m_Margin.bottom == margin.bottom &&
-        m_Margin.right == margin.right)
+    if (m_margin.top == margin.top &&
+        m_margin.left == margin.left &&
+        m_margin.bottom == margin.bottom &&
+        m_margin.right == margin.right)
         return;
 
-    m_Margin = margin;
+    m_margin = margin;
     Invalidate();
     InvalidateParent();
 }
@@ -1061,9 +1061,9 @@ bool Base::HandleAccelerator(Gwk::String& accelerator)
 {
     if (Gwk::KeyboardFocus == this || !AccelOnlyFocus())
     {
-        AccelMap::iterator iter = m_Accelerators.find(accelerator);
+        AccelMap::iterator iter = m_accelerators.find(accelerator);
 
-        if (iter != m_Accelerators.end())
+        if (iter != m_accelerators.end())
         {
             iter->second->Call(this);
             return true;
@@ -1185,12 +1185,12 @@ void Base::SetToolTip(const String& strText)
 
 String Base::GetChildValue(const Gwk::String& strName)
 {
-    Base* pChild = FindChildByName(strName, true);
+    Base* child = FindChildByName(strName, true);
 
-    if (!pChild)
+    if (!child)
         return "";
 
-    return pChild->GetValue();
+    return child->GetValue();
 }
 
 String Base::GetValue()
@@ -1210,18 +1210,18 @@ int Base::GetNamedChildren(Gwk::ControlList& list, const Gwk::String& strName, b
 
     for (iter = Children.begin(); iter != Children.end(); ++iter)
     {
-        Base* pChild = *iter;
+        Base* child = *iter;
 
-        if (!pChild->GetName().empty() && pChild->GetName() == strName)
+        if (!child->GetName().empty() && child->GetName() == strName)
         {
-            list.Add(pChild);
+            list.Add(child);
             iFound++;
         }
 
         if (!bDeep)
             continue;
 
-        iFound += pChild->GetNamedChildren(list, strName, bDeep);
+        iFound += child->GetNamedChildren(list, strName, bDeep);
     }
 
     return iFound;
@@ -1236,25 +1236,25 @@ Gwk::ControlList Base::GetNamedChildren(const Gwk::String& strName, bool bDeep)
 
 #ifndef GWK_NO_ANIMATION
 
-void Base::Anim_WidthIn(float fLength, float fDelay, float fEase)
+void Base::Anim_widthIn(float fLength, float fDelay, float fEase)
 {
     Gwk::Anim::Add(this, new Gwk::Anim::Size::Width(0, Width(), fLength, false, fDelay, fEase));
     SetWidth(0);
 }
 
-void Base::Anim_HeightIn(float fLength, float fDelay, float fEase)
+void Base::Anim_heightIn(float fLength, float fDelay, float fEase)
 {
     Gwk::Anim::Add(this,
                     new Gwk::Anim::Size::Height(0, Height(), fLength, false, fDelay, fEase));
     SetHeight(0);
 }
 
-void Base::Anim_WidthOut(float fLength, bool bHide, float fDelay, float fEase)
+void Base::Anim_widthOut(float fLength, bool bHide, float fDelay, float fEase)
 {
     Gwk::Anim::Add(this, new Gwk::Anim::Size::Width(Width(), 0, fLength, bHide, fDelay, fEase));
 }
 
-void Base::Anim_HeightOut(float fLength, bool bHide, float fDelay, float fEase)
+void Base::Anim_heightOut(float fLength, bool bHide, float fDelay, float fEase)
 {
     Gwk::Anim::Add(this,
                     new Gwk::Anim::Size::Height(Height(), 0, fLength, bHide, fDelay, fEase));

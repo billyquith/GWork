@@ -30,37 +30,37 @@ namespace Gwk
 
             virtual void DrawFilledRect(Gwk::Rect rect);
 
-            virtual void LoadFont(Gwk::Font* pFont);
-            virtual void FreeFont(Gwk::Font* pFont);
-            virtual void RenderText(Gwk::Font* pFont, Gwk::Point pos,
+            virtual void LoadFont(Gwk::Font* font);
+            virtual void FreeFont(Gwk::Font* font);
+            virtual void RenderText(Gwk::Font* font, Gwk::Point pos,
                                     const Gwk::String& text);
-            virtual Gwk::Point MeasureText(Gwk::Font* pFont, const Gwk::String& text);
+            virtual Gwk::Point MeasureText(Gwk::Font* font, const Gwk::String& text);
 
             void StartClip();
             void EndClip();
 
-            void DrawTexturedRect(Gwk::Texture* pTexture, Gwk::Rect pTargetRect,
+            void DrawTexturedRect(Gwk::Texture* texture, Gwk::Rect targetRect,
                                   float u1 = 0.0f, float v1 = 0.0f,
                                   float u2 = 1.0f, float v2 = 1.0f);
-            void        LoadTexture(Gwk::Texture* pTexture);
-            void        FreeTexture(Gwk::Texture* pTexture);
-            Gwk::Color  PixelColour(Gwk::Texture* pTexture, unsigned int x, unsigned int y,
+            void        LoadTexture(Gwk::Texture* texture);
+            void        FreeTexture(Gwk::Texture* texture);
+            Gwk::Color  PixelColour(Gwk::Texture* texture, unsigned int x, unsigned int y,
                                     const Gwk::Color& col_default);
 
             void DrawLinedRect(Gwk::Rect rect);
             void DrawShavedCornerRect(Gwk::Rect rect, bool bSlight = false);
             // void DrawPixel(int x, int y);
 
-            bool BeginContext(Gwk::WindowProvider* pWindow);
-            bool EndContext(Gwk::WindowProvider* pWindow);
-            bool PresentContext(Gwk::WindowProvider* pWindow);
+            bool BeginContext(Gwk::WindowProvider* window);
+            bool EndContext(Gwk::WindowProvider* window);
+            bool PresentContext(Gwk::WindowProvider* window);
 
             // Cache to texture.
             ICacheToTexture* GetCTT();
 
         protected:
 
-            ALLEGRO_COLOR m_Color;
+            ALLEGRO_COLOR m_color;
             AllegroCTT *m_ctt;
         };
 

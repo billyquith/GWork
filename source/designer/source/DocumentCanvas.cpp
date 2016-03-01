@@ -7,13 +7,13 @@ GWK_CONTROL_CONSTRUCTOR( DocumentCanvas )
 {
 	SetShouldDrawBackground( true );
 
-	m_SelectionLayer = new SelectionLayer( this );
-	m_SelectionLayer->onSelectionChanged.Add( this, &ThisClass::OnSelectionChanged );
-	m_SelectionLayer->onPropertiesChanged.Add( this, &ThisClass::OnPropertiesChanged );
-	m_SelectionLayer->onHierachyChanged.Add( this, &ThisClass::OnHierachyChanged );
+	m_selectionLayer = new SelectionLayer( this );
+	m_selectionLayer->onSelectionChanged.Add( this, &ThisClass::OnSelectionChanged );
+	m_selectionLayer->onPropertiesChanged.Add( this, &ThisClass::OnPropertiesChanged );
+	m_selectionLayer->onHierachyChanged.Add( this, &ThisClass::OnHierachyChanged );
 
-	ControlFactory::Base* pControlFactory = Gwk::ControlFactory::Find( "DesignerCanvas" );
-	UserData.Set( "ControlFactory", pControlFactory );
+	ControlFactory::Base* controlFactory = Gwk::ControlFactory::Find( "DesignerCanvas" );
+	UserData.Set( "ControlFactory", controlFactory );
 }
 
 
@@ -24,38 +24,38 @@ void DocumentCanvas::Render( Gwk::Skin::Base* skin )
 
 void DocumentCanvas::PostLayout( Skin::Base* skin )
 {
-	m_SelectionLayer->BringToFront();
-	m_SelectionLayer->SetBounds( 0, 0, Width(), Height() );
+	m_selectionLayer->BringToFront();
+	m_selectionLayer->SetBounds( 0, 0, Width(), Height() );
 }
 
-bool DocumentCanvas::DragAndDrop_CanAcceptPackage( Gwk::DragAndDrop::Package* pPackage )
+bool DocumentCanvas::DragAndDrop_CanAcceptPackage( Gwk::DragAndDrop::Package* package )
 {
-	return pPackage->name == "ControlSpawn";
+	return package->name == "ControlSpawn";
 }
 
-bool DocumentCanvas::DragAndDrop_HandleDrop( Gwk::DragAndDrop::Package* pPackage, int x, int y )
+bool DocumentCanvas::DragAndDrop_HandleDrop( Gwk::DragAndDrop::Package* package, int x, int y )
 {
-	Gwk::Point pPos = CanvasPosToLocal( Gwk::Point( x, y ) );
+	Gwk::Point pos = CanvasPosToLocal( Gwk::Point( x, y ) );
 
-	m_SelectionLayer->SetHidden( true );
-	Controls::Base* pDroppedOn = GetControlAt( pPos.x, pPos.y );
-	pDroppedOn = FindParentControlFactoryControl( pDroppedOn );
-	m_SelectionLayer->SetHidden( false );
+	m_selectionLayer->SetHidden( true );
+	Controls::Base* droppedOn = GetControlAt( pos.x, pos.y );
+	droppedOn = FindParentControlFactoryControl( droppedOn );
+	m_selectionLayer->SetHidden( false );
 
-	if ( !pDroppedOn ) pDroppedOn = this;
+	if ( !droppedOn ) droppedOn = this;
 
-	pPos = pDroppedOn->CanvasPosToLocal( Gwk::Point( x, y ) );
+	pos = droppedOn->CanvasPosToLocal( Gwk::Point( x, y ) );
 	
 
-	if ( pPackage->name == "ControlSpawn" )
+	if ( package->name == "ControlSpawn" )
 	{
-		ControlFactory::Base* pControlFactory = static_cast<ControlFactory::Base*>(pPackage->userdata);
-		Controls::Base* pControl = pControlFactory->CreateInstance( pDroppedOn );
-		pControl->SetPos( pPos );
-		pControl->SetMouseInputEnabled( true );
+		ControlFactory::Base* controlFactory = static_cast<ControlFactory::Base*>(package->userdata);
+		Controls::Base* control = controlFactory->CreateInstance( droppedOn );
+		control->SetPos( pos );
+		control->SetMouseInputEnabled( true );
 
-		pControl->UserData.Set( "ControlFactory", pControlFactory );
-		onChildAdded.Call( this, Event::Information( pControl ) );
+		control->UserData.Set( "ControlFactory", controlFactory );
+		onChildAdded.Call( this, Event::Information( control ) );
 
 		return true;
 	}
@@ -65,11 +65,11 @@ bool DocumentCanvas::DragAndDrop_HandleDrop( Gwk::DragAndDrop::Package* pPackage
 
 void DocumentCanvas::SelectControls( ControlList& CtrlList )
 {
-	m_SelectionLayer->ClearSelection();
+	m_selectionLayer->ClearSelection();
 
 	for ( ControlList::List::const_iterator it = CtrlList.list.begin(); it != CtrlList.list.end(); ++it )
 	{
-		m_SelectionLayer->AddSelection( (*it) );
+		m_selectionLayer->AddSelection( (*it) );
 	}
 
 	// Let everything else know the selection changed
@@ -99,18 +99,18 @@ void DocumentCanvas::Command( const Gwk::String& str )
 {
 	if ( str == "delete" )
 	{
-		for ( ControlList::List::const_iterator it = m_SelectionLayer->GetSelected().list.begin(); it != m_SelectionLayer->GetSelected().list.end(); ++it )
+		for ( ControlList::List::const_iterator it = m_selectionLayer->GetSelected().list.begin(); it != m_selectionLayer->GetSelected().list.end(); ++it )
 		{
 			if ( *it == this ) continue;
 			(*it)->DelayedDelete();
 		}
 
-		m_SelectionLayer->ClearSelection();
+		m_selectionLayer->ClearSelection();
 	}
 
 	if ( str == "bringforward" )
 	{
-		for ( ControlList::List::const_iterator it = m_SelectionLayer->GetSelected().list.begin(); it != m_SelectionLayer->GetSelected().list.end(); ++it )
+		for ( ControlList::List::const_iterator it = m_selectionLayer->GetSelected().list.begin(); it != m_selectionLayer->GetSelected().list.end(); ++it )
 		{
 			if ( *it == this ) continue;
 			(*it)->BringToFront();
@@ -119,7 +119,7 @@ void DocumentCanvas::Command( const Gwk::String& str )
 
 	if ( str == "sendback" )
 	{
-		for ( ControlList::List::const_iterator it = m_SelectionLayer->GetSelected().list.begin(); it != m_SelectionLayer->GetSelected().list.end(); ++it )
+		for ( ControlList::List::const_iterator it = m_selectionLayer->GetSelected().list.begin(); it != m_selectionLayer->GetSelected().list.end(); ++it )
 		{
 			if ( *it == this ) continue;
 			(*it)->SendToBack();

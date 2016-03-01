@@ -85,14 +85,14 @@ namespace GwkUtil {
                 return strFloat;
             }
 
-            BString BinaryToHex(const void* pData, unsigned int iLength)
+            BString BinaryToHex(const void* data, unsigned int iLength)
             {
                 BString str = "";
-                const unsigned char* pBytes = (const unsigned char*)pData;
+                const unsigned char* bytes = (const unsigned char*)data;
 
                 for (unsigned int i = 0; i < iLength; i++)
                 {
-                    str += Print("%02x", pBytes[i]);
+                    str += Print("%02x", bytes[i]);
                 }
 
                 return str;

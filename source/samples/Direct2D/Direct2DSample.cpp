@@ -24,13 +24,13 @@
 #pragma comment(lib, "dwrite.lib")
 #pragma comment(lib, "windowscodecs.lib")
 
-HWND g_pHWND = NULL;
-ID2D1Factory*           g_pD2DFactory = NULL;
-IDWriteFactory*         g_pDWriteFactory = NULL;
-IWICImagingFactory*     g_pWICFactory = NULL;
-ID2D1HwndRenderTarget*  g_pRT = NULL; // this is device-specific
+HWND g_hWND = NULL;
+ID2D1Factory*           g_d2DFactory = NULL;
+IDWriteFactory*         g_dWriteFactory = NULL;
+IWICImagingFactory*     g_wICFactory = NULL;
+ID2D1HwndRenderTarget*  g_rT = NULL; // this is device-specific
 
-Gwk::Renderer::Direct2D* g_pRenderer = NULL;
+Gwk::Renderer::Direct2D* g_renderer = NULL;
 
 //
 // Windows bullshit to create a Window to render to.
@@ -68,12 +68,12 @@ int main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCm
 {
     HRESULT hr = D2D1CreateFactory(
         D2D1_FACTORY_TYPE_SINGLE_THREADED,
-        &g_pD2DFactory
+        &g_d2DFactory
         );
     hr = DWriteCreateFactory(
         DWRITE_FACTORY_TYPE_SHARED,
         __uuidof(IDWriteFactory),
-        reinterpret_cast<IUnknown**>(&g_pDWriteFactory)
+        reinterpret_cast<IUnknown**>(&g_dWriteFactory)
         );
     hr = CoInitialize(NULL);
     hr = CoCreateInstance(
@@ -81,22 +81,22 @@ int main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCm
         NULL,
         CLSCTX_INPROC_SERVER,
         IID_IWICImagingFactory,
-        reinterpret_cast<void**>(&g_pWICFactory)
+        reinterpret_cast<void**>(&g_wICFactory)
         );
-    g_pHWND = CreateGameWindow();
+    g_hWND = CreateGameWindow();
     createDeviceResources();
     //
     // Create a Gwork Direct2D renderer
     //
-    g_pRenderer = new Gwk::Renderer::Direct2D(g_pRT, g_pDWriteFactory, g_pWICFactory);
+    g_renderer = new Gwk::Renderer::Direct2D(g_rT, g_dWriteFactory, g_wICFactory);
     runSample();
-    delete g_pRenderer;
-    g_pRenderer = NULL;
+    delete g_renderer;
+    g_renderer = NULL;
 
-    if (g_pRT != NULL)
+    if (g_rT != NULL)
     {
-        g_pRT->Release();
-        g_pRT = NULL;
+        g_rT->Release();
+        g_rT = NULL;
     }
 }
 
@@ -104,25 +104,25 @@ HRESULT createDeviceResources()
 {
     HRESULT hr = S_OK;
 
-    if (!g_pRT)
+    if (!g_rT)
     {
         RECT rc;
-        GetClientRect(g_pHWND, &rc);
+        GetClientRect(g_hWND, &rc);
         D2D1_SIZE_U size = D2D1::SizeU(
             rc.right-rc.left,
             rc.bottom-rc.top
             );
         // Create a Direct2D render target.
-        hr = g_pD2DFactory->CreateHwndRenderTarget(
+        hr = g_d2DFactory->CreateHwndRenderTarget(
             D2D1::RenderTargetProperties(),
-            D2D1::HwndRenderTargetProperties(g_pHWND, size),
-            &g_pRT
+            D2D1::HwndRenderTargetProperties(g_hWND, size),
+            &g_rT
             );
 
-        if (SUCCEEDED(hr) && g_pRenderer != NULL)
+        if (SUCCEEDED(hr) && g_renderer != NULL)
         {
-            g_pRT->SetTextAntialiasMode(D2D1_TEXT_ANTIALIAS_MODE_CLEARTYPE);
-            g_pRenderer->DeviceAcquired(g_pRT);
+            g_rT->SetTextAntialiasMode(D2D1_TEXT_ANTIALIAS_MODE_CLEARTYPE);
+            g_renderer->DeviceAcquired(g_rT);
         }
     }
 
@@ -131,40 +131,40 @@ HRESULT createDeviceResources()
 
 void discardDeviceResources()
 {
-    if (g_pRT != NULL)
+    if (g_rT != NULL)
     {
-        g_pRT->Release();
-        g_pRT = NULL;
+        g_rT->Release();
+        g_rT = NULL;
     }
 }
 
 void runSample()
 {
     RECT FrameBounds;
-    GetClientRect(g_pHWND, &FrameBounds);
+    GetClientRect(g_hWND, &FrameBounds);
     //
     // Create a Gwork skin
     //
-    Gwk::Skin::TexturedBase skin(g_pRenderer);
+    Gwk::Skin::TexturedBase skin(g_renderer);
     skin.Init("DefaultSkin.png");
     //
     // Create a Canvas (it's root, on which all other Gwork panels are created)
     //
-    Gwk::Controls::Canvas* pCanvas = new Gwk::Controls::Canvas(&skin);
-    pCanvas->SetSize(FrameBounds.right, FrameBounds.bottom);
-    pCanvas->SetDrawBackground(true);
-    pCanvas->SetBackgroundColor(Gwk::Color(150, 170, 170, 255));
+    Gwk::Controls::Canvas* canvas = new Gwk::Controls::Canvas(&skin);
+    canvas->SetSize(FrameBounds.right, FrameBounds.bottom);
+    canvas->SetDrawBackground(true);
+    canvas->SetBackgroundColor(Gwk::Color(150, 170, 170, 255));
     //
     // Create our unittest control (which is a Window with controls in it)
     //
-    UnitTest* pUnit = new UnitTest(pCanvas);
-    pUnit->SetPos(10, 10);
+    UnitTest* unit = new UnitTest(canvas);
+    unit->SetPos(10, 10);
     //
     // Create a Windows Control helper
     // (Processes Windows MSG's and fires input at Gwork)
     //
     Gwk::Input::Windows GworkInput;
-    GworkInput.Initialize(pCanvas);
+    GworkInput.Initialize(canvas);
     //
     // Begin the main game loop
     //
@@ -173,7 +173,7 @@ void runSample()
     while (true)
     {
         // Skip out if the window is closed
-        if (!IsWindowVisible(g_pHWND))
+        if (!IsWindowVisible(g_hWND))
             break;
 
         // If we have a message from windows..
@@ -194,21 +194,21 @@ void runSample()
         {
             if (SUCCEEDED(createDeviceResources()))
             {
-                g_pRT->BeginDraw();
-                g_pRT->SetTransform(D2D1::Matrix3x2F::Identity());
-                g_pRT->Clear(D2D1::ColorF(D2D1::ColorF::White));
+                g_rT->BeginDraw();
+                g_rT->SetTransform(D2D1::Matrix3x2F::Identity());
+                g_rT->Clear(D2D1::ColorF(D2D1::ColorF::White));
                 // This is how easy it is to render Gwork!
-                pCanvas->RenderCanvas();
-                HRESULT hr = g_pRT->EndDraw();
+                canvas->RenderCanvas();
+                HRESULT hr = g_rT->EndDraw();
 
                 if (hr == D2DERR_RECREATE_TARGET)
                 {
                     discardDeviceResources();
-                    g_pRenderer->DeviceLost();
+                    g_renderer->DeviceLost();
                 }
             }
         }
     }
 
-    delete pCanvas;
+    delete canvas;
 }

@@ -16,21 +16,21 @@ namespace Gwk
 //
 //                String GetValueAsString(Controls::Base* ctrl) override
 //                {
-//                    Controls::Rectangle* pRect = gwk_cast<Controls::Rectangle>(ctrl);
-//                    return Utility::Format("%i %i %i %i", pRect->GetColor().r,
-//                                           pRect->GetColor().g,
-//                                           pRect->GetColor().b, pRect->GetColor().a);
+//                    Controls::Rectangle* rect = gwk_cast<Controls::Rectangle>(ctrl);
+//                    return Utility::Format("%i %i %i %i", rect->GetColor().r,
+//                                           rect->GetColor().g,
+//                                           rect->GetColor().b, rect->GetColor().a);
 //                }
 //
 //                void SetValueFromString(Controls::Base* ctrl, const String& str) override
 //                {
-//                    Controls::Rectangle* pRect = gwk_cast<Controls::Rectangle>(ctrl);
+//                    Controls::Rectangle* rect = gwk_cast<Controls::Rectangle>(ctrl);
 //                    int r, g, b, a;
 //
 //                    if (sscanf(str.c_str(), "%i %i %i %i", &r, &g, &b, &a) != 4)
 //                        return;
 //
-//                    pRect->SetColor(Gwk::Color(r, g, b, a));
+//                    rect->SetColor(Gwk::Color(r, g, b, a));
 //                }
 //
 //                size_t NumCount() const override
@@ -54,24 +54,24 @@ namespace Gwk
 //
 //                float NumGet(Controls::Base* ctrl, int i) override
 //                {
-//                    Controls::Rectangle* pRect = gwk_cast<Controls::Rectangle>(ctrl);
+//                    Controls::Rectangle* rect = gwk_cast<Controls::Rectangle>(ctrl);
 //
 //                    if (i == 0)
-//                        return pRect->GetColor().r;
+//                        return rect->GetColor().r;
 //
 //                    if (i == 1)
-//                        return pRect->GetColor().g;
+//                        return rect->GetColor().g;
 //
 //                    if (i == 2)
-//                        return pRect->GetColor().b;
+//                        return rect->GetColor().b;
 //
-//                    return pRect->GetColor().a;
+//                    return rect->GetColor().a;
 //                }
 //
 //                void NumSet(Controls::Base* ctrl, int i, float f) override
 //                {
-//                    Controls::Rectangle* pRect = gwk_cast<Controls::Rectangle>(ctrl);
-//                    Gwk::Color c = pRect->GetColor();
+//                    Controls::Rectangle* rect = gwk_cast<Controls::Rectangle>(ctrl);
+//                    Gwk::Color c = rect->GetColor();
 //
 //                    if (i == 0)
 //                        c.r = f;
@@ -85,7 +85,7 @@ namespace Gwk
 //                    if (i == 3)
 //                        c.a = f;
 //
-//                    pRect->SetColor(c);
+//                    rect->SetColor(c);
 //                }
 //
 //            };
@@ -105,9 +105,9 @@ namespace Gwk
 //
 //            virtual Gwk::Controls::Base* CreateInstance(Gwk::Controls::Base* parent) override
 //            {
-//                Gwk::Controls::Rectangle* pControl = new Gwk::Controls::Rectangle(parent);
-//                pControl->SetSize(100, 100);
-//                return pControl;
+//                Gwk::Controls::Rectangle* control = new Gwk::Controls::Rectangle(parent);
+//                control->SetSize(100, 100);
+//                return control;
 //            }
 //
 //        };

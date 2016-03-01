@@ -30,7 +30,7 @@ namespace Gwk
 
         protected:
 
-            int m_iDirection;
+            int m_direction;
         };
 
 

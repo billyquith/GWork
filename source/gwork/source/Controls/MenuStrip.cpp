@@ -17,7 +17,7 @@ GWK_CONTROL_CONSTRUCTOR(MenuStrip)
 {
     SetBounds(0, 0, 200, 22);
     Dock(Docking::Top);
-    m_InnerPanel->SetPadding(Padding(5, 0, 0, 0));
+    m_innerPanel->SetPadding(Padding(5, 0, 0, 0));
 }
 
 void MenuStrip::Render(Skin::Base* skin)

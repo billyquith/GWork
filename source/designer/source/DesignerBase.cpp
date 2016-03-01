@@ -20,62 +20,62 @@ GWK_CONTROL_CONSTRUCTOR( DesignerBase )
 
 void DesignerBase::CreateMenu()
 {
-	Controls::MenuStrip* pStrip = new Controls::MenuStrip( this );
-	pStrip->Dock( Docking::Top );
+	Controls::MenuStrip* strip = new Controls::MenuStrip( this );
+	strip->Dock( Docking::Top );
 
 	// File
 	{
-		Gwk::Controls::MenuItem* pRoot = pStrip->AddItem( "File" );
+		Gwk::Controls::MenuItem* root = strip->AddItem( "File" );
 
-		pRoot->GetMenu()->AddItem( "New", "img/menu/new.png", "Ctrl + N" )->SetAction( this, &ThisClass::NewDocument );
+		root->GetMenu()->AddItem( "New", "img/menu/new.png", "Ctrl + N" )->SetAction( this, &ThisClass::NewDocument );
 
-		pRoot->GetMenu()->AddItem( "Open", "img/menu/open.png", "Ctrl + O" )->SetAction( this, &ThisClass::OpenDocument );
-		pRoot->GetMenu()->AddItem( "Save", "img/menu/save.png", "Ctrl + S" )->SetAction( this, &ThisClass::SaveDocument );
-		pRoot->GetMenu()->AddItem( "Save As", "img/menu/save.png", "Ctrl + Shift + S" )->SetAction( this, &ThisClass::SaveAsDocument );
+		root->GetMenu()->AddItem( "Open", "img/menu/open.png", "Ctrl + O" )->SetAction( this, &ThisClass::OpenDocument );
+		root->GetMenu()->AddItem( "Save", "img/menu/save.png", "Ctrl + S" )->SetAction( this, &ThisClass::SaveDocument );
+		root->GetMenu()->AddItem( "Save As", "img/menu/save.png", "Ctrl + Shift + S" )->SetAction( this, &ThisClass::SaveAsDocument );
 
-		pRoot->GetMenu()->AddItem( "Close", "img/menu/close.png" )->SetAction( this, &ThisClass::CloseDocument );
+		root->GetMenu()->AddItem( "Close", "img/menu/close.png" )->SetAction( this, &ThisClass::CloseDocument );
 	}
 }
 
 void DesignerBase::CreateToolBar()
 {
-	Controls::ToolBarStrip* pStrip = new Controls::ToolBarStrip( this );
-	pStrip->Dock( Docking::Top );
+	Controls::ToolBarStrip* strip = new Controls::ToolBarStrip( this );
+	strip->Dock( Docking::Top );
 
-	pStrip->Add( "New Document", "img/menu/new.png" )->onPress.Add( this, &ThisClass::NewDocument );
+	strip->Add( "New Document", "img/menu/new.png" )->onPress.Add( this, &ThisClass::NewDocument );
 
-	pStrip->Add( "Open", "img/menu/open.png" )->onPress.Add( this, &ThisClass::OpenDocument );
-	pStrip->Add( "Save", "img/menu/save.png" )->onPress.Add( this, &ThisClass::SaveDocument );
+	strip->Add( "Open", "img/menu/open.png" )->onPress.Add( this, &ThisClass::OpenDocument );
+	strip->Add( "Save", "img/menu/save.png" )->onPress.Add( this, &ThisClass::SaveDocument );
 
 	// splitter
 
-	pStrip->Add( "Delete", "img/menu/delete.png" )->onPress.Add( this, &ThisClass::DeleteSelected );
-	pStrip->Add( "Send Back", "img/menu/back.png" )->onPress.Add( this, &ThisClass::SendBack );
-	pStrip->Add( "Bring Forward", "img/menu/forward.png" )->onPress.Add( this, &ThisClass::BringForward );
+	strip->Add( "Delete", "img/menu/delete.png" )->onPress.Add( this, &ThisClass::DeleteSelected );
+	strip->Add( "Send Back", "img/menu/back.png" )->onPress.Add( this, &ThisClass::SendBack );
+	strip->Add( "Bring Forward", "img/menu/forward.png" )->onPress.Add( this, &ThisClass::BringForward );
 }
 
 void DesignerBase::CreateControlToolbox()
 {
-	ControlToolbox* pControlBox = new ControlToolbox( this );
-	pControlBox->Dock( Docking::Left );
+	ControlToolbox* controlBox = new ControlToolbox( this );
+	controlBox->Dock( Docking::Left );
 }
 
 void DesignerBase::CreateDocumentHolder()
 {
-	m_DocumentHolder = new Controls::TabControl( this );
-	m_DocumentHolder->Dock( Docking::Fill );
-	m_DocumentHolder->SetMargin( Margin( -1, 2, -1, -1 ) );
+	m_documentHolder = new Controls::TabControl( this );
+	m_documentHolder->Dock( Docking::Fill );
+	m_documentHolder->SetMargin( Margin( -1, 2, -1, -1 ) );
 }
 
 void DesignerBase::NewDocument()
 {
-	Controls::TabButton* pButton = m_DocumentHolder->AddPage( "Untitled Design" );
-	pButton->SetImage( "img/document_normal.png" );
+	Controls::TabButton* button = m_documentHolder->AddPage( "Untitled Design" );
+	button->SetImage( "img/document_normal.png" );
 
-	Document* doc = new Document( pButton->GetPage(), "Document" );
-	doc->Initialize( pButton );
+	Document* doc = new Document( button->GetPage(), "Document" );
+	doc->Initialize( button );
 
-	pButton->OnPress();
+	button->OnPress();
 }
 
 void DesignerBase::CloseDocument()
@@ -85,11 +85,11 @@ void DesignerBase::CloseDocument()
 
 	doc->DelayedDelete();
 
-	Controls::TabButton* pButton = m_DocumentHolder->GetCurrentButton();
-	if ( !pButton ) return;
+	Controls::TabButton* button = m_documentHolder->GetCurrentButton();
+	if ( !button ) return;
 
-	m_DocumentHolder->RemovePage( pButton );
-	pButton->DelayedDelete();
+	m_documentHolder->RemovePage( button );
+	button->DelayedDelete();
 }
 
 void DesignerBase::OpenDocument()
@@ -99,14 +99,14 @@ void DesignerBase::OpenDocument()
 
 void DesignerBase::DoOpenDocument( Event::Info info )
 {
-	Controls::TabButton* pButton = m_DocumentHolder->AddPage( "Loaded" );
-	pButton->SetImage( "img/document_normal.png" );
+	Controls::TabButton* button = m_documentHolder->AddPage( "Loaded" );
+	button->SetImage( "img/document_normal.png" );
 
-	Document* doc = new Document( pButton->GetPage(), "Document" );
-	doc->Initialize( pButton );
+	Document* doc = new Document( button->GetPage(), "Document" );
+	doc->Initialize( button );
 	doc->LoadFromFile( info.String, ImportExport::Find( "Designer" ) );
 
-	pButton->OnPress();
+	button->OnPress();
 }
 
 void DesignerBase::SaveDocument()
@@ -127,10 +127,10 @@ void DesignerBase::SaveAsDocument()
 
 Document* DesignerBase::CurrentDocument()
 {
-	Controls::TabButton* pButton = m_DocumentHolder->GetCurrentButton();
-	if ( !pButton ) return NULL;
+	Controls::TabButton* button = m_documentHolder->GetCurrentButton();
+	if ( !button ) return NULL;
 
-	Document* doc = gwk_cast<Document>(pButton->GetPage()->FindChildByName( "Document" ));
+	Document* doc = gwk_cast<Document>(button->GetPage()->FindChildByName( "Document" ));
 	if ( !doc ) return NULL;
 
 	return doc;

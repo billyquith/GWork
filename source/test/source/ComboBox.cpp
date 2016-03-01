@@ -46,9 +46,9 @@ public:
         }
     }
 
-    void OnComboSelect(Gwk::Controls::Base* pControl)
+    void OnComboSelect(Gwk::Controls::Base* control)
     {
-        Gwk::Controls::ComboBox* combo = (Gwk::Controls::ComboBox*)pControl;
+        Gwk::Controls::ComboBox* combo = (Gwk::Controls::ComboBox*)control;
         UnitPrint(Utility::Format("Combo Changed: %s",
                                   combo->GetSelectedItem()->GetText().c_str()));
     }

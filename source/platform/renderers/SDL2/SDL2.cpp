@@ -52,18 +52,18 @@ namespace Gwk
             font->data = tfont;
         }
 
-        void SDL2::FreeFont(Gwk::Font* pFont)
+        void SDL2::FreeFont(Gwk::Font* font)
         {
-            if (pFont->data)
+            if (font->data)
             {
-                TTF_CloseFont(static_cast<TTF_Font*>(pFont->data));
-                pFont->data = NULL;
+                TTF_CloseFont(static_cast<TTF_Font*>(font->data));
+                font->data = NULL;
             }
         }
 
-        void SDL2::RenderText(Gwk::Font* pFont, Gwk::Point pos, const Gwk::String& text)
+        void SDL2::RenderText(Gwk::Font* font, Gwk::Point pos, const Gwk::String& text)
         {
-            TTF_Font *tfont = static_cast<TTF_Font*>(pFont->data);
+            TTF_Font *tfont = static_cast<TTF_Font*>(font->data);
             Translate(pos.x, pos.y);
             
             SDL_Surface *surf = TTF_RenderUTF8_Blended(tfont, text.c_str(), m_color);
@@ -79,16 +79,16 @@ namespace Gwk
             SDL_DestroyTexture(texture);
         }
 
-        Gwk::Point SDL2::MeasureText(Gwk::Font* pFont, const Gwk::String& text)
+        Gwk::Point SDL2::MeasureText(Gwk::Font* font, const Gwk::String& text)
         {
-            TTF_Font *tfont = static_cast<TTF_Font*>(pFont->data);
+            TTF_Font *tfont = static_cast<TTF_Font*>(font->data);
 
             // If the font doesn't exist, or the font size should be changed.
-            if (!tfont || pFont->realsize != pFont->size*Scale())
+            if (!tfont || font->realsize != font->size*Scale())
             {
-                FreeFont(pFont);
-                LoadFont(pFont);
-                tfont = static_cast<TTF_Font*>(pFont->data);
+                FreeFont(font);
+                LoadFont(font);
+                tfont = static_cast<TTF_Font*>(font->data);
             }
 
             if (!tfont)
@@ -112,27 +112,27 @@ namespace Gwk
             SDL_RenderSetClipRect(m_renderer, NULL);
         }
 
-        void SDL2::LoadTexture(Gwk::Texture* pTexture)
+        void SDL2::LoadTexture(Gwk::Texture* texture)
         {
-            if (!pTexture)
+            if (!texture)
                 return;
 
-            if (pTexture->data)
-                FreeTexture(pTexture);
+            if (texture->data)
+                FreeTexture(texture);
             
             SDL_Texture *tex = NULL;
-            if (pTexture->readable)
+            if (texture->readable)
             {
                 // You cannot find the format of a texture once loaded to read from it
                 // in SDL2 so we have to keep the surface to read from.
-                SDL_Surface *surf = IMG_Load(pTexture->name.c_str());
+                SDL_Surface *surf = IMG_Load(texture->name.c_str());
                 tex = SDL_CreateTextureFromSurface(m_renderer, surf);
-                pTexture->surface = surf;
+                texture->surface = surf;
             }
             else
             {
                 // Don't need to read. Just load straight into render format.
-                tex = IMG_LoadTexture(m_renderer, pTexture->name.c_str());
+                tex = IMG_LoadTexture(m_renderer, texture->name.c_str());
             }
 
             if (tex)
@@ -140,43 +140,43 @@ namespace Gwk
                 int w, h;
                 SDL_QueryTexture(tex, NULL, NULL, &w, &h);
                 
-                pTexture->data = tex;
-                pTexture->width = w;
-                pTexture->height = h;
-                pTexture->failed = false;
+                texture->data = tex;
+                texture->width = w;
+                texture->height = h;
+                texture->failed = false;
             }
             else
             {
-                pTexture->data = NULL;
-                pTexture->failed = true;
+                texture->data = NULL;
+                texture->failed = true;
             }
         }
 
-        void SDL2::FreeTexture(Gwk::Texture* pTexture)
+        void SDL2::FreeTexture(Gwk::Texture* texture)
         {
-            SDL_DestroyTexture(static_cast<SDL_Texture*>(pTexture->data));
-            pTexture->data = NULL;
+            SDL_DestroyTexture(static_cast<SDL_Texture*>(texture->data));
+            texture->data = NULL;
             
-            if (pTexture->surface)
+            if (texture->surface)
             {
-                SDL_FreeSurface(static_cast<SDL_Surface*>(pTexture->surface));
-                pTexture->surface = NULL;
-                pTexture->readable = false;
+                SDL_FreeSurface(static_cast<SDL_Surface*>(texture->surface));
+                texture->surface = NULL;
+                texture->readable = false;
             }
         }
 
-        void SDL2::DrawTexturedRect(Gwk::Texture* pTexture, Gwk::Rect rect,
+        void SDL2::DrawTexturedRect(Gwk::Texture* texture, Gwk::Rect rect,
                                     float u1, float v1, float u2, float v2)
         {
-            SDL_Texture *tex = static_cast<SDL_Texture*>(pTexture->data);
+            SDL_Texture *tex = static_cast<SDL_Texture*>(texture->data);
 
             if (!tex)
                 return DrawMissingImage(rect);
 
             Translate(rect);
             
-            const unsigned int w = pTexture->width;
-            const unsigned int h = pTexture->height;
+            const unsigned int w = texture->width;
+            const unsigned int h = texture->height;
             
             const SDL_Rect source = { int(u1*w), int(v1*h), int((u2-u1)*w), int((v2-v1)*h) },
                              dest = { rect.x, rect.y, rect.w, rect.h };
@@ -184,12 +184,12 @@ namespace Gwk
             SDL_RenderCopy(m_renderer, tex, &source, &dest);
         }
 
-        Gwk::Color SDL2::PixelColour(Gwk::Texture* pTexture, unsigned int x, unsigned int y,
+        Gwk::Color SDL2::PixelColour(Gwk::Texture* texture, unsigned int x, unsigned int y,
                                       const Gwk::Color& col_default)
         {
-            SDL_Surface *surf = static_cast<SDL_Surface*>(pTexture->surface);
+            SDL_Surface *surf = static_cast<SDL_Surface*>(texture->surface);
 
-            if (!pTexture->readable || !surf)
+            if (!texture->readable || !surf)
                 return col_default;
             
             if (SDL_MUSTLOCK(surf) != 0)
@@ -230,12 +230,12 @@ namespace Gwk
             return true;
         }
 
-        bool SDL2::EndContext(Gwk::WindowProvider* pWindow)
+        bool SDL2::EndContext(Gwk::WindowProvider* window)
         {
             return true;
         }
 
-        bool SDL2::PresentContext(Gwk::WindowProvider* pWindow)
+        bool SDL2::PresentContext(Gwk::WindowProvider* window)
         {
             SDL_RenderPresent(m_renderer);
             return true;

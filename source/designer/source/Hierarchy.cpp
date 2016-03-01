@@ -6,51 +6,51 @@ GWK_CONTROL_CONSTRUCTOR( Hierarchy )
 {
 	SetSize( 200, 200 );
 
-	m_Tree = new Controls::TreeControl( this );
-	m_Tree->Dock( Docking::Fill );
+	m_tree = new Controls::TreeControl( this );
+	m_tree->Dock( Docking::Fill );
 }
 
-void Hierarchy::WatchCanvas( DocumentCanvas* pCanvas )
+void Hierarchy::WatchCanvas( DocumentCanvas* canvas )
 {
-	m_pCanvas = pCanvas;
-	m_pCanvas->onChildAdded.Add( this, &ThisClass::OnCanvasChildAdded );
-	m_pCanvas->onSelectionChanged.Add( this, &ThisClass::OnCanvasSelectionChanged );
+	m_canvas = canvas;
+	m_canvas->onChildAdded.Add( this, &ThisClass::OnCanvasChildAdded );
+	m_canvas->onSelectionChanged.Add( this, &ThisClass::OnCanvasSelectionChanged );
 
 	CompleteRefresh();
 }
 
 void Hierarchy::CompleteRefresh()
 {
-	m_Tree->Clear();
+	m_tree->Clear();
 
-	UpdateNode( m_Tree, m_pCanvas );
+	UpdateNode( m_tree, m_canvas );
 
-	m_Tree->ExpandAll();
+	m_tree->ExpandAll();
 }
 
-void Hierarchy::UpdateNode( Controls::TreeNode* pNode, Controls::Base* pControl )
+void Hierarchy::UpdateNode( Controls::TreeNode* node, Controls::Base* control )
 {	
-	Controls::TreeNode* pChildNode = NULL;
+	Controls::TreeNode* childNode = NULL;
 
-	if ( !pControl->UserData.Exists( "ControlFactory" ) )
+	if ( !control->UserData.Exists( "ControlFactory" ) )
 	{
-		pChildNode = pNode;
+		childNode = node;
 	}
 	else
 	{
-		Gwk::String strName = pControl->GetName();
-		if ( strName == "" ) strName = "[" + Gwk::String( pControl->GetTypeName() ) + "]";
+		Gwk::String strName = control->GetName();
+		if ( strName == "" ) strName = "[" + Gwk::String( control->GetTypeName() ) + "]";
 
-		pChildNode = pNode->AddNode( strName );
-		pChildNode->SetImage( "img/controls/" + Gwk::String(pControl->GetTypeName()) + ".png" );
-		pChildNode->onSelect.Add( this, &ThisClass::OnNodeSelected );
-		pChildNode->UserData.Set<Controls::Base*>( "TargetControl", pControl );
+		childNode = node->AddNode( strName );
+		childNode->SetImage( "img/controls/" + Gwk::String(control->GetTypeName()) + ".png" );
+		childNode->onSelect.Add( this, &ThisClass::OnNodeSelected );
+		childNode->UserData.Set<Controls::Base*>( "TargetControl", control );
 	}
 
 
-	for ( int i=0; i<pControl->NumChildren(); i++ )
+	for ( int i=0; i<control->NumChildren(); i++ )
 	{
-		UpdateNode( pChildNode, pControl->GetChild( i ) );
+		UpdateNode( childNode, control->GetChild( i ) );
 	}
 }
 
@@ -69,36 +69,36 @@ void Hierarchy::OnNodeSelected( Event::Info info )
 	ControlList list;
 	list.Add( ctrl );
 
-	m_pCanvas->SelectControls( list );
+	m_canvas->SelectControls( list );
 }
 
 void Hierarchy::OnCanvasSelectionChanged( Event::Info info )
 {
-	m_Tree->DeselectAll();
+	m_tree->DeselectAll();
 
 	for ( ControlList::List::const_iterator it = info.ControlList.list.begin();
 		  it != info.ControlList.list.end(); ++it )
 	{
-		SelectNodeRepresentingControl( (*it), m_Tree );
+		SelectNodeRepresentingControl( (*it), m_tree );
 	}
 }
 
-void Hierarchy::SelectNodeRepresentingControl( Controls::Base* pControl, Controls::TreeNode* pNode )
+void Hierarchy::SelectNodeRepresentingControl( Controls::Base* control, Controls::TreeNode* node )
 {
-	if ( pNode == NULL ) pNode = m_Tree;
+	if ( node == NULL ) node = m_tree;
 
-	if ( pNode->UserData.Exists( "TargetControl" ) &&
-		 pNode->UserData.Get<Controls::Base*>( "TargetControl" ) == pControl )
+	if ( node->UserData.Exists( "TargetControl" ) &&
+		 node->UserData.Get<Controls::Base*>( "TargetControl" ) == control )
 	{
-		pNode->SetSelected( true, false );
+		node->SetSelected( true, false );
 	}
 	
-	Base::List& children = pNode->GetChildNodes();
+	Base::List& children = node->GetChildNodes();
 	for ( Base::List::iterator iter = children.begin(); iter != children.end(); ++iter )
 	{
-		Controls::TreeNode* pChildNode = gwk_cast<Controls::TreeNode>( *iter );
-		if ( !pChildNode ) continue;
+		Controls::TreeNode* childNode = gwk_cast<Controls::TreeNode>( *iter );
+		if ( !childNode ) continue;
 
-		SelectNodeRepresentingControl( pControl, pChildNode );
+		SelectNodeRepresentingControl( control, childNode );
 	}
 }

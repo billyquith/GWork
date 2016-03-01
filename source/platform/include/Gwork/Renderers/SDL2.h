@@ -31,28 +31,28 @@ namespace Gwk
 
             virtual void DrawFilledRect(Gwk::Rect rect) override;
 
-            virtual void LoadFont(Gwk::Font* pFont) override;
-            virtual void FreeFont(Gwk::Font* pFont) override;
-            virtual void RenderText(Gwk::Font* pFont, Gwk::Point pos,
+            virtual void LoadFont(Gwk::Font* font) override;
+            virtual void FreeFont(Gwk::Font* font) override;
+            virtual void RenderText(Gwk::Font* font, Gwk::Point pos,
                                     const Gwk::String& text) override;
-            virtual Gwk::Point MeasureText(Gwk::Font* pFont, const Gwk::String& text) override;
+            virtual Gwk::Point MeasureText(Gwk::Font* font, const Gwk::String& text) override;
 
             void StartClip() override;
             void EndClip() override;
 
-            void DrawTexturedRect(Gwk::Texture* pTexture, Gwk::Rect pTargetRect,
+            void DrawTexturedRect(Gwk::Texture* texture, Gwk::Rect targetRect,
                                   float u1 = 0.0f, float v1 = 0.0f,
                                   float u2 = 1.0f, float v2 = 1.0f) override;
-            void        LoadTexture(Gwk::Texture* pTexture) override;
-            void        FreeTexture(Gwk::Texture* pTexture) override;
-            Gwk::Color PixelColour(Gwk::Texture* pTexture, unsigned int x, unsigned int y,
+            void        LoadTexture(Gwk::Texture* texture) override;
+            void        FreeTexture(Gwk::Texture* texture) override;
+            Gwk::Color PixelColour(Gwk::Texture* texture, unsigned int x, unsigned int y,
                                     const Gwk::Color& col_default) override;
 
             void DrawLinedRect(Gwk::Rect rect) override;
 
-            bool BeginContext(Gwk::WindowProvider* pWindow) override;
-            bool EndContext(Gwk::WindowProvider* pWindow) override;
-            bool PresentContext(Gwk::WindowProvider* pWindow) override;
+            bool BeginContext(Gwk::WindowProvider* window) override;
+            bool EndContext(Gwk::WindowProvider* window) override;
+            bool PresentContext(Gwk::WindowProvider* window) override;
 
         protected:
 

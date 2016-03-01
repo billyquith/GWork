@@ -18,40 +18,40 @@ using namespace Gwk::Controls;
 GWK_CONTROL_CONSTRUCTOR(NumericUpDown)
 {
     SetSize(100, 20);
-    Controls::Base* pSplitter = new Controls::Base(this);
-    pSplitter->Dock(Docking::Right);
-    pSplitter->SetWidth(13);
-    NumericUpDownButton_Up* pButtonUp = new NumericUpDownButton_Up(pSplitter);
-    pButtonUp->onPress.Add(this, &NumericUpDown::OnButtonUp);
-    pButtonUp->SetTabable(false);
-    pButtonUp->Dock(Docking::Top);
-    pButtonUp->SetHeight(10);
-    NumericUpDownButton_Down* pButtonDown = new NumericUpDownButton_Down(pSplitter);
-    pButtonDown->onPress.Add(this, &NumericUpDown::OnButtonDown);
-    pButtonDown->SetTabable(false);
-    pButtonDown->Dock(Docking::Fill);
-    pButtonUp->SetPadding(Padding(0, 1, 1, 0));
-    m_iMax = 100;
-    m_iMin = 0;
-    m_iNumber = 0;
+    Controls::Base* splitter = new Controls::Base(this);
+    splitter->Dock(Docking::Right);
+    splitter->SetWidth(13);
+    NumericUpDownButton_Up* buttonUp = new NumericUpDownButton_Up(splitter);
+    buttonUp->onPress.Add(this, &NumericUpDown::OnButtonUp);
+    buttonUp->SetTabable(false);
+    buttonUp->Dock(Docking::Top);
+    buttonUp->SetHeight(10);
+    NumericUpDownButton_Down* buttonDown = new NumericUpDownButton_Down(splitter);
+    buttonDown->onPress.Add(this, &NumericUpDown::OnButtonDown);
+    buttonDown->SetTabable(false);
+    buttonDown->Dock(Docking::Fill);
+    buttonUp->SetPadding(Padding(0, 1, 1, 0));
+    m_max = 100;
+    m_min = 0;
+    m_number = 0;
     SetText("0");
 }
 
 void NumericUpDown::OnButtonUp(Base* /*control*/)
 {
     SyncNumberFromText();
-    SetIntValue(m_iNumber+1);
+    SetIntValue(m_number+1);
 }
 
 void NumericUpDown::OnButtonDown(Base* /*control*/)
 {
     SyncNumberFromText();
-    SetIntValue(m_iNumber-1);
+    SetIntValue(m_number-1);
 }
 
 void NumericUpDown::SyncTextFromNumber()
 {
-    SetText(Utility::ToString(m_iNumber));
+    SetText(Utility::ToString(m_number));
 }
 
 void NumericUpDown::SyncNumberFromText()
@@ -61,22 +61,22 @@ void NumericUpDown::SyncNumberFromText()
 
 void NumericUpDown::SetMin(int i)
 {
-    m_iMin = i;
+    m_min = i;
 }
 
 void NumericUpDown::SetMax(int i)
 {
-    m_iMax = i;
+    m_max = i;
 }
 
 void NumericUpDown::SetIntValue(int i)
 {
-    i = Clamp(i, m_iMin, m_iMax);
+    i = Clamp(i, m_min, m_max);
 
-    if (m_iNumber == i)
+    if (m_number == i)
         return;
 
-    m_iNumber = i;
+    m_number = i;
     // Don't update the text if we're typing in it..
     // Undone - any reason why not?
     // if ( !HasFocus() )

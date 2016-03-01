@@ -14,59 +14,59 @@ using namespace Gwk::ControlsInternal;
 
 GWK_CONTROL_CONSTRUCTOR(Resizer)
 {
-    m_iResizeDir = Docking::Left;
+    m_resizeDir = Docking::Left;
     SetMouseInputEnabled(true);
     SetSize(6, 6);
 }
 
 void Resizer::OnMouseMoved(int x, int y, int /*deltaX*/, int /*deltaY*/)
 {
-    if (!m_pTarget)
+    if (!m_target)
         return;
 
     if (!m_bDepressed)
         return;
 
-    Gwk::Rect pBounds = m_pTarget->GetBounds();
-    Gwk::Point pntMin = m_pTarget->GetMinimumSize();
-    Gwk::Point pCursorPos = m_pTarget->CanvasPosToLocal(Gwk::Point(x, y));
-    Gwk::Point pDelta = m_pTarget->LocalPosToCanvas(m_HoldPos);
-    pDelta.x -= x;
-    pDelta.y -= y;
+    Gwk::Rect bounds = m_target->GetBounds();
+    Gwk::Point pntMin = m_target->GetMinimumSize();
+    Gwk::Point cursorPos = m_target->CanvasPosToLocal(Gwk::Point(x, y));
+    Gwk::Point delta = m_target->LocalPosToCanvas(m_holdPos);
+    delta.x -= x;
+    delta.y -= y;
 
-    if (m_iResizeDir&Docking::Left)
+    if (m_resizeDir&Docking::Left)
     {
-        pBounds.x -= pDelta.x;
-        pBounds.w += pDelta.x;
+        bounds.x -= delta.x;
+        bounds.w += delta.x;
 
         // Conform to minimum size here so we don't
         // go all weird when we snap it in the base conrt
 
-        if (pBounds.w < pntMin.x)
+        if (bounds.w < pntMin.x)
         {
-            int diff = pntMin.x-pBounds.w;
-            pBounds.w += diff;
-            pBounds.x -= diff;
+            int diff = pntMin.x-bounds.w;
+            bounds.w += diff;
+            bounds.x -= diff;
         }
     }
 
-    if (m_iResizeDir&Docking::Top)
+    if (m_resizeDir&Docking::Top)
     {
-        pBounds.y -= pDelta.y;
-        pBounds.h += pDelta.y;
+        bounds.y -= delta.y;
+        bounds.h += delta.y;
 
         // Conform to minimum size here so we don't
         // go all weird when we snap it in the base conrt
 
-        if (pBounds.h < pntMin.y)
+        if (bounds.h < pntMin.y)
         {
-            int diff = pntMin.y-pBounds.h;
-            pBounds.h += diff;
-            pBounds.y -= diff;
+            int diff = pntMin.y-bounds.h;
+            bounds.h += diff;
+            bounds.y -= diff;
         }
     }
 
-    if (m_iResizeDir&Docking::Right)
+    if (m_resizeDir&Docking::Right)
     {
         // This is complicated.
         // Basically we want to use the HoldPos, so it doesn't snap to the edge
@@ -75,37 +75,37 @@ void Resizer::OnMouseMoved(int x, int y, int /*deltaX*/, int /*deltaY*/)
         // I actually think this might be a big hack around the way this control
         // works with regards
         // to the holdpos being on the parent panel.
-        int woff = pBounds.w-m_HoldPos.x;
-        int diff = pBounds.w;
-        pBounds.w = pCursorPos.x+woff;
+        int woff = bounds.w-m_holdPos.x;
+        int diff = bounds.w;
+        bounds.w = cursorPos.x+woff;
 
-        if (pBounds.w < pntMin.x)
-            pBounds.w = pntMin.x;
+        if (bounds.w < pntMin.x)
+            bounds.w = pntMin.x;
 
-        diff -= pBounds.w;
-        m_HoldPos.x -= diff;
+        diff -= bounds.w;
+        m_holdPos.x -= diff;
     }
 
-    if (m_iResizeDir&Docking::Bottom)
+    if (m_resizeDir&Docking::Bottom)
     {
-        int hoff = pBounds.h-m_HoldPos.y;
-        int diff = pBounds.h;
-        pBounds.h = pCursorPos.y+hoff;
+        int hoff = bounds.h-m_holdPos.y;
+        int diff = bounds.h;
+        bounds.h = cursorPos.y+hoff;
 
-        if (pBounds.h < pntMin.y)
-            pBounds.h = pntMin.y;
+        if (bounds.h < pntMin.y)
+            bounds.h = pntMin.y;
 
-        diff -= pBounds.h;
-        m_HoldPos.y -= diff;
+        diff -= bounds.h;
+        m_holdPos.y -= diff;
     }
 
-    m_pTarget->SetBounds(pBounds);
+    m_target->SetBounds(bounds);
     onResize.Call(this);
 }
 
 void Resizer::SetResizeDir(int dir)
 {
-    m_iResizeDir = dir;
+    m_resizeDir = dir;
 
     if ((dir&Docking::Left && dir&Docking::Top) || (dir&Docking::Right && dir&Docking::Bottom))
         return SetCursor(Gwk::CursorType::SizeNWSE);

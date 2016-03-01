@@ -20,71 +20,71 @@ public:
     {
         Dock(Docking::Fill);
         m_bSplittersVisible = false;
-        m_iCurZoom = 0;
-        m_Splitter = new Gwk::Controls::CrossSplitter(this);
-        m_Splitter->SetPos(0, 0);
-        m_Splitter->Dock(Docking::Fill);
+        m_curZoom = 0;
+        m_splitter = new Gwk::Controls::CrossSplitter(this);
+        m_splitter->SetPos(0, 0);
+        m_splitter->Dock(Docking::Fill);
         {
-            Gwk::Controls::Button* testButton =  new Gwk::Controls::Button(m_Splitter);
+            Gwk::Controls::Button* testButton =  new Gwk::Controls::Button(m_splitter);
             testButton->SetText("TOPLEFT");
-            m_Splitter->SetPanel(0, testButton);
+            m_splitter->SetPanel(0, testButton);
         }
         {
-            Gwk::Controls::Button* testButton =  new Gwk::Controls::Button(m_Splitter);
+            Gwk::Controls::Button* testButton =  new Gwk::Controls::Button(m_splitter);
             testButton->SetText("TOPRIGHT");
-            m_Splitter->SetPanel(1, testButton);
+            m_splitter->SetPanel(1, testButton);
         }
         {
-            Gwk::Controls::Button* testButton =  new Gwk::Controls::Button(m_Splitter);
+            Gwk::Controls::Button* testButton =  new Gwk::Controls::Button(m_splitter);
             testButton->SetText("BOTTOMRIGHT");
-            m_Splitter->SetPanel(2, testButton);
+            m_splitter->SetPanel(2, testButton);
         }
         {
-            Gwk::Controls::Button* testButton =  new Gwk::Controls::Button(m_Splitter);
+            Gwk::Controls::Button* testButton =  new Gwk::Controls::Button(m_splitter);
             testButton->SetText("BOTTOMLEFT");
-            m_Splitter->SetPanel(3, testButton);
+            m_splitter->SetPanel(3, testButton);
         }
         // Status bar to hold unit testing buttons
-        Gwk::Controls::StatusBar* pStatus = new Gwk::Controls::StatusBar(this);
-        pStatus->Dock(Docking::Bottom);
+        Gwk::Controls::StatusBar* status = new Gwk::Controls::StatusBar(this);
+        status->Dock(Docking::Bottom);
         {
-            Gwk::Controls::Button* pButton = new Gwk::Controls::Button(pStatus);
-            pButton->SetText("Zoom");
-            pButton->onPress.Add(this, &CrossSplitter::ZoomTest);
-            pStatus->AddControl(pButton, false);
+            Gwk::Controls::Button* button = new Gwk::Controls::Button(status);
+            button->SetText("Zoom");
+            button->onPress.Add(this, &CrossSplitter::ZoomTest);
+            status->AddControl(button, false);
         }
         {
-            Gwk::Controls::Button* pButton = new Gwk::Controls::Button(pStatus);
-            pButton->SetText("UnZoom");
-            pButton->onPress.Add(this, &CrossSplitter::UnZoomTest);
-            pStatus->AddControl(pButton, false);
+            Gwk::Controls::Button* button = new Gwk::Controls::Button(status);
+            button->SetText("UnZoom");
+            button->onPress.Add(this, &CrossSplitter::UnZoomTest);
+            status->AddControl(button, false);
         }
         {
-            Gwk::Controls::Button* pButton = new Gwk::Controls::Button(pStatus);
-            pButton->SetText("CenterPanels");
-            pButton->onPress.Add(this, &CrossSplitter::CenterPanels);
-            pStatus->AddControl(pButton, true);
+            Gwk::Controls::Button* button = new Gwk::Controls::Button(status);
+            button->SetText("CenterPanels");
+            button->onPress.Add(this, &CrossSplitter::CenterPanels);
+            status->AddControl(button, true);
         }
     }
 
-    void ZoomTest(Gwk::Controls::Base* pFromPanel)
+    void ZoomTest(Gwk::Controls::Base* fromPanel)
     {
-        m_Splitter->Zoom(m_iCurZoom);
-        m_iCurZoom++;
+        m_splitter->Zoom(m_curZoom);
+        m_curZoom++;
 
-        if (m_iCurZoom == 4)
-            m_iCurZoom = 0;
+        if (m_curZoom == 4)
+            m_curZoom = 0;
     }
 
-    void UnZoomTest(Gwk::Controls::Base* pFromPanel)
+    void UnZoomTest(Gwk::Controls::Base* fromPanel)
     {
-        m_Splitter->UnZoom();
+        m_splitter->UnZoom();
     }
 
-    void CenterPanels(Gwk::Controls::Base* pFromPanel)
+    void CenterPanels(Gwk::Controls::Base* fromPanel)
     {
-        m_Splitter->CenterPanels();
-        m_Splitter->UnZoom();
+        m_splitter->CenterPanels();
+        m_splitter->UnZoom();
     }
 
     void Layout(Gwk::Skin::Base* skin)
@@ -92,8 +92,8 @@ public:
     }
 
     bool m_bSplittersVisible;
-    int m_iCurZoom;
-    Controls::CrossSplitter* m_Splitter;
+    int m_curZoom;
+    Controls::CrossSplitter* m_splitter;
 
 };
 

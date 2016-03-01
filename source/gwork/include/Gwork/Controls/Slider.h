@@ -58,12 +58,12 @@ namespace Gwk
 
             virtual void SetNotchCount(int num)
             {
-                m_iNumNotches = num;
+                m_numNotches = num;
             }
 
             virtual int GetNotchCount()
             {
-                return m_iNumNotches;
+                return m_numNotches;
             }
 
             virtual void  SetRange(float fMin, float fMax);
@@ -128,9 +128,9 @@ namespace Gwk
             virtual void SetValueInternal(float fVal);
             virtual void UpdateBarFromValue() = 0;
 
-            ControlsInternal::SliderBar* m_SliderBar;
+            ControlsInternal::SliderBar* m_sliderBar;
             bool m_bClampToNotches;
-            int m_iNumNotches;
+            int m_numNotches;
             float m_fValue;
 
             float m_fMin;

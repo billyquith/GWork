@@ -45,7 +45,7 @@ namespace GwkUtil
 
             BString NiceFloat(float f);
             BString NiceDouble(double f);
-            BString BinaryToHex(const void* pData, unsigned int iLength);
+            BString BinaryToHex(const void* data, unsigned int iLength);
             BString UInt64(unsigned long long iBytes);
             BString Int(int iBytes);
         }
@@ -160,7 +160,7 @@ namespace GwkUtil
             typedef typename std::list<Tree>   List;
 
             Tree()
-            :   m_Info(NULL)
+            :   m_info(NULL)
             {
             }
 
@@ -183,12 +183,12 @@ namespace GwkUtil
             //! Returns a list of children.
             const List& Children() const
             {
-                return m_Children;
+                return m_children;
             }
 
             List& Children()
             {
-                return m_Children;
+                return m_children;
             }
 
             //! Adding and setting children.
@@ -228,46 +228,46 @@ namespace GwkUtil
             
             bool IsBranch() const
             {
-                return m_Info == 0;
+                return m_info == 0;
             }
 
         protected:
 
-            BString m_Name;
-            BString m_Value;
-            unsigned char m_Info;
+            BString m_name;
+            BString m_value;
+            unsigned char m_info;
 
-            List m_Children;
+            List m_children;
         };
 
 
         inline const BString& Tree::Name() const
         {
-            return m_Name;
+            return m_name;
         }
 
         inline void Tree::Name(const BString& name)
         {
-            m_Name = name;
+            m_name = name;
         }
 
         inline const BString& Tree::Value() const
         {
-            return m_Value;
+            return m_value;
         }
 
         inline void Tree::Value(const BString& value)
         {
-            m_Info = Value::ValueId<BString>();
-            m_Value = value;
+            m_info = Value::ValueId<BString>();
+            m_value = value;
         }
 
         inline Tree& Tree::AddChild()
         {
             Tree t;
-            m_Children.push_back(t);
+            m_children.push_back(t);
 
-            Tree& back = m_Children.back();
+            Tree& back = m_children.back();
             return back;
         }
 
@@ -320,7 +320,7 @@ namespace GwkUtil
 
         inline bool Tree::HasChildren() const
         {
-            return !m_Children.empty();
+            return !m_children.empty();
         }
 
         template <typename TValue>
@@ -346,8 +346,8 @@ namespace GwkUtil
         template <typename TValue>
         inline void Tree::Var(TValue var)
         {
-            m_Info = Value::ValueId<TValue>();
-            m_Value = Value::ToString<TValue>(var);
+            m_info = Value::ValueId<TValue>();
+            m_value = Value::ToString<TValue>(var);
         }
 
         template <typename TValue>
@@ -359,7 +359,7 @@ namespace GwkUtil
         template <typename TValue>
         inline bool Tree::IsVar() const
         {
-            return m_Info == Value::ValueId<TValue>();
+            return m_info == Value::ValueId<TValue>();
         }
 
         namespace Json

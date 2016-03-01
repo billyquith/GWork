@@ -149,9 +149,9 @@ inline const char *SkipWhitespace_SIMD(const char* p) {
 	for (;;) {
 		__m128i s = _mm_loadu_si128((const __m128i *)p);
 		__m128i x = _mm_cmpeq_epi8(s, w0);
-		x = _mm_or_si128(x, _mm_cmpeq_epi8(s, w1));
-		x = _mm_or_si128(x, _mm_cmpeq_epi8(s, w2));
-		x = _mm_or_si128(x, _mm_cmpeq_epi8(s, w3));
+		x = _mm_OSWindowr_si128(x, _mm_cmpeq_epi8(s, w1));
+		x = _mm_OSWindowr_si128(x, _mm_cmpeq_epi8(s, w2));
+		x = _mm_OSWindowr_si128(x, _mm_cmpeq_epi8(s, w3));
 		unsigned short r = ~_mm_movemask_epi8(x);
 		if (r == 0)	// all 16 characters are whitespace
 			p += 16;

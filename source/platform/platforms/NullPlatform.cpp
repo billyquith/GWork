@@ -60,29 +60,29 @@ void* Gwk::Platform::CreatePlatformWindow(int x, int y, int w, int h,
     return NULL;
 }
 
-void Gwk::Platform::DestroyPlatformWindow(void* pPtr)
+void Gwk::Platform::DestroyPlatformWindow(void* ptr)
 {
 }
 
-bool Gwk::Platform::MessagePump(void* pWindow)
+bool Gwk::Platform::MessagePump(void* window)
 {
     return false;
 }
 
-void Gwk::Platform::SetBoundsPlatformWindow(void* pPtr, int x, int y, int w, int h)
+void Gwk::Platform::SetBoundsPlatformWindow(void* ptr, int x, int y, int w, int h)
 {
 }
 
-void Gwk::Platform::SetWindowMaximized(void* pPtr, bool bMax, Gwk::Point& pNewPos,
-                                        Gwk::Point& pNewSize)
+void Gwk::Platform::SetWindowMaximized(void* ptr, bool bMax, Gwk::Point& newPos,
+                                        Gwk::Point& newSize)
 {
 }
 
-void Gwk::Platform::SetWindowMinimized(void* pPtr, bool bMinimized)
+void Gwk::Platform::SetWindowMinimized(void* ptr, bool bMinimized)
 {
 }
 
-bool Gwk::Platform::HasFocusPlatformWindow(void* pPtr)
+bool Gwk::Platform::HasFocusPlatformWindow(void* ptr)
 {
     return true;
 }

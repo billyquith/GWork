@@ -20,7 +20,7 @@
 using namespace Gwk;
 using namespace Gwk::Controls;
 
-WindowCanvas::WindowCanvas(int x, int y, int w, int h, Gwk::Skin::Base* pSkin,
+WindowCanvas::WindowCanvas(int x, int y, int w, int h, Gwk::Skin::Base* skin,
                            const Gwk::String& strWindowTitle)
 : ParentClass(NULL)
 {
@@ -41,63 +41,63 @@ WindowCanvas::WindowCanvas(int x, int y, int w, int h, Gwk::Skin::Base* pSkin,
             y = (dh-h)/2;
     }
     
-    m_pOSWindow = Gwk::Platform::CreatePlatformWindow(x, y, w, h, strWindowTitle);
-    m_WindowPos  = Gwk::Point(x, y);
-    pSkin->GetRender()->InitializeContext(this);
-    pSkin->GetRender()->Init();
-    m_pSkinChange = pSkin;
+    m_oSWindowSWindow = Gwk::Platform::CreatePlatformWindow(x, y, w, h, strWindowTitle);
+    m_windowPos  = Gwk::Point(x, y);
+    skin->GetRender()->InitializeContext(this);
+    skin->GetRender()->Init();
+    m_skinChange = skin;
     SetSize(w, h);
     
-    m_TitleBar = new Gwk::ControlsInternal::Dragger(this);
-    m_TitleBar->SetHeight(24);
-    m_TitleBar->SetPadding(Padding(0, 0, 0, 0));
-    m_TitleBar->SetMargin(Margin(0, 0, 0, 0));
-    m_TitleBar->Dock(Docking::Top);
-    m_TitleBar->SetDoMove(false);
-    m_TitleBar->onDragged.Add(this, &ThisClass::Dragger_Moved);
-    m_TitleBar->onDragStart.Add(this, &ThisClass::Dragger_Start);
-    m_TitleBar->onDoubleClickLeft.Add(this, &ThisClass::OnTitleDoubleClicked);
+    m_titleBar = new Gwk::ControlsInternal::Dragger(this);
+    m_titleBar->SetHeight(24);
+    m_titleBar->SetPadding(Padding(0, 0, 0, 0));
+    m_titleBar->SetMargin(Margin(0, 0, 0, 0));
+    m_titleBar->Dock(Docking::Top);
+    m_titleBar->SetDoMove(false);
+    m_titleBar->onDragged.Add(this, &ThisClass::Dragger_Moved);
+    m_titleBar->onDragStart.Add(this, &ThisClass::Dragger_Start);
+    m_titleBar->onDoubleClickLeft.Add(this, &ThisClass::OnTitleDoubleClicked);
     
-    m_Title = new Gwk::Controls::Label(m_TitleBar);
-    m_Title->SetAlignment(Docking::Left|Docking::CenterV);
-    m_Title->SetText(strWindowTitle);
-    m_Title->Dock(Docking::Fill);
-    m_Title->SetPadding(Padding(8, 0, 0, 0));
-    m_Title->SetTextColor(GetSkin()->Colors.Window.TitleInactive);
+    m_title = new Gwk::Controls::Label(m_titleBar);
+    m_title->SetAlignment(Docking::Left|Docking::CenterV);
+    m_title->SetText(strWindowTitle);
+    m_title->Dock(Docking::Fill);
+    m_title->SetPadding(Padding(8, 0, 0, 0));
+    m_title->SetTextColor(GetSkin()->Colors.Window.TitleInactive);
     
     // CLOSE
     {
-        m_pClose = new Gwk::Controls::WindowCloseButton(m_TitleBar, "Close");
-        m_pClose->Dock(Docking::Right);
-        m_pClose->SetMargin(Margin(0, 0, 4, 0));
-        m_pClose->onPress.Add(this, &WindowCanvas::CloseButtonPressed);
-        m_pClose->SetTabable(false);
-        m_pClose->SetWindow(this);
+        m_close = new Gwk::Controls::WindowCloseButton(m_titleBar, "Close");
+        m_close->Dock(Docking::Right);
+        m_close->SetMargin(Margin(0, 0, 4, 0));
+        m_close->onPress.Add(this, &WindowCanvas::CloseButtonPressed);
+        m_close->SetTabable(false);
+        m_close->SetWindow(this);
     }
     // MAXIMIZE
     {
-        m_pMaximize = new Gwk::Controls::WindowMaximizeButton(m_TitleBar, "Maximize");
-        m_pMaximize->Dock(Docking::Right);
-        m_pMaximize->onPress.Add(this, &WindowCanvas::MaximizeButtonPressed);
-        m_pMaximize->SetTabable(false);
-        m_pMaximize->SetWindow(this);
+        m_maximize = new Gwk::Controls::WindowMaximizeButton(m_titleBar, "Maximize");
+        m_maximize->Dock(Docking::Right);
+        m_maximize->onPress.Add(this, &WindowCanvas::MaximizeButtonPressed);
+        m_maximize->SetTabable(false);
+        m_maximize->SetWindow(this);
     }
     // MINIMiZE
     {
-        m_pMinimize = new Gwk::Controls::WindowMinimizeButton(m_TitleBar, "Minimize");
-        m_pMinimize->Dock(Docking::Right);
-        m_pMinimize->onPress.Add(this, &WindowCanvas::MinimizeButtonPressed);
-        m_pMinimize->SetTabable(false);
-        m_pMinimize->SetWindow(this);
+        m_minimize = new Gwk::Controls::WindowMinimizeButton(m_titleBar, "Minimize");
+        m_minimize->Dock(Docking::Right);
+        m_minimize->onPress.Add(this, &WindowCanvas::MinimizeButtonPressed);
+        m_minimize->SetTabable(false);
+        m_minimize->SetWindow(this);
     }
     // Bottom Right Corner Sizer
     {
-        m_Sizer = new Gwk::ControlsInternal::Dragger(this);
-        m_Sizer->SetSize(16, 16);
-        m_Sizer->SetDoMove(false);
-        m_Sizer->onDragged.Add(this, &WindowCanvas::Sizer_Moved);
-        m_Sizer->onDragStart.Add(this, &WindowCanvas::Dragger_Start);
-        m_Sizer->SetCursor(Gwk::CursorType::SizeNWSE);
+        m_sizer = new Gwk::ControlsInternal::Dragger(this);
+        m_sizer->SetSize(16, 16);
+        m_sizer->SetDoMove(false);
+        m_sizer->onDragged.Add(this, &WindowCanvas::Sizer_Moved);
+        m_sizer->onDragStart.Add(this, &WindowCanvas::Dragger_Start);
+        m_sizer->SetCursor(Gwk::CursorType::SizeNWSE);
     }
 }
 
@@ -108,19 +108,19 @@ WindowCanvas::~WindowCanvas()
 
 void* WindowCanvas::GetWindow()
 {
-    return m_pOSWindow;
+    return m_oSWindowSWindow;
 }
 
 void WindowCanvas::Layout(Skin::Base* skin)
 {
-    m_Sizer->BringToFront();
-    m_Sizer->Position(Docking::Right|Docking::Bottom);
+    m_sizer->BringToFront();
+    m_sizer->Position(Docking::Right|Docking::Bottom);
     ParentClass::Layout(skin);
 }
 
 void WindowCanvas::DoThink()
 {
-    if (Platform::MessagePump(m_pOSWindow))
+    if (Platform::MessagePump(m_oSWindowSWindow))
     {
         Redraw();
     }
@@ -143,25 +143,25 @@ void WindowCanvas::RenderCanvas()
     }
 
     m_bNeedsRedraw = false;
-    Gwk::Renderer::Base* render = m_Skin->GetRender();
+    Gwk::Renderer::Base* render = m_skin->GetRender();
 
     if (render->BeginContext(this))
     {
         render->Begin();
-        RecurseLayout(m_Skin);
+        RecurseLayout(m_skin);
         render->SetClipRegion(GetRenderBounds());
         render->SetRenderOffset( Gwk::Point(-X(), -Y()) );
         render->SetScale(Scale());
 
         if (m_bDrawBackground)
         {
-            render->SetDrawColor(m_BackgroundColor);
+            render->SetDrawColor(m_backgroundColor);
             render->DrawFilledRect(GetRenderBounds());
         }
 
-        DoRender(m_Skin);
-        DragAndDrop::RenderOverlay(this, m_Skin);
-        ToolTip::RenderToolTip(m_Skin);
+        DoRender(m_skin);
+        DragAndDrop::RenderOverlay(this, m_skin);
+        ToolTip::RenderToolTip(m_skin);
         render->End();
     }
 
@@ -174,20 +174,20 @@ void WindowCanvas::Render(Skin::Base* skin)
     bool bHasFocus = IsOnTop();
 
     if (bHasFocus)
-        m_Title->SetTextColor(GetSkin()->Colors.Window.TitleActive);
+        m_title->SetTextColor(GetSkin()->Colors.Window.TitleActive);
     else
-        m_Title->SetTextColor(GetSkin()->Colors.Window.TitleInactive);
+        m_title->SetTextColor(GetSkin()->Colors.Window.TitleInactive);
 
-    skin->DrawWindow(this, m_TitleBar->Bottom(), bHasFocus);
+    skin->DrawWindow(this, m_titleBar->Bottom(), bHasFocus);
 }
 
 void WindowCanvas::DestroyWindow()
 {
-    if (m_pOSWindow)
+    if (m_oSWindowSWindow)
     {
         GetSkin()->GetRender()->ShutdownContext(this);
-        Gwk::Platform::DestroyPlatformWindow(m_pOSWindow);
-        m_pOSWindow = NULL;
+        Gwk::Platform::DestroyPlatformWindow(m_oSWindowSWindow);
+        m_oSWindowSWindow = NULL;
     }
 }
 
@@ -199,10 +199,10 @@ bool WindowCanvas::InputQuit()
 
 Skin::Base* WindowCanvas::GetSkin(void)
 {
-    if (m_pSkinChange)
+    if (m_skinChange)
     {
-        SetSkin(m_pSkinChange);
-        m_pSkinChange = NULL;
+        SetSkin(m_skinChange);
+        m_skinChange = NULL;
     }
 
     return ParentClass::GetSkin();
@@ -210,9 +210,9 @@ Skin::Base* WindowCanvas::GetSkin(void)
 
 void WindowCanvas::Dragger_Start()
 {
-    Gwk::Platform::GetCursorPos(m_HoldPos);
-    m_HoldPos.x -= m_WindowPos.x;
-    m_HoldPos.y -= m_WindowPos.y;
+    Gwk::Platform::GetCursorPos(m_holdPos);
+    m_holdPos.x -= m_windowPos.x;
+    m_holdPos.y -= m_windowPos.y;
 }
 
 void WindowCanvas::Dragger_Moved()
@@ -229,11 +229,11 @@ void WindowCanvas::Dragger_Moved()
         SetMaximize(false);
         // Change the hold pos to be the same distance across the titlebar of
         // the resized window
-        m_HoldPos.x = ((float)m_HoldPos.x)*((float)Width()/fOldWidth);
-        m_HoldPos.y = 10;
+        m_holdPos.x = ((float)m_holdPos.x)*((float)Width()/fOldWidth);
+        m_holdPos.y = 10;
     }
 
-    SetPos(p.x-m_HoldPos.x, p.y-m_HoldPos.y);
+    SetPos(p.x-m_holdPos.x, p.y-m_holdPos.y);
 }
 
 void WindowCanvas::SetPos(int x, int y)
@@ -241,9 +241,9 @@ void WindowCanvas::SetPos(int x, int y)
     int w, h;
     Gwk::Platform::GetDesktopSize(w, h);
     y = Gwk::Clamp(y, 0, h);
-    m_WindowPos.x = x;
-    m_WindowPos.y = y;
-    Gwk::Platform::SetBoundsPlatformWindow(m_pOSWindow, x, y, Width(), Height());
+    m_windowPos.x = x;
+    m_windowPos.y = y;
+    Gwk::Platform::SetBoundsPlatformWindow(m_oSWindowSWindow, x, y, Width(), Height());
 }
 
 void WindowCanvas::CloseButtonPressed()
@@ -253,18 +253,18 @@ void WindowCanvas::CloseButtonPressed()
 
 bool WindowCanvas::IsOnTop()
 {
-    return Gwk::Platform::HasFocusPlatformWindow(m_pOSWindow);
+    return Gwk::Platform::HasFocusPlatformWindow(m_oSWindowSWindow);
 }
 
 void WindowCanvas::Sizer_Moved()
 {
     Gwk::Point p;
     Gwk::Platform::GetCursorPos(p);
-    int w = (p.x)-m_WindowPos.x;
-    int h = (p.y)-m_WindowPos.y;
+    int w = (p.x)-m_windowPos.x;
+    int h = (p.y)-m_windowPos.y;
     w = Clamp(w, 100, 9999);
     h = Clamp(h, 100, 9999);
-    Gwk::Platform::SetBoundsPlatformWindow(m_pOSWindow, m_WindowPos.x, m_WindowPos.y, w, h);
+    Gwk::Platform::SetBoundsPlatformWindow(m_oSWindowSWindow, m_windowPos.x, m_windowPos.y, w, h);
     GetSkin()->GetRender()->ResizedContext(this, w, h);
     this->SetSize(w, h);
     ParentClass::DoThink();
@@ -282,12 +282,12 @@ void WindowCanvas::OnTitleDoubleClicked()
 void WindowCanvas::SetMaximize(bool b)
 {
     m_bIsMaximized = b;
-    m_pMaximize->SetMaximized(m_bIsMaximized);
-    Gwk::Point pSize, pPos;
-    Gwk::Platform::SetWindowMaximized(m_pOSWindow, m_bIsMaximized, pPos, pSize);
-    SetSize(pSize.x, pSize.y);
-    m_WindowPos = pPos;
-    GetSkin()->GetRender()->ResizedContext(this, pSize.x, pSize.y);
+    m_maximize->SetMaximized(m_bIsMaximized);
+    Gwk::Point size, pos;
+    Gwk::Platform::SetWindowMaximized(m_oSWindowSWindow, m_bIsMaximized, pos, size);
+    SetSize(size.x, size.y);
+    m_windowPos = pos;
+    GetSkin()->GetRender()->ResizedContext(this, size.x, size.y);
     ParentClass::DoThink();
     RenderCanvas();
 }
@@ -302,7 +302,7 @@ void WindowCanvas::MaximizeButtonPressed()
 
 void WindowCanvas::MinimizeButtonPressed()
 {
-    Gwk::Platform::SetWindowMinimized(m_pOSWindow, true);
+    Gwk::Platform::SetWindowMinimized(m_oSWindowSWindow, true);
 }
 
 void WindowCanvas::SetCanMaximize(bool b)
@@ -311,5 +311,5 @@ void WindowCanvas::SetCanMaximize(bool b)
         return;
 
     m_bCanMaximize = b;
-    m_pMaximize->SetDisabled(!b);
+    m_maximize->SetDisabled(!b);
 }

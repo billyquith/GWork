@@ -40,12 +40,12 @@ namespace Gwk
 
             virtual void SetMinimumSize(const Gwk::Point& minSize)
             {
-                m_MinimumSize = minSize;
+                m_minimumSize = minSize;
             }
 
             virtual Gwk::Point GetMinimumSize() override
             {
-                return m_MinimumSize;
+                return m_minimumSize;
             }
 
             virtual void DisableResizing();
@@ -60,18 +60,18 @@ namespace Gwk
 
             virtual ControlsInternal::Resizer* GetResizer(int iResizer)
             {
-                return m_Resizer[iResizer];
+                return m_resizer[iResizer];
             }
 
         protected:
 
-            void OnResizedInternal(Controls::Base* pControl);
+            void OnResizedInternal(Controls::Base* control);
 
-            Gwk::Point m_MinimumSize;
+            Gwk::Point m_minimumSize;
             bool m_bClampMovement;
             bool m_bResizable;
 
-            ControlsInternal::Resizer* m_Resizer[10];
+            ControlsInternal::Resizer* m_resizer[10];
 
 
         };

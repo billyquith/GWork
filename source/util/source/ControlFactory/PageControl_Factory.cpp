@@ -40,16 +40,16 @@ namespace Gwk
 
                 String GetValueAsString(Controls::Base* ctrl) override
                 {
-                    Gwk::Controls::PageControl* pControl =
+                    Gwk::Controls::PageControl* control =
                         gwk_cast<Gwk::Controls::PageControl>(ctrl);
-                    return pControl->FinishButton()->GetName();
+                    return control->FinishButton()->GetName();
                 }
 
                 void SetValueFromString(Controls::Base* ctrl, const String& str) override
                 {
-                    Gwk::Controls::PageControl* pControl =
+                    Gwk::Controls::PageControl* control =
                         gwk_cast<Gwk::Controls::PageControl>(ctrl);
-                    pControl->FinishButton()->SetName(str);
+                    control->FinishButton()->SetName(str);
                 }
 
             };
@@ -69,29 +69,29 @@ namespace Gwk
 
             virtual Gwk::Controls::Base* CreateInstance(Gwk::Controls::Base* parent) override
             {
-                Gwk::Controls::PageControl* pControl = new Gwk::Controls::PageControl(parent);
-                pControl->SetSize(300, 300);
-                pControl->SetPageCount(1);
-                return pControl;
+                Gwk::Controls::PageControl* control = new Gwk::Controls::PageControl(parent);
+                control->SetSize(300, 300);
+                control->SetPageCount(1);
+                return control;
             }
 
             //
             // Called when a child is clicked on in the editor
             //
             virtual bool ChildTouched(Gwk::Controls::Base* ctrl,
-                                      Gwk::Controls::Base* pChildControl)
+                                      Gwk::Controls::Base* childControl)
             {
-                Gwk::Controls::PageControl* pControl = gwk_cast<Gwk::Controls::PageControl>(
+                Gwk::Controls::PageControl* control = gwk_cast<Gwk::Controls::PageControl>(
                     ctrl);
 
-                if (pChildControl == pControl->NextButton())
+                if (childControl == control->NextButton())
                 {
-                    pControl->NextButton()->DoAction(); return true;
+                    control->NextButton()->DoAction(); return true;
                 }
 
-                if (pChildControl == pControl->BackButton())
+                if (childControl == control->BackButton())
                 {
-                    pControl->BackButton()->DoAction(); return true;
+                    control->BackButton()->DoAction(); return true;
                 }
 
                 return false;
@@ -104,21 +104,21 @@ namespace Gwk
             void AddChild(Gwk::Controls::Base* ctrl, Gwk::Controls::Base* child,
                           const Gwk::Point& pos)
             {
-                Gwk::Controls::PageControl* pControl = gwk_cast<Gwk::Controls::PageControl>(
+                Gwk::Controls::PageControl* control = gwk_cast<Gwk::Controls::PageControl>(
                     ctrl);
-                AddChild(ctrl, child, pControl->GetPageNumber());
+                AddChild(ctrl, child, control->GetPageNumber());
             }
 
             void AddChild(Gwk::Controls::Base* ctrl, Gwk::Controls::Base* child, int iPage)
             {
-                Gwk::Controls::PageControl* pControl = gwk_cast<Gwk::Controls::PageControl>(
+                Gwk::Controls::PageControl* control = gwk_cast<Gwk::Controls::PageControl>(
                     ctrl);
 
-                if (!pControl->GetPage(iPage))
+                if (!control->GetPage(iPage))
                     iPage = 0;
 
                 SetParentPage(child, iPage);
-                child->SetParent(pControl->GetPage(iPage));
+                child->SetParent(control->GetPage(iPage));
             }
 
         };

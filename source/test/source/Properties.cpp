@@ -25,8 +25,8 @@ public:
             props->SetBounds(10, 10, 150, 300);
             {
                 {
-                    Gwk::Controls::PropertyRow* pRow = props->Add("First Name");
-                    pRow->onChange.Add(this, &Properties::OnFirstNameChanged);
+                    Gwk::Controls::PropertyRow* row = props->Add("First Name");
+                    row->onChange.Add(this, &Properties::OnFirstNameChanged);
                 }
                 props->Add("Middle Name");
                 props->Add("Last Name");
@@ -51,26 +51,26 @@ public:
                 props->Add("Out Here");
                 // Combo Box Test
                 {
-                    Gwk::Controls::Property::ComboBox* pCombo =
+                    Gwk::Controls::Property::ComboBox* combo =
                         new Gwk::Controls::Property::ComboBox(props);
-                    pCombo->GetComboBox()->AddItem("Option One", "one");
-                    pCombo->GetComboBox()->AddItem("Number Two", "two");
-                    pCombo->GetComboBox()->AddItem("Door Three", "three");
-                    pCombo->GetComboBox()->AddItem("Four Legs", "four");
-                    pCombo->GetComboBox()->AddItem("Five Birds", "five");
-                    Gwk::Controls::PropertyRow* pRow = props->Add("ComboBox", pCombo, "1");
-                    pRow->onChange.Add(this, &Properties::OnFirstNameChanged);
+                    combo->GetComboBox()->AddItem("Option One", "one");
+                    combo->GetComboBox()->AddItem("Number Two", "two");
+                    combo->GetComboBox()->AddItem("Door Three", "three");
+                    combo->GetComboBox()->AddItem("Four Legs", "four");
+                    combo->GetComboBox()->AddItem("Five Birds", "five");
+                    Gwk::Controls::PropertyRow* row = props->Add("ComboBox", combo, "1");
+                    row->onChange.Add(this, &Properties::OnFirstNameChanged);
                 }
             }
             ptree->ExpandAll();
         }
     }
 
-    void OnFirstNameChanged(Controls::Base* pControl)
+    void OnFirstNameChanged(Controls::Base* control)
     {
-        Gwk::Controls::PropertyRow* pRow = (Gwk::Controls::PropertyRow*)pControl;
+        Gwk::Controls::PropertyRow* row = (Gwk::Controls::PropertyRow*)control;
         UnitPrint(Utility::Format("First Name Changed: %s",
-                                  pRow->GetProperty()->GetPropertyValue().c_str()));
+                                  row->GetProperty()->GetPropertyValue().c_str()));
     }
 
 };

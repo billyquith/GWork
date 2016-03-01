@@ -49,20 +49,20 @@ namespace Gwk
 
             const ListBox::Rows& GetSelectedRows()
             {
-                return m_SelectedRows;
+                return m_selectedRows;
             }
 
             virtual Layout::TableRow* GetSelectedRow();
             virtual Gwk::String      GetSelectedRowName();
 
-            virtual void SetSelectedRow(Gwk::Controls::Base* pRow, bool bClearOthers = true);
+            virtual void SetSelectedRow(Gwk::Controls::Base* row, bool bClearOthers = true);
             virtual void SelectByString(const String& string, bool bClearOthers = true);
 
             Gwk::Event::Caller onRowSelected;
 
             Controls::Layout::Table* GetTable()
             {
-                return m_Table;
+                return m_table;
             }
 
             virtual void Clear() override;
@@ -70,22 +70,22 @@ namespace Gwk
             // Pass through, to embedded table
             void SetColumnCount(int iCount)
             {
-                m_Table->SetColumnCount(iCount);
+                m_table->SetColumnCount(iCount);
             }
 
             void SetColumnWidth(int iCount, int iSize)
             {
-                m_Table->SetColumnWidth(iCount, iSize);
+                m_table->SetColumnWidth(iCount, iSize);
             }
 
         protected:
 
-            void OnRowSelected(Base* pControl);
+            void OnRowSelected(Base* control);
             bool OnKeyDown(bool bDown) override;
             bool OnKeyUp(bool bDown) override;
 
-            Controls::Layout::Table* m_Table;
-            ListBox::Rows m_SelectedRows;
+            Controls::Layout::Table* m_table;
+            ListBox::Rows m_selectedRows;
 
             bool m_bMultiSelect;
         };

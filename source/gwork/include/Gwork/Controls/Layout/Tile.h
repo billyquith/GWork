@@ -34,31 +34,31 @@ namespace Gwk
 
                     for (Base::List::iterator it = Children.begin(); it != Children.end(); ++it)
                     {
-                        Base* pChild = *it;
+                        Base* child = *it;
 
-                        if (pChild->GetDock() != Docking::None)
+                        if (child->GetDock() != Docking::None)
                             continue;
 
-                        pChild->SetPos(pos.x+m_TileSize.x/2 - pChild->Width()/2,
-                                       pos.y+m_TileSize.y/2 - pChild->Height()/2);
-                        pos.x = pos.x+m_TileSize.x;
+                        child->SetPos(pos.x+m_tileSize.x/2 - child->Width()/2,
+                                       pos.y+m_tileSize.y/2 - child->Height()/2);
+                        pos.x = pos.x+m_tileSize.x;
 
-                        if (pos.x+m_TileSize.x > bounds.x+bounds.w)
+                        if (pos.x+m_tileSize.x > bounds.x+bounds.w)
                         {
                             pos.x = bounds.x;
-                            pos.y += m_TileSize.y;
+                            pos.y += m_tileSize.y;
                         }
                     }
                 }
 
                 void SetTileSize(int x, int y)
                 {
-                    m_TileSize = Point(x, y);
+                    m_tileSize = Point(x, y);
                 }
 
             private:
 
-                Point m_TileSize;
+                Point m_tileSize;
             };
 
 

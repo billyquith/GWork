@@ -23,25 +23,25 @@ GWK_CONTROL_CONSTRUCTOR(HSVColorPicker)
     SetSize(256, 64);
     EnableCacheToTexture();
     
-    m_LerpBox = new Gwk::Controls::ColorLerpBox(this);
-    m_LerpBox->onSelectionChanged.Add(this, &HSVColorPicker::ColorBoxChanged);
-    m_LerpBox->Dock(Docking::Left);
+    m_lerpBox = new Gwk::Controls::ColorLerpBox(this);
+    m_lerpBox->onSelectionChanged.Add(this, &HSVColorPicker::ColorBoxChanged);
+    m_lerpBox->Dock(Docking::Left);
     
-    m_ColorSlider = new Gwk::Controls::ColorSlider(this);
-    m_ColorSlider->SetPos(m_LerpBox->Width()+15, 5);
-    m_ColorSlider->onSelectionChanged.Add(this, &HSVColorPicker::ColorSliderChanged);
-    m_ColorSlider->Dock(Docking::Left);
+    m_colorSlider = new Gwk::Controls::ColorSlider(this);
+    m_colorSlider->SetPos(m_lerpBox->Width()+15, 5);
+    m_colorSlider->onSelectionChanged.Add(this, &HSVColorPicker::ColorSliderChanged);
+    m_colorSlider->Dock(Docking::Left);
     
-    m_After = new Gwk::ControlsInternal::ColorDisplay(this);
-    m_After->SetSize(48, 24);
-    m_After->SetPos(m_ColorSlider->X()+m_ColorSlider->Width()+15, 5);
+    m_after = new Gwk::ControlsInternal::ColorDisplay(this);
+    m_after->SetSize(48, 24);
+    m_after->SetPos(m_colorSlider->X()+m_colorSlider->Width()+15, 5);
     
-    m_Before = new Gwk::ControlsInternal::ColorDisplay(this);
-    m_Before->SetSize(48, 24);
-    m_Before->SetPos(m_After->X(), 28);
+    m_before = new Gwk::ControlsInternal::ColorDisplay(this);
+    m_before->SetSize(48, 24);
+    m_before->SetPos(m_after->X(), 28);
     
-    int x = m_Before->X();
-    int y = m_Before->Y()+30;
+    int x = m_before->X();
+    int y = m_before->Y()+30;
     {
         Label* label = new Label(this);
         label->SetText("R:");
@@ -129,7 +129,7 @@ void HSVColorPicker::UpdateControls(Gwk::Color color)
     if (blueBox)
         blueBox->SetText(Gwk::Utility::ToString((int)color.b), false);
 
-    m_After->SetColor(color);
+    m_after->SetColor(color);
 }
 
 void HSVColorPicker::SetColor(Gwk::Color color, bool onlyHue, bool reset)
@@ -137,29 +137,29 @@ void HSVColorPicker::SetColor(Gwk::Color color, bool onlyHue, bool reset)
     UpdateControls(color);
 
     if (reset)
-        m_Before->SetColor(color);
+        m_before->SetColor(color);
 
-    m_ColorSlider->SetColor(color);
-    m_LerpBox->SetColor(color,  onlyHue);
-    m_After->SetColor(color);
+    m_colorSlider->SetColor(color);
+    m_lerpBox->SetColor(color,  onlyHue);
+    m_after->SetColor(color);
 }
 
 Gwk::Color HSVColorPicker::GetColor()
 {
-    return m_LerpBox->GetSelectedColor();
+    return m_lerpBox->GetSelectedColor();
 }
 
-void HSVColorPicker::ColorBoxChanged(Gwk::Controls::Base* /*pControl*/)
+void HSVColorPicker::ColorBoxChanged(Gwk::Controls::Base* /*control*/)
 {
     onColorChanged.Call(this);
     UpdateControls(GetColor());
     Invalidate();
 }
 
-void HSVColorPicker::ColorSliderChanged(Gwk::Controls::Base* /*pControl*/)
+void HSVColorPicker::ColorSliderChanged(Gwk::Controls::Base* /*control*/)
 {
-    if (m_LerpBox)
-        m_LerpBox->SetColor(m_ColorSlider->GetSelectedColor(),  true);
+    if (m_lerpBox)
+        m_lerpBox->SetColor(m_colorSlider->GetSelectedColor(),  true);
 
     Invalidate();
 }

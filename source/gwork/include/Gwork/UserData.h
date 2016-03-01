@@ -67,7 +67,7 @@ namespace Gwk
         };
 
         typedef std::map<Gwk::String, ValueBase*> Container;
-        Container m_List;
+        Container m_list;
 
     public:
 
@@ -77,7 +77,7 @@ namespace Gwk
 
         ~UserDataStorage()
         {
-            Container::iterator it = m_List.begin(), itEnd = m_List.end();
+            Container::iterator it = m_list.begin(), itEnd = m_list.end();
 
             while (it != itEnd)
             {
@@ -90,28 +90,28 @@ namespace Gwk
         void Set(const Gwk::String& str, const T& var)
         {
             Value<T> *val = NULL;
-            Container::iterator it = m_List.find(str);
+            Container::iterator it = m_list.find(str);
 
-            if (it != m_List.end())
+            if (it != m_list.end())
             {
                 static_cast< Value<T>* >(it->second)->val = var;
             }
             else
             {
                 val = new Value<T>(var);
-                m_List[str] = val;
+                m_list[str] = val;
             }
         }
 
         bool Exists(const Gwk::String& str) const
         {
-            return m_List.find(str) != m_List.end();
+            return m_list.find(str) != m_list.end();
         }
 
         template <typename T>
         T& Get(const Gwk::String& str)
         {
-            Value<T> *v = static_cast< Value<T>* >(m_List[str]);
+            Value<T> *v = static_cast< Value<T>* >(m_list[str]);
             return v->val;        }
     };
 

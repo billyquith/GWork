@@ -15,62 +15,62 @@ class TabControl : public GUnit
 {
 public:
 
-    Controls::TabControl* m_pDockControlLeft;
+    Controls::TabControl* m_dockControlLeft;
 
     GWK_CONTROL_INLINE(TabControl, GUnit)
     {
         {
-            m_pDockControlLeft = new Controls::TabControl(this);
-            m_pDockControlLeft->SetBounds(10, 10, 200, 200);
+            m_dockControlLeft = new Controls::TabControl(this);
+            m_dockControlLeft->SetBounds(10, 10, 200, 200);
             {
-                Controls::TabButton* pButton = m_pDockControlLeft->AddPage("Controls");
-                Base* pPage = pButton->GetPage();
+                Controls::TabButton* button = m_dockControlLeft->AddPage("Controls");
+                Base* page = button->GetPage();
                 {
-                    Controls::RadioButtonController* pRadio = new Controls::RadioButtonController(
-                        pPage);
-                    pRadio->SetBounds(10, 10, 100, 100);
-                    pRadio->AddOption("Top")->Select();
-                    pRadio->AddOption("Bottom");
-                    pRadio->AddOption("Left");
-                    pRadio->AddOption("Right");
-                    pRadio->onSelectionChange.Add(this, &ThisClass::OnDockChange);
+                    Controls::RadioButtonController* radio = new Controls::RadioButtonController(
+                        page);
+                    radio->SetBounds(10, 10, 100, 100);
+                    radio->AddOption("Top")->Select();
+                    radio->AddOption("Bottom");
+                    radio->AddOption("Left");
+                    radio->AddOption("Right");
+                    radio->onSelectionChange.Add(this, &ThisClass::OnDockChange);
                 }
             }
-            m_pDockControlLeft->AddPage("Red");
-            m_pDockControlLeft->AddPage("Green");
-            m_pDockControlLeft->AddPage("Blue");
+            m_dockControlLeft->AddPage("Red");
+            m_dockControlLeft->AddPage("Green");
+            m_dockControlLeft->AddPage("Blue");
         }
         {
-            Controls::TabControl* pDragMe = new Controls::TabControl(this);
-            pDragMe->SetBounds(220, 10, 200, 200);
-            pDragMe->AddPage("You");
-            pDragMe->AddPage("Can");
-            pDragMe->AddPage("Reorder")->SetImage("test16.png");
-            pDragMe->AddPage("These");
-            pDragMe->AddPage("Tabs");
-            pDragMe->SetAllowReorder(true);
+            Controls::TabControl* dragMe = new Controls::TabControl(this);
+            dragMe->SetBounds(220, 10, 200, 200);
+            dragMe->AddPage("You");
+            dragMe->AddPage("Can");
+            dragMe->AddPage("Reorder")->SetImage("test16.png");
+            dragMe->AddPage("These");
+            dragMe->AddPage("Tabs");
+            dragMe->SetAllowReorder(true);
         }
     }
 
-    void OnDockChange(Gwk::Controls::Base* pControl)
+    void OnDockChange(Gwk::Controls::Base* control)
     {
         Gwk::Controls::RadioButtonController* rc =
-            (Gwk::Controls::RadioButtonController*)pControl;
+            (Gwk::Controls::RadioButtonController*)control;
 
         if (rc->GetSelectedLabel() == "Top")
-            m_pDockControlLeft->SetTabStripPosition(Docking::Top);
+            m_dockControlLeft->SetTabStripPosition(Docking::Top);
 
         if (rc->GetSelectedLabel() == "Bottom")
-            m_pDockControlLeft->SetTabStripPosition(Docking::Bottom);
+            m_dockControlLeft->SetTabStripPosition(Docking::Bottom);
 
         if (rc->GetSelectedLabel() == "Left")
-            m_pDockControlLeft->SetTabStripPosition(Docking::Left);
+            m_dockControlLeft->SetTabStripPosition(Docking::Left);
 
         if (rc->GetSelectedLabel() == "Right")
-            m_pDockControlLeft->SetTabStripPosition(Docking::Right);
+            m_dockControlLeft->SetTabStripPosition(Docking::Right);
     }
 
-    Gwk::Font m_Font;
+    Gwk::Font m_font;
 };
 
 

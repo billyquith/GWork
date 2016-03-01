@@ -37,7 +37,7 @@ namespace Gwk
 
             virtual void SetList(Controls::CollapsibleList* p)
             {
-                m_pList = p;
+                m_list = p;
             }
 
             virtual void    UnselectAll();
@@ -58,8 +58,8 @@ namespace Gwk
 
             virtual void OnSelection(Controls::Base* control);
 
-            Controls::Button*           m_pButton;
-            Controls::CollapsibleList*  m_pList;
+            Controls::Button*           m_button;
+            Controls::CollapsibleList*  m_list;
         };
 
 

@@ -1,15 +1,15 @@
 
 
-inline Gwk::Controls::Base* FindParentControlFactoryControl( Gwk::Controls::Base* pControl )
+inline Gwk::Controls::Base* FindParentControlFactoryControl( Gwk::Controls::Base* control )
 {
-	while ( pControl )
+	while ( control )
 	{
-		if ( pControl->UserData.Exists( "ControlFactory" ) )
+		if ( control->UserData.Exists( "ControlFactory" ) )
 		{
-			return pControl;
+			return control;
 		}
 
-		pControl = pControl->GetParent();
+		control = control->GetParent();
 	}
 
 	return NULL;

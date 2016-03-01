@@ -31,14 +31,14 @@ namespace Gwk
             virtual void Layout(Skin::Base* skin) override;
             virtual void UpdateColours() override;
 
-            virtual void SelectItem(MenuItem* pItem, bool bFireChangeEvents =
+            virtual void SelectItem(MenuItem* item, bool bFireChangeEvents =
                                         true);
             virtual void SelectItemByName(const Gwk::String& name,
                                           bool bFireChangeEvents = true);
             virtual Gwk::Controls::Label* GetSelectedItem();
 
             virtual void OnPress() override;
-            virtual void OnItemSelected(Controls::Base* pControl);
+            virtual void OnItemSelected(Controls::Base* control);
             virtual void OpenList();
             virtual void CloseList();
 
@@ -63,10 +63,10 @@ namespace Gwk
 
         protected:
 
-            Menu* m_Menu;
-            MenuItem* m_SelectedItem;
+            Menu* m_menu;
+            MenuItem* m_selectedItem;
 
-            Controls::Base* m_Button;
+            Controls::Base* m_button;
 
         };
 

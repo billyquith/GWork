@@ -47,7 +47,7 @@ namespace Gwk
                 return m_bCanScrollV;
             }
 
-            virtual void OnChildBoundsChanged(Gwk::Rect oldChildBounds, Base* pChild) override;
+            virtual void OnChildBoundsChanged(Gwk::Rect oldChildBounds, Base* child) override;
             virtual void UpdateScrollBars();
 
             virtual void SetVScrollRequired(bool req);
@@ -76,8 +76,8 @@ namespace Gwk
 
             bool m_bAutoHideBars;
 
-            Controls::BaseScrollBar* m_VerticalScrollBar;
-            Controls::BaseScrollBar* m_HorizontalScrollBar;
+            Controls::BaseScrollBar* m_verticalScrollBar;
+            Controls::BaseScrollBar* m_horizontalScrollBar;
         };
 
 

@@ -67,26 +67,26 @@ GWK_CONTROL_CONSTRUCTOR(ListBox)
     SetScroll(false, true);
     SetAutoHideBars(true);
     SetMargin(Margin(1, 1, 1, 1));
-    m_InnerPanel->SetPadding(Padding(2, 2, 2, 2));
-    m_Table = new Controls::Layout::Table(this);
-    m_Table->SetColumnCount(1);
+    m_innerPanel->SetPadding(Padding(2, 2, 2, 2));
+    m_table = new Controls::Layout::Table(this);
+    m_table->SetColumnCount(1);
     m_bMultiSelect = false;
 }
 
 Layout::TableRow* ListBox::AddItem(const String& strLabel, const String& strName)
 {
-    ListBoxRow* pRow = new ListBoxRow(this);
-    m_Table->AddRow(pRow);
-    pRow->SetCellText(0, strLabel);
-    pRow->SetName(strName);
-    pRow->onRowSelected.Add(this, &ListBox::OnRowSelected);
-    return pRow;
+    ListBoxRow* row = new ListBoxRow(this);
+    m_table->AddRow(row);
+    row->SetCellText(0, strLabel);
+    row->SetName(strName);
+    row->onRowSelected.Add(this, &ListBox::OnRowSelected);
+    return row;
 }
 
 void ListBox::RemoveItem(Layout::TableRow* row)
 {
-    m_SelectedRows.erase(std::find(m_SelectedRows.begin(), m_SelectedRows.end(), row));
-    m_Table->Remove(row);
+    m_selectedRows.erase(std::find(m_selectedRows.begin(), m_selectedRows.end(), row));
+    m_table->Remove(row);
 }
 
 void ListBox::Render(Skin::Base* skin)
@@ -97,41 +97,41 @@ void ListBox::Render(Skin::Base* skin)
 void ListBox::Layout(Skin::Base* skin)
 {
     ParentClass::Layout(skin);
-    const Gwk::Rect& inner = m_InnerPanel->GetInnerBounds();
-    m_Table->SetPos(inner.x, inner.y);
-    m_Table->SetWidth(inner.w);
-    m_Table->SizeToChildren(false, true);
+    const Gwk::Rect& inner = m_innerPanel->GetInnerBounds();
+    m_table->SetPos(inner.x, inner.y);
+    m_table->SetWidth(inner.w);
+    m_table->SizeToChildren(false, true);
     ParentClass::Layout(skin);
 }
 
 void ListBox::UnselectAll()
 {
-    std::list<Layout::TableRow*>::iterator it = m_SelectedRows.begin();
+    std::list<Layout::TableRow*>::iterator it = m_selectedRows.begin();
 
-    while (it != m_SelectedRows.end())
+    while (it != m_selectedRows.end())
     {
-        ListBoxRow* pRow = static_cast<ListBoxRow*>(*it);
-        it = m_SelectedRows.erase(it);
-        pRow->SetSelected(false);
+        ListBoxRow* row = static_cast<ListBoxRow*>(*it);
+        it = m_selectedRows.erase(it);
+        row->SetSelected(false);
     }
 }
 
-void ListBox::OnRowSelected(Base* pControl)
+void ListBox::OnRowSelected(Base* control)
 {
     bool bClear = !Gwk::Input::IsShiftDown();
 
     if (!AllowMultiSelect())
         bClear = true;
 
-    SetSelectedRow(pControl, bClear);
+    SetSelectedRow(control, bClear);
 }
 
 Layout::TableRow* ListBox::GetSelectedRow()
 {
-    if (m_SelectedRows.empty())
+    if (m_selectedRows.empty())
         return NULL;
 
-    return *m_SelectedRows.begin();
+    return *m_selectedRows.begin();
 }
 
 Gwk::String ListBox::GetSelectedRowName()
@@ -147,22 +147,22 @@ Gwk::String ListBox::GetSelectedRowName()
 void ListBox::Clear()
 {
     UnselectAll();
-    m_Table->Clear();
+    m_table->Clear();
 }
 
-void ListBox::SetSelectedRow(Gwk::Controls::Base* pControl, bool bClearOthers)
+void ListBox::SetSelectedRow(Gwk::Controls::Base* control, bool bClearOthers)
 {
     if (bClearOthers)
         UnselectAll();
 
-    ListBoxRow* pRow = gwk_cast<ListBoxRow>(pControl);
+    ListBoxRow* row = gwk_cast<ListBoxRow>(control);
 
-    if (!pRow)
+    if (!row)
         return;
 
     // TODO: make sure this is one of our rows!
-    pRow->SetSelected(true);
-    m_SelectedRows.push_back(pRow);
+    row->SetSelected(true);
+    m_selectedRows.push_back(row);
     onRowSelected.Call(this);
 }
 
@@ -171,17 +171,17 @@ void ListBox::SelectByString(const String& strName, bool bClearOthers)
     if (bClearOthers)
         UnselectAll();
 
-    Base::List& children = m_Table->GetChildren();
+    Base::List& children = m_table->GetChildren();
 
     for (Base::List::iterator iter = children.begin(); iter != children.end(); ++iter)
     {
-        ListBoxRow* pChild = gwk_cast<ListBoxRow>(*iter);
+        ListBoxRow* child = gwk_cast<ListBoxRow>(*iter);
 
-        if (!pChild)
+        if (!child)
             continue;
 
-        if (Utility::Strings::Wildcard(strName, pChild->GetText(0)))
-            SetSelectedRow(pChild, false);
+        if (Utility::Strings::Wildcard(strName, child->GetText(0)))
+            SetSelectedRow(child, false);
     }
 }
 
@@ -189,7 +189,7 @@ bool ListBox::OnKeyDown(bool bDown)
 {
     if (bDown)
     {
-        Base::List& children = m_Table->Children;
+        Base::List& children = m_table->Children;
         Base::List::const_iterator begin = children.begin();
         Base::List::const_iterator end = children.end();
         Controls::Base* sel_row = GetSelectedRow();
@@ -209,16 +209,16 @@ bool ListBox::OnKeyDown(bool bDown)
             if (next != end)
                 result = next;
 
-            ListBoxRow* pRow = gwk_cast<ListBoxRow>(*result);
+            ListBoxRow* row = gwk_cast<ListBoxRow>(*result);
 
-            if (pRow)
+            if (row)
             {
-                pRow->DoSelect();
-                Controls::VerticalScrollBar* pScroll = gwk_cast<Controls::VerticalScrollBar>(
-                    m_VerticalScrollBar);
+                row->DoSelect();
+                Controls::VerticalScrollBar* scroll = gwk_cast<Controls::VerticalScrollBar>(
+                    m_verticalScrollBar);
 
-                if (pScroll)
-                    pScroll->NudgeDown(this);
+                if (scroll)
+                    scroll->NudgeDown(this);
 
                 Redraw();
             }
@@ -232,7 +232,7 @@ bool ListBox::OnKeyUp(bool bDown)
 {
     if (bDown)
     {
-        Base::List& children = m_Table->Children;
+        Base::List& children = m_table->Children;
         Base::List::const_iterator begin = children.begin();
         Base::List::const_iterator end = children.end();
         Controls::Base* sel_row = GetSelectedRow();
@@ -248,16 +248,16 @@ bool ListBox::OnKeyUp(bool bDown)
             if (result != begin)
                 --result;
 
-            ListBoxRow* pRow = gwk_cast<ListBoxRow>(*result);
+            ListBoxRow* row = gwk_cast<ListBoxRow>(*result);
 
-            if (pRow)
+            if (row)
             {
-                pRow->DoSelect();
-                Controls::VerticalScrollBar* pScroll = gwk_cast<Controls::VerticalScrollBar>(
-                    m_VerticalScrollBar);
+                row->DoSelect();
+                Controls::VerticalScrollBar* scroll = gwk_cast<Controls::VerticalScrollBar>(
+                    m_verticalScrollBar);
 
-                if (pScroll)
-                    pScroll->NudgeUp(this);
+                if (scroll)
+                    scroll->NudgeUp(this);
 
                 Redraw();
             }

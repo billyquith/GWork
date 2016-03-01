@@ -22,27 +22,27 @@ GWK_CONTROL_CONSTRUCTOR(DockBase)
 {
     SetPadding(Padding(1, 1, 1, 1));
     SetSize(200, 200);
-    m_DockedTabControl = NULL;
-    m_Left = NULL;
-    m_Right = NULL;
-    m_Top = NULL;
-    m_Bottom = NULL;
+    m_dockedTabControl = NULL;
+    m_left = NULL;
+    m_right = NULL;
+    m_top = NULL;
+    m_bottom = NULL;
     m_bDrawHover = false;
 }
 
 TabControl* DockBase::GetTabControl()
 {
-    return m_DockedTabControl;
+    return m_dockedTabControl;
 }
 
 void DockBase::SetupChildDock(Docking::Area pos)
 {
-    if (!m_DockedTabControl)
+    if (!m_dockedTabControl)
     {
-        m_DockedTabControl = new DockedTabControl(this);
-        m_DockedTabControl->onLoseTab.Add(this, &DockBase::OnTabRemoved);
-        m_DockedTabControl->SetTabStripPosition(Docking::Bottom);
-        m_DockedTabControl->SetShowTitlebar(true);
+        m_dockedTabControl = new DockedTabControl(this);
+        m_dockedTabControl->onLoseTab.Add(this, &DockBase::OnTabRemoved);
+        m_dockedTabControl->SetTabStripPosition(Docking::Bottom);
+        m_dockedTabControl->SetShowTitlebar(true);
     }
 
     Dock(pos);
@@ -73,35 +73,35 @@ void DockBase::Render(Skin::Base* /*skin*/)
 DockBase** DockBase::GetChildDockPtr(Docking::Area pos)
 {
     if (pos == Docking::Left)
-        return &m_Left;
+        return &m_left;
 
     if (pos == Docking::Right)
-        return &m_Right;
+        return &m_right;
 
     if (pos == Docking::Top)
-        return &m_Top;
+        return &m_top;
 
     if (pos == Docking::Bottom)
-        return &m_Bottom;
+        return &m_bottom;
 
     return NULL;
 }
 
 DockBase* DockBase::GetChildDock(Docking::Area pos)
 {
-    DockBase** pDock = GetChildDockPtr(pos);
+    DockBase** dock = GetChildDockPtr(pos);
 
-    if (!(*pDock))
+    if (!(*dock))
     {
-        (*pDock) = new DockBase(this);
-        (*pDock)->SetupChildDock(pos);
+        (*dock) = new DockBase(this);
+        (*dock)->SetupChildDock(pos);
     }
     else
     {
-        (*pDock)->SetHidden(false);
+        (*dock)->SetHidden(false);
     }
 
-    return *pDock;
+    return *dock;
 }
 
 Docking::Area DockBase::GetDroppedTabDirection(int x, int y)
@@ -118,75 +118,75 @@ Docking::Area DockBase::GetDroppedTabDirection(int x, int y)
     if (minimum > 0.3)
         return Docking::Fill;
 
-    if (top == minimum && (!m_Top || m_Top->Hidden()))
+    if (top == minimum && (!m_top || m_top->Hidden()))
         return Docking::Top;
 
-    if (left == minimum && (!m_Left || m_Left->Hidden()))
+    if (left == minimum && (!m_left || m_left->Hidden()))
         return Docking::Left;
 
-    if (right == minimum && (!m_Right || m_Right->Hidden()))
+    if (right == minimum && (!m_right || m_right->Hidden()))
         return Docking::Right;
 
-    if (bottom == minimum && (!m_Bottom || m_Bottom->Hidden()))
+    if (bottom == minimum && (!m_bottom || m_bottom->Hidden()))
         return Docking::Bottom;
 
     return Docking::Fill;
 }
 
-bool DockBase::DragAndDrop_CanAcceptPackage(Gwk::DragAndDrop::Package* pPackage)
+bool DockBase::DragAndDrop_CanAcceptPackage(Gwk::DragAndDrop::Package* package)
 {
     // A TAB button dropped
-    if (pPackage->name == "TabButtonMove")
+    if (package->name == "TabButtonMove")
         return true;
 
     // a TAB window dropped
-    if (pPackage->name == "TabWindowMove")
+    if (package->name == "TabWindowMove")
         return true;
 
     return false;
 }
 
-bool DockBase::DragAndDrop_HandleDrop(Gwk::DragAndDrop::Package* pPackage, int x, int y)
+bool DockBase::DragAndDrop_HandleDrop(Gwk::DragAndDrop::Package* package, int x, int y)
 {
-    Gwk::Point pPos = CanvasPosToLocal(Gwk::Point(x, y));
-    Docking::Area dir = GetDroppedTabDirection(pPos.x, pPos.y);
-    DockedTabControl* pAddTo = m_DockedTabControl;
+    Gwk::Point pos = CanvasPosToLocal(Gwk::Point(x, y));
+    Docking::Area dir = GetDroppedTabDirection(pos.x, pos.y);
+    DockedTabControl* addTo = m_dockedTabControl;
 
-    if (dir == Docking::Fill && pAddTo == NULL)
+    if (dir == Docking::Fill && addTo == NULL)
         return false;
 
     if (dir != Docking::Fill)
     {
-        DockBase* pDock = GetChildDock(dir);
-        pAddTo = pDock->m_DockedTabControl;
+        DockBase* dock = GetChildDock(dir);
+        addTo = dock->m_dockedTabControl;
 
         if (!m_bDropFar)
-            pDock->BringToFront();
+            dock->BringToFront();
         else
-            pDock->SendToBack();
+            dock->SendToBack();
     }
 
-    if (pPackage->name == "TabButtonMove")
+    if (package->name == "TabButtonMove")
     {
-        TabButton* pTabButton = gwk_cast<TabButton>(DragAndDrop::SourceControl);
+        TabButton* tabButton = gwk_cast<TabButton>(DragAndDrop::SourceControl);
 
-        if (!pTabButton)
+        if (!tabButton)
             return false;
 
-        pAddTo->AddPage(pTabButton);
+        addTo->AddPage(tabButton);
     }
 
-    if (pPackage->name == "TabWindowMove")
+    if (package->name == "TabWindowMove")
     {
-        DockedTabControl* pTabControl = gwk_cast<DockedTabControl>(DragAndDrop::SourceControl);
+        DockedTabControl* tabControl = gwk_cast<DockedTabControl>(DragAndDrop::SourceControl);
 
-        if (!pTabControl)
+        if (!tabControl)
             return false;
 
-        if (pTabControl == pAddTo)
+        if (tabControl == addTo)
             return false;
 
-        pTabControl->MoveTabsTo(pAddTo);
+        tabControl->MoveTabsTo(addTo);
     }
 
     Invalidate();
@@ -195,25 +195,25 @@ bool DockBase::DragAndDrop_HandleDrop(Gwk::DragAndDrop::Package* pPackage, int x
 
 bool DockBase::IsEmpty()
 {
-    if (m_DockedTabControl && m_DockedTabControl->TabCount() > 0)
+    if (m_dockedTabControl && m_dockedTabControl->TabCount() > 0)
         return false;
 
-    if (m_Left && !m_Left->IsEmpty())
+    if (m_left && !m_left->IsEmpty())
         return false;
 
-    if (m_Right && !m_Right->IsEmpty())
+    if (m_right && !m_right->IsEmpty())
         return false;
 
-    if (m_Top && !m_Top->IsEmpty())
+    if (m_top && !m_top->IsEmpty())
         return false;
 
-    if (m_Bottom && !m_Bottom->IsEmpty())
+    if (m_bottom && !m_bottom->IsEmpty())
         return false;
 
     return true;
 }
 
-void DockBase::OnTabRemoved(Gwk::Controls::Base* /*pControl*/)
+void DockBase::OnTabRemoved(Gwk::Controls::Base* /*control*/)
 {
     DoRedundancyCheck();
     DoConsolidateCheck();
@@ -224,12 +224,12 @@ void DockBase::DoRedundancyCheck()
     if (!IsEmpty())
         return;
 
-    DockBase* pDockParent = gwk_cast<DockBase>(GetParent());
+    DockBase* dockParent = gwk_cast<DockBase>(GetParent());
 
-    if (!pDockParent)
+    if (!dockParent)
         return;
 
-    pDockParent->OnRedundantChildDock(this);
+    dockParent->OnRedundantChildDock(this);
 }
 
 void DockBase::DoConsolidateCheck()
@@ -237,123 +237,123 @@ void DockBase::DoConsolidateCheck()
     if (IsEmpty())
         return;
 
-    if (!m_DockedTabControl)
+    if (!m_dockedTabControl)
         return;
 
-    if (m_DockedTabControl->TabCount() > 0)
+    if (m_dockedTabControl->TabCount() > 0)
         return;
 
-    if (m_Bottom && !m_Bottom->IsEmpty())
+    if (m_bottom && !m_bottom->IsEmpty())
     {
-        m_Bottom->m_DockedTabControl->MoveTabsTo(m_DockedTabControl);
+        m_bottom->m_dockedTabControl->MoveTabsTo(m_dockedTabControl);
         return;
     }
 
-    if (m_Top && !m_Top->IsEmpty())
+    if (m_top && !m_top->IsEmpty())
     {
-        m_Top->m_DockedTabControl->MoveTabsTo(m_DockedTabControl);
+        m_top->m_dockedTabControl->MoveTabsTo(m_dockedTabControl);
         return;
     }
 
-    if (m_Left && !m_Left->IsEmpty())
+    if (m_left && !m_left->IsEmpty())
     {
-        m_Left->m_DockedTabControl->MoveTabsTo(m_DockedTabControl);
+        m_left->m_dockedTabControl->MoveTabsTo(m_dockedTabControl);
         return;
     }
 
-    if (m_Right && !m_Right->IsEmpty())
+    if (m_right && !m_right->IsEmpty())
     {
-        m_Right->m_DockedTabControl->MoveTabsTo(m_DockedTabControl);
+        m_right->m_dockedTabControl->MoveTabsTo(m_dockedTabControl);
         return;
     }
 }
 
-void DockBase::OnRedundantChildDock(DockBase* pDockBase)
+void DockBase::OnRedundantChildDock(DockBase* dockBase)
 {
-    pDockBase->SetHidden(true);
+    dockBase->SetHidden(true);
     DoRedundancyCheck();
     DoConsolidateCheck();
 }
 
-void DockBase::DragAndDrop_HoverEnter(Gwk::DragAndDrop::Package* /*pPackage*/, int /*x*/,
+void DockBase::DragAndDrop_HoverEnter(Gwk::DragAndDrop::Package* /*package*/, int /*x*/,
                                       int /*y*/)
 {
     m_bDrawHover = true;
 }
 
-void DockBase::DragAndDrop_HoverLeave(Gwk::DragAndDrop::Package* /*pPackage*/)
+void DockBase::DragAndDrop_HoverLeave(Gwk::DragAndDrop::Package* /*package*/)
 {
     m_bDrawHover = false;
 }
 
-void DockBase::DragAndDrop_Hover(Gwk::DragAndDrop::Package* /*pPackage*/, int x, int y)
+void DockBase::DragAndDrop_Hover(Gwk::DragAndDrop::Package* /*package*/, int x, int y)
 {
-    Gwk::Point pPos = CanvasPosToLocal(Gwk::Point(x, y));
-    int dir = GetDroppedTabDirection(pPos.x, pPos.y);
+    Gwk::Point pos = CanvasPosToLocal(Gwk::Point(x, y));
+    int dir = GetDroppedTabDirection(pos.x, pos.y);
 
     if (dir == Docking::Fill)
     {
-        if (!m_DockedTabControl)
+        if (!m_dockedTabControl)
         {
-            m_HoverRect = Gwk::Rect(0, 0, 0, 0);
+            m_hoverRect = Gwk::Rect(0, 0, 0, 0);
             return;
         }
 
-        m_HoverRect = GetInnerBounds();
+        m_hoverRect = GetInnerBounds();
         return;
     }
 
-    m_HoverRect = GetRenderBounds();
+    m_hoverRect = GetRenderBounds();
     int HelpBarWidth = 0;
 
     if (dir == Docking::Left)
     {
-        HelpBarWidth = m_HoverRect.w/4;
-        m_HoverRect.w = HelpBarWidth;
+        HelpBarWidth = m_hoverRect.w/4;
+        m_hoverRect.w = HelpBarWidth;
     }
 
     if (dir == Docking::Right)
     {
-        HelpBarWidth = m_HoverRect.w/4;
-        m_HoverRect.x = m_HoverRect.w-HelpBarWidth;
-        m_HoverRect.w = HelpBarWidth;
+        HelpBarWidth = m_hoverRect.w/4;
+        m_hoverRect.x = m_hoverRect.w-HelpBarWidth;
+        m_hoverRect.w = HelpBarWidth;
     }
 
     if (dir == Docking::Top)
     {
-        HelpBarWidth = m_HoverRect.h/4;
-        m_HoverRect.h = HelpBarWidth;
+        HelpBarWidth = m_hoverRect.h/4;
+        m_hoverRect.h = HelpBarWidth;
     }
 
     if (dir == Docking::Bottom)
     {
-        HelpBarWidth = m_HoverRect.h/4;
-        m_HoverRect.y = m_HoverRect.h-HelpBarWidth;
-        m_HoverRect.h = HelpBarWidth;
+        HelpBarWidth = m_hoverRect.h/4;
+        m_hoverRect.y = m_hoverRect.h-HelpBarWidth;
+        m_hoverRect.h = HelpBarWidth;
     }
 
     if ((dir == Docking::Top || dir == Docking::Bottom) && !m_bDropFar)
     {
-        if (m_Left && m_Left->Visible())
+        if (m_left && m_left->Visible())
         {
-            m_HoverRect.x += m_Left->Width();
-            m_HoverRect.w -= m_Left->Width();
+            m_hoverRect.x += m_left->Width();
+            m_hoverRect.w -= m_left->Width();
         }
 
-        if (m_Right && m_Right->Visible())
-            m_HoverRect.w -= m_Right->Width();
+        if (m_right && m_right->Visible())
+            m_hoverRect.w -= m_right->Width();
     }
 
     if ((dir == Docking::Left || dir == Docking::Right) && !m_bDropFar)
     {
-        if (m_Top && m_Top->Visible())
+        if (m_top && m_top->Visible())
         {
-            m_HoverRect.y += m_Top->Height();
-            m_HoverRect.h -= m_Top->Height();
+            m_hoverRect.y += m_top->Height();
+            m_hoverRect.h -= m_top->Height();
         }
 
-        if (m_Bottom && m_Bottom->Visible())
-            m_HoverRect.h -= m_Bottom->Height();
+        if (m_bottom && m_bottom->Visible())
+            m_hoverRect.h -= m_bottom->Height();
     }
 }
 
@@ -366,11 +366,11 @@ void DockBase::RenderOver(Skin::Base* skin)
     render->SetDrawColor(Gwk::Color(255, 100, 255, 20));
     render->DrawFilledRect(GetRenderBounds());
 
-    if (m_HoverRect.w == 0)
+    if (m_hoverRect.w == 0)
         return;
 
     render->SetDrawColor(Gwk::Color(255, 100, 255, 100));
-    render->DrawFilledRect(m_HoverRect);
+    render->DrawFilledRect(m_hoverRect);
     render->SetDrawColor(Gwk::Color(255, 100, 255, 200));
-    render->DrawLinedRect(m_HoverRect);
+    render->DrawLinedRect(m_hoverRect);
 }

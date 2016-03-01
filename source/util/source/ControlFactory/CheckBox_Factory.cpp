@@ -16,8 +16,8 @@ namespace Gwk
 //
 //            virtual Gwk::Controls::Base* CreateInstance(Gwk::Controls::Base* parent)
 //            {
-//                Gwk::Controls::CheckBox* pControl = new Gwk::Controls::CheckBox(parent);
-//                return pControl;
+//                Gwk::Controls::CheckBox* control = new Gwk::Controls::CheckBox(parent);
+//                return control;
 //            }
 //
 //        };
@@ -55,9 +55,9 @@ namespace Gwk
 //
 //            virtual Gwk::Controls::Base* CreateInstance(Gwk::Controls::Base* parent)
 //            {
-//                Gwk::Controls::CheckBoxWithLabel* pControl =
+//                Gwk::Controls::CheckBoxWithLabel* control =
 //                    new Gwk::Controls::CheckBoxWithLabel(parent);
-//                return pControl;
+//                return control;
 //            }
 //
 //        };

@@ -51,7 +51,7 @@ HWND CreateGameWindow(void)
     return hWindow;
 }
 
-HWND g_pHWND = NULL;
+HWND g_hWND = NULL;
 
 HGLRC CreateOpenGLDeviceContext()
 {
@@ -68,17 +68,17 @@ HGLRC CreateOpenGLDeviceContext()
                                         // green, 8 for blue.
     // This count of color bits EXCLUDES alpha.
     pfd.cDepthBits = 32;                // 32 bits to measure pixel depth.
-    int pixelFormat = ChoosePixelFormat(GetDC(g_pHWND), &pfd);
+    int pixelFormat = ChoosePixelFormat(GetDC(g_hWND), &pfd);
 
     if (pixelFormat == 0)
         FatalAppExit(NULL, TEXT("ChoosePixelFormat() failed!"));
 
-    SetPixelFormat(GetDC(g_pHWND), pixelFormat, &pfd);
-    HGLRC OpenGLContext = wglCreateContext(GetDC(g_pHWND));
-    wglMakeCurrent(GetDC(g_pHWND), OpenGLContext);
+    SetPixelFormat(GetDC(g_hWND), pixelFormat, &pfd);
+    HGLRC OpenGLContext = wglCreateContext(GetDC(g_hWND));
+    wglMakeCurrent(GetDC(g_hWND), OpenGLContext);
     RECT r;
 
-    if (GetClientRect(g_pHWND, &r))
+    if (GetClientRect(g_hWND, &r))
     {
         glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
@@ -95,7 +95,7 @@ int main()
     //
     // Create a new window
     //
-    g_pHWND = CreateGameWindow();
+    g_hWND = CreateGameWindow();
     //
     // Create OpenGL Device
     //
@@ -104,34 +104,34 @@ int main()
     // Create a Gwork OpenGL Renderer
     //
 #ifdef USE_DEBUG_FONT
-    Gwk::Renderer::OpenGL* pRenderer = new Gwk::Renderer::OpenGL_DebugFont();
+    Gwk::Renderer::OpenGL* renderer = new Gwk::Renderer::OpenGL_DebugFont();
 #else
-    Gwk::Renderer::OpenGL* pRenderer = new Gwk::Renderer::OpenGL();
+    Gwk::Renderer::OpenGL* renderer = new Gwk::Renderer::OpenGL();
 #endif
-    pRenderer->Init();
+    renderer->Init();
     //
     // Create a Gwork skin
     //
-    Gwk::Skin::TexturedBase* pSkin = new Gwk::Skin::TexturedBase(pRenderer);
-    pSkin->Init("DefaultSkin.png");
+    Gwk::Skin::TexturedBase* skin = new Gwk::Skin::TexturedBase(renderer);
+    skin->Init("DefaultSkin.png");
     //
     // Create a Canvas (it's root, on which all other Gwork panels are created)
     //
-    Gwk::Controls::Canvas* pCanvas = new Gwk::Controls::Canvas(pSkin);
-    pCanvas->SetSize(998, 650-24);
-    pCanvas->SetDrawBackground(true);
-    pCanvas->SetBackgroundColor(Gwk::Color(150, 170, 170, 255));
+    Gwk::Controls::Canvas* canvas = new Gwk::Controls::Canvas(skin);
+    canvas->SetSize(998, 650-24);
+    canvas->SetDrawBackground(true);
+    canvas->SetBackgroundColor(Gwk::Color(150, 170, 170, 255));
     //
     // Create our unittest control (which is a Window with controls in it)
     //
-    UnitTest* pUnit = new UnitTest(pCanvas);
-    pUnit->SetPos(10, 10);
+    UnitTest* unit = new UnitTest(canvas);
+    unit->SetPos(10, 10);
     //
     // Create a Windows Control helper
     // (Processes Windows MSG's and fires input at Gwork)
     //
     Gwk::Input::Windows GworkInput;
-    GworkInput.Initialize(pCanvas);
+    GworkInput.Initialize(canvas);
     //
     // Begin the main game loop
     //
@@ -140,7 +140,7 @@ int main()
     while (true)
     {
         // Skip out if the window is closed
-        if (!IsWindowVisible(g_pHWND))
+        if (!IsWindowVisible(g_hWND))
             break;
 
         // If we have a message from windows..
@@ -161,15 +161,15 @@ int main()
         // Main OpenGL Render Loop
         {
             glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
-            pCanvas->RenderCanvas();
-            SwapBuffers(GetDC(g_pHWND));
+            canvas->RenderCanvas();
+            SwapBuffers(GetDC(g_hWND));
         }
     }
 
     // Clean up OpenGL
     wglMakeCurrent(NULL, NULL);
     wglDeleteContext(OpenGLContext);
-    delete pCanvas;
-    delete pSkin;
-    delete pRenderer;
+    delete canvas;
+    delete skin;
+    delete renderer;
 }

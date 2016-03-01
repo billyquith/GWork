@@ -23,22 +23,22 @@ public:
         control->onFinish.Add(this, &ThisClass::OnFinish);
         // Page 0
         {
-            Gwk::Controls::Button* pButton = new Gwk::Controls::Button(control->GetPage(0));
-            pButton->Dock(Docking::Fill);
-            pButton->SetText("This button is fill docked on page 0");
+            Gwk::Controls::Button* button = new Gwk::Controls::Button(control->GetPage(0));
+            button->Dock(Docking::Fill);
+            button->SetText("This button is fill docked on page 0");
         }
         // Page 1
         {
-            Gwk::Controls::Button* pButton = new Gwk::Controls::Button(control->GetPage(1));
-            pButton->Dock(Docking::Top);
-            pButton->SetText("This button is top docked on page 1");
+            Gwk::Controls::Button* button = new Gwk::Controls::Button(control->GetPage(1));
+            button->Dock(Docking::Top);
+            button->SetText("This button is top docked on page 1");
         }
         // Page 2
         {
-            Gwk::Controls::Button* pButton = new Gwk::Controls::Button(control->GetPage(2));
-            pButton->SetSize(400, 1000);
-            pButton->SetPos(50, 50);
-            pButton->SetText("This button is long to test scrolling (page 2)");
+            Gwk::Controls::Button* button = new Gwk::Controls::Button(control->GetPage(2));
+            button->SetSize(400, 1000);
+            button->SetPos(50, 50);
+            button->SetText("This button is long to test scrolling (page 2)");
         }
     }
 

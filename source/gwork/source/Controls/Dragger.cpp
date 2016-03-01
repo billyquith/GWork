@@ -14,7 +14,7 @@ using namespace Gwk::ControlsInternal;
 
 GWK_CONTROL_CONSTRUCTOR(Dragger)
 {
-    m_pTarget = NULL;
+    m_target = NULL;
     SetMouseInputEnabled(true);
     m_bDepressed = false;
     m_bDoMove = true;
@@ -26,8 +26,8 @@ void Dragger::OnMouseClickLeft(int x, int y, bool bDown)
     {
         m_bDepressed = true;
 
-        if (m_pTarget)
-            m_HoldPos = m_pTarget->CanvasPosToLocal(Gwk::Point(x, y));
+        if (m_target)
+            m_holdPos = m_target->CanvasPosToLocal(Gwk::Point(x, y));
 
         Gwk::MouseFocus = this;
         onDragStart.Call(this);
@@ -44,15 +44,15 @@ void Dragger::OnMouseMoved(int x, int y, int deltaX, int deltaY)
     if (!m_bDepressed)
         return;
 
-    if (m_bDoMove && m_pTarget)
+    if (m_bDoMove && m_target)
     {
-        Gwk::Point p = Gwk::Point(x-m_HoldPos.x, y-m_HoldPos.y);
+        Gwk::Point p = Gwk::Point(x-m_holdPos.x, y-m_holdPos.y);
 
         // Translate to parent
-        if (m_pTarget->GetParent())
-            p = m_pTarget->GetParent()->CanvasPosToLocal(p);
+        if (m_target->GetParent())
+            p = m_target->GetParent()->CanvasPosToLocal(p);
 
-        m_pTarget->MoveTo(p.x, p.y);
+        m_target->MoveTo(p.x, p.y);
     }
 
     Gwk::Event::Information info;

@@ -16,18 +16,18 @@ public:
 
     GWK_CONTROL_INLINE(CollapsibleList, GUnit)
     {
-        Gwk::Controls::CollapsibleList* pControl = new Gwk::Controls::CollapsibleList(this);
-        pControl->SetSize(100, 200);
-        pControl->SetPos(10, 10);
+        Gwk::Controls::CollapsibleList* control = new Gwk::Controls::CollapsibleList(this);
+        control->SetSize(100, 200);
+        control->SetPos(10, 10);
         {
-            Gwk::Controls::CollapsibleCategory* cat = pControl->Add("Category One");
+            Gwk::Controls::CollapsibleCategory* cat = control->Add("Category One");
             cat->Add("Hello");
             cat->Add("Two");
             cat->Add("Three");
             cat->Add("Four");
         }
         {
-            Gwk::Controls::CollapsibleCategory* cat = pControl->Add("Shopping");
+            Gwk::Controls::CollapsibleCategory* cat = control->Add("Shopping");
             cat->Add("Special");
             cat->Add("Two Noses");
             cat->Add("Orange ears");
@@ -45,7 +45,7 @@ public:
             cat->Add("Three Eyes");
         }
         {
-            Gwk::Controls::CollapsibleCategory* cat = pControl->Add("Category One");
+            Gwk::Controls::CollapsibleCategory* cat = control->Add("Category One");
             cat->Add("Hello");
             cat->Add("Two");
             cat->Add("Three");

@@ -54,8 +54,8 @@ int main()
     //
     // Create our unittest control
     //
-    UnitTest* pUnit = new UnitTest(&window_canvas);
-    pUnit->SetPos(10, 10);
+    UnitTest* unit = new UnitTest(&window_canvas);
+    unit->SetPos(10, 10);
 
     while (!window_canvas.WantsQuit())
     {
@@ -63,5 +63,5 @@ int main()
     }
 
     // Everything should be automatically released
-    // pUnit is a child of Canvas - which releases all of its children
+    // unit is a child of Canvas - which releases all of its children
 }

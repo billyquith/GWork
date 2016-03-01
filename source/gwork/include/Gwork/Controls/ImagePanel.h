@@ -25,13 +25,13 @@ namespace Gwk
             {
                 SetUV(0, 0, 1, 1);
                 SetMouseInputEnabled(false);
-                m_DrawColor = Colors::White;
+                m_drawColor = Colors::White;
                 SetStretch(true);
             }
 
             virtual ~ImagePanel()
             {
-                GetSkin()->GetRender()->FreeTexture(&m_Texture);
+                GetSkin()->GetRender()->FreeTexture(&m_texture);
             }
 
             virtual void SetUV(float u1, float v1, float u2, float v2)
@@ -44,62 +44,62 @@ namespace Gwk
 
             virtual void SetImage(const String& imageName)
             {
-                m_Texture.name = imageName;
-                GetSkin()->GetRender()->LoadTexture(&m_Texture);
+                m_texture.name = imageName;
+                GetSkin()->GetRender()->LoadTexture(&m_texture);
             }
 
             virtual String& GetImage()
             {
-                return m_Texture.name;
+                return m_texture.name;
             }
 
             virtual int TextureWidth()
             {
-                return m_Texture.width;
+                return m_texture.width;
             }
 
             virtual int TextureHeight()
             {
-                return m_Texture.height;
+                return m_texture.height;
             }
 
             virtual const String& GetImageName()
             {
-                return m_Texture.name;
+                return m_texture.name;
             }
 
             virtual void Render(Skin::Base* skin) override
             {
-                skin->GetRender()->SetDrawColor(m_DrawColor);
+                skin->GetRender()->SetDrawColor(m_drawColor);
 
                 if (m_bStretch)
                 {
-                    skin->GetRender()->DrawTexturedRect(&m_Texture,
+                    skin->GetRender()->DrawTexturedRect(&m_texture,
                                                         GetRenderBounds(),
                                                         m_uv[0], m_uv[1], m_uv[2], m_uv[3]);
                 }
                 else
                 {
-                    skin->GetRender()->DrawTexturedRect(&m_Texture,
+                    skin->GetRender()->DrawTexturedRect(&m_texture,
                                                         Gwk::Rect(0, 0,
-                                                                   m_Texture.width,m_Texture.height),
+                                                                   m_texture.width,m_texture.height),
                                                         m_uv[0], m_uv[1], m_uv[2], m_uv[3]);
                 }
             }
 
             virtual void SizeToContents()
             {
-                SetSize(m_Texture.width, m_Texture.height);
+                SetSize(m_texture.width, m_texture.height);
             }
 
             virtual void SetDrawColor(Gwk::Color color)
             {
-                m_DrawColor = color;
+                m_drawColor = color;
             }
 
             virtual bool FailedToLoad()
             {
-                return m_Texture.failed;
+                return m_texture.failed;
             }
 
             virtual bool GetStretch()
@@ -114,9 +114,9 @@ namespace Gwk
 
         protected:
 
-            Texture m_Texture;
+            Texture m_texture;
             float m_uv[4];
-            Gwk::Color m_DrawColor;
+            Gwk::Color m_drawColor;
 
             bool m_bStretch;
 

@@ -24,48 +24,48 @@ namespace Gwk
 
                 GWK_CONTROL_INLINE(ComboBox, Property::Base)
                 {
-                    m_ComboBox = new Gwk::Controls::ComboBox(this);
-                    m_ComboBox->Dock(Docking::Fill);
-                    m_ComboBox->onSelection.Add(this, &ParentClass::OnPropertyValueChanged);
-                    m_ComboBox->SetTabable(true);
-                    m_ComboBox->SetKeyboardInputEnabled(true);
-                    m_ComboBox->SetShouldDrawBackground(false);
+                    m_comboBox = new Gwk::Controls::ComboBox(this);
+                    m_comboBox->Dock(Docking::Fill);
+                    m_comboBox->onSelection.Add(this, &ParentClass::OnPropertyValueChanged);
+                    m_comboBox->SetTabable(true);
+                    m_comboBox->SetKeyboardInputEnabled(true);
+                    m_comboBox->SetShouldDrawBackground(false);
                     SetHeight(18);
                 }
 
                 virtual String GetPropertyValue() override
                 {
-                    Gwk::Controls::Label* pControl = m_ComboBox->GetSelectedItem();
+                    Gwk::Controls::Label* control = m_comboBox->GetSelectedItem();
 
-                    if (!pControl)
+                    if (!control)
                         return "";
 
-                    return pControl->GetName();
+                    return control->GetName();
                 }
 
                 virtual void SetPropertyValue(const String& val, bool bFireChangeEvents) override
                 {
-                    m_ComboBox->SelectItemByName(val, bFireChangeEvents);
+                    m_comboBox->SelectItemByName(val, bFireChangeEvents);
                 }
 
                 virtual bool IsEditing() override
                 {
-                    return m_ComboBox->HasFocus();
+                    return m_comboBox->HasFocus();
                 }
 
                 virtual bool IsHovered() override
                 {
-                    return ParentClass::IsHovered() || m_ComboBox->IsHovered();
+                    return ParentClass::IsHovered() || m_comboBox->IsHovered();
                 }
 
                 Gwk::Controls::ComboBox* GetComboBox()
                 {
-                    return m_ComboBox;
+                    return m_comboBox;
                 }
 
             protected:
 
-                Gwk::Controls::ComboBox* m_ComboBox;
+                Gwk::Controls::ComboBox* m_comboBox;
             };
 
 

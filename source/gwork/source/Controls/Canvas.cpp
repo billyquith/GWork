@@ -20,15 +20,15 @@
 using namespace Gwk::Controls;
 
 
-Canvas::Canvas(Gwk::Skin::Base* pSkin) : ParentClass(NULL), m_bAnyDelete(false)
+Canvas::Canvas(Gwk::Skin::Base* skin) : ParentClass(NULL), m_bAnyDelete(false)
 {
     SetBounds(0, 0, 10000, 10000);
     SetScale(1.0f);
     SetBackgroundColor(Color(255, 255, 255, 255));
     SetDrawBackground(false);
 
-    if (pSkin)
-        SetSkin(pSkin);
+    if (skin)
+        SetSkin(skin);
 }
 
 Canvas::~Canvas()
@@ -39,26 +39,26 @@ Canvas::~Canvas()
 void Canvas::RenderCanvas()
 {
     DoThink();
-    Gwk::Renderer::Base* render = m_Skin->GetRender();
+    Gwk::Renderer::Base* render = m_skin->GetRender();
     render->Begin();
-    RecurseLayout(m_Skin);
+    RecurseLayout(m_skin);
     render->SetClipRegion(GetBounds());
     render->SetRenderOffset(Gwk::Point(0, 0));
     render->SetScale(Scale());
 
     if (m_bDrawBackground)
     {
-        render->SetDrawColor(m_BackgroundColor);
+        render->SetDrawColor(m_backgroundColor);
         render->DrawFilledRect(GetRenderBounds());
     }
 
-    DoRender(m_Skin);
-    DragAndDrop::RenderOverlay(this, m_Skin);
-    ToolTip::RenderToolTip(m_Skin);
+    DoRender(m_skin);
+    DragAndDrop::RenderOverlay(this, m_skin);
+    ToolTip::RenderToolTip(m_skin);
     render->End();
 }
 
-void Canvas::Render(Gwk::Skin::Base* /*pRender*/)
+void Canvas::Render(Gwk::Skin::Base* /*render*/)
 {
     m_bNeedsRedraw = false;
 }
@@ -86,7 +86,7 @@ void Canvas::DoThink()
     }
     ProcessDelayedDeletes();
     // Check has focus etc..
-    RecurseLayout(m_Skin);
+    RecurseLayout(m_skin);
 
     // If we didn't have a next tab, cycle to the start.
     if (NextTab == NULL)
@@ -102,34 +102,34 @@ void Canvas::SetScale(float f)
 
     m_fScale = f;
 
-    if (m_Skin && m_Skin->GetRender())
-        m_Skin->GetRender()->SetScale(m_fScale);
+    if (m_skin && m_skin->GetRender())
+        m_skin->GetRender()->SetScale(m_fScale);
 
     OnScaleChanged();
     Redraw();
 }
 
-void Canvas::AddDelayedDelete(Gwk::Controls::Base* pControl)
+void Canvas::AddDelayedDelete(Gwk::Controls::Base* control)
 {
-    if (!m_bAnyDelete || m_DeleteSet.find(pControl) == m_DeleteSet.end())
+    if (!m_bAnyDelete || m_deleteSet.find(control) == m_deleteSet.end())
     {
         m_bAnyDelete = true;
-        m_DeleteSet.insert(pControl);
-        m_DeleteList.push_back(pControl);
+        m_deleteSet.insert(control);
+        m_deleteList.push_back(control);
     }
 }
 
-void Canvas::PreDeleteCanvas(Gwk::Controls::Base* pControl)
+void Canvas::PreDeleteCanvas(Gwk::Controls::Base* control)
 {
     if (m_bAnyDelete)
     {
         std::set<Controls::Base*>::iterator itFind;
 
-        if ((itFind = m_DeleteSet.find(pControl)) != m_DeleteSet.end())
+        if ((itFind = m_deleteSet.find(control)) != m_deleteSet.end())
         {
-            m_DeleteList.remove(pControl);
-            m_DeleteSet.erase(pControl);
-            m_bAnyDelete = !m_DeleteSet.empty();
+            m_deleteList.remove(control);
+            m_deleteSet.erase(control);
+            m_bAnyDelete = !m_deleteSet.empty();
         }
     }
 }
@@ -139,17 +139,17 @@ void Canvas::ProcessDelayedDeletes()
     while (m_bAnyDelete)
     {
         m_bAnyDelete = false;
-        Controls::Base::List deleteList = m_DeleteList;
-        m_DeleteList.clear();
-        m_DeleteSet.clear();
+        Controls::Base::List deleteList = m_deleteList;
+        m_deleteList.clear();
+        m_deleteSet.clear();
 
         for (Gwk::Controls::Base::List::iterator it = deleteList.begin();
              it != deleteList.end();
              ++it)
         {
-            Gwk::Controls::Base* pControl = *it;
-            pControl->PreDelete(GetSkin());
-            delete pControl;
+            Gwk::Controls::Base* control = *it;
+            control->PreDelete(GetSkin());
+            delete control;
             Redraw();
         }
     }
@@ -161,9 +161,9 @@ void Canvas::ReleaseChildren()
 
     while (iter != Children.end())
     {
-        Base* pChild = *iter;
+        Base* child = *iter;
         iter = Children.erase(iter);
-        delete pChild;
+        delete child;
     }
 }
 

@@ -12,9 +12,9 @@ namespace Gwk
 {
     namespace Renderer
     {
-        GDIPlusBuffered::GDIPlusBuffered(HWND pHWND) : GDIPlus(pHWND)
+        GDIPlusBuffered::GDIPlusBuffered(HWND hWND) : GDIPlus(hWND)
         {
-            m_Bitmap = NULL;
+            m_bitmap = NULL;
         }
 
         GDIPlusBuffered::~GDIPlusBuffered()
@@ -28,34 +28,34 @@ namespace Gwk
             // If it has changed, we need to recreate the backbuffer
             {
                 RECT rect;
-                GetClientRect(m_HWND, &rect);
+                GetClientRect(m_hWND, &rect);
                 int width = rect.right-rect.left;
                 int height = rect.bottom-rect.top;
 
-                if (m_iWidth != width)
+                if (m_width != width)
                     DestroyBackbuffer();
 
-                if (m_iHeight != height)
+                if (m_height != height)
                     DestroyBackbuffer();
 
-                m_iWidth = width;
-                m_iHeight = height;
+                m_width = width;
+                m_height = height;
             }
 
-            if (m_Bitmap)
+            if (m_bitmap)
                 return;
 
             Gdiplus::Graphics gfx(m_hDC);
-            m_Bitmap = new Gdiplus::Bitmap(m_iWidth, m_iHeight, &gfx);
-            graphics = Gdiplus::Graphics::FromImage(m_Bitmap);
+            m_bitmap = new Gdiplus::Bitmap(m_width, m_height, &gfx);
+            graphics = Gdiplus::Graphics::FromImage(m_bitmap);
         }
 
         void GDIPlusBuffered::DestroyBackbuffer()
         {
-            if (m_Bitmap)
+            if (m_bitmap)
             {
-                delete m_Bitmap;
-                m_Bitmap = NULL;
+                delete m_bitmap;
+                m_bitmap = NULL;
             }
 
             if (graphics)
@@ -67,15 +67,15 @@ namespace Gwk
 
         void GDIPlusBuffered::Begin()
         {
-            m_hDC = GetDC(m_HWND);
+            m_hDC = GetDC(m_hWND);
             CreateBackbuffer();
         }
 
         void GDIPlusBuffered::End()
         {
             Gdiplus::Graphics gfx(m_hDC);
-            gfx.DrawImage(m_Bitmap, 0, 0);
-            ReleaseDC(m_HWND, m_hDC);
+            gfx.DrawImage(m_bitmap, 0, 0);
+            ReleaseDC(m_hWND, m_hDC);
             m_hDC = NULL;
         }
 

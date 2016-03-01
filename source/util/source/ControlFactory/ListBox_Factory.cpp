@@ -16,9 +16,9 @@ namespace Gwk
 //
 //            virtual Gwk::Controls::Base* CreateInstance(Gwk::Controls::Base* parent) override
 //            {
-//                Gwk::Controls::ListBox* pControl = new Gwk::Controls::ListBox(parent);
-//                pControl->SetSize(100, 100);
-//                return pControl;
+//                Gwk::Controls::ListBox* control = new Gwk::Controls::ListBox(parent);
+//                control->SetSize(100, 100);
+//                return control;
 //            }
 //
 //        };

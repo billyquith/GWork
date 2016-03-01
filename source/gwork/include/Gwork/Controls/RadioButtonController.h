@@ -28,7 +28,7 @@ namespace Gwk
             {
             }
 
-            virtual void OnRadioClicked(Base* pFromPanel);
+            virtual void OnRadioClicked(Base* fromPanel);
 
             virtual void OnChange();
 
@@ -37,24 +37,24 @@ namespace Gwk
 
             virtual LabeledRadioButton* GetSelected()
             {
-                return m_Selected;
+                return m_selected;
             }
 
             virtual const Gwk::String& GetSelectedName()
             {
-                return m_Selected->GetName();
+                return m_selected->GetName();
             }
 
             virtual const String& GetSelectedLabel()
             {
-                return m_Selected->GetLabel()->GetText();
+                return m_selected->GetLabel()->GetText();
             }
 
             Event::Caller onSelectionChange;
 
         private:
 
-            LabeledRadioButton* m_Selected;
+            LabeledRadioButton* m_selected;
         };
 
 

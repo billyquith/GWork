@@ -25,13 +25,13 @@ namespace Gwk
             virtual void         SetPageCount(unsigned int i);
             virtual unsigned int GetPageCount()
             {
-                return m_iPages;
+                return m_pageCount;
             }
 
             virtual void         ShowPage(unsigned int i);
             virtual unsigned int GetPageNumber()
             {
-                return m_iCurrentPage;
+                return m_currentPage;
             }
 
             virtual Controls::Base* GetPage(unsigned int i);
@@ -43,22 +43,22 @@ namespace Gwk
 
             Controls::Button* NextButton()
             {
-                return m_Next;
+                return m_next;
             }
 
             Controls::Button* BackButton()
             {
-                return m_Back;
+                return m_back;
             }
 
             Controls::Button* FinishButton()
             {
-                return m_Finish;
+                return m_finish;
             }
 
             Controls::Label* Label()
             {
-                return m_Label;
+                return m_label;
             }
 
             void SetUseFinishButton(bool b)
@@ -78,14 +78,14 @@ namespace Gwk
 
             virtual void HideAll();
 
-            unsigned int m_iCurrentPage;
-            unsigned int m_iPages;
-            Controls::Base*         m_pPages[MaxPages];
+            unsigned int m_currentPage;
+            unsigned int m_pageCount;
+            Controls::Base*         m_pages[MaxPages];
 
-            Controls::Button*       m_Next;
-            Controls::Button*       m_Back;
-            Controls::Button*       m_Finish;
-            Controls::Label*        m_Label;
+            Controls::Button*       m_next;
+            Controls::Button*       m_back;
+            Controls::Button*       m_finish;
+            Controls::Label*        m_label;
 
             bool m_bFinish;
 

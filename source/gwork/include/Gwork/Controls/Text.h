@@ -32,11 +32,11 @@ namespace Gwk
 
             void RefreshSize();
 
-            void SetFont(Gwk::Font* pFont);
+            void SetFont(Gwk::Font* font);
 
             const String& GetText() const
             {
-                return m_String;
+                return m_string;
             }
 
             Gwk::Rect GetCharacterPosition(unsigned int iChar);
@@ -48,24 +48,24 @@ namespace Gwk
 
             int Length() const
             {
-                return (int)m_String.size();
+                return (int)m_string.size();
             }
 
             virtual void SetTextColor(const Gwk::Color& col)
             {
-                m_Color = col;
+                m_color = col;
             }
 
             virtual void SetTextColorOverride(const Gwk::Color& col)
             {
-                m_ColorOverride = col;
+                m_colorOverride = col;
             }
 
             virtual void OnScaleChanged() override;
 
             inline const Gwk::Color& TextColor() const
             {
-                return m_Color;
+                return m_color;
             }
 
             virtual void TextChanged()
@@ -101,16 +101,16 @@ namespace Gwk
 
             virtual void RefreshSizeWrap();
 
-            Gwk::String m_String;
-            Gwk::Font*         m_Font;
-            Gwk::Color m_Color;
-            Gwk::Color m_ColorOverride;
+            Gwk::String m_string;
+            Gwk::Font*         m_font;
+            Gwk::Color m_color;
+            Gwk::Color m_colorOverride;
 
             bool m_bWrap;
             bool m_bTextChanged;
 
             typedef std::list<Text*> TextLines;
-            TextLines m_Lines;
+            TextLines m_lines;
         };
 
 

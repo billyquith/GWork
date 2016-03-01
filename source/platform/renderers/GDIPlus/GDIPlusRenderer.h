@@ -19,15 +19,15 @@ class GworkRender_Windows : public Gwk::Gwk::Renderer::Base
 {
 public:
 
-    GworkRender_Windows(HWND pHWND)
+    GworkRender_Windows(HWND hWND)
     {
-        m_HWND = pHWND;
+        m_hWND = hWND;
         m_hDC = NULL;
-        m_iWidth = 0;
-        m_iHeight = 0;
+        m_width = 0;
+        m_height = 0;
 #ifdef USE_GDIPLUS_DOUBLE_BUFFERING
-        m_Bitmap = NULL;
-        m_CachedBitmap = NULL;
+        m_bitmap = NULL;
+        m_cachedBitmap = NULL;
 #endif
         graphics = NULL;
         // Initialize GDI+.
@@ -46,26 +46,26 @@ public:
     void CreateOffscreenBitmap()
     {
         RECT rect;
-        GetClientRect(m_HWND, &rect);
+        GetClientRect(m_hWND, &rect);
         int width = rect.right-rect.left;
         int height = rect.bottom-rect.top;
 
-        if (m_iWidth != width)
+        if (m_width != width)
             DestroyOffscreenBitmap();
 
-        if (m_iHeight != height)
+        if (m_height != height)
             DestroyOffscreenBitmap();
 
 #ifdef USE_GDIPLUS_DOUBLE_BUFFERING
 
-        if (m_Bitmap)
+        if (m_bitmap)
             return;
 
-        m_iWidth = width;
-        m_iHeight = height;
+        m_width = width;
+        m_height = height;
         Graphics gfx(m_hDC);
-        m_Bitmap = new Bitmap(m_iWidth, m_iHeight, &gfx);
-        graphics = Graphics::FromImage(m_Bitmap);
+        m_bitmap = new Bitmap(m_width, m_height, &gfx);
+        graphics = Graphics::FromImage(m_bitmap);
 #endif
     }
 
@@ -73,9 +73,9 @@ public:
     {
 #ifdef USE_GDIPLUS_DOUBLE_BUFFERING
 
-        if (m_Bitmap)
+        if (m_bitmap)
         {
-            delete m_Bitmap; m_Bitmap = NULL;
+            delete m_bitmap; m_bitmap = NULL;
         }
 
         graphics = NULL;
@@ -84,7 +84,7 @@ public:
 
     virtual void Begin()
     {
-        m_hDC = BeginPaint(m_HWND, &m_PaintStruct);
+        m_hDC = BeginPaint(m_hWND, &m_paintStruct);
         // Create the backbuffer if it doesn't exist
         // (or recreate if the size has changed)
         CreateOffscreenBitmap();
@@ -97,7 +97,7 @@ public:
     {
 #ifdef USE_GDIPLUS_DOUBLE_BUFFERING
         Graphics gfx(m_hDC);
-        gfx.DrawImage(m_Bitmap, 0, 0);
+        gfx.DrawImage(m_bitmap, 0, 0);
 #endif
 #ifndef USE_GDIPLUS_DOUBLE_BUFFERING
 
@@ -109,7 +109,7 @@ public:
 
 #endif
         m_hDC = NULL;
-        EndPaint(m_HWND, &m_PaintStruct);
+        EndPaint(m_hWND, &m_paintStruct);
     }
 
     virtual void DrawLine(int x, int y, int a, int b)
@@ -159,12 +159,12 @@ public:
 
     virtual void SetDrawColor(Gwk::Color color)
     {
-        m_Col = Color(color.a, color.r, color.g, color.b);
+        m_col = Color(color.a, color.r, color.g, color.b);
     }
 
     Color GetGDIColor()
     {
-        return m_Col;
+        return m_col;
     }
 
     virtual void LoadFont(Gwk::Font* font)
@@ -172,24 +172,24 @@ public:
         Gwk::Debug::Msg("LOAD FONT %s\n", font->facename.c_str());
         FontStyle fs = FontStyleRegular;
         font->realsize = font->size*Scale();
-        Font* pFont = new Font(Gwk::Utility::StringToUnicode(
+        Font* font = new Font(Gwk::Utility::StringToUnicode(
                                    font->facename).c_str(), font->realsize, fs, UnitPixel, NULL);
-        font->data = pFont;
+        font->data = font;
     }
 
-    virtual void FreeFont(Gwk::Font* pFont)
+    virtual void FreeFont(Gwk::Font* font)
     {
-        Gwk::Debug::Msg("FREE FONT %s\n", pFont->facename.c_str());
+        Gwk::Debug::Msg("FREE FONT %s\n", font->facename.c_str());
 
-        if (!pFont->data)
+        if (!font->data)
             return;
 
-        Font* font = ((Font*)pFont->data);
+        Font* font = ((Font*)font->data);
         delete font;
-        pFont->data = NULL;
+        font->data = NULL;
     }
 
-    virtual void RenderText(Gwk::Font* pFont, Gwk::Rect rect, const Gwk::UnicodeString& text)
+    virtual void RenderText(Gwk::Font* font, Gwk::Rect rect, const Gwk::UnicodeString& text)
     {
         /*
          * SetDrawColor( Gwk::Color( 255, 0, 0, 100 ) );
@@ -198,36 +198,36 @@ public:
          */
         Translate(rect);
 
-        if (!pFont->data || fabs(pFont->realsize-pFont->size*Scale()) > 2)
+        if (!font->data || fabs(font->realsize-font->size*Scale()) > 2)
         {
-            FreeFont(pFont);
-            LoadFont(pFont);
+            FreeFont(font);
+            LoadFont(font);
         }
 
         StringFormat strFormat(StringFormat::GenericDefault());
         SolidBrush solidBrush(GetGDIColor());
         RectF r(rect.x, rect.y, rect.w, rect.h);
-        Font* pGDIFont = (Font*)pFont->data;
-        graphics->DrawString(text.c_str(), text.length()+1, pGDIFont, r, &strFormat, &solidBrush);
+        Font* gDIFont = (Font*)font->data;
+        graphics->DrawString(text.c_str(), text.length()+1, gDIFont, r, &strFormat, &solidBrush);
     }
 
-    virtual Gwk::Point MeasureText(Gwk::Font* pFont, const Gwk::UnicodeString& text)
+    virtual Gwk::Point MeasureText(Gwk::Font* font, const Gwk::UnicodeString& text)
     {
         Gwk::Point p(32, 32);
 
-        if (!pFont->data || fabs(pFont->realsize-pFont->size*Scale()) > 2)
+        if (!font->data || fabs(font->realsize-font->size*Scale()) > 2)
         {
-            FreeFont(pFont);
-            LoadFont(pFont);
+            FreeFont(font);
+            LoadFont(font);
         }
 
         StringFormat strFormat(StringFormat::GenericDefault());
         strFormat.SetFormatFlags(StringFormatFlagsMeasureTrailingSpaces|
                                  strFormat.GetFormatFlags());
         SizeF size;
-        Graphics g(m_HWND);
-        Font* pGDIFont = (Font*)pFont->data;
-        Status s = g.MeasureString(text.c_str(), -1, pGDIFont, &strFormat, &size);
+        Graphics g(m_hWND);
+        Font* gDIFont = (Font*)font->data;
+        Status s = g.MeasureString(text.c_str(), -1, gDIFont, &strFormat, &size);
         return Gwk::Point(size.Width+1, size.Height+1);
     }
 
@@ -246,82 +246,82 @@ public:
         graphics->ResetClip();
     }
 
-    bool ProcessTexture(Gwk::Texture* pTexture)
+    bool ProcessTexture(Gwk::Texture* texture)
     {
         return true;
     }
 
-    void DrawMissingImage(Gwk::Rect pTargetRect)
+    void DrawMissingImage(Gwk::Rect targetRect)
     {
         SetDrawColor(Gwk::Colors::Red);
-        DrawFilledRect(pTargetRect);
+        DrawFilledRect(targetRect);
     }
 
-    void DrawTexturedRect(Gwk::Texture* pTexture, Gwk::Rect pTargetRect, float u1 = 0.0f,
+    void DrawTexturedRect(Gwk::Texture* texture, Gwk::Rect targetRect, float u1 = 0.0f,
                           float v1 = 0.0f, float u2 = 1.0f, float v2 = 1.0f)
     {
-        Image* pImage = (Image*)pTexture->data;
+        Image* image = (Image*)texture->data;
 
         // Missing image, not loaded properly?
-        if (pImage->GetType() == ImageTypeUnknown)
-            return DrawMissingImage(pTargetRect);
+        if (image->GetType() == ImageTypeUnknown)
+            return DrawMissingImage(targetRect);
 
-        Translate(pTargetRect);
-        RectF TargetRect(pTargetRect.x, pTargetRect.y, pTargetRect.w, pTargetRect.h);
+        Translate(targetRect);
+        RectF TargetRect(targetRect.x, targetRect.y, targetRect.w, targetRect.h);
 
         if (u1 == 0.0f && v1 == 0.0f && u2 == 1.0f && v2 == 1.0f)
         {
-            graphics->DrawImage(pImage, TargetRect);
+            graphics->DrawImage(image, TargetRect);
             return;
         }
 
-        float fW = pImage->GetWidth();
-        float fH = pImage->GetHeight();
+        float fW = image->GetWidth();
+        float fH = image->GetHeight();
         u1 *= fW;
         v1 *= fH;
         u2 *= fW;
         u2 -= u1;
         v2 *= fH;
         v2 -= v1;
-        graphics->DrawImage(pImage, TargetRect, u1, v1, u2, v2, UnitPixel);
+        graphics->DrawImage(image, TargetRect, u1, v1, u2, v2, UnitPixel);
     }
 
-    void LoadTexture(Gwk::Texture* pTexture)
+    void LoadTexture(Gwk::Texture* texture)
     {
-        Gwk::Debug::Msg("LOAD TEXTURE %s\n", pTexture->name.c_str());
-        Image* pImage = new Image(Gwk::Utility::StringToUnicode(pTexture->name).c_str());
-        pTexture->data = pImage;
-        pTexture->width = pImage->GetWidth();
-        pTexture->height = pImage->GetHeight();
+        Gwk::Debug::Msg("LOAD TEXTURE %s\n", texture->name.c_str());
+        Image* image = new Image(Gwk::Utility::StringToUnicode(texture->name).c_str());
+        texture->data = image;
+        texture->width = image->GetWidth();
+        texture->height = image->GetHeight();
     }
 
-    void FreeTexture(Gwk::Texture* pTexture)
+    void FreeTexture(Gwk::Texture* texture)
     {
-        Gwk::Debug::Msg("RELEASED TEXTURE %s\n", pTexture->name.c_str());
-        Image* pImage = (Image*)pTexture->data;
+        Gwk::Debug::Msg("RELEASED TEXTURE %s\n", texture->name.c_str());
+        Image* image = (Image*)texture->data;
 
-        if (!pImage)
+        if (!image)
             return;
 
-        delete pImage;
+        delete image;
     }
 
 private:
 
-    Color m_Col;
+    Color m_col;
 
-    HWND m_HWND;
+    HWND m_hWND;
     HDC m_hDC;
-    PAINTSTRUCT m_PaintStruct;
+    PAINTSTRUCT m_paintStruct;
 
-    int m_iWidth;
-    int m_iHeight;
+    int m_width;
+    int m_height;
 
     ULONG_PTR m_gdiplusToken;
 
 #ifdef USE_GDIPLUS_DOUBLE_BUFFERING
-    Bitmap*         m_Bitmap;
-    CachedBitmap*   m_CachedBitmap;
+    Bitmap*         m_bitmap;
+    CachedBitmap*   m_cachedBitmap;
 #endif
 
     Graphics*       graphics;

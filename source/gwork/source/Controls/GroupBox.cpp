@@ -21,15 +21,15 @@ GWK_CONTROL_CONSTRUCTOR(GroupBox)
     SetTextPadding(Padding(10, 0, 0, 0));
     SetAlignment(Docking::Top|Docking::Left);
     Invalidate();
-    m_InnerPanel = new Base(this);
-    m_InnerPanel->Dock(Docking::Fill);
-    m_InnerMargin = 6;
+    m_innerPanel = new Base(this);
+    m_innerPanel->Dock(Docking::Fill);
+    m_innerMargin = 6;
 }
 
 void GroupBox::Layout(Skin::Base* skin)
 {
-	m_InnerPanel->SetMargin( Margin(m_InnerMargin, TextHeight()/2 + m_InnerMargin,
-                                    m_InnerMargin, m_InnerMargin) );
+	m_innerPanel->SetMargin( Margin(m_innerMargin, TextHeight()/2 + m_innerMargin,
+                                    m_innerMargin, m_innerMargin) );
     ParentClass::Layout(skin);
 }
 

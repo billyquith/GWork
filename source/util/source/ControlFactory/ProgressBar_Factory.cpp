@@ -46,9 +46,9 @@ namespace Gwk
 //
 //            virtual Gwk::Controls::Base* CreateInstance(Gwk::Controls::Base* parent) override
 //            {
-//                Gwk::Controls::ProgressBar* pControl = new Gwk::Controls::ProgressBar(parent);
-//                pControl->SetSize(200, 20);
-//                return pControl;
+//                Gwk::Controls::ProgressBar* control = new Gwk::Controls::ProgressBar(parent);
+//                control->SetSize(200, 20);
+//                return control;
 //            }
 //
 //        };

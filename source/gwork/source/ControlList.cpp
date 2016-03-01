@@ -78,12 +78,12 @@ void ControlList::DoAction()
     }
 }
 
-void ControlList::SetActionInternal(Gwk::Event::Handler* pObject,
+void ControlList::SetActionInternal(Gwk::Event::Handler* object,
                                     void ( Gwk::Event::Handler::*f )(
                                         Gwk::Event::Info), const Gwk::Event::Packet& packet)
 {
     for (List::const_iterator it = list.begin(); it != list.end(); ++it)
     {
-        (*it)->SetAction(pObject, f, packet);
+        (*it)->SetAction(object, f, packet);
     }
 }

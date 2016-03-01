@@ -29,9 +29,9 @@ namespace Gwk
             virtual void OnMouseClickLeft(int x, int y, bool bDown) override;
             virtual void Render(Skin::Base* skin) override;
 
-            virtual void SetTarget(Controls::Base* pBase)
+            virtual void SetTarget(Controls::Base* base)
             {
-                m_pTarget = pBase;
+                m_target = base;
             }
 
             virtual bool IsDepressed()
@@ -54,8 +54,8 @@ namespace Gwk
         protected:
 
             bool m_bDepressed;
-            Gwk::Point m_HoldPos;
-            Controls::Base*     m_pTarget;
+            Gwk::Point m_holdPos;
+            Controls::Base*     m_target;
             bool m_bDoMove;
         };
 

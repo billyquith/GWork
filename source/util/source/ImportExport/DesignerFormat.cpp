@@ -22,17 +22,17 @@ public:
         return true;
     }
 
-    virtual void Import(Gwk::Controls::Base* pRoot, const Gwk::String& strFilename);
+    virtual void Import(Gwk::Controls::Base* root, const Gwk::String& strFilename);
 
     virtual bool CanExport()
     {
         return true;
     }
 
-    virtual void Export(Gwk::Controls::Base* pRoot, const Gwk::String& strFilename);
+    virtual void Export(Gwk::Controls::Base* root, const Gwk::String& strFilename);
 
-    void ExportToTree(Gwk::Controls::Base* pRoot, GwkUtil::Data::Tree& tree);
-    void ImportFromTree(Gwk::Controls::Base* pRoot, GwkUtil::Data::Tree& tree);
+    void ExportToTree(Gwk::Controls::Base* root, GwkUtil::Data::Tree& tree);
+    void ImportFromTree(Gwk::Controls::Base* root, GwkUtil::Data::Tree& tree);
 
 };
 
@@ -44,7 +44,7 @@ DesignerFormat::DesignerFormat()
 {
 }
 
-void DesignerFormat::Import(Gwk::Controls::Base* pRoot, const Gwk::String& strFilename)
+void DesignerFormat::Import(Gwk::Controls::Base* root, const Gwk::String& strFilename)
 {
     GwkUtil::BString strContents;
 
@@ -57,7 +57,7 @@ void DesignerFormat::Import(Gwk::Controls::Base* pRoot, const Gwk::String& strFi
     if (!tree.HasChild("Controls"))
         return;
 
-    ImportFromTree(pRoot, tree.GetChild("Controls"));
+    ImportFromTree(root, tree.GetChild("Controls"));
 }
 
 void DesignerFormat::ImportFromTree(Gwk::Controls::Base* root, GwkUtil::Data::Tree& tree)
@@ -102,27 +102,27 @@ void DesignerFormat::ImportFromTree(Gwk::Controls::Base* root, GwkUtil::Data::Tr
             if (!factory)
                 continue;
 
-            Gwk::Controls::Base* pControl = factory->CreateInstance(root);
+            Gwk::Controls::Base* control = factory->CreateInstance(root);
 
-            if (!pControl)
+            if (!control)
                 continue;
 
             // Tell the control we're here and we're queer
             {
                 int iPage = c->ChildVar<int>("Page", 0);
-                rootFactory->AddChild(root, pControl, iPage);
+                rootFactory->AddChild(root, control, iPage);
             }
-            pControl->SetMouseInputEnabled(true);
-            pControl->UserData.Set("ControlFactory", factory);
-            ImportFromTree(pControl, *c);
+            control->SetMouseInputEnabled(true);
+            control->UserData.Set("ControlFactory", factory);
+            ImportFromTree(control, *c);
         }
     }
 }
 
-void DesignerFormat::Export(Gwk::Controls::Base* pRoot, const Gwk::String& strFilename)
+void DesignerFormat::Export(Gwk::Controls::Base* root, const Gwk::String& strFilename)
 {
     GwkUtil::Data::Tree tree;
-    ExportToTree(pRoot, tree);
+    ExportToTree(root, tree);
     GwkUtil::BString strOutput;
 
     if (GwkUtil::Data::Json::Export(tree, strOutput, true))
@@ -146,19 +146,19 @@ void DesignerFormat::ExportToTree(Gwk::Controls::Base* root, GwkUtil::Data::Tree
     if (root->UserData.Exists("ControlFactory"))
     {
         GwkUtil::Data::Tree& props = me->AddChild("Properties");
-        ControlFactory::Base* pCF = root->UserData.Get<ControlFactory::Base*>("ControlFactory");
+        ControlFactory::Base* cF = root->UserData.Get<ControlFactory::Base*>("ControlFactory");
         // Save the ParentPage
         {
-            int iParentPage = pCF->GetParentPage(root);
+            int iParentPage = cF->GetParentPage(root);
 
             if (iParentPage != 0)
                 me->SetChildVar("Page", iParentPage);
         }
 
-        while (pCF)
+        while (cF)
         {
             for (ControlFactory::Property::List::const_iterator
-                 it = pCF->Properties().begin(), itEnd = pCF->Properties().end();
+                 it = cF->Properties().begin(), itEnd = cF->Properties().end();
                  it != itEnd; ++it)
             {
                 if ((*it)->NumCount() > 0)
@@ -176,7 +176,7 @@ void DesignerFormat::ExportToTree(Gwk::Controls::Base* root, GwkUtil::Data::Tree
                 }
             }
 
-            pCF = pCF->GetBaseFactory();
+            cF = cF->GetBaseFactory();
         }
     }
 

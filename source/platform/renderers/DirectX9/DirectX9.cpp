@@ -9,7 +9,7 @@
 
 struct FontData
 {
-    ID3DXFont*  pFont;
+    ID3DXFont*  font;
     int iSpaceWidth;
 };
 
@@ -18,16 +18,16 @@ namespace Gwk
 {
     namespace Renderer
     {
-        DirectX9::DirectX9(IDirect3DDevice9* pDevice)
+        DirectX9::DirectX9(IDirect3DDevice9* device)
         {
-            m_pD3D = NULL;
-            m_pDevice = pDevice;
-            m_iVertNum = 0;
+            m_D3D = NULL;
+            m_device = device;
+            m_vertNum = 0;
 
             for (int i = 0; i < MaxVerts; i++)
             {
-                m_pVerts[ i ].z = 0.5f;
-                m_pVerts[ i ].rhw = 1.0f;
+                m_verts[ i ].z = 0.5f;
+                m_verts[ i ].rhw = 1.0f;
             }
         }
 
@@ -37,22 +37,22 @@ namespace Gwk
 
         void DirectX9::Begin()
         {
-            m_pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
-            m_pDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
-            m_pDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
-            m_pDevice->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
-            m_pDevice->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
-            m_pDevice->SetSamplerState(0, D3DSAMP_MIPFILTER, D3DTEXF_NONE);
-            m_pDevice->SetSamplerState(0, D3DSAMP_ADDRESSU, D3DTADDRESS_CLAMP);
-            m_pDevice->SetSamplerState(0, D3DSAMP_ADDRESSV, D3DTADDRESS_CLAMP);
-            m_pDevice->SetTextureStageState(0, D3DTSS_COLOROP,     D3DTOP_MODULATE);
-            m_pDevice->SetTextureStageState(0, D3DTSS_COLORARG1,   D3DTA_TEXTURE);
-            m_pDevice->SetTextureStageState(0, D3DTSS_COLORARG2,   D3DTA_CURRENT);
-            m_pDevice->SetTextureStageState(0, D3DTSS_ALPHAOP,     D3DTOP_MODULATE);
-            m_pDevice->SetTextureStageState(0, D3DTSS_ALPHAARG1,   D3DTA_TEXTURE);
-            m_pDevice->SetTextureStageState(0, D3DTSS_ALPHAARG2,   D3DTA_CURRENT);
-            m_pDevice->SetTextureStageState(1, D3DTSS_ALPHAOP, D3DTOP_DISABLE);
-            m_pDevice->SetTextureStageState(1, D3DTSS_COLOROP, D3DTOP_DISABLE);
+            m_device->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+            m_device->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+            m_device->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+            m_device->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
+            m_device->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
+            m_device->SetSamplerState(0, D3DSAMP_MIPFILTER, D3DTEXF_NONE);
+            m_device->SetSamplerState(0, D3DSAMP_ADDRESSU, D3DTADDRESS_CLAMP);
+            m_device->SetSamplerState(0, D3DSAMP_ADDRESSV, D3DTADDRESS_CLAMP);
+            m_device->SetTextureStageState(0, D3DTSS_COLOROP,     D3DTOP_MODULATE);
+            m_device->SetTextureStageState(0, D3DTSS_COLORARG1,   D3DTA_TEXTURE);
+            m_device->SetTextureStageState(0, D3DTSS_COLORARG2,   D3DTA_CURRENT);
+            m_device->SetTextureStageState(0, D3DTSS_ALPHAOP,     D3DTOP_MODULATE);
+            m_device->SetTextureStageState(0, D3DTSS_ALPHAARG1,   D3DTA_TEXTURE);
+            m_device->SetTextureStageState(0, D3DTSS_ALPHAARG2,   D3DTA_CURRENT);
+            m_device->SetTextureStageState(1, D3DTSS_ALPHAOP, D3DTOP_DISABLE);
+            m_device->SetTextureStageState(1, D3DTSS_COLOROP, D3DTOP_DISABLE);
         }
 
         void DirectX9::End()
@@ -62,46 +62,46 @@ namespace Gwk
 
         void DirectX9::Flush()
         {
-            if (m_iVertNum > 0)
+            if (m_vertNum > 0)
             {
-                m_pDevice->SetFVF(D3DFVF_VERTEXFORMAT2D);
-                m_pDevice->DrawPrimitiveUP(D3DPT_TRIANGLELIST, m_iVertNum/3, &m_pVerts[0],
+                m_device->SetFVF(D3DFVF_VERTEXFORMAT2D);
+                m_device->DrawPrimitiveUP(D3DPT_TRIANGLELIST, m_vertNum/3, &m_verts[0],
                                            sizeof(VertexFormat));
-                m_iVertNum = 0;
+                m_vertNum = 0;
             }
         }
 
         void DirectX9::AddVert(int x, int y)
         {
-            if (m_iVertNum >= MaxVerts-1)
+            if (m_vertNum >= MaxVerts-1)
                 Flush();
 
-            m_pVerts[ m_iVertNum ].x = (float)x;
-            m_pVerts[ m_iVertNum ].y = (float)y;
-            m_pVerts[ m_iVertNum ].color = m_Color;
-            m_iVertNum++;
+            m_verts[ m_vertNum ].x = (float)x;
+            m_verts[ m_vertNum ].y = (float)y;
+            m_verts[ m_vertNum ].color = m_color;
+            m_vertNum++;
         }
 
         void DirectX9::AddVert(int x, int y, float u, float v)
         {
-            if (m_iVertNum >= MaxVerts-1)
+            if (m_vertNum >= MaxVerts-1)
                 Flush();
 
-            m_pVerts[ m_iVertNum ].x = -0.5f+(float)x;
-            m_pVerts[ m_iVertNum ].y = -0.5f+(float)y;
-            m_pVerts[ m_iVertNum ].u = u;
-            m_pVerts[ m_iVertNum ].v = v;
-            m_pVerts[ m_iVertNum ].color = m_Color;
-            m_iVertNum++;
+            m_verts[ m_vertNum ].x = -0.5f+(float)x;
+            m_verts[ m_vertNum ].y = -0.5f+(float)y;
+            m_verts[ m_vertNum ].u = u;
+            m_verts[ m_vertNum ].v = v;
+            m_verts[ m_vertNum ].color = m_color;
+            m_vertNum++;
         }
 
         void DirectX9::DrawFilledRect(Gwk::Rect rect)
         {
-            if (m_pCurrentTexture != NULL)
+            if (m_currentTexture != NULL)
             {
                 Flush();
-                m_pDevice->SetTexture(0, NULL);
-                m_pCurrentTexture = NULL;
+                m_device->SetTexture(0, NULL);
+                m_currentTexture = NULL;
             }
 
             Translate(rect);
@@ -115,12 +115,12 @@ namespace Gwk
 
         void DirectX9::SetDrawColor(Gwk::Color color)
         {
-            m_Color = D3DCOLOR_ARGB(color.a, color.r, color.g, color.b);
+            m_color = D3DCOLOR_ARGB(color.a, color.r, color.g, color.b);
         }
 
         void DirectX9::LoadFont(Gwk::Font* font)
         {
-            m_FontList.push_back(font);
+            m_fontList.push_back(font);
             // Scale the font according to canvas
             font->realsize = font->size*Scale();
             D3DXFONT_DESC fd;
@@ -140,96 +140,96 @@ namespace Gwk
             fd.Quality = PROOF_QUALITY;
 #endif
             fd.PitchAndFamily = DEFAULT_PITCH|FF_DONTCARE;
-            LPD3DXFONT pD3DXFont;
-            HRESULT hr = D3DXCreateFontIndirect(m_pDevice, &fd, &pD3DXFont);
-            FontData*   pFontData = new FontData();
-            pFontData->pFont = pD3DXFont;
+            LPD3DXFONT d3DXFont;
+            HRESULT hr = D3DXCreateFontIndirect(m_device, &fd, &d3DXFont);
+            FontData*   fontData = new FontData();
+            fontData->font = d3DXFont;
             // ID3DXFont doesn't measure trailing spaces, so we measure the
             // width of a space here and store it
             // in the font data - then we can add it to the width when we
             // measure text with trailing spaces.
             {
                 RECT rctA = {0, 0, 0, 0};
-                pFontData->pFont->DrawTextW(NULL, L"A", -1, &rctA,
+                fontData->font->DrawTextW(NULL, L"A", -1, &rctA,
                                             DT_CALCRECT|DT_LEFT|DT_TOP|DT_SINGLELINE, 0);
                 RECT rctSpc = {0, 0, 0, 0};
-                pFontData->pFont->DrawTextW(NULL, L"A A", -1, &rctSpc,
+                fontData->font->DrawTextW(NULL, L"A A", -1, &rctSpc,
                                             DT_CALCRECT|DT_LEFT|DT_TOP|DT_SINGLELINE, 0);
-                pFontData->iSpaceWidth = rctSpc.right-rctA.right*2;
+                fontData->iSpaceWidth = rctSpc.right-rctA.right*2;
             }
-            font->data = pFontData;
+            font->data = fontData;
         }
 
-        void DirectX9::FreeFont(Gwk::Font* pFont)
+        void DirectX9::FreeFont(Gwk::Font* font)
         {
-            m_FontList.remove(pFont);
+            m_fontList.remove(font);
 
-            if (!pFont->data)
+            if (!font->data)
                 return;
 
-            FontData* pFontData = (FontData*)pFont->data;
+            FontData* fontData = (FontData*)font->data;
 
-            if (pFontData->pFont)
+            if (fontData->font)
             {
-                pFontData->pFont->Release();
-                pFontData->pFont = NULL;
+                fontData->font->Release();
+                fontData->font = NULL;
             }
 
-            delete pFontData;
-            pFont->data = NULL;
+            delete fontData;
+            font->data = NULL;
         }
 
-        void DirectX9::RenderText(Gwk::Font* pFont, Gwk::Point pos,
+        void DirectX9::RenderText(Gwk::Font* font, Gwk::Point pos,
                                   const Gwk::String& text)
         {
             Flush();
 
             // If the font doesn't exist, or the font size should be changed
-            if (!pFont->data || fabs(pFont->realsize-pFont->size*Scale()) > 2)
+            if (!font->data || fabs(font->realsize-font->size*Scale()) > 2)
             {
-                FreeFont(pFont);
-                LoadFont(pFont);
+                FreeFont(font);
+                LoadFont(font);
             }
 
             const std::wstring wideText(Utility::Widen(text));
 
-            FontData* pFontData = (FontData*)pFont->data;
+            FontData* fontData = (FontData*)font->data;
             Translate(pos.x, pos.y);
             RECT ClipRect = { pos.x, pos.y, 0, 0 };
-            pFontData->pFont->DrawTextW(NULL,
+            fontData->font->DrawTextW(NULL,
                                         wideText.c_str(), -1, &ClipRect, DT_LEFT|DT_TOP|DT_NOCLIP|DT_SINGLELINE,
-                                        m_Color);
+                                        m_color);
         }
 
-        Gwk::Point DirectX9::MeasureText(Gwk::Font* pFont, const Gwk::String& text)
+        Gwk::Point DirectX9::MeasureText(Gwk::Font* font, const Gwk::String& text)
         {
             // If the font doesn't exist, or the font size should be changed
-            if (!pFont->data || fabs(pFont->realsize-pFont->size*Scale()) > 2)
+            if (!font->data || fabs(font->realsize-font->size*Scale()) > 2)
             {
-                FreeFont(pFont);
-                LoadFont(pFont);
+                FreeFont(font);
+                LoadFont(font);
             }
 
-            FontData* pFontData = (FontData*)pFont->data;
+            FontData* fontData = (FontData*)font->data;
             Gwk::Point size;
 
             if (text.empty())
             {
                 RECT rct = {0, 0, 0, 0};
-                pFontData->pFont->DrawTextW(NULL, L"W", -1, &rct, DT_CALCRECT, 0);
+                fontData->font->DrawTextW(NULL, L"W", -1, &rct, DT_CALCRECT, 0);
                 return Gwk::Point(0, rct.bottom);
             }
 
             const std::wstring wideText(Utility::Widen(text));
 
             RECT rct = {0, 0, 0, 0};
-            pFontData->pFont->DrawTextW(NULL,
+            fontData->font->DrawTextW(NULL,
                                         wideText.c_str(), -1, &rct, DT_CALCRECT|DT_LEFT|DT_TOP|DT_SINGLELINE,
                                         0);
 
             for (int i = wideText.length()-1; i >= 0 && wideText[i] == L' '; i--)
             {
-                rct.right += pFontData->iSpaceWidth;
+                rct.right += fontData->iSpaceWidth;
             }
 
             return Gwk::Point(rct.right/Scale(), rct.bottom/Scale());
@@ -238,38 +238,38 @@ namespace Gwk
         void DirectX9::StartClip()
         {
             Flush();
-            m_pDevice->SetRenderState(D3DRS_SCISSORTESTENABLE, TRUE);
+            m_device->SetRenderState(D3DRS_SCISSORTESTENABLE, TRUE);
             const Gwk::Rect& rect = ClipRegion();
             RECT r;
             r.left = ceil(((float)rect.x)*Scale());
             r.right = ceil(((float)(rect.x+rect.w))*Scale());
             r.top = ceil((float)rect.y*Scale());
             r.bottom = ceil(((float)(rect.y+rect.h))*Scale());
-            m_pDevice->SetScissorRect(&r);
+            m_device->SetScissorRect(&r);
         }
 
         void DirectX9::EndClip()
         {
             Flush();
-            m_pDevice->SetRenderState(D3DRS_SCISSORTESTENABLE, FALSE);
+            m_device->SetRenderState(D3DRS_SCISSORTESTENABLE, FALSE);
         }
 
-        void DirectX9::DrawTexturedRect(Gwk::Texture* pTexture, Gwk::Rect rect, float u1,
+        void DirectX9::DrawTexturedRect(Gwk::Texture* texture, Gwk::Rect rect, float u1,
                                         float v1, float u2, float v2)
         {
-            IDirect3DTexture9* pImage = (IDirect3DTexture9*)pTexture->data;
+            IDirect3DTexture9* image = (IDirect3DTexture9*)texture->data;
 
             // Missing image, not loaded properly?
-            if (!pImage)
+            if (!image)
                 return DrawMissingImage(rect);
 
             Translate(rect);
 
-            if (m_pCurrentTexture != pImage)
+            if (m_currentTexture != image)
             {
                 Flush();
-                m_pDevice->SetTexture(0, pImage);
-                m_pCurrentTexture = pImage;
+                m_device->SetTexture(0, image);
+                m_currentTexture = image;
             }
 
             AddVert(rect.x, rect.y,            u1, v1);
@@ -280,12 +280,12 @@ namespace Gwk
             AddVert(rect.x, rect.y+rect.h, u1, v2);
         }
 
-        void DirectX9::LoadTexture(Gwk::Texture* pTexture)
+        void DirectX9::LoadTexture(Gwk::Texture* texture)
         {
             IDirect3DTexture9* ptr = NULL;
             D3DXIMAGE_INFO ImageInfo;
-            const std::wstring wtexName( Utility::Widen(pTexture->name) );
-            HRESULT hr = D3DXCreateTextureFromFileExW(m_pDevice,
+            const std::wstring wtexName( Utility::Widen(texture->name) );
+            HRESULT hr = D3DXCreateTextureFromFileExW(m_device,
                                                       wtexName.c_str(),
                                                       0, 0, D3DX_DEFAULT, 0, D3DFMT_UNKNOWN,
                                                       D3DPOOL_MANAGED, D3DX_DEFAULT, D3DX_DEFAULT, 0, &ImageInfo, NULL,
@@ -294,64 +294,64 @@ namespace Gwk
             if (hr != S_OK)
                 return;
 
-            pTexture->data = ptr;
-            pTexture->width = ImageInfo.Width;
-            pTexture->height = ImageInfo.Height;
+            texture->data = ptr;
+            texture->width = ImageInfo.Width;
+            texture->height = ImageInfo.Height;
         }
 
-        void DirectX9::FreeTexture(Gwk::Texture* pTexture)
+        void DirectX9::FreeTexture(Gwk::Texture* texture)
         {
-            IDirect3DTexture9* pImage = (IDirect3DTexture9*)pTexture->data;
+            IDirect3DTexture9* image = (IDirect3DTexture9*)texture->data;
 
-            if (!pImage)
+            if (!image)
                 return;
 
-            pImage->Release();
-            pTexture->data = NULL;
+            image->Release();
+            texture->data = NULL;
         }
 
-        Gwk::Color DirectX9::PixelColour(Gwk::Texture* pTexture, unsigned int x, unsigned int y,
+        Gwk::Color DirectX9::PixelColour(Gwk::Texture* texture, unsigned int x, unsigned int y,
                                           const Gwk::Color& col_default)
         {
-            IDirect3DTexture9* pImage = (IDirect3DTexture9*)pTexture->data;
+            IDirect3DTexture9* image = (IDirect3DTexture9*)texture->data;
 
-            if (!pImage)
+            if (!image)
                 return col_default;
 
-            IDirect3DSurface9* pSurface = NULL;
+            IDirect3DSurface9* surface = NULL;
 
-            if (pImage->GetSurfaceLevel(0, &pSurface) != S_OK)
+            if (image->GetSurfaceLevel(0, &surface) != S_OK)
                 return col_default;
 
-            if (!pSurface)
+            if (!surface)
                 return col_default;
 
             D3DLOCKED_RECT lockedRect;
-            pSurface->LockRect(&lockedRect, NULL, D3DLOCK_READONLY);
-            DWORD* pixels = (DWORD*)lockedRect.pBits;
+            surface->LockRect(&lockedRect, NULL, D3DLOCK_READONLY);
+            DWORD* pixels = (DWORD*)lockedRect.bits;
             D3DXCOLOR color = pixels[lockedRect.Pitch/sizeof(DWORD)*y+x];
-            pSurface->UnlockRect();
-            pSurface->Release();
+            surface->UnlockRect();
+            surface->Release();
             return Gwk::Color(color.r*255, color.g*255, color.b*255, color.a*255);
         }
 
         void DirectX9::Release()
         {
-            Font::List::iterator it = m_FontList.begin();
+            Font::List::iterator it = m_fontList.begin();
 
-            while (it != m_FontList.end())
+            while (it != m_fontList.end())
             {
                 FreeFont(*it);
-                it = m_FontList.begin();
+                it = m_fontList.begin();
             }
         }
 
-        void DirectX9::FillPresentParameters(Gwk::WindowProvider* pWindow,
+        void DirectX9::FillPresentParameters(Gwk::WindowProvider* window,
                                              D3DPRESENT_PARAMETERS& Params)
         {
-            HWND pHWND = (HWND)pWindow->GetWindow();
+            HWND hWND = (HWND)window->GetWindow();
             RECT ClientRect;
-            GetClientRect(pHWND, &ClientRect);
+            GetClientRect(hWND, &ClientRect);
             ZeroMemory(&Params, sizeof(Params));
             Params.Windowed                     = true;
             Params.SwapEffect                   = D3DSWAPEFFECT_DISCARD;
@@ -362,26 +362,26 @@ namespace Gwk
             Params.PresentationInterval         = D3DPRESENT_INTERVAL_IMMEDIATE;
         }
 
-        bool DirectX9::InitializeContext(Gwk::WindowProvider* pWindow)
+        bool DirectX9::InitializeContext(Gwk::WindowProvider* window)
         {
-            HWND pHWND = (HWND)pWindow->GetWindow();
-            m_pD3D = Direct3DCreate9(D3D_SDK_VERSION);
+            HWND hWND = (HWND)window->GetWindow();
+            m_D3D = Direct3DCreate9(D3D_SDK_VERSION);
 
-            if (!m_pD3D)
+            if (!m_D3D)
                 return false;
 
             D3DCAPS9 D3DCaps;
-            m_pD3D->GetDeviceCaps(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, &D3DCaps);
+            m_D3D->GetDeviceCaps(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, &D3DCaps);
             DWORD BehaviourFlags = D3DCREATE_SOFTWARE_VERTEXPROCESSING;
 
             if (D3DCaps.VertexProcessingCaps != 0)
                 BehaviourFlags = D3DCREATE_HARDWARE_VERTEXPROCESSING;
 
             D3DPRESENT_PARAMETERS Params;
-            FillPresentParameters(pWindow, Params);
-            HRESULT hr = m_pD3D->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, pHWND,
+            FillPresentParameters(window, Params);
+            HRESULT hr = m_D3D->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, hWND,
                                               D3DCREATE_HARDWARE_VERTEXPROCESSING, &Params,
-                                              &m_pDevice);
+                                              &m_device);
 
             if (FAILED(hr))
                 return false;
@@ -389,55 +389,55 @@ namespace Gwk
             return true;
         }
 
-        bool DirectX9::ShutdownContext(Gwk::WindowProvider* pWindow)
+        bool DirectX9::ShutdownContext(Gwk::WindowProvider* window)
         {
-            if (m_pDevice)
+            if (m_device)
             {
-                m_pDevice->Release();
-                m_pDevice = NULL;
+                m_device->Release();
+                m_device = NULL;
             }
 
-            if (m_pD3D)
+            if (m_D3D)
             {
-                m_pD3D->Release();
-                m_pD3D = NULL;
+                m_D3D->Release();
+                m_D3D = NULL;
             }
 
             return true;
         }
 
-        bool DirectX9::PresentContext(Gwk::WindowProvider* pWindow)
+        bool DirectX9::PresentContext(Gwk::WindowProvider* window)
         {
-            m_pDevice->Present(NULL, NULL, NULL, NULL);
+            m_device->Present(NULL, NULL, NULL, NULL);
             return true;
         }
 
-        bool DirectX9::ResizedContext(Gwk::WindowProvider* pWindow, int w, int h)
+        bool DirectX9::ResizedContext(Gwk::WindowProvider* window, int w, int h)
         {
             // Force setting the current texture again
-            m_pCurrentTexture = NULL;
+            m_currentTexture = NULL;
             // Free any unmanaged resources (fonts)
             Release();
             // Get the new window size from the HWND
             D3DPRESENT_PARAMETERS Params;
-            FillPresentParameters(pWindow, Params);
+            FillPresentParameters(window, Params);
             // And reset the device!
-            m_pDevice->Reset(&Params);
+            m_device->Reset(&Params);
             return true;
         }
 
-        bool DirectX9::BeginContext(Gwk::WindowProvider* pWindow)
+        bool DirectX9::BeginContext(Gwk::WindowProvider* window)
         {
-            m_pDevice->BeginScene();
-            m_pDevice->Clear(0, NULL, D3DCLEAR_TARGET|D3DCLEAR_ZBUFFER|D3DCLEAR_STENCIL, D3DCOLOR_XRGB(
+            m_device->BeginScene();
+            m_device->Clear(0, NULL, D3DCLEAR_TARGET|D3DCLEAR_ZBUFFER|D3DCLEAR_STENCIL, D3DCOLOR_XRGB(
                                  128, 128,
                                  128), 1, 0);
             return true;
         }
 
-        bool DirectX9::EndContext(Gwk::WindowProvider* pWindow)
+        bool DirectX9::EndContext(Gwk::WindowProvider* window)
         {
-            m_pDevice->EndScene();
+            m_device->EndScene();
             return true;
         }
 

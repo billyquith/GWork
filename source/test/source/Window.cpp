@@ -17,42 +17,42 @@ public:
     GWK_CONTROL_INLINE(Window, GUnit)
     {
         {
-            Controls::Button* pButton = new Controls::Button(this);
-            pButton->SetText("Normal Window");
-            pButton->onPress.Add(this, &ThisClass::OpenWindow);
-            pButton->SetPos(0, 0);
+            Controls::Button* button = new Controls::Button(this);
+            button->SetText("Normal Window");
+            button->onPress.Add(this, &ThisClass::OpenWindow);
+            button->SetPos(0, 0);
         }
         {
-            Controls::Button* pButton = new Controls::Button(this);
-            pButton->SetText("Modal Window");
-            pButton->onPress.Add(this, &ThisClass::OpenModalWindow);
-            pButton->SetPos(0, 32);
+            Controls::Button* button = new Controls::Button(this);
+            button->SetText("Modal Window");
+            button->onPress.Add(this, &ThisClass::OpenModalWindow);
+            button->SetPos(0, 32);
         }
-        m_iWindowCount = 1;
+        m_windowCount = 1;
     }
 
     void OpenWindow()
     {
-        Controls::WindowControl* pWindow = new Controls::WindowControl(GetCanvas());
-        pWindow->SetTitle(Utility::Format("Window %i", m_iWindowCount));
-        pWindow->SetSize(200+rand()%100, 200+rand()%100);
-        pWindow->SetPos(rand()%700, rand()%400);
-        pWindow->SetDeleteOnClose(true);
-        m_iWindowCount++;
+        Controls::WindowControl* window = new Controls::WindowControl(GetCanvas());
+        window->SetTitle(Utility::Format("Window %i", m_windowCount));
+        window->SetSize(200+rand()%100, 200+rand()%100);
+        window->SetPos(rand()%700, rand()%400);
+        window->SetDeleteOnClose(true);
+        m_windowCount++;
     }
 
     void OpenModalWindow()
     {
-        Controls::WindowControl* pWindow = new Controls::WindowControl(GetCanvas());
-        pWindow->SetTitle(Utility::Format("Window %i", m_iWindowCount));
-        pWindow->SetSize(200+rand()%100, 200+rand()%100);
-        pWindow->MakeModal(true);
-        pWindow->Position(Docking::Center);
-        pWindow->SetDeleteOnClose(true);
-        m_iWindowCount++;
+        Controls::WindowControl* window = new Controls::WindowControl(GetCanvas());
+        window->SetTitle(Utility::Format("Window %i", m_windowCount));
+        window->SetSize(200+rand()%100, 200+rand()%100);
+        window->MakeModal(true);
+        window->Position(Docking::Center);
+        window->SetDeleteOnClose(true);
+        m_windowCount++;
     }
 
-    int m_iWindowCount;
+    int m_windowCount;
 
 };
 

@@ -30,12 +30,12 @@ namespace Gwk
 
             virtual void SetInnerMargin(int i)
             {
-                m_InnerMargin = i;
+                m_innerMargin = i;
             }
 
         protected:
 
-            int m_InnerMargin;
+            int m_innerMargin;
 
         };
 

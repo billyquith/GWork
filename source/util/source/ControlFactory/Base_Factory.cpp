@@ -34,13 +34,13 @@
 //            class Position : public Gwk::ControlFactory::Property
 //            {
 //                typedef ValueEnumMap<PositionEnum> EnumMap;
-//                EnumMap m_EnumMap;
+//                EnumMap m_enumMap;
 //                
 //            public:
 //                GWK_CONTROL_FACTORY_PROPERTY(Position, "Sets the position of the control");
 //                
 //                Position()
-//                :   m_EnumMap(g_posEnums, GWK_ARRAY_COUNT(g_posEnums))
+//                :   m_enumMap(g_posEnums, GWK_ARRAY_COUNT(g_posEnums))
 //                {}
 //
 //                String GetValueAsString(Controls::Base* ctrl) override
@@ -60,12 +60,12 @@
 //
 //                size_t NumCount() const override
 //                {
-//                    return m_EnumMap.GetEnumCount();
+//                    return m_enumMap.GetEnumCount();
 //                }
 //
 //                Gwk::String NumName(size_t i) const override
 //                {
-//                    return m_EnumMap.GetNameByIndex(i);
+//                    return m_enumMap.GetNameByIndex(i);
 //                }
 //
 //                float NumGet(Controls::Base* ctrl, int i) override
@@ -211,7 +211,7 @@
 //            };
             
             
-//            static const ValueEnumMapItem<Docking::Area> g_DockEnums[] = {
+//            static const ValueEnumMapItem<Docking::Area> g_dockEnums[] = {
 //                { "None",   Gwk::Docking::None },
 //                { "Fill",   Gwk::Docking::Fill },
 //                { "Left",   Gwk::Docking::Left },
@@ -223,34 +223,34 @@
 //            class Dock : public Gwk::ControlFactory::Property
 //            {
 //                typedef ValueEnumMap<Gwk::Docking::Area> EnumMap;
-//                EnumMap m_EnumMap;
+//                EnumMap m_enumMap;
 //                
 //            public:
 //                GWK_CONTROL_FACTORY_PROPERTY(Dock, "How the control is to be docked");
 //                
 //                Dock()
-//                :   m_EnumMap(g_DockEnums, GWK_ARRAY_COUNT(g_DockEnums))
+//                :   m_enumMap(g_dockEnums, GWK_ARRAY_COUNT(g_dockEnums))
 //                {}
 //
 //                String GetValueAsString(Controls::Base* ctrl) override
 //                {
-//                    return m_EnumMap.GetNameByValue(ctrl->GetDock());
+//                    return m_enumMap.GetNameByValue(ctrl->GetDock());
 //                }
 //
 //                void SetValueFromString(Controls::Base* ctrl, const String& str) override
 //                {
-//                    Docking::Area dock = m_EnumMap.GetValueByName(str.c_str(), Docking::None);
+//                    Docking::Area dock = m_enumMap.GetValueByName(str.c_str(), Docking::None);
 //                    ctrl->Dock(dock);
 //                }
 //
 //                size_t OptionCount() const override
 //                {
-//                    return m_EnumMap.GetEnumCount();
+//                    return m_enumMap.GetEnumCount();
 //                }
 //
 //                Gwk::String OptionGet(int i) override
 //                {
-//                    return m_EnumMap.GetNameByIndex(i);
+//                    return m_enumMap.GetNameByIndex(i);
 //                }
 //                
 //            };
@@ -273,9 +273,9 @@
 //
 //            virtual Gwk::Controls::Base* CreateInstance(Gwk::Controls::Base* parent)
 //            {
-//                Gwk::Controls::Base* pControl = new Gwk::Controls::Base(parent);
-//                pControl->SetSize(100, 100);
-//                return pControl;
+//                Gwk::Controls::Base* control = new Gwk::Controls::Base(parent);
+//                control->SetSize(100, 100);
+//                return control;
 //            }
 //        };
 //

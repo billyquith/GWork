@@ -64,39 +64,39 @@ namespace Gwk
             GWK_CONTROL_INLINE(CheckBoxWithLabel, Base)
             {
                 SetSize(200, 19);
-                m_Checkbox = new CheckBox(this);
-                m_Checkbox->Dock(Docking::Left);
-                m_Checkbox->SetMargin(Margin(0, 2, 2, 2));
-                m_Checkbox->SetTabable(false);
-                m_Label = new LabelClickable(this);
-                m_Label->Dock(Docking::Fill);
-                m_Label->onPress.Add(m_Checkbox, &CheckBox::OnPress);
-                m_Label->SetTabable(false);
+                m_checkbox = new CheckBox(this);
+                m_checkbox->Dock(Docking::Left);
+                m_checkbox->SetMargin(Margin(0, 2, 2, 2));
+                m_checkbox->SetTabable(false);
+                m_label = new LabelClickable(this);
+                m_label->Dock(Docking::Fill);
+                m_label->onPress.Add(m_checkbox, &CheckBox::OnPress);
+                m_label->SetTabable(false);
                 SetTabable(false);
             }
 
             virtual CheckBox* Checkbox()
             {
-                return m_Checkbox;
+                return m_checkbox;
             }
 
             virtual LabelClickable* Label()
             {
-                return m_Label;
+                return m_label;
             }
 
             virtual bool OnKeySpace(bool bDown) override
             {
                 if (!bDown)
-                    m_Checkbox->SetChecked(!m_Checkbox->IsChecked());
+                    m_checkbox->SetChecked(!m_checkbox->IsChecked());
 
                 return true;
             }
 
         private:
 
-            CheckBox*       m_Checkbox;
-            LabelClickable* m_Label;
+            CheckBox*       m_checkbox;
+            LabelClickable* m_label;
         };
 
 

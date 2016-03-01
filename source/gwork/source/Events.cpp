@@ -24,25 +24,25 @@ Handler::~Handler()
 void Handler::CleanLinks()
 {
     // Tell all the callers that we're dead
-    std::list<Caller*>::iterator iter = m_Callers.begin();
+    std::list<Caller*>::iterator iter = m_callers.begin();
 
-    while (iter != m_Callers.end())
+    while (iter != m_callers.end())
     {
-        Caller* pCaller = *iter;
-        UnRegisterCaller(pCaller);
-        pCaller->RemoveHandler(this);
-        iter = m_Callers.begin();
+        Caller* caller = *iter;
+        UnRegisterCaller(caller);
+        caller->RemoveHandler(this);
+        iter = m_callers.begin();
     }
 }
 
-void Handler::RegisterCaller(Caller* pCaller)
+void Handler::RegisterCaller(Caller* caller)
 {
-    m_Callers.push_back(pCaller);
+    m_callers.push_back(caller);
 }
 
-void Handler::UnRegisterCaller(Caller* pCaller)
+void Handler::UnRegisterCaller(Caller* caller)
 {
-    m_Callers.remove(pCaller);
+    m_callers.remove(caller);
 }
 
 Caller::Caller()
@@ -58,13 +58,13 @@ void Caller::CleanLinks()
 {
     std::list<HandlerInstance>::iterator iter;
 
-    for (iter = m_Handlers.begin(); iter != m_Handlers.end(); ++iter)
+    for (iter = m_handlers.begin(); iter != m_handlers.end(); ++iter)
     {
         HandlerInstance& h = *iter;
-        h.pObject->UnRegisterCaller(this);
+        h.object->UnRegisterCaller(this);
     }
 
-    m_Handlers.clear();
+    m_handlers.clear();
 }
 
 void Caller::Call(Controls::Base* pThis)
@@ -78,70 +78,70 @@ void Caller::Call(Controls::Base* pThis, Gwk::Event::Info information)
 {
     Gwk::Event::Information info;
     info = information;
-    info.ControlCaller  = pThis;
+    info.ControlCaller = pThis;
     std::list<HandlerInstance>::iterator iter;
 
-    for (iter = m_Handlers.begin(); iter != m_Handlers.end(); ++iter)
+    for (iter = m_handlers.begin(); iter != m_handlers.end(); ++iter)
     {
         HandlerInstance& h = *iter;
         info.Packet = &h.Packet;
 
         if (h.fnFunction)
-            (h.pObject->*h.fnFunction)(pThis);
+            (h.object->*h.fnFunction)(pThis);
 
         if (h.fnFunctionInfo)
-            (h.pObject->*h.fnFunctionInfo)(info);
+            (h.object->*h.fnFunctionInfo)(info);
 
         if (h.fnFunctionBlank)
-            (h.pObject->*h.fnFunctionBlank)();
+            (h.object->*h.fnFunctionBlank)();
     }
 }
 
-void Caller::AddInternal(Event::Handler* pObject, Event::Handler::Function pFunction)
+void Caller::AddInternal(Event::Handler* object, Event::Handler::Function function)
 {
     HandlerInstance h;
-    h.fnFunction = pFunction;
-    h.pObject = pObject;
-    m_Handlers.push_back(h);
-    pObject->RegisterCaller(this);
+    h.fnFunction = function;
+    h.object = object;
+    m_handlers.push_back(h);
+    object->RegisterCaller(this);
 }
 
-void Caller::AddInternal(Event::Handler* pObject, Handler::FunctionWithInformation pFunction)
+void Caller::AddInternal(Event::Handler* object, Handler::FunctionWithInformation function)
 {
-    AddInternal(pObject, pFunction, Gwk::Event::Packet());
+    AddInternal(object, function, Gwk::Event::Packet());
 }
 
-void Caller::AddInternal(Event::Handler* pObject, Handler::FunctionWithInformation pFunction,
+void Caller::AddInternal(Event::Handler* object, Handler::FunctionWithInformation function,
                          const Gwk::Event::Packet& packet)
 {
     HandlerInstance h;
-    h.fnFunctionInfo    = pFunction;
-    h.pObject           = pObject;
+    h.fnFunctionInfo    = function;
+    h.object            = object;
     h.Packet            = packet;
-    m_Handlers.push_back(h);
-    pObject->RegisterCaller(this);
+    m_handlers.push_back(h);
+    object->RegisterCaller(this);
 }
 
-void Caller::AddInternal(Event::Handler* pObject, Handler::FunctionBlank pFunction)
+void Caller::AddInternal(Event::Handler* object, Handler::FunctionBlank function)
 {
     HandlerInstance h;
-    h.fnFunctionBlank = pFunction;
-    h.pObject = pObject;
-    m_Handlers.push_back(h);
-    pObject->RegisterCaller(this);
+    h.fnFunctionBlank = function;
+    h.object = object;
+    m_handlers.push_back(h);
+    object->RegisterCaller(this);
 }
 
-void Caller::RemoveHandler(Event::Handler* pObject)
+void Caller::RemoveHandler(Event::Handler* object)
 {
-    pObject->UnRegisterCaller(this);
-    std::list<HandlerInstance>::iterator iter = m_Handlers.begin();
+    object->UnRegisterCaller(this);
+    std::list<HandlerInstance>::iterator iter = m_handlers.begin();
 
-    while (iter != m_Handlers.end())
+    while (iter != m_handlers.end())
     {
         HandlerInstance& h = *iter;
 
-        if (h.pObject == pObject)
-            iter = m_Handlers.erase(iter);
+        if (h.object == object)
+            iter = m_handlers.erase(iter);
         else
             ++iter;
     }

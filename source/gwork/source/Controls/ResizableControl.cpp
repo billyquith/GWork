@@ -17,50 +17,50 @@ using namespace Gwk::ControlsInternal;
 GWK_CONTROL_CONSTRUCTOR(ResizableControl)
 {
     m_bResizable = true;
-    m_MinimumSize = Gwk::Point(5, 5);
+    m_minimumSize = Gwk::Point(5, 5);
     m_bClampMovement = false;
-    m_Resizer[5] = NULL;
-    m_Resizer[0] = NULL;
-    m_Resizer[2] = new Resizer(this);
-    m_Resizer[2]->Dock(Docking::Bottom);
-    m_Resizer[2]->SetResizeDir(Docking::Bottom);
-    m_Resizer[2]->SetTarget(this);
-    m_Resizer[2]->onResize.Add(this, &ResizableControl::OnResizedInternal);
-    m_Resizer[1] = new Resizer(m_Resizer[2]);
-    m_Resizer[1]->Dock(Docking::Left);
-    m_Resizer[1]->SetResizeDir(Docking::Bottom|Docking::Left);
-    m_Resizer[1]->SetTarget(this);
-    m_Resizer[1]->onResize.Add(this, &ResizableControl::OnResizedInternal);
-    m_Resizer[3] = new Resizer(m_Resizer[2]);
-    m_Resizer[3]->Dock(Docking::Right);
-    m_Resizer[3]->SetResizeDir(Docking::Bottom|Docking::Right);
-    m_Resizer[3]->SetTarget(this);
-    m_Resizer[3]->onResize.Add(this, &ResizableControl::OnResizedInternal);
-    m_Resizer[8] = new Resizer(this);
-    m_Resizer[8]->Dock(Docking::Top);
-    m_Resizer[8]->SetResizeDir(Docking::Top);
-    m_Resizer[8]->SetTarget(this);
-    m_Resizer[8]->onResize.Add(this, &ResizableControl::OnResizedInternal);
-    m_Resizer[7] = new Resizer(m_Resizer[8]);
-    m_Resizer[7]->Dock(Docking::Left);
-    m_Resizer[7]->SetResizeDir(Docking::Top|Docking::Left);
-    m_Resizer[7]->SetTarget(this);
-    m_Resizer[7]->onResize.Add(this, &ResizableControl::OnResizedInternal);
-    m_Resizer[9] = new Resizer(m_Resizer[8]);
-    m_Resizer[9]->Dock(Docking::Right);
-    m_Resizer[9]->SetResizeDir(Docking::Top|Docking::Right);
-    m_Resizer[9]->SetTarget(this);
-    m_Resizer[9]->onResize.Add(this, &ResizableControl::OnResizedInternal);
-    m_Resizer[4] = new Resizer(this);
-    m_Resizer[4]->Dock(Docking::Left);
-    m_Resizer[4]->SetResizeDir(Docking::Left);
-    m_Resizer[4]->SetTarget(this);
-    m_Resizer[4]->onResize.Add(this, &ResizableControl::OnResizedInternal);
-    m_Resizer[6] = new Resizer(this);
-    m_Resizer[6]->Dock(Docking::Right);
-    m_Resizer[6]->SetResizeDir(Docking::Right);
-    m_Resizer[6]->SetTarget(this);
-    m_Resizer[6]->onResize.Add(this, &ResizableControl::OnResizedInternal);
+    m_resizer[5] = NULL;
+    m_resizer[0] = NULL;
+    m_resizer[2] = new Resizer(this);
+    m_resizer[2]->Dock(Docking::Bottom);
+    m_resizer[2]->SetResizeDir(Docking::Bottom);
+    m_resizer[2]->SetTarget(this);
+    m_resizer[2]->onResize.Add(this, &ResizableControl::OnResizedInternal);
+    m_resizer[1] = new Resizer(m_resizer[2]);
+    m_resizer[1]->Dock(Docking::Left);
+    m_resizer[1]->SetResizeDir(Docking::Bottom|Docking::Left);
+    m_resizer[1]->SetTarget(this);
+    m_resizer[1]->onResize.Add(this, &ResizableControl::OnResizedInternal);
+    m_resizer[3] = new Resizer(m_resizer[2]);
+    m_resizer[3]->Dock(Docking::Right);
+    m_resizer[3]->SetResizeDir(Docking::Bottom|Docking::Right);
+    m_resizer[3]->SetTarget(this);
+    m_resizer[3]->onResize.Add(this, &ResizableControl::OnResizedInternal);
+    m_resizer[8] = new Resizer(this);
+    m_resizer[8]->Dock(Docking::Top);
+    m_resizer[8]->SetResizeDir(Docking::Top);
+    m_resizer[8]->SetTarget(this);
+    m_resizer[8]->onResize.Add(this, &ResizableControl::OnResizedInternal);
+    m_resizer[7] = new Resizer(m_resizer[8]);
+    m_resizer[7]->Dock(Docking::Left);
+    m_resizer[7]->SetResizeDir(Docking::Top|Docking::Left);
+    m_resizer[7]->SetTarget(this);
+    m_resizer[7]->onResize.Add(this, &ResizableControl::OnResizedInternal);
+    m_resizer[9] = new Resizer(m_resizer[8]);
+    m_resizer[9]->Dock(Docking::Right);
+    m_resizer[9]->SetResizeDir(Docking::Top|Docking::Right);
+    m_resizer[9]->SetTarget(this);
+    m_resizer[9]->onResize.Add(this, &ResizableControl::OnResizedInternal);
+    m_resizer[4] = new Resizer(this);
+    m_resizer[4]->Dock(Docking::Left);
+    m_resizer[4]->SetResizeDir(Docking::Left);
+    m_resizer[4]->SetTarget(this);
+    m_resizer[4]->onResize.Add(this, &ResizableControl::OnResizedInternal);
+    m_resizer[6] = new Resizer(this);
+    m_resizer[6]->Dock(Docking::Right);
+    m_resizer[6]->SetResizeDir(Docking::Right);
+    m_resizer[6]->SetTarget(this);
+    m_resizer[6]->onResize.Add(this, &ResizableControl::OnResizedInternal);
 }
 
 void ResizableControl::DisableResizing()
@@ -88,18 +88,18 @@ bool ResizableControl::SetBounds(int x, int y, int w, int h)
     h = Max(h, minSize.y);
 
     // Clamp to parent's window
-    Base* pParent = GetParent();
+    Base* parent = GetParent();
 
-    if (pParent && m_bClampMovement)
+    if (parent && m_bClampMovement)
     {
-        if (x+w > pParent->Width())
-            x = pParent->Width()-w;
+        if (x+w > parent->Width())
+            x = parent->Width()-w;
 
         if (x < 0)
             x = 0;
 
-        if (y+h > pParent->Height())
-            y = pParent->Height()-h;
+        if (y+h > parent->Height())
+            y = parent->Height()-h;
 
         if (y < 0)
             y = 0;
@@ -108,7 +108,7 @@ bool ResizableControl::SetBounds(int x, int y, int w, int h)
     return ParentClass::SetBounds(x, y, w, h);
 }
 
-void ResizableControl::OnResizedInternal(Controls::Base* /*pControl*/)
+void ResizableControl::OnResizedInternal(Controls::Base* /*control*/)
 {
     onResize.Call(this);
     OnResized();

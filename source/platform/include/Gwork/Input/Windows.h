@@ -23,19 +23,19 @@ namespace Gwk
 
             Windows()
             {
-                m_Canvas = NULL;
-                m_MouseX = 0;
-                m_MouseY = 0;
+                m_canvas = NULL;
+                m_mouseX = 0;
+                m_mouseY = 0;
             }
 
             void Initialize(Gwk::Controls::Canvas* c)
             {
-                m_Canvas = c;
+                m_canvas = c;
             }
 
             bool ProcessMessage(MSG msg)
             {
-                if (!m_Canvas)
+                if (!m_canvas)
                     return false;
 
                 switch (msg.message)
@@ -45,55 +45,55 @@ namespace Gwk
                     if (msg.message == WM_SYSCOMMAND && msg.wParam != SC_CLOSE)
                         return false;
 
-                    return m_Canvas->InputQuit();
+                    return m_canvas->InputQuit();
 
                 case WM_MOUSEMOVE:
                     {
                         int x = (signed short)LOWORD(msg.lParam);
                         int y = (signed short)HIWORD(msg.lParam);
-                        int dx = x-m_MouseX;
-                        int dy = y-m_MouseY;
-                        m_MouseX = x;
-                        m_MouseY = y;
-                        return m_Canvas->InputMouseMoved(x, y, dx, dy);
+                        int dx = x-m_mouseX;
+                        int dy = y-m_mouseY;
+                        m_mouseX = x;
+                        m_mouseY = y;
+                        return m_canvas->InputMouseMoved(x, y, dx, dy);
                     }
 
                 case WM_CHAR:
                     {
                         Gwk::UnicodeChar chr = (Gwk::UnicodeChar)msg.wParam;
-                        return m_Canvas->InputCharacter(chr);
+                        return m_canvas->InputCharacter(chr);
                     }
 
 #ifdef WM_MOUSEWHEEL
 
                 case WM_MOUSEWHEEL:
-                    return m_Canvas->InputMouseWheel((short)HIWORD(msg.wParam));
+                    return m_canvas->InputMouseWheel((short)HIWORD(msg.wParam));
 
 #endif
 
                 case WM_LBUTTONDOWN:
                     SetCapture(msg.hwnd);
-                    return m_Canvas->InputMouseButton(0, true);
+                    return m_canvas->InputMouseButton(0, true);
 
                 case WM_LBUTTONUP:
                     ReleaseCapture();
-                    return m_Canvas->InputMouseButton(0, false);
+                    return m_canvas->InputMouseButton(0, false);
 
                 case WM_RBUTTONDOWN:
                     SetCapture(msg.hwnd);
-                    return m_Canvas->InputMouseButton(1, true);
+                    return m_canvas->InputMouseButton(1, true);
 
                 case WM_RBUTTONUP:
                     ReleaseCapture();
-                    return m_Canvas->InputMouseButton(1, false);
+                    return m_canvas->InputMouseButton(1, false);
 
                 case WM_MBUTTONDOWN:
                     SetCapture(msg.hwnd);
-                    return m_Canvas->InputMouseButton(2, true);
+                    return m_canvas->InputMouseButton(2, true);
 
                 case WM_MBUTTONUP:
                     ReleaseCapture();
-                    return m_Canvas->InputMouseButton(2, false);
+                    return m_canvas->InputMouseButton(2, false);
 
                 case WM_LBUTTONDBLCLK:
                 case WM_RBUTTONDBLCLK:
@@ -115,7 +115,7 @@ namespace Gwk
                             'Z')
                         {
                             Gwk::UnicodeChar chr = (Gwk::UnicodeChar)msg.wParam;
-                            return m_Canvas->InputCharacter(chr);
+                            return m_canvas->InputCharacter(chr);
                         }
 
                         if (msg.wParam == VK_SHIFT)
@@ -148,7 +148,7 @@ namespace Gwk
                             iKey = Gwk::Key::Down;
 
                         if (iKey != -1)
-                            return m_Canvas->InputKey(iKey, bDown);
+                            return m_canvas->InputKey(iKey, bDown);
 
                         break;
                     }
@@ -162,9 +162,9 @@ namespace Gwk
 
         protected:
 
-            Gwk::Controls::Canvas* m_Canvas;
-            int m_MouseX;
-            int m_MouseY;
+            Gwk::Controls::Canvas* m_canvas;
+            int m_mouseX;
+            int m_mouseY;
 
         };
 

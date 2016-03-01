@@ -49,10 +49,10 @@ namespace Gwk
 
             virtual bool AccelOnlyFocus() override { return true; }
 
-            virtual void OnPaste(Gwk::Controls::Base* pCtrl) override;
-            virtual void OnCopy(Gwk::Controls::Base* pCtrl) override;
-            virtual void OnCut(Gwk::Controls::Base* pCtrl) override;
-            virtual void OnSelectAll(Gwk::Controls::Base* pCtrl) override;
+            virtual void OnPaste(Gwk::Controls::Base* ctrl) override;
+            virtual void OnCopy(Gwk::Controls::Base* ctrl) override;
+            virtual void OnCut(Gwk::Controls::Base* ctrl) override;
+            virtual void OnSelectAll(Gwk::Controls::Base* ctrl) override;
 
             virtual void OnMouseDoubleClickLeft(int x, int y) override;
 
@@ -98,15 +98,15 @@ namespace Gwk
             bool m_bEditable;
             bool m_bSelectAll;
 
-            int m_iCursorPos;
-            int m_iCursorEnd;
-            int m_iCursorLine;
+            int m_cursorPos;
+            int m_cursorEnd;
+            int m_cursorLine;
 
             Gwk::Rect m_rectSelectionBounds;
             Gwk::Rect m_rectCaretBounds;
 
             float m_fNextCaretColorChange;
-            Gwk::Color m_CaretColor;
+            Gwk::Color m_caretColor;
         };
 
 

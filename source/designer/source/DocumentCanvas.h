@@ -17,8 +17,8 @@ class DocumentCanvas : public Controls::Base
 
 	virtual void SelectControls( ControlList& list );
 
-	virtual bool DragAndDrop_CanAcceptPackage( Gwk::DragAndDrop::Package* pPackage );
-	virtual bool DragAndDrop_HandleDrop( Gwk::DragAndDrop::Package* pPackage, int x, int y );
+	virtual bool DragAndDrop_CanAcceptPackage( Gwk::DragAndDrop::Package* package );
+	virtual bool DragAndDrop_HandleDrop( Gwk::DragAndDrop::Package* package, int x, int y );
 
 	void Command( const Gwk::String& str );
 
@@ -35,5 +35,5 @@ class DocumentCanvas : public Controls::Base
 		void OnHierachyChanged( Event::Info info );
 		
 
-		SelectionLayer*	m_SelectionLayer;
+		SelectionLayer*	m_selectionLayer;
 };

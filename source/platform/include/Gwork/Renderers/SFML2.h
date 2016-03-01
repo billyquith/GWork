@@ -28,39 +28,39 @@ namespace Gwk
 
             inline void EnsurePrimitiveType(sf::PrimitiveType type)
             {
-                if (m_Buffer.getPrimitiveType() != type)
+                if (m_buffer.getPrimitiveType() != type)
                 {
                     Flush();
-                    m_Buffer.setPrimitiveType(type);
+                    m_buffer.setPrimitiveType(type);
                 }
             }
 
             inline void EnsureTexture(const sf::Texture *texture)
             {
-                if (m_RenderStates.texture != texture)
+                if (m_renderStates.texture != texture)
                 {
                     Flush();
-                    m_RenderStates.texture = texture;
+                    m_renderStates.texture = texture;
                 }
             }
 
             inline void AddVert(int x, int y, float u = 0.0f, float v = 0.0f)
             {
-                if (m_RenderStates.texture)
+                if (m_renderStates.texture)
                 {
-                    u *= m_RenderStates.texture->getSize().x;
-                    v *= m_RenderStates.texture->getSize().y;
+                    u *= m_renderStates.texture->getSize().x;
+                    v *= m_renderStates.texture->getSize().y;
                 }
 
-                m_Buffer.append(sf::Vertex(sf::Vector2f(x, y), m_Color, sf::Vector2f(u, v)));
+                m_buffer.append(sf::Vertex(sf::Vector2f(x, y), m_color, sf::Vector2f(u, v)));
             }
 
             inline void Flush()
             {
-                if (m_Buffer.getVertexCount() > 0)
+                if (m_buffer.getVertexCount() > 0)
                 {
-                    m_Target.draw(m_Buffer, m_RenderStates);
-                    m_Buffer.clear();
+                    m_target.draw(m_buffer, m_renderStates);
+                    m_buffer.clear();
                 }
             }
 
@@ -75,28 +75,28 @@ namespace Gwk
             virtual void DrawLinedRect(Gwk::Rect rect);
             virtual void DrawFilledRect(Gwk::Rect rect);
             virtual void DrawShavedCornerRect(Gwk::Rect rect, bool bSlight = false);
-            virtual void DrawTexturedRect(Gwk::Texture* pTexture, Gwk::Rect rect, float u1,
+            virtual void DrawTexturedRect(Gwk::Texture* texture, Gwk::Rect rect, float u1,
                                           float v1, float u2, float v2);
 
-            virtual void RenderText(Gwk::Font* pFont, Gwk::Point pos,
+            virtual void RenderText(Gwk::Font* font, Gwk::Point pos,
                                     const Gwk::String& text);
-            virtual Gwk::Point MeasureText(Gwk::Font* pFont, const Gwk::String& text);
+            virtual Gwk::Point MeasureText(Gwk::Font* font, const Gwk::String& text);
             virtual void        LoadFont(Gwk::Font* font);
-            virtual void        FreeFont(Gwk::Font* pFont);
+            virtual void        FreeFont(Gwk::Font* font);
 
-            virtual void        LoadTexture(Gwk::Texture* pTexture);
-            virtual void        FreeTexture(Gwk::Texture* pTexture);
-            virtual Gwk::Color PixelColour(Gwk::Texture* pTexture, unsigned int x, unsigned int y,
+            virtual void        LoadTexture(Gwk::Texture* texture);
+            virtual void        FreeTexture(Gwk::Texture* texture);
+            virtual Gwk::Color PixelColour(Gwk::Texture* texture, unsigned int x, unsigned int y,
                                             const Gwk::Color& col_default);
 
         protected:
 
-            sf::RenderTarget& m_Target;
-            sf::Color m_Color;
-            sf::VertexArray m_Buffer;
-            sf::RenderStates m_RenderStates;
-            sf::View m_OriginalView;
-            int m_Height;
+            sf::RenderTarget& m_target;
+            sf::Color m_color;
+            sf::VertexArray m_buffer;
+            sf::RenderStates m_renderStates;
+            sf::View m_originalView;
+            int m_height;
         };
 
 

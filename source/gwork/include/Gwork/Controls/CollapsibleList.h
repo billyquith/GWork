@@ -35,21 +35,21 @@ namespace Gwk
                 SetAutoHideBars(true);
             }
 
-            virtual void Add(Gwk::Controls::CollapsibleCategory* pCategory)
+            virtual void Add(Gwk::Controls::CollapsibleCategory* category)
             {
-                pCategory->SetParent(this);
-                pCategory->Dock(Docking::Top);
-                pCategory->SetMargin(Margin(1, 0, 1, 1));
-                pCategory->SetList(this);
-                pCategory->onSelection.Add(this, &ThisClass::OnSelectionEvent);
+                category->SetParent(this);
+                category->Dock(Docking::Top);
+                category->SetMargin(Margin(1, 0, 1, 1));
+                category->SetList(this);
+                category->onSelection.Add(this, &ThisClass::OnSelectionEvent);
             }
 
             virtual Gwk::Controls::CollapsibleCategory* Add(const String& name)
             {
-                Gwk::Controls::CollapsibleCategory* pCategory = new CollapsibleCategory(this);
-                pCategory->SetText(name);
-                Add(pCategory);
-                return pCategory;
+                Gwk::Controls::CollapsibleCategory* category = new CollapsibleCategory(this);
+                category->SetText(name);
+                Add(category);
+                return category;
             }
 
             virtual void Render(Skin::Base* skin) override
@@ -63,13 +63,13 @@ namespace Gwk
 
                 for (Base::List::iterator iter = children.begin(); iter != children.end(); ++iter)
                 {
-                    Gwk::Controls::CollapsibleCategory* pChild =
+                    Gwk::Controls::CollapsibleCategory* child =
                         gwk_cast<Gwk::Controls::CollapsibleCategory>(*iter);
 
-                    if (!pChild)
+                    if (!child)
                         continue;
 
-                    pChild->UnselectAll();
+                    child->UnselectAll();
                 }
             }
 
@@ -79,16 +79,16 @@ namespace Gwk
 
                 for (Base::List::iterator iter = children.begin(); iter != children.end(); ++iter)
                 {
-                    Gwk::Controls::CollapsibleCategory* pChild =
+                    Gwk::Controls::CollapsibleCategory* child =
                         gwk_cast<Gwk::Controls::CollapsibleCategory>(*iter);
 
-                    if (!pChild)
+                    if (!child)
                         continue;
 
-                    Gwk::Controls::Button* pSelected = pChild->GetSelected();
+                    Gwk::Controls::Button* selected = child->GetSelected();
 
-                    if (pSelected)
-                        return pSelected;
+                    if (selected)
+                        return selected;
                 }
 
                 return NULL;
@@ -96,21 +96,21 @@ namespace Gwk
 
         protected:
 
-            virtual void OnSelection(Gwk::Controls::CollapsibleCategory* pControl,
-                                     Gwk::Controls::Button* pSelected)
+            virtual void OnSelection(Gwk::Controls::CollapsibleCategory* control,
+                                     Gwk::Controls::Button* selected)
             {
                 onSelection.Call(this);
             }
 
-            void OnSelectionEvent(Controls::Base* pControl)
+            void OnSelectionEvent(Controls::Base* control)
             {
-                Gwk::Controls::CollapsibleCategory* pChild =
-                    gwk_cast<Gwk::Controls::CollapsibleCategory>(pControl);
+                Gwk::Controls::CollapsibleCategory* child =
+                    gwk_cast<Gwk::Controls::CollapsibleCategory>(control);
 
-                if (!pChild)
+                if (!child)
                     return;
 
-                OnSelection(pChild, pChild->GetSelected());
+                OnSelection(child, child->GetSelected());
             }
 
         };

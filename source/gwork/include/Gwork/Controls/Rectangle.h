@@ -29,17 +29,17 @@ namespace Gwk
 
             const Gwk::Color& GetColor()
             {
-                return m_Color;
+                return m_color;
             }
 
             void SetColor(const Gwk::Color& col)
             {
-                m_Color = col;
+                m_color = col;
             }
 
         protected:
 
-            Gwk::Color m_Color;
+            Gwk::Color m_color;
 
         };
 

@@ -25,14 +25,14 @@ public:
         rc->onSelectionChange.Add(this, &RadioButton::OnChange);
     }
 
-    void OnChange(Controls::Base* pControl)
+    void OnChange(Controls::Base* control)
     {
         Gwk::Controls::RadioButtonController* rc =
-            (Gwk::Controls::RadioButtonController*)pControl;
-        Gwk::Controls::LabeledRadioButton* pSelected = rc->GetSelected();
+            (Gwk::Controls::RadioButtonController*)control;
+        Gwk::Controls::LabeledRadioButton* selected = rc->GetSelected();
         UnitPrint(Utility::Format(
                       "RadioButton changed (using 'OnChange' event)\n Chosen Item: '%s'",
-                      pSelected->GetLabel()->GetText().c_str()));
+                      selected->GetLabel()->GetText().c_str()));
     }
 
 };

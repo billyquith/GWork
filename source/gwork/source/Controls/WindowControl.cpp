@@ -19,31 +19,31 @@ using namespace Gwk::ControlsInternal;
 
 GWK_CONTROL_CONSTRUCTOR(WindowControl)
 {
-    m_Modal = NULL;
+    m_modal = NULL;
     m_bDeleteOnClose = false;
-    m_TitleBar = new Dragger(this);
-    m_TitleBar->SetHeight(24);
-    m_TitleBar->SetPadding(Padding(0, 0, 0, 0));
-    m_TitleBar->SetMargin(Margin(0, 0, 0, 4));
-    m_TitleBar->SetTarget(this);
-    m_TitleBar->Dock(Docking::Top);
-    m_Title = new Label(m_TitleBar);
-    m_Title->SetAlignment(Docking::Left|Docking::CenterV);
-    m_Title->SetText("Window");
-    m_Title->Dock(Docking::Fill);
-    m_Title->SetPadding(Padding(8, 0, 0, 0));
-    m_Title->SetTextColor(GetSkin()->Colors.Window.TitleInactive);
-    m_CloseButton = new Gwk::Controls::WindowCloseButton(m_TitleBar);
-    m_CloseButton->SetText("");
-    m_CloseButton->Dock(Docking::Right);
-    m_CloseButton->onPress.Add(this, &WindowControl::CloseButtonPressed);
-    m_CloseButton->SetTabable(false);
-    m_CloseButton->SetName("closeButton");
-    m_CloseButton->SetWindow(this);
+    m_titleBar = new Dragger(this);
+    m_titleBar->SetHeight(24);
+    m_titleBar->SetPadding(Padding(0, 0, 0, 0));
+    m_titleBar->SetMargin(Margin(0, 0, 0, 4));
+    m_titleBar->SetTarget(this);
+    m_titleBar->Dock(Docking::Top);
+    m_title = new Label(m_titleBar);
+    m_title->SetAlignment(Docking::Left|Docking::CenterV);
+    m_title->SetText("Window");
+    m_title->Dock(Docking::Fill);
+    m_title->SetPadding(Padding(8, 0, 0, 0));
+    m_title->SetTextColor(GetSkin()->Colors.Window.TitleInactive);
+    m_closeButton = new Gwk::Controls::WindowCloseButton(m_titleBar);
+    m_closeButton->SetText("");
+    m_closeButton->Dock(Docking::Right);
+    m_closeButton->onPress.Add(this, &WindowControl::CloseButtonPressed);
+    m_closeButton->SetTabable(false);
+    m_closeButton->SetName("closeButton");
+    m_closeButton->SetWindow(this);
     // Create a blank content control, dock it to the top - Should this be a
     // ScrollControl?
-    m_InnerPanel = new Base(this);
-    m_InnerPanel->Dock(Docking::Fill);
+    m_innerPanel = new Base(this);
+    m_innerPanel->Dock(Docking::Fill);
     GetResizer(8)->Hide();
     BringToFront();
     SetTabable(false);
@@ -61,24 +61,24 @@ WindowControl::~WindowControl()
 
 void WindowControl::MakeModal(bool bDrawBackground)
 {
-    if (m_Modal)
+    if (m_modal)
         return;
 
-    m_Modal = new ControlsInternal::Modal(GetCanvas());
-    SetParent(m_Modal);
-    m_Modal->SetShouldDrawBackground(bDrawBackground);
+    m_modal = new ControlsInternal::Modal(GetCanvas());
+    SetParent(m_modal);
+    m_modal->SetShouldDrawBackground(bDrawBackground);
 }
 
 void WindowControl::DestroyModal()
 {
-    if (!m_Modal)
+    if (!m_modal)
         return;
 
     // Really should be restoring our parent here.. but we don't know who it is.
     // Assume it's the canvas.
     SetParent(GetCanvas());
-    m_Modal->DelayedDelete();
-    m_Modal = NULL;
+    m_modal->DelayedDelete();
+    m_modal = NULL;
 }
 
 bool WindowControl::IsOnTop()
@@ -87,12 +87,12 @@ bool WindowControl::IsOnTop()
          iter != GetParent()->Children.rend();
          ++iter)
     {
-        WindowControl* pWindow = gwk_cast<WindowControl>(*iter);
+        WindowControl* window = gwk_cast<WindowControl>(*iter);
 
-        if (!pWindow)
+        if (!window)
             continue;
 
-        if (pWindow == this)
+        if (window == this)
             return true;
 
         return false;
@@ -106,11 +106,11 @@ void WindowControl::Render(Skin::Base* skin)
     bool bHasFocus = IsOnTop();
 
     if (bHasFocus)
-        m_Title->SetTextColor(GetSkin()->Colors.Window.TitleActive);
+        m_title->SetTextColor(GetSkin()->Colors.Window.TitleActive);
     else
-        m_Title->SetTextColor(GetSkin()->Colors.Window.TitleInactive);
+        m_title->SetTextColor(GetSkin()->Colors.Window.TitleInactive);
 
-    skin->DrawWindow(this, m_TitleBar->Bottom(), bHasFocus);
+    skin->DrawWindow(this, m_titleBar->Bottom(), bHasFocus);
 }
 
 void WindowControl::RenderUnder(Skin::Base* skin)
@@ -121,12 +121,12 @@ void WindowControl::RenderUnder(Skin::Base* skin)
 
 void WindowControl::SetTitle(Gwk::String title)
 {
-    m_Title->SetText(title);
+    m_title->SetText(title);
 }
 
 void WindowControl::SetClosable(bool closeable)
 {
-    m_CloseButton->SetHidden(!closeable);
+    m_closeButton->SetHidden(!closeable);
 }
 
 void WindowControl::SetHidden(bool hidden)

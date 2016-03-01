@@ -26,7 +26,7 @@ namespace Gwk
 
             GWK_CLASS(WindowCanvas, Controls::Canvas);
 
-            WindowCanvas(int x, int y, int w, int h, Gwk::Skin::Base* pRenderer,
+            WindowCanvas(int x, int y, int w, int h, Gwk::Skin::Base* renderer,
                          const Gwk::String& strWindowTitle = "");
             ~WindowCanvas();
 
@@ -61,12 +61,12 @@ namespace Gwk
 
             virtual void SetSizable(bool b)
             {
-                m_Sizer->SetHidden(!b);
+                m_sizer->SetHidden(!b);
             }
 
             virtual bool GetSizable()
             {
-                return m_Sizer->Visible();
+                return m_sizer->Visible();
             }
 
         protected:
@@ -83,25 +83,25 @@ namespace Gwk
             virtual void Sizer_Moved();
             virtual void OnTitleDoubleClicked();
 
-            void*       m_pOSWindow;
+            void*       m_oSWindowSWindow;
             bool m_bQuit;
 
-            Gwk::Skin::Base*           m_pSkinChange;
+            Gwk::Skin::Base*           m_skinChange;
 
-            ControlsInternal::Dragger*  m_TitleBar;
-            ControlsInternal::Dragger*  m_Sizer;
-            Gwk::Controls::Label*      m_Title;
+            ControlsInternal::Dragger*  m_titleBar;
+            ControlsInternal::Dragger*  m_sizer;
+            Gwk::Controls::Label*      m_title;
 
 
-            Gwk::Point m_WindowPos;
-            Gwk::Point m_HoldPos;
+            Gwk::Point m_windowPos;
+            Gwk::Point m_holdPos;
 
             bool m_bCanMaximize;
             bool m_bIsMaximized;
 
-            Gwk::Controls::WindowCloseButton*      m_pClose;
-            Gwk::Controls::WindowMaximizeButton*   m_pMaximize;
-            Gwk::Controls::WindowMinimizeButton*   m_pMinimize;
+            Gwk::Controls::WindowCloseButton*      m_close;
+            Gwk::Controls::WindowMaximizeButton*   m_maximize;
+            Gwk::Controls::WindowMinimizeButton*   m_minimize;
 
         };
 

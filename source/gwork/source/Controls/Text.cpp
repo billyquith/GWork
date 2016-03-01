@@ -16,9 +16,9 @@ using namespace Gwk::ControlsInternal;
 
 GWK_CONTROL_CONSTRUCTOR(Text)
 {
-    m_Font = NULL;
-    m_ColorOverride = Color(255, 255, 255, 0);
-    m_Color = GetSkin()->Colors.Label.Default;
+    m_font = NULL;
+    m_colorOverride = Color(255, 255, 255, 0);
+    m_color = GetSkin()->Colors.Label.Default;
     SetMouseInputEnabled(false);
     SetWrap(false);
 }
@@ -40,24 +40,24 @@ void Text::Layout(Skin::Base* skin)
 
 Gwk::Font* Text::GetFont()
 {
-    return m_Font;
+    return m_font;
 }
 
-void Text::SetFont(Gwk::Font* pFont)
+void Text::SetFont(Gwk::Font* font)
 {
-    if (m_Font == pFont)
+    if (m_font == font)
         return;
 
-    m_Font = pFont;
+    m_font = font;
     m_bTextChanged = true;
     // Change the font of multilines too!
     {
-        TextLines::iterator it = m_Lines.begin();
-        TextLines::iterator itEnd = m_Lines.end();
+        TextLines::iterator it = m_lines.begin();
+        TextLines::iterator itEnd = m_lines.end();
 
         while (it != itEnd)
         {
-            (*it)->SetFont(m_Font);
+            (*it)->SetFont(m_font);
             ++it;
         }
     }
@@ -66,10 +66,10 @@ void Text::SetFont(Gwk::Font* pFont)
 
 void Text::SetString(const String& str)
 {
-    if (m_String == str)
+    if (m_string == str)
         return;
 
-    m_String = str;
+    m_string = str;
     m_bTextChanged = true;
     Invalidate();
 }
@@ -82,45 +82,45 @@ void Text::Render(Skin::Base* skin)
     if (Length() == 0 || !GetFont())
         return;
 
-    if (m_ColorOverride.a == 0)
-        skin->GetRender()->SetDrawColor(m_Color);
+    if (m_colorOverride.a == 0)
+        skin->GetRender()->SetDrawColor(m_color);
     else
-        skin->GetRender()->SetDrawColor(m_ColorOverride);
+        skin->GetRender()->SetDrawColor(m_colorOverride);
 
     skin->GetRender()->RenderText(GetFont(),
                                   Gwk::Point(GetPadding().left, GetPadding().top),
-                                  m_String);
+                                  m_string);
 }
 
 Gwk::Rect Text::GetCharacterPosition(unsigned int iChar)
 {
-    if (!m_Lines.empty())
+    if (!m_lines.empty())
     {
-        TextLines::iterator it = m_Lines.begin();
-        TextLines::iterator itEnd = m_Lines.end();
+        TextLines::iterator it = m_lines.begin();
+        TextLines::iterator itEnd = m_lines.end();
         int iChars = 0;
 
-        Text* pLine;
+        Text* line;
         while (it != itEnd)
         {
-            pLine = *it;
+            line = *it;
             ++it;
-            iChars += pLine->Length();
+            iChars += line->Length();
 
             if (iChars <= iChar)
                 continue;
 
-            iChars -= pLine->Length();
-            Gwk::Rect rect = pLine->GetCharacterPosition(iChar-iChars);
-            rect.x += pLine->X();
-            rect.y += pLine->Y();
+            iChars -= line->Length();
+            Gwk::Rect rect = line->GetCharacterPosition(iChar-iChars);
+            rect.x += line->X();
+            rect.y += line->Y();
             return rect;
         }
 
         //manage special case of the last character
-        Gwk::Rect rect = pLine->GetCharacterPosition(pLine->Length());
-        rect.x += pLine->X();
-        rect.y += pLine->Y();
+        Gwk::Rect rect = line->GetCharacterPosition(line->Length());
+        rect.x += line->X();
+        rect.y += line->Y();
         return rect;
     }
 
@@ -130,7 +130,7 @@ Gwk::Rect Text::GetCharacterPosition(unsigned int iChar)
         return Gwk::Rect(0, 0, 0, p.y);
     }
 
-    String sub = m_String.substr(0, iChar);
+    String sub = m_string.substr(0, iChar);
     Gwk::Point p = GetSkin()->GetRender()->MeasureText(GetFont(), sub);
     return Rect(p.x, 0, 0, p.y);
 }
@@ -140,48 +140,48 @@ Gwk::Rect Text::GetLineBox(int i)
     Text* line = GetLine(i);
     if (line != NULL)
     {
-        Gwk::Point p = GetSkin()->GetRender()->MeasureText(GetFont(), line->m_String);
+        Gwk::Point p = GetSkin()->GetRender()->MeasureText(GetFont(), line->m_string);
         return Gwk::Rect(line->X(), line->Y(), Clamp(p.x, 1,p.x), Clamp(p.y, 1,p.y));
     }
     else
     {
-        Gwk::Point p = GetSkin()->GetRender()->MeasureText(GetFont(), m_String);
+        Gwk::Point p = GetSkin()->GetRender()->MeasureText(GetFont(), m_string);
         return Gwk::Rect(0, 0, Clamp(p.x, 1,p.x), Clamp(p.y, 1,p.y));
     }
 }
 
 int Text::GetClosestCharacter(Gwk::Point p)
 {
-    if (!m_Lines.empty())
+    if (!m_lines.empty())
     {
-        TextLines::iterator it = m_Lines.begin();
-        TextLines::iterator itEnd = m_Lines.end();
+        TextLines::iterator it = m_lines.begin();
+        TextLines::iterator itEnd = m_lines.end();
         int iChars = 0;
 
-        Text *pLine = NULL;
+        Text *line = NULL;
         while (it != itEnd)
         {
-            pLine = *it;
+            line = *it;
             ++it;
-            iChars += pLine->Length();
+            iChars += line->Length();
 
-            if (p.y < pLine->Y())
+            if (p.y < line->Y())
                 continue;
-            if (p.y > pLine->Bottom())
+            if (p.y > line->Bottom())
                 continue;
-            if (p.y < pLine->Bottom())
+            if (p.y < line->Bottom())
                 break;
         }
 
-        iChars -= pLine->Length();
-        int iLinePos = pLine->GetClosestCharacter(Gwk::Point(p.x-pLine->X(), p.y-pLine->Y()));        
+        iChars -= line->Length();
+        int iLinePos = line->GetClosestCharacter(Gwk::Point(p.x-line->X(), p.y-line->Y()));        
         return iChars+iLinePos;
     }
 
     int iDistance = 4096;
     int iChar = 0;
 
-    for (unsigned i = 0; i < m_String.length()+1; i++)
+    for (unsigned i = 0; i < m_string.length()+1; i++)
     {
         Gwk::Rect cp = GetCharacterPosition(i);
         int iDist = abs(cp.x-p.x) + abs(cp.y-p.y);             // this isn't proper
@@ -215,7 +215,7 @@ void Text::RefreshSize()
     Gwk::Point p(1, GetFont()->size);
 
     if (Length() > 0)
-        p = GetSkin()->GetRender()->MeasureText(GetFont(), m_String);
+        p = GetSkin()->GetRender()->MeasureText(GetFont(), m_string);
 
     p.x += GetPadding().left+GetPadding().right;
     p.y += GetPadding().top+GetPadding().bottom;
@@ -280,12 +280,12 @@ void Text::RefreshSizeWrap()
 {
     RemoveAllChildren();
 
-    for (TextLines::iterator it = m_Lines.begin(); it != m_Lines.end(); ++it)
+    for (TextLines::iterator it = m_lines.begin(); it != m_lines.end(); ++it)
     {
         delete *it;
     }
 
-    m_Lines.clear();
+    m_lines.clear();
     std::vector<Gwk::String> words;
     SplitWords(GetText(), words);
     
@@ -299,7 +299,7 @@ void Text::RefreshSizeWrap()
         return;
     }
 
-    Point pFontSize = GetSkin()->GetRender()->MeasureText(GetFont(), " ");
+    Point fontSize = GetSkin()->GetRender()->MeasureText(GetFont(), " ");
     int w = GetParent()->Width() - GetParent()->GetPadding().left - GetParent()->GetPadding().right;
     int x = 0, y = 0;
     Gwk::String strLine;
@@ -348,14 +348,14 @@ void Text::RefreshSizeWrap()
             }
             t->RefreshSize();
             t->SetPos(x, y);
-            m_Lines.push_back(t);
+            m_lines.push_back(t);
             // newline should start with the word that was too big
             // strLine = *it;
 
             // Position the newline
-            y += pFontSize.y;
+            y += fontSize.y;
             x = 0;
-            // if ( strLine[0] == ' ' ) x -= pFontSize.x;
+            // if ( strLine[0] == ' ' ) x -= fontSize.x;
         }
     }
 
@@ -370,13 +370,13 @@ void Text::RefreshSizeWrap()
 
 unsigned int Text::NumLines()
 {
-    return (unsigned int)m_Lines.size();
+    return (unsigned int)m_lines.size();
 }
 
 Text* Text::GetLine(int i)
 {
-    TextLines::iterator it = m_Lines.begin();
-    TextLines::iterator itEnd = m_Lines.end();
+    TextLines::iterator it = m_lines.begin();
+    TextLines::iterator itEnd = m_lines.end();
 
     while (it != itEnd)
     {
@@ -392,16 +392,16 @@ Text* Text::GetLine(int i)
 
 int Text::GetLineFromChar(int i)
 {
-    TextLines::iterator it = m_Lines.begin();
-    TextLines::iterator itEnd = m_Lines.end();
+    TextLines::iterator it = m_lines.begin();
+    TextLines::iterator itEnd = m_lines.end();
     int iChars = 0;
     int iLine = 0;
 
     while (it != itEnd)
     {
-        Text* pLine = *it;
+        Text* line = *it;
         ++it;
-        iChars += pLine->Length();
+        iChars += line->Length();
 
         if (iChars > i)
             return iLine;
@@ -416,19 +416,19 @@ int Text::GetLineFromChar(int i)
 
 int Text::GetStartCharFromLine(int i)
 {
-    TextLines::iterator it = m_Lines.begin();
-    TextLines::iterator itEnd = m_Lines.end();
+    TextLines::iterator it = m_lines.begin();
+    TextLines::iterator itEnd = m_lines.end();
     int iChars = 0;
 
     while (it != itEnd)
     {
-        Text* pLine = *it;
+        Text* line = *it;
         ++it;
 
         if (i == 0)
             return Gwk::Clamp(iChars, 0, Length());
 
-        iChars += pLine->Length();
+        iChars += line->Length();
         i--;
     }
 

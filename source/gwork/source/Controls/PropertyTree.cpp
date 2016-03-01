@@ -30,25 +30,25 @@ namespace Gwk
 
             for (Base::List::iterator iter = children.begin(); iter != children.end(); ++iter)
             {
-                PropertyTreeNode* pChild = gwk_cast<PropertyTreeNode>(*iter);
+                PropertyTreeNode* child = gwk_cast<PropertyTreeNode>(*iter);
 
-                if (!pChild)
+                if (!child)
                     continue;
 
-                if (pChild->GetText() == text)
+                if (child->GetText() == text)
                 {
-                    Base::List& nodechildren = pChild->GetChildren();
+                    Base::List& nodechildren = child->GetChildren();
 
                     for (Base::List::iterator iter = nodechildren.begin();
                          iter != nodechildren.end();
                          ++iter)
                     {
-                        Properties* pPropertyChild = gwk_cast<Properties>(*iter);
+                        Properties* propertyChild = gwk_cast<Properties>(*iter);
 
-                        if (!pPropertyChild)
+                        if (!propertyChild)
                             continue;
 
-                        return pPropertyChild;
+                        return propertyChild;
                     }
                 }
             }

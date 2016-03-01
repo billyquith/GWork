@@ -19,9 +19,9 @@ namespace Gwk
 //            
 //            virtual Gwk::Controls::Base* CreateInstance(Gwk::Controls::Base* parent)
 //            {
-//                Gwk::Controls::ComboBox* pControl = new Gwk::Controls::ComboBox(parent);
-//                pControl->SetSize(100, 20);
-//                return pControl;
+//                Gwk::Controls::ComboBox* control = new Gwk::Controls::ComboBox(parent);
+//                control->SetSize(100, 20);
+//                return control;
 //            }
 //
 //        };

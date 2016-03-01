@@ -26,22 +26,22 @@ public:
 
     void Render(Skin::Base* skin)
     {
-        if (!m_ComboBox->ShouldDrawBackground())
-            return skin->DrawComboDownArrow(this, false, false, false, m_ComboBox->IsDisabled());
+        if (!m_comboBox->ShouldDrawBackground())
+            return skin->DrawComboDownArrow(this, false, false, false, m_comboBox->IsDisabled());
 
-        skin->DrawComboDownArrow(this, m_ComboBox->IsHovered(),
-                                 m_ComboBox->IsDepressed(),
-                                 m_ComboBox->IsMenuOpen(), m_ComboBox->IsDisabled());
+        skin->DrawComboDownArrow(this, m_comboBox->IsHovered(),
+                                 m_comboBox->IsDepressed(),
+                                 m_comboBox->IsMenuOpen(), m_comboBox->IsDisabled());
     }
 
     void SetComboBox(ComboBox* p)
     {
-        m_ComboBox = p;
+        m_comboBox = p;
     }
 
 protected:
 
-    ComboBox*   m_ComboBox;
+    ComboBox*   m_comboBox;
 };
 
 
@@ -49,16 +49,16 @@ GWK_CONTROL_CONSTRUCTOR(ComboBox)
 {
     SetSize(100, 20);
     
-    m_Menu = new Menu(this);
-    m_Menu->SetHidden(true);
-    m_Menu->SetDisableIconMargin(true);
-    m_Menu->SetTabable(false);
+    m_menu = new Menu(this);
+    m_menu->SetHidden(true);
+    m_menu->SetDisableIconMargin(true);
+    m_menu->SetTabable(false);
     
-    DownArrow* pArrow = new DownArrow(this);
-    pArrow->SetComboBox(this);
+    DownArrow* arrow = new DownArrow(this);
+    arrow->SetComboBox(this);
     
-    m_Button = pArrow;
-    m_SelectedItem = NULL;
+    m_button = arrow;
+    m_selectedItem = NULL;
     
     SetAlignment(Gwk::Docking::Left|Gwk::Docking::CenterV);
     SetText("");
@@ -69,15 +69,15 @@ GWK_CONTROL_CONSTRUCTOR(ComboBox)
 
 MenuItem* ComboBox::AddItem(const String& strLabel, const String& strName)
 {
-    MenuItem* pItem = m_Menu->AddItem(strLabel, "");
-    pItem->SetName(strName);
-    pItem->onMenuItemSelected.Add(this, &ComboBox::OnItemSelected);
+    MenuItem* item = m_menu->AddItem(strLabel, "");
+    item->SetName(strName);
+    item->onMenuItemSelected.Add(this, &ComboBox::OnItemSelected);
 
     // Default
-    if (m_SelectedItem == NULL)
-        OnItemSelected(pItem);
+    if (m_selectedItem == NULL)
+        OnItemSelected(item);
 
-    return pItem;
+    return item;
 }
 
 void ComboBox::Render(Skin::Base* skin)
@@ -90,7 +90,7 @@ void ComboBox::Render(Skin::Base* skin)
 
 void ComboBox::Layout(Skin::Base* skin)
 {
-    m_Button->Position(Docking::Right|Docking::CenterV, 4, 0);
+    m_button->Position(Docking::Right|Docking::CenterV, 4, 0);
     ParentClass::Layout(skin);
 }
 
@@ -107,7 +107,7 @@ void ComboBox::OnPress()
     if (IsMenuOpen())
         return GetCanvas()->CloseMenus();
 
-    bool bWasMenuHidden = m_Menu->Hidden();
+    bool bWasMenuHidden = m_menu->Hidden();
     GetCanvas()->CloseMenus();
 
     if (bWasMenuHidden)
@@ -116,18 +116,18 @@ void ComboBox::OnPress()
 
 void ComboBox::ClearItems()
 {
-    if (m_Menu)
-        m_Menu->ClearItems();
+    if (m_menu)
+        m_menu->ClearItems();
 }
 
-void ComboBox::SelectItem(MenuItem* pItem, bool bFireChangeEvents)
+void ComboBox::SelectItem(MenuItem* item, bool bFireChangeEvents)
 {
-    if (m_SelectedItem == pItem)
+    if (m_selectedItem == item)
         return;
 
-    m_SelectedItem = pItem;
-    SetText(m_SelectedItem->GetText());
-    m_Menu->SetHidden(true);
+    m_selectedItem = item;
+    SetText(m_selectedItem->GetText());
+    m_menu->SetHidden(true);
     Invalidate();
 
     if (bFireChangeEvents)
@@ -137,28 +137,28 @@ void ComboBox::SelectItem(MenuItem* pItem, bool bFireChangeEvents)
     }
 }
 
-void ComboBox::OnItemSelected(Controls::Base* pControl)
+void ComboBox::OnItemSelected(Controls::Base* control)
 {
     // Convert selected to a menu item
-    MenuItem* pItem = gwk_cast<MenuItem>(pControl);
+    MenuItem* item = gwk_cast<MenuItem>(control);
 
-    if (!pItem)
+    if (!item)
         return;
 
-    SelectItem(pItem);
+    SelectItem(item);
 }
 
 void ComboBox::SelectItemByName(const Gwk::String& name, bool bFireChangeEvents)
 {
-    Base::List& children = m_Menu->GetChildren();
+    Base::List& children = m_menu->GetChildren();
     Base::List::iterator it = children.begin();
 
     while (it != children.end())
     {
-        MenuItem* pChild = gwk_cast<MenuItem>(*it);
+        MenuItem* child = gwk_cast<MenuItem>(*it);
 
-        if (pChild->GetName() == name)
-            return SelectItem(pChild, bFireChangeEvents);
+        if (child->GetName() == name)
+            return SelectItem(child, bFireChangeEvents);
 
         ++it;
     }
@@ -173,51 +173,51 @@ void ComboBox::OnKeyboardFocus()
 {
     // Until we add the blue highlighting again
     SetTextColor(Color(0, 0, 0, 255));
-    // m_SelectedText->SetTextColor( Color( 255, 255, 255, 255 ) );
+    // m_selectedText->SetTextColor( Color( 255, 255, 255, 255 ) );
 }
 
 Gwk::Controls::Label* ComboBox::GetSelectedItem()
 {
-    return m_SelectedItem;
+    return m_selectedItem;
 }
 
 bool ComboBox::IsMenuOpen()
 {
-    return m_Menu && !m_Menu->Hidden();
+    return m_menu && !m_menu->Hidden();
 }
 
 void ComboBox::OpenList()
 {
-    if (!m_Menu)
+    if (!m_menu)
         return;
 
-    m_Menu->SetParent(GetCanvas());
-    m_Menu->SetHidden(false);
-    m_Menu->BringToFront();
+    m_menu->SetParent(GetCanvas());
+    m_menu->SetHidden(false);
+    m_menu->BringToFront();
     Gwk::Point p = LocalPosToCanvas(Gwk::Point(0, 0));
-    m_Menu->SetBounds(Gwk::Rect(p.x, p.y+Height(), Width(), m_Menu->Height()));
+    m_menu->SetBounds(Gwk::Rect(p.x, p.y+Height(), Width(), m_menu->Height()));
 }
 
 void ComboBox::CloseList()
 {
-    if (!m_Menu)
+    if (!m_menu)
         return;
 
-    m_Menu->Hide();
+    m_menu->Hide();
 }
 
 bool ComboBox::OnKeyUp(bool bDown)
 {
     if (bDown)
     {
-        Base::List& children = m_Menu->GetChildren();
+        Base::List& children = m_menu->GetChildren();
         Base::List::reverse_iterator it = std::find(children.rbegin(),
-                                                    children.rend(), m_SelectedItem);
+                                                    children.rend(), m_selectedItem);
 
         if (it != children.rend() && (++it != children.rend()))
         {
-            Base* pUpElement = *it;
-            OnItemSelected(pUpElement);
+            Base* upElement = *it;
+            OnItemSelected(upElement);
         }
     }
 
@@ -228,13 +228,13 @@ bool ComboBox::OnKeyDown(bool bDown)
 {
     if (bDown)
     {
-        Base::List& children = m_Menu->GetChildren();
-        Base::List::iterator it = std::find(children.begin(), children.end(), m_SelectedItem);
+        Base::List& children = m_menu->GetChildren();
+        Base::List::iterator it = std::find(children.begin(), children.end(), m_selectedItem);
 
         if (it != children.end() && (++it != children.end()))
         {
-            Base* pDownElement = *it;
-            OnItemSelected(pDownElement);
+            Base* downElement = *it;
+            OnItemSelected(downElement);
         }
     }
 

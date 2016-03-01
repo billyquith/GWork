@@ -15,9 +15,9 @@ using namespace Gwk::Controls;
 
 GWK_CONTROL_CONSTRUCTOR(Label)
 {
-    m_CreatedFont = NULL;
-    m_Text = new ControlsInternal::Text(this);
-    m_Text->SetFont(GetSkin()->GetDefaultFont());
+    m_createdFont = NULL;
+    m_text = new ControlsInternal::Text(this);
+    m_text->SetFont(GetSkin()->GetDefaultFont());
     SetMouseInputEnabled(false);
     SetBounds(0, 0, 100, 10);
     SetAlignment(Gwk::Docking::Left|Gwk::Docking::Top);
@@ -25,40 +25,40 @@ GWK_CONTROL_CONSTRUCTOR(Label)
 
 void Label::PreDelete(Gwk::Skin::Base* skin)
 {
-    if (m_CreatedFont)
+    if (m_createdFont)
     {
-        skin->ReleaseFont(m_CreatedFont);
-        delete m_CreatedFont;
-        m_CreatedFont = NULL;
+        skin->ReleaseFont(m_createdFont);
+        delete m_createdFont;
+        m_createdFont = NULL;
         SetFont(NULL);
     }
 }
 
 void Label::PostLayout(Skin::Base* /*skin*/)
 {
-    m_Text->Position(m_iAlign);
+    m_text->Position(m_align);
 }
 
 void Label::SetAlignment(int iAlign)
 {
-    if (m_iAlign == iAlign)
+    if (m_align == iAlign)
         return;
 
-    m_iAlign = iAlign;
+    m_align = iAlign;
     Invalidate();
 }
 
 int Label::GetAlignment()
 {
-    return m_iAlign;
+    return m_align;
 }
 
 void Label::SetText(const String& str, bool bDoEvents)
 {
-    if (m_Text->GetText() == str)
+    if (m_text->GetText() == str)
         return;
 
-    m_Text->SetString(str);
+    m_text->SetString(str);
     Redraw();
 
     if (bDoEvents)
@@ -67,17 +67,17 @@ void Label::SetText(const String& str, bool bDoEvents)
 
 void Label::SizeToContents()
 {
-    m_Text->SetPos(m_Padding.left, m_Padding.top);
-    m_Text->RefreshSize();
-    SetSize(m_Text->Width()+m_Padding.left+m_Padding.right,
-            m_Text->Height()+m_Padding.top+m_Padding.bottom);
+    m_text->SetPos(m_padding.left, m_padding.top);
+    m_text->RefreshSize();
+    SetSize(m_text->Width()+m_padding.left+m_padding.right,
+            m_text->Height()+m_padding.top+m_padding.bottom);
 }
 
 Gwk::Rect Label::GetCharacterPosition(int iChar)
 {
-    Gwk::Rect p = m_Text->GetCharacterPosition(iChar);
-    p.x += m_Text->X();
-    p.y += m_Text->Y();
+    Gwk::Rect p = m_text->GetCharacterPosition(iChar);
+    p.x += m_text->X();
+    p.y += m_text->Y();
     return p;
 }
 
@@ -85,28 +85,28 @@ void Label::OnBoundsChanged(Gwk::Rect oldChildBounds)
 {
     ParentClass::OnBoundsChanged(oldChildBounds);
 
-    if (m_Text->Wrap())
+    if (m_text->Wrap())
     {
-        m_Text->RefreshSize();
+        m_text->RefreshSize();
         Invalidate();
     }
 }
 
 void Label::SetFont(Gwk::String strFacename, int iSize, bool bBold)
 {
-    if (m_CreatedFont)
+    if (m_createdFont)
     {
-        GetSkin()->ReleaseFont(m_CreatedFont);
-        delete m_CreatedFont;
-        m_CreatedFont = NULL;
+        GetSkin()->ReleaseFont(m_createdFont);
+        delete m_createdFont;
+        m_createdFont = NULL;
         SetFont(NULL);
     }
 
-    m_CreatedFont = new Gwk::Font();
-    Debug::AssertCheck(m_CreatedFont != NULL, "Couldn't Create Font!");
-    m_CreatedFont->bold = bBold;
-    m_CreatedFont->facename = strFacename;
-    m_CreatedFont->size = iSize;
-    SetFont(m_CreatedFont);
-    m_Text->RefreshSize();
+    m_createdFont = new Gwk::Font();
+    Debug::AssertCheck(m_createdFont != NULL, "Couldn't Create Font!");
+    m_createdFont->bold = bBold;
+    m_createdFont->facename = strFacename;
+    m_createdFont->size = iSize;
+    SetFont(m_createdFont);
+    m_text->RefreshSize();
 }

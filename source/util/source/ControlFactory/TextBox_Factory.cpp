@@ -16,10 +16,10 @@ namespace Gwk
 //
 //            virtual Gwk::Controls::Base* CreateInstance(Gwk::Controls::Base* parent) override
 //            {
-//                Gwk::Controls::TextBox* pControl = new Gwk::Controls::TextBox(parent);
-//                pControl->SetSize(100, 20);
-//                pControl->SetText("");
-//                return pControl;
+//                Gwk::Controls::TextBox* control = new Gwk::Controls::TextBox(parent);
+//                control->SetSize(100, 20);
+//                control->SetText("");
+//                return control;
 //            }
 //
 //        };
@@ -35,11 +35,11 @@ namespace Gwk
 //
 //            virtual Gwk::Controls::Base* CreateInstance(Gwk::Controls::Base* parent) override
 //            {
-//                Gwk::Controls::TextBoxMultiline* pControl =
+//                Gwk::Controls::TextBoxMultiline* control =
 //                    new Gwk::Controls::TextBoxMultiline(parent);
-//                pControl->SetSize(100, 50);
-//                pControl->SetText("");
-//                return pControl;
+//                control->SetSize(100, 50);
+//                control->SetText("");
+//                return control;
 //            }
 //
 //        };

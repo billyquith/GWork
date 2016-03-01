@@ -24,33 +24,33 @@ namespace Gwk
 
                 GWK_CONTROL_INLINE(Text, Property::Base)
                 {
-                    m_TextBox = new TextBox(this);
-                    m_TextBox->Dock(Docking::Fill);
-                    m_TextBox->SetShouldDrawBackground(false);
-                    m_TextBox->onTextChanged.Add(this, &ParentClass::OnPropertyValueChanged);
+                    m_textBox = new TextBox(this);
+                    m_textBox->Dock(Docking::Fill);
+                    m_textBox->SetShouldDrawBackground(false);
+                    m_textBox->onTextChanged.Add(this, &ParentClass::OnPropertyValueChanged);
                 }
 
                 virtual String GetPropertyValue() override
                 {
-                    return m_TextBox->GetText();
+                    return m_textBox->GetText();
                 }
 
                 virtual void SetPropertyValue(const String& v, bool bFireChangeEvents) override
                 {
-                    m_TextBox->SetText(v, bFireChangeEvents);
+                    m_textBox->SetText(v, bFireChangeEvents);
                 }
 
                 virtual bool IsEditing() override
                 {
-                    return m_TextBox->HasFocus();
+                    return m_textBox->HasFocus();
                 }
 
                 virtual bool IsHovered() override
                 {
-                    return ParentClass::IsHovered() || m_TextBox->IsHovered();
+                    return ParentClass::IsHovered() || m_textBox->IsHovered();
                 }
 
-                TextBox* m_TextBox;
+                TextBox* m_textBox;
             };
 
 

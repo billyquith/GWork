@@ -14,18 +14,18 @@ using namespace Controls;
 
 GWK_CONTROL_CONSTRUCTOR(CrossSplitter)
 {
-    m_VSplitter = new SplitterBar(this);
-    m_VSplitter->SetPos(0, 128);
-    m_VSplitter->onDragged.Add(this, &CrossSplitter::OnVerticalMoved);
-    m_VSplitter->SetCursor(Gwk::CursorType::SizeNS);
-    m_HSplitter = new SplitterBar(this);
-    m_HSplitter->SetPos(128, 0);
-    m_HSplitter->onDragged.Add(this, &CrossSplitter::OnHorizontalMoved);
-    m_HSplitter->SetCursor(Gwk::CursorType::SizeWE);
-    m_CSplitter = new SplitterBar(this);
-    m_CSplitter->SetPos(128, 128);
-    m_CSplitter->onDragged.Add(this, &CrossSplitter::OnCenterMoved);
-    m_CSplitter->SetCursor(Gwk::CursorType::SizeAll);
+    m_vSplitter = new SplitterBar(this);
+    m_vSplitter->SetPos(0, 128);
+    m_vSplitter->onDragged.Add(this, &CrossSplitter::OnVerticalMoved);
+    m_vSplitter->SetCursor(Gwk::CursorType::SizeNS);
+    m_hSplitter = new SplitterBar(this);
+    m_hSplitter->SetPos(128, 0);
+    m_hSplitter->onDragged.Add(this, &CrossSplitter::OnHorizontalMoved);
+    m_hSplitter->SetCursor(Gwk::CursorType::SizeWE);
+    m_cSplitter = new SplitterBar(this);
+    m_cSplitter->SetPos(128, 128);
+    m_cSplitter->onDragged.Add(this, &CrossSplitter::OnCenterMoved);
+    m_cSplitter->SetCursor(Gwk::CursorType::SizeAll);
     m_fHVal = 0.5f;
     m_fVVal = 0.5f;
     SetPanel(0, NULL);
@@ -33,17 +33,17 @@ GWK_CONTROL_CONSTRUCTOR(CrossSplitter)
     SetPanel(2, NULL);
     SetPanel(3, NULL);
     SetSplitterSize(5);
-    m_iZoomedSection = -1;
+    m_zoomedSection = -1;
 }
 
 void CrossSplitter::UpdateVSplitter()
 {
-    m_VSplitter->MoveTo(m_VSplitter->X(), (Height()-m_VSplitter->Height())*(m_fVVal));
+    m_vSplitter->MoveTo(m_vSplitter->X(), (Height()-m_vSplitter->Height())*(m_fVVal));
 }
 
 void CrossSplitter::UpdateHSplitter()
 {
-    m_HSplitter->MoveTo((Width()-m_HSplitter->Width())*(m_fHVal), m_HSplitter->Y());
+    m_hSplitter->MoveTo((Width()-m_hSplitter->Width())*(m_fHVal), m_hSplitter->Y());
 }
 
 void CrossSplitter::OnCenterMoved(Controls::Base* /*control*/)
@@ -55,8 +55,8 @@ void CrossSplitter::OnCenterMoved(Controls::Base* /*control*/)
 
 void CrossSplitter::UpdateCSplitter()
 {
-    m_CSplitter->MoveTo((Width()-m_CSplitter->Width())*(m_fHVal),
-                        (Height()-m_CSplitter->Height())*(m_fVVal));
+    m_cSplitter->MoveTo((Width()-m_cSplitter->Width())*(m_fHVal),
+                        (Height()-m_cSplitter->Height())*(m_fVVal));
 }
 
 void CrossSplitter::OnHorizontalMoved(Controls::Base* /*control*/)
@@ -73,79 +73,79 @@ void CrossSplitter::OnVerticalMoved(Controls::Base* /*control*/)
 
 void CrossSplitter::CalculateValueCenter()
 {
-    m_fHVal = (float)m_CSplitter->X()/(float)(Width()-m_CSplitter->Width());
-    m_fVVal = (float)m_CSplitter->Y()/(float)(Height()-m_CSplitter->Height());
+    m_fHVal = (float)m_cSplitter->X()/(float)(Width()-m_cSplitter->Width());
+    m_fVVal = (float)m_cSplitter->Y()/(float)(Height()-m_cSplitter->Height());
 }
 
 float CrossSplitter::CalculateValueHorizontal()
 {
-    return (float)m_HSplitter->X()/(float)(Width()-m_HSplitter->Width());
+    return (float)m_hSplitter->X()/(float)(Width()-m_hSplitter->Width());
 }
 
 float CrossSplitter::CalculateValueVertical()
 {
-    return (float)m_VSplitter->Y()/(float)(Height()-m_VSplitter->Height());
+    return (float)m_vSplitter->Y()/(float)(Height()-m_vSplitter->Height());
 }
 
 void CrossSplitter::Layout(Skin::Base* /*skin*/)
 {
-    m_VSplitter->SetSize(Width(), m_fBarSize);
-    m_HSplitter->SetSize(m_fBarSize, Height());
-    m_CSplitter->SetSize(m_fBarSize, m_fBarSize);
+    m_vSplitter->SetSize(Width(), m_fBarSize);
+    m_hSplitter->SetSize(m_fBarSize, Height());
+    m_cSplitter->SetSize(m_fBarSize, m_fBarSize);
     UpdateVSplitter();
     UpdateHSplitter();
     UpdateCSplitter();
 
-    if (m_iZoomedSection == -1)
+    if (m_zoomedSection == -1)
     {
-        if (m_Sections[0])
+        if (m_sections[0])
         {
-            m_Sections[0]->SetBounds(0,
+            m_sections[0]->SetBounds(0,
                                      0,
-                                     m_HSplitter->X(),
-                                     m_VSplitter->Y());
+                                     m_hSplitter->X(),
+                                     m_vSplitter->Y());
         }
 
-        if (m_Sections[1])
+        if (m_sections[1])
         {
-            m_Sections[1]->SetBounds(m_HSplitter->X()+m_fBarSize,
+            m_sections[1]->SetBounds(m_hSplitter->X()+m_fBarSize,
                                      0,
-                                     Width()-(m_HSplitter->X()+m_fBarSize),
-                                     m_VSplitter->Y());
+                                     Width()-(m_hSplitter->X()+m_fBarSize),
+                                     m_vSplitter->Y());
         }
 
-        if (m_Sections[2])
+        if (m_sections[2])
         {
-            m_Sections[2]->SetBounds(0,
-                                     m_VSplitter->Y()+m_fBarSize,
-                                     m_HSplitter->X(),
-                                     Height()-(m_VSplitter->Y()+m_fBarSize));
+            m_sections[2]->SetBounds(0,
+                                     m_vSplitter->Y()+m_fBarSize,
+                                     m_hSplitter->X(),
+                                     Height()-(m_vSplitter->Y()+m_fBarSize));
         }
 
-        if (m_Sections[3])
+        if (m_sections[3])
         {
-            m_Sections[3]->SetBounds(m_HSplitter->X()+m_fBarSize,
-                                     m_VSplitter->Y()+m_fBarSize,
-                                     Width()-(m_HSplitter->X()+m_fBarSize),
-                                     Height()-(m_VSplitter->Y()+m_fBarSize));
+            m_sections[3]->SetBounds(m_hSplitter->X()+m_fBarSize,
+                                     m_vSplitter->Y()+m_fBarSize,
+                                     Width()-(m_hSplitter->X()+m_fBarSize),
+                                     Height()-(m_vSplitter->Y()+m_fBarSize));
         }
     }
     else
     {
         // This should probably use Fill docking instead
-        m_Sections[m_iZoomedSection]->SetBounds(0, 0, Width(), Height());
+        m_sections[m_zoomedSection]->SetBounds(0, 0, Width(), Height());
     }
 }
 
-void CrossSplitter::SetPanel(int index, Controls::Base* pPanel)
+void CrossSplitter::SetPanel(int index, Controls::Base* panel)
 {
     Debug::AssertCheck(index >= 0 && index <= 3, "CrossSplitter::SetPanel out of range");
-    m_Sections[index] = pPanel;
+    m_sections[index] = panel;
 
-    if (pPanel)
+    if (panel)
     {
-        pPanel->Dock(Docking::None);
-        pPanel->SetParent(this);
+        panel->Dock(Docking::None);
+        panel->SetParent(this);
     }
 
     Invalidate();
@@ -153,14 +153,14 @@ void CrossSplitter::SetPanel(int index, Controls::Base* pPanel)
 
 Controls::Base* CrossSplitter::GetPanel(int i)
 {
-    return m_Sections[i];
+    return m_sections[i];
 }
 
 void CrossSplitter::ZoomChanged()
 {
     onZoomChange.Call(this);
 
-    if (m_iZoomedSection == -1)
+    if (m_zoomedSection == -1)
         onUnZoomed.Call(this);
     else
         onZoomed.Call(this);
@@ -170,15 +170,15 @@ void CrossSplitter::Zoom(int section)
 {
     UnZoom();
 
-    if (m_Sections[section])
+    if (m_sections[section])
     {
         for (int i = 0; i < 4; i++)
         {
-            if (i != section && m_Sections[i])
-                m_Sections[i]->SetHidden(true);
+            if (i != section && m_sections[i])
+                m_sections[i]->SetHidden(true);
         }
 
-        m_iZoomedSection = section;
+        m_zoomedSection = section;
         Invalidate();
     }
 
@@ -187,12 +187,12 @@ void CrossSplitter::Zoom(int section)
 
 void CrossSplitter::UnZoom()
 {
-    m_iZoomedSection = -1;
+    m_zoomedSection = -1;
 
     for (int i = 0; i < 4; i++)
     {
-        if (m_Sections[i])
-            m_Sections[i]->SetHidden(false);
+        if (m_sections[i])
+            m_sections[i]->SetHidden(false);
     }
 
     Invalidate();

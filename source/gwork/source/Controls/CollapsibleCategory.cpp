@@ -94,51 +94,51 @@ class CategoryHeaderButton : public Button
 
 GWK_CONTROL_CONSTRUCTOR(CollapsibleCategory)
 {
-    m_pList = NULL;
-    m_pButton = new CategoryHeaderButton(this);
-    m_pButton->SetText("Category Title");
-    m_pButton->Dock(Docking::Top);
-    m_pButton->SetHeight(20);
+    m_list = NULL;
+    m_button = new CategoryHeaderButton(this);
+    m_button->SetText("Category Title");
+    m_button->Dock(Docking::Top);
+    m_button->SetHeight(20);
     SetPadding(Padding(1, 0, 1, 5));
     SetSize(512, 512);
 }
 
 Button* CollapsibleCategory::Add(const String& name)
 {
-    CategoryButton* pButton = new CategoryButton(this);
-    pButton->SetText(name);
-    pButton->Dock(Docking::Top);
-    pButton->SizeToContents();
-    pButton->SetSize(pButton->Width()+4, pButton->Height()+4);
-    pButton->SetPadding(Padding(5, 2, 2, 2));
-    pButton->onPress.Add(this, &ThisClass::OnSelection);
-    return pButton;
+    CategoryButton* button = new CategoryButton(this);
+    button->SetText(name);
+    button->Dock(Docking::Top);
+    button->SizeToContents();
+    button->SetSize(button->Width()+4, button->Height()+4);
+    button->SetPadding(Padding(5, 2, 2, 2));
+    button->onPress.Add(this, &ThisClass::OnSelection);
+    return button;
 }
 
 void CollapsibleCategory::OnSelection(Controls::Base* control)
 {
-    CategoryButton* pChild = gwk_cast<CategoryButton>(control);
+    CategoryButton* child = gwk_cast<CategoryButton>(control);
     
-    if (!pChild)
+    if (!child)
         return;
     
-    if (m_pList)
-        m_pList->UnselectAll();
+    if (m_list)
+        m_list->UnselectAll();
     else
         UnselectAll();
     
-    pChild->SetToggleState(true);
+    child->SetToggleState(true);
     onSelection.Call(this);
 }
 
 void CollapsibleCategory::Render(Skin::Base* skin)
 {
-    skin->DrawCategoryInner(this, m_pButton->GetToggleState());
+    skin->DrawCategoryInner(this, m_button->GetToggleState());
 }
 
 void CollapsibleCategory::SetText(const String& text)
 {
-    m_pButton->SetText(text);
+    m_button->SetText(text);
 }
 
 void CollapsibleCategory::UnselectAll()
@@ -147,19 +147,19 @@ void CollapsibleCategory::UnselectAll()
     
     for (Base::List::iterator iter = children.begin(); iter != children.end(); ++iter)
     {
-        CategoryButton* pChild = gwk_cast<CategoryButton>(*iter);
+        CategoryButton* child = gwk_cast<CategoryButton>(*iter);
         
-        if (!pChild)
+        if (!child)
             continue;
         
-        pChild->SetToggleState(false);
+        child->SetToggleState(false);
     }
 }
 
 void CollapsibleCategory::PostLayout(Skin::Base* /*skin*/)
 {
-    if (m_pButton->GetToggleState())
-        SetHeight(m_pButton->Height());
+    if (m_button->GetToggleState())
+        SetHeight(m_button->Height());
     else
         SizeToChildren(false, true);
     
@@ -168,13 +168,13 @@ void CollapsibleCategory::PostLayout(Skin::Base* /*skin*/)
     
     for (Base::List::iterator iter = children.begin(); iter != children.end(); ++iter)
     {
-        CategoryButton* pChild = gwk_cast<CategoryButton>(*iter);
+        CategoryButton* child = gwk_cast<CategoryButton>(*iter);
         
-        if (!pChild)
+        if (!child)
             continue;
         
-        pChild->m_bAlt = b;
-        pChild->UpdateColours();
+        child->m_bAlt = b;
+        child->UpdateColours();
         b = !b;
     }
 }
@@ -185,13 +185,13 @@ Button* CollapsibleCategory::GetSelected()
     
     for (Base::List::iterator iter = children.begin(); iter != children.end(); ++iter)
     {
-        CategoryButton* pChild = gwk_cast<CategoryButton>(*iter);
+        CategoryButton* child = gwk_cast<CategoryButton>(*iter);
         
-        if (!pChild)
+        if (!child)
             continue;
         
-        if (pChild->GetToggleState())
-            return pChild;
+        if (child->GetToggleState())
+            return child;
     }
     
     return NULL;
@@ -200,12 +200,12 @@ Button* CollapsibleCategory::GetSelected()
 
 void CollapsibleCategory::SetExpanded(bool expanded)
 {
-    m_pButton->SetToggleState(!expanded);
+    m_button->SetToggleState(!expanded);
 }
 
 bool CollapsibleCategory::IsExpanded() const
 {
-    return !m_pButton->GetToggleState();
+    return !m_button->GetToggleState();
 }
     
 } // namespace Gwk

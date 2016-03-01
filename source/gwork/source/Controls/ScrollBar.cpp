@@ -19,10 +19,10 @@ GWK_CONTROL_CONSTRUCTOR(BaseScrollBar)
 {
     for (int i = 0; i < 2; i++)
     {
-        m_ScrollButton[i] = new ScrollBarButton(this);
+        m_scrollButton[i] = new ScrollBarButton(this);
     }
 
-    m_Bar = new ScrollBarBar(this);
+    m_bar = new ScrollBarBar(this);
     SetBounds(0, 0, 15, 15);
     m_bDepressed = false;
     m_fScrolledAmount = 0;

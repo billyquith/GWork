@@ -32,27 +32,27 @@ namespace Gwk
                 {
                     for (Base::List::iterator it = Children.begin(); it != Children.end(); ++it)
                     {
-                        Base* pChild = *it;
+                        Base* child = *it;
 
-                        if (pChild->GetDock() != Docking::None)
+                        if (child->GetDock() != Docking::None)
                             continue;
 
-                        pChild->Position(m_iPosition);
+                        child->Position(m_position);
                     }
                 }
 
                 void SetPosition(int p)
                 {
-                    if (m_iPosition == p)
+                    if (m_position == p)
                         return;
 
-                    m_iPosition = p;
+                    m_position = p;
                     Invalidate();
                 }
 
             private:
 
-                int m_iPosition;
+                int m_position;
             };
 
 

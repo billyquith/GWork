@@ -36,7 +36,7 @@ namespace Gwk
 
             Gwk::Point cursorPos;
             bool m_bDepressed;
-            int m_Hue;
+            int m_hue;
 
         };
 
@@ -57,7 +57,7 @@ namespace Gwk
 
         protected:
 
-            int m_iSelectedDist;
+            int m_selectedDist;
             bool m_bDepressed;
 
         };

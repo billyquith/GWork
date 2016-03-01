@@ -33,7 +33,7 @@ namespace Gwk
             virtual void PostLayout(Gwk::Skin::Base* skin) override;
 
             PropertyRow* Add(const String& text, const String& value = "");
-            PropertyRow* Add(const String& text, Property::Base* pProp,
+            PropertyRow* Add(const String& text, Property::Base* prop,
                              const String& value = "");
             PropertyRow* Find(const String& text);
 
@@ -45,7 +45,7 @@ namespace Gwk
 
             virtual void OnSplitterMoved(Controls::Base* control);
 
-            Controls::SplitterBar*  m_SplitterBar;
+            Controls::SplitterBar*  m_splitterBar;
 
         };
 
@@ -58,13 +58,13 @@ namespace Gwk
 
             virtual Label* GetLabel()
             {
-                return m_Label;
+                return m_label;
             }
 
             virtual void            SetProperty(Property::Base* prop);
             virtual Property::Base* GetProperty()
             {
-                return m_Property;
+                return m_property;
             }
 
             virtual void Layout(Gwk::Skin::Base* skin) override;
@@ -72,12 +72,12 @@ namespace Gwk
 
             virtual bool IsEditing()
             {
-                return m_Property && m_Property->IsEditing();
+                return m_property && m_property->IsEditing();
             }
 
             virtual bool IsHovered() override
             {
-                return ParentClass::IsHovered() || (m_Property && m_Property->IsHovered());
+                return ParentClass::IsHovered() || (m_property && m_property->IsHovered());
             }
 
             virtual void OnEditingChanged();
@@ -89,8 +89,8 @@ namespace Gwk
 
             void OnPropertyValueChanged(Gwk::Controls::Base* control);
 
-            Label*          m_Label;
-            Property::Base* m_Property;
+            Label*          m_label;
+            Property::Base* m_property;
 
             bool m_bLastEditing;
             bool m_bLastHover;

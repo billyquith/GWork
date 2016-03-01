@@ -29,12 +29,12 @@ public:
 
     GWK_CONTROL_INLINE(GUnit, Gwk::Controls::Base)
     {
-        m_pUnitTest = NULL;
+        m_unitTest = NULL;
     }
 
     void SetUnitTest(UnitTest* u)
     {
-        m_pUnitTest = u;
+        m_unitTest = u;
     }
 
     void UnitPrint(Gwk::String str);
@@ -47,7 +47,7 @@ public:
         SizeToChildren(true, true);
     }
 
-    UnitTest* m_pUnitTest;
+    UnitTest* m_unitTest;
 };
 
 
@@ -65,14 +65,14 @@ private:
 
     void OnCategorySelect(Gwk::Event::Info info);
 
-    Gwk::Controls::TabControl* m_TabControl;
-    Gwk::Controls::ListBox*    m_TextOutput;
-    Gwk::Controls::PropertyTree* m_ControlProperties;
-    Gwk::Controls::StatusBar*  m_StatusBar;
-    unsigned int m_iFrames;
+    Gwk::Controls::TabControl* m_tabControl;
+    Gwk::Controls::ListBox*    m_textOutput;
+    Gwk::Controls::PropertyTree* m_controlProperties;
+    Gwk::Controls::StatusBar*  m_statusBar;
+    unsigned int m_frames;
     float m_fLastSecond;
 
-    Gwk::Controls::Base*       m_pLastControl;
+    Gwk::Controls::Base*       m_lastControl;
 
 };
 

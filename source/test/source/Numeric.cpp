@@ -16,15 +16,15 @@ public:
 
     GWK_CONTROL_INLINE(Numeric, GUnit)
     {
-        Controls::NumericUpDown* pCtrl = new Controls::NumericUpDown(this);
-        pCtrl->SetBounds(10, 10, 50, 20);
-        pCtrl->SetIntValue(50);
-        pCtrl->SetMax(1000);
-        pCtrl->SetMin(-1000);
-        //	pCtrl->onPress.Add( this, &ThisClass::onButtonA );
+        Controls::NumericUpDown* ctrl = new Controls::NumericUpDown(this);
+        ctrl->SetBounds(10, 10, 50, 20);
+        ctrl->SetIntValue(50);
+        ctrl->SetMax(1000);
+        ctrl->SetMin(-1000);
+        //	ctrl->onPress.Add( this, &ThisClass::onButtonA );
     }
 
-    void onButtonA(Controls::Base* pControl)
+    void onButtonA(Controls::Base* control)
     {
         //	UnitPrint( "Button Pressed (using 'OnPress' event)" );
     }

@@ -183,7 +183,7 @@ bool Gwk::Platform::FileOpen(const String& Name, const String& StartPath, const 
 
     if (GetOpenFileNameA(&opf))
     {
-        if (pHandler && fnCallback)
+        if (handler && fnCallback)
         {
             filePathOut = opf.lpstrFile;
         }
@@ -227,7 +227,7 @@ bool Gwk::Platform::FolderOpen(const String& Name, const String& StartPath,
             if (psi->GetDisplayName(SIGDN_DESKTOPABSOLUTEPARSING, &strOut) != S_OK)
                 return bSuccess;
 
-            if (pHandler && fnCallback)
+            if (handler && fnCallback)
             {
                 filePathOut = Utility::Narrow(strOut); // set result
             }
@@ -282,7 +282,7 @@ bool Gwk::Platform::FileSave(const String& Name, const String& StartPath, const 
 
     if (GetSaveFileNameA(&opf))
     {
-        if (pHandler && fnCallback)
+        if (handler && fnCallback)
         {
             filePathOut = opf.lpstrFile;
         }
@@ -317,18 +317,18 @@ void* Gwk::Platform::CreatePlatformWindow(int x, int y, int w, int h,
     return (void*)hWindow;
 }
 
-void Gwk::Platform::DestroyPlatformWindow(void* pPtr)
+void Gwk::Platform::DestroyPlatformWindow(void* ptr)
 {
-    DestroyWindow((HWND)pPtr);
+    DestroyWindow((HWND)ptr);
     CoUninitialize();
 }
 
-bool Gwk::Platform::MessagePump(void* pWindow)
+bool Gwk::Platform::MessagePump(void* window)
 {
     GworkInput.Initialize(ptarget);
     MSG msg;
 
-    while (PeekMessage(&msg, (HWND)pWindow, 0, 0, PM_REMOVE))
+    while (PeekMessage(&msg, (HWND)window, 0, 0, PM_REMOVE))
     {
         if (GworkInput.ProcessMessage(msg))
             continue;
@@ -343,11 +343,11 @@ bool Gwk::Platform::MessagePump(void* pWindow)
     // If the active window has changed then force a redraw of our canvas
     // since we might paint ourselves a different colour if we're inactive etc
     {
-        static HWND g_LastFocus = NULL;
+        static HWND g_lastFocus = NULL;
 
-        if (GetActiveWindow() != g_LastFocus)
+        if (GetActiveWindow() != g_lastFocus)
         {
-            g_LastFocus = GetActiveWindow();
+            g_lastFocus = GetActiveWindow();
             return true;
         }
     }
@@ -355,65 +355,65 @@ bool Gwk::Platform::MessagePump(void* pWindow)
     return false;
 }
 
-void Gwk::Platform::SetBoundsPlatformWindow(void* pPtr, int x, int y, int w, int h)
+void Gwk::Platform::SetBoundsPlatformWindow(void* ptr, int x, int y, int w, int h)
 {
-    SetWindowPos((HWND)pPtr, HWND_NOTOPMOST, x, y, w, h,
+    SetWindowPos((HWND)ptr, HWND_NOTOPMOST, x, y, w, h,
                  SWP_NOOWNERZORDER|SWP_NOACTIVATE|SWP_NOCOPYBITS|SWP_NOSENDCHANGING);
     // Curve the corners
     {
         HRGN rgn = CreateRoundRectRgn(0, 0, w+1, h+1, 4, 4);
-        SetWindowRgn((HWND)pPtr, rgn, false);
+        SetWindowRgn((HWND)ptr, rgn, false);
     }
 }
 
-void Gwk::Platform::SetWindowMaximized(void* pPtr, bool bMax, Gwk::Point& pNewPos,
-                                        Gwk::Point& pNewSize)
+void Gwk::Platform::SetWindowMaximized(void* ptr, bool bMax, Gwk::Point& newPos,
+                                        Gwk::Point& newSize)
 {
     if (bMax)
     {
-        ShowWindow((HWND)pPtr, SW_SHOWMAXIMIZED);
+        ShowWindow((HWND)ptr, SW_SHOWMAXIMIZED);
         RECT rect;
         SystemParametersInfo(SPI_GETWORKAREA, 0, &rect, 0);    // size excluding
                                                                // task bar
-        SetWindowPos((HWND)pPtr, HWND_NOTOPMOST, rect.left, rect.top, rect.right-rect.left,
+        SetWindowPos((HWND)ptr, HWND_NOTOPMOST, rect.left, rect.top, rect.right-rect.left,
                      rect.bottom-rect.top,
                      SWP_NOOWNERZORDER|SWP_NOACTIVATE|SWP_NOCOPYBITS|SWP_NOSENDCHANGING);
         // Remove the corner curves
         {
-            SetWindowRgn((HWND)pPtr, NULL, false);
+            SetWindowRgn((HWND)ptr, NULL, false);
         }
     }
     else
     {
-        ShowWindow((HWND)pPtr, SW_RESTORE);
+        ShowWindow((HWND)ptr, SW_RESTORE);
         // Curve the corners
         {
             RECT r;
-            GetWindowRect((HWND)pPtr, &r);
+            GetWindowRect((HWND)ptr, &r);
             HRGN rgn = CreateRoundRectRgn(0, 0, (r.right-r.left)+1, (r.bottom-r.top)+1, 4, 4);
-            SetWindowRgn((HWND)pPtr, rgn, false);
+            SetWindowRgn((HWND)ptr, rgn, false);
         }
     }
 
     RECT r;
-    GetWindowRect((HWND)pPtr, &r);
-    pNewSize.x = r.right-r.left;
-    pNewSize.y = r.bottom-r.top;
-    pNewPos.x = r.left;
-    pNewPos.y = r.top;
+    GetWindowRect((HWND)ptr, &r);
+    newSize.x = r.right-r.left;
+    newSize.y = r.bottom-r.top;
+    newPos.x = r.left;
+    newPos.y = r.top;
 }
 
-void Gwk::Platform::SetWindowMinimized(void* pPtr, bool bMinimized)
+void Gwk::Platform::SetWindowMinimized(void* ptr, bool bMinimized)
 {
     if (bMinimized)
-        ShowWindow((HWND)pPtr, SW_SHOWMINIMIZED);
+        ShowWindow((HWND)ptr, SW_SHOWMINIMIZED);
     else
-        ShowWindow((HWND)pPtr, SW_RESTORE);
+        ShowWindow((HWND)ptr, SW_RESTORE);
 }
 
-bool Gwk::Platform::HasFocusPlatformWindow(void* pPtr)
+bool Gwk::Platform::HasFocusPlatformWindow(void* ptr)
 {
-    return GetActiveWindow() == (HWND)pPtr;
+    return GetActiveWindow() == (HWND)ptr;
 }
 
 void Gwk::Platform::Sleep(unsigned int iMS)
