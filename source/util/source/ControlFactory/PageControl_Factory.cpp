@@ -78,8 +78,8 @@ namespace Gwk
             //
             // Called when a child is clicked on in the editor
             //
-            virtual bool ChildTouched(Gwk::Controls::Base* ctrl,
-                                      Gwk::Controls::Base* childControl)
+            bool ChildTouched(Gwk::Controls::Base* ctrl,
+                              Gwk::Controls::Base* childControl) override
             {
                 Gwk::Controls::PageControl* control = gwk_cast<Gwk::Controls::PageControl>(
                     ctrl);
@@ -102,17 +102,17 @@ namespace Gwk
             // properly
             //
             void AddChild(Gwk::Controls::Base* ctrl, Gwk::Controls::Base* child,
-                          const Gwk::Point& pos)
+                          const Gwk::Point& pos) override
             {
                 Gwk::Controls::PageControl* control = gwk_cast<Gwk::Controls::PageControl>(
                     ctrl);
                 AddChild(ctrl, child, control->GetPageNumber());
             }
 
-            void AddChild(Gwk::Controls::Base* ctrl, Gwk::Controls::Base* child, int iPage)
+            void AddChild(Gwk::Controls::Base* ctrl, Gwk::Controls::Base* child, int iPage) override
             {
-                Gwk::Controls::PageControl* control = gwk_cast<Gwk::Controls::PageControl>(
-                    ctrl);
+                Gwk::Controls::PageControl* control =
+                    gwk_cast<Gwk::Controls::PageControl>(ctrl);
 
                 if (!control->GetPage(iPage))
                     iPage = 0;
@@ -122,7 +122,6 @@ namespace Gwk
             }
 
         };
-
 
         GWK_CONTROL_FACTORY(PageControl_Factory);
 

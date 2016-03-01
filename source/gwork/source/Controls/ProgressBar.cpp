@@ -19,9 +19,8 @@ class ProgressBarThink : public Gwk::Anim::Animation
 public:
 
     ProgressBarThink()
-    {
-        m_fLastFrame = 0.0f;
-    }
+    :   m_fLastFrame(0.f)
+    {}
 
     virtual void Think()
     {
@@ -47,19 +46,13 @@ GWK_CONTROL_CONSTRUCTOR(ProgressBar)
     Gwk::Anim::Add(this, new ProgressBarThink());
 }
 
-void ProgressBar::SetValue(float val)
+void ProgressBar::SetProgress(float val)
 {
-    if (val < 0)
-        val = 0;
-
-    if (val > 1)
-        val = 1;
-
-    m_fProgress = val;
+    m_fProgress = Clamp(val, 0.f, 1.f);
 
     if (m_bAutoLabel)
     {
-        int displayVal = m_fProgress*100;
+        const int displayVal = m_fProgress*100;
         SetText(Utility::ToString(displayVal)+"%");
     }
 }

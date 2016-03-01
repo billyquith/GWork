@@ -21,11 +21,11 @@ class OpenToggleButton : public Button
         SetTabable(false);
     }
 
-    virtual void RenderFocus(Skin::Base* /*skin*/)
+    void RenderFocus(Skin::Base* /*skin*/) override
     {
     }
 
-    virtual void Render(Skin::Base* skin)
+    void Render(Skin::Base* skin) override
     {
         skin->DrawTreeButton(this, GetToggleState());
     }
@@ -42,7 +42,7 @@ class TreeNodeText : public Button
         SetHeight(16);
     }
 
-    void UpdateColours()
+    void UpdateColours() override
     {
         if (IsDisabled())
             return SetTextColor(GetSkin()->Colors.Button.Disabled);

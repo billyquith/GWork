@@ -99,7 +99,7 @@ namespace Gwk
                 m_splitter->SetPos(100, 0);
             }
 
-            virtual void RefreshContainers()
+            void RefreshContainers() override
             {
                 const Gwk::Rect& inner = GetInnerBounds();
                 int iOffset = m_size;
@@ -115,7 +115,7 @@ namespace Gwk
                 m_panels[1]->SetSize((inner.x+inner.w)-(iOffset+m_splitterSize), inner.h);
             }
 
-            virtual void OnSplitterMoved()
+            void OnSplitterMoved() override
             {
                 if (m_rightSided)
                     m_size = Width()-m_splitter->X();
@@ -126,7 +126,7 @@ namespace Gwk
                 Invalidate();
             }
 
-            virtual int SplitterPos()
+            int SplitterPos() override
             {
                 return m_splitter->X();
             }

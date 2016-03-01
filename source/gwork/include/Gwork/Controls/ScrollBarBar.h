@@ -51,7 +51,7 @@ namespace Gwk
                 return m_bHorizontal;
             }
 
-            virtual bool IsDepressed()
+            bool IsDepressed() override
             {
                 return m_bDepressed;
             }

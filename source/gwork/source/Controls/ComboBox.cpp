@@ -24,7 +24,7 @@ public:
         SetSize(15, 15);
     }
 
-    void Render(Skin::Base* skin)
+    void Render(Skin::Base* skin) override
     {
         if (!m_comboBox->ShouldDrawBackground())
             return skin->DrawComboDownArrow(this, false, false, false, m_comboBox->IsDisabled());

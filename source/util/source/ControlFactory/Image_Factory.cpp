@@ -11,7 +11,7 @@ namespace Gwk
             class ImageName : public ControlFactory::Property
             {
                 GWK_CONTROL_FACTORY_PROPERTY(ImageName,
-                                              "The path to the image (relative to .exe)");
+                                             "The path to the image (relative to .exe)");
 
                 String GetValueAsString(Controls::Base* ctrl) override
                 {

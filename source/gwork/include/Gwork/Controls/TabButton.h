@@ -47,14 +47,14 @@ namespace Gwk
                 return m_page && m_page->Visible();
             }
 
-            virtual bool DragAndDrop_ShouldStartDrag() override;
-            virtual void DragAndDrop_StartDragging(Gwk::DragAndDrop::Package* /*package*/,
-                                                   int /*x*/, int /*y*/) override
+            bool DragAndDrop_ShouldStartDrag() override;
+            void DragAndDrop_StartDragging(Gwk::DragAndDrop::Package* /*package*/,
+                                           int /*x*/, int /*y*/) override
             {
                 SetHidden(true);
             }
 
-            virtual void DragAndDrop_EndDragging(bool /*bSuccess*/, int /*x*/, int /*y*/)
+            void DragAndDrop_EndDragging(bool /*bSuccess*/, int /*x*/, int /*y*/) override
             {
                 SetHidden(false); SetDepressed(false);
             }
@@ -78,7 +78,7 @@ namespace Gwk
 
         };
 
-
     }
 }
+
 #endif // ifndef GWK_CONTROLS_TABBUTTON_H

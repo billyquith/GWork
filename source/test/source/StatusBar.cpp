@@ -24,10 +24,7 @@ public:
         status->AddControl(right, true);
     }
 
-    void Layout(Gwk::Skin::Base* skin)
-    {
-    }
-
+    void Layout(Gwk::Skin::Base* skin) override {}
 };
 
 

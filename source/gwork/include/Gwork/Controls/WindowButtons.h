@@ -85,7 +85,7 @@ namespace Gwk
             {
             }
 
-            virtual void Render(Skin::Base* skin)
+            void Render(Skin::Base* skin) override
             {
                 if (!m_window)
                     return;
