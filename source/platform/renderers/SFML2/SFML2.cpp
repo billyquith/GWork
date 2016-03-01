@@ -210,7 +210,7 @@ void Gwk::Renderer::SFML2::FreeFont(Gwk::Font* pFont)
 }
 
 void Gwk::Renderer::SFML2::RenderText(Gwk::Font* pFont, Gwk::Point pos,
-                                       const Gwk::String& text)
+                                      const Gwk::String& text)
 {
     Flush();
 
@@ -287,7 +287,7 @@ void Gwk::Renderer::SFML2::FreeTexture(Gwk::Texture* pTexture)
 }
 
 Gwk::Color Gwk::Renderer::SFML2::PixelColour(Gwk::Texture* pTexture, unsigned int x,
-                                               unsigned int y, const Gwk::Color& col_default)
+                                             unsigned int y, const Gwk::Color& col_default)
 {
     TextureData* data = static_cast<TextureData*>(pTexture->data);
 
@@ -300,6 +300,6 @@ Gwk::Color Gwk::Renderer::SFML2::PixelColour(Gwk::Texture* pTexture, unsigned in
         data->image = new sf::Image(copy);
     }
 
-    sf::Color col = data->image->getPixel(x, y);
+    const sf::Color col = data->image->getPixel(x, y);
     return Gwk::Color(col.r, col.g, col.b, col.a);
 }

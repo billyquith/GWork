@@ -12,29 +12,25 @@
 #include <Gwork/Hook.h>
 #include <Gwork/Platform.h>
 
-using namespace Gwk;
+namespace Gwk {
 
-
-static const float      DOUBLE_CLICK_SPEED  = 0.5f;
-static const unsigned   MAX_MOUSE_BUTTONS   = 5;
-
+static const float      c_DoubleClickSpeed  = 0.5f;
+static const float      c_KeyRepeatRate     = 0.03f;
+static const float      c_KeyRepeatDelay    = 0.3f;
+static const unsigned   c_MaxMouseButtons   = 5;
 
 struct Action
 {
     unsigned char       type;
-
     int                 x,y;
     Gwk::UnicodeChar    chr;
 };
-
-static const float KeyRepeatRate = 0.03f;
-static const float KeyRepeatDelay = 0.3f;
 
 struct KeyData
 {
     KeyData()
     {
-        for (int i = 0; i < Gwk::Key::KeysCount; i++)
+        for (int i = 0; i < Key::KeysCount; i++)
         {
             KeyState[i] = false;
             NextRepeat[i] = 0;
@@ -45,8 +41,8 @@ struct KeyData
         RightMouseDown = false;
     }
 
-    bool    KeyState[ Gwk::Key::KeysCount ];
-    float   NextRepeat[ Gwk::Key::KeysCount ];
+    bool    KeyState[Gwk::Key::KeysCount];
+    float   NextRepeat[Gwk::Key::KeysCount];
     Controls::Base* Target;
     bool    LeftMouseDown;
     bool    RightMouseDown;
@@ -56,22 +52,11 @@ struct KeyData
 static KeyData      g_KeyData;
 static Gwk::Point   g_MousePosition;
 
-static float        g_fLastClickTime[MAX_MOUSE_BUTTONS];
+static float        g_fLastClickTime[c_MaxMouseButtons];
 static Gwk::Point   g_pntLastClickPos;
 
-enum
-{
-    ACT_MOUSEMOVE,
-    ACT_MOUSEBUTTON,
-    ACT_CHAR,
-    ACT_MOUSEWHEEL,
-    ACT_KEYPRESS,
-    ACT_KEYRELEASE,
-    ACT_MESSAGE
-};
 
-
-void UpdateHoveredControl(Controls::Base* pInCanvas)
+static void UpdateHoveredControl(Controls::Base* pInCanvas)
 {
     Controls::Base* pHovered = pInCanvas->GetControlAt(g_MousePosition.x, g_MousePosition.y);
 
@@ -103,17 +88,17 @@ void UpdateHoveredControl(Controls::Base* pInCanvas)
     }
 }
 
-bool FindKeyboardFocus(Controls::Base* pControl)
+static bool FindKeyboardFocus(Controls::Base* control)
 {
-    if (!pControl)
+    if (!control)
         return false;
 
-    if (pControl->GetKeyboardInputEnabled())
+    if (control->GetKeyboardInputEnabled())
     {
         // Make sure none of our children have keyboard focus first
         //  todo recursive
-        for (Controls::Base::List::iterator iter = pControl->Children.begin();
-             iter != pControl->Children.end();
+        for (Controls::Base::List::iterator iter = control->Children.begin();
+             iter != control->Children.end();
              ++iter)
         {
             Controls::Base* pChild = *iter;
@@ -122,11 +107,11 @@ bool FindKeyboardFocus(Controls::Base* pControl)
                 return false;
         }
 
-        pControl->Focus();
+        control->Focus();
         return true;
     }
 
-    return FindKeyboardFocus(pControl->GetParent());
+    return FindKeyboardFocus(control->GetParent());
 }
 
 Gwk::Point Gwk::Input::GetMousePosition()
@@ -134,7 +119,7 @@ Gwk::Point Gwk::Input::GetMousePosition()
     return g_MousePosition;
 }
 
-void Gwk::Input::OnCanvasThink(Controls::Base* pControl)
+void Gwk::Input::OnCanvasThink(Controls::Base* control)
 {
     if (Gwk::MouseFocus && !Gwk::MouseFocus->Visible())
         Gwk::MouseFocus = NULL;
@@ -148,14 +133,12 @@ void Gwk::Input::OnCanvasThink(Controls::Base* pControl)
     if (!KeyboardFocus)
         return;
 
-    if (KeyboardFocus->GetCanvas() != pControl)
+    if (KeyboardFocus->GetCanvas() != control)
         return;
 
     float fTime = Gwk::Platform::GetTimeInSeconds();
 
-    //
     // Simulate Key-Repeats
-    //
     for (int i = 0; i < Gwk::Key::KeysCount; i++)
     {
         if (g_KeyData.KeyState[i] && g_KeyData.Target != KeyboardFocus)
@@ -166,7 +149,7 @@ void Gwk::Input::OnCanvasThink(Controls::Base* pControl)
 
         if (g_KeyData.KeyState[i] && fTime > g_KeyData.NextRepeat[i])
         {
-            g_KeyData.NextRepeat[i] = Gwk::Platform::GetTimeInSeconds()+KeyRepeatRate;
+            g_KeyData.NextRepeat[i] = Gwk::Platform::GetTimeInSeconds()+c_KeyRepeatRate;
 
             if (KeyboardFocus)
                 KeyboardFocus->OnKeyPress(i);
@@ -216,7 +199,7 @@ bool Gwk::Input::OnMouseClicked(Controls::Base* pCanvas, int iMouseButton, bool 
     if (Gwk::HoveredControl == pCanvas)
         return false;
 
-    if (iMouseButton > MAX_MOUSE_BUTTONS)
+    if (iMouseButton > c_MaxMouseButtons)
         return false;
 
     if (iMouseButton == 0)
@@ -231,7 +214,7 @@ bool Gwk::Input::OnMouseClicked(Controls::Base* pCanvas, int iMouseButton, bool 
     if (bDown
         && g_pntLastClickPos.x == g_MousePosition.x
         && g_pntLastClickPos.y == g_MousePosition.y
-        && (Gwk::Platform::GetTimeInSeconds()-g_fLastClickTime[iMouseButton]) < DOUBLE_CLICK_SPEED)
+        && (Gwk::Platform::GetTimeInSeconds()-g_fLastClickTime[iMouseButton]) < c_DoubleClickSpeed)
     {
         bIsDoubleClick = true;
     }
@@ -386,7 +369,7 @@ bool Gwk::Input::OnKeyEvent(Controls::Base* pCanvas, int iKey, bool bDown)
         if (!g_KeyData.KeyState[iKey])
         {
             g_KeyData.KeyState[iKey] = true;
-            g_KeyData.NextRepeat[iKey] = Gwk::Platform::GetTimeInSeconds()+KeyRepeatDelay;
+            g_KeyData.NextRepeat[iKey] = Gwk::Platform::GetTimeInSeconds()+c_KeyRepeatDelay;
             g_KeyData.Target = pTarget;
 
             if (pTarget)
@@ -410,3 +393,5 @@ bool Gwk::Input::OnKeyEvent(Controls::Base* pCanvas, int iKey, bool bDown)
 
     return false;
 }
+
+} // Gwk

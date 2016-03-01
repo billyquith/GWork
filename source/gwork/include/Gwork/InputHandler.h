@@ -9,8 +9,8 @@
 #ifndef GWK_INPUTHANDLER_H
 #define GWK_INPUTHANDLER_H
 
-#include <queue>
 #include <Gwork/Gwork.h>
+#include <queue>
 
 namespace Gwk
 {
@@ -59,10 +59,10 @@ namespace Gwk
         }
 
         // For use in panels
-        bool GWK_EXPORT        IsKeyDown(int iKey);
-        bool GWK_EXPORT        IsLeftMouseDown();
-        bool GWK_EXPORT        IsRightMouseDown();
-        Gwk::Point GWK_EXPORT GetMousePosition();
+        bool GWK_EXPORT         IsKeyDown(int key);
+        bool GWK_EXPORT         IsLeftMouseDown();
+        bool GWK_EXPORT         IsRightMouseDown();
+        Gwk::Point GWK_EXPORT   GetMousePosition();
 
         inline bool IsShiftDown()
         {
@@ -75,15 +75,16 @@ namespace Gwk
         }
 
         // Does copy, paste etc
-        bool GWK_EXPORT DoSpecialKeys(Controls::Base* pCanvas, Gwk::UnicodeChar chr);
-        bool GWK_EXPORT HandleAccelerator(Controls::Base* pCanvas, Gwk::UnicodeChar chr);
+        bool GWK_EXPORT DoSpecialKeys(Controls::Base* canvas, Gwk::UnicodeChar chr);
+        bool GWK_EXPORT HandleAccelerator(Controls::Base* canvas, Gwk::UnicodeChar chr);
 
         // Send input to canvas for study
-        void GWK_EXPORT OnMouseMoved(Controls::Base* pCanvas, int x, int y, int deltaX,
-                                      int deltaY);
-        bool GWK_EXPORT OnMouseClicked(Controls::Base* pCanvas, int iButton, bool bDown);
-        bool GWK_EXPORT OnKeyEvent(Controls::Base* pCanvas, int iKey, bool bDown);
-        void GWK_EXPORT OnCanvasThink(Controls::Base* pControl);
+        void GWK_EXPORT OnMouseMoved(Controls::Base* canvas, int x, int y,
+                                     int deltaX, int deltaY);
+        bool GWK_EXPORT OnMouseClicked(Controls::Base* canvas, int iButton, bool bDown);
+        bool GWK_EXPORT OnKeyEvent(Controls::Base* canvas, int iKey, bool bDown);
+        void GWK_EXPORT OnCanvasThink(Controls::Base* control);
     }
 }
+
 #endif // ifndef GWK_INPUTHANDLER_H
