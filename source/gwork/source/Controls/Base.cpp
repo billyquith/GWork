@@ -762,7 +762,7 @@ Base* Base::GetControlAt(int x, int y, bool bOnlyIfMouseEnabled)
 void Base::Layout(Skin::Base* skin)
 {
     if (skin->GetRender()->GetCTT() && IsCachedToTexture())
-        skin->GetRender()->GetCTT()->CreateControlCacheTexture(this);
+        skin->GetRender()->GetCTT()->CreateControlCacheTexture(this, this->GetBounds().GetSize());
 }
 
 void Base::RecurseLayout(Skin::Base* skin)

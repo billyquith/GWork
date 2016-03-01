@@ -1,5 +1,11 @@
+/*
+ *  Gwork
+ *  Copyright (c) 2012 Facepunch Studios
+ *  Copyright (c) 2013-2016 Billy Quith
+ *  See license in Gwork.h
+ */
+
 #include <Gwork/BaseRender.h>
-// #include <Gwork/Utility.h>
 #include <Gwork/Renderers/Allegro5.h>
 
 #include <allegro5/allegro_font.h>
@@ -26,12 +32,12 @@ namespace Gwk
             void ShutDown();
             void SetRenderer(Gwk::Renderer::Base* renderer) { m_renderer = renderer; }
             
-            void SetupCacheTexture(Gwk::Controls::Base* control);
-            void FinishCacheTexture(Gwk::Controls::Base* control);
+            void SetupCacheTexture(CacheHandle control);
+            void FinishCacheTexture(CacheHandle control);
             
-            void DrawCachedControlTexture(Gwk::Controls::Base* control);
-            void CreateControlCacheTexture(Gwk::Controls::Base* control);
-            void UpdateControlCacheTexture(Gwk::Controls::Base* control) {}
+            void DrawCachedControlTexture(CacheHandle control);
+            void CreateControlCacheTexture(CacheHandle control, const Point& size);
+            void UpdateControlCacheTexture(CacheHandle control) {}
             
             // TODO What destroys the cached textures? Does this assume they always exist?
             
@@ -44,8 +50,7 @@ namespace Gwk
                 ALLEGRO_BITMAP *m_bitmap;
             };
             
-            typedef Gwk::Controls::Base* Key;
-            typedef std::map< Key, CacheEntry > CacheMap;
+            typedef std::map< CacheHandle, CacheEntry > CacheMap;
             CacheMap m_cache;
             
             ALLEGRO_BITMAP *m_oldTarget;
@@ -58,20 +63,17 @@ namespace Gwk
             //       if we delete the renderer on clean up.
         }
         
-        void AllegroCTT::CreateControlCacheTexture(Gwk::Controls::Base* control)
+        void AllegroCTT::CreateControlCacheTexture(CacheHandle control, const Point& size)
         {
             // If we haven't seen this control before, create a new entry.
             if (m_cache.find(control) == m_cache.end())
             {
-                const Gwk::Rect &bounds = control->GetBounds();
-                const int w = bounds.w, h = bounds.h;
-                
-                CacheEntry newEntry = { al_create_bitmap(w, h) };
-                m_cache.insert(std::pair<Key,CacheEntry>(control, newEntry));
+                CacheEntry newEntry = { al_create_bitmap(size.x, size.y) };
+                m_cache.insert(std::pair<CacheHandle,CacheEntry>(control, newEntry));
             }
         }
 
-        void AllegroCTT::SetupCacheTexture(Gwk::Controls::Base* control)
+        void AllegroCTT::SetupCacheTexture(CacheHandle control)
         {
             CacheMap::iterator it = m_cache.find(control);
             assert(it != m_cache.end());
@@ -85,14 +87,14 @@ namespace Gwk
             }
         }
 
-        void AllegroCTT::FinishCacheTexture(Gwk::Controls::Base* control)
+        void AllegroCTT::FinishCacheTexture(CacheHandle control)
         {
             // Prepare for rendering.
             al_set_target_bitmap(m_oldTarget);
             m_oldTarget = NULL;
         }
         
-        void AllegroCTT::DrawCachedControlTexture(Gwk::Controls::Base* control)
+        void AllegroCTT::DrawCachedControlTexture(CacheHandle control)
         {
             CacheMap::iterator it = m_cache.find(control);
             assert(it != m_cache.end());

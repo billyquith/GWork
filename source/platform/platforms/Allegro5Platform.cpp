@@ -18,10 +18,10 @@
 #include <Gwork/Input/Allegro5.h>
 
 
-static Gwk::Input::Allegro     g_GworkInput;
+static Gwk::Input::Allegro      g_GworkInput;
 static ALLEGRO_EVENT_QUEUE*     g_event_queue = NULL;
 static ALLEGRO_DISPLAY*         g_display = NULL;
-static Gwk::String             gs_ClipboardEmulator;
+static Gwk::String              gs_ClipboardEmulator;
 
 static const ALLEGRO_SYSTEM_MOUSE_CURSOR g_CursorConversion[] =
 {
@@ -80,14 +80,7 @@ bool Gwk::Platform::FileOpen(const String& Name,
     {
         if (al_get_native_file_dialog_count(chooser) != 0)
         {
-            if (pHandler && fnCallback)
-            {
-                Gwk::Event::Information info;
-                info.Control        = NULL;
-                info.ControlCaller  = NULL;
-                info.String         = al_get_native_file_dialog_path(chooser, 0);
-                (pHandler->*fnCallback)(info);
-            }
+            filePathOut = al_get_native_file_dialog_path(chooser, 0);
         }
     }
 
@@ -97,7 +90,8 @@ bool Gwk::Platform::FileOpen(const String& Name,
 
 bool Gwk::Platform::FileSave(const String& Name,
                              const String& StartPath,
-                             String& filePathOut);
+                             const String& Extension,
+                             String& filePathOut)
 {
     ALLEGRO_FILECHOOSER* chooser = al_create_native_file_dialog(StartPath.c_str(),
                                                                 Name.c_str(),
@@ -109,10 +103,7 @@ bool Gwk::Platform::FileSave(const String& Name,
     {
         if (al_get_native_file_dialog_count(chooser) != 0)
         {
-            if (pHandler && fnCallback)
-            {
-                filePathOut = al_get_native_file_dialog_path(chooser, 0);
-            }
+            filePathOut = al_get_native_file_dialog_path(chooser, 0);
         }
     }
 
@@ -122,7 +113,7 @@ bool Gwk::Platform::FileSave(const String& Name,
 
 bool Gwk::Platform::FolderOpen(const String& Name,
                                const String& StartPath,
-                               String& filePathOut);                               
+                               String& filePathOut)
 {
     ALLEGRO_FILECHOOSER* chooser = al_create_native_file_dialog(StartPath.c_str(),
                                                                 Name.c_str(),
@@ -134,10 +125,7 @@ bool Gwk::Platform::FolderOpen(const String& Name,
     {
         if (al_get_native_file_dialog_count(chooser) != 0)
         {
-            if (pHandler && fnCallback)
-            {
-                filePathOut = al_get_native_file_dialog_path(chooser, 0);
-            }
+            filePathOut = al_get_native_file_dialog_path(chooser, 0);
         }
     }
 
@@ -171,8 +159,13 @@ static bool InitAllegro()
     return true;
 }
 
+void Gwk::Platform::SetPlatformWindow(void* handle)
+{
+    g_display = reinterpret_cast<ALLEGRO_DISPLAY*>(handle);
+}
+
 void* Gwk::Platform::CreatePlatformWindow(int x, int y, int w, int h,
-                                           const Gwk::String& strWindowTitle)
+                                          const Gwk::String& strWindowTitle)
 {
     // Check Allegro has been initialised.
     if (!InitAllegro())
@@ -216,13 +209,12 @@ void Gwk::Platform::DestroyPlatformWindow(void* pPtr)
 
 bool Gwk::Platform::MessagePump(void* pWindow)
 {
-    static bool firstCall = true;
-
-    if (firstCall)
-    {
-        firstCall = false;
-        g_GworkInput.Initialize(ptarget);
-    }
+//    static bool firstCall = true;
+//    if (firstCall)
+//    {
+//        firstCall = false;
+////        g_GworkInput.Initialize(ptarget);   TODO - initialise input to canvas
+//    }
 
     ALLEGRO_EVENT ev;
     while (al_get_next_event(g_event_queue, &ev))

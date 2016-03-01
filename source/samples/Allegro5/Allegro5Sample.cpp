@@ -5,12 +5,11 @@
  *  See license in Gwork.h
  */
 
-#include <Gwork/Gwork.h>
-#include <Gwork/Skins/Simple.h>
 #include <Gwork/Skins/TexturedBase.h>
 #include <Gwork/Test/Test.h>
 #include <Gwork/Input/Allegro5.h>
 #include <Gwork/Renderers/Allegro5.h>
+#include <Gwork/Platform.h>
 
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_image.h>
@@ -25,6 +24,7 @@ int main(int argc, char** argv)
         return EXIT_FAILURE;
 
     ALLEGRO_DISPLAY* display = al_create_display(1024, 768);
+    Gwk::Platform::SetPlatformWindow(display);
 
     if (!display)
         return EXIT_FAILURE;
@@ -45,11 +45,11 @@ int main(int argc, char** argv)
     al_register_event_source(event_queue, al_get_keyboard_event_source());
     
     // Create a Gwork Allegro Renderer
-    Gwk::Renderer::Allegro* pRenderer = new Gwk::Renderer::Allegro();
+    Gwk::Renderer::Allegro* renderer = new Gwk::Renderer::Allegro();
 
     // Create a Gwork skin
-    Gwk::Skin::TexturedBase skin(pRenderer);
-    skin.SetRender(pRenderer);
+    Gwk::Skin::TexturedBase skin(renderer);
+    skin.SetRender(renderer);
     skin.Init("DefaultSkin.png");
     
     // The fonts work differently in Allegro - it can't use
@@ -65,22 +65,22 @@ int main(int argc, char** argv)
     pCanvas->SetBackgroundColor(Gwk::Color(150, 170, 170, 255));
 
     // Create our unittest control (which is a Window with controls in it)
-    UnitTest* pUnit = new UnitTest(pCanvas);
-    pUnit->SetPos(10, 10);
+    UnitTest* unit = new UnitTest(pCanvas);
+    unit->SetPos(10, 10);
 
     // Create a Windows Control helper
     // (Processes Windows MSG's and fires input at Gwork)
     Gwk::Input::Allegro GworkInput;
     GworkInput.Initialize(pCanvas);
     ALLEGRO_EVENT ev;
-    bool bQuit = false;
+    bool haveQuit = false;
 
-    while (!bQuit)
+    while (!haveQuit)
     {
         while (al_get_next_event(event_queue, &ev))
         {
             if (ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE)
-                bQuit = true;
+                haveQuit = true;
 
             GworkInput.ProcessMessage(ev);
         }

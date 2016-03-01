@@ -9,10 +9,7 @@
 #ifndef GWK_INPUT_ALLEGRO_H
 #define GWK_INPUT_ALLEGRO_H
 
-//#include <Gwork/InputHandler.h>
-//#include <Gwork/Gwork.h>
-//#include <Gwork/Controls/Canvas.h>
-
+#include <Gwork/InputEventListener.h>
 #include <allegro5/allegro.h>
 
 namespace Gwk
@@ -24,15 +21,15 @@ namespace Gwk
         public:
 
             Allegro()
-            :   m_Canvas(NULL)
+            :   m_EventListener(NULL)
             ,   m_MouseX(0)
             ,   m_MouseY(0)
             {
             }
 
-            void Initialize(Gwk::Controls::Canvas* c)
+            void Initialize(IInputEventListener* el)
             {
-                m_Canvas = c;
+                m_EventListener = el;
             }
 
             unsigned char TranslateKeyCode(int iKeyCode)
@@ -97,9 +94,9 @@ namespace Gwk
                 return Gwk::Key::Invalid;
             }
 
-            bool ProcessMessage(ALLEGRO_EVENT& event)
+            bool ProcessMessage(const ALLEGRO_EVENT& event)
             {
-                if (!m_Canvas)
+                if (!m_EventListener)
                     return false;
 
                 switch (event.type)
@@ -110,20 +107,20 @@ namespace Gwk
                         const int dy = event.mouse.dy;
 
                         if (event.mouse.dz != 0)
-                            return m_Canvas->InputMouseWheel(event.mouse.dz*60);
+                            return m_EventListener->InputMouseWheel(event.mouse.dz*60);
 
                         m_MouseX = event.mouse.x;
                         m_MouseY = event.mouse.y;
-                        return m_Canvas->InputMouseMoved(m_MouseX, m_MouseY, dx, dy);
+                        return m_EventListener->InputMouseMoved(m_MouseX, m_MouseY, dx, dy);
                     }
 
                 case ALLEGRO_EVENT_MOUSE_BUTTON_DOWN:
                 case ALLEGRO_EVENT_MOUSE_BUTTON_UP:
-                    return m_Canvas->InputMouseButton(event.mouse.button-1,
+                    return m_EventListener->InputMouseButton(event.mouse.button-1,
                                                       event.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN);
 
                 case ALLEGRO_EVENT_KEY_CHAR:
-                    return m_Canvas->InputCharacter(event.keyboard.unichar);
+                    return m_EventListener->InputCharacter(event.keyboard.unichar);
 
                 case ALLEGRO_EVENT_KEY_DOWN:
                 case ALLEGRO_EVENT_KEY_UP:
@@ -135,11 +132,11 @@ namespace Gwk
                             && event.keyboard.keycode >= 'a'
                             && event.keyboard.keycode <= 'z')
                         {
-                            return m_Canvas->InputCharacter(event.keyboard.keycode);
+                            return m_EventListener->InputCharacter(event.keyboard.keycode);
                         }
 
                         const unsigned char iKey = TranslateKeyCode(event.keyboard.keycode);
-                        return m_Canvas->InputKey(iKey, bPressed);
+                        return m_EventListener->InputKey(iKey, bPressed);
                     }
                 }
 
@@ -148,7 +145,7 @@ namespace Gwk
 
         protected:
 
-            Gwk::Controls::Canvas* m_Canvas;
+            IInputEventListener *m_EventListener;
             int m_MouseX;
             int m_MouseY;
 
