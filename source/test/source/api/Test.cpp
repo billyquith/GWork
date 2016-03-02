@@ -5,7 +5,7 @@
  *  See license in Gwork.h
  */
 
-#include <Gwork/Test/Test.h>
+#include <Gwork/Test/TestAPI.h>
 #include <Gwork/Controls/DockedTabControl.h>
 #include <Gwork/Controls/WindowControl.h>
 #include <Gwork/Controls/CollapsibleList.h>
@@ -169,16 +169,16 @@ GWK_CONTROL_CONSTRUCTOR(UnitTest)
     GetLeft()->SetWidth(150);
 
     // Create control property viewer
-    m_controlProperties = new Controls::PropertyTree(GetRight());
-    auto treeCampInfo = new Controls::PropertyTree(GetRight());
-    button = GetRight()->GetTabControl()->AddPage("Properties", m_controlProperties);
-    GetRight()->GetTabControl()->AddPage("Classes", treeCampInfo);
+//    m_controlProperties = new Controls::PropertyTree(GetRight());
+//    auto treeCampInfo = new Controls::PropertyTree(GetRight());
+//    button = GetRight()->GetTabControl()->AddPage("Properties", m_controlProperties);
+//    GetRight()->GetTabControl()->AddPage("Classes", treeCampInfo);
 //    PopulateClassInfo(treeCampInfo);
 
     // Create output log and status bar.
     m_textOutput = new Controls::ListBox(GetBottom());
     button = GetBottom()->GetTabControl()->AddPage("Output", m_textOutput);
-    GetBottom()->SetHeight(200);
+    GetBottom()->SetHeight(140);
     m_statusBar = new Controls::StatusBar(this);
     m_statusBar->Dock(Docking::Bottom);
 
@@ -269,10 +269,10 @@ void UnitTest::OnCategorySelect(Gwk::Event::Info info)
     info.Packet->Control->Show();
     m_lastControl = info.Packet->Control;
     
-    if (m_controlProperties)
-    {
-        m_controlProperties->Clear();
-    }
+//    if (m_controlProperties)
+//    {
+//        m_controlProperties->Clear();
+//    }
 }
 
 void UnitTest::PrintText(const Gwk::String& str)

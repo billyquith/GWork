@@ -7,8 +7,8 @@
 
 
 #pragma once
-#ifndef GWK_UNITTEST_UNITTEST_H
-#define GWK_UNITTEST_UNITTEST_H
+#ifndef GWK_TEST_TESTAPI_H
+#define GWK_TEST_TESTAPI_H
 
 #include <Gwork/Gwork.h>
 #include <Gwork/Align.h>
@@ -20,8 +20,8 @@
 #include <Gwork/Controls/StatusBar.h>
 #include <Gwork/Controls/PropertyTree.h>
 
-class UnitTest;
 
+class UnitTest;
 
 class GUnit : public Gwk::Controls::Base
 {
@@ -67,7 +67,7 @@ private:
 
 //    Gwk::Controls::TabControl* m_tabControl;
     Gwk::Controls::ListBox*    m_textOutput;
-    Gwk::Controls::PropertyTree* m_controlProperties;
+//    Gwk::Controls::PropertyTree* m_controlProperties;
     Gwk::Controls::StatusBar*  m_statusBar;
     unsigned int m_frames;
     float m_fLastSecond;
@@ -82,4 +82,4 @@ private:
     { return new NAME(tab); }
 
 
-#endif // ifndef GWK_UNITTEST_UNITTEST_H
+#endif // ifndef GWK_TEST_TESTAPI_H

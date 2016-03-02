@@ -13,7 +13,7 @@
 
 #include <Gwork/Skins/Simple.h>
 #include <Gwork/Skins/TexturedBase.h>
-#include <Gwork/Test/Test.h>
+#include <Gwork/Test/TestAPI.h>
 
 
 int main()

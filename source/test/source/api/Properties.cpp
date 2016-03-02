@@ -5,7 +5,7 @@
  *  See license in Gwork.h
  */
 
-#include <Gwork/Test/Test.h>
+#include <Gwork/Test/TestAPI.h>
 #include <Gwork/Controls/Properties.h>
 #include <Gwork/Controls/PropertyTree.h>
 #include <Gwork/Controls/Property/ColorSelector.h>
