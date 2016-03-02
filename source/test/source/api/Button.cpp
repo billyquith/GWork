@@ -5,7 +5,7 @@
  *  See license in Gwork.h
  */
 
-#include <Gwork/Test/Test.h>
+#include <Gwork/Test/TestAPI.h>
 
 using namespace Gwk;
 
@@ -22,7 +22,7 @@ public:
         {
             Controls::Button* buttonA = new Controls::Button(this);
             buttonA->SetBounds(200, 30, 300, 200);
-            buttonA->SetText("Event Tester");
+            buttonA->SetText("Event Tester 2");
             buttonA->onPress.Add(this, &Button::onButtonA);
         }
         // Unicode test

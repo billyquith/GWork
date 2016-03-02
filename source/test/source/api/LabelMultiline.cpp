@@ -5,7 +5,7 @@
  *  See license in Gwork.h
  */
 
-#include <Gwork/Test/Test.h>
+#include <Gwork/Test/TestAPI.h>
 #include <Gwork/Controls/Label.h>
 #include <Gwork/Controls/CrossSplitter.h>
 

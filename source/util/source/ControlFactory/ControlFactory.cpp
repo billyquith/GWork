@@ -10,10 +10,10 @@ const Gwk::String PropertyBool::False   = "false";
 void InitializeControls()
 {
     ponder::Class::declare<Gwk::Color>()
-        .property("a", &Gwk::Color::a)
         .property("r", &Gwk::Color::r)
         .property("g", &Gwk::Color::g)
         .property("b", &Gwk::Color::b)
+        .property("a", &Gwk::Color::a)
         ;
 
     ponder::Class::declare<Gwk::Margin>()
