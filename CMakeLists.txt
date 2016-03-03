@@ -28,5 +28,6 @@ include(${CMAKE_SOURCE_DIR}/cmake/Config.cmake)
 
 # add our projects
 add_subdirectory(source)
+add_subdirectory(docs)
 
 

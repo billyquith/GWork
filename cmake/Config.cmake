@@ -2,11 +2,11 @@
 #### Project Configuration
 
 # setup version numbers
-set(VERSION_MAJOR 0)
-set(VERSION_MINOR 1)
-set(VERSION_PATCH 0)
-set(VERSION_STR "${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}")
-message("Project version: ${VERSION_STR}")
+set(GWK_VERSION_MAJOR 0)
+set(GWK_VERSION_MINOR 1)
+set(GWK_VERSION_PATCH 0)
+set(GWK_VERSION_STR "${GWK_VERSION_MAJOR}.${GWK_VERSION_MINOR}.${GWK_VERSION_PATCH}")
+message("Project version: ${GWK_VERSION_STR}")
 
 ### User options
 

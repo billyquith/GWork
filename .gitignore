@@ -1,6 +1,5 @@
 
-gwen/docs/html/*
-gwen/include/allegro5/*
+*.doxcfg
 
 #################
 ## Cmake
