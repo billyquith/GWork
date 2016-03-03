@@ -10,11 +10,11 @@
 
 using namespace Gwk;
 
-class CollapsibleList : public GUnit
+class CollapsibleList : public TestUnit
 {
 public:
 
-    GWK_CONTROL_INLINE(CollapsibleList, GUnit)
+    GWK_CONTROL_INLINE(CollapsibleList, TestUnit)
     {
         Gwk::Controls::CollapsibleList* control = new Gwk::Controls::CollapsibleList(this);
         control->SetSize(100, 200);
@@ -55,4 +55,4 @@ public:
 };
 
 
-DEFINE_UNIT_TEST(CollapsibleList);
+DECLARE_TEST(CollapsibleList);

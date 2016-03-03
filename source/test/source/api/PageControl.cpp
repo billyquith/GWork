@@ -10,11 +10,11 @@
 
 using namespace Gwk;
 
-class PageControl : public GUnit
+class PageControl : public TestUnit
 {
 public:
 
-    GWK_CONTROL_INLINE(PageControl, GUnit)
+    GWK_CONTROL_INLINE(PageControl, TestUnit)
     {
         Gwk::Controls::PageControl* control = new Gwk::Controls::PageControl(this);
         control->SetSize(500, 300);
@@ -44,15 +44,15 @@ public:
 
     void OnPageChanged(Event::Info info)
     {
-        UnitPrint(Utility::Format("PageControl Changed Page: %i", info.Integer));
+        OutputToLog(Utility::Format("PageControl Changed Page: %i", info.Integer));
     }
 
     void OnFinish(Event::Info info)
     {
-        UnitPrint("Finish Pressed");
+        OutputToLog("Finish Pressed");
     }
 
 };
 
 
-DEFINE_UNIT_TEST(PageControl);
+DECLARE_TEST(PageControl);

@@ -7,14 +7,15 @@
 
 #include <Gwork/Test/TestAPI.h>
 #include <Gwork/Controls/TreeControl.h>
+#include <Gwork/Controls/WindowControl.h>
 
 using namespace Gwk;
 
-class Window : public GUnit
+class Window : public TestUnit
 {
 public:
 
-    GWK_CONTROL_INLINE(Window, GUnit)
+    GWK_CONTROL_INLINE(Window, TestUnit)
     {
         {
             Controls::Button* button = new Controls::Button(this);
@@ -57,4 +58,4 @@ public:
 };
 
 
-DEFINE_UNIT_TEST(Window);
+DECLARE_TEST(Window);

@@ -11,11 +11,11 @@
 
 using namespace Gwk;
 
-class ProgressBar : public GUnit
+class ProgressBar : public TestUnit
 {
 public:
 
-    GWK_CONTROL_INLINE(ProgressBar, GUnit)
+    GWK_CONTROL_INLINE(ProgressBar, TestUnit)
     {
         {
             Gwk::Controls::ProgressBar* pb = new Gwk::Controls::ProgressBar(this);
@@ -85,4 +85,4 @@ public:
 };
 
 
-DEFINE_UNIT_TEST(ProgressBar);
+DECLARE_TEST(ProgressBar);

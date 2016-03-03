@@ -9,11 +9,11 @@
 
 using namespace Gwk;
 
-class Button : public GUnit
+class Button : public TestUnit
 {
 public:
 
-    GWK_CONTROL_INLINE(Button, GUnit)
+    GWK_CONTROL_INLINE(Button, TestUnit)
     {
         // Normal button
         Controls::Button* buttonA = new Controls::Button(this);
@@ -62,25 +62,25 @@ public:
 
     void onButtonA(Controls::Base* control)
     {
-        UnitPrint("Button Pressed (using 'OnPress' event)");
+        OutputToLog("Button Pressed (using 'OnPress' event)");
     }
 
     void OnToggle(Controls::Base* control)
     {
-        UnitPrint("Button Toggled (using 'OnToggle' event)");
+        OutputToLog("Button Toggled (using 'OnToggle' event)");
     }
 
     void OnToggleOn(Controls::Base* control)
     {
-        UnitPrint("Button Toggled ON (using 'OnToggleOn' event)");
+        OutputToLog("Button Toggled ON (using 'OnToggleOn' event)");
     }
 
     void OnToggleOff(Controls::Base* control)
     {
-        UnitPrint("Button Toggled Off (using 'OnToggleOff' event)");
+        OutputToLog("Button Toggled Off (using 'OnToggleOff' event)");
     }
 
 };
 
 
-DEFINE_UNIT_TEST(Button);
+DECLARE_TEST(Button);

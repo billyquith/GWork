@@ -10,11 +10,11 @@
 
 using namespace Gwk;
 
-class ScrollControl : public GUnit
+class ScrollControl : public TestUnit
 {
 public:
 
-    GWK_CONTROL_INLINE(ScrollControl, GUnit)
+    GWK_CONTROL_INLINE(ScrollControl, TestUnit)
     {
         {
             Gwk::Controls::ScrollControl* ctrl = new Gwk::Controls::ScrollControl(this);
@@ -116,4 +116,4 @@ public:
 };
 
 
-DEFINE_UNIT_TEST(ScrollControl);
+DECLARE_TEST(ScrollControl);
