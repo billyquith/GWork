@@ -5,17 +5,17 @@
  *  See license in Gwork.h
  */
 
-#include <Gwork/Test/Test.h>
+#include <Gwork/Test/TestAPI.h>
 #include <Gwork/Controls/StatusBar.h>
 #include <Gwork/Controls/Label.h>
 
 using namespace Gwk;
 
-class StatusBar : public GUnit
+class StatusBar : public TestUnit
 {
 public:
 
-    GWK_CONTROL_INLINE(StatusBar, GUnit)
+    GWK_CONTROL_INLINE(StatusBar, TestUnit)
     {
         Dock(Docking::Fill);
         Gwk::Controls::StatusBar* status = new Gwk::Controls::StatusBar(this);
@@ -28,4 +28,4 @@ public:
 };
 
 
-DEFINE_UNIT_TEST(StatusBar);
+DECLARE_TEST(StatusBar);

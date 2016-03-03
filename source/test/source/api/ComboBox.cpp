@@ -5,16 +5,16 @@
  *  See license in Gwork.h
  */
 
-#include <Gwork/Test/Test.h>
+#include <Gwork/Test/TestAPI.h>
 #include <Gwork/Controls/ComboBox.h>
 
 using namespace Gwk;
 
-class ComboBox : public GUnit
+class ComboBox : public TestUnit
 {
 public:
 
-    GWK_CONTROL_INLINE(ComboBox, GUnit)
+    GWK_CONTROL_INLINE(ComboBox, TestUnit)
     {
         {
             Gwk::Controls::ComboBox* combo = new Gwk::Controls::ComboBox(this);
@@ -49,11 +49,11 @@ public:
     void OnComboSelect(Gwk::Controls::Base* control)
     {
         Gwk::Controls::ComboBox* combo = (Gwk::Controls::ComboBox*)control;
-        UnitPrint(Utility::Format("Combo Changed: %s",
+        OutputToLog(Utility::Format("Combo Changed: %s",
                                   combo->GetSelectedItem()->GetText().c_str()));
     }
 
 };
 
 
-DEFINE_UNIT_TEST(ComboBox);
+DECLARE_TEST(ComboBox);

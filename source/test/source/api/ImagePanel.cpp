@@ -5,16 +5,16 @@
  *  See license in Gwork.h
  */
 
-#include <Gwork/Test/Test.h>
+#include <Gwork/Test/TestAPI.h>
 #include <Gwork/Controls/ImagePanel.h>
 
 using namespace Gwk;
 
-class ImagePanel : public GUnit
+class ImagePanel : public TestUnit
 {
 public:
 
-    GWK_CONTROL_INLINE(ImagePanel, GUnit)
+    GWK_CONTROL_INLINE(ImagePanel, TestUnit)
     {
         // Normal
         {
@@ -33,4 +33,4 @@ public:
 };
 
 
-DEFINE_UNIT_TEST(ImagePanel);
+DECLARE_TEST(ImagePanel);

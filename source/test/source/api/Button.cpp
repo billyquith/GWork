@@ -5,15 +5,15 @@
  *  See license in Gwork.h
  */
 
-#include <Gwork/Test/Test.h>
+#include <Gwork/Test/TestAPI.h>
 
 using namespace Gwk;
 
-class Button : public GUnit
+class Button : public TestUnit
 {
 public:
 
-    GWK_CONTROL_INLINE(Button, GUnit)
+    GWK_CONTROL_INLINE(Button, TestUnit)
     {
         // Normal button
         Controls::Button* buttonA = new Controls::Button(this);
@@ -22,7 +22,7 @@ public:
         {
             Controls::Button* buttonA = new Controls::Button(this);
             buttonA->SetBounds(200, 30, 300, 200);
-            buttonA->SetText("Event Tester");
+            buttonA->SetText("Event Tester 2");
             buttonA->onPress.Add(this, &Button::onButtonA);
         }
         // Unicode test
@@ -62,25 +62,25 @@ public:
 
     void onButtonA(Controls::Base* control)
     {
-        UnitPrint("Button Pressed (using 'OnPress' event)");
+        OutputToLog("Button Pressed (using 'OnPress' event)");
     }
 
     void OnToggle(Controls::Base* control)
     {
-        UnitPrint("Button Toggled (using 'OnToggle' event)");
+        OutputToLog("Button Toggled (using 'OnToggle' event)");
     }
 
     void OnToggleOn(Controls::Base* control)
     {
-        UnitPrint("Button Toggled ON (using 'OnToggleOn' event)");
+        OutputToLog("Button Toggled ON (using 'OnToggleOn' event)");
     }
 
     void OnToggleOff(Controls::Base* control)
     {
-        UnitPrint("Button Toggled Off (using 'OnToggleOff' event)");
+        OutputToLog("Button Toggled Off (using 'OnToggleOff' event)");
     }
 
 };
 
 
-DEFINE_UNIT_TEST(Button);
+DECLARE_TEST(Button);

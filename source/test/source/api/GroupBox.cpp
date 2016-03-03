@@ -5,7 +5,7 @@
  *  See license in Gwork.h
  */
 
-#include <Gwork/Test/Test.h>
+#include <Gwork/Test/TestAPI.h>
 #include <Gwork/Controls/GroupBox.h>
 
 using namespace Gwk;
@@ -32,11 +32,11 @@ Maecenas venenatis dui sit amet dolor luctus quis scelerisque mi tincidunt. Cum 
 natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.";
 
 
-class GroupBox : public GUnit
+class GroupBox : public TestUnit
 {
 public:
 
-    GWK_CONTROL_INLINE(GroupBox, GUnit)
+    GWK_CONTROL_INLINE(GroupBox, TestUnit)
     {
         Gwk::Controls::GroupBox* group = new Gwk::Controls::GroupBox(this);
         group->SetText("Group Box");
@@ -50,4 +50,4 @@ public:
 };
 
 
-DEFINE_UNIT_TEST(GroupBox);
+DECLARE_TEST(GroupBox);

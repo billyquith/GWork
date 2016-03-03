@@ -5,18 +5,18 @@
  *  See license in Gwork.h
  */
 
-#include <Gwork/Test/Test.h>
+#include <Gwork/Test/TestAPI.h>
 #include <Gwork/Controls/RadioButtonController.h>
 #include <Gwork/Controls/VerticalSlider.h>
 #include <Gwork/Controls/HorizontalSlider.h>
 
 using namespace Gwk;
 
-class Slider : public GUnit
+class Slider : public TestUnit
 {
 public:
 
-    GWK_CONTROL_INLINE(Slider, GUnit)
+    GWK_CONTROL_INLINE(Slider, TestUnit)
     {
         {
             Gwk::Controls::HorizontalSlider* slider = new Gwk::Controls::HorizontalSlider(this);
@@ -59,10 +59,10 @@ public:
     void SliderMoved(Base* control)
     {
         Gwk::Controls::Slider* slider = (Gwk::Controls::Slider*)control;
-        UnitPrint(Utility::Format("Slider Value: %.2f", (float)slider->GetFloatValue()));
+        OutputToLog(Utility::Format("Slider Value: %.2f", (float)slider->GetFloatValue()));
     }
 
 };
 
 
-DEFINE_UNIT_TEST(Slider);
+DECLARE_TEST(Slider);

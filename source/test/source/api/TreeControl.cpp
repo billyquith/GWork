@@ -5,16 +5,16 @@
  *  See license in Gwork.h
  */
 
-#include <Gwork/Test/Test.h>
+#include <Gwork/Test/TestAPI.h>
 #include <Gwork/Controls/TreeControl.h>
 
 using namespace Gwk;
 
-class TreeControl : public GUnit
+class TreeControl : public TestUnit
 {
 public:
 
-    GWK_CONTROL_INLINE(TreeControl, GUnit)
+    GWK_CONTROL_INLINE(TreeControl, TestUnit)
     {
         {
             Gwk::Controls::TreeControl* ctrl = new Gwk::Controls::TreeControl(this);
@@ -58,4 +58,4 @@ public:
 };
 
 
-DEFINE_UNIT_TEST(TreeControl);
+DECLARE_TEST(TreeControl);

@@ -5,16 +5,16 @@
  *  See license in Gwork.h
  */
 
-#include <Gwork/Test/Test.h>
+#include <Gwork/Test/TestAPI.h>
 #include <Gwork/Controls/TextBox.h>
 
 using namespace Gwk;
 
-class TextBox : public GUnit
+class TextBox : public TestUnit
 {
 public:
 
-    GWK_CONTROL_INLINE(TextBox, GUnit)
+    GWK_CONTROL_INLINE(TextBox, TestUnit)
     {
         {
             Gwk::Controls::TextBox* label = new Gwk::Controls::TextBox(this);
@@ -67,14 +67,14 @@ public:
     void OnEdit(Gwk::Controls::Base* control)
     {
         Gwk::Controls::TextBox* textbox = (Gwk::Controls::TextBox*)(control);
-        UnitPrint(Utility::Format("Textbox Edit: [%s]\n",
+        OutputToLog(Utility::Format("Textbox Edit: [%s]\n",
                                   textbox->GetText().c_str()));
     }
 
     void OnSubmit(Gwk::Controls::Base* control)
     {
         Gwk::Controls::TextBox* textbox = (Gwk::Controls::TextBox*)(control);
-        UnitPrint(Utility::Format("Textbox Submit: [%s]\n",
+        OutputToLog(Utility::Format("Textbox Submit: [%s]\n",
                                   textbox->GetText().c_str()));
     }
 
@@ -82,4 +82,4 @@ public:
 };
 
 
-DEFINE_UNIT_TEST(TextBox);
+DECLARE_TEST(TextBox);

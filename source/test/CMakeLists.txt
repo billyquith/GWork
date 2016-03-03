@@ -9,38 +9,44 @@ include_directories(
 
 set(GWK_TEST_SOURCES
     include/Gwork/Test/Test.h
-    source/Button.cpp
-    source/Checkbox.cpp
-    source/CollapsibleList.cpp
-    source/ColorPicker.cpp
-    source/ComboBox.cpp
-    source/CrossSplitter.cpp
-    source/GroupBox.cpp
-    source/ImagePanel.cpp
-    source/Label.cpp
-    source/LabelMultiline.cpp
-    source/ListBox.cpp
-    source/MenuStrip.cpp
-    source/Numeric.cpp
-    source/PageControl.cpp
-    source/ProgressBar.cpp
-    source/Properties.cpp
-    source/RadioButton.cpp
-    source/ScrollControl.cpp
-    source/Slider.cpp
-    source/StatusBar.cpp
-    source/TabControl.cpp
-    source/TextBox.cpp
+    include/Gwork/Test/TestAPI.h
     source/Test.cpp
-    source/TreeControl.cpp
-    source/Window.cpp
+    source/api/Button.cpp
+    source/api/Checkbox.cpp
+    source/api/CollapsibleList.cpp
+    source/api/ColorPicker.cpp
+    source/api/ComboBox.cpp
+    source/api/CrossSplitter.cpp
+    source/api/GroupBox.cpp
+    source/api/ImagePanel.cpp
+    source/api/Label.cpp
+    source/api/LabelMultiline.cpp
+    source/api/ListBox.cpp
+    source/api/MenuStrip.cpp
+    source/api/Numeric.cpp
+    source/api/PageControl.cpp
+    source/api/ProgressBar.cpp
+    source/api/Properties.cpp
+    source/api/RadioButton.cpp
+    source/api/ScrollControl.cpp
+    source/api/Slider.cpp
+    source/api/StatusBar.cpp
+    source/api/TabControl.cpp
+    source/api/TextBox.cpp
+    source/api/TestAPI.cpp
+    source/api/TreeControl.cpp
+    source/api/Window.cpp
 )
 
 # header folder groups
 source_group("${GWK_HEADER_FOLDER}"
              REGULAR_EXPRESSION "include/Gwork/Test/.*\\.h")
+source_group("${GWK_SOURCE_FOLDER}\\API"
+             REGULAR_EXPRESSION "source/api/.*\\.cpp")
+source_group("${GWK_SOURCE_FOLDER}\\Factory"
+             REGULAR_EXPRESSION "source/factory/.*\\.cpp")
 source_group("${GWK_SOURCE_FOLDER}"
-             REGULAR_EXPRESSION "source/.*\\.cpp")
+             REGULAR_EXPRESSION "source/[^/]+\\.cpp")
 
 # Test library
 if(BUILD_TEST)
