@@ -55,27 +55,38 @@ if(DOXYGEN_FOUND)
         set(DOXYGEN_GENERATE_HTMLHELP NO)
         set(HHC_PROGRAM)
     endif()
-    
-    # directories to scan for documentation
-    set(DOXYGEN_INPUT_DIRS
+
+    # project code to document
+    set(DOXYGEN_CODE_DIRS
         ${DOXYGEN_INPUT_DIR}/platform/include
         ${DOXYGEN_INPUT_DIR}/gwork/include
         ${DOXYGEN_INPUT_DIR}/util/include
         ${DOXYGEN_INPUT_DIR}/test/include
-        pages)
+    )
     
+    # directories to scan for documentation
+    set(DOXYGEN_INPUT_DIRS ${DOXYGEN_CODE_DIRS} pages)
+
     # config substitute variables
     set(DOC_PROJECT_NAME "Gwork")
     set(DOC_PROJECT_BRIEF "GUI")
     set(DOC_LOGO "logo2.png")
-    STRING(REPLACE ";" " " DOC_INPUT "${DOXYGEN_INPUT_DIRS}") # want space separated
     set(DOC_FILE_PATTERNS "*.c *.cpp *.h *.hpp *.dox")
+    STRING(REPLACE ";" " " DOC_INPUT "${DOXYGEN_INPUT_DIRS}") # want space separated
+    STRING(REPLACE ";" " " DOC_MACRO_DIRS "${DOXYGEN_CODE_DIRS}") # want space separated
 
     # subsitutes to make to patch up docs
-    set(DOC_MACROS "\\
-        \"GWK_CONTROL(CLS,BASE)=/** Constructor. */ CLS(Gwk::Control::Base *parent)\" \\
-        \"GWK_CONTROL_INLINE(CLS,BASE)=/** Constructor. */ CLS(Gwk::Control::Base *parent)\" \\
-        __cplusplus")
+    set(PREDEFINES 
+        "GWK_CONTROL(CLS,BASE)=/** Constructor. */ CLS(Gwk::Control::Base *parent)"
+        "GWK_CONTROL_INLINE(CLS,BASE)=/** Constructor. */ CLS(Gwk::Control::Base *parent)"
+        "__cplusplus"
+    )
+
+    # format defines as required
+    set(DOC_PREDEFINES "")
+    foreach(_DEF ${PREDEFINES})
+        set(DOC_PREDEFINES "${DOC_PREDEFINES} \\\n    \"${_DEF}\"")
+    endforeach()
 
     # configure the source Doxyfile by copying it and replacing all @variables@
     configure_file(Doxyfile.in ${DOXYGEN_CONFIG_FILE} @ONLY)
