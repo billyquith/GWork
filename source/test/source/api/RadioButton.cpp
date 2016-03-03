@@ -10,11 +10,11 @@
 
 using namespace Gwk;
 
-class RadioButton : public GUnit
+class RadioButton : public TestUnit
 {
 public:
 
-    GWK_CONTROL_INLINE(RadioButton, GUnit)
+    GWK_CONTROL_INLINE(RadioButton, TestUnit)
     {
         Gwk::Controls::RadioButtonController* rc = new Gwk::Controls::RadioButtonController(this);
         rc->AddOption("Option 1");
@@ -30,7 +30,7 @@ public:
         Gwk::Controls::RadioButtonController* rc =
             (Gwk::Controls::RadioButtonController*)control;
         Gwk::Controls::LabeledRadioButton* selected = rc->GetSelected();
-        UnitPrint(Utility::Format(
+        OutputToLog(Utility::Format(
                       "RadioButton changed (using 'OnChange' event)\n Chosen Item: '%s'",
                       selected->GetLabel()->GetText().c_str()));
     }
@@ -38,4 +38,4 @@ public:
 };
 
 
-DEFINE_UNIT_TEST(RadioButton);
+DECLARE_TEST(RadioButton);

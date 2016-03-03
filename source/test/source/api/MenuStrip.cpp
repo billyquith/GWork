@@ -10,11 +10,11 @@
 
 using namespace Gwk;
 
-class MenuStrip : public GUnit
+class MenuStrip : public TestUnit
 {
 public:
 
-    GWK_CONTROL_INLINE(MenuStrip, GUnit)
+    GWK_CONTROL_INLINE(MenuStrip, TestUnit)
     {
         Dock(Docking::Fill);
         Gwk::Controls::MenuStrip* menu = new Gwk::Controls::MenuStrip(this);
@@ -105,10 +105,10 @@ public:
     void MenuItemSelect(Base* control)
     {
         Gwk::Controls::MenuItem* menuItem = (Gwk::Controls::MenuItem*)control;
-        UnitPrint(Utility::Format("Menu Selected: %s", menuItem->GetText().c_str()));
+        OutputToLog(Utility::Format("Menu Selected: %s", menuItem->GetText().c_str()));
     }
 
 };
 
 
-DEFINE_UNIT_TEST(MenuStrip);
+DECLARE_TEST(MenuStrip);

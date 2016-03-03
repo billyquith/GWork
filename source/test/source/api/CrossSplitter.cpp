@@ -12,11 +12,11 @@
 
 using namespace Gwk;
 
-class CrossSplitter : public GUnit
+class CrossSplitter : public TestUnit
 {
 public:
 
-    GWK_CONTROL_INLINE(CrossSplitter, GUnit)
+    GWK_CONTROL_INLINE(CrossSplitter, TestUnit)
     {
         Dock(Docking::Fill);
         m_bSplittersVisible = false;
@@ -96,4 +96,4 @@ public:
 };
 
 
-DEFINE_UNIT_TEST(CrossSplitter);
+DECLARE_TEST(CrossSplitter);

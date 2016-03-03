@@ -10,11 +10,11 @@
 
 using namespace Gwk;
 
-class ListBox : public GUnit
+class ListBox : public TestUnit
 {
 public:
 
-    GWK_CONTROL_INLINE(ListBox, GUnit)
+    GWK_CONTROL_INLINE(ListBox, TestUnit)
     {
         {
             Gwk::Controls::ListBox* ctrl = new Gwk::Controls::ListBox(this);
@@ -65,7 +65,7 @@ public:
     void RowSelected(Gwk::Controls::Base* control)
     {
         Gwk::Controls::ListBox* ctrl = (Gwk::Controls::ListBox*)control;
-        UnitPrint(Utility::Format("Listbox Item Selected: %s",
+        OutputToLog(Utility::Format("Listbox Item Selected: %s",
                                   ctrl->GetSelectedRow()->GetText(0).c_str()));
     }
 
@@ -73,4 +73,4 @@ public:
 };
 
 
-DEFINE_UNIT_TEST(ListBox);
+DECLARE_TEST(ListBox);

@@ -11,11 +11,11 @@
 
 using namespace Gwk;
 
-class ColorPicker : public GUnit
+class ColorPicker : public TestUnit
 {
 public:
 
-    GWK_CONTROL_INLINE(ColorPicker, GUnit)
+    GWK_CONTROL_INLINE(ColorPicker, TestUnit)
     {
         Controls::ColorPicker* ctrl = new Controls::ColorPicker(this);
         ctrl->SetBounds(0, 10, 250, 150);
@@ -25,4 +25,4 @@ public:
 };
 
 
-DEFINE_UNIT_TEST(ColorPicker);
+DECLARE_TEST(ColorPicker);

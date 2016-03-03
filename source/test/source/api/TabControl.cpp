@@ -11,13 +11,13 @@
 
 using namespace Gwk;
 
-class TabControl : public GUnit
+class TabControl : public TestUnit
 {
 public:
 
     Controls::TabControl* m_dockControlLeft;
 
-    GWK_CONTROL_INLINE(TabControl, GUnit)
+    GWK_CONTROL_INLINE(TabControl, TestUnit)
     {
         {
             m_dockControlLeft = new Controls::TabControl(this);
@@ -26,8 +26,8 @@ public:
                 Controls::TabButton* button = m_dockControlLeft->AddPage("Controls");
                 Base* page = button->GetPage();
                 {
-                    Controls::RadioButtonController* radio = new Controls::RadioButtonController(
-                        page);
+                    Controls::RadioButtonController* radio =
+                        new Controls::RadioButtonController(page);
                     radio->SetBounds(10, 10, 100, 100);
                     radio->AddOption("Top")->Select();
                     radio->AddOption("Bottom");
@@ -74,4 +74,4 @@ public:
 };
 
 
-DEFINE_UNIT_TEST(TabControl);
+DECLARE_TEST(TabControl);

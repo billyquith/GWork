@@ -10,11 +10,11 @@
 
 using namespace Gwk;
 
-class Label : public GUnit
+class Label : public TestUnit
 {
 public:
 
-    GWK_CONTROL_INLINE(Label, GUnit)
+    GWK_CONTROL_INLINE(Label, TestUnit)
     {
         {
             Gwk::Controls::Label* label = new Gwk::Controls::Label(this);
@@ -94,4 +94,4 @@ public:
 };
 
 
-DEFINE_UNIT_TEST(Label);
+DECLARE_TEST(Label);

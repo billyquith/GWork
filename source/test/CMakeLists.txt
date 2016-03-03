@@ -8,7 +8,9 @@ include_directories(
 )
 
 set(GWK_TEST_SOURCES
+    include/Gwork/Test/Test.h
     include/Gwork/Test/TestAPI.h
+    source/Test.cpp
     source/api/Button.cpp
     source/api/Checkbox.cpp
     source/api/CollapsibleList.cpp
@@ -31,7 +33,7 @@ set(GWK_TEST_SOURCES
     source/api/StatusBar.cpp
     source/api/TabControl.cpp
     source/api/TextBox.cpp
-    source/api/Test.cpp
+    source/api/TestAPI.cpp
     source/api/TreeControl.cpp
     source/api/Window.cpp
 )
@@ -41,6 +43,10 @@ source_group("${GWK_HEADER_FOLDER}"
              REGULAR_EXPRESSION "include/Gwork/Test/.*\\.h")
 source_group("${GWK_SOURCE_FOLDER}\\API"
              REGULAR_EXPRESSION "source/api/.*\\.cpp")
+source_group("${GWK_SOURCE_FOLDER}\\Factory"
+             REGULAR_EXPRESSION "source/factory/.*\\.cpp")
+source_group("${GWK_SOURCE_FOLDER}"
+             REGULAR_EXPRESSION "source/[^/]+\\.cpp")
 
 # Test library
 if(BUILD_TEST)
