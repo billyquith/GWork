@@ -5,16 +5,16 @@
  *  See license in Gwork.h
  */
 
-#include <Gwork/Test/Test.h>
+#include <Gwork/Test/TestAPI.h>
 #include <Gwork/Controls/ScrollControl.h>
 
 using namespace Gwk;
 
-class ScrollControl : public GUnit
+class ScrollControl : public TestUnit
 {
 public:
 
-    GWK_CONTROL_INLINE(ScrollControl, GUnit)
+    GWK_CONTROL_INLINE(ScrollControl, TestUnit)
     {
         {
             Gwk::Controls::ScrollControl* ctrl = new Gwk::Controls::ScrollControl(this);
@@ -116,4 +116,4 @@ public:
 };
 
 
-DEFINE_UNIT_TEST(ScrollControl);
+DECLARE_TEST(ScrollControl);

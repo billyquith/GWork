@@ -5,7 +5,7 @@
  *  See license in Gwork.h
  */
 
-#include <Gwork/Test/Test.h>
+#include <Gwork/Test/TestAPI.h>
 #include <Gwork/Controls/Properties.h>
 #include <Gwork/Controls/PropertyTree.h>
 #include <Gwork/Controls/Property/ColorSelector.h>
@@ -14,11 +14,11 @@
 
 using namespace Gwk;
 
-class Properties : public GUnit
+class Properties : public TestUnit
 {
 public:
 
-    GWK_CONTROL_INLINE(Properties, GUnit)
+    GWK_CONTROL_INLINE(Properties, TestUnit)
     {
         {
             Gwk::Controls::Properties* props = new Gwk::Controls::Properties(this);
@@ -69,11 +69,11 @@ public:
     void OnFirstNameChanged(Controls::Base* control)
     {
         Gwk::Controls::PropertyRow* row = (Gwk::Controls::PropertyRow*)control;
-        UnitPrint(Utility::Format("First Name Changed: %s",
+        OutputToLog(Utility::Format("First Name Changed: %s",
                                   row->GetProperty()->GetPropertyValue().c_str()));
     }
 
 };
 
 
-DEFINE_UNIT_TEST(Properties);
+DECLARE_TEST(Properties);

@@ -5,16 +5,16 @@
  *  See license in Gwork.h
  */
 
-#include <Gwork/Test/Test.h>
+#include <Gwork/Test/TestAPI.h>
 #include <Gwork/Controls/NumericUpDown.h>
 
 using namespace Gwk;
 
-class Numeric : public GUnit
+class Numeric : public TestUnit
 {
 public:
 
-    GWK_CONTROL_INLINE(Numeric, GUnit)
+    GWK_CONTROL_INLINE(Numeric, TestUnit)
     {
         Controls::NumericUpDown* ctrl = new Controls::NumericUpDown(this);
         ctrl->SetBounds(10, 10, 50, 20);
@@ -26,10 +26,10 @@ public:
 
     void onButtonA(Controls::Base* control)
     {
-        //	UnitPrint( "Button Pressed (using 'OnPress' event)" );
+        //	OutputToLog( "Button Pressed (using 'OnPress' event)" );
     }
 
 };
 
 
-DEFINE_UNIT_TEST(Numeric);
+DECLARE_TEST(Numeric);

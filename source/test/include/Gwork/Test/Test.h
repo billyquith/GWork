@@ -7,79 +7,90 @@
 
 
 #pragma once
-#ifndef GWK_UNITTEST_UNITTEST_H
-#define GWK_UNITTEST_UNITTEST_H
+#ifndef GWK_TEST_TEST_H
+#define GWK_TEST_TEST_H
 
-#include <Gwork/Gwork.h>
 #include <Gwork/Align.h>
 #include <Gwork/Utility.h>
-#include <Gwork/Controls/WindowControl.h>
-#include <Gwork/Controls/TabControl.h>
 #include <Gwork/Controls/ListBox.h>
 #include <Gwork/Controls/DockBase.h>
 #include <Gwork/Controls/StatusBar.h>
-#include <Gwork/Controls/PropertyTree.h>
-
-class UnitTest;
+#include <Gwork/Controls/TabControl.h>
 
 
-class GUnit : public Gwk::Controls::Base
+// TODO - Put tests in Gwk namespace as can be included in project.
+
+//
+/// Frame into which all tests go.
+//
+class TestFrame : public Gwk::Controls::DockBase
 {
 public:
+    GWK_CONTROL(TestFrame, Gwk::Controls::DockBase);
+    
+    void PrintText(const Gwk::String& str);
+    
+    void Render(Gwk::Skin::Base* skin) override;
+    
+private:
+    
+    void OnCategorySelect(Gwk::Event::Info info);
+    
+    Gwk::Controls::TabControl*  m_testTabs;
+    Gwk::Controls::StatusBar*   m_statusBar;
+    unsigned int                m_frames;
+    float                       m_fLastSecond;
+};
 
-    GWK_CONTROL_INLINE(GUnit, Gwk::Controls::Base)
+
+//
+/// Tab page into which test category goes.
+//
+class TestCategory : public Gwk::Controls::DockBase
+{
+public:
+    GWK_CONTROL(TestCategory, Gwk::Controls::DockBase);
+    
+    void OutputToLog(const Gwk::String& str);
+    
+protected:
+
+    Gwk::Controls::ListBox* m_textOutput;  // (optional) log
+};
+
+
+//
+/// Individual test. All tests derive from this.
+//
+class TestUnit : public Gwk::Controls::Base
+{
+public:
+    
+    GWK_CONTROL_INLINE(TestUnit, Gwk::Controls::Base)
+    ,   m_testCategory(NULL)
+    {}
+    
+    void SetTestCategory(TestCategory* t)
     {
-        m_unitTest = NULL;
+        m_testCategory = t;
     }
-
-    void SetUnitTest(UnitTest* u)
-    {
-        m_unitTest = u;
-    }
-
-    void UnitPrint(Gwk::String str);
-
+    
+    void OutputToLog(Gwk::String str);
+    
     void Layout(Gwk::Skin::Base* skin) override
     {
         if (GetDock() != Gwk::Docking::None)
             return;
-
+        
         SizeToChildren(true, true);
     }
-
-    UnitTest* m_unitTest;
+    
+    TestCategory* m_testCategory;
 };
 
 
-class UnitTest : public Gwk::Controls::DockBase
-{
-public:
-
-    GWK_CONTROL(UnitTest, Gwk::Controls::DockBase);
-
-    void PrintText(const Gwk::String& str);
-
-    void Render(Gwk::Skin::Base* skin) override;
-
-private:
-
-    void OnCategorySelect(Gwk::Event::Info info);
-
-//    Gwk::Controls::TabControl* m_tabControl;
-    Gwk::Controls::ListBox*    m_textOutput;
-    Gwk::Controls::PropertyTree* m_controlProperties;
-    Gwk::Controls::StatusBar*  m_statusBar;
-    unsigned int m_frames;
-    float m_fLastSecond;
-
-    Gwk::Controls::Base*       m_lastControl;
-
-};
+#define DECLARE_TEST(NAME) \
+    TestUnit* RegisterTest_##NAME(Gwk::Controls::Base *parent) { return new NAME(parent); }
 
 
-#define DEFINE_UNIT_TEST(NAME) \
-    GUnit* RegisterUnitTest_##NAME(Gwk::Controls::Base *tab) \
-    { return new NAME(tab); }
-
-
-#endif // ifndef GWK_UNITTEST_UNITTEST_H
+#endif // ifndef GWK_TEST_TEST_H

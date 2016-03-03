@@ -5,17 +5,17 @@
  *  See license in Gwork.h
  */
 
-#include <Gwork/Test/Test.h>
+#include <Gwork/Test/TestAPI.h>
 #include <Gwork/Controls/Label.h>
 #include <Gwork/Controls/CrossSplitter.h>
 
 using namespace Gwk;
 
-class LabelMultiline : public GUnit
+class LabelMultiline : public TestUnit
 {
 public:
 
-    GWK_CONTROL_INLINE(LabelMultiline, GUnit)
+    GWK_CONTROL_INLINE(LabelMultiline, TestUnit)
     {
         Dock(Docking::Fill);
         Gwk::Controls::CrossSplitter* splitter = new Gwk::Controls::CrossSplitter(this);
@@ -55,4 +55,4 @@ public:
 };
 
 
-DEFINE_UNIT_TEST(LabelMultiline);
+DECLARE_TEST(LabelMultiline);
