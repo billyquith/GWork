@@ -56,12 +56,26 @@ if(DOXYGEN_FOUND)
         set(HHC_PROGRAM)
     endif()
     
+    # directories to scan for documentation
+    set(DOXYGEN_INPUT_DIRS
+        ${DOXYGEN_INPUT_DIR}/platform/include
+        ${DOXYGEN_INPUT_DIR}/gwork/include
+        ${DOXYGEN_INPUT_DIR}/util/include
+        ${DOXYGEN_INPUT_DIR}/test/include
+        pages)
+    
     # config substitute variables
     set(DOC_PROJECT_NAME "Gwork")
     set(DOC_PROJECT_BRIEF "GUI")
     set(DOC_LOGO "logo2.png")
-    set(DOC_INPUT ${DOXYGEN_INPUT_DIR})
-    set(DOC_FILE_PATTERNS "*.c *.cpp *.h *.dox")
+    STRING(REPLACE ";" " " DOC_INPUT "${DOXYGEN_INPUT_DIRS}") # want space separated
+    set(DOC_FILE_PATTERNS "*.c *.cpp *.h *.hpp *.dox")
+
+    # subsitutes to make to patch up docs
+    set(DOC_MACROS "\\
+        \"GWK_CONTROL(CLS,BASE)=/** Constructor. */ CLS(Gwk::Control::Base *parent)\" \\
+        \"GWK_CONTROL_INLINE(CLS,BASE)=/** Constructor. */ CLS(Gwk::Control::Base *parent)\" \\
+        __cplusplus")
 
     # configure the source Doxyfile by copying it and replacing all @variables@
     configure_file(Doxyfile.in ${DOXYGEN_CONFIG_FILE} @ONLY)
