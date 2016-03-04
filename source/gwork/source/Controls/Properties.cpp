@@ -71,7 +71,7 @@ PropertyRow* Properties::Find(const String& text)
             return row;
     }
 
-    return NULL;
+    return nullptr;
 }
 
 void Properties::Clear()
@@ -94,7 +94,7 @@ class PropertyRowLabel : public Label
     GWK_CONTROL_INLINE(PropertyRowLabel, Label)
     {
         SetAlignment(Docking::Left|Docking::CenterV);
-        m_propertyRow = NULL;
+        m_propertyRow = nullptr;
     }
 
     void UpdateColours() override
@@ -124,7 +124,7 @@ protected:
 
 GWK_CONTROL_CONSTRUCTOR(PropertyRow)
 {
-    m_property = NULL;
+    m_property = nullptr;
     PropertyRowLabel* label = new PropertyRowLabel(this);
     label->SetPropertyRow(this);
     label->Dock(Docking::Left);

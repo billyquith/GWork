@@ -15,7 +15,7 @@ using namespace Gwk::Controls;
 
 GWK_CONTROL_CONSTRUCTOR(Label)
 {
-    m_createdFont = NULL;
+    m_createdFont = nullptr;
     m_text = new ControlsInternal::Text(this);
     m_text->SetFont(GetSkin()->GetDefaultFont());
     SetMouseInputEnabled(false);
@@ -29,8 +29,8 @@ void Label::PreDelete(Gwk::Skin::Base* skin)
     {
         skin->ReleaseFont(m_createdFont);
         delete m_createdFont;
-        m_createdFont = NULL;
-        SetFont(NULL);
+        m_createdFont = nullptr;
+        SetFont(nullptr);
     }
 }
 
@@ -98,12 +98,12 @@ void Label::SetFont(Gwk::String strFacename, int iSize, bool bBold)
     {
         GetSkin()->ReleaseFont(m_createdFont);
         delete m_createdFont;
-        m_createdFont = NULL;
-        SetFont(NULL);
+        m_createdFont = nullptr;
+        SetFont(nullptr);
     }
 
     m_createdFont = new Gwk::Font();
-    Debug::AssertCheck(m_createdFont != NULL, "Couldn't Create Font!");
+    Debug::AssertCheck(m_createdFont != nullptr, "Couldn't Create Font!");
     m_createdFont->bold = bBold;
     m_createdFont->facename = strFacename;
     m_createdFont->size = iSize;

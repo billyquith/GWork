@@ -12,11 +12,11 @@
 namespace Gwk {
     namespace ToolTip
     {
-        Controls::Base* g_toolTip = NULL;
+        Controls::Base* g_toolTip = nullptr;
 
         GWK_EXPORT bool TooltipActive()
         {
-            return g_toolTip != NULL;
+            return g_toolTip != nullptr;
         }
 
         void Enable(Controls::Base* control)
@@ -30,7 +30,7 @@ namespace Gwk {
         void Disable(Controls::Base* control)
         {
             if (g_toolTip == control)
-                g_toolTip = NULL;
+                g_toolTip = nullptr;
         }
 
         void RenderToolTip(Skin::Base* skin)

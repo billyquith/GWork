@@ -22,9 +22,9 @@
 
 struct TextureData
 {
-    TextureData(sf::Image* img) : texture(NULL), image(img) {}
+    TextureData(sf::Image* img) : texture(nullptr), image(img) {}
 
-    TextureData(sf::Texture* text) : texture(text), image(NULL) {}
+    TextureData(sf::Texture* text) : texture(text), image(nullptr) {}
 
     ~TextureData()
     {
@@ -107,7 +107,7 @@ void Gwk::Renderer::SFML2::SetDrawColor(Gwk::Color color)
 void Gwk::Renderer::SFML2::DrawPixel(int x, int y)
 {
     EnsurePrimitiveType(sf::Points);
-    EnsureTexture(NULL);
+    EnsureTexture(nullptr);
     Translate(x, y);
     AddVert(x, y+1);
 }
@@ -115,7 +115,7 @@ void Gwk::Renderer::SFML2::DrawPixel(int x, int y)
 void Gwk::Renderer::SFML2::DrawLinedRect(Gwk::Rect rect)
 {
     EnsurePrimitiveType(sf::Lines);
-    EnsureTexture(NULL);
+    EnsureTexture(nullptr);
 
     Translate(rect);
 
@@ -139,7 +139,7 @@ void Gwk::Renderer::SFML2::DrawLinedRect(Gwk::Rect rect)
 void Gwk::Renderer::SFML2::DrawFilledRect(Gwk::Rect rect)
 {
     EnsurePrimitiveType(sf::Triangles);
-    EnsureTexture(NULL);
+    EnsureTexture(nullptr);
 
     Translate(rect);
 
@@ -194,7 +194,7 @@ void Gwk::Renderer::SFML2::LoadFont(Gwk::Font* font)
         // Ideally here we should be setting the font to a system
         // default font here.
         delete sfFont;
-        sfFont = NULL; // SFML 2 doesn't have a default font anymore
+        sfFont = nullptr; // SFML 2 doesn't have a default font anymore
     }
 
     font->data = sfFont;
@@ -207,7 +207,7 @@ void Gwk::Renderer::SFML2::FreeFont(Gwk::Font* font)
 
     sf::Font* sfFont = reinterpret_cast<sf::Font*>(font->data);
     delete sfFont;
-    font->data = NULL;
+    font->data = nullptr;
 }
 
 void Gwk::Renderer::SFML2::RenderText(Gwk::Font* font, Gwk::Point pos,
@@ -283,7 +283,7 @@ void Gwk::Renderer::SFML2::FreeTexture(Gwk::Texture* texture)
 
     delete data;
 
-    texture->data = NULL;
+    texture->data = nullptr;
 }
 
 Gwk::Color Gwk::Renderer::SFML2::PixelColour(Gwk::Texture* texture, unsigned int x,

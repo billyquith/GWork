@@ -71,7 +71,7 @@ namespace Gwk
             virtual bool OnKeyUp(bool bDown) override
             {
                 if (bDown)
-                    OnButtonUp(NULL);
+                    OnButtonUp(nullptr);
 
                 return true;
             }
@@ -79,7 +79,7 @@ namespace Gwk
             virtual bool OnKeyDown(bool bDown) override
             {
                 if (bDown)
-                    OnButtonDown(NULL);
+                    OnButtonDown(nullptr);
 
                 return true;
             }

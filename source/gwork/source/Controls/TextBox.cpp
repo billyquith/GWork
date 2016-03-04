@@ -381,7 +381,7 @@ void TextBox::OnMouseClickLeft(int x, int y, bool bDown)
         if (Gwk::MouseFocus == this)
         {
             SetCursorPos(iChar);
-            Gwk::MouseFocus = NULL;
+            Gwk::MouseFocus = nullptr;
         }
     }
 }

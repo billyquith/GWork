@@ -19,7 +19,7 @@ using namespace Gwk::ControlsInternal;
 
 GWK_CONTROL_CONSTRUCTOR(WindowControl)
 {
-    m_modal = NULL;
+    m_modal = nullptr;
     m_bDeleteOnClose = false;
     m_titleBar = new Dragger(this);
     m_titleBar->SetHeight(24);
@@ -78,7 +78,7 @@ void WindowControl::DestroyModal()
     // Assume it's the canvas.
     SetParent(GetCanvas());
     m_modal->DelayedDelete();
-    m_modal = NULL;
+    m_modal = nullptr;
 }
 
 bool WindowControl::IsOnTop()

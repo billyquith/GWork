@@ -14,32 +14,32 @@
 using namespace Gwk;
 using namespace Gwk::DragAndDrop;
 
-DragAndDrop::Package* DragAndDrop::CurrentPackage = NULL;
-Gwk::Controls::Base* DragAndDrop::HoveredControl = NULL;
-Gwk::Controls::Base* DragAndDrop::SourceControl = NULL;
+DragAndDrop::Package* DragAndDrop::CurrentPackage = nullptr;
+Gwk::Controls::Base* DragAndDrop::HoveredControl = nullptr;
+Gwk::Controls::Base* DragAndDrop::SourceControl = nullptr;
 
-static Gwk::Controls::Base* LastPressedControl = NULL;
-static Gwk::Controls::Base* NewHoveredControl = NULL;
+static Gwk::Controls::Base* LastPressedControl = nullptr;
+static Gwk::Controls::Base* NewHoveredControl = nullptr;
 static Gwk::Point LastPressedPos;
 
 void DragAndDrop::ControlDeleted(Gwk::Controls::Base* control)
 {
     if (SourceControl == control)
     {
-        SourceControl = NULL;
-        CurrentPackage = NULL;
-        HoveredControl = NULL;
-        LastPressedControl = NULL;
+        SourceControl = nullptr;
+        CurrentPackage = nullptr;
+        HoveredControl = nullptr;
+        LastPressedControl = nullptr;
     }
 
     if (LastPressedControl == control)
-        LastPressedControl = NULL;
+        LastPressedControl = nullptr;
 
     if (HoveredControl == control)
-        HoveredControl = NULL;
+        HoveredControl = nullptr;
 
     if (NewHoveredControl == control)
-        NewHoveredControl = NULL;
+        NewHoveredControl = nullptr;
 }
 
 static int m_mouseX = 0;
@@ -69,8 +69,8 @@ bool OnDrop(int x, int y)
     // Report back to the source control, to tell it if we've been successful.
     DragAndDrop::SourceControl->DragAndDrop_EndDragging(bSuccess, x, y);
     DragAndDrop::SourceControl->Redraw();
-    DragAndDrop::CurrentPackage = NULL;
-    DragAndDrop::SourceControl = NULL;
+    DragAndDrop::CurrentPackage = nullptr;
+    DragAndDrop::SourceControl = nullptr;
     return true;
 }
 
@@ -78,7 +78,7 @@ bool DragAndDrop::OnMouseButton(Gwk::Controls::Base* hoveredControl, int x, int 
 {
     if (!bDown)
     {
-        LastPressedControl = NULL;
+        LastPressedControl = nullptr;
 
         // Not carrying anything, allow normal actions
         if (!CurrentPackage)
@@ -122,24 +122,24 @@ bool ShouldStartDraggingControl(int x, int y)
     // We didn't create a package!
     if (!DragAndDrop::CurrentPackage)
     {
-        LastPressedControl = NULL;
-        DragAndDrop::SourceControl = NULL;
+        LastPressedControl = nullptr;
+        DragAndDrop::SourceControl = nullptr;
         return false;
     }
 
     // Now we're dragging something!
     DragAndDrop::SourceControl = LastPressedControl;
-    Gwk::MouseFocus = NULL;
-    LastPressedControl = NULL;
-    DragAndDrop::CurrentPackage->drawcontrol = NULL;
+    Gwk::MouseFocus = nullptr;
+    LastPressedControl = nullptr;
+    DragAndDrop::CurrentPackage->drawcontrol = nullptr;
 
     // Some controls will want to decide whether they should be dragged at that
     // moment.
     // This function is for them (it defaults to true)
     if (!DragAndDrop::SourceControl->DragAndDrop_ShouldStartDrag())
     {
-        DragAndDrop::SourceControl = NULL;
-        DragAndDrop::CurrentPackage = NULL;
+        DragAndDrop::SourceControl = nullptr;
+        DragAndDrop::CurrentPackage = nullptr;
         return false;
     }
 
@@ -167,10 +167,10 @@ void UpdateHoveredControl(Gwk::Controls::Base* ctrl, int x, int y)
         DragAndDrop::HoveredControl->DragAndDrop_HoverLeave(DragAndDrop::CurrentPackage);
 
     // If we're hovering where the control came from, just forget it.
-    // By changing it to NULL here we're not going to show any error cursors
+    // By changing it to nullptr here we're not going to show any error cursors
     // it will just do nothing if you drop it.
     if (NewHoveredControl == DragAndDrop::SourceControl)
-        NewHoveredControl = NULL;
+        NewHoveredControl = nullptr;
 
     // Check to see if the new potential control can accept this type of
     // package.
@@ -195,7 +195,7 @@ void UpdateHoveredControl(Gwk::Controls::Base* ctrl, int x, int y)
     if (DragAndDrop::HoveredControl)
         DragAndDrop::HoveredControl->DragAndDrop_HoverEnter(DragAndDrop::CurrentPackage, x, y);
 
-    NewHoveredControl = NULL;
+    NewHoveredControl = nullptr;
 }
 
 void DragAndDrop::OnMouseMoved(Gwk::Controls::Base* hoveredControl, int x, int y)

@@ -22,7 +22,7 @@ namespace Gwk
         {
             GWK_CONTROL_INLINE(WindowCloseButton, Button)
             {
-                m_window = NULL;
+                m_window = nullptr;
                 SetSize(31, 31);
                 SetText("");
             }

@@ -19,8 +19,8 @@ GWK_CONTROL_CONSTRUCTOR(ResizableControl)
     m_bResizable = true;
     m_minimumSize = Gwk::Point(5, 5);
     m_bClampMovement = false;
-    m_resizer[5] = NULL;
-    m_resizer[0] = NULL;
+    m_resizer[5] = nullptr;
+    m_resizer[0] = nullptr;
     m_resizer[2] = new Resizer(this);
     m_resizer[2]->Dock(Docking::Bottom);
     m_resizer[2]->SetResizeDir(Docking::Bottom);

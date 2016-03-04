@@ -58,7 +58,7 @@ GWK_CONTROL_CONSTRUCTOR(ComboBox)
     arrow->SetComboBox(this);
     
     m_button = arrow;
-    m_selectedItem = NULL;
+    m_selectedItem = nullptr;
     
     SetAlignment(Gwk::Docking::Left|Gwk::Docking::CenterV);
     SetText("");
@@ -74,7 +74,7 @@ MenuItem* ComboBox::AddItem(const String& strLabel, const String& strName)
     item->onMenuItemSelected.Add(this, &ComboBox::OnItemSelected);
 
     // Default
-    if (m_selectedItem == NULL)
+    if (m_selectedItem == nullptr)
         OnItemSelected(item);
 
     return item;

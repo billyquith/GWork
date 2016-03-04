@@ -25,7 +25,7 @@ namespace Gwk
         {
         public:
 
-            DirectX9(IDirect3DDevice9* device = NULL);
+            DirectX9(IDirect3DDevice9* device = nullptr);
             ~DirectX9();
 
             virtual void Begin();

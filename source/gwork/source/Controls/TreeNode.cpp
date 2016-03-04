@@ -63,7 +63,7 @@ const int TreeIndentation = 14;
 
 GWK_CONTROL_CONSTRUCTOR(TreeNode)
 {
-    m_treeControl = NULL;
+    m_treeControl = nullptr;
     m_toggleButton = new OpenToggleButton(this);
     m_toggleButton->SetBounds(0, 0, 15, 15);
     m_toggleButton->onToggle.Add(this, &TreeNode::OnToggleButtonPress);
@@ -105,7 +105,7 @@ TreeNode* TreeNode::AddNode(const String& strLabel)
     TreeNode* node = new TreeNode(this);
     node->SetText(strLabel);
     node->Dock(Docking::Top);
-    node->SetRoot(gwk_cast<TreeControl>(this) != NULL);
+    node->SetRoot(gwk_cast<TreeControl>(this) != nullptr);
     node->SetTreeControl(m_treeControl);
 
     if (m_treeControl)

@@ -129,7 +129,7 @@ void ListBox::OnRowSelected(Base* control)
 Layout::TableRow* ListBox::GetSelectedRow()
 {
     if (m_selectedRows.empty())
-        return NULL;
+        return nullptr;
 
     return *m_selectedRows.begin();
 }
@@ -194,7 +194,7 @@ bool ListBox::OnKeyDown(bool bDown)
         Base::List::const_iterator end = children.end();
         Controls::Base* sel_row = GetSelectedRow();
 
-        if (sel_row == NULL && !children.empty())   // no user selection yet, so
+        if (sel_row == nullptr && !children.empty())   // no user selection yet, so
         {                                           // select first element
             sel_row = children.front();
         }
@@ -238,7 +238,7 @@ bool ListBox::OnKeyUp(bool bDown)
         Controls::Base* sel_row = GetSelectedRow();
 
         // no user selection yet, so select first element
-        if (sel_row == NULL && !children.empty())
+        if (sel_row == nullptr && !children.empty())
             sel_row = children.front();
 
         Base::List::const_iterator result = std::find(begin, end, sel_row);

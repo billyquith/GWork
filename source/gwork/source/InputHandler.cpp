@@ -36,7 +36,7 @@ struct KeyData
             NextRepeat[i] = 0;
         }
 
-        Target = NULL;
+        Target = nullptr;
         LeftMouseDown = false;
         RightMouseDown = false;
     }
@@ -65,7 +65,7 @@ static void UpdateHoveredControl(Controls::Base* inCanvas)
         if (Gwk::HoveredControl)
         {
             Controls::Base* OldHover = Gwk::HoveredControl;
-            Gwk::HoveredControl = NULL;
+            Gwk::HoveredControl = nullptr;
             OldHover->OnMouseLeave();
         }
 
@@ -80,7 +80,7 @@ static void UpdateHoveredControl(Controls::Base* inCanvas)
         if (Gwk::HoveredControl)
         {
             Controls::Base* OldHover = Gwk::HoveredControl;
-            Gwk::HoveredControl = NULL;
+            Gwk::HoveredControl = nullptr;
             OldHover->Redraw();
         }
 
@@ -122,12 +122,12 @@ Gwk::Point Gwk::Input::GetMousePosition()
 void Gwk::Input::OnCanvasThink(Controls::Base* control)
 {
     if (Gwk::MouseFocus && !Gwk::MouseFocus->Visible())
-        Gwk::MouseFocus = NULL;
+        Gwk::MouseFocus = nullptr;
 
     if (Gwk::KeyboardFocus
         && (!Gwk::KeyboardFocus->Visible() || !KeyboardFocus->GetKeyboardInputEnabled()))
     {
-        Gwk::KeyboardFocus = NULL;
+        Gwk::KeyboardFocus = nullptr;
     }
 
     if (!KeyboardFocus)
@@ -329,25 +329,25 @@ bool Gwk::Input::DoSpecialKeys(Controls::Base* canvas, Gwk::UnicodeChar chr)
 
     if (chr == 'C' || chr == 'c')
     {
-        Gwk::KeyboardFocus->OnCopy(NULL);
+        Gwk::KeyboardFocus->OnCopy(nullptr);
         return true;
     }
 
     if (chr == 'V' || chr == 'v')
     {
-        Gwk::KeyboardFocus->OnPaste(NULL);
+        Gwk::KeyboardFocus->OnPaste(nullptr);
         return true;
     }
 
     if (chr == 'X' || chr == 'x')
     {
-        Gwk::KeyboardFocus->OnCut(NULL);
+        Gwk::KeyboardFocus->OnCut(nullptr);
         return true;
     }
 
     if (chr == 'A' || chr == 'a')
     {
-        Gwk::KeyboardFocus->OnSelectAll(NULL);
+        Gwk::KeyboardFocus->OnSelectAll(nullptr);
         return true;
     }
 
@@ -359,10 +359,10 @@ bool Gwk::Input::OnKeyEvent(Controls::Base* canvas, int iKey, bool bDown)
     Gwk::Controls::Base* target = Gwk::KeyboardFocus;
 
     if (target && target->GetCanvas() != canvas)
-        target = NULL;
+        target = nullptr;
 
     if (target && !target->Visible())
-        target = NULL;
+        target = nullptr;
 
     if (bDown)
     {
@@ -384,7 +384,7 @@ bool Gwk::Input::OnKeyEvent(Controls::Base* canvas, int iKey, bool bDown)
 
             //! @bug This causes shift left arrow in textboxes
             //! to not work. What is disabling it here breaking?
-            //! `g_keyData.Target = NULL;`
+            //! `g_keyData.Target = nullptr;`
             
             if (target)
                 return target->OnKeyRelease(iKey);

@@ -5,7 +5,7 @@ using namespace Gwk;
 
 GWK_CONTROL_CONSTRUCTOR( Cage )
 {
-	m_control = NULL;
+	m_control = nullptr;
 	m_border = 5;
 }
 

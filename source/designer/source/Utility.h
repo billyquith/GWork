@@ -12,5 +12,5 @@ inline Gwk::Controls::Base* FindParentControlFactoryControl( Gwk::Controls::Base
 		control = control->GetParent();
 	}
 
-	return NULL;
+	return nullptr;
 }

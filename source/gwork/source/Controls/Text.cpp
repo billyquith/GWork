@@ -16,7 +16,7 @@ using namespace Gwk::ControlsInternal;
 
 GWK_CONTROL_CONSTRUCTOR(Text)
 {
-    m_font = NULL;
+    m_font = nullptr;
     m_colorOverride = Color(255, 255, 255, 0);
     m_color = GetSkin()->Colors.Label.Default;
     SetMouseInputEnabled(false);
@@ -138,7 +138,7 @@ Gwk::Rect Text::GetCharacterPosition(unsigned int iChar)
 Gwk::Rect Text::GetLineBox(int i)
 {
     Text* line = GetLine(i);
-    if (line != NULL)
+    if (line != nullptr)
     {
         Gwk::Point p = GetSkin()->GetRender()->MeasureText(GetFont(), line->m_string);
         return Gwk::Rect(line->X(), line->Y(), Clamp(p.x, 1,p.x), Clamp(p.y, 1,p.y));
@@ -158,7 +158,7 @@ int Text::GetClosestCharacter(Gwk::Point p)
         TextLines::iterator itEnd = m_lines.end();
         int iChars = 0;
 
-        Text *line = NULL;
+        Text *line = nullptr;
         while (it != itEnd)
         {
             line = *it;
@@ -387,7 +387,7 @@ Text* Text::GetLine(int i)
         i--;
     }
 
-    return NULL;
+    return nullptr;
 }
 
 int Text::GetLineFromChar(int i)

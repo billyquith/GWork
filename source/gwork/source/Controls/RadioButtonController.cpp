@@ -16,7 +16,7 @@ using namespace Gwk::Controls;
 
 GWK_CONTROL_CONSTRUCTOR(RadioButtonController)
 {
-    m_selected = NULL;
+    m_selected = nullptr;
     SetTabable(false);
     SetKeyboardInputEnabled(false);
 }

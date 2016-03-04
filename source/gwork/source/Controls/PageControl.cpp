@@ -24,7 +24,7 @@ GWK_CONTROL_CONSTRUCTOR(PageControl)
 
     for (int i = 0; i < MaxPages; i++)
     {
-        m_pages[i] = NULL;
+        m_pages[i] = nullptr;
     }
 
     Base* controls = new Base(this);

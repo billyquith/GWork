@@ -22,7 +22,7 @@ using namespace Gwk::Controls;
 
 WindowCanvas::WindowCanvas(int x, int y, int w, int h, Gwk::Skin::Base* skin,
                            const Gwk::String& strWindowTitle)
-: ParentClass(NULL)
+: ParentClass(nullptr)
 {
     m_bQuit = false;
     m_bCanMaximize = true;
@@ -187,7 +187,7 @@ void WindowCanvas::DestroyWindow()
     {
         GetSkin()->GetRender()->ShutdownContext(this);
         Gwk::Platform::DestroyPlatformWindow(m_oSWindowSWindow);
-        m_oSWindowSWindow = NULL;
+        m_oSWindowSWindow = nullptr;
     }
 }
 
@@ -202,7 +202,7 @@ Skin::Base* WindowCanvas::GetSkin(void)
     if (m_skinChange)
     {
         SetSkin(m_skinChange);
-        m_skinChange = NULL;
+        m_skinChange = nullptr;
     }
 
     return ParentClass::GetSkin();

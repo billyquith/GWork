@@ -31,9 +31,9 @@ namespace Gwk
         // self-hosting constructor
         Direct2D::Direct2D() : m_color(D2D1::ColorF::White)
         {
-            m_rT               = NULL;
-            m_dWriteFactory    = NULL;
-            m_wICFactory       = NULL;
+            m_rT               = nullptr;
+            m_dWriteFactory    = nullptr;
+            m_wICFactory       = nullptr;
         }
 
         Direct2D::Direct2D(ID2D1RenderTarget* rT, IDWriteFactory* dWriteFactory,
@@ -75,10 +75,10 @@ namespace Gwk
 
         bool Direct2D::InternalLoadFont(Gwk::Font* font)
         {
-            IDWriteTextFormat* textFormat = NULL;
+            IDWriteTextFormat* textFormat = nullptr;
             HRESULT hr = m_dWriteFactory->CreateTextFormat(
                 font->facename.c_str(),
-                NULL,
+                nullptr,
                 font->bold ? DWRITE_FONT_WEIGHT_BOLD : DWRITE_FONT_WEIGHT_NORMAL,
                 DWRITE_FONT_STYLE_NORMAL,
                 DWRITE_FONT_STRETCH_NORMAL,
@@ -116,7 +116,7 @@ namespace Gwk
             FontData* fontData = (FontData*)font->data;
             fontData->textFormat->Release();
             delete fontData;
-            font->data = NULL;
+            font->data = nullptr;
         }
 
         void Direct2D::FreeFont(Gwk::Font* font)
@@ -168,10 +168,10 @@ namespace Gwk
 
         void Direct2D::DeviceLost()
         {
-            if (m_solidColorBrush != NULL)
+            if (m_solidColorBrush != nullptr)
             {
                 m_solidColorBrush->Release();
-                m_solidColorBrush = NULL;
+                m_solidColorBrush = nullptr;
             }
 
             for (Texture::List::const_iterator tex_it = m_textureList.begin();
@@ -215,7 +215,7 @@ namespace Gwk
             TextureData* texData = (TextureData*)texture->data;
 
             // Missing image, not loaded properly?
-            if (!texData || texData->bitmap == NULL)
+            if (!texData || texData->bitmap == nullptr)
                 return DrawMissingImage(rect);
 
             Translate(rect);
@@ -229,13 +229,13 @@ namespace Gwk
 
         bool Direct2D::InternalLoadTexture(Gwk::Texture* texture)
         {
-            IWICBitmapDecoder* decoder = NULL;
-            IWICBitmapFrameDecode* source = NULL;
-            IWICFormatConverter* converter = NULL;
-            ID2D1Bitmap*            d2DBitmap = NULL;
+            IWICBitmapDecoder* decoder = nullptr;
+            IWICBitmapFrameDecode* source = nullptr;
+            IWICFormatConverter* converter = nullptr;
+            ID2D1Bitmap*            d2DBitmap = nullptr;
             HRESULT hr = m_wICFactory->CreateDecoderFromFilename(
                 texture->name.GetUnicode().c_str(),
-                NULL,
+                nullptr,
                 GENERIC_READ,
                 WICDecodeMetadataCacheOnLoad,
                 &decoder
@@ -257,7 +257,7 @@ namespace Gwk
                     source,
                     GUID_WICPixelFormat32bppPBGRA,
                     WICBitmapDitherTypeNone,
-                    NULL,
+                    nullptr,
                     0.f,
                     WICBitmapPaletteTypeMedianCut
                     );
@@ -267,7 +267,7 @@ namespace Gwk
             {
                 hr = m_rT->CreateBitmapFromWicBitmap(
                     converter,
-                    NULL,
+                    nullptr,
                     &d2DBitmap
                     );
             }
@@ -288,10 +288,10 @@ namespace Gwk
                 texture->failed = true;
             }
 
-            if (decoder != NULL)
+            if (decoder != nullptr)
                 decoder->Release();
 
-            if (converter != NULL)
+            if (converter != nullptr)
                 converter->Release();
 
             return SUCCEEDED(hr);
@@ -308,20 +308,20 @@ namespace Gwk
             if (bRemove)
                 m_textureList.remove(texture);
 
-            if (texture->data != NULL)
+            if (texture->data != nullptr)
             {
                 TextureData* texdata = (TextureData*)texture->data;
 
-                if (texdata->wICBitmap != NULL)
+                if (texdata->wICBitmap != nullptr)
                     texdata->wICBitmap->Release();
 
-                if (texdata->bitmap != NULL)
+                if (texdata->bitmap != nullptr)
                     texdata->bitmap->Release();
 
                 delete texdata;
             }
 
-            texture->data = NULL;
+            texture->data = nullptr;
         }
 
         void Direct2D::FreeTexture(Gwk::Texture* texture)
@@ -334,7 +334,7 @@ namespace Gwk
         {
             TextureData* texData = (TextureData*)texture->data;
 
-            if (!texData || texData->bitmap == NULL)
+            if (!texData || texData->bitmap == nullptr)
                 return col_default;
 
             WICRect sourceRect;
@@ -423,10 +423,10 @@ namespace Gwk
 
         void Direct2D::InternalReleaseDeviceResources()
         {
-            if (m_rT != NULL)
+            if (m_rT != nullptr)
             {
                 m_rT->Release();
-                m_rT = NULL;
+                m_rT = nullptr;
             }
         }
 
@@ -450,14 +450,14 @@ namespace Gwk
             if (FAILED(hr))
                 return false;
 
-            hr = CoInitialize(NULL);
+            hr = CoInitialize(nullptr);
 
             if (FAILED(hr))
                 return false;
 
             hr = CoCreateInstance(
                 CLSID_WICImagingFactory,
-                NULL,
+                nullptr,
                 CLSCTX_INPROC_SERVER,
                 IID_IWICImagingFactory,
                 reinterpret_cast<void**>(&m_wICFactory)

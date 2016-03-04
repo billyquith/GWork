@@ -25,7 +25,7 @@ namespace Gwk
         {
         public:
             
-            AllegroCTT() : m_oSWindowldTarget(NULL) {}
+            AllegroCTT() : m_oSWindowldTarget(nullptr) {}
             ~AllegroCTT() {}
             
             void Initialize() {}
@@ -80,7 +80,7 @@ namespace Gwk
             if (it != m_cache.end())
             {
                 // Prepare for rendering.
-                assert(m_oSWindowldTarget==NULL);
+                assert(m_oSWindowldTarget==nullptr);
                 m_oSWindowldTarget = al_get_target_bitmap();
                 al_set_target_bitmap((*it).second.m_bitmap);
                 al_clear_to_color(al_map_rgb_f(1.f,1.f,1.f));
@@ -91,7 +91,7 @@ namespace Gwk
         {
             // Prepare for rendering.
             al_set_target_bitmap(m_oSWindowldTarget);
-            m_oSWindowldTarget = NULL;
+            m_oSWindowldTarget = nullptr;
         }
         
         void AllegroCTT::DrawCachedControlTexture(CacheHandle control)
@@ -143,7 +143,7 @@ namespace Gwk
             if (font->data)
             {
                 al_destroy_font((ALLEGRO_FONT*)font->data);
-                font->data = NULL;
+                font->data = nullptr;
             }
         }
 
@@ -205,7 +205,7 @@ namespace Gwk
             }
             else
             {
-                texture->data = NULL;
+                texture->data = nullptr;
                 texture->failed = true;
             }
         }
@@ -213,7 +213,7 @@ namespace Gwk
         void Allegro::FreeTexture(Gwk::Texture* texture)
         {
             al_destroy_bitmap((ALLEGRO_BITMAP*)texture->data);
-            texture->data = NULL;
+            texture->data = nullptr;
         }
 
         void Allegro::DrawTexturedRect(Gwk::Texture* texture, Gwk::Rect rect,
@@ -287,7 +287,7 @@ namespace Gwk
                 ADD_LINE(2, fx+fw,fy+1.f,      fx+fw,fy+fh-1.f); // right
                 ADD_LINE(4, fx+fw-1.f,fy+fh,   fx+1.f,fy+fh   ); // bottom
                 ADD_LINE(6, fx,fy+fh-1.f,      fx,fy+1.f      ); // left
-                al_draw_prim(vtx, NULL, NULL, 0, 7, ALLEGRO_PRIM_LINE_LOOP);
+                al_draw_prim(vtx, nullptr, nullptr, 0, 7, ALLEGRO_PRIM_LINE_LOOP);
             }
             else
             {
@@ -305,7 +305,7 @@ namespace Gwk
                 ADD_LINE(2, fx+fw,fy+2.f,       fx+fw,fy+fh-2.f ); // right
                 ADD_LINE(4, fx+fw-2.f,fy+fh,    fx+2.f,fy+fh    ); // bottom
                 ADD_LINE(6, fx,fy+fh-2.f,       fx,fy+2.f       ); // left
-                al_draw_prim(vtx, NULL, NULL, 0, 7, ALLEGRO_PRIM_LINE_LOOP);
+                al_draw_prim(vtx, nullptr, nullptr, 0, 7, ALLEGRO_PRIM_LINE_LOOP);
             }
             
 #undef SET_VERT

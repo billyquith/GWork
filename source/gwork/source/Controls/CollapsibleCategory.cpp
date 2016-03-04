@@ -94,7 +94,7 @@ class CategoryHeaderButton : public Button
 
 GWK_CONTROL_CONSTRUCTOR(CollapsibleCategory)
 {
-    m_list = NULL;
+    m_list = nullptr;
     m_button = new CategoryHeaderButton(this);
     m_button->SetText("Category Title");
     m_button->Dock(Docking::Top);
@@ -194,7 +194,7 @@ Button* CollapsibleCategory::GetSelected()
             return child;
     }
     
-    return NULL;
+    return nullptr;
 }
 
 

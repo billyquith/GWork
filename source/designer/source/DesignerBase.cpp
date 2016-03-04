@@ -128,10 +128,10 @@ void DesignerBase::SaveAsDocument()
 Document* DesignerBase::CurrentDocument()
 {
 	Controls::TabButton* button = m_documentHolder->GetCurrentButton();
-	if ( !button ) return NULL;
+	if ( !button ) return nullptr;
 
 	Document* doc = gwk_cast<Document>(button->GetPage()->FindChildByName( "Document" ));
-	if ( !doc ) return NULL;
+	if ( !doc ) return nullptr;
 
 	return doc;
 }

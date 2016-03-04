@@ -34,7 +34,7 @@ namespace Gwk
 
             GWK_CONTROL_INLINE(FieldLabel, Controls::Label)
             {
-                m_field = NULL;
+                m_field = nullptr;
                 SetMargin(Margin(0, 1, 0, 1));
                 SetAlignment(Docking::CenterV|Docking::Left);
             }

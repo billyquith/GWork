@@ -67,10 +67,10 @@ int main(int argc, char** argv)
             GworkInput.ProcessEvent(&evt);
         }
         
-        renderer->BeginContext(NULL);
+        renderer->BeginContext(nullptr);
         canvas->RenderCanvas();
-        renderer->PresentContext(NULL);
-        renderer->EndContext(NULL);
+        renderer->PresentContext(nullptr);
+        renderer->EndContext(nullptr);
     }
 
     //TTF_Quit();   TODO: Currently crashes. Gwork needs work.

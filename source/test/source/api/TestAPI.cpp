@@ -16,7 +16,7 @@ using namespace Gwk;
 
 GWK_CONTROL_CONSTRUCTOR(TestAPI)
 {
-    m_lastControl = NULL;
+    m_lastControl = nullptr;
 
     Dock(Docking::Fill);
     

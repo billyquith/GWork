@@ -17,11 +17,11 @@ GWK_CONTROL_CONSTRUCTOR(TreeControl)
 {
     m_treeControl = this;
     m_toggleButton->DelayedDelete();
-    m_toggleButton = NULL;
+    m_toggleButton = nullptr;
     m_title->DelayedDelete();
-    m_title = NULL;
+    m_title = nullptr;
     m_innerPanel->DelayedDelete();
-    m_innerPanel = NULL;
+    m_innerPanel = nullptr;
     m_bAllowMultipleSelection = false;
     m_scrollControl = new ScrollControl(this);
     m_scrollControl->Dock(Docking::Fill);

@@ -18,7 +18,7 @@ using namespace Gwk::Controls;
 
 GWK_CONTROL_CONSTRUCTOR(DockedTabControl)
 {
-    m_windowControl = NULL;
+    m_windowControl = nullptr;
     Dock(Docking::Fill);
     m_titleBar = new TabTitleBar(this);
     m_titleBar->Dock(Docking::Top);

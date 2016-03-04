@@ -27,7 +27,7 @@ namespace Gwk
 
             SDL13()
             {
-                m_canvas = NULL;
+                m_canvas = nullptr;
             }
 
             void Initialize(Gwk::Controls::Canvas* c)

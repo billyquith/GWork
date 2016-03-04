@@ -18,7 +18,7 @@ namespace Gwk
         OpenGL::OpenGL()
         {
             m_vertNum = 0;
-            m_context = NULL;
+            m_context = nullptr;
             ::FreeImage_Initialise();
 
             for (int i = 0; i < MaxVerts; i++)
@@ -226,7 +226,7 @@ namespace Gwk
 
             glDeleteTextures(1, tex);
             delete tex;
-            texture->data = NULL;
+            texture->data = nullptr;
         }
 
         Gwk::Color OpenGL::PixelColour(Gwk::Texture* texture, unsigned int x, unsigned int y,

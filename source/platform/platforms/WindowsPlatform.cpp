@@ -49,7 +49,7 @@ static LPCTSTR iCursorConversion[] =
 void Gwk::Platform::SetCursor(unsigned char iCursor)
 {
     // Todo.. Properly.
-    ::SetCursor(LoadCursor(NULL, iCursorConversion[iCursor]));
+    ::SetCursor(LoadCursor(nullptr, iCursorConversion[iCursor]));
 }
 
 void Gwk::Platform::GetCursorPos(Gwk::Point& po)
@@ -68,12 +68,12 @@ void Gwk::Platform::GetDesktopSize(int& w, int& h)
 
 Gwk::String Gwk::Platform::GetClipboardText()
 {
-    if (!OpenClipboard(NULL))
+    if (!OpenClipboard(nullptr))
         return "";
 
     HANDLE hData = GetClipboardData(CF_UNICODETEXT);
 
-    if (hData == NULL)
+    if (hData == nullptr)
     {
         CloseClipboard();
         return "";
@@ -89,7 +89,7 @@ Gwk::String Gwk::Platform::GetClipboardText()
 
 bool Gwk::Platform::SetClipboardText(const Gwk::String& str)
 {
-    if (!OpenClipboard(NULL))
+    if (!OpenClipboard(nullptr))
         return false;
 
     EmptyClipboard();
@@ -176,7 +176,7 @@ bool Gwk::Platform::FileOpen(const String& Name, const String& StartPath, const 
     opf.nFileOffset = 0;
     opf.nFileExtension = 0;
     opf.lpstrDefExt = "*.*";
-    opf.lpfnHook = NULL;
+    opf.lpfnHook = nullptr;
     opf.lCustData = 0;
     opf.Flags = (OFN_PATHMUSTEXIST|OFN_OVERWRITEPROMPT|OFN_NOCHANGEDIR)&~OFN_ALLOWMULTISELECT;
     opf.lStructSize = sizeof(OPENFILENAME);
@@ -195,10 +195,10 @@ bool Gwk::Platform::FileOpen(const String& Name, const String& StartPath, const 
 bool Gwk::Platform::FolderOpen(const String& Name, const String& StartPath,
                                String& filePathOut)
 {
-    IFileDialog* pfd = NULL;
+    IFileDialog* pfd = nullptr;
     bool bSuccess = false;
 
-    if (CoCreateInstance(CLSID_FileOpenDialog, NULL, CLSCTX_INPROC_SERVER,
+    if (CoCreateInstance(CLSID_FileOpenDialog, nullptr, CLSCTX_INPROC_SERVER,
                          IID_PPV_ARGS(&pfd)) != S_OK)
         return bSuccess;
 
@@ -216,13 +216,13 @@ bool Gwk::Platform::FolderOpen(const String& Name, const String& StartPath,
     // TODO: SetDefaultFolder -> StartPath
     //
 
-    if (pfd->Show(NULL) == S_OK)
+    if (pfd->Show(nullptr) == S_OK)
     {
         IShellItem* psi;
 
         if (pfd->GetResult(&psi) == S_OK)
         {
-            WCHAR* strOut = NULL;
+            WCHAR* strOut = nullptr;
 
             if (psi->GetDisplayName(SIGDN_DESKTOPABSOLUTEPARSING, &strOut) != S_OK)
                 return bSuccess;
@@ -275,7 +275,7 @@ bool Gwk::Platform::FileSave(const String& Name, const String& StartPath, const 
     opf.nFileOffset = 0;
     opf.nFileExtension = 0;
     opf.lpstrDefExt = "*.*";
-    opf.lpfnHook = NULL;
+    opf.lpfnHook = nullptr;
     opf.lCustData = 0;
     opf.Flags = (OFN_PATHMUSTEXIST|OFN_OVERWRITEPROMPT|OFN_NOCHANGEDIR) & ~OFN_ALLOWMULTISELECT;
     opf.lStructSize = sizeof(OPENFILENAME);
@@ -294,18 +294,18 @@ bool Gwk::Platform::FileSave(const String& Name, const String& StartPath, const 
 void* Gwk::Platform::CreatePlatformWindow(int x, int y, int w, int h,
                                            const Gwk::String& strWindowTitle)
 {
-    CoInitializeEx(NULL, COINIT_APARTMENTTHREADED);
+    CoInitializeEx(nullptr, COINIT_APARTMENTTHREADED);
     WNDCLASSA wc;
     ZeroMemory(&wc, sizeof(wc));
     wc.style            = CS_OWNDC|CS_DROPSHADOW;
     wc.lpfnWndProc      = DefWindowProc;
-    wc.hInstance        = GetModuleHandle(NULL);
+    wc.hInstance        = GetModuleHandle(nullptr);
     wc.lpszClassName    = "GWK_Window_Class";
-    wc.hCursor          = LoadCursor(NULL, IDC_ARROW);
+    wc.hCursor          = LoadCursor(nullptr, IDC_ARROW);
     RegisterClassA(&wc);
     HWND hWindow = CreateWindowExA(WS_EX_APPWINDOW|WS_EX_ACCEPTFILES, wc.lpszClassName,
-                                   strWindowTitle.c_str(), WS_POPUP|WS_VISIBLE, x, y, w, h, NULL, NULL,
-                                   GetModuleHandle(NULL), NULL);
+                                   strWindowTitle.c_str(), WS_POPUP|WS_VISIBLE, x, y, w, h, nullptr, nullptr,
+                                   GetModuleHandle(nullptr), nullptr);
     ShowWindow(hWindow, SW_SHOW);
     SetForegroundWindow(hWindow);
     SetFocus(hWindow);
@@ -343,7 +343,7 @@ bool Gwk::Platform::MessagePump(void* window)
     // If the active window has changed then force a redraw of our canvas
     // since we might paint ourselves a different colour if we're inactive etc
     {
-        static HWND g_lastFocus = NULL;
+        static HWND g_lastFocus = nullptr;
 
         if (GetActiveWindow() != g_lastFocus)
         {
@@ -380,7 +380,7 @@ void Gwk::Platform::SetWindowMaximized(void* ptr, bool bMax, Gwk::Point& newPos,
                      SWP_NOOWNERZORDER|SWP_NOACTIVATE|SWP_NOCOPYBITS|SWP_NOSENDCHANGING);
         // Remove the corner curves
         {
-            SetWindowRgn((HWND)ptr, NULL, false);
+            SetWindowRgn((HWND)ptr, nullptr, false);
         }
     }
     else

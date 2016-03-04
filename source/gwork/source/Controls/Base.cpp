@@ -28,10 +28,10 @@ namespace Controls {
 
 Base::Base(Base* parent, const Gwk::String& Name)
 {
-    m_parent = NULL;
-    m_actualParent = NULL;
-    m_innerPanel = NULL;
-    m_skin = NULL;
+    m_parent = nullptr;
+    m_actualParent = nullptr;
+    m_innerPanel = nullptr;
+    m_skin = nullptr;
     SetName(Name);
     SetParent(parent);
     m_bHidden = false;
@@ -39,13 +39,13 @@ Base::Base(Base* parent, const Gwk::String& Name)
     m_padding = Padding(0, 0, 0, 0);
     m_margin = Margin(0, 0, 0, 0);
     m_dock = Docking::None;
-    m_dragAndDrop_Package = NULL;
+    m_dragAndDrop_Package = nullptr;
     RestrictToParent(false);
     SetMouseInputEnabled(true);
     SetKeyboardInputEnabled(false);
     Invalidate();
     SetCursor(Gwk::CursorType::Normal);
-    SetToolTip(NULL);
+    SetToolTip(nullptr);
     SetTabable(false);
     SetShouldDrawBackground(true);
     m_bDisabled = false;
@@ -79,16 +79,16 @@ Base::~Base()
     }
 
     m_accelerators.clear();
-    SetParent(NULL);
+    SetParent(nullptr);
 
     if (Gwk::HoveredControl == this)
-        Gwk::HoveredControl = NULL;
+        Gwk::HoveredControl = nullptr;
 
     if (Gwk::KeyboardFocus == this)
-        Gwk::KeyboardFocus = NULL;
+        Gwk::KeyboardFocus = nullptr;
 
     if (Gwk::MouseFocus == this)
-        Gwk::MouseFocus = NULL;
+        Gwk::MouseFocus = nullptr;
 
     DragAndDrop::ControlDeleted(this);
     ToolTip::ControlDeleted(this);
@@ -99,7 +99,7 @@ Base::~Base()
     if (m_dragAndDrop_Package)
     {
         delete m_dragAndDrop_Package;
-        m_dragAndDrop_Package = NULL;
+        m_dragAndDrop_Package = nullptr;
     }
 }
 
@@ -120,7 +120,7 @@ Canvas* Base::GetCanvas()
     Base* canvas = m_parent;
 
     if (!canvas)
-        return NULL;
+        return nullptr;
 
     return canvas->GetCanvas();
 }
@@ -134,7 +134,7 @@ void Base::SetParent(Base* parent)
         m_parent->RemoveChild(this);
 
     m_parent = parent;
-    m_actualParent = NULL;
+    m_actualParent = nullptr;
 
     if (m_parent)
         m_parent->AddChild(this);
@@ -270,7 +270,7 @@ Controls::Base* Base::FindChildByName(const Gwk::String& name, bool bRecursive)
         }
     }
 
-    return NULL;
+    return nullptr;
 }
 
 void Base::BringNextToControl(Controls::Base* child, bool bBehind)
@@ -314,7 +314,7 @@ void Base::RemoveChild(Base* child)
 {
     // If we removed our innerpanel, remove our pointer to it
     if (m_innerPanel == child)
-        m_innerPanel = NULL;
+        m_innerPanel = nullptr;
 
     if (m_innerPanel)
         m_innerPanel->RemoveChild(child);
@@ -340,7 +340,7 @@ unsigned int Base::NumChildren()
 Controls::Base* Base::GetChild(unsigned int i)
 {
     if (i >= NumChildren())
-        return NULL;
+        return nullptr;
 
     for (Base::List::iterator iter = Children.begin(); iter != Children.end(); ++iter)
     {
@@ -351,7 +351,7 @@ Controls::Base* Base::GetChild(unsigned int i)
     }
 
     // Should never happen.
-    return NULL;
+    return nullptr;
 }
 
 void Base::OnChildAdded(Base* /*child*/)
@@ -372,8 +372,8 @@ Skin::Base* Base::GetSkin(void)
     if (m_parent)
         return m_parent->GetSkin();
 
-    Debug::AssertCheck(0, "Base::GetSkin Returning NULL!\n");
-    return NULL;
+    Debug::AssertCheck(0, "Base::GetSkin Returning nullptr!\n");
+    return nullptr;
 }
 
 void Base::MoveBy(int x, int y)
@@ -679,7 +679,7 @@ bool Base::IsHovered()
 
 bool Base::ShouldDrawHover()
 {
-    return Gwk::MouseFocus == this || Gwk::MouseFocus == NULL;
+    return Gwk::MouseFocus == this || Gwk::MouseFocus == nullptr;
 }
 
 bool Base::HasFocus()
@@ -705,7 +705,7 @@ void Base::Blur()
     if (Gwk::KeyboardFocus != this)
         return;
 
-    Gwk::KeyboardFocus = NULL;
+    Gwk::KeyboardFocus = nullptr;
     OnLostKeyboardFocus();
     Redraw();
 }
@@ -738,15 +738,15 @@ void Base::OnChildTouched(Controls::Base* /*child*/)
 Base* Base::GetControlAt(int x, int y, bool bOnlyIfMouseEnabled)
 {
     if (Hidden())
-        return NULL;
+        return nullptr;
 
     if (x < 0 || y < 0 || x >= Width() || y >= Height())
-        return NULL;
+        return nullptr;
 
     for (Base::List::reverse_iterator iter = Children.rbegin(); iter != Children.rend(); ++iter)
     {
         Base* child = *iter;
-        Base* found = NULL;
+        Base* found = nullptr;
         found = child->GetControlAt(x-child->X(), y-child->Y(), bOnlyIfMouseEnabled);
 
         if (found)
@@ -754,7 +754,7 @@ Base* Base::GetControlAt(int x, int y, bool bOnlyIfMouseEnabled)
     }
 
     if (bOnlyIfMouseEnabled && !GetMouseInputEnabled())
-        return NULL;
+        return nullptr;
 
     return this;
 }
@@ -880,7 +880,7 @@ void Base::RecurseLayout(Skin::Base* skin)
     }
 
     if (Gwk::KeyboardFocus == this)
-        GetCanvas()->NextTab = NULL;
+        GetCanvas()->NextTab = nullptr;
 }
 
 bool Base::IsChild(Controls::Base* child)

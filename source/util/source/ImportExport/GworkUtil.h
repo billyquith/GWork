@@ -160,7 +160,7 @@ namespace GwkUtil
             typedef typename std::list<Tree>   List;
 
             Tree()
-            :   m_info(NULL)
+            :   m_info(0)
             {
             }
 

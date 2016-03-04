@@ -81,7 +81,7 @@ void Document::DoSaveFromDialog( Event::Info info )
 	m_strFilename = info.String;
 	
 	m_exporter->Export( m_canvas, m_strFilename );
-	m_exporter = NULL;
+	m_exporter = nullptr;
 }
 
 void Document::DoSave( ImportExport::Base* exporter )

@@ -19,8 +19,8 @@
 
 
 static Gwk::Input::Allegro      g_gworkInput;
-static ALLEGRO_EVENT_QUEUE*     g_event_queue = NULL;
-static ALLEGRO_DISPLAY*         g_display = NULL;
+static ALLEGRO_EVENT_QUEUE*     g_event_queue = nullptr;
+static ALLEGRO_DISPLAY*         g_display = nullptr;
 static Gwk::String              gs_ClipboardEmulator;
 
 static const ALLEGRO_SYSTEM_MOUSE_CURSOR g_cursorConversion[] =
@@ -169,14 +169,14 @@ void* Gwk::Platform::CreatePlatformWindow(int x, int y, int w, int h,
 {
     // Check Allegro has been initialised.
     if (!InitAllegro())
-        return NULL;
+        return nullptr;
 
     al_set_new_window_position(x, y);
     al_set_new_display_flags(ALLEGRO_WINDOWED|ALLEGRO_FRAMELESS);
     ALLEGRO_DISPLAY* display = al_create_display(w, h);
 
     if (!display)
-        return NULL;
+        return nullptr;
 
     g_display = display;
     al_set_window_title(display, strWindowTitle.c_str());     // invisible as
@@ -184,7 +184,7 @@ void* Gwk::Platform::CreatePlatformWindow(int x, int y, int w, int h,
     g_event_queue = al_create_event_queue();
 
     if (!g_event_queue)
-        return NULL;
+        return nullptr;
 
     al_init_image_addon();
     al_init_font_addon();
@@ -204,7 +204,7 @@ void Gwk::Platform::DestroyPlatformWindow(void* ptr)
     ALLEGRO_DISPLAY* display = (ALLEGRO_DISPLAY*)ptr;
     al_destroy_display(display);
     al_destroy_event_queue(g_event_queue);
-    g_event_queue = NULL;
+    g_event_queue = nullptr;
 }
 
 bool Gwk::Platform::MessagePump(void* window)

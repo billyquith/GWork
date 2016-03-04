@@ -30,7 +30,7 @@ namespace Gwk
         {
         public:
 
-            GDIPlus(HWND hWND = NULL);
+            GDIPlus(HWND hWND = nullptr);
             ~GDIPlus();
 
             virtual void Begin();
@@ -88,7 +88,7 @@ namespace Gwk
         {
         public:
 
-            GDIPlusBuffered(HWND hWND = NULL);
+            GDIPlusBuffered(HWND hWND = nullptr);
             ~GDIPlusBuffered();
 
             virtual void Begin();

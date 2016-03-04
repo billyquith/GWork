@@ -19,7 +19,7 @@ namespace Gwk
             m_fLetterSpacing = 1.0f/16.0f;
             m_fFontScale[0] = 1.5f;
             m_fFontScale[1] = 1.5f;
-            m_fontTexture = NULL;
+            m_fontTexture = nullptr;
         }
 
         void OpenGL_DebugFont::Init()
@@ -76,9 +76,9 @@ namespace Gwk
 
             glDeleteTextures(1, tex);
             delete tex;
-            m_fontTexture->data = NULL;
+            m_fontTexture->data = nullptr;
             delete m_fontTexture;
-            m_fontTexture = NULL;
+            m_fontTexture = nullptr;
         }
 
         void OpenGL_DebugFont::RenderText(Gwk::Font* font, Gwk::Point pos,

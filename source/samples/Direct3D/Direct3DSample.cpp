@@ -27,9 +27,9 @@
 #include <Gwork/Input/Windows.h>
 #include <Gwork/Renderers/DirectX9.h>
 
-HWND g_hWND = NULL;
-LPDIRECT3D9 g_D3D = NULL;
-IDirect3DDevice9*       g_D3DDevice = NULL;
+HWND g_hWND = nullptr;
+LPDIRECT3D9 g_D3D = nullptr;
+IDirect3DDevice9*       g_D3DDevice = nullptr;
 D3DPRESENT_PARAMETERS g_D3DParams;
 
 //
@@ -41,16 +41,16 @@ HWND CreateGameWindow(void)
     ZeroMemory(&wc, sizeof(wc));
     wc.style            = CS_HREDRAW|CS_VREDRAW|CS_OWNDC;
     wc.lpfnWndProc      = DefWindowProc;
-    wc.hInstance        = GetModuleHandle(NULL);
+    wc.hInstance        = GetModuleHandle(nullptr);
     wc.lpszClassName    = L"GworkWindow";
-    wc.hCursor          = LoadCursor(NULL, IDC_ARROW);
+    wc.hCursor          = LoadCursor(nullptr, IDC_ARROW);
     RegisterClass(&wc);
     HWND hWindow = CreateWindowEx((WS_EX_APPWINDOW|WS_EX_WINDOWEDGE), wc.lpszClassName,
                                   L"Gwork - Direct 3D Sample",
                                   (WS_OVERLAPPEDWINDOW|WS_CLIPSIBLINGS|
                                    WS_CLIPCHILDREN)&~(WS_MINIMIZEBOX|WS_MAXIMIZEBOX|WS_THICKFRAME),
-                                  -1, -1, 1004, 650, NULL, NULL, GetModuleHandle(
-                                      NULL), NULL);
+                                  -1, -1, 1004, 650, nullptr, nullptr, GetModuleHandle(
+                                      nullptr), nullptr);
     ShowWindow(hWindow, SW_SHOW);
     SetForegroundWindow(hWindow);
     SetFocus(hWindow);
@@ -142,7 +142,7 @@ int main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCm
             break;
 
         // If we have a message from windows..
-        if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
+        if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
         {
             // .. give it to the input handler to process
             GworkInput.ProcessMessage(msg);
@@ -159,11 +159,11 @@ int main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCm
         {
             // Normal DirectX rendering loop
             g_D3DDevice->BeginScene();
-            g_D3DDevice->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 0, 0), 1, 0);
+            g_D3DDevice->Clear(0, nullptr, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 0, 0), 1, 0);
             // This is how easy it is to render Gwork!
             canvas->RenderCanvas();
             g_D3DDevice->EndScene();
-            g_D3DDevice->Present(NULL, NULL, NULL, NULL);
+            g_D3DDevice->Present(nullptr, nullptr, nullptr, nullptr);
         }
     }
 
@@ -174,12 +174,12 @@ int main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCm
     if (g_D3DDevice)
     {
         g_D3DDevice->Release();
-        g_D3DDevice = NULL;
+        g_D3DDevice = nullptr;
     }
 
     if (g_D3D)
     {
         g_D3D->Release();
-        g_D3D = NULL;
+        g_D3D = nullptr;
     }
 }

@@ -20,7 +20,7 @@ using namespace Gwk::Controls;
 
 GWK_CONTROL_CONSTRUCTOR(TabStrip)
 {
-    m_tabDragControl = NULL;
+    m_tabDragControl = nullptr;
     m_bAllowReorder = false;
 }
 
@@ -134,7 +134,7 @@ void TabStrip::DragAndDrop_HoverEnter(Gwk::DragAndDrop::Package* /*package*/, in
 void TabStrip::DragAndDrop_HoverLeave(Gwk::DragAndDrop::Package* /*package*/)
 {
     delete m_tabDragControl;
-    m_tabDragControl = NULL;
+    m_tabDragControl = nullptr;
 }
 
 void TabStrip::DragAndDrop_Hover(Gwk::DragAndDrop::Package* /*package*/, int x, int y)

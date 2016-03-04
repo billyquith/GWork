@@ -32,7 +32,7 @@ namespace Gwk
         {
         public:
 
-            Base(Gwk::Renderer::Base* renderer = NULL)
+            Base(Gwk::Renderer::Base* renderer = nullptr)
             {
                 m_defaultFont.facename = "Arial";
                 m_defaultFont.size = 10.0f;
