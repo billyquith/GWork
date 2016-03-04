@@ -84,8 +84,8 @@ bool ResizableControl::SetBounds(int x, int y, int w, int h)
     Gwk::Point minSize = GetMinimumSize();
 
     // Clamp Minimum Size
-    w = Max(w, minSize.x);
-    h = Max(h, minSize.y);
+    w = std::max(w, minSize.x);
+    h = std::max(h, minSize.y);
 
     // Clamp to parent's window
     Base* parent = GetParent();

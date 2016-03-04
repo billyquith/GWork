@@ -140,9 +140,9 @@ void TextBox::RefreshCursorBounds()
     MakeCaratVisible();
     Gwk::Rect pA = GetCharacterPosition(m_cursorPos);
     Gwk::Rect pB = GetCharacterPosition(m_cursorEnd);
-    m_rectSelectionBounds.x = Gwk::Min(pA.x, pB.x);
+    m_rectSelectionBounds.x = std::min(pA.x, pB.x);
     m_rectSelectionBounds.y = m_text->Y()-1;
-    m_rectSelectionBounds.w = Gwk::Max(pA.x, pB.x)-m_rectSelectionBounds.x;
+    m_rectSelectionBounds.w = std::max(pA.x, pB.x)-m_rectSelectionBounds.x;
     m_rectSelectionBounds.h = m_text->Height()+2;
     m_rectCaretBounds.x = pA.x;
     m_rectCaretBounds.y = pA.y;
@@ -191,8 +191,8 @@ String TextBox::GetSelection()
     if (!HasSelection())
         return "";
 
-    int iStart = Gwk::Min(m_cursorPos, m_cursorEnd);
-    int iEnd = Gwk::Max(m_cursorPos, m_cursorEnd);
+    int iStart = std::min(m_cursorPos, m_cursorEnd);
+    int iEnd = std::max(m_cursorPos, m_cursorEnd);
     const String& str = GetText();
     return str.substr(iStart, iEnd-iStart);
 }
@@ -347,8 +347,8 @@ bool TextBox::HasSelection()
 
 void TextBox::EraseSelection()
 {
-    int iStart = Gwk::Min(m_cursorPos, m_cursorEnd);
-    int iEnd = Gwk::Max(m_cursorPos, m_cursorEnd);
+    int iStart = std::min(m_cursorPos, m_cursorEnd);
+    int iEnd = std::max(m_cursorPos, m_cursorEnd);
     DeleteText(iStart, iEnd-iStart);
     // Move the cursor to the start of the selection,
     // since the end is probably outside of the string now.

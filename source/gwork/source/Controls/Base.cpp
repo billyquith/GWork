@@ -1024,8 +1024,8 @@ Gwk::Point Base::ChildrenSize()
         if (!child->ShouldIncludeInSize())
             continue;
 
-        size.x = Gwk::Max(size.x, child->Right());
-        size.y = Gwk::Max(size.y, child->Bottom());
+        size.x = std::max(size.x, child->Right());
+        size.y = std::max(size.y, child->Bottom());
     }
 
     return size;

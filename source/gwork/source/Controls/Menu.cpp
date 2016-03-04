@@ -85,7 +85,7 @@ void Menu::OnAddItem(MenuItem* item)
     item->onHoverEnter.Add(this, &Menu::OnHoverItem);
     
     // Do this here - after Top Docking these values mean nothing in layout
-    const int w = Max(item->Width()+10+32, Width());
+    const int w = std::max(item->Width()+10+32, Width());
 
     SetSize(w, Height());
 }
