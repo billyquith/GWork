@@ -552,7 +552,7 @@ namespace Gwk
 
         public:
 
-#ifndef GWK_NO_ANIMATION
+#if GWK_ANIMATE
 
             virtual void Anim_widthIn(float fLength, float fDelay = 0.0f, float fEase = 1.0f);
             virtual void Anim_heightIn(float fLength, float fDelay = 0.0f, float fEase = 1.0f);

@@ -13,7 +13,7 @@
 #include <Gwork/Controls/Base.h>
 #include <Gwork/Platform.h>
 
-#ifndef GWK_NO_ANIMATION
+#if GWK_ANIMATE
 
 namespace Gwk
 {

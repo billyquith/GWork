@@ -12,7 +12,7 @@
 
 using namespace Gwk;
 
-#ifndef GWK_NO_ANIMATION
+#if GWK_ANIMATE
 
 static Gwk::Anim::Animation::List g_animations;
 static Gwk::Anim::Animation::ChildList g_animationsListed;
@@ -152,4 +152,4 @@ bool Gwk::Anim::TimedAnimation::Finished()
     return m_bFinished;
 }
 
-#endif // ifndef GWK_NO_ANIMATION
+#endif // if GWK_ANIMATE
