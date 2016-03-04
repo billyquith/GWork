@@ -8,7 +8,7 @@
 
 #include <Gwork/Anim.h>
 #include <Gwork/Utility.h>
-#include <math.h>
+#include <cmath>
 
 using namespace Gwk;
 
@@ -113,9 +113,9 @@ static float GetEased(float fTime, float fEase)
 {
     // Ease in and Out if ease is < 0
     if (fEase < 0)
-        return -fTime/2*(cosf(3.14159f*fTime)-1);
+        return -fTime/2*(std::cosf(3.14159f*fTime)-1);
 
-    return powf(fTime, fEase);
+    return std::powf(fTime, fEase);
 }
 
 void Gwk::Anim::TimedAnimation::Think()

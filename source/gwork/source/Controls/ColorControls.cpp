@@ -14,22 +14,23 @@
 #include <Gwork/Controls/ColorControls.h>
 #include <cmath>
 
-using namespace Gwk;
+namespace Gwk
+{
+    
 using namespace Gwk::Controls;
-
 
 static void al_color_hsv_to_rgb(float hue, float saturation, float value,
                                 float *red, float *green, float *blue)
 {
     int d;
     float e, a, b, c;
-    hue = std::fmod(hue, 360);
-    if (hue < 0) hue += 360;
-    d = hue / 60;
-    e = hue / 60 - d;
-    a = value * (1 - saturation);
-    b = value * (1 - e * saturation);
-    c = value * (1 - (1 - e) * saturation);
+    hue = std::fmod(hue, 360.f);
+    if (hue < 0) hue += 360.f;
+    d = hue / 60.f;
+    e = hue / 60.f - d;
+    a = value * (1.f - saturation);
+    b = value * (1.f - e * saturation);
+    c = value * (1.f - (1.f - e) * saturation);
     switch (d) {
         default:
         case 0: *red = value, *green = c,     *blue = a;     return;
@@ -105,7 +106,7 @@ GWK_CONTROL_CONSTRUCTOR(ColorLerpBox)
 }
 
 // Find a place to put this? color member?
-Gwk::Color LerpColor(Gwk::Color& toColor, Gwk::Color& fromColor, float amount)
+static Gwk::Color LerpColor(Gwk::Color& toColor, Gwk::Color& fromColor, float amount)
 {
     Gwk::Color colorDelta = toColor-fromColor;
     colorDelta.r *= amount;
@@ -273,3 +274,5 @@ Gwk::Color ColorSlider::GetSelectedColor()
 {
     return GetColorAtHeight(m_selectedDist);
 }
+
+} // namespace Gwk

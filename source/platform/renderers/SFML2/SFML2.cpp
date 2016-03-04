@@ -218,7 +218,7 @@ void Gwk::Renderer::SFML2::RenderText(Gwk::Font* font, Gwk::Point pos,
     Translate(pos.x, pos.y);
 
     // If the font doesn't exist, or the font size should be changed
-    if (!font->data || fabs(font->realsize-font->size*Scale()) > 2)
+    if (!font->data || std::abs(font->realsize-font->size*Scale()) > 2)
     {
         FreeFont(font);
         LoadFont(font);
@@ -238,7 +238,7 @@ void Gwk::Renderer::SFML2::RenderText(Gwk::Font* font, Gwk::Point pos,
 Gwk::Point Gwk::Renderer::SFML2::MeasureText(Gwk::Font* font, const Gwk::String& text)
 {
     // If the font doesn't exist, or the font size should be changed
-    if (!font->data || fabs(font->realsize-font->size*Scale()) > 2)
+    if (!font->data || std::abs(font->realsize-font->size*Scale()) > 2)
     {
         FreeFont(font);
         LoadFont(font);

@@ -112,7 +112,7 @@ bool ShouldStartDraggingControl(int x, int y)
         return false;
 
     // Not been dragged far enough
-    int iLength = abs(x-LastPressedPos.x)+abs(y-LastPressedPos.y);
+    int iLength = std::abs(x-LastPressedPos.x) + std::abs(y-LastPressedPos.y);
 
     if (iLength < 5)
         return false;
