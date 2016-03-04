@@ -48,7 +48,7 @@ namespace Gwk
 
                 virtual bool IsEditing() override
                 {
-                    return m_checkbox->HasFocus();
+                    return m_checkbox->IsFocussed();
                 }
 
                 virtual bool IsHovered() override

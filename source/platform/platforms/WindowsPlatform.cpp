@@ -411,7 +411,7 @@ void Gwk::Platform::SetWindowMinimized(void* ptr, bool bMinimized)
         ShowWindow((HWND)ptr, SW_RESTORE);
 }
 
-bool Gwk::Platform::HasFocusPlatformWindow(void* ptr)
+bool Gwk::Platform::IsFocussedPlatformWindow(void* ptr)
 {
     return GetActiveWindow() == (HWND)ptr;
 }

@@ -42,7 +42,7 @@ namespace Gwk
 
                 virtual bool IsEditing() override
                 {
-                    return m_textBox->HasFocus();
+                    return m_textBox->IsFocussed();
                 }
 
                 virtual bool IsHovered() override

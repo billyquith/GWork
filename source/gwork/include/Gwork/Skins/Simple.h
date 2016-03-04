@@ -301,7 +301,7 @@ namespace Gwk
             virtual void DrawTextBox(Gwk::Controls::Base* control)
             {
                 Gwk::Rect rect = control->GetRenderBounds();
-                bool bHasFocus = control->HasFocus();
+                bool bIsFocussed = control->IsFocussed();
 
                 // Box inside
                 m_render->SetDrawColor(Gwk::Color(255, 255, 255, 255));
@@ -313,7 +313,7 @@ namespace Gwk
                 m_render->DrawFilledRect(Gwk::Rect(rect.x+1, (rect.y+rect.h)-1, rect.w-2, 1));
                 m_render->DrawFilledRect(Gwk::Rect((rect.x+rect.w)-1, rect.y+1, 1, rect.h-2));
 
-                if (bHasFocus)
+                if (bIsFocussed)
                 {
                     m_render->SetDrawColor(Gwk::Color(50, 200, 255, 150));
                     m_render->DrawLinedRect(rect);

@@ -50,7 +50,7 @@ namespace Gwk
 
                 virtual bool IsEditing() override
                 {
-                    return m_comboBox->HasFocus();
+                    return m_comboBox->IsFocussed();
                 }
 
                 virtual bool IsHovered() override

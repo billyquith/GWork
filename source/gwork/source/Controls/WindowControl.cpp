@@ -103,14 +103,14 @@ bool WindowControl::IsOnTop()
 
 void WindowControl::Render(Skin::Base* skin)
 {
-    bool bHasFocus = IsOnTop();
+    bool bIsFocussed = IsOnTop();
 
-    if (bHasFocus)
+    if (bIsFocussed)
         m_title->SetTextColor(GetSkin()->Colors.Window.TitleActive);
     else
         m_title->SetTextColor(GetSkin()->Colors.Window.TitleInactive);
 
-    skin->DrawWindow(this, m_titleBar->Bottom(), bHasFocus);
+    skin->DrawWindow(this, m_titleBar->Bottom(), bIsFocussed);
 }
 
 void WindowControl::RenderUnder(Skin::Base* skin)

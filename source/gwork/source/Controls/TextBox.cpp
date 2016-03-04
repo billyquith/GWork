@@ -96,7 +96,7 @@ void TextBox::UpdateCaretColor()
     if (m_fNextCaretColorChange > Gwk::Platform::GetTimeInSeconds())
         return;
 
-    if (!HasFocus())
+    if (!IsFocussed())
     {
         m_fNextCaretColorChange = Gwk::Platform::GetTimeInSeconds()+0.5f; return;
     }
@@ -118,7 +118,7 @@ void TextBox::Render(Skin::Base* skin)
     if (ShouldDrawBackground())
         skin->DrawTextBox(this);
 
-    if (!HasFocus())
+    if (!IsFocussed())
         return;
 
     // Draw selection.. if selected..
@@ -205,11 +205,11 @@ bool TextBox::OnKeyReturn(bool bDown)
     // Try to move to the next control, as if tab had been pressed
     OnKeyTab(true);
 
-    // If we still have focus, blur it.
-    if (HasFocus())
-        Blur();
+    // If we still have focus, unfocus it.
+    if (IsFocussed())
+        Unfocus();
 
-    // This is called AFTER the blurring so you can
+    // This is called AFTER the unfocusring so you can
     // refocus in your onReturnPressed hook.
     OnEnter();
     return true;
@@ -501,7 +501,7 @@ void TextBoxMultiline::Render(Skin::Base* skin)
     if (ShouldDrawBackground())
         skin->DrawTextBox(this);
 
-    if (!HasFocus())
+    if (!IsFocussed())
         return;
 
     if (m_cursorPos != m_cursorEnd)

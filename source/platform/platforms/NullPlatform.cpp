@@ -82,7 +82,7 @@ void Gwk::Platform::SetWindowMinimized(void* ptr, bool bMinimized)
 {
 }
 
-bool Gwk::Platform::HasFocusPlatformWindow(void* ptr)
+bool Gwk::Platform::IsFocussedPlatformWindow(void* ptr)
 {
     return true;
 }
