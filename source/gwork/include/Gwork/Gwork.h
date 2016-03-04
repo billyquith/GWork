@@ -35,7 +35,6 @@
 #include <list>
 #include <algorithm>
 
-#include <Gwork/Macros.h>
 #include <Gwork/Config.h>
 #include <Gwork/UiTypes.h>
 #include <Gwork/Skin.h>

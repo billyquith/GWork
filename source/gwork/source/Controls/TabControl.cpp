@@ -14,8 +14,30 @@
 #include <Gwork/Controls/WindowControl.h>
 #include <Gwork/Controls/ScrollBarButton.h>
 
+
 using namespace Gwk;
 using namespace Gwk::Controls;
+
+template <typename T, typename T2>
+inline T Approach(T fCurrent, T fTarget, T2 fDelta)
+{
+    if (fCurrent < fTarget)
+    {
+        fCurrent += fDelta;
+        
+        if (fCurrent > fTarget)
+            return fTarget;
+    }
+    else if (fCurrent > fTarget)
+    {
+        fCurrent -= fDelta;
+        
+        if (fCurrent < fTarget)
+            return fTarget;
+    }
+    
+    return fCurrent;
+}
 
 class TabControlInner : public Base
 {
@@ -191,7 +213,7 @@ void TabControl::HandleOverflow()
     // Then get a margin animation type and do it properly!
     // TODO!
     //
-    m_tabStrip->SetMargin(Margin(Gwk::Approach(m_tabStrip->GetMargin().left, m_scrollOffset* -1,
+    m_tabStrip->SetMargin(Margin(Approach(m_tabStrip->GetMargin().left, m_scrollOffset* -1,
                                                 2), 0, 0, 0));
     InvalidateParent();
 #else // if 0

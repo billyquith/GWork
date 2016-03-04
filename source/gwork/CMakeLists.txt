@@ -16,7 +16,6 @@ set(GWK_HEADERS
     include/Gwork/Gwork.h
     include/Gwork/Hook.h
     include/Gwork/InputHandler.h
-    include/Gwork/Macros.h
     include/Gwork/Skin.h
     include/Gwork/ToolTip.h
     include/Gwork/UiTypes.h
