@@ -54,7 +54,7 @@ namespace Gwk
         GWK_EXPORT void SetBoundsPlatformWindow(void* ptr, int x, int y, int w, int h);
         // Returns true for redraw.
         GWK_EXPORT bool MessagePump(void* window);
-        GWK_EXPORT bool HasFocusPlatformWindow(void* ptr);
+        GWK_EXPORT bool IsFocussedPlatformWindow(void* ptr);
         GWK_EXPORT void SetWindowMaximized(void* ptr, bool bMaximized, Gwk::Point& newPos,
                                            Gwk::Point& newSize);
         GWK_EXPORT void SetWindowMinimized(void* ptr, bool bMinimized);

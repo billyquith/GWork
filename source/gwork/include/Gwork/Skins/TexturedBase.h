@@ -570,7 +570,7 @@ namespace Gwk
                     if ( control->IsDisabled() )
                     { return Textures.TextBox.Disabled.Draw( GetRender(), control->GetRenderBounds() ); }
 
-                    if ( control->HasFocus() )
+                    if ( control->IsFocussed() )
                     { Textures.TextBox.Focus.Draw( GetRender(), control->GetRenderBounds() ); }
                     else
                     { Textures.TextBox.Normal.Draw( GetRender(), control->GetRenderBounds() ); }

@@ -230,7 +230,7 @@ bool Gwk::Input::OnMouseClicked(Controls::Base* canvas, int iMouseButton, bool b
         if (!FindKeyboardFocus(Gwk::HoveredControl))
         {
             if (Gwk::KeyboardFocus)
-                Gwk::KeyboardFocus->Blur();
+                Gwk::KeyboardFocus->Unfocus();
         }
     }
 

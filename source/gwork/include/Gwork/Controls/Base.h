@@ -318,9 +318,9 @@ namespace Gwk
 
             virtual bool IsOnTop();
 
-            virtual bool HasFocus();
+            virtual bool IsFocussed();
             virtual void Focus();
-            virtual void Blur();
+            virtual void Unfocus();
 
             // Other
             virtual void SetDisabled(bool active)

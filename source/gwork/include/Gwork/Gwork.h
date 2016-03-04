@@ -87,10 +87,10 @@ namespace Gwk
 
     namespace Input
     {
-        inline void Blur()
+        inline void Unfocus()
         {
             if (KeyboardFocus)
-                KeyboardFocus->Blur();
+                KeyboardFocus->Unfocus();
         }
 
     }

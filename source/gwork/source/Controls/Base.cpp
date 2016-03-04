@@ -682,7 +682,7 @@ bool Base::ShouldDrawHover()
     return Gwk::MouseFocus == this || Gwk::MouseFocus == nullptr;
 }
 
-bool Base::HasFocus()
+bool Base::IsFocussed()
 {
     return Gwk::KeyboardFocus == this;
 }
@@ -700,7 +700,7 @@ void Base::Focus()
     Redraw();
 }
 
-void Base::Blur()
+void Base::Unfocus()
 {
     if (Gwk::KeyboardFocus != this)
         return;

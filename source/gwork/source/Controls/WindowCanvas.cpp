@@ -171,14 +171,14 @@ void WindowCanvas::RenderCanvas()
 
 void WindowCanvas::Render(Skin::Base* skin)
 {
-    bool bHasFocus = IsOnTop();
+    bool bIsFocussed = IsOnTop();
 
-    if (bHasFocus)
+    if (bIsFocussed)
         m_title->SetTextColor(GetSkin()->Colors.Window.TitleActive);
     else
         m_title->SetTextColor(GetSkin()->Colors.Window.TitleInactive);
 
-    skin->DrawWindow(this, m_titleBar->Bottom(), bHasFocus);
+    skin->DrawWindow(this, m_titleBar->Bottom(), bIsFocussed);
 }
 
 void WindowCanvas::DestroyWindow()
@@ -253,7 +253,7 @@ void WindowCanvas::CloseButtonPressed()
 
 bool WindowCanvas::IsOnTop()
 {
-    return Gwk::Platform::HasFocusPlatformWindow(m_oSWindowSWindow);
+    return Gwk::Platform::IsFocussedPlatformWindow(m_oSWindowSWindow);
 }
 
 void WindowCanvas::Sizer_Moved()
