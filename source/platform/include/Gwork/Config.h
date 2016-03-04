@@ -6,8 +6,8 @@
  */
 
 #pragma once
-#ifndef GWK_EXPORTS_H
-#define GWK_EXPORTS_H
+#ifndef GWK_CONFIG_H
+#define GWK_CONFIG_H
 
 // GWK_COMPILE_DLL
 //  - We're compiling the Gwork.dll (or .dylib etc)
@@ -53,4 +53,4 @@
 // Enable animation functions.
 #define GWK_ANIMATE 1
 
-#endif // GWK_EXPORTS_H
+#endif // GWK_CONFIG_H
