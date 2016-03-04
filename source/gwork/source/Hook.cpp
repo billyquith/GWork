@@ -10,10 +10,12 @@
 
 #if GWK_HOOKSYSTEM
 
-using namespace Gwk;
+namespace Gwk
+{
+    
 using namespace Gwk::Hook;
 
-std::list<BaseHook*> g_hookList;
+static std::list<BaseHook*> g_hookList;
 
 void Gwk::Hook::AddHook(BaseHook* hook)
 {
@@ -29,5 +31,7 @@ HookList& Gwk::Hook::GetHookList()
 {
     return g_hookList;
 }
+
+} // namespace Gwk
 
 #endif // if GWK_HOOKSYSTEM

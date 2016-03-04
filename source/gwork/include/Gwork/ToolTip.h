@@ -26,7 +26,6 @@ namespace Gwk {
 
         GWK_EXPORT void RenderToolTip(Skin::Base* skin);
     }
-
 }
 
 #endif // ifndef GWK_TOOLTIP_H

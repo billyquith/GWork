@@ -9,8 +9,8 @@
 #include <Gwork/Gwork.h>
 #include <Gwork/ControlList.h>
 
-using namespace Gwk;
-using namespace Gwk::Controls;
+namespace Gwk
+{
 
 void ControlList::Enable()
 {
@@ -87,3 +87,5 @@ void ControlList::SetActionInternal(Gwk::Event::Handler* object,
         (*it)->SetAction(object, f, packet);
     }
 }
+
+} // namespace Gwk

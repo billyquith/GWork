@@ -7,15 +7,14 @@
 
 
 #include <Gwork/Gwork.h>
-#include <stdio.h>
-#include <stdarg.h>
 
 
 namespace Gwk
 {
-    // Globals
-    GWK_EXPORT Controls::Base* HoveredControl = nullptr;
-    GWK_EXPORT Controls::Base* KeyboardFocus = nullptr;
-    GWK_EXPORT Controls::Base* MouseFocus = nullptr;
-
-}
+    
+// Globals
+GWK_EXPORT Controls::Base* HoveredControl = nullptr;
+GWK_EXPORT Controls::Base* KeyboardFocus = nullptr;
+GWK_EXPORT Controls::Base* MouseFocus = nullptr;
+    
+} // namespace Gwk

@@ -11,7 +11,9 @@
 #include <Gwork/Utility.h>
 #include <Gwork/Platform.h>
 
-using namespace Gwk;
+namespace Gwk
+{
+    
 using namespace Gwk::DragAndDrop;
 
 DragAndDrop::Package* DragAndDrop::CurrentPackage = nullptr;
@@ -244,3 +246,5 @@ void DragAndDrop::RenderOverlay(Gwk::Controls::Canvas* /*canvas*/, Skin::Base* s
     CurrentPackage->drawcontrol->DoRender(skin);
     skin->GetRender()->SetRenderOffset(pntOld);
 }
+
+} // namespace Gwk

@@ -396,4 +396,4 @@ bool Gwk::Input::OnKeyEvent(Controls::Base* canvas, int iKey, bool bDown)
     return false;
 }
 
-} // Gwk
+} // namespace Gwk

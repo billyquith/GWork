@@ -29,8 +29,6 @@ public:
     }
 
 };
-
-
 #endif // if GWK_ANIMATE
 
 
