@@ -40,8 +40,6 @@ namespace Gwk
         
     } // Pos
 
-    class TextObject;
-
     namespace Skin
     {
         class Base;
