@@ -13,9 +13,11 @@
 #include <Gwork/Utility.h>
 #include <Gwork/Platform.h>
 #include <Gwork/InputHandler.h>
-#include <math.h>
+#include <cmath>
 
-using namespace Gwk;
+namespace Gwk
+{
+    
 using namespace Gwk::Controls;
 
 #if GWK_ANIMATE
@@ -623,7 +625,7 @@ void TextBoxMultiline::MakeCaratVisible()
         if (m_align&Docking::Right)
             x = Width()-m_text->Width()-GetPadding().right;
         if (m_align&Docking::CenterH)
-            x = (Width()-m_text->Width())*0.5;
+            x = (Width()-m_text->Width())*0.5f;
 
         m_text->SetPos(x, y);
     }
@@ -736,7 +738,7 @@ void PasswordTextBox::SetText(const String& str, bool bDoEvents)
         return;
 
     m_realText = str;
-    std::string passwordChars;
+    String passwordChars;
     for (int i = 0; i < m_realText.length(); i++)
     {
         passwordChars += m_passwordChar;
@@ -753,3 +755,5 @@ void PasswordTextBox::SetPasswordChar(const char c)
 {
     m_passwordChar = c;
 }
+
+} // namespace Gwk

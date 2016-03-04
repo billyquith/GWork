@@ -6,10 +6,12 @@
  */
 
 
-#include <math.h>
 #include <Gwork/Controls/Slider.h>
+#include <cmath>
 
-using namespace Gwk;
+namespace Gwk
+{
+    
 using namespace Gwk::Controls;
 using namespace Gwk::ControlsInternal;
 
@@ -66,8 +68,8 @@ void Slider::SetValueInternal(float val)
 {
     if (m_bClampToNotches)
     {
-        val = floorf(val*(float)m_numNotches+0.5f);
-        val /= (float)m_numNotches;
+        val = std::floor(val * float(m_numNotches) + 0.5f);
+        val /= float(m_numNotches);
     }
 
     if (m_fValue != val)
@@ -100,3 +102,5 @@ void Slider::RenderFocus(Gwk::Skin::Base* skin)
 
     skin->DrawKeyboardHighlight(this, GetRenderBounds(), 0);
 }
+
+} // namespace Gwk

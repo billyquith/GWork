@@ -184,7 +184,7 @@ int Text::GetClosestCharacter(Gwk::Point p)
     for (unsigned i = 0; i < m_string.length()+1; i++)
     {
         Gwk::Rect cp = GetCharacterPosition(i);
-        int iDist = abs(cp.x-p.x) + abs(cp.y-p.y);             // this isn't proper
+        const int iDist = std::abs(cp.x-p.x) + std::abs(cp.y-p.y);  // this isn't proper
 
         if (iDist > iDistance)
             continue;

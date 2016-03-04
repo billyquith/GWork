@@ -11,7 +11,7 @@
 #include <Gwork/Utility.h>
 #include <Gwork/Platform.h>
 
-#include <math.h>
+#include <cmath>
 
 namespace Gwk
 {
@@ -74,15 +74,15 @@ void Base::Translate(int& x, int& y)
 {
     x += m_renderOffset.x;
     y += m_renderOffset.y;
-    x = ceilf(((float)x)*m_fScale);
-    y = ceilf(((float)y)*m_fScale);
+    x = std::ceil(float(x)*m_fScale);
+    y = std::ceil(float(y)*m_fScale);
 }
 
 void Base::Translate(Gwk::Rect& rect)
 {
     Translate(rect.x, rect.y);
-    rect.w = ceilf(((float)rect.w)*m_fScale);
-    rect.h = ceilf(((float)rect.h)*m_fScale);
+    rect.w = std::ceil(float(rect.w)*m_fScale);
+    rect.h = std::ceil(float(rect.h)*m_fScale);
 }
 
 void Gwk::Renderer::Base::SetClipRegion(Gwk::Rect rect)

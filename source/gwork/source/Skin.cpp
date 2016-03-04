@@ -7,7 +7,6 @@
 
 
 #include <Gwork/Gwork.h>
-#include <math.h>
 
 namespace Gwk
 {
@@ -28,8 +27,8 @@ namespace Skin
 
 void Base::DrawArrowDown(Gwk::Rect rect)
 {
-    float x = (rect.w/5.0f);
-    float y = (rect.h/5.0f);
+    const float x = (rect.w/5.0f);
+    const float y = (rect.h/5.0f);
     m_render->DrawFilledRect(Gwk::Rect(rect.x+x*0.0f, rect.y+y*1.0f, x, y*1.0f));
     m_render->DrawFilledRect(Gwk::Rect(rect.x+x*1.0f, rect.y+y*1.0f, x, y*2.0f));
     m_render->DrawFilledRect(Gwk::Rect(rect.x+x*2.0f, rect.y+y*1.0f, x, y*3.0f));
@@ -39,8 +38,8 @@ void Base::DrawArrowDown(Gwk::Rect rect)
 
 void Base::DrawArrowUp(Gwk::Rect rect)
 {
-    float x = (rect.w/5.0f);
-    float y = (rect.h/5.0f);
+    const float x = (rect.w/5.0f);
+    const float y = (rect.h/5.0f);
     m_render->DrawFilledRect(Gwk::Rect(rect.x+x*0.0f, rect.y+y*3.0f, x, y*1.0f));
     m_render->DrawFilledRect(Gwk::Rect(rect.x+x*1.0f, rect.y+y*2.0f, x, y*2.0f));
     m_render->DrawFilledRect(Gwk::Rect(rect.x+x*2.0f, rect.y+y*1.0f, x, y*3.0f));
@@ -50,8 +49,8 @@ void Base::DrawArrowUp(Gwk::Rect rect)
 
 void Base::DrawArrowLeft(Gwk::Rect rect)
 {
-    float x = (rect.w/5.0f);
-    float y = (rect.h/5.0f);
+    const float x = (rect.w/5.0f);
+    const float y = (rect.h/5.0f);
     m_render->DrawFilledRect(Gwk::Rect(rect.x+x*3.0f, rect.y+y*0.0f, x*1.0f, y));
     m_render->DrawFilledRect(Gwk::Rect(rect.x+x*2.0f, rect.y+y*1.0f, x*2.0f, y));
     m_render->DrawFilledRect(Gwk::Rect(rect.x+x*1.0f, rect.y+y*2.0f, x*3.0f, y));
@@ -61,8 +60,8 @@ void Base::DrawArrowLeft(Gwk::Rect rect)
 
 void Base::DrawArrowRight(Gwk::Rect rect)
 {
-    float x = (rect.w/5.0f);
-    float y = (rect.h/5.0f);
+    const float x = (rect.w/5.0f);
+    const float y = (rect.h/5.0f);
     m_render->DrawFilledRect(Gwk::Rect(rect.x+x*1.0f, rect.y+y*0.0f, x*1.0f, y));
     m_render->DrawFilledRect(Gwk::Rect(rect.x+x*1.0f, rect.y+y*1.0f, x*2.0f, y));
     m_render->DrawFilledRect(Gwk::Rect(rect.x+x*1.0f, rect.y+y*2.0f, x*3.0f, y));
@@ -72,8 +71,8 @@ void Base::DrawArrowRight(Gwk::Rect rect)
 
 void Base::DrawCheck(Gwk::Rect rect)
 {
-    float x = (rect.w/5.0f);
-    float y = (rect.h/5.0f);
+    const float x = (rect.w/5.0f);
+    const float y = (rect.h/5.0f);
     m_render->DrawFilledRect(Gwk::Rect(rect.x+x*0.0f, rect.y+y*3.0f, x*2, y*2));
     m_render->DrawFilledRect(Gwk::Rect(rect.x+x*1.0f, rect.y+y*4.0f, x*2, y*2));
     m_render->DrawFilledRect(Gwk::Rect(rect.x+x*2.0f, rect.y+y*3.0f, x*2, y*2));
@@ -98,7 +97,7 @@ void Base::DrawTreeNode(Controls::Base* ctrl, bool bOpen, bool bSelected, int iL
 
 void Base::DrawPropertyTreeNode(Controls::Base* control, int BorderLeft, int BorderTop)
 {
-    Gwk::Rect rect = control->GetRenderBounds();
+    const Gwk::Rect& rect = control->GetRenderBounds();
     m_render->SetDrawColor(Colors.Properties.Border);
     m_render->DrawFilledRect(Gwk::Rect(rect.x, rect.y, BorderLeft, rect.h));
     m_render->DrawFilledRect(Gwk::Rect(rect.x+BorderLeft, rect.y, rect.w-BorderLeft,
