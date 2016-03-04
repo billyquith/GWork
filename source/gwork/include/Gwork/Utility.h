@@ -17,9 +17,12 @@
 
 namespace Gwk
 {
+    //! Get the number of items in a static array.
+    //! @param A : The array.
+#define GWK_ARRAY_COUNT(A) (sizeof(A)/sizeof(A[0]))
+
     namespace Utility
     {
-     
         GWK_EXPORT int vsnprintf(char* _str, size_t _count, const char* _format, va_list _argList);
         GWK_EXPORT int vsnwprintf(wchar_t* _str, size_t _count, const wchar_t* _format, va_list _argList);
         GWK_EXPORT int snprintf(char* _str, size_t _count, const char* _format, ...);
@@ -72,8 +75,14 @@ namespace Gwk
         }
         
         Gwk::Rect ClampRectToRect(Gwk::Rect inside, Gwk::Rect outside, bool clampSize = false);
-
     }
-}
+    
+    template <typename T>
+    inline T Clamp(T current, T vmin, T vmax)
+    {
+        return current < vmin ? vmin : (current > vmax ? vmax : current);
+    }
+    
+ }
 
 #endif // ifndef GWK_UTILITY_H

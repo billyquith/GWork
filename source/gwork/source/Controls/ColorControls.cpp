@@ -12,6 +12,7 @@
 
 #include <Gwork/Utility.h>
 #include <Gwork/Controls/ColorControls.h>
+#include <cmath>
 
 using namespace Gwk;
 using namespace Gwk::Controls;
@@ -22,7 +23,7 @@ static void al_color_hsv_to_rgb(float hue, float saturation, float value,
 {
     int d;
     float e, a, b, c;
-    hue = fmodf(hue, 360);
+    hue = std::fmod(hue, 360);
     if (hue < 0) hue += 360;
     d = hue / 60;
     e = hue / 60 - d;
