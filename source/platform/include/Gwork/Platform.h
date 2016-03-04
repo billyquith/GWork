@@ -10,7 +10,6 @@
 #define GWK_PLATFORM_H
 
 #include <Gwork/PlatformTypes.h>
-#include <string>
 
 namespace Gwk
 {

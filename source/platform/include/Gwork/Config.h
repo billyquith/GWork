@@ -50,4 +50,7 @@
 #   define GWK_EXPORT
 #endif
 
+// Enable animation functions.
+#define GWK_ANIMATE 1
+
 #endif // GWK_EXPORTS_H

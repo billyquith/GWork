@@ -10,7 +10,7 @@
 #define GWK_EVENTS_H
 
 #include <list>
-#include <Gwork/Exports.h>
+#include <Gwork/Config.h>
 #include <Gwork/UiTypes.h>
 #include <Gwork/ControlList.h>
 

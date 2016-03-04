@@ -7,7 +7,7 @@ include_directories(
 
 set(GWK_RENDER_HEADERS
     include/Gwork/BaseRender.h
-    include/Gwork/Exports.h
+    include/Gwork/Config.h
     include/Gwork/InputEventListener.h
     include/Gwork/Platform.h
     include/Gwork/PlatformTypes.h
