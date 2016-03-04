@@ -36,7 +36,6 @@
 #include <algorithm>
 
 #include <Gwork/Macros.h>
-#include <Gwork/Config.h>
 #include <Gwork/Exports.h>
 #include <Gwork/UiTypes.h>
 #include <Gwork/Skin.h>
@@ -46,6 +45,11 @@
 
 // Enable the hook system (se Hook.h)
 #define GWK_HOOKSYSTEM 1
+
+//
+// Disables animation functions.
+//
+// #define GWK_NO_ANIMATION
 
 namespace Gwk
 {
