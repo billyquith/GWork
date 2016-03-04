@@ -53,7 +53,7 @@ namespace Gwk
                 }
             }
 
-            return NULL;
+            return nullptr;
         }
 
     }

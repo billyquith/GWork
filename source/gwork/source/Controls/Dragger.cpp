@@ -14,7 +14,7 @@ using namespace Gwk::ControlsInternal;
 
 GWK_CONTROL_CONSTRUCTOR(Dragger)
 {
-    m_target = NULL;
+    m_target = nullptr;
     SetMouseInputEnabled(true);
     m_bDepressed = false;
     m_bDoMove = true;
@@ -35,7 +35,7 @@ void Dragger::OnMouseClickLeft(int x, int y, bool bDown)
     else
     {
         m_bDepressed = false;
-        Gwk::MouseFocus = NULL;
+        Gwk::MouseFocus = nullptr;
     }
 }
 

@@ -57,7 +57,7 @@ bool Gwk::Platform::FolderOpen(const String& Name, const String& StartPath, Stri
 void* Gwk::Platform::CreatePlatformWindow(int x, int y, int w, int h,
                                           const Gwk::String& strWindowTitle)
 {
-    return NULL;
+    return nullptr;
 }
 
 void Gwk::Platform::DestroyPlatformWindow(void* ptr)

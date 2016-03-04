@@ -23,7 +23,7 @@ namespace Gwk
 
             Gwk::Controls::Base* CreateInstance(Gwk::Controls::Base* parent) override
             {
-                return NULL;
+                return nullptr;
             }
 
         };

@@ -20,7 +20,7 @@
 using namespace Gwk::Controls;
 
 
-Canvas::Canvas(Gwk::Skin::Base* skin) : ParentClass(NULL), m_bAnyDelete(false)
+Canvas::Canvas(Gwk::Skin::Base* skin) : ParentClass(nullptr), m_bAnyDelete(false)
 {
     SetBounds(0, 0, 10000, 10000);
     SetScale(1.0f);
@@ -81,15 +81,15 @@ void Canvas::DoThink()
 #endif
     // Reset tabbing
     {
-        NextTab = NULL;
-        FirstTab = NULL;
+        NextTab = nullptr;
+        FirstTab = nullptr;
     }
     ProcessDelayedDeletes();
     // Check has focus etc..
     RecurseLayout(m_skin);
 
     // If we didn't have a next tab, cycle to the start.
-    if (NextTab == NULL)
+    if (NextTab == nullptr)
         NextTab = FirstTab;
 
     Gwk::Input::OnCanvasThink(this);

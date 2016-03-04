@@ -31,9 +31,9 @@ namespace Gwk
                 child->SetParent(splitter);
 
                 if (pos.y < splitter->SplitterPos())
-                    splitter->SetPanels(child, NULL);
+                    splitter->SetPanels(child, nullptr);
                 else
-                    splitter->SetPanels(NULL, child);
+                    splitter->SetPanels(nullptr, child);
             }
 
             void AddChild(Gwk::Controls::Base* ctrl, Gwk::Controls::Base* child, int iPage) override

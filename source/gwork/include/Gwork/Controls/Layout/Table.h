@@ -30,7 +30,7 @@ namespace Gwk
 
                     for (int i = 0; i < MaxColumns; i++)
                     {
-                        m_columns[i] = NULL;
+                        m_columns[i] = nullptr;
                     }
 
                     m_columnCount = 0;
@@ -58,7 +58,7 @@ namespace Gwk
                         else if (m_columns[i])
                         {
                             m_columns[i]->DelayedDelete();
-                            m_columns[i] = NULL;
+                            m_columns[i] = nullptr;
                         }
 
                         m_columnCount = iCount;

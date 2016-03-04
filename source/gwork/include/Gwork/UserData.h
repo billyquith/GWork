@@ -89,7 +89,7 @@ namespace Gwk
         template <typename T>
         void Set(const Gwk::String& str, const T& var)
         {
-            Value<T> *val = NULL;
+            Value<T> *val = nullptr;
             Container::iterator it = m_list.find(str);
 
             if (it != m_list.end())

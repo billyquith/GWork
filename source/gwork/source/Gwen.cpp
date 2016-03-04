@@ -14,9 +14,9 @@
 namespace Gwk
 {
     // Globals
-    GWK_EXPORT Controls::Base* HoveredControl = NULL;
-    GWK_EXPORT Controls::Base* KeyboardFocus = NULL;
-    GWK_EXPORT Controls::Base* MouseFocus = NULL;
+    GWK_EXPORT Controls::Base* HoveredControl = nullptr;
+    GWK_EXPORT Controls::Base* KeyboardFocus = nullptr;
+    GWK_EXPORT Controls::Base* MouseFocus = nullptr;
 
     namespace Debug
     {
@@ -56,7 +56,7 @@ namespace Gwk
             {
                 Msg("Assert: %s\n", strMsg);
 #ifdef WIN32
-                MessageBoxA(NULL, strMsg, "Assert", MB_ICONEXCLAMATION | MB_OK);
+                MessageBoxA(nullptr, strMsg, "Assert", MB_ICONEXCLAMATION | MB_OK);
                 _asm { int 3 }      // Break to debugger.
 #endif
                 

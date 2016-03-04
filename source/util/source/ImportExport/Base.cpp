@@ -35,7 +35,7 @@ ImportExport::Base* Find(Gwk::String strName)
         ++it;
     }
     
-    return NULL;
+    return nullptr;
 }
 
 Base::Base()

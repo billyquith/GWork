@@ -96,7 +96,7 @@ void VerticalScrollBar::OnMouseClickLeft(int x, int y, bool bDown)
             NudgeDown(this);
 
         m_bDepressed = false;
-        Gwk::MouseFocus = NULL;
+        Gwk::MouseFocus = nullptr;
     }
 }
 

@@ -117,7 +117,7 @@ public:
 
 	//! Constructor for constant string (i.e. do not make a copy of string)
 	GenericValue(const Ch* s, SizeType length) { 
-		RAPIDJSON_ASSERT(s != NULL);
+		RAPIDJSON_ASSERT(s != nullptr);
 		flags_ = kConstStringFlag;
 		data_.s.str = s;
 		data_.s.length = length;
@@ -659,7 +659,7 @@ private:
 
 	//! Initialize this value as constant string, without calling destructor.
 	void SetStringRaw(const Ch* s, SizeType length) {
-		RAPIDJSON_ASSERT(s != NULL);
+		RAPIDJSON_ASSERT(s != nullptr);
 		flags_ = kConstStringFlag;
 		data_.s.str = s;
 		data_.s.length = length;
@@ -667,7 +667,7 @@ private:
 
 	//! Initialize this value as copy string with initial data, without calling destructor.
 	void SetStringRaw(const Ch* s, SizeType length, Allocator& allocator) {
-		RAPIDJSON_ASSERT(s != NULL);
+		RAPIDJSON_ASSERT(s != nullptr);
 		flags_ = kCopyStringFlag;
 		data_.s.str = (Ch *)allocator.Malloc((length + 1) * sizeof(Ch));
 		data_.s.length = length;

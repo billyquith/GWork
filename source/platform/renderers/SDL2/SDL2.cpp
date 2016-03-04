@@ -14,7 +14,7 @@ namespace Gwk
 
         SDL2::SDL2(SDL_Window *window)
         :   m_window(window)
-        ,   m_renderer(NULL)
+        ,   m_renderer(nullptr)
         {
             m_renderer = SDL_CreateRenderer(m_window, -1,
                                             SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
@@ -57,7 +57,7 @@ namespace Gwk
             if (font->data)
             {
                 TTF_CloseFont(static_cast<TTF_Font*>(font->data));
-                font->data = NULL;
+                font->data = nullptr;
             }
         }
 
@@ -71,10 +71,10 @@ namespace Gwk
             SDL_FreeSurface(surf);
             
             int w, h;
-            SDL_QueryTexture(texture, NULL, NULL, &w, &h);
+            SDL_QueryTexture(texture, nullptr, nullptr, &w, &h);
             const SDL_Rect dest = { pos.x,pos.y, w,h };
             
-            SDL_RenderCopy(m_renderer, texture, NULL, &dest);
+            SDL_RenderCopy(m_renderer, texture, nullptr, &dest);
             
             SDL_DestroyTexture(texture);
         }
@@ -109,7 +109,7 @@ namespace Gwk
 
         void SDL2::EndClip()
         {
-            SDL_RenderSetClipRect(m_renderer, NULL);
+            SDL_RenderSetClipRect(m_renderer, nullptr);
         }
 
         void SDL2::LoadTexture(Gwk::Texture* texture)
@@ -120,7 +120,7 @@ namespace Gwk
             if (texture->data)
                 FreeTexture(texture);
             
-            SDL_Texture *tex = NULL;
+            SDL_Texture *tex = nullptr;
             if (texture->readable)
             {
                 // You cannot find the format of a texture once loaded to read from it
@@ -138,7 +138,7 @@ namespace Gwk
             if (tex)
             {
                 int w, h;
-                SDL_QueryTexture(tex, NULL, NULL, &w, &h);
+                SDL_QueryTexture(tex, nullptr, nullptr, &w, &h);
                 
                 texture->data = tex;
                 texture->width = w;
@@ -147,7 +147,7 @@ namespace Gwk
             }
             else
             {
-                texture->data = NULL;
+                texture->data = nullptr;
                 texture->failed = true;
             }
         }
@@ -155,12 +155,12 @@ namespace Gwk
         void SDL2::FreeTexture(Gwk::Texture* texture)
         {
             SDL_DestroyTexture(static_cast<SDL_Texture*>(texture->data));
-            texture->data = NULL;
+            texture->data = nullptr;
             
             if (texture->surface)
             {
                 SDL_FreeSurface(static_cast<SDL_Surface*>(texture->surface));
-                texture->surface = NULL;
+                texture->surface = nullptr;
                 texture->readable = false;
             }
         }

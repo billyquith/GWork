@@ -28,7 +28,7 @@ namespace Gwk
         {
             GWK_CONTROL(TabControl, Base);
 
-            virtual TabButton* AddPage(const String strText, Controls::Base* page = NULL);
+            virtual TabButton* AddPage(const String strText, Controls::Base* page = nullptr);
 
             virtual void AddPage(TabButton* button);
             virtual void RemovePage(TabButton* button);

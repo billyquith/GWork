@@ -19,8 +19,8 @@ using namespace Gwk::Controls;
 
 GWK_CONTROL_CONSTRUCTOR(TabButton)
 {
-    m_page = NULL;
-    m_control = NULL;
+    m_page = nullptr;
+    m_control = nullptr;
     DragAndDrop_SetPackage(true, "TabButtonMove");
     SetAlignment(Docking::Top|Docking::Left);
     SetTextPadding(Padding(2, 2, 2, 2));

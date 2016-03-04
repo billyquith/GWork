@@ -172,7 +172,7 @@ ControlFactory::Base* Find(const Gwk::String& name)
             return *it;
     }
 
-    return NULL;
+    return nullptr;
 }
 
 Base::Base()
@@ -195,7 +195,7 @@ Base* Base::GetBaseFactory()
             return *it;
     }
 
-    return NULL;
+    return nullptr;
 }
 
 Property* Base::GetProperty(const Gwk::String& name)
@@ -213,7 +213,7 @@ Property* Base::GetProperty(const Gwk::String& name)
     Base* base = GetBaseFactory();
 
     if (!base)
-        return NULL;
+        return nullptr;
 
     return base->GetProperty(name);
 }

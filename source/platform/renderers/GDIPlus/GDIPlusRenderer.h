@@ -22,17 +22,17 @@ public:
     GworkRender_Windows(HWND hWND)
     {
         m_hWND = hWND;
-        m_hDC = NULL;
+        m_hDC = nullptr;
         m_width = 0;
         m_height = 0;
 #ifdef USE_GDIPLUS_DOUBLE_BUFFERING
-        m_bitmap = NULL;
-        m_cachedBitmap = NULL;
+        m_bitmap = nullptr;
+        m_cachedBitmap = nullptr;
 #endif
-        graphics = NULL;
+        graphics = nullptr;
         // Initialize GDI+.
         GdiplusStartupInput gdiplusStartupInput;
-        GdiplusStartup(&m_gdiplusToken, &gdiplusStartupInput, NULL);
+        GdiplusStartup(&m_gdiplusToken, &gdiplusStartupInput, nullptr);
     }
 
     ~GworkRender_Windows()
@@ -75,10 +75,10 @@ public:
 
         if (m_bitmap)
         {
-            delete m_bitmap; m_bitmap = NULL;
+            delete m_bitmap; m_bitmap = nullptr;
         }
 
-        graphics = NULL;
+        graphics = nullptr;
 #endif
     }
 
@@ -104,11 +104,11 @@ public:
         if (graphics)
         {
             delete graphics;
-            graphics = NULL;
+            graphics = nullptr;
         }
 
 #endif
-        m_hDC = NULL;
+        m_hDC = nullptr;
         EndPaint(m_hWND, &m_paintStruct);
     }
 
@@ -154,7 +154,7 @@ public:
     virtual void* ImagePointer(const char* image)
     {
         //	return IGet::Render()->LoadMaterial( image );
-        return NULL;
+        return nullptr;
     }
 
     virtual void SetDrawColor(Gwk::Color color)
@@ -173,7 +173,7 @@ public:
         FontStyle fs = FontStyleRegular;
         font->realsize = font->size*Scale();
         Font* font = new Font(Gwk::Utility::StringToUnicode(
-                                   font->facename).c_str(), font->realsize, fs, UnitPixel, NULL);
+                                   font->facename).c_str(), font->realsize, fs, UnitPixel, nullptr);
         font->data = font;
     }
 
@@ -186,7 +186,7 @@ public:
 
         Font* font = ((Font*)font->data);
         delete font;
-        font->data = NULL;
+        font->data = nullptr;
     }
 
     virtual void RenderText(Gwk::Font* font, Gwk::Rect rect, const Gwk::UnicodeString& text)

@@ -17,7 +17,7 @@ using namespace Gwk::Controls;
 
 GWK_CONTROL_CONSTRUCTOR(Button)
 {
-    m_image = NULL;
+    m_image = nullptr;
     m_bDepressed = false;
     m_bCenterImage = false;
     SetSize(100, 20);
@@ -61,7 +61,7 @@ void Button::OnMouseClickLeft(int /*x*/, int /*y*/, bool bDown)
             OnPress();
 
         SetDepressed(false);
-        Gwk::MouseFocus = NULL;
+        Gwk::MouseFocus = nullptr;
         onUp.Call(this);
     }
 }
@@ -83,7 +83,7 @@ void Button::OnMouseClickRight(int /*x*/, int /*y*/, bool bDown)
             OnRightPress();
 
         SetDepressed(false);
-        Gwk::MouseFocus = NULL;
+        Gwk::MouseFocus = nullptr;
         onUp.Call(this);
     }
 }
@@ -117,7 +117,7 @@ void Button::SetImage(const String& strName, bool bCenter)
         if (m_image)
         {
             delete m_image;
-            m_image = NULL;
+            m_image = nullptr;
         }
 
         return;

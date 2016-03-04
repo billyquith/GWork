@@ -22,7 +22,7 @@ namespace Gwk
             struct Single
             {
                 Single()
-                :   m_texture(NULL)
+                :   m_texture(nullptr)
                 {}
 
                 void Init( Texture* texture, float x, float y, float w, float h )
@@ -78,7 +78,7 @@ namespace Gwk
             struct Bordered
             {
                 Bordered()
-                :   m_texture(NULL)
+                :   m_texture(nullptr)
                 {}
 
                 void Init( Texture* texture, float x, float y, float w, float h, Margin in_margin, float DrawMarginScale = 1.0f )

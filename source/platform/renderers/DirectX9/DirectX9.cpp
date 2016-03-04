@@ -20,7 +20,7 @@ namespace Gwk
     {
         DirectX9::DirectX9(IDirect3DDevice9* device)
         {
-            m_D3D = NULL;
+            m_D3D = nullptr;
             m_device = device;
             m_vertNum = 0;
 
@@ -97,11 +97,11 @@ namespace Gwk
 
         void DirectX9::DrawFilledRect(Gwk::Rect rect)
         {
-            if (m_currentTexture != NULL)
+            if (m_currentTexture != nullptr)
             {
                 Flush();
-                m_device->SetTexture(0, NULL);
-                m_currentTexture = NULL;
+                m_device->SetTexture(0, nullptr);
+                m_currentTexture = nullptr;
             }
 
             Translate(rect);
@@ -150,10 +150,10 @@ namespace Gwk
             // measure text with trailing spaces.
             {
                 RECT rctA = {0, 0, 0, 0};
-                fontData->font->DrawTextW(NULL, L"A", -1, &rctA,
+                fontData->font->DrawTextW(nullptr, L"A", -1, &rctA,
                                             DT_CALCRECT|DT_LEFT|DT_TOP|DT_SINGLELINE, 0);
                 RECT rctSpc = {0, 0, 0, 0};
-                fontData->font->DrawTextW(NULL, L"A A", -1, &rctSpc,
+                fontData->font->DrawTextW(nullptr, L"A A", -1, &rctSpc,
                                             DT_CALCRECT|DT_LEFT|DT_TOP|DT_SINGLELINE, 0);
                 fontData->iSpaceWidth = rctSpc.right-rctA.right*2;
             }
@@ -172,11 +172,11 @@ namespace Gwk
             if (fontData->font)
             {
                 fontData->font->Release();
-                fontData->font = NULL;
+                fontData->font = nullptr;
             }
 
             delete fontData;
-            font->data = NULL;
+            font->data = nullptr;
         }
 
         void DirectX9::RenderText(Gwk::Font* font, Gwk::Point pos,
@@ -196,7 +196,7 @@ namespace Gwk
             FontData* fontData = (FontData*)font->data;
             Translate(pos.x, pos.y);
             RECT ClipRect = { pos.x, pos.y, 0, 0 };
-            fontData->font->DrawTextW(NULL,
+            fontData->font->DrawTextW(nullptr,
                                         wideText.c_str(), -1, &ClipRect, DT_LEFT|DT_TOP|DT_NOCLIP|DT_SINGLELINE,
                                         m_color);
         }
@@ -216,14 +216,14 @@ namespace Gwk
             if (text.empty())
             {
                 RECT rct = {0, 0, 0, 0};
-                fontData->font->DrawTextW(NULL, L"W", -1, &rct, DT_CALCRECT, 0);
+                fontData->font->DrawTextW(nullptr, L"W", -1, &rct, DT_CALCRECT, 0);
                 return Gwk::Point(0, rct.bottom);
             }
 
             const std::wstring wideText(Utility::Widen(text));
 
             RECT rct = {0, 0, 0, 0};
-            fontData->font->DrawTextW(NULL,
+            fontData->font->DrawTextW(nullptr,
                                         wideText.c_str(), -1, &rct, DT_CALCRECT|DT_LEFT|DT_TOP|DT_SINGLELINE,
                                         0);
 
@@ -282,13 +282,13 @@ namespace Gwk
 
         void DirectX9::LoadTexture(Gwk::Texture* texture)
         {
-            IDirect3DTexture9* ptr = NULL;
+            IDirect3DTexture9* ptr = nullptr;
             D3DXIMAGE_INFO ImageInfo;
             const std::wstring wtexName( Utility::Widen(texture->name) );
             HRESULT hr = D3DXCreateTextureFromFileExW(m_device,
                                                       wtexName.c_str(),
                                                       0, 0, D3DX_DEFAULT, 0, D3DFMT_UNKNOWN,
-                                                      D3DPOOL_MANAGED, D3DX_DEFAULT, D3DX_DEFAULT, 0, &ImageInfo, NULL,
+                                                      D3DPOOL_MANAGED, D3DX_DEFAULT, D3DX_DEFAULT, 0, &ImageInfo, nullptr,
                                                       &ptr);
 
             if (hr != S_OK)
@@ -307,7 +307,7 @@ namespace Gwk
                 return;
 
             image->Release();
-            texture->data = NULL;
+            texture->data = nullptr;
         }
 
         Gwk::Color DirectX9::PixelColour(Gwk::Texture* texture, unsigned int x, unsigned int y,
@@ -318,7 +318,7 @@ namespace Gwk
             if (!image)
                 return col_default;
 
-            IDirect3DSurface9* surface = NULL;
+            IDirect3DSurface9* surface = nullptr;
 
             if (image->GetSurfaceLevel(0, &surface) != S_OK)
                 return col_default;
@@ -327,7 +327,7 @@ namespace Gwk
                 return col_default;
 
             D3DLOCKED_RECT lockedRect;
-            surface->LockRect(&lockedRect, NULL, D3DLOCK_READONLY);
+            surface->LockRect(&lockedRect, nullptr, D3DLOCK_READONLY);
             DWORD* pixels = (DWORD*)lockedRect.bits;
             D3DXCOLOR color = pixels[lockedRect.Pitch/sizeof(DWORD)*y+x];
             surface->UnlockRect();
@@ -394,13 +394,13 @@ namespace Gwk
             if (m_device)
             {
                 m_device->Release();
-                m_device = NULL;
+                m_device = nullptr;
             }
 
             if (m_D3D)
             {
                 m_D3D->Release();
-                m_D3D = NULL;
+                m_D3D = nullptr;
             }
 
             return true;
@@ -408,14 +408,14 @@ namespace Gwk
 
         bool DirectX9::PresentContext(Gwk::WindowProvider* window)
         {
-            m_device->Present(NULL, NULL, NULL, NULL);
+            m_device->Present(nullptr, nullptr, nullptr, nullptr);
             return true;
         }
 
         bool DirectX9::ResizedContext(Gwk::WindowProvider* window, int w, int h)
         {
             // Force setting the current texture again
-            m_currentTexture = NULL;
+            m_currentTexture = nullptr;
             // Free any unmanaged resources (fonts)
             Release();
             // Get the new window size from the HWND
@@ -429,7 +429,7 @@ namespace Gwk
         bool DirectX9::BeginContext(Gwk::WindowProvider* window)
         {
             m_device->BeginScene();
-            m_device->Clear(0, NULL, D3DCLEAR_TARGET|D3DCLEAR_ZBUFFER|D3DCLEAR_STENCIL, D3DCOLOR_XRGB(
+            m_device->Clear(0, nullptr, D3DCLEAR_TARGET|D3DCLEAR_ZBUFFER|D3DCLEAR_STENCIL, D3DCOLOR_XRGB(
                                  128, 128,
                                  128), 1, 0);
             return true;

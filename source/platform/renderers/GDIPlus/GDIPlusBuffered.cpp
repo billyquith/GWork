@@ -14,7 +14,7 @@ namespace Gwk
     {
         GDIPlusBuffered::GDIPlusBuffered(HWND hWND) : GDIPlus(hWND)
         {
-            m_bitmap = NULL;
+            m_bitmap = nullptr;
         }
 
         GDIPlusBuffered::~GDIPlusBuffered()
@@ -55,13 +55,13 @@ namespace Gwk
             if (m_bitmap)
             {
                 delete m_bitmap;
-                m_bitmap = NULL;
+                m_bitmap = nullptr;
             }
 
             if (graphics)
             {
                 delete graphics;
-                graphics = NULL;
+                graphics = nullptr;
             }
         }
 
@@ -76,7 +76,7 @@ namespace Gwk
             Gdiplus::Graphics gfx(m_hDC);
             gfx.DrawImage(m_bitmap, 0, 0);
             ReleaseDC(m_hWND, m_hDC);
-            m_hDC = NULL;
+            m_hDC = nullptr;
         }
 
     }

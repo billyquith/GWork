@@ -17,13 +17,13 @@ namespace Gwk
         GDIPlus::GDIPlus(HWND hWND)
         {
             m_hWND = hWND;
-            m_hDC = NULL;
-            graphics = NULL;
+            m_hDC = nullptr;
+            graphics = nullptr;
             m_width = 0;
             m_height = 0;
             // Initialize GDI+.
             Gdiplus::GdiplusStartupInput gdiplusStartupInput;
-            Gdiplus::GdiplusStartup(&m_gdiplusToken, &gdiplusStartupInput, NULL);
+            Gdiplus::GdiplusStartup(&m_gdiplusToken, &gdiplusStartupInput, nullptr);
         }
 
         GDIPlus::~GDIPlus()
@@ -42,11 +42,11 @@ namespace Gwk
             if (graphics)
             {
                 delete graphics;
-                graphics = NULL;
+                graphics = nullptr;
             }
 
             ReleaseDC(m_hWND, m_hDC);
-            m_hDC = NULL;
+            m_hDC = nullptr;
         }
 
         void GDIPlus::DrawFilledRect(Gwk::Rect rect)
@@ -66,7 +66,7 @@ namespace Gwk
             Gdiplus::FontStyle fs = Gdiplus::FontStyleRegular;
             font->realsize = font->size*Scale();
             Gdiplus::Font* font = new Gdiplus::Font(Utility::Widen(font->facename).c_str(),
-                                                     font->realsize, fs, Gdiplus::UnitPixel, NULL);
+                                                     font->realsize, fs, Gdiplus::UnitPixel, nullptr);
             font->data = font;
         }
 
@@ -77,7 +77,7 @@ namespace Gwk
 
             Gdiplus::Font* font = ((Gdiplus::Font*)font->data);
             delete font;
-            font->data = NULL;
+            font->data = nullptr;
         }
 
         void GDIPlus::RenderText(Gwk::Font* font, Gwk::Point pos,

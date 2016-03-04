@@ -67,7 +67,7 @@ class TestUnit : public Gwk::Controls::Base
 public:
     
     GWK_CONTROL_INLINE(TestUnit, Gwk::Controls::Base)
-    ,   m_testCategory(NULL)
+    ,   m_testCategory(nullptr)
     {}
     
     void SetTestCategory(TestCategory* t)

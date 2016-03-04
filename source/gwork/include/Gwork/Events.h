@@ -33,7 +33,7 @@ namespace Gwk
          */
         struct Packet
         {
-            Packet(Gwk::Controls::Base* control = NULL)
+            Packet(Gwk::Controls::Base* control = nullptr)
                 :   Control(control)
             {}
 
@@ -65,9 +65,9 @@ namespace Gwk
 
             void Init()
             {
-                ControlCaller   = NULL;
-                Packet          = NULL;
-                Control         = NULL;
+                ControlCaller   = nullptr;
+                Packet          = nullptr;
+                Control         = nullptr;
                 Integer         = 0;
             }
 
@@ -176,10 +176,10 @@ namespace Gwk
             struct HandlerInstance
             {
                 HandlerInstance()
-                    :   fnFunction(NULL)
-                    ,   fnFunctionInfo(NULL)
-                    ,   fnFunctionBlank(NULL)
-                    ,   object(NULL)
+                    :   fnFunction(nullptr)
+                    ,   fnFunctionInfo(nullptr)
+                    ,   fnFunctionBlank(nullptr)
+                    ,   object(nullptr)
                 {}
 
                 Handler::Function fnFunction;

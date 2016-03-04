@@ -69,7 +69,7 @@ namespace Gwk
             static const char* GetTypeNameStatic() { return "Base"; }
             
             virtual const char* GetTypeName() const { return GetTypeNameStatic(); }
-            virtual const char* GetParentTypeName() const { return NULL; }
+            virtual const char* GetParentTypeName() const { return nullptr; }
             
             virtual void DelayedDelete();
             virtual void PreDelete(Gwk::Skin::Base* skin) {}
@@ -403,9 +403,9 @@ namespace Gwk
 
             template <typename T>
             void AddAccelerator(const String& accelerator, T func,
-                                Gwk::Event::Handler* handler = NULL)
+                                Gwk::Event::Handler* handler = nullptr)
             {
-                if (handler == NULL)
+                if (handler == nullptr)
                     handler = this;
 
                 Gwk::Event::Caller* caller = new Gwk::Event::Caller();
@@ -511,7 +511,7 @@ namespace Gwk
             // Giver
 
             virtual void DragAndDrop_SetPackage(bool bDraggable, const String& strName = "",
-                                                void* userData = NULL);
+                                                void* userData = nullptr);
             virtual bool DragAndDrop_Draggable();
             virtual bool DragAndDrop_ShouldStartDrag()  { return true; }
 
@@ -576,7 +576,7 @@ namespace Gwk
 
             virtual Gwk::Controls::Base* DynamicCast(const char* Variable)
             {
-                return NULL;
+                return nullptr;
             }
 
         public:
@@ -650,11 +650,11 @@ namespace Gwk
     inline T* gwk_cast(Gwk::Controls::Base* p)
     {
         if (!p)
-            return NULL;
+            return nullptr;
 
         Gwk::Controls::Base* result = p->DynamicCast(T::GetIdentifier());
 
-        return result != NULL ? static_cast<T*>(result) : NULL;
+        return result != nullptr ? static_cast<T*>(result) : nullptr;
     }
 
     template <class T>

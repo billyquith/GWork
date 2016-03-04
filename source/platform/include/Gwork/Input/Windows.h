@@ -23,7 +23,7 @@ namespace Gwk
 
             Windows()
             {
-                m_canvas = NULL;
+                m_canvas = nullptr;
                 m_mouseX = 0;
                 m_mouseY = 0;
             }

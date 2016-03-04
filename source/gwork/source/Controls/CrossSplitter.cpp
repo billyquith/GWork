@@ -28,10 +28,10 @@ GWK_CONTROL_CONSTRUCTOR(CrossSplitter)
     m_cSplitter->SetCursor(Gwk::CursorType::SizeAll);
     m_fHVal = 0.5f;
     m_fVVal = 0.5f;
-    SetPanel(0, NULL);
-    SetPanel(1, NULL);
-    SetPanel(2, NULL);
-    SetPanel(3, NULL);
+    SetPanel(0, nullptr);
+    SetPanel(1, nullptr);
+    SetPanel(2, nullptr);
+    SetPanel(3, nullptr);
     SetSplitterSize(5);
     m_zoomedSection = -1;
 }

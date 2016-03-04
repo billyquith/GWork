@@ -181,7 +181,7 @@ namespace Gwk
         :   facename("Arial")
         ,   size(10)
         ,   bold(false)
-        ,   data(NULL)
+        ,   data(nullptr)
         ,   realsize(0)
         {
         }
@@ -191,7 +191,7 @@ namespace Gwk
         bool bold;
 
         /// This should be set by the renderer
-        /// if it tries to use a font where it's NULL.
+        /// if it tries to use a font where it's nullptr.
         void*   data;
 
         /// This is the real font size, after it's been scaled by Render->Scale()
@@ -212,12 +212,12 @@ namespace Gwk
         void*   surface;
 
         Texture()
-        :   data(NULL)
+        :   data(nullptr)
         ,   failed(false)
         ,   width(4)
         ,   height(4)
         ,   readable(false)
-        ,   surface(NULL)
+        ,   surface(nullptr)
         {
         }
     };

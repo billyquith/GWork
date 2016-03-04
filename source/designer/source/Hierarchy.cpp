@@ -30,7 +30,7 @@ void Hierarchy::CompleteRefresh()
 
 void Hierarchy::UpdateNode( Controls::TreeNode* node, Controls::Base* control )
 {	
-	Controls::TreeNode* childNode = NULL;
+	Controls::TreeNode* childNode = nullptr;
 
 	if ( !control->UserData.Exists( "ControlFactory" ) )
 	{
@@ -85,7 +85,7 @@ void Hierarchy::OnCanvasSelectionChanged( Event::Info info )
 
 void Hierarchy::SelectNodeRepresentingControl( Controls::Base* control, Controls::TreeNode* node )
 {
-	if ( node == NULL ) node = m_tree;
+	if ( node == nullptr ) node = m_tree;
 
 	if ( node->UserData.Exists( "TargetControl" ) &&
 		 node->UserData.Get<Controls::Base*>( "TargetControl" ) == control )

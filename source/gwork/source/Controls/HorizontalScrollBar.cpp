@@ -91,7 +91,7 @@ void HorizontalScrollBar::OnMouseClickLeft(int x, int y, bool bDown)
             NudgeRight(this);
 
         m_bDepressed = false;
-        Gwk::MouseFocus = NULL;
+        Gwk::MouseFocus = nullptr;
     }
 }
 

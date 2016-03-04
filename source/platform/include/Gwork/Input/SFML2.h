@@ -22,7 +22,7 @@ namespace Gwk
         public:
 
             SFML()
-            :   m_eventListener(NULL)
+            :   m_eventListener(nullptr)
             ,   m_mouseX(0)
             ,   m_mouseY(0)
             {

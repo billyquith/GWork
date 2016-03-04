@@ -22,11 +22,11 @@ GWK_CONTROL_CONSTRUCTOR(DockBase)
 {
     SetPadding(Padding(1, 1, 1, 1));
     SetSize(200, 200);
-    m_dockedTabControl = NULL;
-    m_left = NULL;
-    m_right = NULL;
-    m_top = NULL;
-    m_bottom = NULL;
+    m_dockedTabControl = nullptr;
+    m_left = nullptr;
+    m_right = nullptr;
+    m_top = nullptr;
+    m_bottom = nullptr;
     m_bDrawHover = false;
 }
 
@@ -84,7 +84,7 @@ DockBase** DockBase::GetChildDockPtr(Docking::Area pos)
     if (pos == Docking::Bottom)
         return &m_bottom;
 
-    return NULL;
+    return nullptr;
 }
 
 DockBase* DockBase::GetChildDock(Docking::Area pos)
@@ -152,7 +152,7 @@ bool DockBase::DragAndDrop_HandleDrop(Gwk::DragAndDrop::Package* package, int x,
     Docking::Area dir = GetDroppedTabDirection(pos.x, pos.y);
     DockedTabControl* addTo = m_dockedTabControl;
 
-    if (dir == Docking::Fill && addTo == NULL)
+    if (dir == Docking::Fill && addTo == nullptr)
         return false;
 
     if (dir != Docking::Fill)

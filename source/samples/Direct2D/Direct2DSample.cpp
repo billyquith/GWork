@@ -24,13 +24,13 @@
 #pragma comment(lib, "dwrite.lib")
 #pragma comment(lib, "windowscodecs.lib")
 
-HWND g_hWND = NULL;
-ID2D1Factory*           g_d2DFactory = NULL;
-IDWriteFactory*         g_dWriteFactory = NULL;
-IWICImagingFactory*     g_wICFactory = NULL;
-ID2D1HwndRenderTarget*  g_rT = NULL; // this is device-specific
+HWND g_hWND = nullptr;
+ID2D1Factory*           g_d2DFactory = nullptr;
+IDWriteFactory*         g_dWriteFactory = nullptr;
+IWICImagingFactory*     g_wICFactory = nullptr;
+ID2D1HwndRenderTarget*  g_rT = nullptr; // this is device-specific
 
-Gwk::Renderer::Direct2D* g_renderer = NULL;
+Gwk::Renderer::Direct2D* g_renderer = nullptr;
 
 //
 // Windows bullshit to create a Window to render to.
@@ -41,16 +41,16 @@ HWND CreateGameWindow(void)
     ZeroMemory(&wc, sizeof(wc));
     wc.style            = CS_HREDRAW|CS_VREDRAW|CS_OWNDC;
     wc.lpfnWndProc      = DefWindowProc;
-    wc.hInstance        = GetModuleHandle(NULL);
+    wc.hInstance        = GetModuleHandle(nullptr);
     wc.lpszClassName    = L"GworkWindow";
-    wc.hCursor          = LoadCursor(NULL, IDC_ARROW);
+    wc.hCursor          = LoadCursor(nullptr, IDC_ARROW);
     RegisterClass(&wc);
     HWND hWindow = CreateWindowEx((WS_EX_APPWINDOW|WS_EX_WINDOWEDGE), wc.lpszClassName,
                                   L"Gwork - Direct 2D Sample",
                                   (WS_OVERLAPPEDWINDOW|WS_CLIPSIBLINGS|
                                    WS_CLIPCHILDREN)&~(WS_MINIMIZEBOX|WS_MAXIMIZEBOX|WS_THICKFRAME),
-                                  -1, -1, 1004, 650, NULL, NULL, GetModuleHandle(
-                                      NULL), NULL);
+                                  -1, -1, 1004, 650, nullptr, nullptr, GetModuleHandle(
+                                      nullptr), nullptr);
     ShowWindow(hWindow, SW_SHOW);
     SetForegroundWindow(hWindow);
     SetFocus(hWindow);
@@ -75,10 +75,10 @@ int main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCm
         __uuidof(IDWriteFactory),
         reinterpret_cast<IUnknown**>(&g_dWriteFactory)
         );
-    hr = CoInitialize(NULL);
+    hr = CoInitialize(nullptr);
     hr = CoCreateInstance(
         CLSID_WICImagingFactory,
-        NULL,
+        nullptr,
         CLSCTX_INPROC_SERVER,
         IID_IWICImagingFactory,
         reinterpret_cast<void**>(&g_wICFactory)
@@ -91,12 +91,12 @@ int main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCm
     g_renderer = new Gwk::Renderer::Direct2D(g_rT, g_dWriteFactory, g_wICFactory);
     runSample();
     delete g_renderer;
-    g_renderer = NULL;
+    g_renderer = nullptr;
 
-    if (g_rT != NULL)
+    if (g_rT != nullptr)
     {
         g_rT->Release();
-        g_rT = NULL;
+        g_rT = nullptr;
     }
 }
 
@@ -119,7 +119,7 @@ HRESULT createDeviceResources()
             &g_rT
             );
 
-        if (SUCCEEDED(hr) && g_renderer != NULL)
+        if (SUCCEEDED(hr) && g_renderer != nullptr)
         {
             g_rT->SetTextAntialiasMode(D2D1_TEXT_ANTIALIAS_MODE_CLEARTYPE);
             g_renderer->DeviceAcquired(g_rT);
@@ -131,10 +131,10 @@ HRESULT createDeviceResources()
 
 void discardDeviceResources()
 {
-    if (g_rT != NULL)
+    if (g_rT != nullptr)
     {
         g_rT->Release();
-        g_rT = NULL;
+        g_rT = nullptr;
     }
 }
 
@@ -177,7 +177,7 @@ void runSample()
             break;
 
         // If we have a message from windows..
-        if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
+        if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
         {
             // .. give it to the input handler to process
             GworkInput.ProcessMessage(msg);

@@ -27,23 +27,23 @@ HWND CreateGameWindow(void)
     ZeroMemory(&wc, sizeof(wc));
     wc.style            = CS_HREDRAW|CS_VREDRAW|CS_OWNDC;
     wc.lpfnWndProc      = DefWindowProc;
-    wc.hInstance        = GetModuleHandle(NULL);
+    wc.hInstance        = GetModuleHandle(nullptr);
     wc.lpszClassName    = L"GworkWindow";
-    wc.hCursor          = LoadCursor(NULL, IDC_ARROW);
+    wc.hCursor          = LoadCursor(nullptr, IDC_ARROW);
     RegisterClassW(&wc);
 #ifdef USE_DEBUG_FONT
     HWND hWindow = CreateWindowExW((WS_EX_APPWINDOW|WS_EX_WINDOWEDGE), wc.lpszClassName,
                                    L"Gwork - OpenGL Sample (Using embedded debug font renderer)",
                                    (WS_OVERLAPPEDWINDOW|WS_CLIPSIBLINGS|
                                     WS_CLIPCHILDREN)&~(WS_MINIMIZEBOX|WS_MAXIMIZEBOX|WS_THICKFRAME),
-                                   -1, -1, 1004, 650, NULL, NULL, GetModuleHandle(
-                                       NULL), NULL);
+                                   -1, -1, 1004, 650, nullptr, nullptr, GetModuleHandle(
+                                       nullptr), nullptr);
 #else
     HWND hWindow = CreateWindowExW((WS_EX_APPWINDOW|WS_EX_WINDOWEDGE), wc.lpszClassName,
                                    L"Gwork - OpenGL Sample (No cross platform way to render fonts in OpenGL)",
                                    (WS_OVERLAPPEDWINDOW|WS_CLIPSIBLINGS|
-                                    WS_CLIPCHILDREN)&~(WS_MINIMIZEBOX|WS_MAXIMIZEBOX|WS_THICKFRAME), -1, -1, 1004, 650, NULL, NULL,
-                                   GetModuleHandle(NULL), NULL);
+                                    WS_CLIPCHILDREN)&~(WS_MINIMIZEBOX|WS_MAXIMIZEBOX|WS_THICKFRAME), -1, -1, 1004, 650, nullptr, nullptr,
+                                   GetModuleHandle(nullptr), nullptr);
 #endif // ifdef USE_DEBUG_FONT
     ShowWindow(hWindow, SW_SHOW);
     SetForegroundWindow(hWindow);
@@ -51,7 +51,7 @@ HWND CreateGameWindow(void)
     return hWindow;
 }
 
-HWND g_hWND = NULL;
+HWND g_hWND = nullptr;
 
 HGLRC CreateOpenGLDeviceContext()
 {
@@ -71,7 +71,7 @@ HGLRC CreateOpenGLDeviceContext()
     int pixelFormat = ChoosePixelFormat(GetDC(g_hWND), &pfd);
 
     if (pixelFormat == 0)
-        FatalAppExit(NULL, TEXT("ChoosePixelFormat() failed!"));
+        FatalAppExit(nullptr, TEXT("ChoosePixelFormat() failed!"));
 
     SetPixelFormat(GetDC(g_hWND), pixelFormat, &pfd);
     HGLRC OpenGLContext = wglCreateContext(GetDC(g_hWND));
@@ -144,7 +144,7 @@ int main()
             break;
 
         // If we have a message from windows..
-        if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
+        if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
         {
             // .. give it to the input handler to process
             GworkInput.ProcessMessage(msg);
@@ -167,7 +167,7 @@ int main()
     }
 
     // Clean up OpenGL
-    wglMakeCurrent(NULL, NULL);
+    wglMakeCurrent(nullptr, nullptr);
     wglDeleteContext(OpenGLContext);
     delete canvas;
     delete skin;

@@ -14,7 +14,7 @@ class Hierarchy : public Controls::Base
 
 		void WatchCanvas( DocumentCanvas* canvas );
 
-		void SelectNodeRepresentingControl( Controls::Base* control, Controls::TreeNode* node = NULL );
+		void SelectNodeRepresentingControl( Controls::Base* control, Controls::TreeNode* node = nullptr );
 
 		void CompleteRefresh();
 

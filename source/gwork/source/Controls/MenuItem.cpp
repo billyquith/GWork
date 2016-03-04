@@ -32,10 +32,10 @@ public:
 
 GWK_CONTROL_CONSTRUCTOR(MenuItem)
 {
-    m_menu = NULL;
+    m_menu = nullptr;
     m_bOnStrip = false;
-    m_submenuArrow = NULL;
-    m_accelerator = NULL;
+    m_submenuArrow = nullptr;
+    m_accelerator = nullptr;
     SetTabable(false);
     SetCheckable(false);
     SetChecked(false);
@@ -162,7 +162,7 @@ void MenuItem::SetAccelerator(const String& strAccelerator)
     if (m_accelerator)
     {
         m_accelerator->DelayedDelete();
-        m_accelerator = NULL;
+        m_accelerator = nullptr;
     }
 
     if (strAccelerator.empty())

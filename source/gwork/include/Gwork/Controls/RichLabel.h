@@ -25,7 +25,7 @@ namespace Gwk
             GWK_CONTROL(RichLabel, Gwk::Controls::Base);
 
             void AddLineBreak();
-            void AddText(const Gwk::String& text, Gwk::Color color, Gwk::Font* font = NULL);
+            void AddText(const Gwk::String& text, Gwk::Color color, Gwk::Font* font = nullptr);
 
             virtual bool SizeToChildren(bool w = true, bool h = true) override;
 
@@ -37,7 +37,7 @@ namespace Gwk
                 DividedText()
                 {
                     type = 0;
-                    font = NULL;
+                    font = nullptr;
                 }
 
                 unsigned char       type;

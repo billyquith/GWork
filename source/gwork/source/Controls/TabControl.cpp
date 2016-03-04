@@ -36,7 +36,7 @@ public:
 GWK_CONTROL_CONSTRUCTOR(TabControl)
 {
     m_scrollOffset = 0;
-    m_currentButton = NULL;
+    m_currentButton = nullptr;
     m_tabStrip = new TabStrip(this);
     m_tabStrip->SetTabPosition(Docking::Top);
     // Make this some special control?
@@ -122,7 +122,7 @@ void TabControl::OnTabPressed(Controls::Base* control)
             page->SetHidden(true);
 
         m_currentButton->Redraw();
-        m_currentButton = NULL;
+        m_currentButton = nullptr;
     }
 
     m_currentButton = button;
@@ -140,7 +140,7 @@ void TabControl::PostLayout(Skin::Base* skin)
 void TabControl::OnLoseTab(TabButton* button)
 {
     if (m_currentButton == button)
-        m_currentButton = NULL;
+        m_currentButton = nullptr;
 
     // TODO: Select a tab if any exist.
     onLoseTab.Call(this);

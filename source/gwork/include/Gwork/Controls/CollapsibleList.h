@@ -91,7 +91,7 @@ namespace Gwk
                         return selected;
                 }
 
-                return NULL;
+                return nullptr;
             }
 
         protected:

@@ -154,7 +154,7 @@ void ColorLerpBox::OnMouseClickLeft(int x, int y, bool bDown)
     if (bDown)
         Gwk::MouseFocus = this;
     else
-        Gwk::MouseFocus = NULL;
+        Gwk::MouseFocus = nullptr;
 
     OnMouseMoved(x, y, 0, 0);
 }
@@ -233,7 +233,7 @@ void ColorSlider::OnMouseClickLeft(int x, int y, bool bDown)
     if (bDown)
         Gwk::MouseFocus = this;
     else
-        Gwk::MouseFocus = NULL;
+        Gwk::MouseFocus = nullptr;
 
     OnMouseMoved(x, y, 0, 0);
 }

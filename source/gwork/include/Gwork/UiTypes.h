@@ -61,9 +61,9 @@ namespace Gwk
         {
             Package()
             {
-                userdata = NULL;
+                userdata = nullptr;
                 draggable = false;
-                drawcontrol = NULL;
+                drawcontrol = nullptr;
                 holdoffset = Gwk::Point(0, 0);
             }
 
