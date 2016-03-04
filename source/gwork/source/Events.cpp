@@ -8,9 +8,10 @@
 
 #include <Gwork/Events.h>
 
-using namespace Gwk;
+namespace Gwk
+{
+    
 using namespace Gwk::Event;
-
 
 Handler::Handler()
 {
@@ -146,3 +147,5 @@ void Caller::RemoveHandler(Event::Handler* object)
             ++iter;
     }
 }
+
+} // namespace Gwk
