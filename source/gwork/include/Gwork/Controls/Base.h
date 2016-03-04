@@ -13,7 +13,7 @@
 #include <map>
 #include <algorithm>
 
-#include <Gwork/Exports.h>
+#include <Gwork/Config.h>
 #include <Gwork/UiTypes.h>
 #include <Gwork/BaseRender.h>
 #include <Gwork/Events.h>

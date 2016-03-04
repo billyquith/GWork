@@ -9,7 +9,6 @@ include_directories(
 set(GWK_HEADERS
     include/Gwork/Align.h
     include/Gwork/Anim.h
-    include/Gwork/Config.h
     include/Gwork/ControlList.h
     include/Gwork/Controls.h
     include/Gwork/DragAndDrop.h

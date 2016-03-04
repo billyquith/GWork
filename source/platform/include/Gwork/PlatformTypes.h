@@ -15,7 +15,7 @@
 #   pragma warning( disable : 4251 )
 #endif
 
-#include <Gwork/Exports.h>
+#include <Gwork/Config.h>
 #include <string>
 #include <list>
 
