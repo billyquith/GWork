@@ -58,14 +58,6 @@ namespace Gwk
         class Base;
     }
 
-    namespace Debug
-    {
-        void GWK_EXPORT Msg(const wchar_t* str, ...);
-        void GWK_EXPORT Msg(const char* str, ...);
-        void GWK_EXPORT AssertCheck(bool b, const char* strMsg);
-    }
-
-
     namespace Colors
     {
         static const Color Black(0, 0, 0, 255);

@@ -77,6 +77,15 @@ namespace Gwk
         Gwk::Rect ClampRectToRect(Gwk::Rect inside, Gwk::Rect outside, bool clampSize = false);
     }
     
+    namespace Debug
+    {
+        void GWK_EXPORT Msg(const char* str, ...);
+#ifdef UNICODE
+        void GWK_EXPORT Msg(const wchar_t* str, ...);
+#endif
+        void GWK_EXPORT AssertCheck(bool b, const char* strMsg);
+    }
+    
     template <typename T>
     inline T Clamp(T current, T vmin, T vmax)
     {

@@ -282,7 +282,57 @@ Gwk::Rect ClampRectToRect(Gwk::Rect inside, Gwk::Rect outside, bool clampSize)
     return inside;
 }
 
-} // Utility
-} // Gwk
+} // namespace Utility
+    
+namespace Debug
+{
+    
+void Msg(const char* str, ...)
+{
+    char strOut[1024];
+    va_list s;
+    
+    va_start(s, str);
+    Utility::vsnprintf(strOut, sizeof(strOut), str, s);
+    va_end(s);
+    
+#ifdef WIN32
+    OutputDebugStringA(strOut);
+#else
+    puts(strOut);
+#endif
+}
+
+#ifdef UNICODE
+void Msg(const wchar_t* str, ...)
+{
+    wchar_t strOut[1024];
+    va_list s;
+    va_start(s, str);
+    vswprintf(strOut, sizeof(strOut), str, s);
+    va_end(s);
+    GwkUtil_OutputDebugWideString(strOut);
+}
+#endif // ifdef UNICODE
+
+void AssertCheck(bool b, const char* strMsg)
+{
+    if (!b)
+    {
+        Msg("Assert: %s\n", strMsg);
+#ifdef WIN32
+        MessageBoxA(nullptr, strMsg, "Assert", MB_ICONEXCLAMATION | MB_OK);
+        _asm { int 3 }      // Break to debugger.
+#endif
+        
+#ifdef __APPLE__
+        __builtin_trap();   // Break to debugger.
+#endif
+    }
+}
+
+} // namespace Debug
+    
+} // namespace Gwk
 
 
