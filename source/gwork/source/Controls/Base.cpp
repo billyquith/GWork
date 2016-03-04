@@ -17,7 +17,7 @@
 #include <Gwork/Utility.h>
 #include <list>
 
-#ifndef GWK_NO_ANIMATION
+#if GWK_ANIMATE
 #include <Gwork/Anim.h>
 #endif
 
@@ -92,7 +92,7 @@ Base::~Base()
 
     DragAndDrop::ControlDeleted(this);
     ToolTip::ControlDeleted(this);
-#ifndef GWK_NO_ANIMATION
+#if GWK_ANIMATE
     Anim::Cancel(this);
 #endif
 
@@ -1234,7 +1234,7 @@ Gwk::ControlList Base::GetNamedChildren(const Gwk::String& strName, bool bDeep)
     return list;
 }
 
-#ifndef GWK_NO_ANIMATION
+#if GWK_ANIMATE
 
 void Base::Anim_widthIn(float fLength, float fDelay, float fEase)
 {
@@ -1260,7 +1260,7 @@ void Base::Anim_heightOut(float fLength, bool bHide, float fDelay, float fEase)
                     new Gwk::Anim::Size::Height(Height(), 0, fLength, bHide, fDelay, fEase));
 }
 
-#endif // ifndef GWK_NO_ANIMATION
+#endif // if GWK_ANIMATE
 
     
 } // namespace Gwk

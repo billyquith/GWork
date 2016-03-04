@@ -18,7 +18,7 @@
 using namespace Gwk;
 using namespace Gwk::Controls;
 
-#ifndef GWK_NO_ANIMATION
+#if GWK_ANIMATE
 class ChangeCaretColor : public Gwk::Anim::Animation
 {
 public:
@@ -31,7 +31,7 @@ public:
 };
 
 
-#endif // ifndef GWK_NO_ANIMATION
+#endif // if GWK_ANIMATE
 
 
 GWK_CONTROL_CONSTRUCTOR(TextBox)
@@ -90,7 +90,7 @@ void TextBox::InsertText(const Gwk::String& strInsert)
     RefreshCursorBounds();
 }
 
-#ifndef GWK_NO_ANIMATION
+#if GWK_ANIMATE
 void TextBox::UpdateCaretColor()
 {
     if (m_fNextCaretColorChange > Gwk::Platform::GetTimeInSeconds())
@@ -111,7 +111,7 @@ void TextBox::UpdateCaretColor()
     Redraw();
 }
 
-#endif // ifndef GWK_NO_ANIMATION
+#endif // if GWK_ANIMATE
 
 void TextBox::Render(Skin::Base* skin)
 {

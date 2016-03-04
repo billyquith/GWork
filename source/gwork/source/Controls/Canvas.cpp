@@ -13,7 +13,7 @@
 #include <Gwork/DragAndDrop.h>
 #include <Gwork/ToolTip.h>
 
-#ifndef GWK_NO_ANIMATION
+#if GWK_ANIMATE
 #include <Gwork/Anim.h>
 #endif
 
@@ -76,7 +76,7 @@ void Canvas::DoThink()
     if (Hidden())
         return;
 
-#ifndef GWK_NO_ANIMATION
+#if GWK_ANIMATE
     Gwk::Anim::Think();
 #endif
     // Reset tabbing

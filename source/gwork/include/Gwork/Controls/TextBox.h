@@ -28,7 +28,7 @@ namespace Gwk
             virtual void Layout(Skin::Base* skin) override;
             virtual void PostLayout(Skin::Base* skin) override;
 
-#ifndef GWK_NO_ANIMATION
+#if GWK_ANIMATE
             virtual void UpdateCaretColor();
 #endif
 
