@@ -8,6 +8,8 @@
 
 #include <Gwork/ToolTip.h>
 #include <Gwork/Utility.h>
+#include <Gwork/InputHandler.h>
+#include <Gwork/Controls/Canvas.h>
 
 namespace Gwk {
     namespace ToolTip

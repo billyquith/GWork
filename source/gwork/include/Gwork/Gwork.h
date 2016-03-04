@@ -29,48 +29,10 @@
 #ifndef GWK_GWK_H
 #define GWK_GWK_H
 
-#include <stdlib.h>
-#include <memory.h>
-#include <set>
-#include <list>
-#include <algorithm>
-
-#include <Gwork/Config.h>
-#include <Gwork/UiTypes.h>
-#include <Gwork/Skin.h>
 #include <Gwork/Controls/Base.h>
-#include <Gwork/Controls/Canvas.h>
-#include <Gwork/Align.h>
-
-// Enable the hook system (se Hook.h)
-#define GWK_HOOKSYSTEM 1
 
 namespace Gwk
 {
-    namespace Controls
-    {
-        class Base;
-        class Canvas;
-    }
-
-    namespace Renderer
-    {
-        class Base;
-    }
-
-    namespace Colors
-    {
-        static const Color Black(0, 0, 0, 255);
-        static const Color Red(255, 0, 0, 255);
-        static const Color Yellow(255, 255, 0, 255);
-        static const Color White(255, 255, 255, 255);
-        static const Color Blue(0, 0, 255, 255);
-        static const Color Green(0, 255, 0, 255);
-        static const Color Grey(200, 200, 200, 255);
-        static const Color GreyLight(230, 230, 230, 255);
-        static const Color GworkPink(255, 65, 199, 255);
-    }
-
     extern GWK_EXPORT Controls::Base*  HoveredControl;
     extern GWK_EXPORT Controls::Base*  KeyboardFocus;
     extern GWK_EXPORT Controls::Base*  MouseFocus;

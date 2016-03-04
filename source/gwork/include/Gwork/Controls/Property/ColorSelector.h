@@ -12,7 +12,7 @@
 #include <Gwork/Controls/Properties.h>
 #include <Gwork/Controls/Menu.h>
 #include <Gwork/Controls/HSVColorPicker.h>
-
+#include <Gwork/Controls/Canvas.h>
 #include <stdio.h>
 
 namespace Gwk

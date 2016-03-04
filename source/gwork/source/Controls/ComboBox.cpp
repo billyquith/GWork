@@ -8,7 +8,7 @@
 
 #include <Gwork/Controls/ComboBox.h>
 #include <Gwork/Controls/Menu.h>
-
+#include <Gwork/Controls/Canvas.h>
 
 using namespace Gwk;
 using namespace Gwk::Controls;

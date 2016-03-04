@@ -11,6 +11,8 @@
 #include <Gwork/DragAndDrop.h>
 #include <Gwork/Hook.h>
 #include <Gwork/Platform.h>
+#include <Gwork/Controls/Canvas.h>
+#include <Gwork/Gwork.h>
 
 namespace Gwk {
 

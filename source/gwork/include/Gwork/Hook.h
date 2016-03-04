@@ -9,10 +9,14 @@
 #ifndef GWK_HOOK_H
 #define GWK_HOOK_H
 
-#include <Gwork/Gwork.h>
-#include <list>
+#include <Gwork/Controls/Base.h>
+
+// Enable the hook system.
+#define GWK_HOOKSYSTEM 1
 
 #if GWK_HOOKSYSTEM
+
+#include <list>
 
 namespace Gwk
 {
