@@ -22,10 +22,12 @@ namespace Gwk
     {
         namespace Symbol
         {
-            static const unsigned char None             = 0;
-            static const unsigned char ArrowRight       = 1;
-            static const unsigned char Check            = 2;
-            static const unsigned char Dot              = 3;
+            enum {
+                None,
+                ArrowRight,
+                Check,
+                Dot
+            };
         }
 
         class GWK_EXPORT Base
