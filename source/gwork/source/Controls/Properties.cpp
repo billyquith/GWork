@@ -163,7 +163,7 @@ void PropertyRow::Layout(Gwk::Skin::Base* /*skin*/)
     m_label->SetWidth(parent->GetSplitWidth());
 
     if (m_property)
-        SetHeight( Max(m_label->Height(), m_property->Height()) );
+        SetHeight( std::max(m_label->Height(), m_property->Height()) );
 }
 
 void PropertyRow::SetProperty(Property::Base* prop)

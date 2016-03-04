@@ -40,18 +40,6 @@
 namespace Gwk
 {
     template <typename T>
-    inline T Min(T a, T b)
-    {
-        return a < b ? a : b;
-    }
-
-    template <typename T>
-    inline T Max(T a, T b)
-    {
-        return a > b ? a : b;
-    }
-
-    template <typename T>
     inline T Clamp(T current, T vmin, T vmax)
     {
         return current < vmin ? vmin : (current > vmax ? vmax : current);

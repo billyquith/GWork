@@ -105,8 +105,8 @@ void TabStrip::Layout(Skin::Base* skin)
             button->Dock(Docking::Left);
         }
 
-        largestTab.x = Gwk::Max(largestTab.x, button->Width());
-        largestTab.y = Gwk::Max(largestTab.y, button->Height());
+        largestTab.x = std::max(largestTab.x, button->Width());
+        largestTab.y = std::max(largestTab.y, button->Height());
         button->SetMargin(m);
         iNum++;
     }

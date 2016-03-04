@@ -51,7 +51,7 @@ void ColorPicker::CreateColorControl(Gwk::String name, int y)
     HorizontalSlider* slider = new HorizontalSlider(colorGroup);
     slider->SetPos(colorSize+5, 0);
     slider->SetRange(0, 255);
-    slider->SetSize(80, Gwk::Max(colorSize, 15));
+    slider->SetSize(80, std::max(colorSize, 15));
     slider->SetName(name+"Slider");
     slider->onValueChanged.Add(this, &ColorPicker::SlidersMoved);
 }

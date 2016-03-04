@@ -114,7 +114,7 @@ namespace Gwk
                         else
                             m_columns[i]->SizeToContents();
 
-                        iHeight = Gwk::Max(iHeight, m_columns[i]->Height());
+                        iHeight = std::max(iHeight, m_columns[i]->Height());
                     }
 
                     SetHeight(iHeight);
@@ -337,7 +337,7 @@ namespace Gwk
                         {
                             if (row->m_columns[i])
                             {
-                                m_columnWidth[i] = Gwk::Max(m_columnWidth[i],
+                                m_columnWidth[i] = std::max(m_columnWidth[i],
                                                              row->m_columns[i]->Width());
                             }
                         }

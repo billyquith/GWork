@@ -112,7 +112,7 @@ Docking::Area DockBase::GetDroppedTabDirection(int x, int y)
     float left = (float)x/(float)w;
     float right = (float)(w-x)/(float)w;
     float bottom = (float)(h-y)/(float)h;
-    float minimum = Gwk::Min(Gwk::Min(Gwk::Min(top, left), right), bottom);
+    float minimum = std::min(std::min(std::min(top, left), right), bottom);
     m_bDropFar = (minimum < 0.2f);
 
     if (minimum > 0.3)
