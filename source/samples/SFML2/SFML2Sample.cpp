@@ -6,7 +6,6 @@
  */
 
 #include <SFML/Graphics.hpp>
-#include <cmath>
 
 #include <Gwork/Renderers/SFML2.h>
 #include <Gwork/Input/SFML2.h>

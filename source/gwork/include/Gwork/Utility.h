@@ -79,11 +79,11 @@ namespace Gwk
     
     namespace Debug
     {
-        void GWK_EXPORT Msg(const char* str, ...);
+        GWK_EXPORT void Msg(const char* str, ...);
 #ifdef UNICODE
-        void GWK_EXPORT Msg(const wchar_t* str, ...);
+        GWK_EXPORT void Msg(const wchar_t* str, ...);
 #endif
-        void GWK_EXPORT AssertCheck(bool b, const char* strMsg);
+        GWK_EXPORT void AssertCheck(bool b, const char* strMsg);
     }
     
     template <typename T>

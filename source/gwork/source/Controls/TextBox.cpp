@@ -12,7 +12,7 @@
 #include <Gwork/Anim.h>
 #include <Gwork/Utility.h>
 #include <Gwork/Platform.h>
-
+#include <Gwork/InputHandler.h>
 #include <math.h>
 
 using namespace Gwk;

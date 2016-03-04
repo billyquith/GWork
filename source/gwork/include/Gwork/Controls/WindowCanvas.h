@@ -15,6 +15,7 @@
 #include <Gwork/Controls/Dragger.h>
 #include <Gwork/Controls/Label.h>
 #include <Gwork/Controls/WindowButtons.h>
+#include <Gwork/Controls/Canvas.h>
 
 namespace Gwk
 {

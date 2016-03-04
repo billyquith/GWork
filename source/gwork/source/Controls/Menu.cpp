@@ -10,6 +10,7 @@
 #include <Gwork/Controls/Menu.h>
 #include <Gwork/Skin.h>
 #include <Gwork/Utility.h>
+#include <Gwork/Controls/Canvas.h>
 
 using namespace Gwk;
 using namespace Gwk::Controls;

@@ -8,6 +8,7 @@
 
 #include <Gwork/Controls/Base.h>
 #include <Gwork/Controls/Label.h>
+#include <Gwork/Controls/Canvas.h>
 #include <Gwork/Gwork.h>
 #include <Gwork/BaseRender.h>
 #include <Gwork/Skin.h>
@@ -18,7 +19,7 @@
 #include <list>
 
 #if GWK_ANIMATE
-#include <Gwork/Anim.h>
+#   include <Gwork/Anim.h>
 #endif
 
 

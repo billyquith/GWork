@@ -9,6 +9,8 @@
 #ifndef GWK_USERDATA_H
 #define GWK_USERDATA_H
 
+#include <map>
+
 namespace Gwk
 {
     /**

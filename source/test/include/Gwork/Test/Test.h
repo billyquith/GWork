@@ -16,6 +16,7 @@
 #include <Gwork/Controls/DockBase.h>
 #include <Gwork/Controls/StatusBar.h>
 #include <Gwork/Controls/TabControl.h>
+#include <Gwork/Controls/Canvas.h>
 
 
 // TODO - Put tests in Gwk namespace as can be included in project.

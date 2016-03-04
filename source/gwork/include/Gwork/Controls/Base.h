@@ -9,10 +9,6 @@
 #ifndef GWK_CONTROLS_BASE_H
 #define GWK_CONTROLS_BASE_H
 
-#include <list>
-#include <map>
-#include <algorithm>
-
 #include <Gwork/Config.h>
 #include <Gwork/UiTypes.h>
 #include <Gwork/BaseRender.h>
@@ -21,6 +17,9 @@
 #include <Gwork/Skin.h>
 #include <Gwork/ControlList.h>
 #include <Gwork/UserData.h>
+#include <list>
+#include <map>
+#include <algorithm>
 
 namespace Gwk
 {

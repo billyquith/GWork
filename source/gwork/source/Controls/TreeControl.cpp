@@ -9,6 +9,7 @@
 #include <Gwork/Controls/TreeControl.h>
 #include <Gwork/Controls/ScrollControl.h>
 #include <Gwork/Utility.h>
+#include <Gwork/InputHandler.h>
 
 using namespace Gwk;
 using namespace Gwk::Controls;

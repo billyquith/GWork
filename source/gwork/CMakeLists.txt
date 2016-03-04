@@ -114,7 +114,7 @@ set(GWK_SOURCES
     source/ControlList.cpp
     source/DragAndDrop.cpp
     source/Events.cpp
-    source/Gwen.cpp
+    source/Gwork.cpp
     source/Hook.cpp
     source/InputHandler.cpp
     source/Skin.cpp
