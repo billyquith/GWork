@@ -1,15 +1,17 @@
-# Gwork library
+ # Gwork library
 
 include_directories(
     ${CMAKE_SOURCE_DIR}/source/platform/include
     ${CMAKE_SOURCE_DIR}/source/gwork/include
     ${GWK_RENDER_INCLUDES}
+    ${CMAKE_SOURCE_DIR}/source/util/include
     ${CMAKE_SOURCE_DIR}/source/test/include
 )
 
 set(GWK_TEST_SOURCES
     include/Gwork/Test/Test.h
     include/Gwork/Test/TestAPI.h
+    include/Gwork/Test/TestFactory.h
     source/Test.cpp
     source/api/Button.cpp
     source/api/Checkbox.cpp
@@ -36,6 +38,8 @@ set(GWK_TEST_SOURCES
     source/api/TestAPI.cpp
     source/api/TreeControl.cpp
     source/api/Window.cpp
+    source/factory/TestFactory.cpp
+    source/factory/ReflectButton.cpp
 )
 
 # header folder groups

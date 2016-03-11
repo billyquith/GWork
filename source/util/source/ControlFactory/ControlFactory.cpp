@@ -7,7 +7,7 @@ namespace ControlFactory {
 const Gwk::String PropertyBool::True    = "true";
 const Gwk::String PropertyBool::False   = "false";
 
-void InitializeControls()
+void InitialiseControls()
 {
     ponder::Class::declare<Gwk::Color>()
         .property("r", &Gwk::Color::r)
@@ -44,7 +44,7 @@ void InitializeControls()
         .function("typename",   &Controls::Base::GetTypeName)
         .property("name",       &Controls::Base::GetName, &Controls::Base::SetName)
         .property("pos",        &Controls::Base::GetPos,
-                                static_cast<void(Controls::Base::*)(const Point&)>(&Controls::Base::SetPos))
+                  static_cast<void(Controls::Base::*)(const Point&)>(&Controls::Base::SetPos))
         .property("size",       &Controls::Base::GetSize,
                                 [] (Controls::Base& c,const Point& s) {c.SetSize(s);})
         .property("margin",     &Controls::Base::GetMargin, &Controls::Base::SetMargin)
@@ -52,7 +52,8 @@ void InitializeControls()
         ;
 
     ponder::Class::declare<Controls::Label>()
-        .base<Controls::Base>()
+        .base<Controls::Label::ParentClass>()
+        .constructor<Controls::Base*>()
         .property("text", &Controls::Label::GetText,
                           [] (Controls::Label& c, const Gwk::String& s) { c.SetText(s); })
         .property("textColor",  &Controls::Label::GetTextColor, &Controls::Label::SetTextColor)
@@ -62,7 +63,8 @@ void InitializeControls()
         .base<Controls::Button::ParentClass>()
         .property("depressed",  &Controls::Button::IsDepressed, &Controls::Button::SetDepressed)
         .property("isToggle",   &Controls::Button::IsToggle, &Controls::Button::SetIsToggle)
-        .property("toggled",    &Controls::Button::GetToggleState, &Controls::Button::SetToggleState)
+        .property("toggled",    &Controls::Button::GetToggleState,
+                                &Controls::Button::SetToggleState)
         ;
 
     ponder::Class::declare<Controls::LabelClickable>()
@@ -118,7 +120,8 @@ void InitializeControls()
 
     ponder::Class::declare<Controls::ProgressBar>()
         .base<Controls::Rectangle::ParentClass>()
-        .property("cycleSpeed", &Controls::ProgressBar::GetCycleSpeed, &Controls::ProgressBar::SetCycleSpeed)
+        .property("cycleSpeed", &Controls::ProgressBar::GetCycleSpeed,
+                                &Controls::ProgressBar::SetCycleSpeed)
         ;
 
     ponder::Class::declare<Controls::ComboBox>()
@@ -159,7 +162,7 @@ List& GetList()
     if (!Initialized)
     {
         Initialized = true;
-        InitializeControls();
+//        InitialiseControls();
     }
 
     return list;
@@ -282,5 +285,5 @@ int Base::GetParentPage(Gwk::Controls::Base* ctrl)
     return ctrl->UserData.Get<int>("ParentPage");
 }
 
-}
-}
+} // namespace ControlFactory
+} // namespace Gwk

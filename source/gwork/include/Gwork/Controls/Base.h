@@ -20,6 +20,7 @@
 #include <list>
 #include <map>
 #include <algorithm>
+#include <ponder/pondertype.hpp>
 
 namespace Gwk
 {    
@@ -589,7 +590,7 @@ namespace Gwk
 
 
     }
-
+    
     /**
      *  To avoid using dynamic_cast we have gwk_cast.
      *

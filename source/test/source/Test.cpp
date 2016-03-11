@@ -5,8 +5,8 @@
  *  See license in Gwork.h
  */
 
-#include <Gwork/Test/Test.h>
 #include <Gwork/Test/TestAPI.h>
+#include <Gwork/Test/TestFactory.h>
 #include <Gwork/Platform.h>
 
 using namespace Gwk;
@@ -24,6 +24,7 @@ GWK_CONTROL_CONSTRUCTOR(TestFrame)
     m_statusBar->Dock(Position::Bottom);
     
     m_testTabs->AddPage("API", new TestAPI(m_testTabs));
+    m_testTabs->AddPage("Factory", new TestFactory(m_testTabs));
 }
 
 void TestFrame::Render(Skin::Base* skin)

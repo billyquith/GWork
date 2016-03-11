@@ -48,6 +48,8 @@ namespace Gwk
         class Base;
         
         typedef std::list<ControlFactory::Base*> List;
+        
+        void InitialiseControls();
 
         List&                 GetList();
         ControlFactory::Base* Find(const Gwk::String& name);
