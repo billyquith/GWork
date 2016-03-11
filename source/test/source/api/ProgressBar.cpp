@@ -26,20 +26,20 @@ public:
             Gwk::Controls::ProgressBar* pb = new Gwk::Controls::ProgressBar(this);
             pb->SetBounds(Gwk::Rect(110, 50, 200, 20));
             pb->SetProgress(0.66f);
-            pb->SetAlignment(Docking::Right|Docking::CenterV);
+            pb->SetAlignment(Position::Right|Position::CenterV);
         }
         {
             Gwk::Controls::ProgressBar* pb = new Gwk::Controls::ProgressBar(this);
             pb->SetBounds(Gwk::Rect(110, 80, 200, 20));
             pb->SetProgress(0.88f);
-            pb->SetAlignment(Docking::Left|Docking::CenterV);
+            pb->SetAlignment(Position::Left|Position::CenterV);
         }
         {
             Gwk::Controls::ProgressBar* pb = new Gwk::Controls::ProgressBar(this);
             pb->SetBounds(Gwk::Rect(110, 110, 200, 20));
             pb->SetAutoLabel(false);
             pb->SetProgress(0.20f);
-            pb->SetAlignment(Docking::Right|Docking::CenterV);
+            pb->SetAlignment(Position::Right|Position::CenterV);
             pb->SetText("40,245 MB");
         }
         {
@@ -65,7 +65,7 @@ public:
             pb->SetBounds(Gwk::Rect(20, 20, 25, 200));
             pb->SetVertical();
             pb->SetProgress(0.25f);
-            pb->SetAlignment(Docking::Top|Docking::CenterH);
+            pb->SetAlignment(Position::Top|Position::CenterH);
         }
         {
             Gwk::Controls::ProgressBar* pb = new Gwk::Controls::ProgressBar(this);
@@ -77,7 +77,7 @@ public:
             Gwk::Controls::ProgressBar* pb = new Gwk::Controls::ProgressBar(this);
             pb->SetBounds(Gwk::Rect(80, 20, 25, 200));
             pb->SetVertical();
-            pb->SetAlignment(Docking::Bottom|Docking::CenterH);
+            pb->SetAlignment(Position::Bottom|Position::CenterH);
             pb->SetProgress(0.65f);
         }
     }

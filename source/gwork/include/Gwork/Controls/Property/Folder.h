@@ -24,7 +24,7 @@ namespace Gwk
                 GWK_CONTROL_INLINE(Folder, Property::Text)
                 {
                     Controls::Button* button = new Controls::Button(this);
-                    button->Dock(Docking::Right);
+                    button->Dock(Position::Right);
                     button->SetText("...");
                     button->SetWidth(20);
                     button->onPress.Add(this, &ThisClass::OnButtonPress);

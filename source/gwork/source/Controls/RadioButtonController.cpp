@@ -57,7 +57,7 @@ LabeledRadioButton* RadioButtonController::AddOption(const Gwk::String& strText,
     lrb->SetName(strOptionName);
     lrb->GetLabel()->SetText(strText);
     lrb->GetRadioButton()->onChecked.Add(this, &RadioButtonController::OnRadioClicked);
-    lrb->Dock(Docking::Top);
+    lrb->Dock(Position::Top);
     lrb->SetMargin(Margin(0, 1, 0, 1));
     lrb->SetKeyboardInputEnabled(false);
     lrb->SetTabable(false);

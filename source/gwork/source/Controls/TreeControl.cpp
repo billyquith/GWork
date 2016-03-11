@@ -25,7 +25,7 @@ GWK_CONTROL_CONSTRUCTOR(TreeControl)
     m_innerPanel = nullptr;
     m_bAllowMultipleSelection = false;
     m_scrollControl = new ScrollControl(this);
-    m_scrollControl->Dock(Docking::Fill);
+    m_scrollControl->Dock(Position::Fill);
     m_scrollControl->SetScroll(false, true);
     m_scrollControl->SetAutoHideBars(true);
     m_scrollControl->SetMargin(Margin(1, 1, 1, 1));

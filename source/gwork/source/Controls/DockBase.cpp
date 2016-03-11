@@ -35,31 +35,31 @@ TabControl* DockBase::GetTabControl()
     return m_dockedTabControl;
 }
 
-void DockBase::SetupChildDock(Docking::Area pos)
+void DockBase::SetupChildDock(Position pos)
 {
     if (!m_dockedTabControl)
     {
         m_dockedTabControl = new DockedTabControl(this);
         m_dockedTabControl->onLoseTab.Add(this, &DockBase::OnTabRemoved);
-        m_dockedTabControl->SetTabStripPosition(Docking::Bottom);
+        m_dockedTabControl->SetTabStripPosition(Position::Bottom);
         m_dockedTabControl->SetShowTitlebar(true);
     }
 
     Dock(pos);
-    Docking::Area iSizeDirection = Docking::Left;
+    Position sizeDirection = Position::Left;
 
-    if (pos == Docking::Left)
-        iSizeDirection = Docking::Right;
+    if (pos == Position::Left)
+        sizeDirection = Position::Right;
 
-    if (pos == Docking::Top)
-        iSizeDirection = Docking::Bottom;
+    if (pos == Position::Top)
+        sizeDirection = Position::Bottom;
 
-    if (pos == Docking::Bottom)
-        iSizeDirection = Docking::Top;
+    if (pos == Position::Bottom)
+        sizeDirection = Position::Top;
 
     ControlsInternal::Resizer* sizer = new ControlsInternal::Resizer(this);
-    sizer->Dock(iSizeDirection);
-    sizer->SetResizeDir(iSizeDirection);
+    sizer->Dock(sizeDirection);
+    sizer->SetResizeDir(sizeDirection);
     sizer->SetSize(2, 2);
     sizer->SetTarget(this);
 }
@@ -70,24 +70,24 @@ void DockBase::Render(Skin::Base* /*skin*/)
     // Gwk::Render->DrawLinedRect( GetRenderBounds() );
 }
 
-DockBase** DockBase::GetChildDockPtr(Docking::Area pos)
+DockBase** DockBase::GetChildDockPtr(Position pos)
 {
-    if (pos == Docking::Left)
+    if (pos == Position::Left)
         return &m_left;
 
-    if (pos == Docking::Right)
+    if (pos == Position::Right)
         return &m_right;
 
-    if (pos == Docking::Top)
+    if (pos == Position::Top)
         return &m_top;
 
-    if (pos == Docking::Bottom)
+    if (pos == Position::Bottom)
         return &m_bottom;
 
     return nullptr;
 }
 
-DockBase* DockBase::GetChildDock(Docking::Area pos)
+DockBase* DockBase::GetChildDock(Position pos)
 {
     DockBase** dock = GetChildDockPtr(pos);
 
@@ -104,10 +104,10 @@ DockBase* DockBase::GetChildDock(Docking::Area pos)
     return *dock;
 }
 
-Docking::Area DockBase::GetDroppedTabDirection(int x, int y)
+Position DockBase::GetDroppedTabDirection(int x, int y)
 {
-    int w = Width();
-    int h = Height();
+    const int w = Width();
+    const int h = Height();
     float top = (float)y/(float)h;
     float left = (float)x/(float)w;
     float right = (float)(w-x)/(float)w;
@@ -116,21 +116,21 @@ Docking::Area DockBase::GetDroppedTabDirection(int x, int y)
     m_bDropFar = (minimum < 0.2f);
 
     if (minimum > 0.3)
-        return Docking::Fill;
+        return Position::Fill;
 
     if (top == minimum && (!m_top || m_top->Hidden()))
-        return Docking::Top;
+        return Position::Top;
 
     if (left == minimum && (!m_left || m_left->Hidden()))
-        return Docking::Left;
+        return Position::Left;
 
     if (right == minimum && (!m_right || m_right->Hidden()))
-        return Docking::Right;
+        return Position::Right;
 
     if (bottom == minimum && (!m_bottom || m_bottom->Hidden()))
-        return Docking::Bottom;
+        return Position::Bottom;
 
-    return Docking::Fill;
+    return Position::Fill;
 }
 
 bool DockBase::DragAndDrop_CanAcceptPackage(Gwk::DragAndDrop::Package* package)
@@ -149,13 +149,13 @@ bool DockBase::DragAndDrop_CanAcceptPackage(Gwk::DragAndDrop::Package* package)
 bool DockBase::DragAndDrop_HandleDrop(Gwk::DragAndDrop::Package* package, int x, int y)
 {
     Gwk::Point pos = CanvasPosToLocal(Gwk::Point(x, y));
-    Docking::Area dir = GetDroppedTabDirection(pos.x, pos.y);
+    Position dir = GetDroppedTabDirection(pos.x, pos.y);
     DockedTabControl* addTo = m_dockedTabControl;
 
-    if (dir == Docking::Fill && addTo == nullptr)
+    if (dir == Position::Fill && addTo == nullptr)
         return false;
 
-    if (dir != Docking::Fill)
+    if (dir != Position::Fill)
     {
         DockBase* dock = GetChildDock(dir);
         addTo = dock->m_dockedTabControl;
@@ -289,9 +289,9 @@ void DockBase::DragAndDrop_HoverLeave(Gwk::DragAndDrop::Package* /*package*/)
 void DockBase::DragAndDrop_Hover(Gwk::DragAndDrop::Package* /*package*/, int x, int y)
 {
     Gwk::Point pos = CanvasPosToLocal(Gwk::Point(x, y));
-    int dir = GetDroppedTabDirection(pos.x, pos.y);
+    Position dir = GetDroppedTabDirection(pos.x, pos.y);
 
-    if (dir == Docking::Fill)
+    if (dir == Position::Fill)
     {
         if (!m_dockedTabControl)
         {
@@ -306,33 +306,33 @@ void DockBase::DragAndDrop_Hover(Gwk::DragAndDrop::Package* /*package*/, int x, 
     m_hoverRect = GetRenderBounds();
     int HelpBarWidth = 0;
 
-    if (dir == Docking::Left)
+    if (dir == Position::Left)
     {
         HelpBarWidth = m_hoverRect.w/4;
         m_hoverRect.w = HelpBarWidth;
     }
 
-    if (dir == Docking::Right)
+    if (dir == Position::Right)
     {
         HelpBarWidth = m_hoverRect.w/4;
         m_hoverRect.x = m_hoverRect.w-HelpBarWidth;
         m_hoverRect.w = HelpBarWidth;
     }
 
-    if (dir == Docking::Top)
+    if (dir == Position::Top)
     {
         HelpBarWidth = m_hoverRect.h/4;
         m_hoverRect.h = HelpBarWidth;
     }
 
-    if (dir == Docking::Bottom)
+    if (dir == Position::Bottom)
     {
         HelpBarWidth = m_hoverRect.h/4;
         m_hoverRect.y = m_hoverRect.h-HelpBarWidth;
         m_hoverRect.h = HelpBarWidth;
     }
 
-    if ((dir == Docking::Top || dir == Docking::Bottom) && !m_bDropFar)
+    if ((dir == Position::Top || dir == Position::Bottom) && !m_bDropFar)
     {
         if (m_left && m_left->Visible())
         {
@@ -344,7 +344,7 @@ void DockBase::DragAndDrop_Hover(Gwk::DragAndDrop::Package* /*package*/, int x, 
             m_hoverRect.w -= m_right->Width();
     }
 
-    if ((dir == Docking::Left || dir == Docking::Right) && !m_bDropFar)
+    if ((dir == Position::Left || dir == Position::Right) && !m_bDropFar)
     {
         if (m_top && m_top->Visible())
         {

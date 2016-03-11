@@ -19,13 +19,13 @@ namespace Gwk
     {
         namespace Layout
         {
-            class GWK_EXPORT Position : public Base
+            class GWK_EXPORT CalcPosition : public Base
             {
             public:
 
-                GWK_CONTROL_INLINE(Position, Base)
+                GWK_CONTROL_INLINE(CalcPosition, Base)
                 {
-                    SetPosition(Docking::Left|Docking::Top);
+                    SetPosition(Position::Left | Position::Top);
                 }
 
                 void PostLayout(Skin::Base* skin) override
@@ -34,33 +34,33 @@ namespace Gwk
                     {
                         Base* child = *it;
 
-                        if (child->GetDock() != Docking::None)
+                        if (child->GetDock() != Position::None)
                             continue;
 
-                        child->Position(m_position);
+                        child->SetPosition(m_position);
                     }
                 }
 
-                void SetPosition(int p)
+                void SetPosition(Position p)
                 {
-                    if (m_position == p)
-                        return;
-
-                    m_position = p;
-                    Invalidate();
+                    if (m_position != p)
+                    {
+                        m_position = p;
+                        Invalidate();                        
+                    }
                 }
 
             private:
 
-                int m_position;
+                Position m_position;
             };
 
 
-            class GWK_EXPORT Center : public Position
+            class GWK_EXPORT Center : public CalcPosition
             {
-                GWK_CONTROL_INLINE(Center, Position)
+                GWK_CONTROL_INLINE(Center, CalcPosition)
                 {
-                    SetPosition(Docking::Center);
+                    SetPosition(Position::Center);
                 }
             };
 

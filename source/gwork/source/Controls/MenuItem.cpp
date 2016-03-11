@@ -58,7 +58,7 @@ void MenuItem::Render(Skin::Base* skin)
 void MenuItem::Layout(Skin::Base* skin)
 {
     if (m_submenuArrow)
-        m_submenuArrow->Position(Docking::Right|Docking::CenterV, 4, 0);
+        m_submenuArrow->SetPosition(Position::Right|Position::CenterV, 4, 0);
 
     ParentClass::Layout(skin);
 }
@@ -170,8 +170,8 @@ void MenuItem::SetAccelerator(const String& strAccelerator)
         return;
 
     m_accelerator = new Controls::Label(this);
-    m_accelerator->Dock(Docking::Right);
-    m_accelerator->SetAlignment(Docking::Right|Docking::CenterV);
+    m_accelerator->Dock(Position::Right);
+    m_accelerator->SetAlignment(Position::Right|Position::CenterV);
     m_accelerator->SetText(strAccelerator);
     m_accelerator->SetMargin(Margin(0, 0, 16, 0));
     // TODO.

@@ -23,7 +23,7 @@ namespace Gwk
 
                 GWK_CONTROL_INLINE(Tile, Base)
                 {
-                    Dock(Docking::Fill);
+                    Dock(Position::Fill);
                     SetTileSize(22, 22);
                 }
 
@@ -36,7 +36,7 @@ namespace Gwk
                     {
                         Base* child = *it;
 
-                        if (child->GetDock() != Docking::None)
+                        if (child->GetDock() != Position::None)
                             continue;
 
                         child->SetPos(pos.x+m_tileSize.x/2 - child->Width()/2,

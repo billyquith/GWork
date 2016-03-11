@@ -574,29 +574,34 @@ namespace Gwk
                 { Textures.TextBox.Normal.Draw( GetRender(), control->GetRenderBounds() ); }
             }
 
-            virtual void DrawActiveTabButton( Gwk::Controls::Base* control, int dir )
+            virtual void DrawActiveTabButton( Gwk::Controls::Base* control, Position dir )
             {
-                if ( dir == Docking::Bottom )   { return Textures.Tab.Bottom.Active.Draw( GetRender(), control->GetRenderBounds() + Rect( 0, -8, 0, 8 ) ); }
-
-                if ( dir == Docking::Top )      { return Textures.Tab.Top.Active.Draw( GetRender(), control->GetRenderBounds() + Rect( 0, 0, 0, 8 ) ); }
-
-                if ( dir == Docking::Left )     { return Textures.Tab.Left.Active.Draw( GetRender(), control->GetRenderBounds() + Rect( 0, 0, 8, 0 ) ); }
-
-                if ( dir == Docking::Right )    { return Textures.Tab.Right.Active.Draw( GetRender(), control->GetRenderBounds() + Rect( -8, 0, 8, 0 ) ); }
+                if ( dir == Position::Bottom )
+                    Textures.Tab.Bottom.Active.Draw( GetRender(), control->GetRenderBounds() + Rect( 0, -8, 0, 8 ) );
+                else if ( dir == Position::Top )
+                    Textures.Tab.Top.Active.Draw( GetRender(), control->GetRenderBounds() + Rect( 0, 0, 0, 8 ) );
+                else if ( dir == Position::Left )
+                    Textures.Tab.Left.Active.Draw( GetRender(), control->GetRenderBounds() + Rect( 0, 0, 8, 0 ) );
+                else if ( dir == Position::Right )
+                    Textures.Tab.Right.Active.Draw( GetRender(), control->GetRenderBounds() + Rect( -8, 0, 8, 0 ) );
             }
 
-            virtual void DrawTabButton( Gwk::Controls::Base* control, bool bActive, int dir )
+            virtual void DrawTabButton( Gwk::Controls::Base* control, bool bActive, Position dir ) override
             {
                 if ( bActive )
-                { return DrawActiveTabButton( control, dir ); }
+                {
+                    DrawActiveTabButton( control, dir );
+                    return;
+                }
 
-                if ( dir == Docking::Bottom )   { return Textures.Tab.Bottom.Inactive.Draw( GetRender(), control->GetRenderBounds() ); }
-
-                if ( dir == Docking::Top )      { return Textures.Tab.Top.Inactive.Draw( GetRender(), control->GetRenderBounds() ); }
-
-                if ( dir == Docking::Left )     { return Textures.Tab.Left.Inactive.Draw( GetRender(), control->GetRenderBounds() ); }
-
-                if ( dir == Docking::Right )    { return Textures.Tab.Right.Inactive.Draw( GetRender(), control->GetRenderBounds() ); }
+                if ( dir == Position::Bottom )
+                    Textures.Tab.Bottom.Inactive.Draw( GetRender(), control->GetRenderBounds() );
+                else if ( dir == Position::Top )
+                    Textures.Tab.Top.Inactive.Draw( GetRender(), control->GetRenderBounds() );
+                else if ( dir == Position::Left )
+                    Textures.Tab.Left.Inactive.Draw( GetRender(), control->GetRenderBounds() );
+                else if ( dir == Position::Right )
+                    Textures.Tab.Right.Inactive.Draw( GetRender(), control->GetRenderBounds() );
             }
 
             virtual void DrawTabControl( Gwk::Controls::Base* control )
@@ -817,24 +822,22 @@ namespace Gwk
                 return Textures.Tooltip.Draw( GetRender(), control->GetRenderBounds() );
             }
 
-            virtual void DrawScrollButton( Gwk::Controls::Base* control, int iDirection, bool bDepressed, bool bHovered, bool bDisabled )
+            virtual void DrawScrollButton( Gwk::Controls::Base* control, Position direction, bool bDepressed, bool bHovered, bool bDisabled )
             {
                 int i = 0;
 
-                if ( iDirection == Docking::Top ) { i = 1; }
-
-                if ( iDirection == Docking::Right ) { i = 2; }
-
-                if ( iDirection == Docking::Bottom ) { i = 3; }
+                if ( direction == Position::Top ) { i = 1; }
+                else if ( direction == Position::Right ) { i = 2; }
+                else if ( direction == Position::Bottom ) { i = 3; }
 
                 if ( bDisabled )
-                { return Textures.Scroller.Button.Disabled[i].Draw( GetRender(), control->GetRenderBounds() ); }
+                    return Textures.Scroller.Button.Disabled[i].Draw( GetRender(), control->GetRenderBounds() );
 
                 if ( bDepressed )
-                { return Textures.Scroller.Button.Down[i].Draw( GetRender(), control->GetRenderBounds() ); }
+                    return Textures.Scroller.Button.Down[i].Draw( GetRender(), control->GetRenderBounds() );
 
                 if ( bHovered )
-                { return Textures.Scroller.Button.Hover[i].Draw( GetRender(), control->GetRenderBounds() ); }
+                    return Textures.Scroller.Button.Hover[i].Draw( GetRender(), control->GetRenderBounds() );
 
                 return Textures.Scroller.Button.Normal[i].Draw( GetRender(), control->GetRenderBounds() );
             }

@@ -16,7 +16,7 @@ public:
 
     GWK_CONTROL_INLINE(MenuStrip, TestUnit)
     {
-        Dock(Docking::Fill);
+        Dock(Position::Fill);
         Gwk::Controls::MenuStrip* menu = new Gwk::Controls::MenuStrip(this);
         {
             Gwk::Controls::MenuItem* root = menu->AddItem("File");

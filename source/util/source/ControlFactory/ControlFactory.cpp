@@ -28,13 +28,16 @@ void InitializeControls()
         .property("y",  &Gwk::Point::y)
         ;
     
-    ponder::Enum::declare<Docking::Area>()
-        .value("none",   Gwk::Docking::None)
-        .value("fill",   Gwk::Docking::Fill)
-        .value("left",   Gwk::Docking::Left)
-        .value("right",  Gwk::Docking::Right)
-        .value("top",    Gwk::Docking::Top)
-        .value("bottom", Gwk::Docking::Bottom)
+    ponder::Enum::declare<Position>()
+        .value("none",    Gwk::Position::None)
+        .value("left",    Gwk::Position::Left)
+        .value("right",   Gwk::Position::Right)
+        .value("top",     Gwk::Position::Top)
+        .value("bottom",  Gwk::Position::Bottom)
+        .value("midy",    Gwk::Position::CenterV)
+        .value("midx",    Gwk::Position::CenterH)
+        .value("center",  Gwk::Position::Center)
+        .value("fill",    Gwk::Position::Fill)
         ;
 
     ponder::Class::declare<Controls::Base>()

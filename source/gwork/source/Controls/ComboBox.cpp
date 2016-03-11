@@ -60,7 +60,7 @@ GWK_CONTROL_CONSTRUCTOR(ComboBox)
     m_button = arrow;
     m_selectedItem = nullptr;
     
-    SetAlignment(Gwk::Docking::Left|Gwk::Docking::CenterV);
+    SetAlignment(Gwk::Position::Left|Gwk::Position::CenterV);
     SetText("");
     SetMargin(Margin(3, 0, 0, 0));
     SetTabable(true);
@@ -90,7 +90,7 @@ void ComboBox::Render(Skin::Base* skin)
 
 void ComboBox::Layout(Skin::Base* skin)
 {
-    m_button->Position(Docking::Right|Docking::CenterV, 4, 0);
+    m_button->SetPosition(Position::Right | Position::CenterV, 4, 0);
     ParentClass::Layout(skin);
 }
 

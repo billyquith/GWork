@@ -21,22 +21,22 @@ GWK_CONTROL_CONSTRUCTOR(ScrollBarButton)
 
 void ScrollBarButton::SetDirectionUp()
 {
-    m_direction = Docking::Top;
+    m_direction = Position::Top;
 }
 
 void ScrollBarButton::SetDirectionDown()
 {
-    m_direction = Docking::Bottom;
+    m_direction = Position::Bottom;
 }
 
 void ScrollBarButton::SetDirectionLeft()
 {
-    m_direction = Docking::Left;
+    m_direction = Position::Left;
 }
 
 void ScrollBarButton::SetDirectionRight()
 {
-    m_direction = Docking::Right;
+    m_direction = Position::Right;
 }
 
 void ScrollBarButton::Render(Skin::Base* skin)

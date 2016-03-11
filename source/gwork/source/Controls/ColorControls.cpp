@@ -105,16 +105,16 @@ GWK_CONTROL_CONSTRUCTOR(ColorLerpBox)
     m_bDepressed = false;
 }
 
-// Find a place to put this? color member?
-static Gwk::Color LerpColor(Gwk::Color& toColor, Gwk::Color& fromColor, float amount)
-{
-    Gwk::Color colorDelta = toColor-fromColor;
-    colorDelta.r *= amount;
-    colorDelta.g *= amount;
-    colorDelta.b *= amount;
-    Gwk::Color newColor = fromColor+colorDelta;
-    return newColor;
-}
+//// Find a place to put this? color member?
+//static Gwk::Color LerpColor(Gwk::Color& toColor, Gwk::Color& fromColor, float amount)
+//{
+//    Gwk::Color colorDelta = toColor-fromColor;
+//    colorDelta.r *= amount;
+//    colorDelta.g *= amount;
+//    colorDelta.b *= amount;
+//    Gwk::Color newColor = fromColor+colorDelta;
+//    return newColor;
+//}
 
 Gwk::Color ColorLerpBox::GetSelectedColor()
 {

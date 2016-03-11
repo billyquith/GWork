@@ -320,7 +320,7 @@ namespace Gwk
                 }
             }
 
-            virtual void DrawTabButton(Gwk::Controls::Base* control, bool bActive, int dir)
+            virtual void DrawTabButton(Gwk::Controls::Base* control, bool bActive, Position dir) override
             {
                 Gwk::Rect rect = control->GetRenderBounds();
                 bool bHovered = control->IsHovered();
@@ -577,18 +577,18 @@ namespace Gwk
                 m_render->DrawLinedRect(rct);
             }
 
-            virtual void DrawScrollButton(Gwk::Controls::Base* control, int iDirection,
+            virtual void DrawScrollButton(Gwk::Controls::Base* control, Position direction,
                                           bool bDepressed, bool bHovered, bool bDisabled)
             {
                 DrawButton(control, bDepressed, false, false);
                 m_render->SetDrawColor(Gwk::Color(0, 0, 0, 240));
-                Gwk::Rect r(control->Width()/2-2, control->Height()/2-2, 5, 5);
+                Rect r(control->Width()/2 - 2, control->Height() / 2 - 2, 5, 5);
 
-                if (iDirection == Gwk::Docking::Top)
+                if (direction == Position::Top)
                     DrawArrowUp(r);
-                else if (iDirection == Gwk::Docking::Bottom)
+                else if (direction == Position::Bottom)
                     DrawArrowDown(r);
-                else if (iDirection == Gwk::Docking::Left)
+                else if (direction == Position::Left)
                     DrawArrowLeft(r);
                 else
                     DrawArrowRight(r);

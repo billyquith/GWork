@@ -61,7 +61,7 @@ namespace Gwk
 
             virtual void DrawButton(Controls::Base* control, bool bDepressed, bool bHovered,
                                     bool bDisabled) = 0;
-            virtual void DrawTabButton(Controls::Base* control, bool bActive, int dir) = 0;
+            virtual void DrawTabButton(Controls::Base* control, bool bActive, Position dir) = 0;
             virtual void DrawTabControl(Controls::Base* control) = 0;
             virtual void DrawTabTitleBar(Controls::Base* control) = 0;
 
@@ -97,7 +97,7 @@ namespace Gwk
                                           bool isHorizontal) = 0;
             virtual void DrawScrollBar(Controls::Base* control, bool isHorizontal,
                                        bool bDepressed) = 0;
-            virtual void DrawScrollButton(Controls::Base* control, int iDirection, bool bDepressed,
+            virtual void DrawScrollButton(Controls::Base* control, Position direction, bool bDepressed,
                                           bool bHovered, bool bDisabled) = 0;
             virtual void DrawProgressBar(Controls::Base* control, bool isHorizontal,
                                          float progress) = 0;

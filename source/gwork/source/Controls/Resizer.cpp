@@ -14,7 +14,7 @@ using namespace Gwk::ControlsInternal;
 
 GWK_CONTROL_CONSTRUCTOR(Resizer)
 {
-    m_resizeDir = Docking::Left;
+    m_resizeDir = Position::Left;
     SetMouseInputEnabled(true);
     SetSize(6, 6);
 }
@@ -34,7 +34,7 @@ void Resizer::OnMouseMoved(int x, int y, int /*deltaX*/, int /*deltaY*/)
     delta.x -= x;
     delta.y -= y;
 
-    if (m_resizeDir&Docking::Left)
+    if (m_resizeDir & Position::Left)
     {
         bounds.x -= delta.x;
         bounds.w += delta.x;
@@ -50,7 +50,7 @@ void Resizer::OnMouseMoved(int x, int y, int /*deltaX*/, int /*deltaY*/)
         }
     }
 
-    if (m_resizeDir&Docking::Top)
+    if (m_resizeDir & Position::Top)
     {
         bounds.y -= delta.y;
         bounds.h += delta.y;
@@ -66,7 +66,7 @@ void Resizer::OnMouseMoved(int x, int y, int /*deltaX*/, int /*deltaY*/)
         }
     }
 
-    if (m_resizeDir&Docking::Right)
+    if (m_resizeDir & Position::Right)
     {
         // This is complicated.
         // Basically we want to use the HoldPos, so it doesn't snap to the edge
@@ -86,7 +86,7 @@ void Resizer::OnMouseMoved(int x, int y, int /*deltaX*/, int /*deltaY*/)
         m_holdPos.x -= diff;
     }
 
-    if (m_resizeDir&Docking::Bottom)
+    if (m_resizeDir & Position::Bottom)
     {
         int hoff = bounds.h-m_holdPos.y;
         int diff = bounds.h;
@@ -103,19 +103,19 @@ void Resizer::OnMouseMoved(int x, int y, int /*deltaX*/, int /*deltaY*/)
     onResize.Call(this);
 }
 
-void Resizer::SetResizeDir(int dir)
+void Resizer::SetResizeDir(Position dir)
 {
     m_resizeDir = dir;
 
-    if ((dir&Docking::Left && dir&Docking::Top) || (dir&Docking::Right && dir&Docking::Bottom))
+    if ((dir & Position::Left && dir & Position::Top) || (dir & Position::Right && dir & Position::Bottom))
         return SetCursor(Gwk::CursorType::SizeNWSE);
 
-    if ((dir&Docking::Right && dir&Docking::Top) || (dir&Docking::Left && dir&Docking::Bottom))
+    if ((dir & Position::Right && dir & Position::Top) || (dir & Position::Left && dir & Position::Bottom))
         return SetCursor(Gwk::CursorType::SizeNESW);
 
-    if (dir&Docking::Right || dir&Docking::Left)
+    if (dir & Position::Right || dir & Position::Left)
         return SetCursor(Gwk::CursorType::SizeWE);
 
-    if (dir&Docking::Top || dir&Docking::Bottom)
+    if (dir & Position::Top || dir & Position::Bottom)
         return SetCursor(Gwk::CursorType::SizeNS);
 }

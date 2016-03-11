@@ -25,12 +25,12 @@ GWK_CONTROL_CONSTRUCTOR(HSVColorPicker)
     
     m_lerpBox = new Gwk::Controls::ColorLerpBox(this);
     m_lerpBox->onSelectionChanged.Add(this, &HSVColorPicker::ColorBoxChanged);
-    m_lerpBox->Dock(Docking::Left);
+    m_lerpBox->Dock(Position::Left);
     
     m_colorSlider = new Gwk::Controls::ColorSlider(this);
     m_colorSlider->SetPos(m_lerpBox->Width()+15, 5);
     m_colorSlider->onSelectionChanged.Add(this, &HSVColorPicker::ColorSliderChanged);
-    m_colorSlider->Dock(Docking::Left);
+    m_colorSlider->Dock(Position::Left);
     
     m_after = new Gwk::ControlsInternal::ColorDisplay(this);
     m_after->SetSize(48, 24);

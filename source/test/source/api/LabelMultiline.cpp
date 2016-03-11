@@ -17,9 +17,9 @@ public:
 
     GWK_CONTROL_INLINE(LabelMultiline, TestUnit)
     {
-        Dock(Docking::Fill);
+        Dock(Position::Fill);
         Gwk::Controls::CrossSplitter* splitter = new Gwk::Controls::CrossSplitter(this);
-        splitter->Dock(Docking::Fill);
+        splitter->Dock(Position::Fill);
         splitter->SetMargin(Margin(10, 10, 10, 10));
         {
             Gwk::Controls::Label* label = new Gwk::Controls::Label(splitter);

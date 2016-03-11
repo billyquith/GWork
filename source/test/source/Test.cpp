@@ -13,15 +13,15 @@ using namespace Gwk;
 
 GWK_CONTROL_CONSTRUCTOR(TestFrame)
 {
-    Dock(Docking::Fill);
+    Dock(Position::Fill);
     
     // tabs to hold categories
     m_testTabs = new Controls::TabControl(this);
-    m_testTabs->Dock(Docking::Fill);
+    m_testTabs->Dock(Position::Fill);
     
     // status bar
     m_statusBar = new Controls::StatusBar(this);
-    m_statusBar->Dock(Docking::Bottom);
+    m_statusBar->Dock(Position::Bottom);
     
     m_testTabs->AddPage("API", new TestAPI(m_testTabs));
 }
@@ -42,7 +42,7 @@ void TestFrame::Render(Skin::Base* skin)
 
 GWK_CONTROL_CONSTRUCTOR(TestCategory)
 {
-    Dock(Docking::Fill);
+    Dock(Position::Fill);
 }
 
 void TestCategory::OutputToLog(const String& str)

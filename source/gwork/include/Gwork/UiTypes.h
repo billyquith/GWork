@@ -78,5 +78,29 @@ namespace Gwk
 
     }
 
-}
+    enum class Position
+    {
+        None        = 0,
+        Left        = (1<<1),
+        Right       = (1<<2),
+        Top         = (1<<3),
+        Bottom      = (1<<4),
+        CenterV     = (1<<5),
+        CenterH     = (1<<6),
+        Fill        = (1<<7),
+        Center      = CenterV | CenterH
+    };
+    
+    inline Position operator | (Position a, Position b)
+    {
+        return Position(static_cast<int>(a) | static_cast<int>(b));
+    }
+
+    inline bool operator & (Position a, Position b)
+    {
+        return (static_cast<int>(a) & static_cast<int>(b)) != 0;
+    }
+
+} // namespace Gwk
+    
 #endif // ifndef GWK_UITYPES_H

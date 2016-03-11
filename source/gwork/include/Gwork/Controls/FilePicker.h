@@ -25,13 +25,13 @@ namespace Gwk
             GWK_CONTROL_INLINE(FilePicker, Controls::Base)
             {
                 m_button = new Controls::Button(this);
-                m_button->Dock(Docking::Right);
+                m_button->Dock(Position::Right);
                 m_button->SetMargin(Margin(2, 0, 0, 0));
                 m_button->SetText("..");
                 m_button->SetSize(20, 20);
                 m_button->onPress.Add(this, &FilePicker::OnBrowse);
                 m_textBox = new Controls::TextBox(this);
-                m_textBox->Dock(Docking::Fill);
+                m_textBox->Dock(Position::Fill);
                 this->SetSize(100, 20);
                 SetFileType("Any Type | *.*");
             }

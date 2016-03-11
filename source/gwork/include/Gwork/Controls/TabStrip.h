@@ -34,7 +34,7 @@ namespace Gwk
             virtual void DragAndDrop_HoverLeave(Gwk::DragAndDrop::Package* package) override;
             virtual void DragAndDrop_Hover(Gwk::DragAndDrop::Package* package, int x, int y) override;
 
-            virtual void SetTabPosition(Docking::Area pos);
+            virtual void SetTabPosition(Position pos);
 
             virtual void SetAllowReorder(bool b)
             {

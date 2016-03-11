@@ -18,7 +18,7 @@ GWK_CONTROL_CONSTRUCTOR(TestAPI)
 {
     m_lastControl = nullptr;
 
-    Dock(Docking::Fill);
+    Dock(Position::Fill);
     
     Controls::CollapsibleList* apiList = new Controls::CollapsibleList( this );
     GetLeft()->GetTabControl()->AddPage( "Tests", apiList );
@@ -26,7 +26,7 @@ GWK_CONTROL_CONSTRUCTOR(TestAPI)
 
     // Where to put the demo controls.
     auto center = new Controls::Layout::Center(this);
-    center->Dock(Docking::Fill);
+    center->Dock(Position::Fill);
     
     m_textOutput = new Controls::ListBox(GetBottom());
     GetBottom()->GetTabControl()->AddPage("Output", m_textOutput);

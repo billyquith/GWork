@@ -30,9 +30,9 @@ namespace Gwk
 
         protected:
 
-            int m_direction;
+            Position m_direction;
+            
         };
-
 
     }
 }

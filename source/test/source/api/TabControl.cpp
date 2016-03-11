@@ -58,16 +58,16 @@ public:
             (Gwk::Controls::RadioButtonController*)control;
 
         if (rc->GetSelectedLabel() == "Top")
-            m_dockControlLeft->SetTabStripPosition(Docking::Top);
+            m_dockControlLeft->SetTabStripPosition(Position::Top);
 
         if (rc->GetSelectedLabel() == "Bottom")
-            m_dockControlLeft->SetTabStripPosition(Docking::Bottom);
+            m_dockControlLeft->SetTabStripPosition(Position::Bottom);
 
         if (rc->GetSelectedLabel() == "Left")
-            m_dockControlLeft->SetTabStripPosition(Docking::Left);
+            m_dockControlLeft->SetTabStripPosition(Position::Left);
 
         if (rc->GetSelectedLabel() == "Right")
-            m_dockControlLeft->SetTabStripPosition(Docking::Right);
+            m_dockControlLeft->SetTabStripPosition(Position::Right);
     }
 
     Gwk::Font m_font;

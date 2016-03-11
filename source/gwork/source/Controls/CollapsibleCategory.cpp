@@ -18,7 +18,7 @@ class CategoryButton : public Button
 {
     GWK_CONTROL_INLINE(CategoryButton, Button)
     {
-        SetAlignment(Docking::Left|Docking::CenterV);
+        SetAlignment(Position::Left | Position::CenterV);
         m_bAlt = false;
     }
     
@@ -78,7 +78,7 @@ class CategoryHeaderButton : public Button
     {
         SetShouldDrawBackground(false);
         SetIsToggle(true);
-        SetAlignment(Docking::Center);
+        SetAlignment(Position::Center);
     }
     
     void UpdateColours() override
@@ -97,7 +97,7 @@ GWK_CONTROL_CONSTRUCTOR(CollapsibleCategory)
     m_list = nullptr;
     m_button = new CategoryHeaderButton(this);
     m_button->SetText("Category Title");
-    m_button->Dock(Docking::Top);
+    m_button->Dock(Position::Top);
     m_button->SetHeight(20);
     SetPadding(Padding(1, 0, 1, 5));
     SetSize(512, 512);
@@ -107,7 +107,7 @@ Button* CollapsibleCategory::Add(const String& name)
 {
     CategoryButton* button = new CategoryButton(this);
     button->SetText(name);
-    button->Dock(Docking::Top);
+    button->Dock(Position::Top);
     button->SizeToContents();
     button->SetSize(button->Width()+4, button->Height()+4);
     button->SetPadding(Padding(5, 2, 2, 2));

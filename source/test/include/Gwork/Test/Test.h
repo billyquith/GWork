@@ -80,7 +80,7 @@ public:
     
     void Layout(Gwk::Skin::Base* skin) override
     {
-        if (GetDock() != Gwk::Docking::None)
+        if (GetDock() != Gwk::Position::None)
             return;
         
         SizeToChildren(true, true);

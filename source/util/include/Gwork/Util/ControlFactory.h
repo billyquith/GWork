@@ -15,7 +15,7 @@
 PONDER_TYPE(Gwk::Color)
 PONDER_TYPE(Gwk::Margin)
 PONDER_TYPE(Gwk::Point)
-PONDER_TYPE(Gwk::Docking::Area)
+PONDER_TYPE(Gwk::Position)
 
 PONDER_TYPE(Gwk::Controls::Base)
 PONDER_TYPE(Gwk::Controls::Label)

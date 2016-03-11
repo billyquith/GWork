@@ -48,7 +48,7 @@ public:
         window->SetTitle(Utility::Format("Window %i", m_windowCount));
         window->SetSize(200+rand()%100, 200+rand()%100);
         window->MakeModal(true);
-        window->Position(Docking::Center);
+        window->SetPosition(Position::Center);
         window->SetDeleteOnClose(true);
         m_windowCount++;
     }

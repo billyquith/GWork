@@ -51,7 +51,7 @@ namespace Gwk
                             if (!m_columns[i])
                             {
                                 m_columns[i] = new Label(this);
-                                m_columns[i]->Dock(Docking::Left);
+                                m_columns[i]->Dock(Position::Left);
                                 m_columns[i]->SetPadding(Padding(3, 3, 3, 3));
                             }
                         }
@@ -224,7 +224,7 @@ namespace Gwk
                     row->SetParent(this);
                     row->SetColumnCount(m_columnCount);
                     row->SetHeight(m_defaultRowHeight);
-                    row->Dock(Docking::Top);
+                    row->Dock(Position::Top);
                     Invalidate();
                 }
 

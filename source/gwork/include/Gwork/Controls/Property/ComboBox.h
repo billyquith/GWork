@@ -25,7 +25,7 @@ namespace Gwk
                 GWK_CONTROL_INLINE(ComboBox, Property::Base)
                 {
                     m_comboBox = new Gwk::Controls::ComboBox(this);
-                    m_comboBox->Dock(Docking::Fill);
+                    m_comboBox->Dock(Position::Fill);
                     m_comboBox->onSelection.Add(this, &ParentClass::OnPropertyValueChanged);
                     m_comboBox->SetTabable(true);
                     m_comboBox->SetKeyboardInputEnabled(true);
