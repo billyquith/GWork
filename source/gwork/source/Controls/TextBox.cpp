@@ -39,7 +39,7 @@ GWK_CONTROL_CONSTRUCTOR(TextBox)
     SetSize(200, 20);
     SetMouseInputEnabled(true);
     SetKeyboardInputEnabled(true);
-    SetAlignment(Docking::Left|Docking::CenterV);
+    SetAlignment(Position::Left|Position::CenterV);
     SetPadding(Padding(4, 2, 4, 2));
     m_cursorPos = 0;
     m_cursorEnd = 0;
@@ -399,7 +399,7 @@ void TextBox::MakeCaratVisible()
 {
     if (m_text->Width() < Width())
     {
-        m_text->Position(m_align);
+        m_text->SetPosition(m_align);
     }
     else
     {
@@ -429,13 +429,13 @@ void TextBox::MakeCaratVisible()
 
         int y = 0;
 
-        if (m_align&Docking::Top)
+        if (m_align&Position::Top)
             y = GetPadding().top;
 
-        if (m_align&Docking::Bottom)
+        if (m_align&Position::Bottom)
             y = Height()-m_text->Height()-GetPadding().bottom;
 
-        if (m_align&Docking::CenterV)
+        if (m_align&Position::CenterV)
             y = (Height()-m_text->Height()) / 2;
 
         m_text->SetPos(x, y);
@@ -485,7 +485,7 @@ void TextBox::MoveCaretToStart()
 GWK_CONTROL_CONSTRUCTOR(TextBoxMultiline)
 {
     SetWrap(true);
-    SetAlignment(Docking::Left|Docking::Top);
+    SetAlignment(Position::Left|Position::Top);
 }
 
 bool TextBoxMultiline::OnKeyReturn(bool bDown)
@@ -576,15 +576,15 @@ void TextBoxMultiline::MakeCaratVisible()
 {
     if (m_text->Height() < Height())
     {
-        m_text->Position(m_align);
+        m_text->SetPosition(m_align);
     }
     else
     {
         //const Rect& bounds = GetInnerBounds();
 
-        //if ( pos & Docking::Top ) y = bounds.y + ypadding;
-        //if ( pos & Docking::Bottom ) y = bounds.y + ( bounds.h - Height() - ypadding );
-        //if ( pos & Docking::CenterV ) y = bounds.y + ( bounds.h - Height() )  * 0.5;
+        //if ( pos & Position::Top ) y = bounds.y + ypadding;
+        //if ( pos & Position::Bottom ) y = bounds.y + ( bounds.h - Height() - ypadding );
+        //if ( pos & Position::CenterV ) y = bounds.y + ( bounds.h - Height() )  * 0.5;
 
         Rect pos = m_text->GetCharacterPosition(m_cursorPos);
         int iCaratPos = pos.y; // + pos.h;
@@ -620,11 +620,11 @@ void TextBoxMultiline::MakeCaratVisible()
             y = GetPadding().top;
 
         int x = 0;
-        if (m_align&Docking::Left)
+        if (m_align&Position::Left)
             x = GetPadding().left;
-        if (m_align&Docking::Right)
+        if (m_align&Position::Right)
             x = Width()-m_text->Width()-GetPadding().right;
-        if (m_align&Docking::CenterH)
+        if (m_align&Position::CenterH)
             x = (Width()-m_text->Width())*0.5f;
 
         m_text->SetPos(x, y);

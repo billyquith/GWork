@@ -18,12 +18,12 @@ public:
 
     GWK_CONTROL_INLINE(CrossSplitter, TestUnit)
     {
-        Dock(Docking::Fill);
+        Dock(Position::Fill);
         m_bSplittersVisible = false;
         m_curZoom = 0;
         m_splitter = new Gwk::Controls::CrossSplitter(this);
         m_splitter->SetPos(0, 0);
-        m_splitter->Dock(Docking::Fill);
+        m_splitter->Dock(Position::Fill);
         {
             Gwk::Controls::Button* testButton =  new Gwk::Controls::Button(m_splitter);
             testButton->SetText("TOPLEFT");
@@ -46,7 +46,7 @@ public:
         }
         // Status bar to hold unit testing buttons
         Gwk::Controls::StatusBar* status = new Gwk::Controls::StatusBar(this);
-        status->Dock(Docking::Bottom);
+        status->Dock(Position::Bottom);
         {
             Gwk::Controls::Button* button = new Gwk::Controls::Button(status);
             button->SetText("Zoom");

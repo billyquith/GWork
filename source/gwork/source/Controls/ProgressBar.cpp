@@ -39,7 +39,7 @@ GWK_CONTROL_CONSTRUCTOR(ProgressBar)
     SetBounds(Gwk::Rect(0, 0, 128, 32));
     SetTextPadding(Padding(3, 3, 3, 3));
     SetHorizontal();
-    SetAlignment(Gwk::Docking::Center);
+    SetAlignment(Gwk::Position::Center);
     m_fProgress = 0.0f;
     m_bAutoLabel = true;
     m_fCycleSpeed = 0.0f;

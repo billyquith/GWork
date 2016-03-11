@@ -45,7 +45,7 @@ public:
 		Gwk::Controls::Label* label = new Gwk::Controls::Label( group );
 		label->SetText(c_text);
 		label->SetWrap( true );
-		label->Dock(Docking::Fill);
+		label->Dock(Position::Fill);
     }
 };
 

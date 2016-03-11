@@ -65,11 +65,11 @@ namespace Gwk
             {
                 SetSize(200, 19);
                 m_checkbox = new CheckBox(this);
-                m_checkbox->Dock(Docking::Left);
+                m_checkbox->Dock(Position::Left);
                 m_checkbox->SetMargin(Margin(0, 2, 2, 2));
                 m_checkbox->SetTabable(false);
                 m_label = new LabelClickable(this);
-                m_label->Dock(Docking::Fill);
+                m_label->Dock(Position::Fill);
                 m_label->onPress.Add(m_checkbox, &CheckBox::OnPress);
                 m_label->SetTabable(false);
                 SetTabable(false);

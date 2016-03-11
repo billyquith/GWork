@@ -38,7 +38,7 @@ namespace Gwk
             virtual void Add(Gwk::Controls::CollapsibleCategory* category)
             {
                 category->SetParent(this);
-                category->Dock(Docking::Top);
+                category->Dock(Position::Top);
                 category->SetMargin(Margin(1, 0, 1, 1));
                 category->SetList(this);
                 category->onSelection.Add(this, &ThisClass::OnSelectionEvent);

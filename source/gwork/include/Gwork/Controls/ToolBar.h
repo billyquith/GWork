@@ -22,7 +22,7 @@ namespace Gwk
             GWK_CONTROL_INLINE(ToolBarButton, Gwk::Controls::Button)
             {
                 SetSize(20, 20);
-                Dock(Docking::Left);
+                Dock(Position::Left);
             }
 
             virtual bool ShouldDrawBackground() override

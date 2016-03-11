@@ -23,16 +23,16 @@ namespace Gwk
             GWK_CONTROL_INLINE(StatusBar, Controls::Label)
             {
                 SetHeight(22);
-                Dock(Docking::Bottom);
+                Dock(Position::Bottom);
                 SetPadding(Padding(2, 2, 2, 2));
                 SetText("");
-                SetAlignment(Docking::Left|Docking::CenterV);
+                SetAlignment(Position::Left|Position::CenterV);
             }
 
             virtual void AddControl(Controls::Base* ctrl, bool bRight)
             {
                 ctrl->SetParent(this);
-                ctrl->Dock(bRight ? Docking::Right : Docking::Left);
+                ctrl->Dock(bRight ? Position::Right : Position::Left);
             }
 
             virtual void Render(Skin::Base* skin) override

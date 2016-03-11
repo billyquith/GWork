@@ -25,7 +25,7 @@ namespace Gwk
                 GWK_CONTROL_INLINE(Text, Property::Base)
                 {
                     m_textBox = new TextBox(this);
-                    m_textBox->Dock(Docking::Fill);
+                    m_textBox->Dock(Position::Fill);
                     m_textBox->SetShouldDrawBackground(false);
                     m_textBox->onTextChanged.Add(this, &ParentClass::OnPropertyValueChanged);
                 }

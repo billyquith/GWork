@@ -52,23 +52,23 @@ WindowCanvas::WindowCanvas(int x, int y, int w, int h, Gwk::Skin::Base* skin,
     m_titleBar->SetHeight(24);
     m_titleBar->SetPadding(Padding(0, 0, 0, 0));
     m_titleBar->SetMargin(Margin(0, 0, 0, 0));
-    m_titleBar->Dock(Docking::Top);
+    m_titleBar->Dock(Position::Top);
     m_titleBar->SetDoMove(false);
     m_titleBar->onDragged.Add(this, &ThisClass::Dragger_Moved);
     m_titleBar->onDragStart.Add(this, &ThisClass::Dragger_Start);
     m_titleBar->onDoubleClickLeft.Add(this, &ThisClass::OnTitleDoubleClicked);
     
     m_title = new Gwk::Controls::Label(m_titleBar);
-    m_title->SetAlignment(Docking::Left|Docking::CenterV);
+    m_title->SetAlignment(Position::Left|Position::CenterV);
     m_title->SetText(strWindowTitle);
-    m_title->Dock(Docking::Fill);
+    m_title->Dock(Position::Fill);
     m_title->SetPadding(Padding(8, 0, 0, 0));
     m_title->SetTextColor(GetSkin()->Colors.Window.TitleInactive);
     
     // CLOSE
     {
         m_close = new Gwk::Controls::WindowCloseButton(m_titleBar, "Close");
-        m_close->Dock(Docking::Right);
+        m_close->Dock(Position::Right);
         m_close->SetMargin(Margin(0, 0, 4, 0));
         m_close->onPress.Add(this, &WindowCanvas::CloseButtonPressed);
         m_close->SetTabable(false);
@@ -77,7 +77,7 @@ WindowCanvas::WindowCanvas(int x, int y, int w, int h, Gwk::Skin::Base* skin,
     // MAXIMIZE
     {
         m_maximize = new Gwk::Controls::WindowMaximizeButton(m_titleBar, "Maximize");
-        m_maximize->Dock(Docking::Right);
+        m_maximize->Dock(Position::Right);
         m_maximize->onPress.Add(this, &WindowCanvas::MaximizeButtonPressed);
         m_maximize->SetTabable(false);
         m_maximize->SetWindow(this);
@@ -85,7 +85,7 @@ WindowCanvas::WindowCanvas(int x, int y, int w, int h, Gwk::Skin::Base* skin,
     // MINIMiZE
     {
         m_minimize = new Gwk::Controls::WindowMinimizeButton(m_titleBar, "Minimize");
-        m_minimize->Dock(Docking::Right);
+        m_minimize->Dock(Position::Right);
         m_minimize->onPress.Add(this, &WindowCanvas::MinimizeButtonPressed);
         m_minimize->SetTabable(false);
         m_minimize->SetWindow(this);
@@ -114,7 +114,7 @@ void* WindowCanvas::GetWindow()
 void WindowCanvas::Layout(Skin::Base* skin)
 {
     m_sizer->BringToFront();
-    m_sizer->Position(Docking::Right|Docking::Bottom);
+    m_sizer->SetPosition(Position::Right|Position::Bottom);
     ParentClass::Layout(skin);
 }
 

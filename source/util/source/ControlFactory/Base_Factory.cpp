@@ -211,18 +211,18 @@
 //            };
             
             
-//            static const ValueEnumMapItem<Docking::Area> g_dockEnums[] = {
-//                { "None",   Gwk::Docking::None },
-//                { "Fill",   Gwk::Docking::Fill },
-//                { "Left",   Gwk::Docking::Left },
-//                { "Right",  Gwk::Docking::Right },
-//                { "Top",    Gwk::Docking::Top },
-//                { "Bottom", Gwk::Docking::Bottom },
+//            static const ValueEnumMapItem<Position> g_dockEnums[] = {
+//                { "None",   Gwk::Position::None },
+//                { "Fill",   Gwk::Position::Fill },
+//                { "Left",   Gwk::Position::Left },
+//                { "Right",  Gwk::Position::Right },
+//                { "Top",    Gwk::Position::Top },
+//                { "Bottom", Gwk::Position::Bottom },
 //            };
 //            
 //            class Dock : public Gwk::ControlFactory::Property
 //            {
-//                typedef ValueEnumMap<Gwk::Docking::Area> EnumMap;
+//                typedef ValueEnumMap<Gwk::Position> EnumMap;
 //                EnumMap m_enumMap;
 //                
 //            public:
@@ -239,7 +239,7 @@
 //
 //                void SetValueFromString(Controls::Base* ctrl, const String& str) override
 //                {
-//                    Docking::Area dock = m_enumMap.GetValueByName(str.c_str(), Docking::None);
+//                    Position dock = m_enumMap.GetValueByName(str.c_str(), Position::None);
 //                    ctrl->Dock(dock);
 //                }
 //

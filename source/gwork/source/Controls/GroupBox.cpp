@@ -19,10 +19,10 @@ GWK_CONTROL_CONSTRUCTOR(GroupBox)
     // can't get it without us..
     SetMouseInputEnabled(true);
     SetTextPadding(Padding(10, 0, 0, 0));
-    SetAlignment(Docking::Top|Docking::Left);
+    SetAlignment(Position::Top|Position::Left);
     Invalidate();
     m_innerPanel = new Base(this);
-    m_innerPanel->Dock(Docking::Fill);
+    m_innerPanel->Dock(Position::Fill);
     m_innerMargin = 6;
 }
 

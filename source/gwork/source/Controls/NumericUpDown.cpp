@@ -19,17 +19,17 @@ GWK_CONTROL_CONSTRUCTOR(NumericUpDown)
 {
     SetSize(100, 20);
     Controls::Base* splitter = new Controls::Base(this);
-    splitter->Dock(Docking::Right);
+    splitter->Dock(Position::Right);
     splitter->SetWidth(13);
     NumericUpDownButton_Up* buttonUp = new NumericUpDownButton_Up(splitter);
     buttonUp->onPress.Add(this, &NumericUpDown::OnButtonUp);
     buttonUp->SetTabable(false);
-    buttonUp->Dock(Docking::Top);
+    buttonUp->Dock(Position::Top);
     buttonUp->SetHeight(10);
     NumericUpDownButton_Down* buttonDown = new NumericUpDownButton_Down(splitter);
     buttonDown->onPress.Add(this, &NumericUpDown::OnButtonDown);
     buttonDown->SetTabable(false);
-    buttonDown->Dock(Docking::Fill);
+    buttonDown->Dock(Position::Fill);
     buttonUp->SetPadding(Padding(0, 1, 1, 0));
     m_max = 100;
     m_min = 0;

@@ -22,29 +22,7 @@
 #include <algorithm>
 
 namespace Gwk
-{
-    namespace Docking
-    {
-        enum Area
-        {
-            None        = 0,
-            Left        = (1<<1),
-            Right       = (1<<2),
-            Top         = (1<<3),
-            Bottom      = (1<<4),
-            CenterV     = (1<<5),
-            CenterH     = (1<<6),
-            Fill        = (1<<7),
-            Center      = CenterV | CenterH
-        };
-        
-    } // Pos
-
-    namespace Skin
-    {
-        class Base;
-    }
-
+{    
     namespace Controls
     {
         class Canvas;
@@ -121,8 +99,8 @@ namespace Gwk
             virtual Gwk::Point LocalPosToCanvas(const Gwk::Point& in = Point(0, 0));
             virtual Gwk::Point CanvasPosToLocal(const Gwk::Point& in);
 
-            virtual void Dock(Docking::Area dock);
-            virtual Docking::Area GetDock() const;
+            virtual void Dock(Position dock);
+            virtual Position GetDock() const;
 
             virtual void RestrictToParent(bool restrict)    { m_bRestrictToParent = restrict; }
             virtual bool ShouldRestrictToParent()           { return m_bRestrictToParent; }
@@ -465,7 +443,7 @@ namespace Gwk
             bool m_bKeyboardInputEnabled;
             bool m_bDrawBackground;
 
-            Docking::Area m_dock;
+            Position m_dock;
 
             unsigned char m_cursor;
 
@@ -486,7 +464,7 @@ namespace Gwk
             }
 
             void InvalidateChildren(bool bRecursive = false);
-            void Position(unsigned int pos, int xpadding = 0, int ypadding = 0);
+            void SetPosition(Position pos, int xpadding = 0, int ypadding = 0);
 
         protected:
 

@@ -22,17 +22,17 @@ GWK_CONTROL_CONSTRUCTOR(TabButton)
     m_page = nullptr;
     m_control = nullptr;
     DragAndDrop_SetPackage(true, "TabButtonMove");
-    SetAlignment(Docking::Top|Docking::Left);
+    SetAlignment(Position::Top|Position::Left);
     SetTextPadding(Padding(2, 2, 2, 2));
 }
 
 void TabButton::Layout(Skin::Base* skin)
 {
-    int iParentDock = m_control->GetTabStrip()->GetDock();
+    Position parentDock = m_control->GetTabStrip()->GetDock();
 
-    if (iParentDock == Docking::Bottom)
+    if (parentDock == Position::Bottom)
         SetPadding(Padding(3, 1, 5, 4));
-    else if (iParentDock == Docking::Top)
+    else if (parentDock == Position::Top)
         SetPadding(Padding(3, 3, 5, 2));
     else
         SetPadding(Padding(3, 2, 5, 2));

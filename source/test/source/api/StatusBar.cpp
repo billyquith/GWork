@@ -17,7 +17,7 @@ public:
 
     GWK_CONTROL_INLINE(StatusBar, TestUnit)
     {
-        Dock(Docking::Fill);
+        Dock(Position::Fill);
         Gwk::Controls::StatusBar* status = new Gwk::Controls::StatusBar(this);
         Gwk::Controls::Label* right = new Gwk::Controls::Label(status);
         right->SetText("Label Added to Right");

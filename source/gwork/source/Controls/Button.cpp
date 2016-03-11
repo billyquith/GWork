@@ -23,7 +23,7 @@ GWK_CONTROL_CONSTRUCTOR(Button)
     SetSize(100, 20);
     SetMouseInputEnabled(true);
     SetIsToggle(false);
-    SetAlignment(Gwk::Docking::Center);
+    SetAlignment(Position::Center);
     SetTextPadding(Padding(3, 0, 3, 0));
     m_bToggleStatus = false;
     SetKeyboardInputEnabled(false);
@@ -199,9 +199,9 @@ void Button::PostLayout(Skin::Base* skin)
     if (m_image)
     {
         if (m_bCenterImage)
-            m_image->Position(Docking::Center);
+            m_image->SetPosition(Position::Center);
         else
-            m_image->Position(Docking::Left|Docking::CenterV);
+            m_image->SetPosition(Position::Left|Position::CenterV);
     }
 }
 

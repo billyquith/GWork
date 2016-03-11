@@ -53,7 +53,7 @@ namespace Gwk
                 GWK_CONTROL_INLINE(ColorSelector, Property::Text)
                 {
                     m_button = new Controls::Internal::ColourButton(m_textBox);
-                    m_button->Dock(Docking::Right);
+                    m_button->Dock(Position::Right);
                     m_button->SetWidth(20);
                     m_button->onPress.Add(this, &ThisClass::OnButtonPress);
                     m_button->SetMargin(Margin(1, 1, 1, 2));
@@ -67,7 +67,7 @@ namespace Gwk
                     menu->SetDisableIconMargin(true);
                     
                     Gwk::Controls::HSVColorPicker* picker = new Gwk::Controls::HSVColorPicker(menu);
-                    picker->Dock(Docking::Fill);
+                    picker->Dock(Position::Fill);
                     picker->SetSize(256, 128);
                     float defaultColor[3];
                     Gwk::Utility::Strings::To::Floats(m_textBox->GetText(), defaultColor, 3);
@@ -75,7 +75,7 @@ namespace Gwk
                                      false, true);
                     picker->onColorChanged.Add(this, &ThisClass::ColorChanged);
                     
-                    menu->Open(Docking::Right|Docking::Top);
+                    menu->Open(Position::Right | Position::Top);
                 }
 
                 void ColorChanged(Controls::Base* control)

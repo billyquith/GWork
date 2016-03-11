@@ -81,28 +81,28 @@ void TabStrip::Layout(Skin::Base* skin)
         Margin m;
         int iNotFirst = iNum > 0 ? -1 : 0;
 
-        if (m_dock == Docking::Top)
+        if (m_dock == Position::Top)
         {
             m.left = iNotFirst;
-            button->Dock(Docking::Left);
+            button->Dock(Position::Left);
         }
 
-        if (m_dock == Docking::Left)
+        if (m_dock == Position::Left)
         {
             m.top = iNotFirst;
-            button->Dock(Docking::Top);
+            button->Dock(Position::Top);
         }
 
-        if (m_dock == Docking::Right)
+        if (m_dock == Position::Right)
         {
             m.top = iNotFirst;
-            button->Dock(Docking::Top);
+            button->Dock(Position::Top);
         }
 
-        if (m_dock == Docking::Bottom)
+        if (m_dock == Position::Bottom)
         {
             m.left = iNotFirst;
-            button->Dock(Docking::Left);
+            button->Dock(Position::Left);
         }
 
         largestTab.x = std::max(largestTab.x, button->Width());
@@ -111,10 +111,10 @@ void TabStrip::Layout(Skin::Base* skin)
         iNum++;
     }
 
-    if (m_dock == Docking::Top || m_dock == Docking::Bottom)
+    if (m_dock == Position::Top || m_dock == Position::Bottom)
         SetSize(Width(), largestTab.y);
 
-    if (m_dock == Docking::Left || m_dock == Docking::Right)
+    if (m_dock == Position::Left || m_dock == Position::Right)
         SetSize(largestTab.x, Height());
 
     ParentClass::Layout(skin);
@@ -152,29 +152,29 @@ void TabStrip::DragAndDrop_Hover(Gwk::DragAndDrop::Package* /*package*/, int x, 
         if (DropPos.x > DroppedOn->Width()/2)
             m_tabDragControl->MoveBy(DroppedOn->Width()-1, 0);
 
-        m_tabDragControl->Dock(Docking::None);
+        m_tabDragControl->Dock(Position::None);
     }
     else
     {
-        m_tabDragControl->Dock(Docking::Left);
+        m_tabDragControl->Dock(Position::Left);
         m_tabDragControl->BringToFront();
     }
 }
 
-void TabStrip::SetTabPosition(Docking::Area pos)
+void TabStrip::SetTabPosition(Position pos)
 {
     Dock(pos);
 
-    if (m_dock == Docking::Top)
+    if (m_dock == Position::Top)
         SetPadding(Padding(5, 0, 0, 0));
 
-    if (m_dock == Docking::Left)
+    if (m_dock == Position::Left)
         SetPadding(Padding(0, 5, 0, 0));
 
-    if (m_dock == Docking::Right)
+    if (m_dock == Position::Right)
         SetPadding(Padding(0, 5, 0, 0));
 
-    if (m_dock == Docking::Bottom)
+    if (m_dock == Position::Bottom)
         SetPadding(Padding(5, 0, 0, 0));
 
     InvalidateChildren(true);

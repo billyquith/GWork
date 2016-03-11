@@ -17,7 +17,7 @@ GWK_CONTROL_CONSTRUCTOR(LabelClickable)
 {
     SetIsToggle(false);
     SetCursor(Gwk::CursorType::Finger);
-    SetAlignment(Gwk::Docking::Left|Gwk::Docking::CenterV);
+    SetAlignment(Gwk::Position::Left|Gwk::Position::CenterV);
 }
 
 void LabelClickable::Render(Skin::Base* /*skin*/)

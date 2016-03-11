@@ -48,7 +48,7 @@ namespace Gwk
                 return m_tabStrip;
             }
 
-            virtual void SetTabStripPosition(Docking::Area dockSide);
+            virtual void SetTabStripPosition(Position dockSide);
 
             virtual bool DoesAllowDrag();
 

@@ -42,7 +42,7 @@ namespace Gwk
             bool IsMenuOpen();
             void ClearItems();
 
-            virtual void Open(unsigned int iPos);
+            virtual void Open(Position pos);
             virtual void Close();
 
             virtual bool IsMenuComponent() override

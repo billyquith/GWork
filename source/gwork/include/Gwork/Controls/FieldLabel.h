@@ -36,13 +36,13 @@ namespace Gwk
             {
                 m_field = nullptr;
                 SetMargin(Margin(0, 1, 0, 1));
-                SetAlignment(Docking::CenterV|Docking::Left);
+                SetAlignment(Position::CenterV|Position::Left);
             }
 
             void SetField(Controls::Base* field)
             {
                 field->SetParent(this);
-                field->Dock(Docking::Right);
+                field->Dock(Position::Right);
                 m_field = field;
             }
 

@@ -39,7 +39,7 @@ Base::Base(Base* parent, const Gwk::String& Name)
     m_bounds = Gwk::Rect(0, 0, 10, 10);
     m_padding = Padding(0, 0, 0, 0);
     m_margin = Margin(0, 0, 0, 0);
-    m_dock = Docking::None;
+    m_dock = Position::None;
     m_dragAndDrop_Package = nullptr;
     RestrictToParent(false);
     SetMouseInputEnabled(true);
@@ -141,7 +141,7 @@ void Base::SetParent(Base* parent)
         m_parent->AddChild(this);
 }
 
-void Base::Dock(Docking::Area dock)
+void Base::Dock(Position dock)
 {
     if (m_dock == dock)
         return;
@@ -151,7 +151,7 @@ void Base::Dock(Docking::Area dock)
     InvalidateParent();
 }
 
-Docking::Area Base::GetDock() const
+Position Base::GetDock() const
 {
     return m_dock;
 }
@@ -196,29 +196,29 @@ void Base::InvalidateChildren(bool bRecursive)
     }
 }
 
-void Base::Position(unsigned int pos, int xpadding, int ypadding)
+void Base::SetPosition(Position pos, int xpadding, int ypadding)
 {
     const Rect& bounds = GetParent()->GetInnerBounds();
     const Margin& margin = GetMargin();
     int x = X();
     int y = Y();
 
-    if (pos & Docking::Left)
+    if (pos & Position::Left)
         x = bounds.x + xpadding + margin.left;
 
-    if (pos & Docking::Right)
+    if (pos & Position::Right)
         x = bounds.x + (bounds.w - Width() - xpadding - margin.right);
 
-    if (pos & Docking::CenterH)
+    if (pos & Position::CenterH)
         x = bounds.x + (bounds.w - Width())/2;
 
-    if (pos & Docking::Top)
+    if (pos & Position::Top)
         y = bounds.y + ypadding;
 
-    if (pos & Docking::Bottom)
+    if (pos & Position::Bottom)
         y = bounds.y + (bounds.h - Height() - ypadding);
 
-    if (pos & Docking::CenterV)
+    if (pos & Position::CenterV)
         y = bounds.y + (bounds.h - Height())/2 + ypadding;
 
     SetPos(x, y);
@@ -795,12 +795,12 @@ void Base::RecurseLayout(Skin::Base* skin)
         if (child->Hidden())
             continue;
 
-        int iDock = child->GetDock();
+        Position dock = child->GetDock();
 
-        if (iDock & Docking::Fill)
+        if (dock & Position::Fill)
             continue;
 
-        if (iDock & Docking::Top)
+        if (dock & Position::Top)
         {
             const Margin& margin = child->GetMargin();
             child->SetBounds(rBounds.x+margin.left,
@@ -812,7 +812,7 @@ void Base::RecurseLayout(Skin::Base* skin)
             rBounds.h -= iHeight;
         }
 
-        if (iDock & Docking::Left)
+        if (dock & Position::Left)
         {
             const Margin& margin = child->GetMargin();
             child->SetBounds(rBounds.x+margin.left,
@@ -824,7 +824,7 @@ void Base::RecurseLayout(Skin::Base* skin)
             rBounds.w -= iWidth;
         }
 
-        if (iDock & Docking::Right)
+        if (dock & Position::Right)
         {
             // TODO: THIS MARGIN CODE MIGHT NOT BE FULLY FUNCTIONAL
             const Margin& margin = child->GetMargin();
@@ -836,7 +836,7 @@ void Base::RecurseLayout(Skin::Base* skin)
             rBounds.w -= iWidth;
         }
 
-        if (iDock & Docking::Bottom)
+        if (dock & Position::Bottom)
         {
             // TODO: THIS MARGIN CODE MIGHT NOT BE FULLY FUNCTIONAL
             const Margin& margin = child->GetMargin();
@@ -858,14 +858,14 @@ void Base::RecurseLayout(Skin::Base* skin)
     for (Base::List::iterator iter = Children.begin(); iter != Children.end(); ++iter)
     {
         Base* child = *iter;
-        int iDock = child->GetDock();
+        Position dock = child->GetDock();
 
-        if (!(iDock&Docking::Fill))
+        if (!(dock & Position::Fill))
             continue;
 
         const Margin& margin = child->GetMargin();
         child->SetBounds(rBounds.x+margin.left, rBounds.y+margin.top,
-                          rBounds.w-margin.left-margin.right, rBounds.h-margin.top-margin.bottom);
+                         rBounds.w-margin.left-margin.right, rBounds.h-margin.top-margin.bottom);
         child->RecurseLayout(skin);
     }
 

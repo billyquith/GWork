@@ -140,13 +140,13 @@ namespace Gwk
 //                {
 //                    const int align = gwk_cast<Controls::Label>(ctrl)->GetAlignment();
 //                    
-//                    if (align & Docking::Top)
+//                    if (align & Position::Top)
 //                        return "Top";
 //
-//                    if (align & Docking::CenterV)
+//                    if (align & Position::CenterV)
 //                        return "Center";
 //
-//                    if (align & Docking::Bottom)
+//                    if (align & Position::Bottom)
 //                        return "Bottom";
 //
 //                    return "Top";
@@ -155,16 +155,16 @@ namespace Gwk
 //                void SetValueFromString(Controls::Base* ctrl, const String& str) override
 //                {
 //                    int align = gwk_cast<Controls::Label>(ctrl)->GetAlignment();
-//                    align &= ~Docking::Top;
-//                    align &= ~Docking::CenterV;
-//                    align &= ~Docking::Bottom;
+//                    align &= ~Position::Top;
+//                    align &= ~Position::CenterV;
+//                    align &= ~Position::Bottom;
 //
 //                    if (str == "Top")
-//                        gwk_cast<Controls::Label>(ctrl)->SetAlignment(align|Docking::Top);
+//                        gwk_cast<Controls::Label>(ctrl)->SetAlignment(align|Position::Top);
 //                    else if (str == "Center")
-//                        gwk_cast<Controls::Label>(ctrl)->SetAlignment(align|Docking::CenterV);
+//                        gwk_cast<Controls::Label>(ctrl)->SetAlignment(align|Position::CenterV);
 //                    else if (str == "Bottom")
-//                        gwk_cast<Controls::Label>(ctrl)->SetAlignment(align|Docking::Bottom);
+//                        gwk_cast<Controls::Label>(ctrl)->SetAlignment(align|Position::Bottom);
 //                }
 //
 //                size_t OptionCount() const override
@@ -192,13 +192,13 @@ namespace Gwk
 //
 //                String GetValueAsString(Controls::Base* ctrl) override
 //                {
-//                    if (gwk_cast<Controls::Label>(ctrl)->GetAlignment() & Docking::Left)
+//                    if (gwk_cast<Controls::Label>(ctrl)->GetAlignment() & Position::Left)
 //                        return "Left";
 //
-//                    if (gwk_cast<Controls::Label>(ctrl)->GetAlignment() & Docking::CenterH)
+//                    if (gwk_cast<Controls::Label>(ctrl)->GetAlignment() & Position::CenterH)
 //                        return "Center";
 //
-//                    if (gwk_cast<Controls::Label>(ctrl)->GetAlignment() & Docking::Right)
+//                    if (gwk_cast<Controls::Label>(ctrl)->GetAlignment() & Position::Right)
 //                        return "Right";
 //
 //                    return "Left";
@@ -207,18 +207,18 @@ namespace Gwk
 //                void SetValueFromString(Controls::Base* ctrl, const String& str) override
 //                {
 //                    int iAlign = gwk_cast<Controls::Label>(ctrl)->GetAlignment();
-//                    iAlign &= ~Docking::Left;
-//                    iAlign &= ~Docking::CenterH;
-//                    iAlign &= ~Docking::Right;
+//                    iAlign &= ~Position::Left;
+//                    iAlign &= ~Position::CenterH;
+//                    iAlign &= ~Position::Right;
 //
 //                    if (str == "Left")
-//                        gwk_cast<Controls::Label>(ctrl)->SetAlignment(iAlign|Docking::Left);
+//                        gwk_cast<Controls::Label>(ctrl)->SetAlignment(iAlign|Position::Left);
 //
 //                    if (str == "Center")
-//                        gwk_cast<Controls::Label>(ctrl)->SetAlignment(iAlign|Docking::CenterH);
+//                        gwk_cast<Controls::Label>(ctrl)->SetAlignment(iAlign|Position::CenterH);
 //
 //                    if (str == "Right")
-//                        gwk_cast<Controls::Label>(ctrl)->SetAlignment(iAlign|Docking::Right);
+//                        gwk_cast<Controls::Label>(ctrl)->SetAlignment(iAlign|Position::Right);
 //                }
 //
 //                size_t OptionCount() const override

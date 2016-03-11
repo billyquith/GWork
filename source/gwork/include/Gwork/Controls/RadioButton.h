@@ -45,14 +45,14 @@ namespace Gwk
             {
                 SetSize(200, 19);
                 m_radioButton = new RadioButton(this);
-                m_radioButton->Dock(Docking::Left);
+                m_radioButton->Dock(Position::Left);
                 m_radioButton->SetMargin(Margin(0, 2, 2, 2));
                 m_radioButton->SetTabable(false);
                 m_radioButton->SetKeyboardInputEnabled(false);
                 m_label = new LabelClickable(this);
-                m_label->SetAlignment(Docking::CenterV | Docking::Left);
+                m_label->SetAlignment(Position::CenterV | Position::Left);
                 m_label->SetText("Radio Button");
-                m_label->Dock(Docking::Fill);
+                m_label->Dock(Position::Fill);
                 m_label->onPress.Add(m_radioButton, &CheckBox::OnPress);
                 m_label->SetTabable(false);
                 m_label->SetKeyboardInputEnabled(false);

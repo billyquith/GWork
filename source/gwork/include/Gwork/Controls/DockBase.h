@@ -31,10 +31,10 @@ namespace Gwk
 
             virtual TabControl* GetTabControl();
 
-            virtual DockBase* GetRight()    { return GetChildDock(Docking::Right); }
-            virtual DockBase* GetLeft()     { return GetChildDock(Docking::Left); }
-            virtual DockBase* GetTop()      { return GetChildDock(Docking::Top); }
-            virtual DockBase* GetBottom()   { return GetChildDock(Docking::Bottom); }
+            virtual DockBase* GetRight()    { return GetChildDock(Position::Right); }
+            virtual DockBase* GetLeft()     { return GetChildDock(Position::Left); }
+            virtual DockBase* GetTop()      { return GetChildDock(Position::Top); }
+            virtual DockBase* GetBottom()   { return GetChildDock(Position::Bottom); }
 
             // No action on space (default button action is to press)
             virtual bool OnKeySpace(bool /*bDown*/) override { return false; }
@@ -48,17 +48,17 @@ namespace Gwk
             virtual void DragAndDrop_HoverLeave(Gwk::DragAndDrop::Package* package) override;
             virtual void DragAndDrop_Hover(Gwk::DragAndDrop::Package* package, int x, int y) override;
 
-            virtual void SetupChildDock(Docking::Area iPos);
+            virtual void SetupChildDock(Position iPos);
 
             virtual void DoRedundancyCheck();
             virtual void DoConsolidateCheck();
             virtual void OnRedundantChildDock(DockBase* dockBase);
 
-            virtual Docking::Area GetDroppedTabDirection(int x, int y);
+            virtual Position GetDroppedTabDirection(int x, int y);
             virtual void OnTabRemoved(Gwk::Controls::Base* control);
 
-            DockBase*  GetChildDock(Docking::Area iPos);
-            DockBase** GetChildDockPtr(Docking::Area iPos);
+            DockBase*  GetChildDock(Position iPos);
+            DockBase** GetChildDockPtr(Position iPos);
 
             DockBase*       m_left;
             DockBase*       m_right;

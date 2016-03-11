@@ -25,9 +25,9 @@ GWK_CONTROL_CONSTRUCTOR(VerticalScrollBar)
 void VerticalScrollBar::Layout(Skin::Base* skin)
 {
     ParentClass::Layout(skin);
-    m_scrollButton[SCROLL_BUTTON_UP]->Dock(Docking::Top);
+    m_scrollButton[SCROLL_BUTTON_UP]->Dock(Position::Top);
     m_scrollButton[SCROLL_BUTTON_UP]->SetHeight(Width());
-    m_scrollButton[SCROLL_BUTTON_DOWN]->Dock(Docking::Bottom);
+    m_scrollButton[SCROLL_BUTTON_DOWN]->Dock(Position::Bottom);
     m_scrollButton[SCROLL_BUTTON_DOWN]->SetHeight(Width());
     m_bar->SetWidth(GetButtonSize());
     // Add padding

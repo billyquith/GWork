@@ -19,9 +19,9 @@ using namespace Gwk::Controls;
 GWK_CONTROL_CONSTRUCTOR(DockedTabControl)
 {
     m_windowControl = nullptr;
-    Dock(Docking::Fill);
+    Dock(Position::Fill);
     m_titleBar = new TabTitleBar(this);
-    m_titleBar->Dock(Docking::Top);
+    m_titleBar->Dock(Position::Top);
     m_titleBar->SetHidden(true);
     SetAllowReorder(true);
 }
@@ -69,7 +69,7 @@ void DockedTabControl::DragAndDrop_EndDragging(bool bSuccess, int /*x*/, int /*y
      *      m_windowControl->SetPosition( x, y );
      *      SetParent( m_windowControl );
      *      SetPosition( 0, 0 );
-     *      Dock( Docking::Fill );
+     *      Dock( Position::Fill );
      *  }
      */
 }

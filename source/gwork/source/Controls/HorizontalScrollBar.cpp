@@ -26,9 +26,9 @@ void HorizontalScrollBar::Layout(Skin::Base* skin)
 {
     ParentClass::Layout(skin);
     m_scrollButton[SCROLL_BUTTON_LEFT]->SetWidth(Height());
-    m_scrollButton[SCROLL_BUTTON_LEFT]->Dock(Docking::Left);
+    m_scrollButton[SCROLL_BUTTON_LEFT]->Dock(Position::Left);
     m_scrollButton[SCROLL_BUTTON_RIGHT]->SetWidth(Height());
-    m_scrollButton[SCROLL_BUTTON_RIGHT]->Dock(Docking::Right);
+    m_scrollButton[SCROLL_BUTTON_RIGHT]->Dock(Position::Right);
     m_bar->SetHeight(GetButtonSize());
     m_bar->SetPadding(Padding(GetButtonSize(), 0, GetButtonSize(), 0));
     float barWidth = (m_fViewableContentSize/m_fContentSize)*(Width()-GetButtonSize());

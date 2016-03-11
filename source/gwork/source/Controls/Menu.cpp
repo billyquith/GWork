@@ -80,9 +80,9 @@ MenuItem* Menu::AddItem(const String& strName,
 void Menu::OnAddItem(MenuItem* item)
 {
     item->SetTextPadding(Padding(IconMarginDisabled() ? 0 : 24, 0, 16, 0));
-    item->Dock(Docking::Top);
+    item->Dock(Position::Top);
     item->SizeToContents();
-    item->SetAlignment(Docking::CenterV|Docking::Left);
+    item->SetAlignment(Position::CenterV|Position::Left);
     item->onHoverEnter.Add(this, &Menu::OnHoverItem);
     
     // Do this here - after Top Docking these values mean nothing in layout
@@ -158,7 +158,7 @@ void Menu::OnHoverItem(Gwk::Controls::Base* control)
     item->OpenMenu();
 }
 
-void Menu::Open(unsigned int iPos)
+void Menu::Open(Position pos)
 {
     SetHidden(false);
     BringToFront();
@@ -184,7 +184,7 @@ void Menu::CloseMenus()
 void Menu::AddDivider()
 {
     MenuDivider* divider = new MenuDivider(this);
-    divider->Dock(Docking::Top);
+    divider->Dock(Position::Top);
     divider->SetMargin(Margin(IconMarginDisabled() ? 0 : 24, 0, 4, 0));
 }
 

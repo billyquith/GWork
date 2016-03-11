@@ -20,7 +20,7 @@ GWK_CONTROL_CONSTRUCTOR(Label)
     m_text->SetFont(GetSkin()->GetDefaultFont());
     SetMouseInputEnabled(false);
     SetBounds(0, 0, 100, 10);
-    SetAlignment(Gwk::Docking::Left|Gwk::Docking::Top);
+    SetAlignment(Position::Left | Position::Top);
 }
 
 void Label::PreDelete(Gwk::Skin::Base* skin)
@@ -36,10 +36,10 @@ void Label::PreDelete(Gwk::Skin::Base* skin)
 
 void Label::PostLayout(Skin::Base* /*skin*/)
 {
-    m_text->Position(m_align);
+    m_text->SetPosition(m_align);
 }
 
-void Label::SetAlignment(int iAlign)
+void Label::SetAlignment(Position iAlign)
 {
     if (m_align == iAlign)
         return;
@@ -48,7 +48,7 @@ void Label::SetAlignment(int iAlign)
     Invalidate();
 }
 
-int Label::GetAlignment()
+Position Label::GetAlignment()
 {
     return m_align;
 }

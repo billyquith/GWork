@@ -35,16 +35,14 @@ namespace Gwk
             }
 
             virtual void Render(Skin::Base* /*skin*/) override
-            {
-            }
+            {}
 
             virtual void PostLayout(Skin::Base* skin) override;
 
             virtual void SizeToContents();
 
-            virtual void SetAlignment(int iAlign);
-            virtual int  GetAlignment();
-
+            virtual void SetAlignment(enum Position area);
+            virtual Position GetAlignment();
 
             virtual void SetFont(Gwk::String strFacename, int iSize, bool bBold);
 
@@ -96,7 +94,7 @@ namespace Gwk
                 return m_text->GetPadding();
             }
 
-            int Alignment() const
+            Position Alignment() const
             {
                 return m_align;
             }
@@ -147,9 +145,9 @@ namespace Gwk
 
             virtual void OnTextChanged() {}
 
-            Gwk::Font*                 m_createdFont;
+            Gwk::Font*                  m_createdFont;
             ControlsInternal::Text*     m_text;
-            int m_align;
+            Position                 m_align;
 
         };
 

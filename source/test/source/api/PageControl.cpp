@@ -24,13 +24,13 @@ public:
         // Page 0
         {
             Gwk::Controls::Button* button = new Gwk::Controls::Button(control->GetPage(0));
-            button->Dock(Docking::Fill);
+            button->Dock(Position::Fill);
             button->SetText("This button is fill docked on page 0");
         }
         // Page 1
         {
             Gwk::Controls::Button* button = new Gwk::Controls::Button(control->GetPage(1));
-            button->Dock(Docking::Top);
+            button->Dock(Position::Top);
             button->SetText("This button is top docked on page 1");
         }
         // Page 2
