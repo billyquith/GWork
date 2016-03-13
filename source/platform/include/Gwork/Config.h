@@ -9,6 +9,8 @@
 #ifndef GWK_CONFIG_H
 #define GWK_CONFIG_H
 
+#include <ponder/pondertype.hpp>
+
 // GWK_COMPILE_DLL
 //  - We're compiling the Gwork.dll (or .dylib etc)
 #if defined (GWK_COMPILE_DLL)

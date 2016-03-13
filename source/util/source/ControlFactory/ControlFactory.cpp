@@ -40,6 +40,10 @@ void InitialiseControls()
         .value("fill",    Gwk::Position::Fill)
         ;
 
+//    ponder::Class::declare<Event::Caller>()
+//        .function("add", static_cast<void(Event::Handler&)>(&Event::Caller::Add))
+//        ;
+
     ponder::Class::declare<Controls::Base>()
         .function("typename",   &Controls::Base::GetTypeName)
         .property("name",       &Controls::Base::GetName, &Controls::Base::SetName)
@@ -61,6 +65,7 @@ void InitialiseControls()
 
     ponder::Class::declare<Controls::Button>()
         .base<Controls::Button::ParentClass>()
+        .constructor<Controls::Base*>()
         .property("depressed",  &Controls::Button::IsDepressed, &Controls::Button::SetDepressed)
         .property("isToggle",   &Controls::Button::IsToggle, &Controls::Button::SetIsToggle)
         .property("toggled",    &Controls::Button::GetToggleState,

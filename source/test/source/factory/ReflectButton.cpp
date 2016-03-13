@@ -51,16 +51,16 @@ PONDER_AUTO_TYPE(ReflectButton, &declare);
 
 GWK_CONTROL_CONSTRUCTOR(ReflectButton)
 {
-    //        // Normal button
+    // Normal button
     //        Controls::Button* buttonA = new Controls::Button(this);
     //        buttonA->SetText("Event Tester");
     //        buttonA->onPress.Add(this, &Button::onButtonA);
-    
-    const ponder::Class* metaclass = &ponder::classByType<Controls::Label>();
+    const ponder::Class* metaclass = &ponder::classByType<Controls::Button>();
     assert(metaclass != nullptr);
     ponder::UserObject buttonA = metaclass->construct(ponder::Args(static_cast<Controls::Base*>(this)));
     assert(buttonA != ponder::UserObject::nothing);
     buttonA.set("text", "Hello world!");
+//    buttonA.get("onPress").call("add", this, &ReflectButton::onButtonA);
     
     //        {
     //            Controls::Button* buttonA = new Controls::Button(this);
