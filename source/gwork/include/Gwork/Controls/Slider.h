@@ -71,7 +71,7 @@ namespace Gwk
             virtual void  SetFloatValue(float val, bool forceUpdate = true);
 
             virtual float CalculateValue();
-            virtual void  OnMoved(Controls::Base* control);
+            virtual void  OnMoved(Event::Info info);
 
             virtual void OnMouseClickLeft(int /*x*/, int /*y*/, bool /*bDown*/) override
             {

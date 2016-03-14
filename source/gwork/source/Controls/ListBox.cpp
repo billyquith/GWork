@@ -116,14 +116,14 @@ void ListBox::UnselectAll()
     }
 }
 
-void ListBox::OnRowSelected(Base* control)
+void ListBox::OnRowSelected(Event::Info info)
 {
     bool bClear = !Gwk::Input::IsShiftDown();
 
     if (!AllowMultiSelect())
         bClear = true;
 
-    SetSelectedRow(control, bClear);
+    SetSelectedRow(info.ControlCaller, bClear);
 }
 
 Layout::TableRow* ListBox::GetSelectedRow()

@@ -64,18 +64,18 @@ public:
         }
     }
 
-    void OnEdit(Gwk::Controls::Base* control)
+    void OnEdit(Event::Info info)
     {
-        Gwk::Controls::TextBox* textbox = (Gwk::Controls::TextBox*)(control);
+        auto textbox = static_cast<Gwk::Controls::TextBox*>(info.ControlCaller);
         OutputToLog(Utility::Format("Textbox Edit: [%s]\n",
-                                  textbox->GetText().c_str()));
+                                    textbox->GetText().c_str()));
     }
 
-    void OnSubmit(Gwk::Controls::Base* control)
+    void OnSubmit(Event::Info info)
     {
-        Gwk::Controls::TextBox* textbox = (Gwk::Controls::TextBox*)(control);
+        auto textbox = static_cast<Gwk::Controls::TextBox*>(info.ControlCaller);
         OutputToLog(Utility::Format("Textbox Submit: [%s]\n",
-                                  textbox->GetText().c_str()));
+                                    textbox->GetText().c_str()));
     }
 
     Gwk::Font m_font;

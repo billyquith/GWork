@@ -49,10 +49,10 @@ namespace Gwk
 
             virtual bool AccelOnlyFocus() override { return true; }
 
-            virtual void OnPaste(Gwk::Controls::Base* ctrl) override;
-            virtual void OnCopy(Gwk::Controls::Base* ctrl) override;
-            virtual void OnCut(Gwk::Controls::Base* ctrl) override;
-            virtual void OnSelectAll(Gwk::Controls::Base* ctrl) override;
+            virtual void OnPaste(Event::Info info) override;
+            virtual void OnCopy(Event::Info info) override;
+            virtual void OnCut(Event::Info info) override;
+            virtual void OnSelectAll(Event::Info info) override;
 
             virtual void OnMouseDoubleClickLeft(int x, int y) override;
 

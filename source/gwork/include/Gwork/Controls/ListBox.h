@@ -80,7 +80,7 @@ namespace Gwk
 
         protected:
 
-            void OnRowSelected(Base* control);
+            void OnRowSelected(Event::Info);
             bool OnKeyDown(bool bDown) override;
             bool OnKeyUp(bool bDown) override;
 

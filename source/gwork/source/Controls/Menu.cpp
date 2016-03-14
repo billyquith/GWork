@@ -141,12 +141,12 @@ bool Menu::IsMenuOpen()
     return false;
 }
 
-void Menu::OnHoverItem(Gwk::Controls::Base* control)
+void Menu::OnHoverItem(Event::Info info)
 {
     if (!ShouldHoverOpenMenu())
         return;
 
-    MenuItem* item = gwk_cast<MenuItem>(control);
+    MenuItem* item = gwk_cast<MenuItem>(info.ControlCaller);
 
     if (!item)
         return;

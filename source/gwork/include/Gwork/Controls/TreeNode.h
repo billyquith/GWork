@@ -75,13 +75,12 @@ namespace Gwk
             Event::Caller onSelect;
             Event::Caller onUnselect;
 
-
             /*protected:*/
 
-            void OnToggleButtonPress(Base* control);
-            void OnDoubleClickName(Base* control);
-            void OnRightPress(Base* control);
-            void OnClickName(Base* control);
+            void OnToggleButtonPress(Event::Info);
+            void OnDoubleClickName(Event::Info);
+            void OnRightPress(Event::Info);
+            void OnClickName(Event::Info);
 
         protected:
 

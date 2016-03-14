@@ -268,10 +268,10 @@ namespace Gwk
             virtual bool OnKeyPress(int iKey, bool bPress = true);
             virtual bool OnKeyRelease(int iKey);
 
-            virtual void OnPaste(Controls::Base* /*from*/)         {}
-            virtual void OnCopy(Controls::Base* /*from*/)          {}
-            virtual void OnCut(Controls::Base* /*from*/)           {}
-            virtual void OnSelectAll(Controls::Base* /*from*/)     {}
+            virtual void OnPaste(Event::Info info)         {}
+            virtual void OnCopy(Event::Info info)          {}
+            virtual void OnCut(Event::Info info)           {}
+            virtual void OnSelectAll(Event::Info info)     {}
 
             virtual bool OnKeyTab(bool bDown);
             virtual bool OnKeySpace(bool /*bDown*/)         { return false; }
@@ -367,7 +367,7 @@ namespace Gwk
             virtual void SetTabable(bool isTabable)     { m_tabable = isTabable; }
 
             // Accelerator functionality
-            void DefaultAccel(Gwk::Controls::Base* /*ctrl*/)
+            void DefaultAccel(Event::Info /*info*/)
             {
                 AcceleratePressed();
             }
@@ -378,7 +378,8 @@ namespace Gwk
             virtual bool HandleAccelerator(Gwk::String& accelerator);
 
             template <typename T>
-            void AddAccelerator(const String& accelerator, T func,
+            void AddAccelerator(const String& accelerator,
+                                T func,
                                 Gwk::Event::Handler* handler = nullptr)
             {
                 if (handler == nullptr)

@@ -46,19 +46,19 @@ void ColorPicker::CreateColorControl(Gwk::String name, int y)
     numeric->SetPos(105, 0);
     numeric->SetSize(26, 16);
     numeric->SetSelectAllOnFocus(true);
-    numeric->onTextChanged.Add(this, &ColorPicker::NumericTyped);
+    numeric->onTextChanged.Add(this, &ColorPicker::OnNumericTyped);
     
     HorizontalSlider* slider = new HorizontalSlider(colorGroup);
     slider->SetPos(colorSize+5, 0);
     slider->SetRange(0, 255);
     slider->SetSize(80, std::max(colorSize, 15));
     slider->SetName(name+"Slider");
-    slider->onValueChanged.Add(this, &ColorPicker::SlidersMoved);
+    slider->onValueChanged.Add(this, &ColorPicker::OnSlidersMoved);
 }
 
-void ColorPicker::NumericTyped(Gwk::Controls::Base* control)
+void ColorPicker::OnNumericTyped(Event::Info info)
 {
-    TextBoxNumeric* box = gwk_cast<TextBoxNumeric>(control);
+    TextBoxNumeric* box = gwk_cast<TextBoxNumeric>(info.ControlCaller);
 
     if (!box)
         return;
@@ -136,7 +136,7 @@ void ColorPicker::UpdateControls()
     onColorChanged.Call(this);
 }
 
-void ColorPicker::SlidersMoved(Gwk::Controls::Base* control)
+void ColorPicker::OnSlidersMoved(Event::Info info)
 {
     /*
      * HorizontalSlider* redSlider		= gwk_cast<HorizontalSlider>(	FindChildByName(
@@ -148,7 +148,7 @@ void ColorPicker::SlidersMoved(Gwk::Controls::Base* control)
      * HorizontalSlider* alphaSlider	= gwk_cast<HorizontalSlider>(	FindChildByName(
      * "AlphaSlider", true ) );
      */
-    HorizontalSlider* slider = gwk_cast<HorizontalSlider>(control);
+    HorizontalSlider* slider = gwk_cast<HorizontalSlider>(info.ControlCaller);
 
     if (slider)
         SetColorByName(GetColorFromName(slider->GetName()), slider->GetFloatValue());

@@ -26,15 +26,13 @@ namespace Gwk
         class Caller;
 
         /**
-         *
          *  When adding an event hook you can add a Packet too.
          *  This will be passed in Event::Info when you receive an event.
-         *
          */
         struct Packet
         {
             Packet(Gwk::Controls::Base* control = nullptr)
-                :   Control(control)
+            :   Control(control)
             {}
 
             Gwk::Controls::Base   *Control;
@@ -46,30 +44,16 @@ namespace Gwk
 
 
         /**
-         *
          *  Passed to an event hook
-         *
          */
         struct Information
         {
-            Information()
-            {
-                Init();
-            }
-
-            Information(Gwk::Controls::Base* pctrl)
-            {
-                Init();
-                Control = pctrl;
-            }
-
-            void Init()
-            {
-                ControlCaller   = nullptr;
-                Packet          = nullptr;
-                Control         = nullptr;
-                Integer         = 0;
-            }
+            Information(Gwk::Controls::Base* ctrl = nullptr)
+            :   ControlCaller(nullptr)
+            ,   Packet(nullptr)
+            ,   Control(ctrl)
+            ,   Integer(0)
+            {}
 
             /// This is set by the event caller, it will always be
             /// the control which is calling the event.
@@ -81,16 +65,13 @@ namespace Gwk
             /// ~~~
             Gwk::Event::Packet* Packet;
 
-            //
             /// These are set by the event and may or may not be set.
-            //
             Gwk::Controls::Base* Control;
 
             Gwk::ControlList ControlList;
             Gwk::String String;
             Gwk::Point Point;
             int Integer;
-
         };
 
 
@@ -101,6 +82,7 @@ namespace Gwk
         //
         class GWK_EXPORT Handler
         {
+            PONDER_RTTI()
         public:
 
             virtual ~Handler();
@@ -117,12 +99,12 @@ namespace Gwk
 
         public:
 
-            typedef void (Handler::*Function)                   (Gwk::Controls::Base* fromPanel);
+//            typedef void (Handler::*Function)                   (Gwk::Controls::Base* fromPanel);
             typedef void (Handler::*FunctionBlank)              ();
             typedef void (Handler::*FunctionWithInformation)    (Gwk::Event::Info info);
 
         };
-
+        
         //
         /// Event callback management.
         //
@@ -136,11 +118,11 @@ namespace Gwk
             void Call(Controls::Base* pThis);
             void Call(Controls::Base* pThis, Gwk::Event::Info info);
 
-            template <typename T>
-            void Add(Event::Handler* ob, T f)
-            {
-                AddInternal(ob, static_cast<Handler::Function>(f));
-            }
+//            template <typename T>
+//            void Add(Event::Handler* ob, T f)
+//            {
+//                AddInternal(ob, static_cast<Handler::Function>(f));
+//            }
 
             template <typename T>
             void Add(Event::Handler* ob, void (T::*f)(Gwk::Event::Info))
@@ -164,10 +146,10 @@ namespace Gwk
 
             void RemoveHandler(Event::Handler* object);
 
-        protected:
+        private:
 
             void CleanLinks();
-            void AddInternal(Event::Handler* object, Handler::Function function);
+//            void AddInternal(Event::Handler* object, Handler::Function function);
             void AddInternal(Event::Handler* object, Handler::FunctionWithInformation function);
             void AddInternal(Event::Handler* object, Handler::FunctionWithInformation function,
                              const Gwk::Event::Packet& packet);
@@ -176,13 +158,13 @@ namespace Gwk
             struct HandlerInstance
             {
                 HandlerInstance()
-                    :   fnFunction(nullptr)
-                    ,   fnFunctionInfo(nullptr)
-                    ,   fnFunctionBlank(nullptr)
-                    ,   object(nullptr)
+//                :   fnFunction(nullptr)
+                :   fnFunctionInfo(nullptr)
+                ,   fnFunctionBlank(nullptr)
+                ,   object(nullptr)
                 {}
 
-                Handler::Function fnFunction;
+//                Handler::Function fnFunction;
                 Handler::FunctionWithInformation fnFunctionInfo;
                 Handler::FunctionBlank fnFunctionBlank;
 
@@ -197,5 +179,7 @@ namespace Gwk
     }
 
 }
+
+PONDER_TYPE(Gwk::Event::Handler)
 
 #endif // ifndef GWK_EVENTS_H

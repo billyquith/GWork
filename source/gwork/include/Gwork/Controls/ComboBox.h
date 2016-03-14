@@ -37,8 +37,6 @@ namespace Gwk
                                           bool bFireChangeEvents = true);
             virtual Gwk::Controls::Label* GetSelectedItem();
 
-            virtual void OnPress() override;
-            virtual void OnItemSelected(Controls::Base* control);
             virtual void OpenList();
             virtual void CloseList();
 
@@ -62,6 +60,9 @@ namespace Gwk
             Gwk::Event::Caller onSelection;
 
         protected:
+
+            virtual void OnPress() override;
+            virtual void OnItemSelected(Event::Info info);
 
             Menu* m_menu;
             MenuItem* m_selectedItem;

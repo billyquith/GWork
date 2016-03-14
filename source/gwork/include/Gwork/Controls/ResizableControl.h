@@ -65,7 +65,7 @@ namespace Gwk
 
         protected:
 
-            void OnResizedInternal(Controls::Base* control);
+            void OnResizedInternal(Event::Info);
 
             Gwk::Point m_minimumSize;
             bool m_bClampMovement;

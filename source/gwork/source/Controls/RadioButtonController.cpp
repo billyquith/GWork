@@ -21,8 +21,10 @@ GWK_CONTROL_CONSTRUCTOR(RadioButtonController)
     SetKeyboardInputEnabled(false);
 }
 
-void RadioButtonController::OnRadioClicked(Gwk::Controls::Base* fromPanel)
+void RadioButtonController::OnRadioClicked(Event::Info info)
 {
+    auto fromPanel = info.ControlCaller;
+    
     RadioButton* checkedRadioButton = gwk_cast<RadioButton>(fromPanel);
 
     // Iterate through all other buttons and set them to false;

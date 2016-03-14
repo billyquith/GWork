@@ -46,11 +46,11 @@ public:
         }
     }
 
-    void OnComboSelect(Gwk::Controls::Base* control)
+    void OnComboSelect(Event::Info info)
     {
-        Gwk::Controls::ComboBox* combo = (Gwk::Controls::ComboBox*)control;
+        Gwk::Controls::ComboBox* combo = static_cast<Controls::ComboBox*>(info.ControlCaller);
         OutputToLog(Utility::Format("Combo Changed: %s",
-                                  combo->GetSelectedItem()->GetText().c_str()));
+                                    combo->GetSelectedItem()->GetText().c_str()));
     }
 
 };

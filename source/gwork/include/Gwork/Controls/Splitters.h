@@ -72,7 +72,7 @@ namespace Gwk
                 m_panels[1]->SetSize(inner.w, (inner.y+inner.h)-(iOffset+m_splitterSize));
             }
 
-            virtual void OnSplitterMoved()
+            virtual void OnSplitterMoved(Event::Info)
             {
                 if (m_rightSided)
                     m_size = Height()-m_splitter->Y();
@@ -115,7 +115,7 @@ namespace Gwk
                 m_panels[1]->SetSize((inner.x+inner.w)-(iOffset+m_splitterSize), inner.h);
             }
 
-            void OnSplitterMoved() override
+            void OnSplitterMoved(Event::Info) override
             {
                 if (m_rightSided)
                     m_size = Width()-m_splitter->X();

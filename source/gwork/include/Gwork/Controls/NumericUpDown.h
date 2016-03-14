@@ -65,8 +65,8 @@ namespace Gwk
             virtual void OnChange();
             virtual void OnTextChanged() override;
 
-            virtual void OnButtonUp(Base* control);
-            virtual void OnButtonDown(Base* control);
+            virtual void OnButtonUp(Event::Info);
+            virtual void OnButtonDown(Event::Info);
 
             virtual bool OnKeyUp(bool bDown) override
             {

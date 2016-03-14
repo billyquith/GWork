@@ -213,7 +213,7 @@ bool DockBase::IsEmpty()
     return true;
 }
 
-void DockBase::OnTabRemoved(Gwk::Controls::Base* /*control*/)
+void DockBase::OnTabRemoved(Event::Info)
 {
     DoRedundancyCheck();
     DoConsolidateCheck();

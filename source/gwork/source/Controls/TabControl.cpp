@@ -64,11 +64,11 @@ GWK_CONTROL_CONSTRUCTOR(TabControl)
     // Make this some special control?
     m_scroll[0] = new ControlsInternal::ScrollBarButton(this);
     m_scroll[0]->SetDirectionLeft();
-    m_scroll[0]->onPress.Add(this, &TabControl::ScrollPressLeft);
+    m_scroll[0]->onPress.Add(this, &TabControl::OnScrollPressLeft);
     m_scroll[0]->SetSize(14, 14);
     m_scroll[1] = new ControlsInternal::ScrollBarButton(this);
     m_scroll[1]->SetDirectionRight();
-    m_scroll[1]->onPress.Add(this, &TabControl::ScrollPressRight);
+    m_scroll[1]->onPress.Add(this, &TabControl::OnScrollPressRight);
     m_scroll[1]->SetSize(14, 14);
     m_innerPanel = new TabControlInner(this);
     m_innerPanel->Dock(Position::Fill);
@@ -121,9 +121,9 @@ void TabControl::AddPage(TabButton* button)
     Invalidate();
 }
 
-void TabControl::OnTabPressed(Controls::Base* control)
+void TabControl::OnTabPressed(Event::Info info)
 {
-    TabButton* button = gwk_cast<TabButton>(control);
+    TabButton* button = gwk_cast<TabButton>(info.ControlCaller);
 
     if (!button)
         return;
@@ -223,12 +223,12 @@ void TabControl::HandleOverflow()
     m_scroll[1]->SetPos(m_scroll[0]->Right(), 5);
 }
 
-void TabControl::ScrollPressLeft(Base* from)
+void TabControl::OnScrollPressLeft(Event::Info)
 {
     m_scrollOffset -= 120;
 }
 
-void TabControl::ScrollPressRight(Base* from)
+void TabControl::OnScrollPressRight(Event::Info)
 {
     m_scrollOffset += 120;
 }

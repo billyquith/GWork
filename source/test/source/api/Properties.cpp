@@ -66,9 +66,9 @@ public:
         }
     }
 
-    void OnFirstNameChanged(Controls::Base* control)
+    void OnFirstNameChanged(Event::Info info)
     {
-        Gwk::Controls::PropertyRow* row = (Gwk::Controls::PropertyRow*)control;
+        auto row = static_cast<Gwk::Controls::PropertyRow*>(info.ControlCaller);
         OutputToLog(Utility::Format("First Name Changed: %s",
                                   row->GetProperty()->GetPropertyValue().c_str()));
     }

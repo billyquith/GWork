@@ -52,10 +52,9 @@ public:
         }
     }
 
-    void OnDockChange(Gwk::Controls::Base* control)
+    void OnDockChange(Event::Info info)
     {
-        Gwk::Controls::RadioButtonController* rc =
-            (Gwk::Controls::RadioButtonController*)control;
+        auto rc = static_cast<Gwk::Controls::RadioButtonController*>(info.ControlCaller);
 
         if (rc->GetSelectedLabel() == "Top")
             m_dockControlLeft->SetTabStripPosition(Position::Top);

@@ -25,10 +25,10 @@ public:
         rc->onSelectionChange.Add(this, &RadioButton::OnChange);
     }
 
-    void OnChange(Controls::Base* control)
+    void OnChange(Event::Info info)
     {
         Gwk::Controls::RadioButtonController* rc =
-            (Gwk::Controls::RadioButtonController*)control;
+            static_cast<Gwk::Controls::RadioButtonController*>(info.ControlCaller);
         Gwk::Controls::LabeledRadioButton* selected = rc->GetSelected();
         OutputToLog(Utility::Format(
                       "RadioButton changed (using 'OnChange' event)\n Chosen Item: '%s'",

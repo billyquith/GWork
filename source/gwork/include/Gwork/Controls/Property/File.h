@@ -39,7 +39,7 @@ namespace Gwk
                     return this;
                 }
 
-                void OnButtonPress(Controls::Base* control)
+                void OnButtonPress(Event::Info)
                 {
                     String fileChosen;
                     if (Dialogs::FileOpen(true, m_strDialogName,

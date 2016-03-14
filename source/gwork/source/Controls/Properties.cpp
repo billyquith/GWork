@@ -32,7 +32,7 @@ void Properties::PostLayout(Gwk::Skin::Base* /*skin*/)
     m_splitterBar->SetSize(3, Height());
 }
 
-void Properties::OnSplitterMoved(Controls::Base* /*control*/)
+void Properties::OnSplitterMoved(Event::Info)
 {
     InvalidateChildren();
 }
@@ -174,11 +174,11 @@ void PropertyRow::SetProperty(Property::Base* prop)
     m_property->onChange.Add(this, &ThisClass::OnPropertyValueChanged);
 }
 
-void PropertyRow::OnPropertyValueChanged(Gwk::Controls::Base* /*control*/)
+void PropertyRow::OnPropertyValueChanged(Event::Info info)
 {
-    Event::Information info;
-    info.String = GetProperty()->GetPropertyValue();
-    onChange.Call(this, info);
+    Event::Information sinfo(info);
+    sinfo.String = GetProperty()->GetPropertyValue();
+    onChange.Call(this, sinfo);
 }
 
 void PropertyRow::OnEditingChanged()

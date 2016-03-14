@@ -87,8 +87,8 @@ void Caller::Call(Controls::Base* pThis, Gwk::Event::Info information)
         HandlerInstance& h = *iter;
         info.Packet = &h.Packet;
 
-        if (h.fnFunction)
-            (h.object->*h.fnFunction)(pThis);
+//        if (h.fnFunction)
+//            (h.object->*h.fnFunction)(pThis);
 
         if (h.fnFunctionInfo)
             (h.object->*h.fnFunctionInfo)(info);
@@ -98,14 +98,14 @@ void Caller::Call(Controls::Base* pThis, Gwk::Event::Info information)
     }
 }
 
-void Caller::AddInternal(Event::Handler* object, Event::Handler::Function function)
-{
-    HandlerInstance h;
-    h.fnFunction = function;
-    h.object = object;
-    m_handlers.push_back(h);
-    object->RegisterCaller(this);
-}
+//void Caller::AddInternal(Event::Handler* object, Event::Handler::Function function)
+//{
+//    HandlerInstance h;
+//    h.fnFunction = function;
+//    h.object = object;
+//    m_handlers.push_back(h);
+//    object->RegisterCaller(this);
+//}
 
 void Caller::AddInternal(Event::Handler* object, Handler::FunctionWithInformation function)
 {

@@ -102,15 +102,14 @@ namespace Gwk
                 onSelection.Call(this);
             }
 
-            void OnSelectionEvent(Controls::Base* control)
+            void OnSelectionEvent(Event::Info info)
             {
-                Gwk::Controls::CollapsibleCategory* child =
-                    gwk_cast<Gwk::Controls::CollapsibleCategory>(control);
+                auto child = gwk_cast<Gwk::Controls::CollapsibleCategory>(info.ControlCaller);
 
-                if (!child)
-                    return;
-
-                OnSelection(child, child->GetSelected());
+                if (child)
+                {
+                    OnSelection(child, child->GetSelected());
+                }
             }
 
         };

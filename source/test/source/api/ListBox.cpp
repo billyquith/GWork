@@ -62,11 +62,11 @@ public:
     }
 
 
-    void RowSelected(Gwk::Controls::Base* control)
+    void RowSelected(Event::Info info)
     {
-        Gwk::Controls::ListBox* ctrl = (Gwk::Controls::ListBox*)control;
+        Gwk::Controls::ListBox* ctrl = static_cast<Gwk::Controls::ListBox*>(info.ControlCaller);
         OutputToLog(Utility::Format("Listbox Item Selected: %s",
-                                  ctrl->GetSelectedRow()->GetText(0).c_str()));
+                                    ctrl->GetSelectedRow()->GetText(0).c_str()));
     }
 
     Gwk::Font m_font;

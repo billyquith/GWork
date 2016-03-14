@@ -37,9 +37,6 @@ namespace Gwk
             virtual int  GetBarSize() = 0;
             virtual int  GetBarPos() = 0;
 
-            virtual void OnBarMoved(Controls::Base* control);
-            virtual void OnMouseClickLeft(int /*x*/, int /*y*/, bool /*bDown*/) override {}
-
             virtual void ScrollToLeft()     {}
             virtual void ScrollToRight()    {}
             virtual void ScrollToTop()      {}
@@ -91,6 +88,9 @@ namespace Gwk
 
         protected:
 
+            virtual void OnBarMoved(Event::Info info);
+            virtual void OnMouseClickLeft(int /*x*/, int /*y*/, bool /*bDown*/) override {}
+            
             ControlsInternal::ScrollBarButton* m_scrollButton[2];
             ControlsInternal::ScrollBarBar* m_bar;
 

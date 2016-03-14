@@ -59,13 +59,13 @@ void VerticalScrollBar::ScrollToBottom()
     SetScrolledAmount(1, true);
 }
 
-void VerticalScrollBar::NudgeUp(Base* /*control*/)
+void VerticalScrollBar::NudgeUp(Event::Info)
 {
     if (!IsDisabled())
         SetScrolledAmount(GetScrolledAmount()-GetNudgeAmount(), true);
 }
 
-void VerticalScrollBar::NudgeDown(Base* /*control*/)
+void VerticalScrollBar::NudgeDown(Event::Info)
 {
     if (!IsDisabled())
         SetScrolledAmount(GetScrolledAmount()+GetNudgeAmount(), true);
@@ -122,12 +122,12 @@ bool VerticalScrollBar::SetScrolledAmount(float amount, bool forceUpdate)
     return true;
 }
 
-void VerticalScrollBar::OnBarMoved(Controls::Base* control)
+void VerticalScrollBar::OnBarMoved(Event::Info info)
 {
     if (m_bar->IsDepressed())
     {
         SetScrolledAmount(CalculateScrolledAmount(), false);
-        ParentClass::OnBarMoved(control);
+        ParentClass::OnBarMoved(info);
     }
     else
     {

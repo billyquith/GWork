@@ -55,7 +55,7 @@ namespace Gwk
             virtual void OnRedundantChildDock(DockBase* dockBase);
 
             virtual Position GetDroppedTabDirection(int x, int y);
-            virtual void OnTabRemoved(Gwk::Controls::Base* control);
+            virtual void OnTabRemoved(Event::Info);
 
             DockBase*  GetChildDock(Position iPos);
             DockBase** GetChildDockPtr(Position iPos);

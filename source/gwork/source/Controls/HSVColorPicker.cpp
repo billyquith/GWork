@@ -53,7 +53,7 @@ GWK_CONTROL_CONSTRUCTOR(HSVColorPicker)
         numeric->SetPos(x+15, y-1);
         numeric->SetSize(26, 16);
         numeric->SetSelectAllOnFocus(true);
-        numeric->onTextChanged.Add(this, &HSVColorPicker::NumericTyped);
+        numeric->onTextChanged.Add(this, &HSVColorPicker::OnNumericTyped);
     }
     y += 20;
     {
@@ -67,7 +67,7 @@ GWK_CONTROL_CONSTRUCTOR(HSVColorPicker)
         numeric->SetPos(x+15, y-1);
         numeric->SetSize(26, 16);
         numeric->SetSelectAllOnFocus(true);
-        numeric->onTextChanged.Add(this, &HSVColorPicker::NumericTyped);
+        numeric->onTextChanged.Add(this, &HSVColorPicker::OnNumericTyped);
     }
     y += 20;
     {
@@ -81,13 +81,13 @@ GWK_CONTROL_CONSTRUCTOR(HSVColorPicker)
         numeric->SetPos(x+15, y-1);
         numeric->SetSize(26, 16);
         numeric->SetSelectAllOnFocus(true);
-        numeric->onTextChanged.Add(this, &HSVColorPicker::NumericTyped);
+        numeric->onTextChanged.Add(this, &HSVColorPicker::OnNumericTyped);
     }
 }
 
-void HSVColorPicker::NumericTyped(Gwk::Controls::Base* control)
+void HSVColorPicker::OnNumericTyped(Event::Info info)
 {
-    TextBoxNumeric* box = gwk_cast<TextBoxNumeric>(control);
+    TextBoxNumeric* box = gwk_cast<TextBoxNumeric>(info.ControlCaller);
 
     if (!box)
         return;
@@ -149,14 +149,14 @@ Gwk::Color HSVColorPicker::GetColor()
     return m_lerpBox->GetSelectedColor();
 }
 
-void HSVColorPicker::ColorBoxChanged(Gwk::Controls::Base* /*control*/)
+void HSVColorPicker::ColorBoxChanged(Event::Info)
 {
     onColorChanged.Call(this);
     UpdateControls(GetColor());
     Invalidate();
 }
 
-void HSVColorPicker::ColorSliderChanged(Gwk::Controls::Base* /*control*/)
+void HSVColorPicker::ColorSliderChanged(Event::Info)
 {
     if (m_lerpBox)
         m_lerpBox->SetColor(m_colorSlider->GetSelectedColor(),  true);

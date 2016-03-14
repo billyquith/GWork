@@ -44,7 +44,7 @@ namespace Gwk
                     onChange.Call(this, info);
                 }
 
-                void OnPropertyValueChanged(Gwk::Controls::Base* /*control*/)
+                void OnPropertyValueChanged(Event::Info)
                 {
                     DoChanged();
                 }

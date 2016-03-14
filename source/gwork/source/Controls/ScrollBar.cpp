@@ -36,7 +36,7 @@ void BaseScrollBar::Render(Skin::Base* skin)
     skin->DrawScrollBar(this, IsHorizontal(), m_bDepressed);
 }
 
-void BaseScrollBar::OnBarMoved(Controls::Base* /*control*/)
+void BaseScrollBar::OnBarMoved(Event::Info)
 {
     onBarMoved.Call(this);
 }

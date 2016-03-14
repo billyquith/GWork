@@ -10,7 +10,7 @@
 #include <Gwork/Utility.h>
 #include <Gwork/Skin.h>
 #include <Gwork/Controls/PageControl.h>
-#include <Gwork/Controls.h>
+#include <Gwork/Anim.h>
 
 using namespace Gwk;
 using namespace Gwk::Controls;

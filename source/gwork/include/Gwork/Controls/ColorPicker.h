@@ -69,8 +69,8 @@ namespace Gwk
             /// \sect{By name}
             ///     Set colour channel value. Range: 0-255.
             //
-            int          GetColorByName(Gwk::String colorName);
-            void         SetColorByName(Gwk::String colorName, int colorValue);
+            int         GetColorByName(Gwk::String colorName);
+            void        SetColorByName(Gwk::String colorName, int colorValue);
             Gwk::String GetColorFromName(Gwk::String name);
             // \}
 
@@ -89,8 +89,8 @@ namespace Gwk
 
             virtual void Layout(Skin::Base* skin) override;
             virtual void CreateControls();
-            virtual void SlidersMoved(Gwk::Controls::Base* control);
-            virtual void NumericTyped(Gwk::Controls::Base* control);
+            virtual void OnSlidersMoved(Event::Info info);
+            virtual void OnNumericTyped(Event::Info info);
             virtual void UpdateControls();
             virtual void UpdateColorControls(Gwk::String name, Gwk::Color col, int sliderVal);
             virtual void CreateColorControl(Gwk::String name, int y);

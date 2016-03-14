@@ -37,13 +37,13 @@ GWK_CONTROL_CONSTRUCTOR(NumericUpDown)
     SetText("0");
 }
 
-void NumericUpDown::OnButtonUp(Base* /*control*/)
+void NumericUpDown::OnButtonUp(Event::Info)
 {
     SyncNumberFromText();
     SetIntValue(m_number+1);
 }
 
-void NumericUpDown::OnButtonDown(Base* /*control*/)
+void NumericUpDown::OnButtonDown(Event::Info)
 {
     SyncNumberFromText();
     SetIntValue(m_number-1);

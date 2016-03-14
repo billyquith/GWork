@@ -56,7 +56,7 @@ namespace Gwk
 
         protected:
 
-            virtual void OnSelection(Controls::Base* control);
+            virtual void OnSelection(Event::Info info);
 
             Controls::Button*           m_button;
             Controls::CollapsibleList*  m_list;
