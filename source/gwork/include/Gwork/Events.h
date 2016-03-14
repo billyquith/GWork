@@ -68,7 +68,6 @@ namespace Gwk
             /// These are set by the event and may or may not be set.
             Gwk::Controls::Base* Control;
 
-            Gwk::ControlList ControlList;
             Gwk::String String;
             Gwk::Point Point;
             int Integer;
@@ -103,7 +102,6 @@ namespace Gwk
         
         //
         /// Event callback management.
-        
         //
         class GWK_EXPORT Caller
         {
