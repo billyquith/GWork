@@ -87,25 +87,10 @@ void Caller::Call(Controls::Base* pThis, Gwk::Event::Info information)
         HandlerInstance& h = *iter;
         info.Packet = &h.Packet;
 
-//        if (h.fnFunction)
-//            (h.object->*h.fnFunction)(pThis);
-
         if (h.fnFunctionInfo)
             (h.object->*h.fnFunctionInfo)(info);
-
-//        if (h.fnFunctionBlank)
-//            (h.object->*h.fnFunctionBlank)();
     }
 }
-
-//void Caller::AddInternal(Event::Handler* object, Event::Handler::Function function)
-//{
-//    HandlerInstance h;
-//    h.fnFunction = function;
-//    h.object = object;
-//    m_handlers.push_back(h);
-//    object->RegisterCaller(this);
-//}
 
 void Caller::AddInternal(Event::Handler* object, Handler::FunctionWithInformation function)
 {
@@ -123,16 +108,7 @@ void Caller::AddInternal(Event::Handler* object, Handler::FunctionWithInformatio
     object->RegisterCaller(this);
 }
 
-//void Caller::AddInternal(Event::Handler* object, Handler::FunctionBlank function)
-//{
-//    HandlerInstance h;
-//    h.fnFunctionBlank = function;
-//    h.object = object;
-//    m_handlers.push_back(h);
-//    object->RegisterCaller(this);
-//}
-
-void Caller::RemoveHandler(Event::Handler* object)
+    void Caller::RemoveHandler(Event::Handler* object)
 {
     object->UnRegisterCaller(this);
     std::list<HandlerInstance>::iterator iter = m_handlers.begin();

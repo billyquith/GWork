@@ -85,6 +85,8 @@ namespace Gwk
             PONDER_RTTI()
         public:
 
+            typedef void (Handler::*FunctionWithInformation)(Gwk::Event::Info info);
+
             virtual ~Handler();
 
             void RegisterCaller(Caller*);
@@ -96,12 +98,6 @@ namespace Gwk
 
             void CleanLinks();
             std::list<Caller*> m_callers;
-
-        public:
-
-//            typedef void (Handler::*Function)                   (Gwk::Controls::Base* fromPanel);
-//            typedef void (Handler::*FunctionBlank)              ();
-            typedef void (Handler::*FunctionWithInformation)    (Gwk::Event::Info info);
 
         };
         
@@ -119,12 +115,6 @@ namespace Gwk
             void Call(Controls::Base* pThis);
             void Call(Controls::Base* pThis, Gwk::Event::Info info);
 
-//            template <typename T>
-//            void Add(Event::Handler* ob, T f)
-//            {
-//                AddInternal(ob, static_cast<Handler::Function>(f));
-//            }
-
             template <typename T>
             void Add(Event::Handler* ob, void (T::*f)(Gwk::Event::Info))
             {
@@ -139,36 +129,23 @@ namespace Gwk
                 AddInternal(ob, static_cast<Handler::FunctionWithInformation>(f), packet);
             }
 
-//            template <typename T>
-//            void Add(Event::Handler* ob, void (T::*f)())
-//            {
-//                AddInternal(ob, static_cast<Handler::FunctionBlank>(f));
-//            }
-
             void RemoveHandler(Event::Handler* object);
 
         private:
 
             void CleanLinks();
-//            void AddInternal(Event::Handler* object, Handler::Function function);
             void AddInternal(Event::Handler* object, Handler::FunctionWithInformation function);
             void AddInternal(Event::Handler* object, Handler::FunctionWithInformation function,
                              const Gwk::Event::Packet& packet);
-//            void AddInternal(Event::Handler* object, Handler::FunctionBlank function);
 
             struct HandlerInstance
             {
                 HandlerInstance()
-//                :   fnFunction(nullptr)
                 :   fnFunctionInfo(nullptr)
-//                ,   fnFunctionBlank(nullptr)
                 ,   object(nullptr)
                 {}
 
-//                Handler::Function fnFunction;
                 Handler::FunctionWithInformation fnFunctionInfo;
-//                Handler::FunctionBlank fnFunctionBlank;
-
                 Event::Handler*         object;
                 Gwk::Event::Packet Packet;
             };
