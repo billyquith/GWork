@@ -37,10 +37,6 @@ namespace Gwk
             virtual Controls::Base* GetPage(unsigned int i);
             virtual Controls::Base* GetCurrentPage();
 
-            virtual void NextPage();
-            virtual void PreviousPage();
-            virtual void Finish();
-
             Controls::Button* NextButton()
             {
                 return m_next;
@@ -76,6 +72,10 @@ namespace Gwk
 
         protected:
 
+            virtual void NextPage(Event::Info);
+            virtual void PreviousPage(Event::Info);
+            virtual void Finish(Event::Info);
+            
             virtual void HideAll();
 
             unsigned int m_currentPage;

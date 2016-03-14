@@ -33,7 +33,7 @@ namespace Gwk
 
             virtual void SizeToContents() override;
 
-            virtual void OnPress() override;
+            virtual void OnPress(Event::Info) override;
 
             Menu* GetMenu();
 

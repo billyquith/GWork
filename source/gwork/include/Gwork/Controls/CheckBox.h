@@ -26,7 +26,7 @@ namespace Gwk
             GWK_CONTROL(CheckBox, Button);
 
             virtual void Render(Skin::Base* skin) override;
-            virtual void OnPress() override;
+            virtual void OnPress(Event::Info) override;
 
             virtual void SetChecked(bool Checked);
             virtual void Toggle() override

@@ -58,7 +58,9 @@ void Button::OnMouseClickLeft(int /*x*/, int /*y*/, bool bDown)
     else
     {
         if (IsHovered() && m_bDepressed)
-            OnPress();
+        {
+            OnPress(Event::Information(this));
+        }
 
         SetDepressed(false);
         Gwk::MouseFocus = nullptr;
@@ -80,7 +82,9 @@ void Button::OnMouseClickRight(int /*x*/, int /*y*/, bool bDown)
     else
     {
         if (IsHovered() && m_bDepressed)
-            OnRightPress();
+        {
+            OnRightPress(Event::Information(this));
+        }
 
         SetDepressed(false);
         Gwk::MouseFocus = nullptr;
@@ -97,12 +101,12 @@ void Button::SetDepressed(bool b)
     Redraw();
 }
 
-void Button::OnRightPress()
+void Button::OnRightPress(Event::Info)
 {
     onRightPress.Call(this);
 }
 
-void Button::OnPress()
+void Button::OnPress(Event::Info)
 {
     if (IsToggle())
         SetToggleState(!GetToggleState());
@@ -168,14 +172,16 @@ void Button::SizeToContents()
 bool Button::OnKeySpace(bool bDown)
 {
     if (bDown)
-        OnPress();
+    {
+        OnPress(Event::Information());
+    }
 
     return true;
 }
 
 void Button::AcceleratePressed()
 {
-    OnPress();
+    OnPress(Event::Information(this));
 }
 
 void Button::UpdateColours()

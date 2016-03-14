@@ -61,7 +61,7 @@ namespace Gwk
 
         protected:
 
-            virtual void OnPress() override;
+            virtual void OnPress(Event::Info) override;
             virtual void OnItemSelected(Event::Info info);
 
             Menu* m_menu;

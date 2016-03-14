@@ -25,7 +25,7 @@ void CheckBox::Render(Skin::Base* skin)
     skin->DrawCheckBox(this, m_bChecked, IsDepressed());
 }
 
-void CheckBox::OnPress()
+void CheckBox::OnPress(Event::Info)
 {
     if (IsDisabled())
         return;

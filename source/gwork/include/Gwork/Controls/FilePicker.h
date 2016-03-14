@@ -58,7 +58,7 @@ namespace Gwk
                 return m_textBox->GetText();
             }
 
-            void OnBrowse()
+            void OnBrowse(Event::Info)
             {
                 String fileChosen;
                 if (Dialogs::FileOpen(true, "Name", "Start Path", m_fileType, fileChosen))

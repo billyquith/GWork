@@ -128,7 +128,7 @@ Controls::Base* PageControl::GetCurrentPage()
     return GetPage(GetPageNumber());
 }
 
-void PageControl::NextPage()
+void PageControl::NextPage(Event::Info)
 {
     if (m_currentPage >= m_pageCount-1)
         return;
@@ -150,7 +150,7 @@ void PageControl::NextPage()
     }
 }
 
-void PageControl::PreviousPage()
+void PageControl::PreviousPage(Event::Info)
 {
     if (m_currentPage == 0)
         return;
@@ -172,7 +172,7 @@ void PageControl::PreviousPage()
     }
 }
 
-void PageControl::Finish()
+void PageControl::Finish(Event::Info)
 {
     onFinish.Call(this);
 }

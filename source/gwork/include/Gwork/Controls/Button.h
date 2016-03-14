@@ -29,8 +29,8 @@ namespace Gwk
             virtual void OnMouseDoubleClickLeft(int x, int y) override;
             virtual bool OnKeySpace(bool bDown) override;
 
-            virtual void OnPress();
-            virtual void OnRightPress();
+            virtual void OnPress(Event::Info);
+            virtual void OnRightPress(Event::Info);
 
             virtual void AcceleratePressed() override;
 
@@ -76,7 +76,8 @@ namespace Gwk
 
             virtual void DoAction() override
             {
-                OnPress();
+                Event::Information info(this);
+                OnPress(info);
             }
 
             virtual void SetAction(Event::Handler* object,

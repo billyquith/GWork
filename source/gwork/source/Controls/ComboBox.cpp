@@ -102,12 +102,12 @@ void ComboBox::UpdateColours()
     ParentClass::UpdateColours();
 }
 
-void ComboBox::OnPress()
+void ComboBox::OnPress(Event::Info)
 {
     if (IsMenuOpen())
         return GetCanvas()->CloseMenus();
 
-    bool bWasMenuHidden = m_menu->Hidden();
+    const bool bWasMenuHidden = m_menu->Hidden();
     GetCanvas()->CloseMenus();
 
     if (bWasMenuHidden)

@@ -96,7 +96,7 @@ void MenuItem::SetChecked(bool bCheck)
         onUnChecked.Call(this);
 }
 
-void MenuItem::OnPress()
+void MenuItem::OnPress(Event::Info info)
 {
     if (m_menu)
     {
@@ -109,7 +109,7 @@ void MenuItem::OnPress()
         GetCanvas()->CloseMenus();
     }
 
-    ParentClass::OnPress();
+    ParentClass::OnPress(info);
 }
 
 void MenuItem::ToggleMenu()

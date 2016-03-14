@@ -35,7 +35,7 @@ namespace Gwk
             :   Control(control)
             {}
 
-            Gwk::Controls::Base   *Control;
+            Gwk::Controls::Base *Control;
             Gwk::String String;
             int Integer;
             float Float;
@@ -100,13 +100,14 @@ namespace Gwk
         public:
 
 //            typedef void (Handler::*Function)                   (Gwk::Controls::Base* fromPanel);
-            typedef void (Handler::*FunctionBlank)              ();
+//            typedef void (Handler::*FunctionBlank)              ();
             typedef void (Handler::*FunctionWithInformation)    (Gwk::Event::Info info);
 
         };
         
         //
         /// Event callback management.
+        
         //
         class GWK_EXPORT Caller
         {
@@ -138,11 +139,11 @@ namespace Gwk
                 AddInternal(ob, static_cast<Handler::FunctionWithInformation>(f), packet);
             }
 
-            template <typename T>
-            void Add(Event::Handler* ob, void (T::*f)())
-            {
-                AddInternal(ob, static_cast<Handler::FunctionBlank>(f));
-            }
+//            template <typename T>
+//            void Add(Event::Handler* ob, void (T::*f)())
+//            {
+//                AddInternal(ob, static_cast<Handler::FunctionBlank>(f));
+//            }
 
             void RemoveHandler(Event::Handler* object);
 
@@ -153,20 +154,20 @@ namespace Gwk
             void AddInternal(Event::Handler* object, Handler::FunctionWithInformation function);
             void AddInternal(Event::Handler* object, Handler::FunctionWithInformation function,
                              const Gwk::Event::Packet& packet);
-            void AddInternal(Event::Handler* object, Handler::FunctionBlank function);
+//            void AddInternal(Event::Handler* object, Handler::FunctionBlank function);
 
             struct HandlerInstance
             {
                 HandlerInstance()
 //                :   fnFunction(nullptr)
                 :   fnFunctionInfo(nullptr)
-                ,   fnFunctionBlank(nullptr)
+//                ,   fnFunctionBlank(nullptr)
                 ,   object(nullptr)
                 {}
 
 //                Handler::Function fnFunction;
                 Handler::FunctionWithInformation fnFunctionInfo;
-                Handler::FunctionBlank fnFunctionBlank;
+//                Handler::FunctionBlank fnFunctionBlank;
 
                 Event::Handler*         object;
                 Gwk::Event::Packet Packet;

@@ -49,7 +49,7 @@ namespace Gwk
                 return m_textBox->GetText();
             }
 
-            void OnBrowse()
+            void OnBrowse(Event::Info)
             {
                 String folder;
                 if (Dialogs::FolderOpen(true, "Name", GetFolder(), folder))

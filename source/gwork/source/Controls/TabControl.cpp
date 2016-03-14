@@ -115,7 +115,7 @@ void TabControl::AddPage(TabButton* button)
     button->onPress.Add(this, &TabControl::OnTabPressed);
 
     if (!m_currentButton)
-        button->OnPress();
+        button->OnPress(Event::Information(this));
 
     onAddTab.Call(this);
     Invalidate();

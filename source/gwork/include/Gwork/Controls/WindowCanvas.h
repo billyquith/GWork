@@ -75,14 +75,14 @@ namespace Gwk
             virtual void RenderCanvas();
             virtual void DestroyWindow();
 
-            virtual void CloseButtonPressed();
-            virtual void MaximizeButtonPressed();
-            virtual void MinimizeButtonPressed();
+            virtual void CloseButtonPressed(Event::Info);
+            virtual void MaximizeButtonPressed(Event::Info);
+            virtual void MinimizeButtonPressed(Event::Info);
 
-            virtual void Dragger_Start();
-            virtual void Dragger_Moved();
-            virtual void Sizer_Moved();
-            virtual void OnTitleDoubleClicked();
+            virtual void Dragger_Start(Event::Info);
+            virtual void Dragger_Moved(Event::Info);
+            virtual void Sizer_Moved(Event::Info);
+            virtual void OnTitleDoubleClicked(Event::Info);
 
             void*       m_oSWindowSWindow;
             bool m_bQuit;

@@ -93,8 +93,8 @@ void Caller::Call(Controls::Base* pThis, Gwk::Event::Info information)
         if (h.fnFunctionInfo)
             (h.object->*h.fnFunctionInfo)(info);
 
-        if (h.fnFunctionBlank)
-            (h.object->*h.fnFunctionBlank)();
+//        if (h.fnFunctionBlank)
+//            (h.object->*h.fnFunctionBlank)();
     }
 }
 
@@ -123,14 +123,14 @@ void Caller::AddInternal(Event::Handler* object, Handler::FunctionWithInformatio
     object->RegisterCaller(this);
 }
 
-void Caller::AddInternal(Event::Handler* object, Handler::FunctionBlank function)
-{
-    HandlerInstance h;
-    h.fnFunctionBlank = function;
-    h.object = object;
-    m_handlers.push_back(h);
-    object->RegisterCaller(this);
-}
+//void Caller::AddInternal(Event::Handler* object, Handler::FunctionBlank function)
+//{
+//    HandlerInstance h;
+//    h.fnFunctionBlank = function;
+//    h.object = object;
+//    m_handlers.push_back(h);
+//    object->RegisterCaller(this);
+//}
 
 void Caller::RemoveHandler(Event::Handler* object)
 {
