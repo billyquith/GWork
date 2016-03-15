@@ -111,7 +111,7 @@ void PageControl::ShowPage(unsigned int i)
     }
 
     {
-        Event::Information info;
+        Event::Information info(this);
         info.Integer = i;
         info.Control = m_pages[i];
         onPageChanged.Call(this, info);

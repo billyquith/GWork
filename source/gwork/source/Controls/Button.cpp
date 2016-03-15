@@ -173,7 +173,7 @@ bool Button::OnKeySpace(bool bDown)
 {
     if (bDown)
     {
-        OnPress(Event::Information());
+        OnPress(Event::Information(this));
     }
 
     return true;

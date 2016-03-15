@@ -9,7 +9,6 @@
 #ifndef GWK_EVENTS_H
 #define GWK_EVENTS_H
 
-#include <list>
 #include <Gwork/Config.h>
 #include <Gwork/UiTypes.h>
 #include <Gwork/ControlList.h>
@@ -48,7 +47,7 @@ namespace Gwk
          */
         struct Information
         {
-            Information(Gwk::Controls::Base* ctrl = nullptr)
+            Information(Gwk::Controls::Base* ctrl)
             :   ControlCaller(nullptr)
             ,   Packet(nullptr)
             ,   Control(ctrl)
@@ -84,7 +83,7 @@ namespace Gwk
             PONDER_RTTI()
         public:
 
-            typedef void (Handler::*FunctionWithInformation)(Gwk::Event::Info info);
+            typedef void (Handler::*FunctionWithInformation)(Event::Info info);
 
             virtual ~Handler();
 
@@ -131,10 +130,11 @@ namespace Gwk
 
         private:
 
-            void CleanLinks();
             void AddInternal(Event::Handler* object, Handler::FunctionWithInformation function);
             void AddInternal(Event::Handler* object, Handler::FunctionWithInformation function,
                              const Gwk::Event::Packet& packet);
+
+            void CleanLinks();
 
             struct HandlerInstance
             {

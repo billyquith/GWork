@@ -70,14 +70,14 @@ void Caller::CleanLinks()
 
 void Caller::Call(Controls::Base* pThis)
 {
-    static Gwk::Event::Information info;
+    Event::Information info(pThis);
     info.Control = pThis;
     Call(pThis, info);
 }
 
-void Caller::Call(Controls::Base* pThis, Gwk::Event::Info information)
+void Caller::Call(Controls::Base* pThis, Event::Info information)
 {
-    Gwk::Event::Information info;
+    Event::Information info(nullptr);
     info = information;
     info.ControlCaller = pThis;
     std::list<HandlerInstance>::iterator iter;
