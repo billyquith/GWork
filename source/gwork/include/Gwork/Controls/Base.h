@@ -585,7 +585,7 @@ namespace Gwk
 
         public:
 
-            UserDataStorage UserData;
+            UserDataStorage UserData;   // TODO - optimise memory usage.
 
         };
 
