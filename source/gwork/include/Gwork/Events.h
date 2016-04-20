@@ -110,18 +110,16 @@ namespace Gwk
             ~Caller();
 
             void Call(Controls::Base* pThis);
-            void Call(Controls::Base* pThis, Gwk::Event::Info info);
+            void Call(Controls::Base* pThis, Event::Info info);
 
             template <typename T>
-            void Add(Event::Handler* ob, void (T::*f)(Gwk::Event::Info))
+            void Add(Event::Handler* ob, void (T::*f)(Event::Info))
             {
                 AddInternal(ob, static_cast<Handler::FunctionWithInformation>(f));
             }
 
             template <typename T>
-            void Add(Event::Handler* ob,
-                     void (T::*f)(Gwk::Event::Info),
-                     const Gwk::Event::Packet& packet)
+            void Add(Event::Handler* ob, void (T::*f)(Event::Info), const Event::Packet& packet)
             {
                 AddInternal(ob, static_cast<Handler::FunctionWithInformation>(f), packet);
             }
@@ -132,7 +130,7 @@ namespace Gwk
 
             void AddInternal(Event::Handler* object, Handler::FunctionWithInformation function);
             void AddInternal(Event::Handler* object, Handler::FunctionWithInformation function,
-                             const Gwk::Event::Packet& packet);
+                             const Event::Packet& packet);
 
             void CleanLinks();
 
@@ -144,8 +142,8 @@ namespace Gwk
                 {}
 
                 Handler::FunctionWithInformation fnFunctionInfo;
-                Event::Handler*         object;
-                Gwk::Event::Packet Packet;
+                Event::Handler*     object;
+                Event::Packet       Packet;
             };
 
             std::list<HandlerInstance> m_handlers;
