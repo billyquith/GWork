@@ -7,6 +7,7 @@
 
 #include <Gwork/Platform.h>
 #include <time.h>
+#include <unistd.h>
 
 static Gwk::String gs_ClipboardEmulator;
 
@@ -33,7 +34,7 @@ bool Gwk::Platform::SetClipboardText(const Gwk::String& str)
 
 float Gwk::Platform::GetTimeInSeconds()
 {
-    float fSeconds = (float)clock()/(float)CLOCKS_PER_SEC;
+    const float fSeconds = (float)clock()/(float)CLOCKS_PER_SEC;
     return fSeconds;
 }
 
@@ -74,7 +75,7 @@ void Gwk::Platform::SetBoundsPlatformWindow(void* ptr, int x, int y, int w, int 
 }
 
 void Gwk::Platform::SetWindowMaximized(void* ptr, bool bMax, Gwk::Point& newPos,
-                                        Gwk::Point& newSize)
+                                       Gwk::Point& newSize)
 {
 }
 
