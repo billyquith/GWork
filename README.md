@@ -25,16 +25,16 @@ CMake is used to generate the project files.
 
 ```bash
 cd gwork
-cmake -G Ninja -DRENDER_SDL2=ON  # create Ninja project files with SDL2 renderer
+mkdir build && cd build             # put all build files in separate directory
+cmake -G Ninja -DRENDER_SDL2=ON ..  # create Ninja project files with SDL2 renderer
 ```
 
 Providing the dependencies are present, this will create a sample executable. When run it will
 demonstrate all of the controls available:
 
 ```bash
-ninja  # build project
-cd build/bin
-./GworkSDL2Sample
+ninja                 # build project
+bin/GworkSDL2Sample   # run sample
 ```
 
 ## Changes from GWEN
