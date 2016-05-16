@@ -17,8 +17,8 @@ if(BUILD_SAMPLE)
     add_executable(${SAMPLE_NAME} ${SAMPLE_SOURCES})
     target_compile_features(${SAMPLE_NAME} PRIVATE cxx_override)
     target_link_libraries(${SAMPLE_NAME}
-                          Gwork Gwork${GWK_RENDER_NAME} GworkUtil
-                          ${GWK_RENDER_LIBRARIES} ${PONDER_LIBRARIES})
+                          Gwork Gwork${GWK_RENDER_NAME} # GworkUtil
+                          ${GWK_RENDER_LIBRARIES})
 
     if(BUILD_TEST)
         target_link_libraries(${SAMPLE_NAME} GworkTest)
