@@ -190,8 +190,8 @@ bool ListBox::OnKeyDown(bool bDown)
     if (bDown)
     {
         Base::List& children = m_table->Children;
-        Base::List::const_iterator begin = children.begin();
-        Base::List::const_iterator end = children.end();
+        Base::List::const_iterator begin = children.cbegin();
+        Base::List::const_iterator end = children.cend();
         Controls::Base* sel_row = GetSelectedRow();
 
         if (sel_row == nullptr && !children.empty())   // no user selection yet, so
@@ -233,8 +233,8 @@ bool ListBox::OnKeyUp(bool bDown)
     if (bDown)
     {
         Base::List& children = m_table->Children;
-        Base::List::const_iterator begin = children.begin();
-        Base::List::const_iterator end = children.end();
+        Base::List::const_iterator begin = children.cbegin();
+        Base::List::const_iterator end = children.cend();
         Controls::Base* sel_row = GetSelectedRow();
 
         // no user selection yet, so select first element

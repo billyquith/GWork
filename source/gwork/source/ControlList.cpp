@@ -14,7 +14,7 @@ namespace Gwk
 
 void ControlList::Enable()
 {
-    for (List::const_iterator it = list.begin(); it != list.end(); ++it)
+    for (List::const_iterator it = list.cbegin(); it != list.cend(); ++it)
     {
         (*it)->SetDisabled(false);
     }
@@ -22,7 +22,7 @@ void ControlList::Enable()
 
 void ControlList::Disable()
 {
-    for (List::const_iterator it = list.begin(); it != list.end(); ++it)
+    for (List::const_iterator it = list.cbegin(); it != list.cend(); ++it)
     {
         (*it)->SetDisabled(true);
     }
@@ -30,7 +30,7 @@ void ControlList::Disable()
 
 void ControlList::Show()
 {
-    for (List::const_iterator it = list.begin(); it != list.end(); ++it)
+    for (List::const_iterator it = list.cbegin(); it != list.cend(); ++it)
     {
         (*it)->Show();
     }
@@ -38,7 +38,7 @@ void ControlList::Show()
 
 void ControlList::Hide()
 {
-    for (List::const_iterator it = list.begin(); it != list.end(); ++it)
+    for (List::const_iterator it = list.cbegin(); it != list.cend(); ++it)
     {
         (*it)->Hide();
     }
@@ -46,7 +46,7 @@ void ControlList::Hide()
 
 Gwk::String ControlList::GetValue()
 {
-    for (List::const_iterator it = list.begin(); it != list.end(); ++it)
+    for (List::const_iterator it = list.cbegin(); it != list.cend(); ++it)
     {
         return (*it)->GetValue();
     }
@@ -56,7 +56,7 @@ Gwk::String ControlList::GetValue()
 
 void ControlList::SetValue(const Gwk::String& value)
 {
-    for (List::const_iterator it = list.begin(); it != list.end(); ++it)
+    for (List::const_iterator it = list.cbegin(); it != list.cend(); ++it)
     {
         (*it)->SetValue(value);
     }
@@ -64,7 +64,7 @@ void ControlList::SetValue(const Gwk::String& value)
 
 void ControlList::MoveBy(const Gwk::Point& point)
 {
-    for (List::const_iterator it = list.begin(); it != list.end(); ++it)
+    for (List::const_iterator it = list.cbegin(); it != list.cend(); ++it)
     {
         (*it)->MoveBy(point.x, point.y);
     }
@@ -72,7 +72,7 @@ void ControlList::MoveBy(const Gwk::Point& point)
 
 void ControlList::DoAction()
 {
-    for (List::const_iterator it = list.begin(); it != list.end(); ++it)
+    for (List::const_iterator it = list.cbegin(); it != list.cend(); ++it)
     {
         (*it)->DoAction();
     }
@@ -82,7 +82,7 @@ void ControlList::SetActionInternal(Gwk::Event::Handler* object,
                                     void ( Gwk::Event::Handler::*f )(
                                         Gwk::Event::Info), const Gwk::Event::Packet& packet)
 {
-    for (List::const_iterator it = list.begin(); it != list.end(); ++it)
+    for (List::const_iterator it = list.cbegin(); it != list.cend(); ++it)
     {
         (*it)->SetAction(object, f, packet);
     }

@@ -167,8 +167,8 @@ List& GetList()
 
 ControlFactory::Base* Find(const Gwk::String& name)
 {
-    for (ControlFactory::List::iterator it = ControlFactory::GetList().begin();
-         it != ControlFactory::GetList().end();
+    for (ControlFactory::List::iterator it = ControlFactory::GetList().cbegin();
+         it != ControlFactory::GetList().cend();
          ++it)
     {
         if ((*it)->Name() == name)
@@ -190,8 +190,8 @@ void Base::AddProperty(Property* prop)
 
 Base* Base::GetBaseFactory()
 {
-    for (ControlFactory::List::iterator it = ControlFactory::GetList().begin();
-         it != ControlFactory::GetList().end();
+    for (ControlFactory::List::iterator it = ControlFactory::GetList().cbegin();
+         it != ControlFactory::GetList().cend();
          ++it)
     {
         if ((*it)->Name() == ParentFactory())
@@ -203,8 +203,8 @@ Base* Base::GetBaseFactory()
 
 Property* Base::GetProperty(const Gwk::String& name)
 {
-    for (ControlFactory::Property::List::const_iterator it = Properties().begin(),
-         itEnd = Properties().end();
+    for (ControlFactory::Property::List::const_iterator it = Properties().cbegin(),
+         itEnd = Properties().cend();
          it != itEnd; ++it)
     {
         if ((*it)->Name() != name)
@@ -257,7 +257,7 @@ Controls::Base* Clone(Controls::Base* source, ControlFactory::Base* factory)
     while (factory)
     {
         for (ControlFactory::Property::List::const_iterator
-             it = factory->Properties().begin(), itEnd = factory->Properties().end();
+             it = factory->Properties().cbegin(), itEnd = factory->Properties().cend();
              it != itEnd; ++it)
         {
             (*it)->SetValueFromString(control, (*it)->GetValueAsString(source));

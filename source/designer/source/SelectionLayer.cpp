@@ -100,7 +100,7 @@ void SelectionLayer::OnMouseClickLeft( int x, int y, bool bDown )
 
 void SelectionLayer::OnControlDragged( Event::Info info )
 {
-	for ( ControlList::List::const_iterator it = m_selected.list.begin(); it != m_selected.list.end(); ++it )
+	for ( ControlList::List::const_iterator it = m_selected.list.cbegin(); it != m_selected.list.cend(); ++it )
 	{
 		Controls::Base* control = (*it);
 		control->MoveBy( info.Point.x, info.Point.y );
@@ -142,8 +142,8 @@ void SelectionLayer::OnCageMoving( Event::Info info )
 	
 	// Hide all of the selected panels, and this selection layer
 	{
-		for ( ControlList::List::const_iterator it = m_selected.list.begin();
-			  it != m_selected.list.end(); ++it )
+		for ( ControlList::List::const_iterator it = m_selected.list.cbegin();
+			  it != m_selected.list.cend(); ++it )
 		{
 			(*it)->SetHidden( true );
 		}
@@ -208,7 +208,7 @@ void SelectionLayer::OnDragStart()
 
 	ControlList NewList;
 
-	for ( ControlList::List::const_iterator it = m_selected.list.begin(); it != m_selected.list.end(); ++it )
+	for ( ControlList::List::const_iterator it = m_selected.list.cbegin(); it != m_selected.list.cend(); ++it )
 	{
 		Gwk::ControlFactory::Base* factory = (*it)->UserData.Get<Gwk::ControlFactory::Base*>( "ControlFactory" );
 		Controls::Base* control = ControlFactory::Clone( *it, factory );
