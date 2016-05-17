@@ -78,9 +78,9 @@ void DockedTabControl::MoveTabsTo(DockedTabControl* target)
 {
     Base::List Children = GetTabStrip()->Children;
 
-    for (auto&& iter : Children)
+    for (auto&& child : Children)
     {
-        TabButton* button = gwk_cast<TabButton>(iter);
+        TabButton* button = gwk_cast<TabButton>(child);
 
         if (!button)
             continue;

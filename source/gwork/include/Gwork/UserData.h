@@ -79,9 +79,9 @@ namespace Gwk
 
         ~UserDataStorage()
         {
-            for (auto&& iter : m_list)
+            for (auto&& item : m_list)
             {
-                iter.second->DeleteThis();
+                item.second->DeleteThis();
             }
         }
 

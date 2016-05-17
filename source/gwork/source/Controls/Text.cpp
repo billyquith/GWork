@@ -52,11 +52,12 @@ void Text::SetFont(Gwk::Font* font)
     m_bTextChanged = true;
     // Change the font of multilines too!
     {
-	for (auto&& it : m_lines)
+	for (auto&& line : m_lines)
         {
-            it->SetFont(m_font);
+            line->SetFont(m_font);
         }
     }
+
     Invalidate();
 }
 
@@ -276,9 +277,9 @@ void Text::RefreshSizeWrap()
 {
     RemoveAllChildren();
 
-    for (auto&& it : m_lines)
+    for (auto&& line : m_lines)
     {
-        delete it;
+        delete line;
     }
 
     m_lines.clear();
@@ -371,10 +372,10 @@ unsigned int Text::NumLines()
 
 Text* Text::GetLine(int i)
 {
-    for (auto&& it : m_lines)
+    for (auto&& line : m_lines)
     {
         if (i == 0)
-            return it;
+            return line;
 
         i--;
     }

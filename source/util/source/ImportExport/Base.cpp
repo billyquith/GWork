@@ -24,10 +24,10 @@ ImportExport::Base::List& GetList()
 
 ImportExport::Base* Find(Gwk::String strName)
 {
-    for(auto&& iter : GetList())
+    for(auto&& item : GetList())
     {
-        if (iter->Name() == strName)
-            return iter;
+        if (item->Name() == strName)
+            return item;
     }
 
     return nullptr;

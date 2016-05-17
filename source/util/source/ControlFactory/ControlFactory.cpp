@@ -167,10 +167,10 @@ List& GetList()
 
 ControlFactory::Base* Find(const Gwk::String& name)
 {
-    for (auto const& iter : ControlFactory::GetList)
+    for (auto const& control : ControlFactory::GetList)
     {
-        if (iter->Name() == name)
-            return iter;
+        if (control->Name() == name)
+            return control;
     }
 
     return nullptr;
@@ -188,10 +188,10 @@ void Base::AddProperty(Property* prop)
 
 Base* Base::GetBaseFactory()
 {
-    for (auto const& iter : ControlFactory::GetList())
+    for (auto const& control : ControlFactory::GetList())
     {
-        if iter->Name() == ParentFactory())
-            return iter;
+        if control->Name() == ParentFactory())
+            return control;
     }
 
     return nullptr;
@@ -199,12 +199,12 @@ Base* Base::GetBaseFactory()
 
 Property* Base::GetProperty(const Gwk::String& name)
 {
-    for (auto const& iter : Properties())
+    for (auto const& property : Properties())
     {
-        if iter->Name() != name)
+        if property->Name() != name)
             continue;
 
-        return iter;
+        return property;
     }
 
     Base* base = GetBaseFactory();
@@ -250,9 +250,9 @@ Controls::Base* Clone(Controls::Base* source, ControlFactory::Base* factory)
 
     while (factory)
     {
-	for(auto&& iter : factory->Properties())
+	for(auto&& property : factory->Properties())
         {
-            iter->SetValueFromString(control, iter->GetValueAsString(source));
+            property->SetValueFromString(control, property->GetValueAsString(source));
         }
 
         factory = factory->GetBaseFactory();
