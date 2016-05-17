@@ -18,23 +18,18 @@ ImportExport::Base::List& GetList()
         Initialized = true;
         InitializeFormats();
     }
-    
+
     return list;
 }
 
 ImportExport::Base* Find(Gwk::String strName)
 {
-    ImportExport::Base::List::iterator it = GetList().begin();
-    ImportExport::Base::List::iterator itEnd = GetList().end();
-    
-    while (it != itEnd)
+    for(auto&& iter : GetList())
     {
-        if ((*it)->Name() == strName)
-            return *it;
-        
-        ++it;
+        if (iter->Name() == strName)
+            return iter;
     }
-    
+
     return nullptr;
 }
 

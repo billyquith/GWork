@@ -57,8 +57,6 @@ Caller::~Caller()
 
 void Caller::CleanLinks()
 {
-    std::list<HandlerInstance>::iterator iter;
-
     for (auto&& h : m_handlers)
     {
         h.object->UnRegisterCaller(this);
