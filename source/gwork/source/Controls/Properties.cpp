@@ -60,9 +60,9 @@ PropertyRow* Properties::Add(const String& text, Property::Base* prop, const Str
 
 PropertyRow* Properties::Find(const String& text)
 {
-    for (Base::List::iterator it = GetChildren().begin(); it != GetChildren().end(); ++it)
+    for (auto&& it : GetChildren())
     {
-        PropertyRow* row = gwk_cast<PropertyRow>(*it);
+        PropertyRow* row = gwk_cast<PropertyRow>(it);
 
         if (!row)
             continue;
@@ -78,9 +78,9 @@ void Properties::Clear()
 {
     Base::List ChildListCopy = GetChildren();
 
-    for (Base::List::iterator it = ChildListCopy.begin(); it != ChildListCopy.end(); ++it)
+    for (auto&& it : ChildListCopy)
     {
-        PropertyRow* row = gwk_cast<PropertyRow>(*it);
+        PropertyRow* row = gwk_cast<PropertyRow>(it);
 
         if (!row)
             continue;

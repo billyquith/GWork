@@ -42,15 +42,11 @@ void Menu::Layout(Skin::Base* skin)
 {
     int childrenHeight = 0;
 
-    for (Base::List::iterator it = m_innerPanel->Children.begin();
-         it != m_innerPanel->Children.end();
-         ++it)
+    for(auto&& child : m_innerPanel->Children)
     {
-        Base* child = (*it);
-        
         if (!child)
             continue;
-        
+
         childrenHeight += child->Height();
     }
 
@@ -60,7 +56,7 @@ void Menu::Layout(Skin::Base* skin)
     }
 
     SetSize(Width(), childrenHeight);
-    
+
     ParentClass::Layout(skin);
 }
 
@@ -93,12 +89,8 @@ void Menu::OnAddItem(MenuItem* item)
 
 void Menu::ClearItems()
 {
-    for (Base::List::iterator it = m_innerPanel->Children.begin();
-         it != m_innerPanel->Children.end();
-         ++it)
+    for(auto&& child : m_innerPanel->Children)
     {
-        Base* child = *it;
-
         if (!child)
             continue;
 
@@ -108,11 +100,8 @@ void Menu::ClearItems()
 
 void Menu::CloseAll()
 {
-    for (Base::List::iterator it = m_innerPanel->Children.begin();
-         it != m_innerPanel->Children.end();
-         ++it)
+    for(auto&& child : m_innerPanel->Children)
     {
-        Base* child = *it;
         MenuItem* item = gwk_cast<MenuItem>(child);
 
         if (!item)
@@ -124,11 +113,8 @@ void Menu::CloseAll()
 
 bool Menu::IsMenuOpen()
 {
-    for (Base::List::iterator it = m_innerPanel->Children.begin();
-         it != m_innerPanel->Children.end();
-         ++it)
+    for(auto&& child : m_innerPanel->Children)
     {
-        Base* child = *it;
         MenuItem* item = gwk_cast<MenuItem>(child);
 
         if (!item)

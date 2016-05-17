@@ -173,9 +173,9 @@ void ListBox::SelectByString(const String& strName, bool bClearOthers)
 
     Base::List& children = m_table->GetChildren();
 
-    for (Base::List::iterator iter = children.begin(); iter != children.end(); ++iter)
+    for(auto&& iter : children)
     {
-        ListBoxRow* child = gwk_cast<ListBoxRow>(*iter);
+        ListBoxRow* child = gwk_cast<ListBoxRow>(iter);
 
         if (!child)
             continue;

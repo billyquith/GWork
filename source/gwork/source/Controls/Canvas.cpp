@@ -143,11 +143,8 @@ void Canvas::ProcessDelayedDeletes()
         m_deleteList.clear();
         m_deleteSet.clear();
 
-        for (Gwk::Controls::Base::List::iterator it = deleteList.begin();
-             it != deleteList.end();
-             ++it)
+        for(auto&& control : deleteList)
         {
-            Gwk::Controls::Base* control = *it;
             control->PreDelete(GetSkin());
             delete control;
             Redraw();

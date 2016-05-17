@@ -32,10 +32,8 @@ namespace Gwk
                     Gwk::Rect bounds = GetInnerBounds();
                     Gwk::Point pos = Point(bounds.x, bounds.y);
 
-                    for (Base::List::iterator it = Children.begin(); it != Children.end(); ++it)
+                    for(auto&& child : Children)
                     {
-                        Base* child = *it;
-
                         if (child->GetDock() != Position::None)
                             continue;
 
