@@ -67,9 +67,9 @@ void DocumentCanvas::SelectControls( ControlList& CtrlList )
 {
 	m_selectionLayer->ClearSelection();
 
-	for ( ControlList::List::const_iterator it = CtrlList.list.cbegin(); it != CtrlList.list.cend(); ++it )
+        for (auto const& iter : CtrlList.list)
 	{
-		m_selectionLayer->AddSelection( (*it) );
+		m_selectionLayer->AddSelection( iter );
 	}
 
 	// Let everything else know the selection changed
@@ -99,10 +99,10 @@ void DocumentCanvas::Command( const Gwk::String& str )
 {
 	if ( str == "delete" )
 	{
-		for ( ControlList::List::const_iterator it = m_selectionLayer->GetSelected().list.cbegin(); it != m_selectionLayer->GetSelected().list.cend(); ++it )
+		for ( auto&& iter : m_selectionLayer->GetSelected().list)
 		{
-			if ( *it == this ) continue;
-			(*it)->DelayedDelete();
+			if ( iter == this ) continue;
+			iter->DelayedDelete();
 		}
 
 		m_selectionLayer->ClearSelection();
@@ -110,19 +110,19 @@ void DocumentCanvas::Command( const Gwk::String& str )
 
 	if ( str == "bringforward" )
 	{
-		for ( ControlList::List::const_iterator it = m_selectionLayer->GetSelected().list.cbegin(); it != m_selectionLayer->GetSelected().list.cend(); ++it )
+                for ( auto&& iter : m_selectionLayer->GetSelected().list)
 		{
-			if ( *it == this ) continue;
-			(*it)->BringToFront();
+			if ( iter == this ) continue;
+			iter->BringToFront();
 		}
 	}
 
 	if ( str == "sendback" )
 	{
-		for ( ControlList::List::const_iterator it = m_selectionLayer->GetSelected().list.cbegin(); it != m_selectionLayer->GetSelected().list.cend(); ++it )
+                for ( auto&& iter : m_selectionLayer->GetSelected().list)
 		{
-			if ( *it == this ) continue;
-			(*it)->SendToBack();
+			if ( iter == this ) continue;
+			iter->SendToBack();
 		}
 	}
 }
