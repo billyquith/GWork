@@ -67,9 +67,9 @@ void DocumentCanvas::SelectControls( ControlList& CtrlList )
 {
 	m_selectionLayer->ClearSelection();
 
-        for (auto const& iter : CtrlList.list)
+        for (auto const& ctrl : CtrlList.list)
 	{
-		m_selectionLayer->AddSelection( iter );
+		m_selectionLayer->AddSelection( ctrl );
 	}
 
 	// Let everything else know the selection changed
@@ -99,10 +99,10 @@ void DocumentCanvas::Command( const Gwk::String& str )
 {
 	if ( str == "delete" )
 	{
-		for ( auto&& iter : m_selectionLayer->GetSelected().list)
+		for ( auto&& selected : m_selectionLayer->GetSelected().list)
 		{
-			if ( iter == this ) continue;
-			iter->DelayedDelete();
+			if ( selected == this ) continue;
+			selected->DelayedDelete();
 		}
 
 		m_selectionLayer->ClearSelection();
@@ -110,19 +110,19 @@ void DocumentCanvas::Command( const Gwk::String& str )
 
 	if ( str == "bringforward" )
 	{
-                for ( auto&& iter : m_selectionLayer->GetSelected().list)
+                for ( auto&& selected : m_selectionLayer->GetSelected().list)
 		{
-			if ( iter == this ) continue;
-			iter->BringToFront();
+			if ( selected == this ) continue;
+			selected->BringToFront();
 		}
 	}
 
 	if ( str == "sendback" )
 	{
-                for ( auto&& iter : m_selectionLayer->GetSelected().list)
+                for ( auto&& selected : m_selectionLayer->GetSelected().list)
 		{
-			if ( iter == this ) continue;
-			iter->SendToBack();
+			if ( selected == this ) continue;
+			selected->SendToBack();
 		}
 	}
 }

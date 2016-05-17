@@ -157,20 +157,20 @@ void DesignerFormat::ExportToTree(Gwk::Controls::Base* root, GwkUtil::Data::Tree
 
         while (cF)
         {
-            for (auto const& iter : cF->Properties)
+            for (auto const& property : cF->Properties)
             {
-                if (iter->NumCount() > 0)
+                if (property->NumCount() > 0)
                 {
-                    GwkUtil::Data::Tree& prop = props.AddChild(iter->Name());
+                    GwkUtil::Data::Tree& prop = props.AddChild(property->Name());
 
                     for (int i = 0; i < (*it)->NumCount(); i++)
                     {
-                        prop.SetChildVar<float>(iter->NumName(i), iter->NumGet(root, i));
+                        prop.SetChildVar<float>(property->NumName(i), property->NumGet(root, i));
                     }
                 }
                 else
                 {
-                    props.SetChild(iter->Name(), iter->GetValueAsString(root));
+                    props.SetChild(property->Name(), property->GetValueAsString(root));
                 }
             }
 

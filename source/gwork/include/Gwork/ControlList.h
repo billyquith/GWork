@@ -51,9 +51,9 @@ namespace Gwk
 
         void Add(const List& _list)
         {
-            for (auto const& it : _list)
+            for (auto const& item : _list)
             {
-                Add(it);
+                Add(item);
             }
         }
 

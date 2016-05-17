@@ -70,9 +70,9 @@ void TabStrip::Layout(Skin::Base* skin)
     Gwk::Point largestTab(5, 5);
     int iNum = 0;
 
-    for (auto&& iter : Children)
+    for (auto&& control : Children)
     {
-        TabButton* button = gwk_cast<TabButton>(iter);
+        TabButton* button = gwk_cast<TabButton>(control);
 
         if (!button)
             continue;

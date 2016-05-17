@@ -175,22 +175,22 @@ bool Base::Visible() const
 
 void Base::InvalidateChildren(bool bRecursive)
 {
-    for(auto&& it : Children)
+    for(auto&& child : Children)
     {
-        it->Invalidate();
+        child->Invalidate();
 
         if (bRecursive)
-            it->InvalidateChildren(bRecursive);
+            child->InvalidateChildren(bRecursive);
     }
 
     if (m_innerPanel)
     {
-	for(auto&& it : m_innerPanel->Children)
+	for(auto&& innerchild : m_innerPanel->Children)
 	{
-            it->Invalidate();
+            innerchild->Invalidate();
 
             if (bRecursive)
-                it->InvalidateChildren(bRecursive);
+                innerchild->InvalidateChildren(bRecursive);
         }
     }
 }
@@ -338,10 +338,10 @@ Controls::Base* Base::GetChild(unsigned int i)
     if (i >= NumChildren())
         return nullptr;
 
-    for(auto&& iter : Children)
+    for(auto&& child : Children)
     {
         if (i == 0)
-            return iter;
+            return child;
 
         i--;
     }
@@ -872,11 +872,11 @@ void Base::RecurseLayout(Skin::Base* skin)
         GetCanvas()->NextTab = nullptr;
 }
 
-bool Base::IsChild(Controls::Base* child)
+bool Base::IsChild(Controls::Base* possiblechild)
 {
-    for(auto&& iter : Children)
+    for(auto&& child : Children)
     {
-        if (child == iter)
+        if (possiblechild == child)
             return true;
     }
 

@@ -170,17 +170,17 @@ void RichLabel::Rebuild()
     int y = 0;
     int lineheight = -1;
 
-    for (auto&& iter : m_textBlocks)
+    for (auto&& text : m_textBlocks)
     {
-        if (iter.type == Type_Newline)
+        if (text.type == Type_Newline)
         {
             CreateNewline(x, y, lineheight);
             continue;
         }
 
-        if (iter.type == Type_Text)
+        if (text.type == Type_Text)
         {
-            CreateLabel(iter.text, iter, x, y, lineheight, false);
+            CreateLabel(text.text, text, x, y, lineheight, false);
             continue;
         }
     }
