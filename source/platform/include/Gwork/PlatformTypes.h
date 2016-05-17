@@ -121,6 +121,14 @@ namespace Gwk
         ,   a(a_)
         {}
 
+        Color(const Color& c)
+        {
+            r = c.r;
+            g = c.g;
+            b = c.b;
+            a = c.a;
+        }
+
         void operator = (Color c)
         {
             r = c.r;
