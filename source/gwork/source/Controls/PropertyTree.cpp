@@ -29,9 +29,9 @@ Properties* PropertyTree::Find(const String& text)
 {
     Controls::Base::List& children = GetChildNodes();
 
-    for (Base::List::iterator iter = children.begin(); iter != children.end(); ++iter)
+    for (auto&& iter : children)
     {
-        PropertyTreeNode* child = gwk_cast<PropertyTreeNode>(*iter);
+        PropertyTreeNode* child = gwk_cast<PropertyTreeNode>(iter);
 
         if (!child)
             continue;
@@ -40,11 +40,9 @@ Properties* PropertyTree::Find(const String& text)
         {
             Base::List& nodechildren = child->GetChildren();
 
-            for (Base::List::iterator subiter = nodechildren.begin();
-                 subiter != nodechildren.end();
-                 ++subiter)
+            for (auto&& subiter : nodechildren)
             {
-                Properties* propertyChild = gwk_cast<Properties>(*subiter);
+                Properties* propertyChild = gwk_cast<Properties>(subiter);
 
                 if (!propertyChild)
                     continue;

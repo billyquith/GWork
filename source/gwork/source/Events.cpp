@@ -59,9 +59,8 @@ void Caller::CleanLinks()
 {
     std::list<HandlerInstance>::iterator iter;
 
-    for (iter = m_handlers.begin(); iter != m_handlers.end(); ++iter)
+    for (auto&& h : m_handlers)
     {
-        HandlerInstance& h = *iter;
         h.object->UnRegisterCaller(this);
     }
 
@@ -80,11 +79,9 @@ void Caller::Call(Controls::Base* pThis, Gwk::Event::Info information)
     Gwk::Event::Information info;
     info = information;
     info.ControlCaller = pThis;
-    std::list<HandlerInstance>::iterator iter;
 
-    for (iter = m_handlers.begin(); iter != m_handlers.end(); ++iter)
+    for (auto&& h : m_handlers)
     {
-        HandlerInstance& h = *iter;
         info.Packet = &h.Packet;
 
         if (h.fnFunction)

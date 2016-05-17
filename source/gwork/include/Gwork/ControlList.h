@@ -51,9 +51,9 @@ namespace Gwk
 
         void Add(const List& _list)
         {
-            for (typename List::const_iterator it = _list.cbegin(); it != _list.cend(); ++it)
+            for (auto const& it : _list)
             {
-                Add(*it);
+                Add(it);
             }
         }
 

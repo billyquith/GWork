@@ -61,10 +61,10 @@ namespace Gwk
             {
                 Base::List& children = GetChildren();
 
-                for (Base::List::iterator iter = children.begin(); iter != children.end(); ++iter)
+                for (auto&& iter : children)
                 {
                     Gwk::Controls::CollapsibleCategory* child =
-                        gwk_cast<Gwk::Controls::CollapsibleCategory>(*iter);
+                        gwk_cast<Gwk::Controls::CollapsibleCategory>(iter);
 
                     if (!child)
                         continue;
@@ -77,10 +77,10 @@ namespace Gwk
             {
                 Base::List& children = GetChildren();
 
-                for (Base::List::iterator iter = children.begin(); iter != children.end(); ++iter)
+                for (auto&& iter : children)
                 {
                     Gwk::Controls::CollapsibleCategory* child =
-                        gwk_cast<Gwk::Controls::CollapsibleCategory>(*iter);
+                        gwk_cast<Gwk::Controls::CollapsibleCategory>(iter);
 
                     if (!child)
                         continue;

@@ -44,9 +44,9 @@ namespace Gwk
         template <typename fnc>
         bool CallHook(fnc f)
         {
-            for (HookList::iterator it = GetHookList().begin(); it != GetHookList().end(); ++it)
+            for (auto&& it : GetHookList())
             {
-                if (((*it)->*f)())
+                if ((it->*f)())
                     return true;
             }
 
@@ -56,9 +56,9 @@ namespace Gwk
         template <typename fnc, typename AA>
         bool CallHook(fnc f, AA a)
         {
-            for (HookList::iterator it = GetHookList().begin(); it != GetHookList().end(); ++it)
+            for (auto&& it : GetHookList())
             {
-                if (((*it)->*f)(a))
+                if ((it->*f)(a))
                     return true;
             }
 
@@ -68,9 +68,9 @@ namespace Gwk
         template <typename fnc, typename AA, typename AB>
         bool CallHook(fnc f, AA a, AB b)
         {
-            for (HookList::iterator it = GetHookList().begin(); it != GetHookList().end(); ++it)
+            for (auto&& it : GetHookList())
             {
-                if (((*it)->*f)(a, b))
+                if ((it->*f)(a, b))
                     return true;
             }
 
@@ -80,9 +80,9 @@ namespace Gwk
         template <typename fnc, typename AA, typename AB, typename AC>
         bool CallHook(fnc f, AA a, AB b, AC c)
         {
-            for (HookList::iterator it = GetHookList().begin(); it != GetHookList().end(); ++it)
+            for (auto&& it : GetHookList())
             {
-                if (((*it)->*f)(a, b, c))
+                if ((it->*f)(a, b, c))
                     return true;
             }
 
