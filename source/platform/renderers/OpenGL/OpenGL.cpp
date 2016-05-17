@@ -1,14 +1,20 @@
+/*
+ *  Gwork
+ *  Copyright (c) 2010 Facepunch Studios
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
+ */
 
 #include <Gwork/Renderers/OpenGL.h>
-#include <Gwork/Utility.h>
-#include <Gwork/Font.h>
-#include <Gwork/Texture.h>
-#include <Gwork/WindowProvider.h>
+#include <Gwork/PlatformTypes.h>
 
+#include <GLFW/glfw3.h>
+//#include <GL/glew.h>
 #include <math.h>
 
-#include "GL/glew.h"
-#include "FreeImage/FreeImage.h"
+//#define STBI_ASSERT(x)  // comment in for no asserts
+#define STB_IMAGE_IMPLEMENTATION
+#include "stb_image.h"
 
 
 namespace Gwk
@@ -19,7 +25,6 @@ namespace Gwk
         {
             m_vertNum = 0;
             m_context = nullptr;
-            ::FreeImage_Initialise();
 
             for (int i = 0; i < MaxVerts; i++)
             {
@@ -29,7 +34,6 @@ namespace Gwk
 
         OpenGL::~OpenGL()
         {
-            ::FreeImage_DeInitialise();
         }
 
         void OpenGL::Init()
@@ -115,7 +119,7 @@ namespace Gwk
             {
                 GLint view[4];
                 glGetIntegerv(GL_VIEWPORT, &view[0]);
-                rect.y = view[3]-(rect.y+rect.h);
+                rect.y = view[3] - (rect.y + rect.h);
             }
             glScissor(rect.x*Scale(), rect.y*Scale(), rect.w*Scale(), rect.h*Scale());
             glEnable(GL_SCISSOR_TEST);
@@ -127,8 +131,8 @@ namespace Gwk
             glDisable(GL_SCISSOR_TEST);
         }
 
-        void OpenGL::DrawTexturedRect(Gwk::Texture* texture, Gwk::Rect rect, float u1, float v1,
-                                      float u2, float v2)
+        void OpenGL::DrawTexturedRect(Gwk::Texture* texture, Gwk::Rect rect,
+                                      float u1, float v1, float u2, float v2)
         {
             GLuint* tex = (GLuint*)texture->data;
 
@@ -149,72 +153,62 @@ namespace Gwk
                 glEnable(GL_TEXTURE_2D);
             }
 
-            AddVert(rect.x, rect.y,            u1, v1);
-            AddVert(rect.x+rect.w, rect.y,       u2, v1);
-            AddVert(rect.x, rect.y+rect.h,   u1, v2);
-            AddVert(rect.x+rect.w, rect.y,       u2, v1);
+            AddVert(rect.x, rect.y,             u1, v1);
+            AddVert(rect.x+rect.w, rect.y,      u2, v1);
+            AddVert(rect.x, rect.y+rect.h,      u1, v2);
+            AddVert(rect.x+rect.w, rect.y,      u2, v1);
             AddVert(rect.x+rect.w, rect.y+rect.h, u2, v2);
-            AddVert(rect.x, rect.y+rect.h, u1, v2);
+            AddVert(rect.x, rect.y+rect.h,      u1, v2);
         }
 
         void OpenGL::LoadTexture(Gwk::Texture* texture)
         {
             const std::string &fileName = texture->name;
-            FREE_IMAGE_FORMAT imageFormat = FreeImage_GetFileType(fileName.c_str());
-
-            if (imageFormat == FIF_UNKNOWN)
-                imageFormat = FreeImage_GetFIFFromFilename(fileName.c_str());
-
+            
+            int x,y,n;
+            unsigned char *data = stbi_load(fileName.c_str(), &x, &y, &n, 0);
+            
             // Image failed to load..
-            if (imageFormat == FIF_UNKNOWN)
-            {
-                texture->failed = true;
-                return;
-            }
-
-            // Try to load the image..
-            FIBITMAP* bits = FreeImage_Load(imageFormat, fileName.c_str());
-
-            if (!bits)
+            if (!data)
             {
                 texture->failed = true;
                 return;
             }
 
             // Convert to 32bit
-            FIBITMAP* bits32 = FreeImage_ConvertTo32Bits(bits);
-            FreeImage_Unload(bits);
-
-            if (!bits32)
-            {
-                texture->failed = true;
-                return;
-            }
+//            FIBITMAP* bits32 = FreeImage_ConvertTo32Bits(bits);
+//            FreeImage_Unload(bits);
+//
+//            if (!bits32)
+//            {
+//                texture->failed = true;
+//                return;
+//            }
 
             // Flip
-            ::FreeImage_FlipVertical(bits32);
+//            ::FreeImage_FlipVertical(bits32);
 
             // Create a little texture pointer..
             GLuint* pglTexture = new GLuint;
 
-            // Sort out our Gwork texture
             texture->data = pglTexture;
-            texture->width = FreeImage_GetWidth(bits32);
-            texture->height = FreeImage_GetHeight(bits32);
+            texture->width = x;
+            texture->height = y;
 
             // Create the opengl texture
             glGenTextures(1, pglTexture);
             glBindTexture(GL_TEXTURE_2D, *pglTexture);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-#ifdef FREEIMAGE_BIGENDIAN
-            GLenum format = GL_RGBA;
-#else
+//#ifdef FREEIMAGE_BIGENDIAN
+//            GLenum format = GL_RGBA;
+//#else
             GLenum format = GL_BGRA;
-#endif
+//#endif
             glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, texture->width, texture->height, 0, format,
-                         GL_UNSIGNED_BYTE, (const GLvoid*)FreeImage_GetBits(bits32));
-            FreeImage_Unload(bits32);
+                         GL_UNSIGNED_BYTE, (const GLvoid*)data);
+            
+            stbi_image_free(data);
         }
 
         void OpenGL::FreeTexture(Gwk::Texture* texture)
@@ -230,7 +224,7 @@ namespace Gwk
         }
 
         Gwk::Color OpenGL::PixelColour(Gwk::Texture* texture, unsigned int x, unsigned int y,
-                                        const Gwk::Color& col_default)
+                                       const Gwk::Color& col_default)
         {
             GLuint* tex = (GLuint*)texture->data;
 
