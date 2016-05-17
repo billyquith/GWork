@@ -11,6 +11,7 @@ A number of rendering backends are provided for use, or as an example for your o
  * TODO: Direct2D (Windows).
  * TODO: DirectX9 (Windows).
  * TODO: GDI+ (Windows).
+ * OpenGL (cross-platform using GLFW).
  * [SDL2][sdl2] (cross-platform).
  * [SFML2][sfml2] (cross-platform).
 
