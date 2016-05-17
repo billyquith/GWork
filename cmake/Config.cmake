@@ -17,12 +17,12 @@ if(WIN32)
     # TODO: option(RENDER_DIRECT2D  "Renderer: Direct2D" OFF)
     # TODO: option(RENDER_DIRECTX9  "Renderer: DirectX9" OFF)
     # TODO: option(RENDER_GDIPLUS   "Renderer: GDIPlus" OFF)
-    # TODO: option(RENDER_OPENGL        "Renderer: OpenGL" OFF)
     set(GWK_PLATFORM_NAME "Windows")
 endif()
 
 # Cross-platform
 option(RENDER_ALLEGRO5      "Renderer: Allegro5" OFF)
+option(RENDER_OPENGL        "Renderer: OPENGL" OFF)
 option(RENDER_SDL2          "Renderer: SDL2" OFF)
 option(RENDER_SFML2         "Renderer: SFML2" OFF)
 
@@ -53,7 +53,6 @@ endif()
 
 if(BUILD_TEST)
     message("Including tests")
-    # find_package(Ponder 1.0 REQUIRED)
 endif(BUILD_TEST)
     
 if(BUILD_SAMPLE)
@@ -69,6 +68,14 @@ if(RENDER_ALLEGRO5)
     set(GWK_RENDER_LIBRARIES "${ALLEGRO5_LIBRARIES}")
     set(GWK_PLATFORM_NAME "Allegro5")
 endif(RENDER_ALLEGRO5)
+
+if(RENDER_OPENGL)
+    find_package(GLFW REQUIRED)
+    set(GLFW_DEPENDENCIES "-framework OpenGL")
+    set(GWK_RENDER_NAME "OpenGL")
+    set(GWK_RENDER_INCLUDES "${GLFW_INCLUDE_DIR}")
+    set(GWK_RENDER_LIBRARIES ${GLFW_LIBRARIES} ${GLFW_DEPENDENCIES})
+endif(RENDER_OPENGL)
 
 if(RENDER_SDL2)
     find_package(SDL2 REQUIRED)

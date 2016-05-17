@@ -58,6 +58,11 @@ namespace Gwk
         :   x(x_), y(y_)
         {}
         
+        void set(int x_, int y_)
+        {
+            x = x_, y = y_;
+        }
+        
         void operator += (const Point& p)
         {
             x += p.x;
