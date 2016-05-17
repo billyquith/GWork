@@ -21,11 +21,12 @@ namespace Gwk
 {
     namespace Renderer
     {
-        OpenGL::OpenGL()
+        
+        OpenGL::OpenGL(const Rect& viewRect)
+        :   m_viewRect(viewRect)
+        ,   m_vertNum(0)
+        ,   m_context(nullptr)
         {
-            m_vertNum = 0;
-            m_context = nullptr;
-
             for (int i = 0; i < MaxVerts; i++)
             {
                 m_vertices[ i ].z = 0.5f;
@@ -38,6 +39,13 @@ namespace Gwk
 
         void OpenGL::Init()
         {
+            glMatrixMode(GL_PROJECTION);
+            glLoadIdentity();
+            glOrtho(m_viewRect.x, m_viewRect.x + m_viewRect.w,
+                    m_viewRect.y, m_viewRect.y + m_viewRect.h,
+                    -1.0, 1.0);
+            glMatrixMode(GL_MODELVIEW);
+            glViewport(m_viewRect.x, m_viewRect.y, m_viewRect.w, m_viewRect.h);
         }
 
         void OpenGL::Begin()
@@ -73,8 +81,9 @@ namespace Gwk
             if (m_vertNum >= MaxVerts-1)
                 Flush();
 
-            m_vertices[ m_vertNum ].x = (float)x;
-            m_vertices[ m_vertNum ].y = (float)y;
+            // OpenGL origin is bottom-left. Gwork origin is top-left.
+            m_vertices[ m_vertNum ].x = float(x);
+            m_vertices[ m_vertNum ].y = m_viewRect.h - float(y);
             m_vertices[ m_vertNum ].u = u;
             m_vertices[ m_vertNum ].v = v;
             m_vertices[ m_vertNum ].r = m_color.r;
@@ -113,22 +122,22 @@ namespace Gwk
         void OpenGL::StartClip()
         {
             Flush();
-            Gwk::Rect rect = ClipRegion();
-            // OpenGL's coords are from the bottom left
-            // so we need to translate them here.
-            {
-                GLint view[4];
-                glGetIntegerv(GL_VIEWPORT, &view[0]);
-                rect.y = view[3] - (rect.y + rect.h);
-            }
-            glScissor(rect.x*Scale(), rect.y*Scale(), rect.w*Scale(), rect.h*Scale());
-            glEnable(GL_SCISSOR_TEST);
+//            Gwk::Rect rect = ClipRegion();
+//            // OpenGL's coords are from the bottom left
+//            // so we need to translate them here.
+//            {
+//                GLint view[4];
+//                glGetIntegerv(GL_VIEWPORT, &view[0]);
+//                rect.y = view[3] - (rect.y + rect.h);
+//            }
+//            glScissor(rect.x*Scale(), rect.y*Scale(), rect.w*Scale(), rect.h*Scale());
+//            glEnable(GL_SCISSOR_TEST);
         }
 
         void OpenGL::EndClip()
         {
             Flush();
-            glDisable(GL_SCISSOR_TEST);
+//            glDisable(GL_SCISSOR_TEST);
         }
 
         void OpenGL::DrawTexturedRect(Gwk::Texture* texture, Gwk::Rect rect,
@@ -152,7 +161,7 @@ namespace Gwk
                 glBindTexture(GL_TEXTURE_2D, *tex);
                 glEnable(GL_TEXTURE_2D);
             }
-
+            
             AddVert(rect.x, rect.y,             u1, v1);
             AddVert(rect.x+rect.w, rect.y,      u2, v1);
             AddVert(rect.x, rect.y+rect.h,      u1, v2);
@@ -166,7 +175,7 @@ namespace Gwk
             const std::string &fileName = texture->name;
             
             int x,y,n;
-            unsigned char *data = stbi_load(fileName.c_str(), &x, &y, &n, 0);
+            unsigned char *data = stbi_load(fileName.c_str(), &x, &y, &n, 4);
             
             // Image failed to load..
             if (!data)
@@ -174,19 +183,6 @@ namespace Gwk
                 texture->failed = true;
                 return;
             }
-
-            // Convert to 32bit
-//            FIBITMAP* bits32 = FreeImage_ConvertTo32Bits(bits);
-//            FreeImage_Unload(bits);
-//
-//            if (!bits32)
-//            {
-//                texture->failed = true;
-//                return;
-//            }
-
-            // Flip
-//            ::FreeImage_FlipVertical(bits32);
 
             // Create a little texture pointer..
             GLuint* pglTexture = new GLuint;
@@ -201,9 +197,9 @@ namespace Gwk
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 //#ifdef FREEIMAGE_BIGENDIAN
-//            GLenum format = GL_RGBA;
+            GLenum format = GL_RGBA;
 //#else
-            GLenum format = GL_BGRA;
+//            GLenum format = GL_BGRA;
 //#endif
             glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, texture->width, texture->height, 0, format,
                          GL_UNSIGNED_BYTE, (const GLvoid*)data);

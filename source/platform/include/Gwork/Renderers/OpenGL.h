@@ -18,15 +18,7 @@ namespace Gwk
         {
         public:
 
-            struct Vertex
-            {
-                float x, y, z;
-                float u, v;
-                unsigned char r, g, b, a;
-            };
-
-
-            OpenGL();
+            OpenGL(const Gwk::Rect& viewRect);
             virtual ~OpenGL();
 
             void Init() override;
@@ -42,8 +34,8 @@ namespace Gwk
 
             void DrawTexturedRect(Gwk::Texture* texture, Gwk::Rect targetRect, float u1 = 0.0f,
                                   float v1 = 0.0f, float u2 = 1.0f, float v2 = 1.0f) override;
-            void        LoadTexture(Gwk::Texture* texture) override;
-            void        FreeTexture(Gwk::Texture* texture) override;
+            void LoadTexture(Gwk::Texture* texture) override;
+            void FreeTexture(Gwk::Texture* texture) override;
             
             Gwk::Color PixelColour(Gwk::Texture* texture,
                                    unsigned int x, unsigned int y,
@@ -51,14 +43,22 @@ namespace Gwk
 
         protected:
 
+            Rect m_viewRect;
+            Color m_color;
+            
             static const int MaxVerts = 1024;
+            struct Vertex
+            {
+                float x, y, z;
+                float u, v;
+                unsigned char r, g, b, a;
+            };
+            
+            int m_vertNum;
+            Vertex m_vertices[ MaxVerts ];
 
             void Flush();
             void AddVert(int x, int y, float u = 0.0f, float v = 0.0f);
-
-            Gwk::Color m_color;
-            int m_vertNum;
-            Vertex m_vertices[ MaxVerts ];
 
         public:
 

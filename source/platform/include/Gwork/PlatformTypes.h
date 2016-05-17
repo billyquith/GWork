@@ -94,6 +94,10 @@ namespace Gwk
         :   x(x_), y(y_), w(w_), h(h_)
         {}
         
+        Rect(const Point& o, const Point& sz)
+        :   x(o.x), y(o.y), w(sz.x), h(sz.y)
+        {}
+        
         bool operator == (const Rect &other) const
         {
             return x == other.x && y == other.y && w == other.w && h == other.h;
