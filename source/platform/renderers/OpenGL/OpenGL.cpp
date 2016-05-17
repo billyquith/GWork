@@ -9,7 +9,6 @@
 #include <Gwork/PlatformTypes.h>
 
 #include <GLFW/glfw3.h>
-//#include <GL/glew.h>
 #include <math.h>
 
 //#define STBI_ASSERT(x)  // comment in for no asserts
@@ -83,7 +82,7 @@ namespace Gwk
 
             // OpenGL origin is bottom-left. Gwork origin is top-left.
             m_vertices[ m_vertNum ].x = float(x);
-            m_vertices[ m_vertNum ].y = m_viewRect.h - float(y);
+            m_vertices[ m_vertNum ].y = float(m_viewRect.h - y);
             m_vertices[ m_vertNum ].u = u;
             m_vertices[ m_vertNum ].v = v;
             m_vertices[ m_vertNum ].r = m_color.r;
@@ -122,22 +121,22 @@ namespace Gwk
         void OpenGL::StartClip()
         {
             Flush();
-//            Gwk::Rect rect = ClipRegion();
-//            // OpenGL's coords are from the bottom left
-//            // so we need to translate them here.
-//            {
-//                GLint view[4];
-//                glGetIntegerv(GL_VIEWPORT, &view[0]);
-//                rect.y = view[3] - (rect.y + rect.h);
-//            }
-//            glScissor(rect.x*Scale(), rect.y*Scale(), rect.w*Scale(), rect.h*Scale());
-//            glEnable(GL_SCISSOR_TEST);
+            Gwk::Rect rect = ClipRegion();
+            // OpenGL's coords are from the bottom left
+            // so we need to translate them here.
+            {
+                GLint view[4];
+                glGetIntegerv(GL_VIEWPORT, &view[0]);
+                rect.y = view[3] - (rect.y + rect.h);
+            }
+            glScissor(rect.x*Scale(), rect.y*Scale(), rect.w*Scale(), rect.h*Scale());
+            glEnable(GL_SCISSOR_TEST);
         }
 
         void OpenGL::EndClip()
         {
             Flush();
-//            glDisable(GL_SCISSOR_TEST);
+            glDisable(GL_SCISSOR_TEST);
         }
 
         void OpenGL::DrawTexturedRect(Gwk::Texture* texture, Gwk::Rect rect,
@@ -196,11 +195,7 @@ namespace Gwk
             glBindTexture(GL_TEXTURE_2D, *pglTexture);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-//#ifdef FREEIMAGE_BIGENDIAN
             GLenum format = GL_RGBA;
-//#else
-//            GLenum format = GL_BGRA;
-//#endif
             glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, texture->width, texture->height, 0, format,
                          GL_UNSIGNED_BYTE, (const GLvoid*)data);
             
