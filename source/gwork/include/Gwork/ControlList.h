@@ -51,7 +51,7 @@ namespace Gwk
 
         void Add(const List& _list)
         {
-            for (typename List::const_iterator it = _list.begin(); it != _list.end(); ++it)
+            for (typename List::const_iterator it = _list.cbegin(); it != _list.cend(); ++it)
             {
                 Add(*it);
             }
@@ -64,8 +64,8 @@ namespace Gwk
 
         bool Contains(TYPE control) const
         {
-            typename List::const_iterator it = std::find(list.begin(), list.end(), control);
-            return it != list.end();
+            typename List::const_iterator it = std::find(list.cbegin(), list.cend(), control);
+            return it != list.cend();
         }
 
         inline void Clear()

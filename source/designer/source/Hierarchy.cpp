@@ -76,8 +76,8 @@ void Hierarchy::OnCanvasSelectionChanged( Event::Info info )
 {
 	m_tree->DeselectAll();
 
-	for ( ControlList::List::const_iterator it = info.ControlList.list.begin();
-		  it != info.ControlList.list.end(); ++it )
+	for ( ControlList::List::const_iterator it = info.ControlList.list.cbegin();
+		  it != info.ControlList.list.cend(); ++it )
 	{
 		SelectNodeRepresentingControl( (*it), m_tree );
 	}
