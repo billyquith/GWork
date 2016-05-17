@@ -100,7 +100,7 @@ Gwk::Rect Text::GetCharacterPosition(unsigned int iChar)
         TextLines::iterator itEnd = m_lines.end();
         int iChars = 0;
 
-        Text* line;
+        Text* line = nullptr;
         while (it != itEnd)
         {
             line = *it;

@@ -106,7 +106,7 @@ void TextBox::UpdateCaretColor()
     if (m_caretColor == targetcolor)
         targetcolor = Gwk::Color(20, 20, 20, 255);
 
-    m_fNextCaretColorChange = Gwk::Platform::GetTimeInSeconds()+0.5;
+    m_fNextCaretColorChange = Gwk::Platform::GetTimeInSeconds()+0.5f;
     m_caretColor = targetcolor;
     Redraw();
 }
