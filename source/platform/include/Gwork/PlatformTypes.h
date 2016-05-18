@@ -205,6 +205,7 @@ namespace Gwk
         ,   bold(false)
         ,   data(nullptr)
         ,   realsize(0)
+        ,   render_data(nullptr)
         {
         }
 
@@ -212,12 +213,12 @@ namespace Gwk
         float size;
         bool bold;
 
-        /// This should be set by the renderer
-        /// if it tries to use a font where it's nullptr.
-        void*   data;
+        void *data;             // Font data, set by renderer
 
-        /// This is the real font size, after it's been scaled by Render->Scale()
+        // This is the real font size, after it's been scaled by Render->Scale()
         float realsize;
+        
+        void *render_data;      // optional renderer data
     };
 
     struct Texture

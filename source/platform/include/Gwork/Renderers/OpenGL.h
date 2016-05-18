@@ -41,6 +41,15 @@ namespace Gwk
                                    unsigned int x, unsigned int y,
                                    const Gwk::Color& col_default) override;
 
+            void LoadFont(Gwk::Font* font) override;
+            void FreeFont(Gwk::Font* font) override;
+            
+            void RenderText(Gwk::Font* font,
+                            Gwk::Point pos,
+                            const Gwk::String& text) override;
+            
+            Gwk::Point MeasureText(Gwk::Font* font, const Gwk::String& text) override;
+
         protected:
 
             Rect m_viewRect;
