@@ -244,6 +244,8 @@ namespace Gwk
             return c;
         }
 
+        static const int texsz = 128;
+
         void OpenGL::LoadFont(Gwk::Font* font)
         {
             std::string fontName(font->facename);
@@ -251,10 +253,13 @@ namespace Gwk
             if (fontName.find(".ttf") == std::string::npos)
                 fontName += ".ttf";
             
+            font->realsize = font->size*Scale();
+            
             FILE* f = fopen(fontName.c_str(), "rb");
             if (!f)
             {
                 font->data = nullptr;
+                font->facename = "";
                 return;
             }
             
@@ -266,29 +271,33 @@ namespace Gwk
             unsigned char* ttfdata = new unsigned char[fsz];
             fread(ttfdata, 1, fsz, f);
             
-            const int texsz = 512;
             unsigned char *font_bmp = new unsigned char[texsz * texsz];
             
-            font->render_data = new stbtt_bakedchar['z' - ' ' + 1];
+            font->render_data = new stbtt_bakedchar[96];
             
-            stbtt_BakeFontBitmap(ttfdata, 0,
-                                 font->realsize,    // height
-                                 font_bmp, texsz, texsz,
-                                 ' ','z',           // range to bake
-                                 static_cast<stbtt_bakedchar*>(font->render_data));
+            const int bfret =
+                stbtt_BakeFontBitmap(ttfdata, 0,
+                                     font->realsize,    // height
+                                     font_bmp, texsz, texsz,
+                                     32,96,             // range to bake
+                                     static_cast<stbtt_bakedchar*>(font->render_data));
             delete [] ttfdata;
             
             font->data = new GLuint;
             glGenTextures(1, static_cast<GLuint*>(font->data));
             glBindTexture(GL_TEXTURE_2D, *static_cast<GLuint*>(font->data));
-            glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, 512,512, 0, GL_ALPHA, GL_UNSIGNED_BYTE,
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA,
+                         texsz,texsz, 0,
+                         GL_ALPHA, GL_UNSIGNED_BYTE,
                          font_bmp);
             delete [] font_bmp;
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
         }
         
         void OpenGL::FreeFont(Gwk::Font* font)
         {
+            // TODO - unbind texture
             delete [] static_cast<GLuint*>(font->data);
             delete [] static_cast<stbtt_bakedchar*>(font->render_data);
         }
@@ -296,36 +305,39 @@ namespace Gwk
         void OpenGL::RenderText(Gwk::Font* font, Gwk::Point pos,
                                 const Gwk::String& text)
         {
-//            return;
+            if (font->facename.empty())
+                return;
             
             if (!font->data)
-            {
                 LoadFont(font);
-            }
 
             Texture tex;
             tex.data = font->data;
-
+            
             float x = pos.x, y = pos.y;
             const char *pc = text.c_str();
             size_t slen = text.length();
             
             while (slen > 0)
             {
-                stbtt_aligned_quad q;
-                stbtt_GetBakedQuad(static_cast<stbtt_bakedchar*>(font->render_data),
-                                   512,512,
-                                   *pc - 32,
-                                   &x, &y, &q, 1); // 1=opengl & d3d10+,0=d3d9
-                Rect r(q.x0, q.y0, q.x1 - q.x0, q.y1 - q.y0);
-                DrawTexturedRect(&tex, r, q.s0,q.t0, q.s1,q.t1);
+                if (*pc >= 32 && *pc <= 127)
+                {
+                    stbtt_aligned_quad q;
+                    stbtt_GetBakedQuad(static_cast<stbtt_bakedchar*>(font->render_data),
+                                       texsz,texsz,
+                                       *pc - 32,
+                                       &x, &y, &q, 1); // 1=opengl & d3d10+,0=d3d9
+
+                    Rect r(q.x0, q.y1+10, q.x1 - q.x0, q.y1 - q.y0);
+                    DrawTexturedRect(&tex, r, q.s0,q.t0, q.s1,q.t1);
+                }
                 ++pc, --slen;
             }
         }
 
         Gwk::Point OpenGL::MeasureText(Gwk::Font* font, const Gwk::String& text)
         {
-            return Point();
+            return Point(100,20);
         }
 
         bool OpenGL::InitializeContext(Gwk::WindowProvider* window)
