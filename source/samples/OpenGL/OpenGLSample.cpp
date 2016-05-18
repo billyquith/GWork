@@ -70,6 +70,7 @@ int main()
     // Create a Gwork skin
     Gwk::Skin::TexturedBase* skin = new Gwk::Skin::TexturedBase(renderer);
     skin->Init("DefaultSkin.png");
+    skin->SetDefaultFont("OpenSans.ttf", 11);
 
     // Create a Canvas (it's root, on which all other Gwork panels are created)
     Gwk::Controls::Canvas* canvas = new Gwk::Controls::Canvas(skin);
