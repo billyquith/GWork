@@ -7,10 +7,8 @@ Gwork (*pronounced "gw-orc"*) is a fork of the GUI library [GWEN][gwen]. It was 
 to fix issues with GWEN and add new features.
 
 A number of rendering backends are provided for use, or as an example for your own:
+
  * [Allegro5][al5] (cross-platform).
- * TODO: Direct2D (Windows).
- * TODO: DirectX9 (Windows).
- * TODO: GDI+ (Windows).
  * OpenGL (cross-platform using GLFW).
  * [SDL2][sdl2] (cross-platform).
  * [SFML2][sfml2] (cross-platform).
