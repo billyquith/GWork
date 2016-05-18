@@ -122,14 +122,12 @@ namespace Gwk
         {
             Flush();
             Gwk::Rect rect = ClipRegion();
+            
             // OpenGL's coords are from the bottom left
-            // so we need to translate them here.
-            {
-                GLint view[4];
-                glGetIntegerv(GL_VIEWPORT, &view[0]);
-                rect.y = view[3] - (rect.y + rect.h);
-            }
-            glScissor(rect.x*Scale(), rect.y*Scale(), rect.w*Scale(), rect.h*Scale());
+            rect.y = m_viewRect.h - (rect.y + rect.h);
+
+            glScissor(rect.x * Scale(), rect.y * Scale(),
+                      rect.w * Scale(), rect.h * Scale());
             glEnable(GL_SCISSOR_TEST);
         }
 
