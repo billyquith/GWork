@@ -328,7 +328,7 @@ namespace Gwk
                                        *pc - 32,
                                        &x, &y, &q, 1); // 1=opengl & d3d10+,0=d3d9
 
-                    Rect r(q.x0, q.y1+10, q.x1 - q.x0, q.y1 - q.y0);
+                    Rect r(q.x0, q.y1, q.x1 - q.x0, q.y1 - q.y0);
                     DrawTexturedRect(&tex, r, q.s0,q.t0, q.s1,q.t1);
                 }
                 ++pc, --slen;
@@ -337,7 +337,33 @@ namespace Gwk
 
         Gwk::Point OpenGL::MeasureText(Gwk::Font* font, const Gwk::String& text)
         {
-            return Point(100,20);
+            Point sz;
+            
+            if (!font->data || font->facename.empty())
+                return sz;
+            
+            float x = 0.f, y = 0.f;
+            const char *pc = text.c_str();
+            size_t slen = text.length();
+            
+            while (slen > 0)
+            {
+                if (*pc >= 32 && *pc <= 127)
+                {
+                    stbtt_aligned_quad q;
+                    stbtt_GetBakedQuad(static_cast<stbtt_bakedchar*>(font->render_data),
+                                       texsz,texsz,
+                                       *pc - 32,
+                                       &x, &y, &q, 1); // 1=opengl & d3d10+,0=d3d9
+                    
+                    Rect r(q.x0, q.y1+10, q.x1 - q.x0, q.y1 - q.y0);
+                    sz.x = r.x + r.w;
+                    sz.y = std::max(sz.y, r.h);
+                }
+                ++pc, --slen;
+            }
+            
+            return sz;
         }
 
         bool OpenGL::InitializeContext(Gwk::WindowProvider* window)
