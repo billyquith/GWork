@@ -175,7 +175,7 @@ bool Base::Visible() const
 
 void Base::InvalidateChildren(bool bRecursive)
 {
-    for(auto&& child : Children)
+    for (auto&& child : Children)
     {
         child->Invalidate();
 
@@ -185,7 +185,7 @@ void Base::InvalidateChildren(bool bRecursive)
 
     if (m_innerPanel)
     {
-	for(auto&& innerchild : m_innerPanel->Children)
+	for (auto&& innerchild : m_innerPanel->Children)
 	{
             innerchild->Invalidate();
 
@@ -252,7 +252,7 @@ void Base::BringToFront()
 
 Controls::Base* Base::FindChildByName(const Gwk::String& name, bool bRecursive)
 {
-    for(auto&& child : Children)
+    for (auto&& child : Children)
     {
         if (!child->GetName().empty() && child->GetName() == name)
             return child;
@@ -338,7 +338,7 @@ Controls::Base* Base::GetChild(unsigned int i)
     if (i >= NumChildren())
         return nullptr;
 
-    for(auto&& child : Children)
+    for (auto&& child : Children)
     {
         if (i == 0)
             return child;
@@ -447,7 +447,7 @@ void Base::OnBoundsChanged(Gwk::Rect oldBounds)
 
 void Base::OnScaleChanged()
 {
-    for(auto&& child : Children)
+    for (auto&& child : Children)
     {
         child->OnScaleChanged();
     }
@@ -497,7 +497,7 @@ void Base::DoCacheRender(Gwk::Skin::Base* skin, Gwk::Controls::Base* master)
             if (!Children.empty())
             {
                 // Now render my kids
-                for(auto&& child : Children)
+                for (auto&& child : Children)
                 {
                     if (!child->Hidden())
                     {
@@ -581,7 +581,7 @@ void Base::RenderRecursive(Gwk::Skin::Base* skin, const Gwk::Rect& cliprect)
         if (!Children.empty())
         {
             // Now render my kids
-            for(auto&& child : Children)
+            for (auto&& child : Children)
             {
                 if (child->Hidden())
                     continue;
@@ -618,7 +618,7 @@ void Base::SetSkin(Skin::Base* skin, bool doChildren)
 
     if (doChildren)
     {
-        for(auto&& child : Children)
+        for (auto&& child : Children)
         {
             child->SetSkin(skin, true);
         }
@@ -779,7 +779,7 @@ void Base::RecurseLayout(Skin::Base* skin)
     rBounds.y += m_padding.top;
     rBounds.h -= m_padding.top + m_padding.bottom;
 
-    for(auto&& child : Children)
+    for (auto&& child : Children)
     {
         if (child->Hidden())
             continue;
@@ -844,7 +844,7 @@ void Base::RecurseLayout(Skin::Base* skin)
     //
     // Fill uses the left over space, so do that now.
     //
-    for(auto&& child : Children)
+    for (auto&& child : Children)
     {
         Position dock = child->GetDock();
 
@@ -874,7 +874,7 @@ void Base::RecurseLayout(Skin::Base* skin)
 
 bool Base::IsChild(Controls::Base* possiblechild)
 {
-    for(auto&& child : Children)
+    for (auto&& child : Children)
     {
         if (possiblechild == child)
             return true;
@@ -937,7 +937,7 @@ bool Base::IsMenuComponent()
 
 void Base::CloseMenus()
 {
-    for(auto&& child : Children)
+    for (auto&& child : Children)
     {
         child->CloseMenus();
     }
@@ -1003,7 +1003,7 @@ Gwk::Point Base::ChildrenSize()
 {
     Gwk::Point size;
 
-    for(auto&& child : Children)
+    for (auto&& child : Children)
     {
         if (child->Hidden())
             continue;
@@ -1057,7 +1057,7 @@ bool Base::HandleAccelerator(Gwk::String& accelerator)
         }
     }
 
-    for(auto&& child : Children)
+    for (auto&& child : Children)
     {
         if (child->HandleAccelerator(accelerator))
             return true;
@@ -1194,7 +1194,7 @@ int Base::GetNamedChildren(Gwk::ControlList& list, const Gwk::String& strName, b
 {
     int iFound = 0;
 
-    for(auto&& child : Children)
+    for (auto&& child : Children)
     {
         if (!child->GetName().empty() && child->GetName() == strName)
         {

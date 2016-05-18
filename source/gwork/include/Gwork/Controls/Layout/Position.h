@@ -30,7 +30,7 @@ namespace Gwk
 
                 void PostLayout(Skin::Base* skin) override
                 {
-                    for(auto&& child : Children)
+                    for (auto&& child : Children)
                     {
                         if (child->GetDock() != Position::None)
                             continue;

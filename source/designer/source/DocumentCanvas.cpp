@@ -16,7 +16,6 @@ GWK_CONTROL_CONSTRUCTOR( DocumentCanvas )
 	UserData.Set( "ControlFactory", controlFactory );
 }
 
-
 void DocumentCanvas::Render( Gwk::Skin::Base* skin )
 {
 	skin->DrawGenericPanel( this );
@@ -67,7 +66,7 @@ void DocumentCanvas::SelectControls( ControlList& CtrlList )
 {
 	m_selectionLayer->ClearSelection();
 
-        for (auto const& ctrl : CtrlList.list)
+	for (auto const& ctrl : CtrlList.list)
 	{
 		m_selectionLayer->AddSelection( ctrl );
 	}
@@ -110,7 +109,7 @@ void DocumentCanvas::Command( const Gwk::String& str )
 
 	if ( str == "bringforward" )
 	{
-                for ( auto&& selected : m_selectionLayer->GetSelected().list)
+		for ( auto&& selected : m_selectionLayer->GetSelected().list)
 		{
 			if ( selected == this ) continue;
 			selected->BringToFront();
@@ -119,7 +118,7 @@ void DocumentCanvas::Command( const Gwk::String& str )
 
 	if ( str == "sendback" )
 	{
-                for ( auto&& selected : m_selectionLayer->GetSelected().list)
+		for ( auto&& selected : m_selectionLayer->GetSelected().list)
 		{
 			if ( selected == this ) continue;
 			selected->SendToBack();

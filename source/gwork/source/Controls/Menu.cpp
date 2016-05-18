@@ -42,7 +42,7 @@ void Menu::Layout(Skin::Base* skin)
 {
     int childrenHeight = 0;
 
-    for(auto&& child : m_innerPanel->Children)
+    for (auto&& child : m_innerPanel->Children)
     {
         if (!child)
             continue;
@@ -89,7 +89,7 @@ void Menu::OnAddItem(MenuItem* item)
 
 void Menu::ClearItems()
 {
-    for(auto&& child : m_innerPanel->Children)
+    for (auto&& child : m_innerPanel->Children)
     {
         if (!child)
             continue;
@@ -100,7 +100,7 @@ void Menu::ClearItems()
 
 void Menu::CloseAll()
 {
-    for(auto&& child : m_innerPanel->Children)
+    for (auto&& child : m_innerPanel->Children)
     {
         MenuItem* item = gwk_cast<MenuItem>(child);
 
@@ -113,7 +113,7 @@ void Menu::CloseAll()
 
 bool Menu::IsMenuOpen()
 {
-    for(auto&& child : m_innerPanel->Children)
+    for (auto&& child : m_innerPanel->Children)
     {
         MenuItem* item = gwk_cast<MenuItem>(child);
 

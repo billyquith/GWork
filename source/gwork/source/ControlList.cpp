@@ -14,7 +14,7 @@ namespace Gwk
 
 void ControlList::Enable()
 {
-    for(auto&& item : list)
+    for (auto&& item : list)
     {
         item->SetDisabled(false);
     }
@@ -22,7 +22,7 @@ void ControlList::Enable()
 
 void ControlList::Disable()
 {
-    for(auto&& item : list)
+    for (auto&& item : list)
     {
         item->SetDisabled(true);
     }
@@ -30,7 +30,7 @@ void ControlList::Disable()
 
 void ControlList::Show()
 {
-    for(auto&& item : list)
+    for (auto&& item : list)
     {
         item->Show();
     }
@@ -38,7 +38,7 @@ void ControlList::Show()
 
 void ControlList::Hide()
 {
-    for(auto&& item : list)
+    for (auto&& item : list)
     {
         item->Hide();
     }
@@ -46,7 +46,7 @@ void ControlList::Hide()
 
 Gwk::String ControlList::GetValue()
 {
-    for(auto&& item : list)
+    for (auto&& item : list)
     {
         return item->GetValue();
     }
@@ -56,7 +56,7 @@ Gwk::String ControlList::GetValue()
 
 void ControlList::SetValue(const Gwk::String& value)
 {
-    for(auto&& item : list)
+    for (auto&& item : list)
     {
         item->SetValue(value);
     }
@@ -64,7 +64,7 @@ void ControlList::SetValue(const Gwk::String& value)
 
 void ControlList::MoveBy(const Gwk::Point& point)
 {
-    for(auto&& item : list)
+    for (auto&& item : list)
     {
         item->MoveBy(point.x, point.y);
     }
@@ -72,7 +72,7 @@ void ControlList::MoveBy(const Gwk::Point& point)
 
 void ControlList::DoAction()
 {
-    for(auto&& item : list)
+    for (auto&& item : list)
     {
         item->DoAction();
     }
@@ -82,7 +82,7 @@ void ControlList::SetActionInternal(Gwk::Event::Handler* object,
                                     void ( Gwk::Event::Handler::*f )(
                                         Gwk::Event::Info), const Gwk::Event::Packet& packet)
 {
-    for(auto&& item : list)
+    for (auto&& item : list)
     {
         item->SetAction(object, f, packet);
     }

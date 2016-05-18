@@ -145,7 +145,7 @@ void CollapsibleCategory::UnselectAll()
 {
     Base::List& children = GetChildren();
 
-    for(auto&& control : children)
+    for (auto&& control : children)
     {
         CategoryButton* child = gwk_cast<CategoryButton>(control);
 
@@ -166,7 +166,7 @@ void CollapsibleCategory::PostLayout(Skin::Base* /*skin*/)
     Base::List& children = GetChildren();
     bool b = true;
 
-    for(auto&& control : children)
+    for (auto&& control : children)
     {
         CategoryButton* child = gwk_cast<CategoryButton>(control);
 
@@ -183,7 +183,7 @@ Button* CollapsibleCategory::GetSelected()
 {
     Base::List& children = GetChildren();
 
-    for(auto&& control : children)
+    for (auto&& control : children)
     {
         CategoryButton* child = gwk_cast<CategoryButton>(control);
 

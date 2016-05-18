@@ -190,7 +190,7 @@ namespace Gwk
                     if (m_columnCount == i)
                         return;
 
-                    for(auto&& child : Children)
+                    for (auto&& child : Children)
                     {
                         TableRow* row = gwk_cast<TableRow>(child);
 
@@ -245,7 +245,7 @@ namespace Gwk
 
                 void Clear()
                 {
-                    for(auto&& child : Children)
+                    for (auto&& child : Children)
                     {
                         TableRow* row = gwk_cast<TableRow>(child);
 
@@ -279,7 +279,7 @@ namespace Gwk
 
                     bool bEven = false;
 
-                    for(auto&& child : Children)
+                    for (auto&& child : Children)
                     {
                         TableRow* row = gwk_cast<TableRow>(child);
 
@@ -324,7 +324,7 @@ namespace Gwk
                         m_columnWidth[i] = 10;
                     }
 
-                    for(auto&& child : Children)
+                    for (auto&& child : Children)
                     {
                         TableRow* row = gwk_cast<TableRow>(child);
 

@@ -143,7 +143,7 @@ void Canvas::ProcessDelayedDeletes()
         m_deleteList.clear();
         m_deleteSet.clear();
 
-        for(auto&& control : deleteList)
+        for (auto&& control : deleteList)
         {
             control->PreDelete(GetSkin());
             delete control;

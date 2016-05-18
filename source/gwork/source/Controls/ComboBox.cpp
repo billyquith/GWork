@@ -150,7 +150,7 @@ void ComboBox::OnItemSelected(Controls::Base* control)
 
 void ComboBox::SelectItemByName(const Gwk::String& name, bool bFireChangeEvents)
 {
-    for(auto&& control : m_menu->GetChildren())
+    for (auto&& control : m_menu->GetChildren())
     {
         MenuItem* child = gwk_cast<MenuItem>(control);
 
