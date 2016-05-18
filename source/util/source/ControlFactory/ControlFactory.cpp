@@ -250,7 +250,7 @@ Controls::Base* Clone(Controls::Base* source, ControlFactory::Base* factory)
 
     while (factory)
     {
-	for(auto&& property : factory->Properties())
+	for (auto&& property : factory->Properties())
         {
             property->SetValueFromString(control, property->GetValueAsString(source));
         }
