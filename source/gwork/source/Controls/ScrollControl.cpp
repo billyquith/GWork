@@ -117,12 +117,8 @@ bool ScrollControl::ContentsAreDocked()
     if (!m_innerPanel)
         return false;
 
-    for (Base::List::iterator iter = m_innerPanel->Children.begin();
-         iter != m_innerPanel->Children.end();
-         ++iter)
+    for (auto&& child : m_innerPanel->Children)
     {
-        Base* child = *iter;
-
         if (child->GetDock() == Position::None)
             return false;
     }
@@ -151,11 +147,8 @@ void ScrollControl::UpdateScrollBars()
     int childrenHeight = 0;
 
     // Get the max size of all our children together
-    for (Base::List::iterator iter = m_innerPanel->Children.begin();
-         iter != m_innerPanel->Children.end();
-         ++iter)
+    for (auto&& child : m_innerPanel->Children)
     {
-        Base* child = *iter;
         childrenWidth = std::max(childrenWidth, child->Right());
         childrenHeight = std::max(childrenHeight, child->Bottom());
     }

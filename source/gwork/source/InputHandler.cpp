@@ -99,12 +99,8 @@ static bool FindKeyboardFocus(Controls::Base* control)
     {
         // Make sure none of our children have keyboard focus first
         //  todo recursive
-        for (Controls::Base::List::iterator iter = control->Children.begin();
-             iter != control->Children.end();
-             ++iter)
+        for (auto&& child : control->Children)
         {
-            Controls::Base* child = *iter;
-
             if (child == Gwk::KeyboardFocus)
                 return false;
         }

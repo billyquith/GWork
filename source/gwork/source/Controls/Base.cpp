@@ -63,6 +63,7 @@ Base::~Base()
         if (canvas)
             canvas->PreDeleteCanvas(this);
     }
+
     Base::List::iterator iter = Children.begin();
 
     while (iter != Children.end())
@@ -174,24 +175,22 @@ bool Base::Visible() const
 
 void Base::InvalidateChildren(bool bRecursive)
 {
-    for (Base::List::iterator it = Children.begin(); it != Children.end(); ++it)
+    for (auto&& child : Children)
     {
-        (*it)->Invalidate();
+        child->Invalidate();
 
         if (bRecursive)
-            (*it)->InvalidateChildren(bRecursive);
+            child->InvalidateChildren(bRecursive);
     }
 
     if (m_innerPanel)
     {
-        for (Base::List::iterator it = m_innerPanel->Children.begin();
-             it != m_innerPanel->Children.end();
-             ++it)
-        {
-            (*it)->Invalidate();
+	for (auto&& innerchild : m_innerPanel->Children)
+	{
+            innerchild->Invalidate();
 
             if (bRecursive)
-                (*it)->InvalidateChildren(bRecursive);
+                innerchild->InvalidateChildren(bRecursive);
         }
     }
 }
@@ -253,12 +252,8 @@ void Base::BringToFront()
 
 Controls::Base* Base::FindChildByName(const Gwk::String& name, bool bRecursive)
 {
-    Base::List::iterator iter;
-
-    for (iter = Children.begin(); iter != Children.end(); ++iter)
+    for (auto&& child : Children)
     {
-        Base* child = *iter;
-
         if (!child->GetName().empty() && child->GetName() == name)
             return child;
 
@@ -343,10 +338,10 @@ Controls::Base* Base::GetChild(unsigned int i)
     if (i >= NumChildren())
         return nullptr;
 
-    for (Base::List::iterator iter = Children.begin(); iter != Children.end(); ++iter)
+    for (auto&& child : Children)
     {
         if (i == 0)
-            return *iter;
+            return child;
 
         i--;
     }
@@ -423,7 +418,7 @@ bool Base::SetBounds(const Gwk::Rect& bounds)
 {
     if (m_bounds == bounds)
         return false;
-    
+
     const Gwk::Rect oldBounds = GetBounds();
     m_bounds = bounds;
     OnBoundsChanged(oldBounds);
@@ -452,9 +447,9 @@ void Base::OnBoundsChanged(Gwk::Rect oldBounds)
 
 void Base::OnScaleChanged()
 {
-    for (Base::List::iterator iter = Children.begin(); iter != Children.end(); ++iter)
+    for (auto&& child : Children)
     {
-        (*iter)->OnScaleChanged();
+        child->OnScaleChanged();
     }
 }
 
@@ -502,10 +497,8 @@ void Base::DoCacheRender(Gwk::Skin::Base* skin, Gwk::Controls::Base* master)
             if (!Children.empty())
             {
                 // Now render my kids
-                for (Base::List::iterator iter = Children.begin(); iter != Children.end(); ++iter)
+                for (auto&& child : Children)
                 {
-                    Base* child = *iter;
-
                     if (!child->Hidden())
                     {
                         // Draw child control using normal render. If it is cached it will
@@ -588,10 +581,8 @@ void Base::RenderRecursive(Gwk::Skin::Base* skin, const Gwk::Rect& cliprect)
         if (!Children.empty())
         {
             // Now render my kids
-            for (Base::List::iterator iter = Children.begin(); iter != Children.end(); ++iter)
+            for (auto&& child : Children)
             {
-                Base* child = *iter;
-
                 if (child->Hidden())
                     continue;
 
@@ -627,9 +618,9 @@ void Base::SetSkin(Skin::Base* skin, bool doChildren)
 
     if (doChildren)
     {
-        for (Base::List::iterator it = Children.begin(); it != Children.end(); ++it)
+        for (auto&& child : Children)
         {
-            (*it)->SetSkin(skin, true);
+            child->SetSkin(skin, true);
         }
     }
 }
@@ -788,10 +779,8 @@ void Base::RecurseLayout(Skin::Base* skin)
     rBounds.y += m_padding.top;
     rBounds.h -= m_padding.top + m_padding.bottom;
 
-    for (Base::List::iterator iter = Children.begin(); iter != Children.end(); ++iter)
+    for (auto&& child : Children)
     {
-        Base* child = *iter;
-
         if (child->Hidden())
             continue;
 
@@ -855,9 +844,8 @@ void Base::RecurseLayout(Skin::Base* skin)
     //
     // Fill uses the left over space, so do that now.
     //
-    for (Base::List::iterator iter = Children.begin(); iter != Children.end(); ++iter)
+    for (auto&& child : Children)
     {
-        Base* child = *iter;
         Position dock = child->GetDock();
 
         if (!(dock & Position::Fill))
@@ -884,11 +872,11 @@ void Base::RecurseLayout(Skin::Base* skin)
         GetCanvas()->NextTab = nullptr;
 }
 
-bool Base::IsChild(Controls::Base* child)
+bool Base::IsChild(Controls::Base* possiblechild)
 {
-    for (Base::List::iterator iter = Children.begin(); iter != Children.end(); ++iter)
+    for (auto&& child : Children)
     {
-        if (child == (*iter))
+        if (possiblechild == child)
             return true;
     }
 
@@ -949,9 +937,9 @@ bool Base::IsMenuComponent()
 
 void Base::CloseMenus()
 {
-    for (Base::List::iterator it = Children.begin(); it != Children.end(); ++it)
+    for (auto&& child : Children)
     {
-        (*it)->CloseMenus();
+        child->CloseMenus();
     }
 }
 
@@ -1015,10 +1003,8 @@ Gwk::Point Base::ChildrenSize()
 {
     Gwk::Point size;
 
-    for (Base::List::iterator iter = Children.begin(); iter != Children.end(); ++iter)
+    for (auto&& child : Children)
     {
-        Base* child = *iter;
-
         if (child->Hidden())
             continue;
 
@@ -1071,9 +1057,9 @@ bool Base::HandleAccelerator(Gwk::String& accelerator)
         }
     }
 
-    for (Base::List::iterator it = Children.begin(); it != Children.end(); ++it)
+    for (auto&& child : Children)
     {
-        if ((*it)->HandleAccelerator(accelerator))
+        if (child->HandleAccelerator(accelerator))
             return true;
     }
 
@@ -1207,12 +1193,9 @@ void Base::SetValue(const String& strValue)
 int Base::GetNamedChildren(Gwk::ControlList& list, const Gwk::String& strName, bool bDeep)
 {
     int iFound = 0;
-    Base::List::iterator iter;
 
-    for (iter = Children.begin(); iter != Children.end(); ++iter)
+    for (auto&& child : Children)
     {
-        Base* child = *iter;
-
         if (!child->GetName().empty() && child->GetName() == strName)
         {
             list.Add(child);

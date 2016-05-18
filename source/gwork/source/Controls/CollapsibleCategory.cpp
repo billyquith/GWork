@@ -144,14 +144,14 @@ void CollapsibleCategory::SetText(const String& text)
 void CollapsibleCategory::UnselectAll()
 {
     Base::List& children = GetChildren();
-    
-    for (Base::List::iterator iter = children.begin(); iter != children.end(); ++iter)
+
+    for (auto&& control : children)
     {
-        CategoryButton* child = gwk_cast<CategoryButton>(*iter);
-        
+        CategoryButton* child = gwk_cast<CategoryButton>(control);
+
         if (!child)
             continue;
-        
+
         child->SetToggleState(false);
     }
 }
@@ -162,17 +162,17 @@ void CollapsibleCategory::PostLayout(Skin::Base* /*skin*/)
         SetHeight(m_button->Height());
     else
         SizeToChildren(false, true);
-    
+
     Base::List& children = GetChildren();
     bool b = true;
-    
-    for (Base::List::iterator iter = children.begin(); iter != children.end(); ++iter)
+
+    for (auto&& control : children)
     {
-        CategoryButton* child = gwk_cast<CategoryButton>(*iter);
-        
+        CategoryButton* child = gwk_cast<CategoryButton>(control);
+
         if (!child)
             continue;
-        
+
         child->m_bAlt = b;
         child->UpdateColours();
         b = !b;
@@ -182,18 +182,18 @@ void CollapsibleCategory::PostLayout(Skin::Base* /*skin*/)
 Button* CollapsibleCategory::GetSelected()
 {
     Base::List& children = GetChildren();
-    
-    for (Base::List::iterator iter = children.begin(); iter != children.end(); ++iter)
+
+    for (auto&& control : children)
     {
-        CategoryButton* child = gwk_cast<CategoryButton>(*iter);
-        
+        CategoryButton* child = gwk_cast<CategoryButton>(control);
+
         if (!child)
             continue;
-        
+
         if (child->GetToggleState())
             return child;
     }
-    
+
     return nullptr;
 }
 

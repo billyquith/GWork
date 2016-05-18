@@ -170,17 +170,17 @@ void RichLabel::Rebuild()
     int y = 0;
     int lineheight = -1;
 
-    for (DividedText::List::iterator it = m_textBlocks.begin(); it != m_textBlocks.end(); ++it)
+    for (auto&& text : m_textBlocks)
     {
-        if (it->type == Type_Newline)
+        if (text.type == Type_Newline)
         {
             CreateNewline(x, y, lineheight);
             continue;
         }
 
-        if (it->type == Type_Text)
+        if (text.type == Type_Text)
         {
-            CreateLabel((*it).text, *it, x, y, lineheight, false);
+            CreateLabel(text.text, text, x, y, lineheight, false);
             continue;
         }
     }

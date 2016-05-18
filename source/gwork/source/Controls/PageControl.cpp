@@ -22,7 +22,7 @@ GWK_CONTROL_CONSTRUCTOR(PageControl)
     m_currentPage = 0;
     SetUseFinishButton(true);
 
-    for (int i = 0; i < MaxPages; i++)
+    for (size_t i = 0; i < MaxPages; i++)
     {
         m_pages[i] = nullptr;
     }
@@ -78,7 +78,7 @@ void PageControl::SetPageCount(unsigned int iNum)
 
 void PageControl::HideAll()
 {
-    for (int i = 0; i < MaxPages; i++)
+    for (size_t i = 0; i < MaxPages; i++)
     {
         if (!m_pages[i])
             continue;
