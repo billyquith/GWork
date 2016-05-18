@@ -25,6 +25,10 @@ namespace Gwk
 {
     namespace Renderer
     {
+        // See "Font Size in Pixels or Points" in "stb_truetype.h"
+        const float c_pixToPoints = 1.333f;
+        
+        static const int c_texsz = 256;   // TODO - fix this hack.
         
         OpenGL::OpenGL(const Rect& viewRect)
         :   m_viewRect(viewRect)
@@ -244,8 +248,6 @@ namespace Gwk
             return c;
         }
 
-        static const int texsz = 128;
-
         void OpenGL::LoadFont(Gwk::Font* font)
         {
             std::string fontName(font->facename);
@@ -253,7 +255,7 @@ namespace Gwk
             if (fontName.find(".ttf") == std::string::npos)
                 fontName += ".ttf";
             
-            font->realsize = font->size*Scale();
+            font->realsize = font->size * Scale() * c_pixToPoints;
             
             FILE* f = fopen(fontName.c_str(), "rb");
             if (!f)
@@ -271,16 +273,15 @@ namespace Gwk
             unsigned char* ttfdata = new unsigned char[fsz];
             fread(ttfdata, 1, fsz, f);
             
-            unsigned char *font_bmp = new unsigned char[texsz * texsz];
+            unsigned char *font_bmp = new unsigned char[c_texsz * c_texsz];
             
             font->render_data = new stbtt_bakedchar[96];
             
-            const int bfret =
-                stbtt_BakeFontBitmap(ttfdata, 0,
-                                     font->realsize,    // height
-                                     font_bmp, texsz, texsz,
-                                     32,96,             // range to bake
-                                     static_cast<stbtt_bakedchar*>(font->render_data));
+            stbtt_BakeFontBitmap(ttfdata, 0,
+                                 font->realsize,    // height
+                                 font_bmp, c_texsz, c_texsz,
+                                 32,96,             // range to bake
+                                 static_cast<stbtt_bakedchar*>(font->render_data));
             delete [] ttfdata;
             
             font->data = new GLuint;
@@ -289,7 +290,7 @@ namespace Gwk
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
             glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA,
-                         texsz,texsz, 0,
+                         c_texsz,c_texsz, 0,
                          GL_ALPHA, GL_UNSIGNED_BYTE,
                          font_bmp);
             delete [] font_bmp;
@@ -310,7 +311,7 @@ namespace Gwk
             
             if (!font->data)
                 LoadFont(font);
-
+            
             Texture tex;
             tex.data = font->data;
             
@@ -318,17 +319,18 @@ namespace Gwk
             const char *pc = text.c_str();
             size_t slen = text.length();
             
+            const float height = font->realsize / c_pixToPoints;
             while (slen > 0)
             {
                 if (*pc >= 32 && *pc <= 127)
                 {
                     stbtt_aligned_quad q;
                     stbtt_GetBakedQuad(static_cast<stbtt_bakedchar*>(font->render_data),
-                                       texsz,texsz,
+                                       c_texsz,c_texsz,
                                        *pc - 32,
                                        &x, &y, &q, 1); // 1=opengl & d3d10+,0=d3d9
 
-                    Rect r(q.x0, q.y1, q.x1 - q.x0, q.y1 - q.y0);
+                    Rect r(q.x0, height + q.y0, q.x1 - q.x0, q.y1 - q.y0);
                     DrawTexturedRect(&tex, r, q.s0,q.t0, q.s1,q.t1);
                 }
                 ++pc, --slen;
@@ -337,11 +339,14 @@ namespace Gwk
 
         Gwk::Point OpenGL::MeasureText(Gwk::Font* font, const Gwk::String& text)
         {
-            Point sz;
-            
-            if (!font->data || font->facename.empty())
+            Point sz(0, font->realsize * c_pixToPoints);
+
+            if (font->facename.empty())
                 return sz;
             
+            if (!font->data)
+                LoadFont(font);
+
             float x = 0.f, y = 0.f;
             const char *pc = text.c_str();
             size_t slen = text.length();
@@ -352,13 +357,12 @@ namespace Gwk
                 {
                     stbtt_aligned_quad q;
                     stbtt_GetBakedQuad(static_cast<stbtt_bakedchar*>(font->render_data),
-                                       texsz,texsz,
+                                       c_texsz,c_texsz,
                                        *pc - 32,
                                        &x, &y, &q, 1); // 1=opengl & d3d10+,0=d3d9
                     
-                    Rect r(q.x0, q.y1+10, q.x1 - q.x0, q.y1 - q.y0);
-                    sz.x = r.x + r.w;
-                    sz.y = std::max(sz.y, r.h);
+                    sz.x = q.x1;
+                    sz.y = std::max(sz.y, int(q.y1 - q.y0));
                 }
                 ++pc, --slen;
             }
