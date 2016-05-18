@@ -25,7 +25,7 @@ class ChangeCaretColor : public Gwk::Anim::Animation
 {
 public:
 
-    virtual void Think()
+    virtual void Think() override
     {
         gwk_cast<TextBox>(m_control)->UpdateCaretColor();
     }
@@ -106,7 +106,7 @@ void TextBox::UpdateCaretColor()
     if (m_caretColor == targetcolor)
         targetcolor = Gwk::Color(20, 20, 20, 255);
 
-    m_fNextCaretColorChange = Gwk::Platform::GetTimeInSeconds()+0.5;
+    m_fNextCaretColorChange = Gwk::Platform::GetTimeInSeconds()+0.5f;
     m_caretColor = targetcolor;
     Redraw();
 }
@@ -739,7 +739,7 @@ void PasswordTextBox::SetText(const String& str, bool bDoEvents)
 
     m_realText = str;
     String passwordChars;
-    for (int i = 0; i < m_realText.length(); i++)
+    for (size_t i = 0; i < m_realText.length(); i++)
     {
         passwordChars += m_passwordChar;
     }

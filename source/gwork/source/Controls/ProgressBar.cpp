@@ -22,7 +22,7 @@ public:
     :   m_fLastFrame(0.f)
     {}
 
-    virtual void Think()
+    virtual void Think() override
     {
         float fDiff = Platform::GetTimeInSeconds()-m_fLastFrame;
         gwk_cast<ProgressBar>(m_control)->CycleThink(Gwk::Clamp(fDiff, 0.f, 0.3f));

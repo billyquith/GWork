@@ -12,29 +12,24 @@ ImportExport::Base::List& GetList()
 {
     static ImportExport::Base::List list;
     static bool Initialized = false;
-    
+
     if (!Initialized)
     {
         Initialized = true;
         InitializeFormats();
     }
-    
+
     return list;
 }
 
 ImportExport::Base* Find(Gwk::String strName)
 {
-    ImportExport::Base::List::iterator it = GetList().begin();
-    ImportExport::Base::List::iterator itEnd = GetList().end();
-    
-    while (it != itEnd)
+    for (auto&& item : GetList())
     {
-        if ((*it)->Name() == strName)
-            return *it;
-        
-        ++it;
+        if (item->Name() == strName)
+            return item;
     }
-    
+
     return nullptr;
 }
 
@@ -48,14 +43,14 @@ namespace Tools
     ControlList GetExportableChildren(Gwk::Controls::Base* root)
     {
         ControlList list;
-        
+
         for (int i = 0; i < root->NumChildren(); i++)
         {
             Gwk::Controls::Base* baseChild = root->GetChild(i);
-            
+
             if (!baseChild)
                 continue;
-            
+
             //
             // If we have a child is isn't exportable - maybe it has a
             // child that is
@@ -66,13 +61,12 @@ namespace Tools
                 list.Add(GetExportableChildren(baseChild));
                 continue;
             }
-            
+
             list.Add(baseChild);
         }
-        
+
         return list;
     }
-    
 }
 
 } // namespace ImportExport
