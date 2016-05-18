@@ -52,15 +52,12 @@ void Text::SetFont(Gwk::Font* font)
     m_bTextChanged = true;
     // Change the font of multilines too!
     {
-        TextLines::iterator it = m_lines.begin();
-        TextLines::iterator itEnd = m_lines.end();
-
-        while (it != itEnd)
+	for (auto&& line : m_lines)
         {
-            (*it)->SetFont(m_font);
-            ++it;
+            line->SetFont(m_font);
         }
     }
+
     Invalidate();
 }
 
@@ -100,7 +97,7 @@ Gwk::Rect Text::GetCharacterPosition(unsigned int iChar)
         TextLines::iterator itEnd = m_lines.end();
         int iChars = 0;
 
-        Text* line;
+        Text* line = nullptr;
         while (it != itEnd)
         {
             line = *it;
@@ -280,15 +277,15 @@ void Text::RefreshSizeWrap()
 {
     RemoveAllChildren();
 
-    for (TextLines::iterator it = m_lines.begin(); it != m_lines.end(); ++it)
+    for (auto&& line : m_lines)
     {
-        delete *it;
+        delete line;
     }
 
     m_lines.clear();
     std::vector<Gwk::String> words;
     SplitWords(GetText(), words);
-    
+
     // Adding a word to the end simplifies the code below
     // which is anything but simple.
     words.push_back("");
@@ -316,7 +313,7 @@ void Text::RefreshSizeWrap()
 
         // Does adding this word drive us over the width?
         {
-            strLine += (*it);
+            strLine += *it;
             Gwk::Point p = GetSkin()->GetRender()->MeasureText(GetFont(), strLine);
 
             if (p.x > Width())
@@ -375,15 +372,11 @@ unsigned int Text::NumLines()
 
 Text* Text::GetLine(int i)
 {
-    TextLines::iterator it = m_lines.begin();
-    TextLines::iterator itEnd = m_lines.end();
-
-    while (it != itEnd)
+    for (auto&& line : m_lines)
     {
         if (i == 0)
-            return *it;
+            return line;
 
-        ++it;
         i--;
     }
 

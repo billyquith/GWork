@@ -167,12 +167,10 @@ List& GetList()
 
 ControlFactory::Base* Find(const Gwk::String& name)
 {
-    for (ControlFactory::List::iterator it = ControlFactory::GetList().begin();
-         it != ControlFactory::GetList().end();
-         ++it)
+    for (auto const& control : ControlFactory::GetList)
     {
-        if ((*it)->Name() == name)
-            return *it;
+        if (control->Name() == name)
+            return control;
     }
 
     return nullptr;
@@ -190,12 +188,10 @@ void Base::AddProperty(Property* prop)
 
 Base* Base::GetBaseFactory()
 {
-    for (ControlFactory::List::iterator it = ControlFactory::GetList().begin();
-         it != ControlFactory::GetList().end();
-         ++it)
+    for (auto const& control : ControlFactory::GetList())
     {
-        if ((*it)->Name() == ParentFactory())
-            return *it;
+        if control->Name() == ParentFactory())
+            return control;
     }
 
     return nullptr;
@@ -203,14 +199,12 @@ Base* Base::GetBaseFactory()
 
 Property* Base::GetProperty(const Gwk::String& name)
 {
-    for (ControlFactory::Property::List::const_iterator it = Properties().begin(),
-         itEnd = Properties().end();
-         it != itEnd; ++it)
+    for (auto const& property : Properties())
     {
-        if ((*it)->Name() != name)
+        if property->Name() != name)
             continue;
 
-        return *it;
+        return property;
     }
 
     Base* base = GetBaseFactory();
@@ -256,11 +250,9 @@ Controls::Base* Clone(Controls::Base* source, ControlFactory::Base* factory)
 
     while (factory)
     {
-        for (ControlFactory::Property::List::const_iterator
-             it = factory->Properties().begin(), itEnd = factory->Properties().end();
-             it != itEnd; ++it)
+	for (auto&& property : factory->Properties())
         {
-            (*it)->SetValueFromString(control, (*it)->GetValueAsString(source));
+            property->SetValueFromString(control, property->GetValueAsString(source));
         }
 
         factory = factory->GetBaseFactory();

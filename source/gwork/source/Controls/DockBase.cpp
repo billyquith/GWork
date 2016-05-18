@@ -115,7 +115,7 @@ Position DockBase::GetDroppedTabDirection(int x, int y)
     float minimum = std::min(std::min(std::min(top, left), right), bottom);
     m_bDropFar = (minimum < 0.2f);
 
-    if (minimum > 0.3)
+    if (minimum > 0.3f)
         return Position::Fill;
 
     if (top == minimum && (!m_top || m_top->Hidden()))

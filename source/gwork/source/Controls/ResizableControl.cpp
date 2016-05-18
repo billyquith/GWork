@@ -65,9 +65,9 @@ GWK_CONTROL_CONSTRUCTOR(ResizableControl)
 
 void ResizableControl::DisableResizing()
 {
-    for (Base::List::iterator it = Children.begin(); it != Children.end(); ++it)
+    for (auto&& child : Children)
     {
-        Resizer* resizer = gwk_cast<Resizer>(*it);
+        Resizer* resizer = gwk_cast<Resizer>(child);
 
         if (!resizer)
             continue;
