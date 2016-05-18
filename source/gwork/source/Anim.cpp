@@ -113,9 +113,9 @@ static float GetEased(float fTime, float fEase)
 {
     // Ease in and Out if ease is < 0
     if (fEase < 0)
-        return -fTime/2*(std::cosf(3.14159f*fTime)-1);
+        return -fTime/2*(std::cos(3.14159f*fTime)-1);
 
-    return std::powf(fTime, fEase);
+    return std::pow(fTime, fEase);
 }
 
 void Gwk::Anim::TimedAnimation::Think()

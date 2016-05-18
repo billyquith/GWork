@@ -14,41 +14,41 @@ namespace Gwk
 
 void ControlList::Enable()
 {
-    for (List::const_iterator it = list.begin(); it != list.end(); ++it)
+    for (auto&& item : list)
     {
-        (*it)->SetDisabled(false);
+        item->SetDisabled(false);
     }
 }
 
 void ControlList::Disable()
 {
-    for (List::const_iterator it = list.begin(); it != list.end(); ++it)
+    for (auto&& item : list)
     {
-        (*it)->SetDisabled(true);
+        item->SetDisabled(true);
     }
 }
 
 void ControlList::Show()
 {
-    for (List::const_iterator it = list.begin(); it != list.end(); ++it)
+    for (auto&& item : list)
     {
-        (*it)->Show();
+        item->Show();
     }
 }
 
 void ControlList::Hide()
 {
-    for (List::const_iterator it = list.begin(); it != list.end(); ++it)
+    for (auto&& item : list)
     {
-        (*it)->Hide();
+        item->Hide();
     }
 }
 
 Gwk::String ControlList::GetValue()
 {
-    for (List::const_iterator it = list.begin(); it != list.end(); ++it)
+    for (auto&& item : list)
     {
-        return (*it)->GetValue();
+        return item->GetValue();
     }
 
     return "";
@@ -56,25 +56,25 @@ Gwk::String ControlList::GetValue()
 
 void ControlList::SetValue(const Gwk::String& value)
 {
-    for (List::const_iterator it = list.begin(); it != list.end(); ++it)
+    for (auto&& item : list)
     {
-        (*it)->SetValue(value);
+        item->SetValue(value);
     }
 }
 
 void ControlList::MoveBy(const Gwk::Point& point)
 {
-    for (List::const_iterator it = list.begin(); it != list.end(); ++it)
+    for (auto&& item : list)
     {
-        (*it)->MoveBy(point.x, point.y);
+        item->MoveBy(point.x, point.y);
     }
 }
 
 void ControlList::DoAction()
 {
-    for (List::const_iterator it = list.begin(); it != list.end(); ++it)
+    for (auto&& item : list)
     {
-        (*it)->DoAction();
+        item->DoAction();
     }
 }
 
@@ -82,9 +82,9 @@ void ControlList::SetActionInternal(Gwk::Event::Handler* object,
                                     void ( Gwk::Event::Handler::*f )(
                                         Gwk::Event::Info), const Gwk::Event::Packet& packet)
 {
-    for (List::const_iterator it = list.begin(); it != list.end(); ++it)
+    for (auto&& item : list)
     {
-        (*it)->SetAction(object, f, packet);
+        item->SetAction(object, f, packet);
     }
 }
 

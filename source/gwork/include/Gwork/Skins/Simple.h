@@ -63,13 +63,13 @@ namespace Gwk
                 m_defaultFont.size      = 11;
             }
 
-            virtual void DrawGenericPanel(Controls::Base* control)
+            virtual void DrawGenericPanel(Controls::Base* control) override
             {
                 // TODO.
             }
 
             virtual void DrawButton(Gwk::Controls::Base* control, bool bDepressed, bool bHovered,
-                                    bool bDisabled)
+                                    bool bDisabled) override
             {
                 int w = control->Width();
                 int h = control->Height();
@@ -77,28 +77,28 @@ namespace Gwk
             }
 
             virtual void DrawWindowCloseButton(Gwk::Controls::Base* control, bool bDepressed,
-                                               bool bHovered, bool bDisabled)
+                                               bool bHovered, bool bDisabled) override
             {
                 // TODO.
                 DrawButton(control, bDepressed, bHovered, bDisabled);
             }
 
             virtual void DrawWindowMaximizeButton(Gwk::Controls::Base* control, bool bDepressed,
-                                                  bool bHovered, bool bDisabled, bool bMaximized)
+                                                  bool bHovered, bool bDisabled, bool bMaximized) override
             {
                 // TODO.
                 DrawButton(control, bDepressed, bHovered, bDisabled);
             }
 
             virtual void DrawWindowMinimizeButton(Gwk::Controls::Base* control, bool bDepressed,
-                                                  bool bHovered, bool bDisabled)
+                                                  bool bHovered, bool bDisabled) override
             {
                 // TODO.
                 DrawButton(control, bDepressed, bHovered, bDisabled);
             }
 
             virtual void DrawMenuItem(Gwk::Controls::Base* control, bool bSubmenuOpen,
-                                      bool bChecked)
+                                      bool bChecked) override
             {
                 if (bSubmenuOpen || control->IsHovered())
                 {
@@ -116,7 +116,7 @@ namespace Gwk
                 }
             }
 
-            virtual void DrawMenuStrip(Gwk::Controls::Base* control)
+            virtual void DrawMenuStrip(Gwk::Controls::Base* control) override
             {
                 int w = control->Width();
                 int h = control->Height();
@@ -127,7 +127,7 @@ namespace Gwk
                 m_render->DrawFilledRect(Gwk::Rect(0, h/2, w, h/2));
             }
 
-            virtual void DrawMenu(Gwk::Controls::Base* control, bool bPaddingDisabled)
+            virtual void DrawMenu(Gwk::Controls::Base* control, bool bPaddingDisabled) override
             {
                 int w = control->Width();
                 int h = control->Height();
@@ -144,7 +144,7 @@ namespace Gwk
                 m_render->DrawLinedRect(Gwk::Rect(0, 0, w, h));
             }
 
-            virtual void DrawShadow(Gwk::Controls::Base* control)
+            virtual void DrawShadow(Gwk::Controls::Base* control) override
             {
                 int w = control->Width();
                 int h = control->Height();
@@ -194,7 +194,7 @@ namespace Gwk
             }
 
             virtual void DrawRadioButton(Gwk::Controls::Base* control, bool bSelected,
-                                         bool bDepressed)
+                                         bool bDepressed) override
             {
                 Gwk::Rect rect = control->GetRenderBounds();
 
@@ -231,7 +231,7 @@ namespace Gwk
             }
 
             virtual void DrawCheckBox(Gwk::Controls::Base* control, bool bSelected,
-                                      bool bDepressed)
+                                      bool bDepressed) override
             {
                 Gwk::Rect rect = control->GetRenderBounds();
 
@@ -275,7 +275,7 @@ namespace Gwk
             }
 
             virtual void DrawGroupBox(Gwk::Controls::Base* control, int textStart, int textHeight,
-                                      int textWidth)
+                                      int textWidth) override
             {
                 Gwk::Rect rect = control->GetRenderBounds();
                 rect.y += textHeight/2;
@@ -298,7 +298,7 @@ namespace Gwk
                 m_render->DrawFilledRect(Gwk::Rect((rect.x+rect.w)-1, rect.y+1, 1, rect.h-1));
             }
 
-            virtual void DrawTextBox(Gwk::Controls::Base* control)
+            virtual void DrawTextBox(Gwk::Controls::Base* control) override
             {
                 Gwk::Rect rect = control->GetRenderBounds();
                 bool bIsFocussed = control->IsFocussed();
@@ -342,7 +342,7 @@ namespace Gwk
                 m_render->DrawShavedCornerRect(Gwk::Rect(0, 0, rect.w, rect.h));
             }
 
-            virtual void DrawTabControl(Gwk::Controls::Base* control)
+            virtual void DrawTabControl(Gwk::Controls::Base* control) override
             {
                 Gwk::Rect rect = control->GetRenderBounds();
                 m_render->SetDrawColor(m_colControl);
@@ -353,7 +353,7 @@ namespace Gwk
                 //m_render->DrawFilledRect( CurrentButtonRect );
             }
 
-            virtual void DrawWindow(Gwk::Controls::Base* control, int topHeight, bool inFocus)
+            virtual void DrawWindow(Gwk::Controls::Base* control, int topHeight, bool inFocus) override
             {
                 Gwk::Rect rect = control->GetRenderBounds();
 
@@ -393,7 +393,7 @@ namespace Gwk
                 m_render->DrawShavedCornerRect(Gwk::Rect(rect.x, rect.y, rect.w, rect.h));
             }
 
-            virtual void DrawHighlight(Gwk::Controls::Base* control)
+            virtual void DrawHighlight(Gwk::Controls::Base* control) override
             {
                 Gwk::Rect rect = control->GetRenderBounds();
                 m_render->SetDrawColor(Gwk::Color(255, 100, 255, 255));
@@ -401,7 +401,7 @@ namespace Gwk
             }
 
             virtual void DrawScrollBar(Gwk::Controls::Base* control, bool isHorizontal,
-                                       bool bDepressed)
+                                       bool bDepressed) override
             {
                 Gwk::Rect rect = control->GetRenderBounds();
 
@@ -413,13 +413,13 @@ namespace Gwk
             }
 
             virtual void DrawScrollBarBar(Controls::Base* control, bool bDepressed, bool isHovered,
-                                          bool isHorizontal)
+                                          bool isHorizontal) override
             {
                 //TODO: something specialized
                 DrawButton(control, bDepressed, isHovered, false);
             }
 
-            virtual void DrawTabTitleBar(Gwk::Controls::Base* control)
+            virtual void DrawTabTitleBar(Gwk::Controls::Base* control) override
             {
                 Gwk::Rect rect = control->GetRenderBounds();
                 m_render->SetDrawColor(Gwk::Color(177, 193, 214, 255));
@@ -430,7 +430,7 @@ namespace Gwk
             }
 
             virtual void DrawProgressBar(Gwk::Controls::Base* control, bool isHorizontal,
-                                         float progress)
+                                         float progress) override
             {
                 Gwk::Rect rect = control->GetRenderBounds();
                 Gwk::Color FillColour(0, 211, 40, 255);
@@ -467,7 +467,7 @@ namespace Gwk
                 m_render->DrawShavedCornerRect(rect);
             }
 
-            virtual void DrawListBox(Gwk::Controls::Base* control)
+            virtual void DrawListBox(Gwk::Controls::Base* control) override
             {
                 Gwk::Rect rect = control->GetRenderBounds();
                 m_render->SetDrawColor(m_colControlBright);
@@ -476,7 +476,7 @@ namespace Gwk
                 m_render->DrawLinedRect(rect);
             }
 
-            virtual void DrawListBoxLine(Gwk::Controls::Base* control, bool bSelected, bool bEven)
+            virtual void DrawListBoxLine(Gwk::Controls::Base* control, bool bSelected, bool bEven) override
             {
                 Gwk::Rect rect = control->GetRenderBounds();
 
@@ -493,7 +493,7 @@ namespace Gwk
             }
 
             virtual void DrawSlider(Gwk::Controls::Base* control, bool bIsHorizontal,
-                                    int numNotches, int barSize)
+                                    int numNotches, int barSize) override
             {
                 Gwk::Rect rect = control->GetRenderBounds();
 
@@ -514,13 +514,13 @@ namespace Gwk
                 m_render->DrawLinedRect(rect);
             }
 
-            virtual void DrawComboBox(Gwk::Controls::Base* control, bool bIsDown, bool bIsMenuOpen)
+            virtual void DrawComboBox(Gwk::Controls::Base* control, bool bIsDown, bool bIsMenuOpen) override
             {
                 DrawTextBox(control);
             }
 
             virtual void DrawKeyboardHighlight(Gwk::Controls::Base* control, const Gwk::Rect& r,
-                                               int iOffset)
+                                               int iOffset) override
             {
                 Gwk::Rect rect = r;
                 rect.x += iOffset;
@@ -564,7 +564,7 @@ namespace Gwk
                 }
             }
 
-            virtual void DrawToolTip(Gwk::Controls::Base* control)
+            virtual void DrawToolTip(Gwk::Controls::Base* control) override
             {
                 Gwk::Rect rct = control->GetRenderBounds();
                 rct.x -= 3;
@@ -578,7 +578,7 @@ namespace Gwk
             }
 
             virtual void DrawScrollButton(Gwk::Controls::Base* control, Position direction,
-                                          bool bDepressed, bool bHovered, bool bDisabled)
+                                          bool bDepressed, bool bHovered, bool bDisabled) override
             {
                 DrawButton(control, bDepressed, false, false);
                 m_render->SetDrawColor(Gwk::Color(0, 0, 0, 240));
@@ -595,7 +595,7 @@ namespace Gwk
             }
 
             virtual void DrawComboDownArrow(Gwk::Controls::Base* control, bool bHovered,
-                                            bool bDown, bool bOpen, bool bDisabled)
+                                            bool bDown, bool bOpen, bool bDisabled) override
             {
                 //DrawButton( control->Width(), control->Height(), bDepressed, false, true );
                 m_render->SetDrawColor(Gwk::Color(0, 0, 0, 240));
@@ -604,7 +604,7 @@ namespace Gwk
             }
 
             virtual void DrawNumericUpDownButton(Gwk::Controls::Base* control, bool bDepressed,
-                                                 bool bUp)
+                                                 bool bUp) override
             {
                 //DrawButton( control->Width(), control->Height(), bDepressed, false, true );
                 m_render->SetDrawColor(Gwk::Color(0, 0, 0, 240));
@@ -616,7 +616,7 @@ namespace Gwk
                     DrawArrowDown(r);
             }
 
-            virtual void DrawTreeButton(Controls::Base* control, bool bOpen)
+            virtual void DrawTreeButton(Controls::Base* control, bool bOpen) override
             {
                 Gwk::Rect rect = control->GetRenderBounds();
                 rect.x += 2;
@@ -641,7 +641,7 @@ namespace Gwk
                                                     1));
             }
 
-            virtual void DrawTreeControl(Controls::Base* control)
+            virtual void DrawTreeControl(Controls::Base* control) override
             {
                 Gwk::Rect rect = control->GetRenderBounds();
                 m_render->SetDrawColor(m_colControlBright);
@@ -650,8 +650,8 @@ namespace Gwk
                 m_render->DrawLinedRect(rect);
             }
 
-            void DrawTreeNode(Controls::Base* ctrl, bool bOpen, bool bSelected, int iLabelHeight,
-                              int iLabelWidth, int iHalfWay, int iLastBranch, bool bIsRoot)
+            virtual void DrawTreeNode(Controls::Base* ctrl, bool bOpen, bool bSelected, int iLabelHeight,
+                              int iLabelWidth, int iHalfWay, int iLastBranch, bool bIsRoot) override
             {
                 if (bSelected)
                 {
@@ -665,12 +665,12 @@ namespace Gwk
                                    iLastBranch, bIsRoot);
             }
 
-            virtual void DrawStatusBar(Controls::Base* control)
+            virtual void DrawStatusBar(Controls::Base* control) override
             {
                 // TODO.
             }
 
-            void DrawColorDisplay(Controls::Base* control, Gwk::Color color)
+            virtual void DrawColorDisplay(Controls::Base* control, Gwk::Color color) override
             {
                 Gwk::Rect rect = control->GetRenderBounds();
 
@@ -689,7 +689,7 @@ namespace Gwk
                 GetRender()->DrawLinedRect(rect);
             }
 
-            virtual void DrawModalControl(Controls::Base* control)
+            virtual void DrawModalControl(Controls::Base* control) override
             {
                 if (control->ShouldDrawBackground())
                 {
@@ -699,7 +699,7 @@ namespace Gwk
                 }
             }
 
-            virtual void DrawMenuDivider(Controls::Base* control)
+            virtual void DrawMenuDivider(Controls::Base* control) override
             {
                 Gwk::Rect rect = control->GetRenderBounds();
                 GetRender()->SetDrawColor(m_colBGDark);
@@ -708,19 +708,19 @@ namespace Gwk
                 GetRender()->DrawLinedRect(rect);
             }
 
-            virtual void DrawMenuRightArrow(Controls::Base* control)
+            virtual void DrawMenuRightArrow(Controls::Base* control) override
             {
                 DrawArrowRight(control->GetRenderBounds());
             }
 
             virtual void DrawSlideButton(Gwk::Controls::Base* control, bool bDepressed,
-                                         bool bHorizontal)
+                                         bool bHorizontal) override
             {
                 DrawButton(control, bDepressed, control->IsHovered(), control->IsDisabled());
             }
 
-            virtual void DrawCategoryHolder(Controls::Base* ctrl) {}
-            virtual void DrawCategoryInner(Controls::Base* ctrl, bool bCollapsed) {}
+            virtual void DrawCategoryHolder(Controls::Base* ctrl) override {}
+            virtual void DrawCategoryInner(Controls::Base* ctrl, bool bCollapsed) override {}
         };
 
 
