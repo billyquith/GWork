@@ -20,12 +20,20 @@ Get source code:
 * From git: `git clone https://github.com/billyquith/GWork.git gwork` or
 * [Download zip](https://github.com/billyquith/GWork/archive/gwork.zip) & unzip
 
-CMake is used to generate the project files.
+CMake is used to generate the project files. See `cmake -h` to see all the generators for 
+your platform. Only have one renderer per build directory. Choose renderer:
+
+* `-D RENDER_ALLEGRO5=ON`
+* `-D RENDER_OPENGL=ON`
+* `-D RENDER_SDL2=ON`
+* `-D RENDER_SFML2=ON`
+
+For example to build SDL2 renderer using Ninja:
 
 ```bash
 cd gwork
-mkdir build && cd build             # put all build files in separate directory
-cmake -G Ninja -DRENDER_SDL2=ON ..  # create Ninja project files with SDL2 renderer
+mkdir build && cd build              # put all build files in separate directory
+cmake -G Ninja -D RENDER_SDL2=ON ..  # create Ninja project files with SDL2 renderer
 ```
 
 Providing the dependencies are present, this will create a sample executable. When run it will
