@@ -21,7 +21,6 @@
 static Gwk::Input::Allegro      g_gworkInput;
 static ALLEGRO_EVENT_QUEUE*     g_event_queue = nullptr;
 static ALLEGRO_DISPLAY*         g_display = nullptr;
-static Gwk::String              gs_clipboard;
 
 static const ALLEGRO_SYSTEM_MOUSE_CURSOR g_cursorConversion[] =
 {
@@ -50,22 +49,25 @@ void Gwk::Platform::SetCursor(unsigned char iCursor)
 
 Gwk::String Gwk::Platform::GetClipboardText()
 {
-    if (al_clipboard_has_text(g_display) {
+    Gwk::String str;
+
+    if (al_clipboard_has_text(g_display) )
+    {
         char* clip = al_get_clipboard_text(g_display);
 
-        if (clip != NULL) {
-            gs_clipboard = clip;
+        if (clip != nullptr)
+        {
+            str = clip;
             al_free(clip);
         }
     }
 
-    return gs_clipboard;
+    return str;
 }
 
 bool Gwk::Platform::SetClipboardText(const Gwk::String& str)
 {
-    gs_clipboard = str;
-    return al_set_clipboard_text(g_display, gs_clipboard.c_str());
+    return al_set_clipboard_text(g_display, str.c_str());
 }
 
 float Gwk::Platform::GetTimeInSeconds()
