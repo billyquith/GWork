@@ -81,7 +81,7 @@ namespace Gwk
             }
 
             virtual void SetAction(Event::Handler* object,
-                                   Handler::FunctionWithInformation function,
+                                   Event::Caller::EventListenter function,
                                    const Gwk::Event::Packet& packet) override;
 
         public:

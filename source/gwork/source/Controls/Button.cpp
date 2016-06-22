@@ -228,8 +228,9 @@ void Button::SetImageAlpha(float f)
     m_image->SetDrawColor(Gwk::Color(255, 255, 255, 255.0f*f));
 }
 
-void Button::SetAction(Event::Handler* object, Handler::FunctionWithInformation function,
+void Button::SetAction(Event::Handler* object, Event::Caller::EventListenter function,
                        const Gwk::Event::Packet& packet)
 {
     onPress.Add(object, function, packet);
 }
+

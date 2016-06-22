@@ -12,6 +12,7 @@
 #include <Gwork/Config.h>
 #include <Gwork/UiTypes.h>
 #include <Gwork/ControlList.h>
+#include <functional>
 
 namespace Gwk
 {
@@ -83,8 +84,6 @@ namespace Gwk
             PONDER_RTTI()
         public:
 
-            typedef void (Handler::*FunctionWithInformation)(Event::Info info);
-
             virtual ~Handler();
 
             void RegisterCaller(Caller*);
@@ -96,7 +95,6 @@ namespace Gwk
 
             void CleanLinks();
             std::list<Caller*> m_callers;
-
         };
         
         //
@@ -106,6 +104,8 @@ namespace Gwk
         {
         public:
 
+            typedef void (Handler::*EventListenter)(Event::Info info);
+            
             Caller();
             ~Caller();
 
@@ -117,14 +117,14 @@ namespace Gwk
                      void (T::*f)(Event::Info),
                      const Event::Packet& packet = Event::Packet())
             {
-                AddInternal(ob, static_cast<Handler::FunctionWithInformation>(f), packet);
+                AddInternal(ob, static_cast<EventListenter>(f), packet);
             }
 
             void RemoveHandler(Event::Handler* object);
 
         private:
 
-            void AddInternal(Event::Handler* object, Handler::FunctionWithInformation function,
+            void AddInternal(Event::Handler* object, EventListenter function,
                              const Event::Packet& packet);
 
             void CleanLinks();
@@ -136,7 +136,7 @@ namespace Gwk
                 ,   object(nullptr)
                 {}
 
-                Handler::FunctionWithInformation fnFunctionInfo;
+                EventListenter fnFunctionInfo;
                 Event::Handler*     object;
                 Event::Packet       Packet;
             };
@@ -144,9 +144,7 @@ namespace Gwk
             std::list<HandlerInstance> m_handlers;
         };
 
-
     }
-
 }
 
 PONDER_TYPE(Gwk::Event::Handler)
