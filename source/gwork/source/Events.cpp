@@ -84,7 +84,7 @@ void Caller::Call(Controls::Base* pThis, Event::Info information)
         info.Packet = &h.Packet;
 
         if (h.callback)
-            (h.listener->*h.callback)(info);
+            h.callback(*h.listener, info);
     }
 }
 

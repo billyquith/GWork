@@ -136,7 +136,8 @@ namespace Gwk
                 ,   listener(nullptr)
                 {}
 
-                EventListenter      callback;
+                typedef std::function<void(Handler&,Event::Info)> EventCallback;
+                EventCallback       callback;
                 Event::Handler*     listener;
                 Event::Packet       Packet;
             };
