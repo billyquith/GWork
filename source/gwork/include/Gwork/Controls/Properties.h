@@ -83,7 +83,7 @@ namespace Gwk
             virtual void OnEditingChanged();
             virtual void OnHoverChanged();
 
-            Event::Caller onChange;
+            Event::Listener onChange;
 
         protected:
 

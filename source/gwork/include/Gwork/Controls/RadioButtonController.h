@@ -46,7 +46,7 @@ namespace Gwk
                 return m_selected->GetLabel()->GetText();
             }
 
-            Event::Caller onSelectionChange;
+            Event::Listener onSelectionChange;
 
             virtual void OnRadioClicked(Event::Info);
             

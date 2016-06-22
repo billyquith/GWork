@@ -39,9 +39,9 @@ namespace Gwk
                 return m_bChecked;
             }
 
-            Gwk::Event::Caller onChecked;
-            Gwk::Event::Caller onUnChecked;
-            Gwk::Event::Caller onCheckChanged;
+            Gwk::Event::Listener onChecked;
+            Gwk::Event::Listener onUnChecked;
+            Gwk::Event::Listener onCheckChanged;
 
         private:
 

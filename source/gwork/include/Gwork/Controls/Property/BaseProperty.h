@@ -49,7 +49,7 @@ namespace Gwk
                     DoChanged();
                 }
 
-                Event::Caller onChange;
+                Event::Listener onChange;
             };
 
 

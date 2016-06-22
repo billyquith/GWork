@@ -37,7 +37,7 @@ namespace Gwk
 
             typedef std::list<Base*> List;
 
-            typedef std::map<Gwk::String, Gwk::Event::Caller*> AccelMap;
+            typedef std::map<Gwk::String, Gwk::Event::Listener*> AccelMap;
 
             Base(Base* parent, const Gwk::String& Name = "");
             virtual ~Base();
@@ -385,12 +385,12 @@ namespace Gwk
                 if (handler == nullptr)
                     handler = this;
 
-                Gwk::Event::Caller* caller = new Gwk::Event::Caller();
-                caller->Add(handler, func);
+                Gwk::Event::Listener* Listener = new Gwk::Event::Listener();
+                Listener->Add(handler, func);
                 Gwk::String str = accelerator;
                 Gwk::Utility::Strings::ToUpper(str);
                 Gwk::Utility::Strings::Strip(str, " ");
-                m_accelerators[ str ] = caller;
+                m_accelerators[ str ] = Listener;
             }
 
             void AddAccelerator(const String& accelerator)
@@ -402,8 +402,8 @@ namespace Gwk
 
             // Default Events
 
-            Gwk::Event::Caller onHoverEnter;
-            Gwk::Event::Caller onHoverLeave;
+            Gwk::Event::Listener onHoverEnter;
+            Gwk::Event::Listener onHoverLeave;
 
             // Childrens List
 
@@ -573,7 +573,7 @@ namespace Gwk
             virtual void       DoAction() {}
 
             virtual void SetAction(Event::Handler* object,
-                                   Event::Caller::EventListener function,
+                                   Event::Listener::EventListener function,
                                    const Gwk::Event::Packet& packet)
             {
             }

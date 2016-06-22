@@ -46,10 +46,10 @@ namespace Gwk
 
             virtual void OnMouseDoubleClickLeft(int x, int y) override;
 
-            Gwk::Event::Caller onDragged;
-            Gwk::Event::Caller onDragStart;
+            Gwk::Event::Listener onDragged;
+            Gwk::Event::Listener onDragStart;
 
-            Gwk::Event::Caller onDoubleClickLeft;
+            Gwk::Event::Listener onDoubleClickLeft;
 
         protected:
 

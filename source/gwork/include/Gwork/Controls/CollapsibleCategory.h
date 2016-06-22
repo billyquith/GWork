@@ -52,7 +52,7 @@ namespace Gwk
 
         public:
 
-            Gwk::Event::Caller onSelection;
+            Gwk::Event::Listener onSelection;
 
         protected:
 

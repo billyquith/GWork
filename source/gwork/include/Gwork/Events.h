@@ -23,7 +23,7 @@ namespace Gwk
 
     namespace Event
     {
-        class Caller;
+        class Listener;
 
         /**
          *  When adding an event hook you can add a Packet too.
@@ -55,7 +55,7 @@ namespace Gwk
             ,   Integer(0)
             {}
 
-            /// This is set by the event caller, it will always be
+            /// This is set by the event Listener, it will always be
             /// the control which is calling the event.
             Gwk::Controls::Base* ControlCaller;
 
@@ -86,29 +86,29 @@ namespace Gwk
 
             virtual ~Handler();
 
-            void RegisterCaller(Caller*);
-            void UnRegisterCaller(Caller*);
+            void RegisterCaller(Listener*);
+            void UnRegisterCaller(Listener*);
 
         protected:
 
             Handler();  // Class needs to be derived.
 
             void CleanLinks();
-            std::list<Caller*> m_callers;
+            std::list<Listener*> m_callers;
         };
         
         //
         /// Event callback listener.
         /// Callbacks are registered with this to receive event notifications.
         //
-        class GWK_EXPORT Caller
+        class GWK_EXPORT Listener
         {
         public:
 
             typedef void (Handler::*EventListener)(Event::Info info);
             
-            Caller();
-            ~Caller();
+            Listener();
+            ~Listener();
 
             void Call(Controls::Base* pThis);
             void Call(Controls::Base* pThis, Event::Info info);

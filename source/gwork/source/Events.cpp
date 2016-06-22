@@ -25,37 +25,37 @@ Handler::~Handler()
 void Handler::CleanLinks()
 {
     // Tell all the callers that we're dead
-    std::list<Caller*>::iterator iter = m_callers.begin();
+    std::list<Listener*>::iterator iter = m_callers.begin();
 
     while (iter != m_callers.end())
     {
-        Caller* caller = *iter;
-        UnRegisterCaller(caller);
-        caller->RemoveHandler(this);
+        Listener* Listener = *iter;
+        UnRegisterCaller(Listener);
+        Listener->RemoveHandler(this);
         iter = m_callers.begin();
     }
 }
 
-void Handler::RegisterCaller(Caller* caller)
+void Handler::RegisterCaller(Listener* Listener)
 {
-    m_callers.push_back(caller);
+    m_callers.push_back(Listener);
 }
 
-void Handler::UnRegisterCaller(Caller* caller)
+void Handler::UnRegisterCaller(Listener* Listener)
 {
-    m_callers.remove(caller);
+    m_callers.remove(Listener);
 }
 
-Caller::Caller()
+Listener::Listener()
 {
 }
 
-Caller::~Caller()
+Listener::~Listener()
 {
     CleanLinks();
 }
 
-void Caller::CleanLinks()
+void Listener::CleanLinks()
 {
     for (auto& h : m_handlers)
     {
@@ -65,14 +65,14 @@ void Caller::CleanLinks()
     m_handlers.clear();
 }
 
-void Caller::Call(Controls::Base* pThis)
+void Listener::Call(Controls::Base* pThis)
 {
     Event::Information info(pThis);
     info.Control = pThis;
     Call(pThis, info);
 }
 
-void Caller::Call(Controls::Base* pThis, Event::Info information)
+void Listener::Call(Controls::Base* pThis, Event::Info information)
 {
     Event::Information info(nullptr);
     info = information;
@@ -88,7 +88,7 @@ void Caller::Call(Controls::Base* pThis, Event::Info information)
     }
 }
 
-void Caller::AddInternal(Event::Handler* listener,
+void Listener::AddInternal(Event::Handler* listener,
                          EventListener function,
                          const Gwk::Event::Packet& packet)
 {
@@ -100,7 +100,7 @@ void Caller::AddInternal(Event::Handler* listener,
     listener->RegisterCaller(this);
 }
 
-void Caller::RemoveHandler(Event::Handler* object)
+void Listener::RemoveHandler(Event::Handler* object)
 {
     object->UnRegisterCaller(this);
     std::list<HandlerInstance>::iterator iter = m_handlers.begin();

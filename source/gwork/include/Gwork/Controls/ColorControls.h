@@ -30,7 +30,7 @@ namespace Gwk
             virtual void OnMouseClickLeft(int x, int y, bool bDown) override;
             Gwk::Color  GetSelectedColor();
 
-            Event::Caller onSelectionChanged;
+            Event::Listener onSelectionChanged;
 
         protected:
 
@@ -53,7 +53,7 @@ namespace Gwk
             Gwk::Color  GetColorAtHeight(int y);
             void         SetColor(Gwk::Color color);
 
-            Event::Caller onSelectionChanged;
+            Event::Listener onSelectionChanged;
 
         protected:
 

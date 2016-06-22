@@ -68,7 +68,7 @@ namespace Gwk
                 return SetFolder(strValue);
             }
 
-            Event::Caller onFolderChanged;
+            Event::Listener onFolderChanged;
 
         private:
 

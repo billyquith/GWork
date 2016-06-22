@@ -84,8 +84,8 @@ namespace Gwk
             virtual void MoveCaretToEnd();
             virtual void MoveCaretToStart();
 
-            Event::Caller onTextChanged;
-            Event::Caller onReturnPressed;
+            Event::Listener onTextChanged;
+            Event::Listener onReturnPressed;
 
         protected:
 

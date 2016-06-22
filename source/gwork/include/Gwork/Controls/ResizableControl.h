@@ -56,7 +56,7 @@ namespace Gwk
             {
             }
 
-            Event::Caller onResize;
+            Event::Listener onResize;
 
             virtual ControlsInternal::Resizer* GetResizer(int iResizer)
             {

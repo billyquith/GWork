@@ -83,7 +83,7 @@ namespace Gwk
             virtual void SetAlpha(int alpha)    { m_color.a = alpha; }
             // \}
 
-            Event::Caller onColorChanged;
+            Event::Listener onColorChanged;
 
         protected:
 

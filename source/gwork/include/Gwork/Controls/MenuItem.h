@@ -75,10 +75,10 @@ namespace Gwk
 
             void SetAccelerator(const String& strAccelerator);
 
-            Gwk::Event::Caller onMenuItemSelected;
-            Gwk::Event::Caller onChecked;
-            Gwk::Event::Caller onUnChecked;
-            Gwk::Event::Caller onCheckChange;
+            Gwk::Event::Listener onMenuItemSelected;
+            Gwk::Event::Listener onChecked;
+            Gwk::Event::Listener onUnChecked;
+            Gwk::Event::Listener onCheckChange;
 
         private:
 

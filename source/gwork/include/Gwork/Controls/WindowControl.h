@@ -55,7 +55,7 @@ namespace Gwk
             void MakeModal(bool bDrawBackground = true);
             void DestroyModal();
 
-            Gwk::Event::Caller onWindowClosed;
+            Gwk::Event::Listener onWindowClosed;
 
         protected:
 

@@ -75,9 +75,9 @@ namespace Gwk
 
             int m_zoomedSection;
 
-            Gwk::Event::Caller onZoomed;
-            Gwk::Event::Caller onUnZoomed;
-            Gwk::Event::Caller onZoomChange;
+            Gwk::Event::Listener onZoomed;
+            Gwk::Event::Listener onUnZoomed;
+            Gwk::Event::Listener onZoomChange;
         };
 
 

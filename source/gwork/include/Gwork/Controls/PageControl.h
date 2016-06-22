@@ -67,8 +67,8 @@ namespace Gwk
                 return m_bFinish;
             }
 
-            Event::Caller onPageChanged;
-            Event::Caller onFinish;
+            Event::Listener onPageChanged;
+            Event::Listener onFinish;
 
         protected:
 

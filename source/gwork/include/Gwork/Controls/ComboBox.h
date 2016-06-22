@@ -57,7 +57,7 @@ namespace Gwk
                 return true;
             }
 
-            Gwk::Event::Caller onSelection;
+            Gwk::Event::Listener onSelection;
 
         protected:
 

@@ -69,11 +69,11 @@ namespace Gwk
 
             virtual Controls::Base::List& GetChildNodes();
 
-            Event::Caller onNamePress;
-            Event::Caller onRightPress;
-            Event::Caller onSelectChange;
-            Event::Caller onSelect;
-            Event::Caller onUnselect;
+            Event::Listener onNamePress;
+            Event::Listener onRightPress;
+            Event::Listener onSelectChange;
+            Event::Listener onSelect;
+            Event::Listener onUnselect;
 
             /*protected:*/
 

@@ -57,7 +57,7 @@ namespace Gwk
             virtual void SetMax(int i);
             virtual void SetIntValue(int i);
 
-            Event::Caller onChanged;
+            Event::Listener onChanged;
 
         private:
 

@@ -81,19 +81,19 @@ namespace Gwk
             }
 
             virtual void SetAction(Event::Handler* object,
-                                   Event::Caller::EventListener function,
+                                   Event::Listener::EventListener function,
                                    const Gwk::Event::Packet& packet) override;
 
         public:
 
-            Gwk::Event::Caller onPress;
-            Gwk::Event::Caller onRightPress;
-            Gwk::Event::Caller onDown;
-            Gwk::Event::Caller onUp;
-            Gwk::Event::Caller onDoubleClick;
-            Gwk::Event::Caller onToggle;
-            Gwk::Event::Caller onToggleOn;
-            Gwk::Event::Caller onToggleOff;
+            Gwk::Event::Listener onPress;
+            Gwk::Event::Listener onRightPress;
+            Gwk::Event::Listener onDown;
+            Gwk::Event::Listener onUp;
+            Gwk::Event::Listener onDoubleClick;
+            Gwk::Event::Listener onToggle;
+            Gwk::Event::Listener onToggleOn;
+            Gwk::Event::Listener onToggleOff;
 
         protected:
 

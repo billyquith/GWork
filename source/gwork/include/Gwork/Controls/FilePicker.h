@@ -77,7 +77,7 @@ namespace Gwk
                 return SetFileName(strValue);
             }
 
-            Event::Caller onFileChanged;
+            Event::Listener onFileChanged;
 
         private:
 

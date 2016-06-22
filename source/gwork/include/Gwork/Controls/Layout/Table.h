@@ -144,7 +144,7 @@ namespace Gwk
                 //
                 // This is sometimes called by derivatives.
                 //
-                Gwk::Event::Caller onRowSelected;
+                Gwk::Event::Listener onRowSelected;
 
                 virtual bool GetEven()
                 {

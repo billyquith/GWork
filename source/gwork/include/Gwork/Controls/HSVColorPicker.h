@@ -40,7 +40,7 @@ namespace Gwk
 
             void UpdateControls(Gwk::Color newColor);
 
-            Event::Caller onColorChanged;
+            Event::Listener onColorChanged;
 
         protected:
 

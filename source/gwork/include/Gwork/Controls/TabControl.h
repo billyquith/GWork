@@ -54,8 +54,8 @@ namespace Gwk
                 GetTabStrip()->SetAllowReorder(b);
             }
 
-            Gwk::Event::Caller onLoseTab;
-            Gwk::Event::Caller onAddTab;
+            Gwk::Event::Listener onLoseTab;
+            Gwk::Event::Listener onAddTab;
 
             virtual void OnTabPressed(Event::Info info);
             virtual void OnLoseTab(TabButton* button);

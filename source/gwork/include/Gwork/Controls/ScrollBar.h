@@ -84,7 +84,7 @@ namespace Gwk
                 return false;
             }
 
-            Gwk::Event::Caller onBarMoved;
+            Gwk::Event::Listener onBarMoved;
 
         protected:
 

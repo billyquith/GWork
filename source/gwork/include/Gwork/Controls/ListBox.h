@@ -58,7 +58,7 @@ namespace Gwk
             virtual void SetSelectedRow(Gwk::Controls::Base* row, bool bClearOthers = true);
             virtual void SelectByString(const String& string, bool bClearOthers = true);
 
-            Gwk::Event::Caller onRowSelected;
+            Gwk::Event::Listener onRowSelected;
 
             Controls::Layout::Table* GetTable()
             {

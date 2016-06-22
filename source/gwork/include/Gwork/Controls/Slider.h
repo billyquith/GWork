@@ -111,7 +111,7 @@ namespace Gwk
 
             virtual void RenderFocus(Gwk::Skin::Base* skin) override;
 
-            Gwk::Event::Caller onValueChanged;
+            Gwk::Event::Listener onValueChanged;
 
             virtual float GetMin()
             {
