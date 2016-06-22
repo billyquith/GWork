@@ -62,8 +62,7 @@ endif(BUILD_SAMPLE)
 
 
 if(RENDER_ALLEGRO5)
-    # Use Allegro 5.0 as 5.1 is unstable.
-    find_package(Allegro50 REQUIRED)
+    find_package(Allegro5 REQUIRED)
     set(GWK_RENDER_NAME "Allegro5")
     set(GWK_RENDER_INCLUDES "${ALLEGRO5_INCLUDE_DIRS}")
     set(GWK_RENDER_LIBRARIES "${ALLEGRO5_LIBRARIES}")
