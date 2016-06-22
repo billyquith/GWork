@@ -113,13 +113,9 @@ namespace Gwk
             void Call(Controls::Base* pThis, Event::Info info);
 
             template <typename T>
-            void Add(Event::Handler* ob, void (T::*f)(Event::Info))
-            {
-                AddInternal(ob, static_cast<Handler::FunctionWithInformation>(f));
-            }
-
-            template <typename T>
-            void Add(Event::Handler* ob, void (T::*f)(Event::Info), const Event::Packet& packet)
+            void Add(Event::Handler* ob,
+                     void (T::*f)(Event::Info),
+                     const Event::Packet& packet = Event::Packet())
             {
                 AddInternal(ob, static_cast<Handler::FunctionWithInformation>(f), packet);
             }
@@ -128,7 +124,6 @@ namespace Gwk
 
         private:
 
-            void AddInternal(Event::Handler* object, Handler::FunctionWithInformation function);
             void AddInternal(Event::Handler* object, Handler::FunctionWithInformation function,
                              const Event::Packet& packet);
 

@@ -92,11 +92,6 @@ void Caller::Call(Controls::Base* pThis, Event::Info information)
     }
 }
 
-void Caller::AddInternal(Event::Handler* object, Handler::FunctionWithInformation function)
-{
-    AddInternal(object, function, Gwk::Event::Packet());
-}
-
 void Caller::AddInternal(Event::Handler* object, Handler::FunctionWithInformation function,
                          const Gwk::Event::Packet& packet)
 {
