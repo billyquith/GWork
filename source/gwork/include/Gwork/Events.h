@@ -98,13 +98,14 @@ namespace Gwk
         };
         
         //
-        /// Event callback management.
+        /// Event callback listener.
+        /// Callbacks are registered with this to receive event notifications.
         //
         class GWK_EXPORT Caller
         {
         public:
 
-            typedef void (Handler::*EventListenter)(Event::Info info);
+            typedef void (Handler::*EventListener)(Event::Info info);
             
             Caller();
             ~Caller();
@@ -117,14 +118,14 @@ namespace Gwk
                      void (T::*f)(Event::Info),
                      const Event::Packet& packet = Event::Packet())
             {
-                AddInternal(listener, static_cast<EventListenter>(f), packet);
+                AddInternal(listener, static_cast<EventListener>(f), packet);
             }
 
             void RemoveHandler(Event::Handler* object);
 
         private:
 
-            void AddInternal(Event::Handler* listener, EventListenter function,
+            void AddInternal(Event::Handler* listener, EventListener function,
                              const Event::Packet& packet);
 
             void CleanLinks();

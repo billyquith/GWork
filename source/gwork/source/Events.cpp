@@ -89,7 +89,7 @@ void Caller::Call(Controls::Base* pThis, Event::Info information)
 }
 
 void Caller::AddInternal(Event::Handler* listener,
-                         EventListenter function,
+                         EventListener function,
                          const Gwk::Event::Packet& packet)
 {
     HandlerInstance h;
