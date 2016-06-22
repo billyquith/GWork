@@ -59,7 +59,7 @@ void Caller::CleanLinks()
 {
     for (auto& h : m_handlers)
     {
-        h.object->UnRegisterCaller(this);
+        h.listener->UnRegisterCaller(this);
     }
 
     m_handlers.clear();
@@ -83,23 +83,24 @@ void Caller::Call(Controls::Base* pThis, Event::Info information)
     {
         info.Packet = &h.Packet;
 
-        if (h.fnFunctionInfo)
-            (h.object->*h.fnFunctionInfo)(info);
+        if (h.callback)
+            (h.listener->*h.callback)(info);
     }
 }
 
-void Caller::AddInternal(Event::Handler* object, EventListenter function,
+void Caller::AddInternal(Event::Handler* listener,
+                         EventListenter function,
                          const Gwk::Event::Packet& packet)
 {
     HandlerInstance h;
-    h.fnFunctionInfo    = function;
-    h.object            = object;
-    h.Packet            = packet;
+    h.callback  = function;
+    h.listener  = listener;
+    h.Packet    = packet;
     m_handlers.push_back(h);
-    object->RegisterCaller(this);
+    listener->RegisterCaller(this);
 }
 
-    void Caller::RemoveHandler(Event::Handler* object)
+void Caller::RemoveHandler(Event::Handler* object)
 {
     object->UnRegisterCaller(this);
     std::list<HandlerInstance>::iterator iter = m_handlers.begin();
@@ -108,7 +109,7 @@ void Caller::AddInternal(Event::Handler* object, EventListenter function,
     {
         HandlerInstance& h = *iter;
 
-        if (h.object == object)
+        if (h.listener == object)
             iter = m_handlers.erase(iter);
         else
             ++iter;

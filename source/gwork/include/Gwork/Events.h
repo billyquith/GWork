@@ -113,18 +113,18 @@ namespace Gwk
             void Call(Controls::Base* pThis, Event::Info info);
 
             template <typename T>
-            void Add(Event::Handler* ob,
+            void Add(Event::Handler* listener,
                      void (T::*f)(Event::Info),
                      const Event::Packet& packet = Event::Packet())
             {
-                AddInternal(ob, static_cast<EventListenter>(f), packet);
+                AddInternal(listener, static_cast<EventListenter>(f), packet);
             }
 
             void RemoveHandler(Event::Handler* object);
 
         private:
 
-            void AddInternal(Event::Handler* object, EventListenter function,
+            void AddInternal(Event::Handler* listener, EventListenter function,
                              const Event::Packet& packet);
 
             void CleanLinks();
@@ -132,12 +132,12 @@ namespace Gwk
             struct HandlerInstance
             {
                 HandlerInstance()
-                :   fnFunctionInfo(nullptr)
-                ,   object(nullptr)
+                :   callback(nullptr)
+                ,   listener(nullptr)
                 {}
 
-                EventListenter fnFunctionInfo;
-                Event::Handler*     object;
+                EventListenter      callback;
+                Event::Handler*     listener;
                 Event::Packet       Packet;
             };
 
