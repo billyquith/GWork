@@ -25,25 +25,25 @@ Handler::~Handler()
 void Handler::CleanLinks()
 {
     // Tell all the callers that we're dead
-    std::list<Listener*>::iterator iter = m_callers.begin();
+    std::list<Listener*>::iterator iter = m_listeners.begin();
 
-    while (iter != m_callers.end())
+    while (iter != m_listeners.end())
     {
         Listener* Listener = *iter;
         UnRegisterCaller(Listener);
         Listener->RemoveHandler(this);
-        iter = m_callers.begin();
+        iter = m_listeners.begin();
     }
 }
 
 void Handler::RegisterCaller(Listener* Listener)
 {
-    m_callers.push_back(Listener);
+    m_listeners.push_back(Listener);
 }
 
 void Handler::UnRegisterCaller(Listener* Listener)
 {
-    m_callers.remove(Listener);
+    m_listeners.remove(Listener);
 }
 
 Listener::Listener()

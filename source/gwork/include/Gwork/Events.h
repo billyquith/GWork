@@ -76,9 +76,9 @@ namespace Gwk
 
         typedef const Gwk::Event::Information& Info;
 
-        //
-        /// A class wanting to receive events must be derived from this.
-        //
+        /**
+         *  A class wanting to receive events must be derived from this.
+         */
         class GWK_EXPORT Handler
         {
             PONDER_RTTI()
@@ -93,14 +93,17 @@ namespace Gwk
 
             Handler();  // Class needs to be derived.
 
+        private:
+
             void CleanLinks();
-            std::list<Listener*> m_callers;
+            std::list<Listener*> m_listeners;
         };
         
-        //
-        /// Event callback listener.
-        /// Callbacks are registered with this to receive event notifications.
-        //
+        /**
+         *  \brief Event callback listener.
+         *
+         *  Callbacks are registered with this to receive event notifications.
+         */
         class GWK_EXPORT Listener
         {
         public:
