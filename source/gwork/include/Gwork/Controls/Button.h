@@ -76,7 +76,7 @@ namespace Gwk
 
             virtual void DoAction() override
             {
-                Event::Information info(this);
+                Event::Info info(this);
                 OnPress(info);
             }
 

@@ -59,7 +59,7 @@ void Button::OnMouseClickLeft(int /*x*/, int /*y*/, bool bDown)
     {
         if (IsHovered() && m_bDepressed)
         {
-            OnPress(Event::Information(this));
+            OnPress(Event::Info(this));
         }
 
         SetDepressed(false);
@@ -83,7 +83,7 @@ void Button::OnMouseClickRight(int /*x*/, int /*y*/, bool bDown)
     {
         if (IsHovered() && m_bDepressed)
         {
-            OnRightPress(Event::Information(this));
+            OnRightPress(Event::Info(this));
         }
 
         SetDepressed(false);
@@ -173,7 +173,7 @@ bool Button::OnKeySpace(bool bDown)
 {
     if (bDown)
     {
-        OnPress(Event::Information(this));
+        OnPress(Event::Info(this));
     }
 
     return true;
@@ -181,7 +181,7 @@ bool Button::OnKeySpace(bool bDown)
 
 void Button::AcceleratePressed()
 {
-    OnPress(Event::Information(this));
+    OnPress(Event::Info(this));
 }
 
 void Button::UpdateColours()

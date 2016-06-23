@@ -39,7 +39,7 @@ namespace Gwk
 
                 virtual void DoChanged()
                 {
-                    Event::Information info(this);
+                    Event::Info info(this);
                     info.String = GetPropertyValue();
                     onChange.Call(this, info);
                 }

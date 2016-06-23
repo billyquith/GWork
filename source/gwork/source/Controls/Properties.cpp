@@ -176,7 +176,7 @@ void PropertyRow::SetProperty(Property::Base* prop)
 
 void PropertyRow::OnPropertyValueChanged(Event::Info info)
 {
-    Event::Information sinfo(info);
+    Event::Info sinfo(info);
     sinfo.String = GetProperty()->GetPropertyValue();
     onChange.Call(this, sinfo);
 }

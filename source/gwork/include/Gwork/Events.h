@@ -35,6 +35,7 @@ namespace Gwk
             :   Control(control)
             {}
 
+            // TODO - union? variant?
             Gwk::Controls::Base *Control;
             Gwk::String String;
             int Integer;
@@ -44,11 +45,11 @@ namespace Gwk
 
 
         /**
-         *  Passed to an event hook
+         *  Passed to an event listener.
          */
-        struct Information
+        struct Info
         {
-            Information(Gwk::Controls::Base* ctrl)
+            Info(Gwk::Controls::Base* ctrl)
             :   ControlCaller(nullptr)
             ,   Packet(nullptr)
             ,   Control(ctrl)
@@ -72,9 +73,6 @@ namespace Gwk
             Gwk::Point Point;
             int Integer;
         };
-
-
-        typedef const Gwk::Event::Information& Info;
 
         /**
          *  A class wanting to receive events must be derived from this.

@@ -67,14 +67,14 @@ void Listener::CleanLinks()
 
 void Listener::Call(Controls::Base* pThis)
 {
-    Event::Information info(pThis);
+    Event::Info info(pThis);
     info.Control = pThis;
     Call(pThis, info);
 }
 
 void Listener::Call(Controls::Base* pThis, Event::Info information)
 {
-    Event::Information info(nullptr);
+    Event::Info info(nullptr);
     info = information;
     info.ControlCaller = pThis;
     std::list<HandlerInstance>::iterator iter;
