@@ -60,9 +60,7 @@ bool TextBox::OnChar(Gwk::UnicodeChar c)
     if (c == '\t')
         return false;
 
-    Gwk::String str;
-    str += c;
-    InsertText(str);
+    InsertText(String{c});
     return true;
 }
 
@@ -520,14 +518,11 @@ void TextBoxMultiline::Render(Skin::Base* skin)
         int iSelectionStartPos =  (m_cursorPos < m_cursorEnd) ? m_cursorPos : m_cursorEnd;
         int iSelectionEndPos =    (m_cursorPos < m_cursorEnd) ? m_cursorEnd : m_cursorPos;
 
-//        int iFirstChar = 0;
-//        int iLastChar = 0;
         skin->GetRender()->SetDrawColor(Gwk::Color(50, 170, 255, 200));
         m_rectSelectionBounds.h = m_text->GetFont()->size+2;
 
         for (int iLine = iSelectionStartLine; iLine <= iSelectionEndLine; ++iLine)
         {
-//            ControlsInternal::Text* line = m_text->GetLine(iLine);
             Gwk::Rect box = m_text->GetLineBox(iLine);
             box.x += m_text->X();
             box.y += m_text->Y();
@@ -547,11 +542,11 @@ void TextBoxMultiline::Render(Skin::Base* skin)
             if (iLine == iSelectionEndLine)
             {
                 Gwk::Rect pos = GetCharacterPosition(iSelectionEndPos);
-                m_rectSelectionBounds.w = pos.x-m_rectSelectionBounds.x;
+                m_rectSelectionBounds.w = pos.x - m_rectSelectionBounds.x;
             }
             else
             {
-                m_rectSelectionBounds.w = box.x+box.w-m_rectSelectionBounds.x;
+                m_rectSelectionBounds.w = box.x + box.w - m_rectSelectionBounds.x;
             }
             if (m_rectSelectionBounds.w < 1)
                 m_rectSelectionBounds.w = 1;

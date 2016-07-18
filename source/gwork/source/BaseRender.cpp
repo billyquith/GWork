@@ -151,7 +151,7 @@ void Base::RenderText(Gwk::Font* font, Gwk::Point pos, const Gwk::String& text)
         if (chr == ' ')
             continue;
 
-        Gwk::Rect r(pos.x+i*fSize*0.4f, pos.y, fSize*0.4f-1.0f, fSize);
+        Gwk::Rect r(pos.x + i*fSize*0.4f, pos.y, fSize*0.4f - 1.0f, fSize);
 
         //
         // This isn't important, it's just me messing around changing
