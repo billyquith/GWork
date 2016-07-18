@@ -127,7 +127,7 @@ namespace Gwk
                             return false;
                         }
 
-                        return m_canvas->InputKey(iKey, E->state);
+                        return m_canvas->InputModifierKey(iKey, E->state);
                     }
 
                 case SDL_TEXTINPUT:

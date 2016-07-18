@@ -33,7 +33,8 @@ namespace Gwk
             Down = 13,
             Escape = 14,
             Alt = 15,
-            KeysCount = 16  //!< number of keys
+            Command = 16,   // Mac command/clover
+            KeysCount //!< number of keys
         };
     }
     
@@ -44,7 +45,7 @@ namespace Gwk
         
         virtual bool InputMouseMoved(int x, int y, int deltaX, int deltaY) = 0;
         virtual bool InputMouseButton(int iButton, bool bDown) = 0;
-        virtual bool InputKey(int iKey, bool bDown) = 0;
+        virtual bool InputModifierKey(int iKey, bool bDown) = 0;
         virtual bool InputCharacter(Gwk::UnicodeChar chr) = 0;
         virtual bool InputMouseWheel(int val) = 0;
         virtual bool InputQuit() = 0;
