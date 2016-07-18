@@ -60,7 +60,7 @@ GWK_CONTROL_CONSTRUCTOR(ReflectButton)
     ponder::UserObject buttonA = metaclass->construct(ponder::Args(static_cast<Controls::Base*>(this)));
     assert(buttonA != ponder::UserObject::nothing);
     buttonA.set("text", "Hello world!");
-    buttonA.get("onPress").call("add", this, &ReflectButton::onButtonA);
+//    buttonA.get("onPress").call("add", this, &ReflectButton::onButtonA);
     
     //        {
     //            Controls::Button* buttonA = new Controls::Button(this);

@@ -107,6 +107,7 @@ namespace Gwk
         public:
 
             typedef void (Handler::*EventListener)(Event::Info info);
+            typedef std::function<void(Handler&,Event::Info)> EventCallback;
             
             Listener();
             ~Listener();
@@ -126,7 +127,8 @@ namespace Gwk
 
         private:
 
-            void AddInternal(Event::Handler* listener, EventListener function,
+            void AddInternal(Event::Handler* listener,
+                             EventListener function,
                              const Event::Packet& packet);
 
             void CleanLinks();
@@ -138,7 +140,6 @@ namespace Gwk
                 ,   listener(nullptr)
                 {}
 
-                typedef std::function<void(Handler&,Event::Info)> EventCallback;
                 EventCallback       callback;
                 Event::Handler*     listener;
                 Event::Packet       Packet;

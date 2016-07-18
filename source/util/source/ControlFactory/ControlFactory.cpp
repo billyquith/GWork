@@ -40,8 +40,8 @@ void InitialiseControls()
         .value("fill",    Gwk::Position::Fill)
         ;
 
-    ponder::Class::declare<Event::Caller>()
-    .function("add", [] (Event::Handler&, Controls::Base*))
+    ponder::Class::declare<Gwk::Event::Listener>()
+//        .function("add", [] (Event::Handler&, Controls::Base*))
         ;
 
     ponder::Class::declare<Controls::Base>()

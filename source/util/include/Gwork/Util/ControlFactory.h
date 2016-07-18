@@ -17,6 +17,8 @@ PONDER_TYPE(Gwk::Margin)
 PONDER_TYPE(Gwk::Point)
 PONDER_TYPE(Gwk::Position)
 
+PONDER_TYPE(Gwk::Event::Listener);
+
 PONDER_TYPE(Gwk::Controls::Base)
 PONDER_TYPE(Gwk::Controls::Label)
 PONDER_TYPE(Gwk::Controls::LabelClickable)
