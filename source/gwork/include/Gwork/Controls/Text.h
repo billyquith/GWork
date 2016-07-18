@@ -102,9 +102,9 @@ namespace Gwk
             virtual void RefreshSizeWrap();
 
             Gwk::String m_string;
-            Gwk::Font*         m_font;
-            Gwk::Color m_color;
-            Gwk::Color m_colorOverride;
+            Gwk::Font   *m_font;
+            Gwk::Color  m_color;
+            Gwk::Color  m_colorOverride;
 
             bool m_bWrap;
             bool m_bTextChanged;

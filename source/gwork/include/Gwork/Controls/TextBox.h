@@ -56,8 +56,8 @@ namespace Gwk
 
             virtual void OnMouseDoubleClickLeft(int x, int y) override;
 
-            virtual void          EraseSelection();
-            virtual bool          HasSelection();
+            virtual void EraseSelection();
+            virtual bool HasSelection();
             virtual String GetSelection();
 
             virtual void SetCursorPos(int i);
