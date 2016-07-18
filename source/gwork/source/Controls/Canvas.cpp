@@ -199,7 +199,7 @@ bool Canvas::InputMouseButton(int iButton, bool bDown)
     return Gwk::Input::OnMouseClicked(this, iButton, bDown);
 }
 
-bool Canvas::InputKey(int iKey, bool bDown)
+bool Canvas::InputModifierKey(int iKey, bool bDown)
 {
     if (Hidden())
         return false;
@@ -218,7 +218,8 @@ bool Canvas::InputCharacter(Gwk::UnicodeChar chr)
     if (Hidden())
         return false;
 
-    if (!iswprint(chr))
+    // Check if character is printable, i.e. don't want hidden codes, like backspace.
+    if (!isprint(chr))
         return false;
 
     // Handle Accelerators

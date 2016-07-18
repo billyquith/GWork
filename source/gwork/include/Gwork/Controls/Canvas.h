@@ -49,7 +49,7 @@ namespace Gwk
             // Internal. Do not call directly.
             virtual void Render(Skin::Base* render) override;
 
-            /// Childpanels call parent->GetCanvas() until they get to
+            /// Child panels call parent->GetCanvas() until they get to
             /// this top level function.
             virtual Controls::Canvas* GetCanvas() override
             {
@@ -76,9 +76,17 @@ namespace Gwk
 
             /// \sect{Input}            
             bool InputMouseMoved(int x, int y, int deltaX, int deltaY) override;
-            bool InputMouseButton(int iButton, bool bDown) override;
-            bool InputKey(int iKey, bool bDown) override;
+            bool InputMouseButton(int iButton, bool bDown) override;            
+            /// A modifier key was inputted.
+            /// \param key - Key code
+            /// \param down - Key state. Pressed?
+            /// \return Event consumed?
+            bool InputModifierKey(int key, bool down) override;
+            /// A character was entered on the keyboard.
+            /// \param chr - Unicode character code.
+            /// \return Event consumed?
             bool InputCharacter(Gwk::UnicodeChar chr) override;
+            
             bool InputMouseWheel(int val) override;
             bool InputQuit() override
             {

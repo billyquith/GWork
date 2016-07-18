@@ -32,7 +32,7 @@ namespace Gwk
     // See: http://www.utf8everywhere.org
     //
     typedef std::string     String;
-    typedef char            UnicodeChar;
+    typedef char            UnicodeChar;    // TODO - deal with multibyte UTF8 chars.
 
     namespace CursorType
     {

@@ -148,7 +148,7 @@ namespace Gwk
                             iKey = Gwk::Key::Down;
 
                         if (iKey != -1)
-                            return m_canvas->InputKey(iKey, bDown);
+                            return m_canvas->InputModifierKey(iKey, bDown);
 
                         break;
                     }

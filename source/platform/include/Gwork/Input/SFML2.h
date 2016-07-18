@@ -133,7 +133,7 @@ namespace Gwk
                             return m_eventListener->InputCharacter(keyCode);
 
                         const unsigned char iKey = TranslateKeyCode(keyCode);
-                        return m_eventListener->InputKey(iKey, bPressed);
+                        return m_eventListener->InputModifierKey(iKey, bPressed);
                     }
                         
                 default:
