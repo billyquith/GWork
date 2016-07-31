@@ -28,12 +28,12 @@ your platform. Only have one renderer per build directory. Choose renderer:
 * `-DRENDER_SDL2=ON`
 * `-DRENDER_SFML2=ON`
 
-For example to build SDL2 renderer using Ninja:
+For example to build Allegro 5 renderer using Ninja:
 
 ```bash
 cd gwork
-mkdir build && cd build                 # put all build files in separate directory
-cmake -GNinja -DRENDER_ALLEGRO5=ON ..  # create Ninja project files with SDL2 renderer
+mkdir build && cd build                 # put build files in subdirectory
+cmake -GNinja -DRENDER_ALLEGRO5=ON ..   # create Ninja project files
 ```
 
 Providing the dependencies are present, this will create a sample executable. When run it will
@@ -51,7 +51,6 @@ bin/GworkAllegro5Sample     # run sample
 * CMake is used to generate project files instead of Premake. CMake is much more
   comprehensive.
 * [SDL2][sdl2] renderer added.
-* C++11 used.
 * [UTF-8 everywhere][5]. Unicode support simplified.
   * `Gwen::UnicodeString` removed. This assumed that all Unicode was best as a 
     wide encoding. This is not the case on all platforms.
@@ -61,6 +60,7 @@ bin/GworkAllegro5Sample     # run sample
 * Documentation:
   * Any existing GWEN comments and docs formatted for [doxygen](http://doxygen.org).
   * Docs currently very minimal as GWEN has almost no documentation.
+* C++11 used.
 * Cache to texture optimisation implemented (Allegro only).
 * No dependency on Bootil (Garry's personal library).
 * Fixes for [Allegro][al5]. e.g. text rendering.
@@ -74,11 +74,11 @@ bin/GworkAllegro5Sample     # run sample
   Github, Google Code, etc use 8 space tabs. GWEN uses 4 space tabs. This 
   messes up the indentation when reading code on Github.
 * Brackets: [Allman][2]/BSD indentation.
-* Line length ~100 chars. Github has width around 100. Easier for 
-  3 way merge. Everything on regular screen.
+* Line length ~100 chars. Github has width around 100. Easier for 3 way merge. Everything 
+  on regular screen.
 * camelCase variables.
   
-Please [report problems to Github][7] or they'll get lost.
+Please [report problems to Github][issues] or they'll get lost.
 
 BQ
 
@@ -86,9 +86,9 @@ BQ
 [sdl2]: https://www.libsdl.org/
 [sfml2]: http://www.sfml-dev.org
 [al5]: http://alleg.sourceforge.net
+[issues]: https://github.com/billyquith/GWork/issues "Bugs/Issues"
 [1]: http://www.codinghorror.com/blog/2009/04/death-to-the-space-infidels.html "Interesting article on consistency"
 [2]: http://en.wikipedia.org/wiki/Indent_style#Allman_style "Not uncommon"
 [5]: http://www.utf8everywhere.org "Why you should use UTF8 everywhere."
 [6]: http://industriousone.com/premake
-[7]: https://github.com/billyquith/GWork/issues "Bugs/Issues"
 
