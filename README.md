@@ -23,25 +23,25 @@ Get source code:
 CMake is used to generate the project files. See `cmake -h` to see all the generators for 
 your platform. Only have one renderer per build directory. Choose renderer:
 
-* `-D RENDER_ALLEGRO5=ON`
-* `-D RENDER_OPENGL=ON`
-* `-D RENDER_SDL2=ON`
-* `-D RENDER_SFML2=ON`
+* `-DRENDER_ALLEGRO5=ON`
+* `-DRENDER_OPENGL=ON`
+* `-DRENDER_SDL2=ON`
+* `-DRENDER_SFML2=ON`
 
 For example to build SDL2 renderer using Ninja:
 
 ```bash
 cd gwork
-mkdir build && cd build              # put all build files in separate directory
-cmake -G Ninja -D RENDER_SDL2=ON ..  # create Ninja project files with SDL2 renderer
+mkdir build && cd build                 # put all build files in separate directory
+cmake -GNinja -DRENDER_ALLEGRO5=ON ..  # create Ninja project files with SDL2 renderer
 ```
 
 Providing the dependencies are present, this will create a sample executable. When run it will
 demonstrate all of the controls available:
 
 ```bash
-ninja                 # build project
-bin/GworkSDL2Sample   # run sample
+ninja                       # build project
+bin/GworkAllegro5Sample     # run sample
 ```
 
 ## Changes from GWEN
@@ -80,6 +80,7 @@ bin/GworkSDL2Sample   # run sample
   
 Please [report problems to Github][7] or they'll get lost.
 
+BQ
 
 [gwen]: https://github.com/garrynewman/GWEN
 [sdl2]: https://www.libsdl.org/
@@ -91,5 +92,3 @@ Please [report problems to Github][7] or they'll get lost.
 [6]: http://industriousone.com/premake
 [7]: https://github.com/billyquith/GWork/issues "Bugs/Issues"
 
-
-BQ
