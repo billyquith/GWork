@@ -108,6 +108,6 @@ endif(NOT GWK_RENDER_NAME)
 list(REMOVE_DUPLICATES GWK_RENDER_INCLUDES)
 list(REMOVE_DUPLICATES GWK_RENDER_LIBRARIES)
 
-message("Using renderer ${GWK_RENDER_NAME}")
+message("Using renderer ${GWK_RENDER_NAME} on platform ${GWK_PLATFORM_NAME}")
 message("${GWK_RENDER_NAME} includes: ${GWK_RENDER_INCLUDES}")
 message("${GWK_RENDER_NAME} libs: ${GWK_RENDER_LIBRARIES}")
