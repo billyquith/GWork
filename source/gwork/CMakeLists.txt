@@ -212,7 +212,6 @@ source_group("${GWK_SOURCE_FOLDER}\\Controls\\Dialog"
 
 # Gwork library
 add_library(Gwork STATIC ${GWK_HEADERS} ${GWK_SOURCES})
-target_compile_features(Gwork PUBLIC cxx_override)
 
 install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/Gwork
         DESTINATION include)
