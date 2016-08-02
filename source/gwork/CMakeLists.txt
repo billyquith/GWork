@@ -112,6 +112,7 @@ set(GWK_SOURCES
     source/Anim.cpp
     source/BaseRender.cpp
     source/ControlList.cpp
+    source/DebugBreak.h
     source/DragAndDrop.cpp
     source/Events.cpp
     source/Gwork.cpp
