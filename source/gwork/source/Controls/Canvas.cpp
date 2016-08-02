@@ -5,7 +5,6 @@
  *  See license in Gwork.h
  */
 
-
 #include <Gwork/Gwork.h>
 #include <Gwork/Controls/Canvas.h>
 #include <Gwork/Skin.h>
@@ -16,6 +15,8 @@
 #if GWK_ANIMATE
 #include <Gwork/Anim.h>
 #endif
+
+#include <cctype>
 
 using namespace Gwk::Controls;
 
