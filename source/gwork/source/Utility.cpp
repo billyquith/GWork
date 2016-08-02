@@ -15,6 +15,11 @@
 #include <locale>       // Narrow/widen
 #include <codecvt>      // Narrow/widen - C++11
 
+#ifdef WIN32
+#define WIN32_LEAN_AND_MEAN
+#include <Windows.h>
+#endif
+
 #include "DebugBreak.h"
 
 namespace Gwk {

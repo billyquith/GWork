@@ -5,7 +5,6 @@
  *  See license in Gwork.h
  */
 
-
 #include <Gwork/Gwork.h>
 #include <Gwork/Controls/Canvas.h>
 #include <Gwork/Skin.h>
@@ -219,7 +218,7 @@ bool Canvas::InputCharacter(Gwk::UnicodeChar chr)
         return false;
 
     // Check if character is printable, i.e. don't want hidden codes, like backspace.
-    if (!std::isprint(chr))
+    if (!isprint(chr))
         return false;
 
     // Handle Accelerators
