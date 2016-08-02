@@ -16,6 +16,8 @@
 #include <Gwork/Anim.h>
 #endif
 
+#include <cctype>
+
 using namespace Gwk::Controls;
 
 
@@ -218,7 +220,7 @@ bool Canvas::InputCharacter(Gwk::UnicodeChar chr)
         return false;
 
     // Check if character is printable, i.e. don't want hidden codes, like backspace.
-    if (!isprint(chr))
+    if (!std::isprint(chr))
         return false;
 
     // Handle Accelerators
