@@ -50,11 +50,18 @@ void Menu::Layout(Skin::Base* skin)
         childrenHeight += child->Height();
     }
 
-    if (Y()+childrenHeight > GetCanvas()->Height())
+    // if tall menu descends off screen then clamp to screen height
+    if (Y() + childrenHeight > GetCanvas()->Height())
     {
-        childrenHeight = GetCanvas()->Height() - Y();
-    }
+        const int dy = GetCanvas()->Height() - Y();
+        const int ytop = std::max(Y() - dy, 0);
 
+        if (childrenHeight > GetCanvas()->Height())
+            childrenHeight = GetCanvas()->Height();
+
+        SetPos(X(), ytop);
+    }
+    
     SetSize(Width(), childrenHeight);
 
     ParentClass::Layout(skin);
