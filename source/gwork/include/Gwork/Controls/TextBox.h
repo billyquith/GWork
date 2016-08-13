@@ -75,7 +75,7 @@ namespace Gwk
                     OnSelectAll(this);
             }
 
-            virtual void MakeCaratVisible();
+            virtual void MakeCaretVisible();
 
             virtual void OnEnter();
 
@@ -133,7 +133,7 @@ namespace Gwk
 
             virtual bool OnKeyReturn(bool bDown) override;
             virtual void Render(Skin::Base* skin) override;
-            virtual void MakeCaratVisible() override;
+            virtual void MakeCaretVisible() override;
 
             virtual bool OnKeyHome(bool bDown) override;
             virtual bool OnKeyEnd(bool bDown) override;
