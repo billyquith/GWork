@@ -5,7 +5,6 @@
  *  See license in Gwork.h
  */
 
-//#include <Gwork/Macros.h>
 #include <Gwork/Platform.h>
 
 #include <allegro5/allegro.h>
@@ -31,7 +30,7 @@ static const ALLEGRO_SYSTEM_MOUSE_CURSOR g_cursorConversion[] =
     ALLEGRO_SYSTEM_MOUSE_CURSOR_RESIZE_N,   // IDC_SIZENWSE
     ALLEGRO_SYSTEM_MOUSE_CURSOR_RESIZE_E,   // IDC_SIZENESW
     ALLEGRO_SYSTEM_MOUSE_CURSOR_MOVE,       // IDC_SIZEALL
-    ALLEGRO_SYSTEM_MOUSE_CURSOR_UNAVAILABLE, // IDC_NO
+    ALLEGRO_SYSTEM_MOUSE_CURSOR_UNAVAILABLE,// IDC_NO
     ALLEGRO_SYSTEM_MOUSE_CURSOR_BUSY,       // IDC_WAIT
     ALLEGRO_SYSTEM_MOUSE_CURSOR_LINK        // IDC_HAND
 };
@@ -106,8 +105,7 @@ bool Gwk::Platform::FileSave(const String& Name,
 {
     ALLEGRO_FILECHOOSER* chooser = al_create_native_file_dialog(StartPath.c_str(),
                                                                 Name.c_str(),
-                                                                "*.*",  //
-                                                                        // Extension.c_str(),
+                                                                "*.*", // Extension.c_str(),
                                                                 ALLEGRO_FILECHOOSER_SAVE);
 
     if (al_show_native_file_dialog(g_display, chooser))
@@ -128,8 +126,7 @@ bool Gwk::Platform::FolderOpen(const String& Name,
 {
     ALLEGRO_FILECHOOSER* chooser = al_create_native_file_dialog(StartPath.c_str(),
                                                                 Name.c_str(),
-                                                                "*.*",  //
-                                                                        // Extension.c_str(),
+                                                                "*.*", // Extension.c_str(),
                                                                 ALLEGRO_FILECHOOSER_FOLDER);
 
     if (al_show_native_file_dialog(g_display, chooser))
@@ -163,7 +160,6 @@ static bool InitAllegro()
     al_install_mouse();
     al_install_keyboard();
     al_init_native_dialog_addon();
-//    al_register_event_source(event_queue, al_get_display_event_source(display));
     al_register_event_source(event_queue, al_get_mouse_event_source());
     al_register_event_source(event_queue, al_get_keyboard_event_source());
     
