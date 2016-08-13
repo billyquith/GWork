@@ -40,29 +40,25 @@ void Menu::RenderUnder(Skin::Base* skin)
 
 void Menu::Layout(Skin::Base* skin)
 {
-    int childrenHeight = 0;
+    int menuHeight = 0;
 
     for (auto&& child : m_innerPanel->Children)
     {
-        if (!child)
-            continue;
-
-        childrenHeight += child->Height();
+        if (child)
+            menuHeight += child->Height();
     }
 
     // if tall menu descends off screen then clamp to screen height
-    if (Y() + childrenHeight > GetCanvas()->Height())
+    if (Y() + menuHeight > GetCanvas()->Height())
     {
         const int dy = GetCanvas()->Height() - Y();
         const int ytop = std::max(Y() - dy, 0);
-
-        if (childrenHeight > GetCanvas()->Height())
-            childrenHeight = GetCanvas()->Height();
-
+        
         SetPos(X(), ytop);
+        menuHeight = std::min(menuHeight, GetCanvas()->Height());
     }
     
-    SetSize(Width(), childrenHeight);
+    SetSize(Width(), menuHeight);
 
     ParentClass::Layout(skin);
 }
