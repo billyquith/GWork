@@ -231,7 +231,7 @@ void Gwk::Renderer::SFML2::RenderText(Gwk::Font* font, Gwk::Point pos,
     sfStr.setFont(*sFFont);
     sfStr.move(pos.x, pos.y);
     sfStr.setCharacterSize(font->realsize);
-    sfStr.setColor(m_color);
+    sfStr.setFillColor(m_color);
     m_target.draw(sfStr);
 }
 
