@@ -69,7 +69,10 @@ int main()
 
         // Render the control canvas
         app.clear();
+        // <user render here>
+        app.pushGLStates();
         canvas->RenderCanvas();
+        app.popGLStates();        
         app.display();
     }
 
