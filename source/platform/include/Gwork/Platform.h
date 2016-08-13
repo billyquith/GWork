@@ -33,7 +33,12 @@ namespace Gwk
         GWK_EXPORT String GetClipboardText();
         //! Set platform clipboard from a string.
         GWK_EXPORT bool   SetClipboardText(const String& str);
-
+        
+        //! Get the directory of the running executable.
+        //! \return Path string, blank if not known.
+        //! \note Path is terminated with directory separator.
+        GWK_EXPORT String GetExecutableDir();
+        
         //
         // System Dialogs (Can return false if unhandled)
         //

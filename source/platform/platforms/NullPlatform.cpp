@@ -6,8 +6,13 @@
  */
 
 #include <Gwork/Platform.h>
-#include <time.h>
 #include <unistd.h>
+
+#if !defined(WIN32)
+# include <errno.h>
+# include <libproc.h>
+# include <libgen.h>
+#endif
 
 static Gwk::String gs_ClipboardEmulator;
 
@@ -36,6 +41,26 @@ float Gwk::Platform::GetTimeInSeconds()
 {
     const float fSeconds = (float)clock()/(float)CLOCKS_PER_SEC;
     return fSeconds;
+}
+
+Gwk::String Gwk::Platform::GetExecutableDir()
+{
+#if !defined(WIN32)
+    
+    pid_t pid = getpid();
+    char pathbuf[PROC_PIDPATHINFO_MAXSIZE];
+    int ret = proc_pidpath(pid, pathbuf, sizeof(pathbuf));
+    if (ret > 0)
+    {
+        return String(dirname(pathbuf)) + "/";
+    }
+
+    // fprintf(stderr, "PID %d: %s\n", pid, strerror(errno));
+    return "";
+    
+#else
+    return "";
+#endif
 }
 
 bool Gwk::Platform::FileOpen(const String& Name, const String& StartPath, const String& Extension,
