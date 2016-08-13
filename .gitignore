@@ -4,4 +4,4 @@
 bin/
 lib/
 
-build*/     # user build directory
+build*/
