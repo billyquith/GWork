@@ -11,7 +11,7 @@
 
 #include <Gwork/Controls/Properties.h>
 #include <Gwork/Controls/Button.h>
-#include <Gwork/Controls/Dialogs/FolderOpen.h>
+#include <Gwork/Controls/Dialogs/FileOpen.h>
 
 namespace Gwk
 {
@@ -57,4 +57,5 @@ namespace Gwk
         }
     }
 }
+
 #endif // ifndef GWK_CONTROLS_PROPERTY_FILE_H

@@ -28,9 +28,8 @@ void RadioButtonController::OnRadioClicked(Event::Info info)
     RadioButton* checkedRadioButton = gwk_cast<RadioButton>(fromPanel);
 
     // Iterate through all other buttons and set them to false;
-    for (Base::List::iterator iter = Children.begin(); iter != Children.end(); ++iter)
+    for (auto&& child : Children)
     {
-        Base* child = *iter;
         LabeledRadioButton* lRB = gwk_cast<LabeledRadioButton>(child);
 
         if (lRB)

@@ -8,7 +8,7 @@
 #include <Gwork/Gwork.h>
 #include <Gwork/Skins/Simple.h>
 #include <Gwork/Skins/TexturedBase.h>
-#include <Gwork/Test/Test.h>
+#include <Gwork/Test/TestAPI.h>
 #include <Gwork/Input/SDL2.h>
 #include <Gwork/Renderers/SDL2.h>
 #include <SDL.h>
@@ -49,7 +49,7 @@ int main(int argc, char** argv)
     canvas->SetBackgroundColor(Gwk::Color(150, 170, 170, 255));
 
     // Create our unittest control (which is a Window with controls in it)
-    UnitTest* unit = new UnitTest(canvas);
+    TestAPI* unit = new TestAPI(canvas);
     unit->SetPos(10, 10);
 
     Gwk::Input::SDL2 GworkInput;

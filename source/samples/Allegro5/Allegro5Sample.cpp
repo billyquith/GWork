@@ -65,7 +65,7 @@ int main(int argc, char** argv)
     canvas->SetBackgroundColor(Gwk::Color(150, 170, 170, 255));
 
     // Create our unittest control (which is a Window with controls in it)
-    TestAPI* unit = new TestAPI(canvas);
+    auto unit = new TestFrame(canvas);
     unit->SetPos(10, 10);
 
     // Create a Windows Control helper

@@ -40,27 +40,26 @@ void Menu::RenderUnder(Skin::Base* skin)
 
 void Menu::Layout(Skin::Base* skin)
 {
-    int childrenHeight = 0;
+    int menuHeight = 0;
 
-    for (Base::List::iterator it = m_innerPanel->Children.begin();
-         it != m_innerPanel->Children.end();
-         ++it)
+    for (auto&& child : m_innerPanel->Children)
     {
-        Base* child = (*it);
-        
-        if (!child)
-            continue;
-        
-        childrenHeight += child->Height();
+        if (child)
+            menuHeight += child->Height();
     }
 
-    if (Y()+childrenHeight > GetCanvas()->Height())
+    // if tall menu descends off screen then clamp to screen height
+    if (Y() + menuHeight > GetCanvas()->Height())
     {
-        childrenHeight = GetCanvas()->Height() - Y();
+        const int dy = GetCanvas()->Height() - Y();
+        const int ytop = std::max(Y() - dy, 0);
+        
+        SetPos(X(), ytop);
+        menuHeight = std::min(menuHeight, GetCanvas()->Height());
     }
-
-    SetSize(Width(), childrenHeight);
     
+    SetSize(Width(), menuHeight);
+
     ParentClass::Layout(skin);
 }
 
@@ -93,12 +92,8 @@ void Menu::OnAddItem(MenuItem* item)
 
 void Menu::ClearItems()
 {
-    for (Base::List::iterator it = m_innerPanel->Children.begin();
-         it != m_innerPanel->Children.end();
-         ++it)
+    for (auto&& child : m_innerPanel->Children)
     {
-        Base* child = *it;
-
         if (!child)
             continue;
 
@@ -108,11 +103,8 @@ void Menu::ClearItems()
 
 void Menu::CloseAll()
 {
-    for (Base::List::iterator it = m_innerPanel->Children.begin();
-         it != m_innerPanel->Children.end();
-         ++it)
+    for (auto&& child : m_innerPanel->Children)
     {
-        Base* child = *it;
         MenuItem* item = gwk_cast<MenuItem>(child);
 
         if (!item)
@@ -124,11 +116,8 @@ void Menu::CloseAll()
 
 bool Menu::IsMenuOpen()
 {
-    for (Base::List::iterator it = m_innerPanel->Children.begin();
-         it != m_innerPanel->Children.end();
-         ++it)
+    for (auto&& child : m_innerPanel->Children)
     {
-        Base* child = *it;
         MenuItem* item = gwk_cast<MenuItem>(child);
 
         if (!item)

@@ -138,10 +138,10 @@ void TabControl::OnTabPressed(Event::Info info)
 
     if (m_currentButton)
     {
-        Base* page = m_currentButton->GetPage();
+        Base* subpage = m_currentButton->GetPage();
 
-        if (page)
-            page->SetHidden(true);
+        if (subpage)
+            subpage->SetHidden(true);
 
         m_currentButton->Redraw();
         m_currentButton = nullptr;

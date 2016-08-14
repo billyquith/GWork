@@ -69,7 +69,7 @@ namespace Gwk
             }
 
             void DrawButton(Gwk::Controls::Base* control, bool bDepressed, bool bHovered,
-                                    bool bDisabled) override
+                            bool bDisabled) override
             {
                 int w = control->Width();
                 int h = control->Height();
@@ -84,21 +84,21 @@ namespace Gwk
             }
 
             void DrawWindowMaximizeButton(Gwk::Controls::Base* control, bool bDepressed,
-                                                  bool bHovered, bool bDisabled, bool bMaximized) override
+                                          bool bHovered, bool bDisabled, bool bMaximized) override
             {
                 // TODO.
                 DrawButton(control, bDepressed, bHovered, bDisabled);
             }
 
             void DrawWindowMinimizeButton(Gwk::Controls::Base* control, bool bDepressed,
-                                                  bool bHovered, bool bDisabled) override
+                                          bool bHovered, bool bDisabled) override
             {
                 // TODO.
                 DrawButton(control, bDepressed, bHovered, bDisabled);
             }
 
             void DrawMenuItem(Gwk::Controls::Base* control, bool bSubmenuOpen,
-                                      bool bChecked) override
+                              bool bChecked) override
             {
                 if (bSubmenuOpen || control->IsHovered())
                 {
@@ -192,7 +192,7 @@ namespace Gwk
             }
 
             void DrawRadioButton(Gwk::Controls::Base* control, bool bSelected,
-                                         bool bDepressed) override
+                                 bool bDepressed) override
             {
                 Gwk::Rect rect = control->GetRenderBounds();
 
@@ -229,7 +229,7 @@ namespace Gwk
             }
 
             void DrawCheckBox(Gwk::Controls::Base* control, bool bSelected,
-                                      bool bDepressed) override
+                              bool bDepressed) override
             {
                 Gwk::Rect rect = control->GetRenderBounds();
 
@@ -273,7 +273,7 @@ namespace Gwk
             }
 
             void DrawGroupBox(Gwk::Controls::Base* control, int textStart, int textHeight,
-                                      int textWidth) override
+                              int textWidth) override
             {
                 Gwk::Rect rect = control->GetRenderBounds();
                 rect.y += textHeight/2;
@@ -399,7 +399,7 @@ namespace Gwk
             }
 
             void DrawScrollBar(Gwk::Controls::Base* control, bool isHorizontal,
-                                       bool bDepressed) override
+                               bool bDepressed) override
             {
                 Gwk::Rect rect = control->GetRenderBounds();
 
@@ -411,7 +411,7 @@ namespace Gwk
             }
 
             void DrawScrollBarBar(Controls::Base* control, bool bDepressed, bool isHovered,
-                                          bool isHorizontal) override
+                                  bool isHorizontal) override
             {
                 //TODO: something specialized
                 DrawButton(control, bDepressed, isHovered, false);
@@ -428,7 +428,7 @@ namespace Gwk
             }
 
             void DrawProgressBar(Gwk::Controls::Base* control, bool isHorizontal,
-                                         float progress) override
+                                 float progress) override
             {
                 Gwk::Rect rect = control->GetRenderBounds();
                 Gwk::Color FillColour(0, 211, 40, 255);
@@ -491,7 +491,7 @@ namespace Gwk
             }
 
             void DrawSlider(Gwk::Controls::Base* control, bool bIsHorizontal,
-                                    int numNotches, int barSize) override
+                            int numNotches, int barSize) override
             {
                 Gwk::Rect rect = control->GetRenderBounds();
 
@@ -518,7 +518,7 @@ namespace Gwk
             }
 
             void DrawKeyboardHighlight(Gwk::Controls::Base* control, const Gwk::Rect& r,
-                                               int iOffset) override
+                                       int iOffset) override
             {
                 Gwk::Rect rect = r;
                 rect.x += iOffset;
@@ -576,7 +576,7 @@ namespace Gwk
             }
 
             void DrawScrollButton(Gwk::Controls::Base* control, Position direction,
-                                          bool bDepressed, bool bHovered, bool bDisabled) override
+                                  bool bDepressed, bool bHovered, bool bDisabled) override
             {
                 DrawButton(control, bDepressed, false, false);
                 m_render->SetDrawColor(Gwk::Color(0, 0, 0, 240));
@@ -593,7 +593,7 @@ namespace Gwk
             }
 
             void DrawComboDownArrow(Gwk::Controls::Base* control, bool bHovered,
-                                            bool bDown, bool bOpen, bool bDisabled) override
+                                    bool bDown, bool bOpen, bool bDisabled) override
             {
                 //DrawButton( control->Width(), control->Height(), bDepressed, false, true );
                 m_render->SetDrawColor(Gwk::Color(0, 0, 0, 240));
@@ -602,7 +602,7 @@ namespace Gwk
             }
 
             void DrawNumericUpDownButton(Gwk::Controls::Base* control, bool bDepressed,
-                                                 bool bUp) override
+                                         bool bUp) override
             {
                 //DrawButton( control->Width(), control->Height(), bDepressed, false, true );
                 m_render->SetDrawColor(Gwk::Color(0, 0, 0, 240));
@@ -712,7 +712,7 @@ namespace Gwk
             }
 
             void DrawSlideButton(Gwk::Controls::Base* control, bool bDepressed,
-                                         bool bHorizontal) override
+                                 bool bHorizontal) override
             {
                 DrawButton(control, bDepressed, control->IsHovered(), control->IsDisabled());
             }

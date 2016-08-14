@@ -30,10 +30,8 @@ namespace Gwk
 
                 void PostLayout(Skin::Base* skin) override
                 {
-                    for (Base::List::iterator it = Children.begin(); it != Children.end(); ++it)
+                    for (auto&& child : Children)
                     {
-                        Base* child = *it;
-
                         if (child->GetDock() != Position::None)
                             continue;
 

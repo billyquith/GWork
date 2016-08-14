@@ -28,9 +28,9 @@ public:
         labeled->Checkbox()->onUnChecked.Add(this, &Checkbox::OnUnchecked);
         labeled->Checkbox()->onCheckChanged.Add(this, &Checkbox::OnCheckChanged);
         {
-            Gwk::Controls::CheckBox* check = new Gwk::Controls::CheckBox(this);
-            check->SetPos(10, 54);
-            check->SetDisabled(true);
+            Gwk::Controls::CheckBox* check2 = new Gwk::Controls::CheckBox(this);
+            check2->SetPos(10, 54);
+            check2->SetDisabled(true);
         }
     }
 

@@ -190,9 +190,9 @@ namespace Gwk
                     if (m_columnCount == i)
                         return;
 
-                    for (Base::List::iterator it = Children.begin(); it != Children.end(); ++it)
+                    for (auto&& child : Children)
                     {
-                        TableRow* row = gwk_cast<TableRow>(*it);
+                        TableRow* row = gwk_cast<TableRow>(child);
 
                         if (!row)
                             continue;
@@ -245,9 +245,9 @@ namespace Gwk
 
                 void Clear()
                 {
-                    for (Base::List::iterator it = Children.begin(); it != Children.end(); ++it)
+                    for (auto&& child : Children)
                     {
-                        TableRow* row = gwk_cast<TableRow>(*it);
+                        TableRow* row = gwk_cast<TableRow>(child);
 
                         if (!row)
                             continue;
@@ -279,9 +279,9 @@ namespace Gwk
 
                     bool bEven = false;
 
-                    for (Base::List::iterator it = Children.begin(); it != Children.end(); ++it)
+                    for (auto&& child : Children)
                     {
-                        TableRow* row = gwk_cast<TableRow>(*it);
+                        TableRow* row = gwk_cast<TableRow>(child);
 
                         if (!row)
                             continue;
@@ -324,9 +324,9 @@ namespace Gwk
                         m_columnWidth[i] = 10;
                     }
 
-                    for (Base::List::iterator it = Children.begin(); it != Children.end(); ++it)
+                    for (auto&& child : Children)
                     {
-                        TableRow* row = gwk_cast<TableRow>(*it);
+                        TableRow* row = gwk_cast<TableRow>(child);
 
                         if (!row)
                             continue;

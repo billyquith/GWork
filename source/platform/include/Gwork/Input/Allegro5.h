@@ -72,23 +72,28 @@ namespace Gwk
                 case ALLEGRO_KEY_DELETE:
                     return Gwk::Key::Delete;
 
+                case ALLEGRO_KEY_LSHIFT:
+                    return Gwk::Key::Shift;
+
                 case ALLEGRO_KEY_LCTRL:
                     return Gwk::Key::Control;
 
                 case ALLEGRO_KEY_ALT:
                     return Gwk::Key::Alt;
 
-                case ALLEGRO_KEY_LSHIFT:
-                    return Gwk::Key::Shift;
+                case ALLEGRO_KEY_COMMAND:
+                    return Gwk::Key::Command;
 
+                case ALLEGRO_KEY_RSHIFT:
+                    return Gwk::Key::Shift;
+                        
                 case ALLEGRO_KEY_RCTRL:
                     return Gwk::Key::Control;
 
                 case ALLEGRO_KEY_ALTGR:
                     return Gwk::Key::Alt;
-
-                case ALLEGRO_KEY_RSHIFT:
-                    return Gwk::Key::Shift;
+                        
+                default: ;
                 }
 
                 return Gwk::Key::Invalid;
@@ -116,8 +121,9 @@ namespace Gwk
 
                 case ALLEGRO_EVENT_MOUSE_BUTTON_DOWN:
                 case ALLEGRO_EVENT_MOUSE_BUTTON_UP:
-                    return m_eventListener->InputMouseButton(event.mouse.button-1,
-                                                      event.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN);
+                    return m_eventListener->InputMouseButton(
+                                                    event.mouse.button-1,
+                                                    event.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN);
 
                 case ALLEGRO_EVENT_KEY_CHAR:
                     return m_eventListener->InputCharacter(event.keyboard.unichar);
@@ -125,18 +131,20 @@ namespace Gwk
                 case ALLEGRO_EVENT_KEY_DOWN:
                 case ALLEGRO_EVENT_KEY_UP:
                     {
-                        bool bPressed = (event.type == ALLEGRO_EVENT_KEY_DOWN);
+                        const bool bPressed = (event.type == ALLEGRO_EVENT_KEY_DOWN);
 
-                        if (event.keyboard.keycode
+                        if (event.keyboard.keycode != 0
                             && bPressed
-                            && event.keyboard.keycode >= 'a'
-                            && event.keyboard.keycode <= 'z')
+                            && event.keyboard.keycode >= ALLEGRO_KEY_A
+                            && event.keyboard.keycode <= ALLEGRO_KEY_Z)
                         {
                             return m_eventListener->InputCharacter(event.keyboard.keycode);
                         }
 
-                        const unsigned char iKey = TranslateKeyCode(event.keyboard.keycode);
-                        return m_eventListener->InputKey(iKey, bPressed);
+                        const unsigned char key = TranslateKeyCode(event.keyboard.keycode);
+                        return key == Gwk::Key::Invalid
+                               ? false
+                               : m_eventListener->InputModifierKey(key, bPressed);
                     }
                 }
 
@@ -150,8 +158,7 @@ namespace Gwk
             int m_mouseY;
 
         };
-
-
     }
 }
+
 #endif // ifndef GWK_INPUT_ALLEGRO_H

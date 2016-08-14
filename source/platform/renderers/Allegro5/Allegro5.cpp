@@ -26,7 +26,7 @@ class AllegroCTT : public ICacheToTexture
 {
 public:
     
-    AllegroCTT() : m_oSWindowldTarget(nullptr) {}
+    AllegroCTT() : m_oldTarget(nullptr) {}
     ~AllegroCTT() {}
     
     void Initialize() {}
@@ -54,7 +54,7 @@ private:
     typedef std::map< CacheHandle, CacheEntry > CacheMap;
     CacheMap m_cache;
     
-    ALLEGRO_BITMAP *m_oSWindowldTarget;
+    ALLEGRO_BITMAP *m_oldTarget;
 };
 
 void AllegroCTT::ShutDown()
@@ -69,6 +69,7 @@ void AllegroCTT::CreateControlCacheTexture(CacheHandle control, const Point& siz
     // If we haven't seen this control before, create a new entry.
     if (m_cache.find(control) == m_cache.end())
     {
+        al_set_new_bitmap_flags(ALLEGRO_VIDEO_BITMAP);
         CacheEntry newEntry = { al_create_bitmap(size.x, size.y) };
         m_cache.insert(std::pair<CacheHandle,CacheEntry>(control, newEntry));
     }
@@ -81,18 +82,22 @@ void AllegroCTT::SetupCacheTexture(CacheHandle control)
     if (it != m_cache.end())
     {
         // Prepare for rendering.
-        assert(m_oSWindowldTarget==nullptr);
-        m_oSWindowldTarget = al_get_target_bitmap();
-        al_set_target_bitmap((*it).second.m_bitmap);
-        al_clear_to_color(al_map_rgb_f(1.f,1.f,1.f));
+        assert(m_oldTarget==nullptr);
+        m_oldTarget = al_get_target_bitmap();
+        
+        auto albmp = it->second.m_bitmap;
+        assert(albmp != nullptr);
+        al_set_target_bitmap(albmp);
+        
+        al_clear_to_color(al_map_rgb_f(1.f, 1.f, 1.f));
     }
 }
 
 void AllegroCTT::FinishCacheTexture(CacheHandle control)
 {
     // Prepare for rendering.
-    al_set_target_bitmap(m_oSWindowldTarget);
-    m_oSWindowldTarget = nullptr;
+    al_set_target_bitmap(m_oldTarget);
+    m_oldTarget = nullptr;
 }
 
 void AllegroCTT::DrawCachedControlTexture(CacheHandle control)
@@ -101,7 +106,7 @@ void AllegroCTT::DrawCachedControlTexture(CacheHandle control)
     assert(it != m_cache.end());
     if (it != m_cache.end())
     {
-        ALLEGRO_BITMAP *bmp = (*it).second.m_bitmap;                
+        ALLEGRO_BITMAP *bmp = it->second.m_bitmap;
         const Gwk::Point &pos = m_renderer->GetRenderOffset();
         al_draw_bitmap(bmp, pos.x, pos.y, 0);
     }

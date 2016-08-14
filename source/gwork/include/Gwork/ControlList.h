@@ -9,6 +9,7 @@
 #ifndef GWK_CONTROLLIST_H
 #define GWK_CONTROLLIST_H
 
+#include <algorithm>
 
 namespace Gwk
 {
@@ -47,23 +48,23 @@ namespace Gwk
             list.remove(control);
         }
 
-        void Add(const List& list)
+        void Add(const List& _list)
         {
-            for (typename List::const_iterator it = list.begin(); it != list.end(); ++it)
+            for (auto const& item : _list)
             {
-                Add(*it);
+                Add(item);
             }
         }
 
-        void Add(const TEasyList<TYPE>& list)
+        void Add(const TEasyList<TYPE>& _list)
         {
-            Add(list.list);
+            Add(_list.list);
         }
 
         bool Contains(TYPE control) const
         {
-            typename List::const_iterator it = std::find(list.begin(), list.end(), control);
-            return it != list.end();
+            typename List::const_iterator it = std::find(list.cbegin(), list.cend(), control);
+            return it != list.cend();
         }
 
         inline void Clear()

@@ -21,7 +21,7 @@ GWK_CONTROL_CONSTRUCTOR(HSVColorPicker)
 {
     SetMouseInputEnabled(true);
     SetSize(256, 64);
-    EnableCacheToTexture();
+//    EnableCacheToTexture();   // TODO - fix texture caching.
     
     m_lerpBox = new Gwk::Controls::ColorLerpBox(this);
     m_lerpBox->onSelectionChanged.Add(this, &HSVColorPicker::ColorBoxChanged);

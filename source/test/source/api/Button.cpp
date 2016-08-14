@@ -20,10 +20,10 @@ public:
         buttonA->SetText("Event Tester");
         buttonA->onPress.Add(this, &Button::OnButtonA);
         {
-            Controls::Button* buttonA = new Controls::Button(this);
-            buttonA->SetBounds(200, 30, 300, 200);
-            buttonA->SetText("Event Tester 2");
-            buttonA->onPress.Add(this, &Button::OnButtonA);
+            Controls::Button* buttonAA = new Controls::Button(this);
+            buttonAA->SetBounds(200, 30, 300, 200);
+            buttonAA->SetText("Event Tester 2");
+            buttonAA->onPress.Add(this, &::Button::OnButtonA);
         }
         // Unicode test
         Controls::Button* buttonB = new Controls::Button(this);

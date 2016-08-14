@@ -57,7 +57,7 @@ Listener::~Listener()
 
 void Listener::CleanLinks()
 {
-    for (auto& h : m_handlers)
+    for (auto&& h : m_handlers)
     {
         h.listener->UnRegisterCaller(this);
     }
@@ -77,9 +77,8 @@ void Listener::Call(Controls::Base* pThis, Event::Info information)
     Event::Info info(nullptr);
     info = information;
     info.ControlCaller = pThis;
-    std::list<HandlerInstance>::iterator iter;
 
-    for (auto& h : m_handlers)
+    for (auto&& h : m_handlers)
     {
         info.Packet = &h.Packet;
 

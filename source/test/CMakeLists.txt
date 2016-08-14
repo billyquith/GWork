@@ -55,7 +55,6 @@ source_group("${GWK_SOURCE_FOLDER}"
 # Test library
 if(BUILD_TEST)
     add_library(GworkTest STATIC ${GWK_TEST_SOURCES})
-    target_compile_features(GworkTest PUBLIC cxx_override)
     target_link_libraries(GworkTest Gwork Gwork${GWK_RENDER_NAME})
 
     install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/Gwork

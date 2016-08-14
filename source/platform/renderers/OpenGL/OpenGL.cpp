@@ -1,26 +1,41 @@
+/*
+ *  Gwork
+ *  Copyright (c) 2010 Facepunch Studios
+ *  Copyright (c) 2013-16 Billy Quith
+ *  See license in Gwork.h
+ */
 
 #include <Gwork/Renderers/OpenGL.h>
-#include <Gwork/Utility.h>
-#include <Gwork/Font.h>
-#include <Gwork/Texture.h>
-#include <Gwork/WindowProvider.h>
+#include <Gwork/PlatformTypes.h>
 
+#include <GLFW/glfw3.h>
 #include <math.h>
+#include <sys/stat.h>
+#include <stdio.h>
 
-#include "GL/glew.h"
-#include "FreeImage/FreeImage.h"
+//#define STBI_ASSERT(x)  // comment in for no asserts
+#define STB_IMAGE_IMPLEMENTATION
+#include "stb_image.h"
 
+#define STB_TRUETYPE_IMPLEMENTATION
+#define STBTT_STATIC
+#include "stb_truetype.h"
 
 namespace Gwk
 {
 namespace Renderer
 {
-OpenGL::OpenGL()
-{
-    m_vertNum = 0;
-    m_context = nullptr;
-    ::FreeImage_Initialise();
+    
+// See "Font Size in Pixels or Points" in "stb_truetype.h"
+const float c_pixToPoints = 1.333f;
 
+static const int c_texsz = 256;   // TODO - fix this hack.
+
+OpenGL::OpenGL(const Rect& viewRect)
+:   m_viewRect(viewRect)
+,   m_vertNum(0)
+,   m_context(nullptr)
+{
     for (int i = 0; i < MaxVerts; i++)
     {
         m_vertices[ i ].z = 0.5f;
@@ -29,11 +44,17 @@ OpenGL::OpenGL()
 
 OpenGL::~OpenGL()
 {
-    ::FreeImage_DeInitialise();
 }
 
 void OpenGL::Init()
 {
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    glOrtho(m_viewRect.x, m_viewRect.x + m_viewRect.w,
+            m_viewRect.y, m_viewRect.y + m_viewRect.h,
+            -1.0, 1.0);
+    glMatrixMode(GL_MODELVIEW);
+    glViewport(m_viewRect.x, m_viewRect.y, m_viewRect.w, m_viewRect.h);
 }
 
 void OpenGL::Begin()
@@ -60,6 +81,7 @@ void OpenGL::Flush()
     glTexCoordPointer(2, GL_FLOAT, sizeof(Vertex), (void*)&m_vertices[0].u);
     glEnableClientState(GL_TEXTURE_COORD_ARRAY);
     glDrawArrays(GL_TRIANGLES, 0, (GLsizei)m_vertNum);
+    
     m_vertNum = 0;
     glFlush();
 }
@@ -69,8 +91,9 @@ void OpenGL::AddVert(int x, int y, float u, float v)
     if (m_vertNum >= MaxVerts-1)
         Flush();
 
-    m_vertices[ m_vertNum ].x = (float)x;
-    m_vertices[ m_vertNum ].y = (float)y;
+    // OpenGL origin is bottom-left. Gwork origin is top-left.
+    m_vertices[ m_vertNum ].x = float(x);
+    m_vertices[ m_vertNum ].y = float(m_viewRect.h - y);
     m_vertices[ m_vertNum ].u = u;
     m_vertices[ m_vertNum ].v = v;
     m_vertices[ m_vertNum ].r = m_color.r;
@@ -110,14 +133,12 @@ void OpenGL::StartClip()
 {
     Flush();
     Gwk::Rect rect = ClipRegion();
+    
     // OpenGL's coords are from the bottom left
-    // so we need to translate them here.
-    {
-        GLint view[4];
-        glGetIntegerv(GL_VIEWPORT, &view[0]);
-        rect.y = view[3]-(rect.y+rect.h);
-    }
-    glScissor(rect.x*Scale(), rect.y*Scale(), rect.w*Scale(), rect.h*Scale());
+    rect.y = m_viewRect.h - (rect.y + rect.h);
+
+    glScissor(rect.x * Scale(), rect.y * Scale(),
+              rect.w * Scale(), rect.h * Scale());
     glEnable(GL_SCISSOR_TEST);
 }
 
@@ -127,8 +148,8 @@ void OpenGL::EndClip()
     glDisable(GL_SCISSOR_TEST);
 }
 
-void OpenGL::DrawTexturedRect(Gwk::Texture* texture, Gwk::Rect rect, float u1, float v1,
-                              float u2, float v2)
+void OpenGL::DrawTexturedRect(Gwk::Texture* texture, Gwk::Rect rect,
+                              float u1, float v1, float u2, float v2)
 {
     GLuint* tex = (GLuint*)texture->data;
 
@@ -148,73 +169,46 @@ void OpenGL::DrawTexturedRect(Gwk::Texture* texture, Gwk::Rect rect, float u1, f
         glBindTexture(GL_TEXTURE_2D, *tex);
         glEnable(GL_TEXTURE_2D);
     }
-
-    AddVert(rect.x, rect.y,            u1, v1);
-    AddVert(rect.x+rect.w, rect.y,       u2, v1);
-    AddVert(rect.x, rect.y+rect.h,   u1, v2);
-    AddVert(rect.x+rect.w, rect.y,       u2, v1);
+    
+    AddVert(rect.x, rect.y,             u1, v1);
+    AddVert(rect.x+rect.w, rect.y,      u2, v1);
+    AddVert(rect.x, rect.y+rect.h,      u1, v2);
+    AddVert(rect.x+rect.w, rect.y,      u2, v1);
     AddVert(rect.x+rect.w, rect.y+rect.h, u2, v2);
-    AddVert(rect.x, rect.y+rect.h, u1, v2);
+    AddVert(rect.x, rect.y+rect.h,      u1, v2);
 }
 
 void OpenGL::LoadTexture(Gwk::Texture* texture)
 {
     const std::string &fileName = texture->name;
-    FREE_IMAGE_FORMAT imageFormat = FreeImage_GetFileType(fileName.c_str());
-
-    if (imageFormat == FIF_UNKNOWN)
-        imageFormat = FreeImage_GetFIFFromFilename(fileName.c_str());
-
+    
+    int x,y,n;
+    unsigned char *data = stbi_load(fileName.c_str(), &x, &y, &n, 4);
+    
     // Image failed to load..
-    if (imageFormat == FIF_UNKNOWN)
+    if (!data)
     {
         texture->failed = true;
         return;
     }
-
-    // Try to load the image..
-    FIBITMAP* bits = FreeImage_Load(imageFormat, fileName.c_str());
-
-    if (!bits)
-    {
-        texture->failed = true;
-        return;
-    }
-
-    // Convert to 32bit
-    FIBITMAP* bits32 = FreeImage_ConvertTo32Bits(bits);
-    FreeImage_Unload(bits);
-
-    if (!bits32)
-    {
-        texture->failed = true;
-        return;
-    }
-
-    // Flip
-    ::FreeImage_FlipVertical(bits32);
 
     // Create a little texture pointer..
     GLuint* pglTexture = new GLuint;
 
-    // Sort out our Gwork texture
     texture->data = pglTexture;
-    texture->width = FreeImage_GetWidth(bits32);
-    texture->height = FreeImage_GetHeight(bits32);
+    texture->width = x;
+    texture->height = y;
 
     // Create the opengl texture
     glGenTextures(1, pglTexture);
     glBindTexture(GL_TEXTURE_2D, *pglTexture);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-#ifdef FREEIMAGE_BIGENDIAN
     GLenum format = GL_RGBA;
-#else
-    GLenum format = GL_BGRA;
-#endif
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, texture->width, texture->height, 0, format,
-                 GL_UNSIGNED_BYTE, (const GLvoid*)FreeImage_GetBits(bits32));
-    FreeImage_Unload(bits32);
+                 GL_UNSIGNED_BYTE, (const GLvoid*)data);
+    
+    stbi_image_free(data);
 }
 
 void OpenGL::FreeTexture(Gwk::Texture* texture)
@@ -230,7 +224,7 @@ void OpenGL::FreeTexture(Gwk::Texture* texture)
 }
 
 Gwk::Color OpenGL::PixelColour(Gwk::Texture* texture, unsigned int x, unsigned int y,
-                                const Gwk::Color& col_default)
+                               const Gwk::Color& col_default)
 {
     GLuint* tex = (GLuint*)texture->data;
 
@@ -240,22 +234,141 @@ Gwk::Color OpenGL::PixelColour(Gwk::Texture* texture, unsigned int x, unsigned i
     unsigned int iPixelSize = sizeof(unsigned char)*4;
     glBindTexture(GL_TEXTURE_2D, *tex);
     unsigned char* data =
-        (unsigned char*)malloc(iPixelSize*texture->width*texture->height);
+        (unsigned char*)malloc(iPixelSize * texture->width * texture->height);
     glGetTexImage(GL_TEXTURE_2D, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
     unsigned int iOffset = (y*texture->width+x)*4;
-    Gwk::Color c;
-    c.r = data[0+iOffset];
-    c.g = data[1+iOffset];
-    c.b = data[2+iOffset];
-    c.a = data[3+iOffset];
-    //
+    
+    Color c(data[0+iOffset], data[1+iOffset], data[2+iOffset], data[3+iOffset]);
+
     // Retrieving the entire texture for a single pixel read
     // is kind of a waste - maybe cache this pointer in the texture
     // data and then release later on? It's never called during runtime
     // - only during initialization.
-    //
     free(data);
+    
     return c;
+}
+
+void OpenGL::LoadFont(Gwk::Font* font)
+{
+    std::string fontName(font->facename);
+    
+    if (fontName.find(".ttf") == std::string::npos)
+        fontName += ".ttf";
+    
+    font->realsize = font->size * Scale() * c_pixToPoints;
+    
+    FILE* f = fopen(fontName.c_str(), "rb");
+    if (!f)
+    {
+        font->data = nullptr;
+        font->facename = "";
+        return;
+    }
+    
+    struct stat stat_buf;
+    int rc = stat(fontName.c_str(), &stat_buf);
+    size_t fsz = rc == 0 ? stat_buf.st_size : -1;
+    assert(fsz > 0);
+    
+    unsigned char* ttfdata = new unsigned char[fsz];
+    fread(ttfdata, 1, fsz, f);
+    
+    unsigned char *font_bmp = new unsigned char[c_texsz * c_texsz];
+    
+    font->render_data = new stbtt_bakedchar[96];
+    
+    stbtt_BakeFontBitmap(ttfdata, 0,
+                         font->realsize,    // height
+                         font_bmp, c_texsz, c_texsz,
+                         32,96,             // range to bake
+                         static_cast<stbtt_bakedchar*>(font->render_data));
+    delete [] ttfdata;
+    
+    font->data = new GLuint;
+    glGenTextures(1, static_cast<GLuint*>(font->data));
+    glBindTexture(GL_TEXTURE_2D, *static_cast<GLuint*>(font->data));
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA,
+                 c_texsz,c_texsz, 0,
+                 GL_ALPHA, GL_UNSIGNED_BYTE,
+                 font_bmp);
+    delete [] font_bmp;
+}
+
+void OpenGL::FreeFont(Gwk::Font* font)
+{
+    // TODO - unbind texture
+    delete [] static_cast<GLuint*>(font->data);
+    delete [] static_cast<stbtt_bakedchar*>(font->render_data);
+}
+
+void OpenGL::RenderText(Gwk::Font* font, Gwk::Point pos,
+                        const Gwk::String& text)
+{
+    if (font->facename.empty())
+        return;
+    
+    if (!font->data)
+        LoadFont(font);
+    
+    Texture tex;
+    tex.data = font->data;
+    
+    float x = pos.x, y = pos.y;
+    const char *pc = text.c_str();
+    size_t slen = text.length();
+    
+    const float height = font->realsize / c_pixToPoints;
+    while (slen > 0)
+    {
+        if (*pc >= 32 && *pc <= 127)
+        {
+            stbtt_aligned_quad q;
+            stbtt_GetBakedQuad(static_cast<stbtt_bakedchar*>(font->render_data),
+                               c_texsz,c_texsz,
+                               *pc - 32,
+                               &x, &y, &q, 1); // 1=opengl & d3d10+,0=d3d9
+
+            Rect r(q.x0, height + q.y0, q.x1 - q.x0, q.y1 - q.y0);
+            DrawTexturedRect(&tex, r, q.s0,q.t0, q.s1,q.t1);
+        }
+        ++pc, --slen;
+    }
+}
+
+Gwk::Point OpenGL::MeasureText(Gwk::Font* font, const Gwk::String& text)
+{
+    Point sz(0, font->realsize * c_pixToPoints);
+
+    if (font->facename.empty())
+        return sz;
+    
+    if (!font->data)
+        LoadFont(font);
+
+    float x = 0.f, y = 0.f;
+    const char *pc = text.c_str();
+    size_t slen = text.length();
+    
+    while (slen > 0)
+    {
+        if (*pc >= 32 && *pc <= 127)
+        {
+            stbtt_aligned_quad q;
+            stbtt_GetBakedQuad(static_cast<stbtt_bakedchar*>(font->render_data),
+                               c_texsz,c_texsz,
+                               *pc - 32,
+                               &x, &y, &q, 1); // 1=opengl & d3d10+,0=d3d9
+            
+            sz.x = q.x1;
+            sz.y = std::max(sz.y, int(q.y1 - q.y0));
+        }
+        ++pc, --slen;
+    }
+    
+    return sz;
 }
 
 bool OpenGL::InitializeContext(Gwk::WindowProvider* window)
@@ -356,5 +469,5 @@ bool OpenGL::EndContext(Gwk::WindowProvider* window)
     return true;
 }
 
-} // namespace Renderer
-} // namespace Gwk
+}
+}

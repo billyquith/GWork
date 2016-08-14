@@ -16,7 +16,6 @@ GWK_CONTROL_CONSTRUCTOR( DocumentCanvas )
 	UserData.Set( "ControlFactory", controlFactory );
 }
 
-
 void DocumentCanvas::Render( Gwk::Skin::Base* skin )
 {
 	skin->DrawGenericPanel( this );
@@ -67,9 +66,9 @@ void DocumentCanvas::SelectControls( ControlList& CtrlList )
 {
 	m_selectionLayer->ClearSelection();
 
-	for ( ControlList::List::const_iterator it = CtrlList.list.begin(); it != CtrlList.list.end(); ++it )
+	for (auto const& ctrl : CtrlList.list)
 	{
-		m_selectionLayer->AddSelection( (*it) );
+		m_selectionLayer->AddSelection( ctrl );
 	}
 
 	// Let everything else know the selection changed
@@ -99,10 +98,10 @@ void DocumentCanvas::Command( const Gwk::String& str )
 {
 	if ( str == "delete" )
 	{
-		for ( ControlList::List::const_iterator it = m_selectionLayer->GetSelected().list.begin(); it != m_selectionLayer->GetSelected().list.end(); ++it )
+		for ( auto&& selected : m_selectionLayer->GetSelected().list)
 		{
-			if ( *it == this ) continue;
-			(*it)->DelayedDelete();
+			if ( selected == this ) continue;
+			selected->DelayedDelete();
 		}
 
 		m_selectionLayer->ClearSelection();
@@ -110,19 +109,19 @@ void DocumentCanvas::Command( const Gwk::String& str )
 
 	if ( str == "bringforward" )
 	{
-		for ( ControlList::List::const_iterator it = m_selectionLayer->GetSelected().list.begin(); it != m_selectionLayer->GetSelected().list.end(); ++it )
+		for ( auto&& selected : m_selectionLayer->GetSelected().list)
 		{
-			if ( *it == this ) continue;
-			(*it)->BringToFront();
+			if ( selected == this ) continue;
+			selected->BringToFront();
 		}
 	}
 
 	if ( str == "sendback" )
 	{
-		for ( ControlList::List::const_iterator it = m_selectionLayer->GetSelected().list.begin(); it != m_selectionLayer->GetSelected().list.end(); ++it )
+		for ( auto&& selected : m_selectionLayer->GetSelected().list)
 		{
-			if ( *it == this ) continue;
-			(*it)->SendToBack();
+			if ( selected == this ) continue;
+			selected->SendToBack();
 		}
 	}
 }

@@ -28,6 +28,7 @@ namespace Gwk
 {
 namespace Renderer
 {
+    
 // self-hosting constructor
 Direct2D::Direct2D() : m_color(D2D1::ColorF::White)
 {
@@ -365,10 +366,12 @@ void Direct2D::DrawShavedCornerRect(Gwk::Rect rect, bool bSlight)
 
     if (m_solidColorBrush)
     {
-        m_rT->DrawRoundedRectangle(D2D1::RoundedRect(D2D1::RectF(rect.x, rect.y, rect.x+
-                                                                  rect.w,
-                                                                  rect.y+rect.h), 10.f,
-                                                      10.f), m_solidColorBrush);
+        m_rT->DrawRoundedRectangle(
+            D2D1::RoundedRect(
+                D2D1::RectF(rect.x, rect.y, rect.x+rect.w, rect.y+rect.h),
+                10.f,
+                10.f),
+            m_solidColorBrush);
     }
 }
 
@@ -509,6 +512,9 @@ bool Direct2D::EndContext(Gwk::WindowProvider* window)
     }
 
     return SUCCEEDED(hr);
+}
+
+}
 }
 
 } // namespace Renderer

@@ -1,5 +1,7 @@
 # Find Allegro 5.x
-set(AL5_VERSION "5.2")
+
+set(ALLEGRO_VERSION "5.2")  # Required version
+message("Looking for Allegro ${ALLEGRO_VERSION}")
 
 # Find headers
 find_path(ALLEGRO_INCLUDE
@@ -29,7 +31,7 @@ mark_as_advanced(ALLEGRO_INCLUDE ALLEGRO_LIB_LIST)
 foreach(ALLEGRO_LIB_EACH ${ALLEGRO_LIB_LIST})    
     find_library(${ALLEGRO_LIB_EACH}_LIB
         NAMES
-            "${ALLEGRO_LIB_EACH}.${AL5_VERSION}"
+            "${ALLEGRO_LIB_EACH}.${ALLEGRO_VERSION}"
         PATHS
             /usr/lib
             /usr/local/lib

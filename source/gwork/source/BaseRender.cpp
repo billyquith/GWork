@@ -151,7 +151,7 @@ void Base::RenderText(Gwk::Font* font, Gwk::Point pos, const Gwk::String& text)
         if (chr == ' ')
             continue;
 
-        Gwk::Rect r(pos.x+i*fSize*0.4, pos.y, fSize*0.4-1, fSize);
+        Gwk::Rect r(pos.x + i*fSize*0.4f, pos.y, fSize*0.4f - 1.0f, fSize);
 
         //
         // This isn't important, it's just me messing around changing
@@ -190,7 +190,7 @@ void Base::RenderText(Gwk::Font* font, Gwk::Point pos, const Gwk::String& text)
 Gwk::Point Base::MeasureText(Gwk::Font* font, const Gwk::String& text)
 {
     Gwk::Point p;
-    p.x = font->size*Scale()*(float)text.length()*0.4;
+    p.x = font->size*Scale()*(float)text.length()*0.4f;
     p.y = font->size*Scale();
     return p;
 }

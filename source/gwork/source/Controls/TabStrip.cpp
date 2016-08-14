@@ -70,9 +70,9 @@ void TabStrip::Layout(Skin::Base* skin)
     Gwk::Point largestTab(5, 5);
     int iNum = 0;
 
-    for (Base::List::iterator iter = Children.begin(); iter != Children.end(); ++iter)
+    for (auto&& control : Children)
     {
-        TabButton* button = gwk_cast<TabButton>(*iter);
+        TabButton* button = gwk_cast<TabButton>(control);
 
         if (!button)
             continue;
@@ -81,7 +81,6 @@ void TabStrip::Layout(Skin::Base* skin)
         Margin m;
         int iNotFirst = iNum > 0 ? -1 : 0;
 
-        if (m_dock == Position::Top)
         {
             m.left = iNotFirst;
             button->Dock(Position::Left);

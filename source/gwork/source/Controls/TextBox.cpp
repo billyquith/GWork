@@ -25,7 +25,7 @@ class ChangeCaretColor : public Gwk::Anim::Animation
 {
 public:
 
-    virtual void Think()
+    virtual void Think() override
     {
         gwk_cast<TextBox>(m_control)->UpdateCaretColor();
     }
@@ -60,9 +60,7 @@ bool TextBox::OnChar(Gwk::UnicodeChar c)
     if (c == '\t')
         return false;
 
-    Gwk::String str;
-    str += c;
-    InsertText(str);
+    InsertText(String{c});
     return true;
 }
 
@@ -106,7 +104,7 @@ void TextBox::UpdateCaretColor()
     if (m_caretColor == targetcolor)
         targetcolor = Gwk::Color(20, 20, 20, 255);
 
-    m_fNextCaretColorChange = Gwk::Platform::GetTimeInSeconds()+0.5;
+    m_fNextCaretColorChange = Gwk::Platform::GetTimeInSeconds()+0.5f;
     m_caretColor = targetcolor;
     Redraw();
 }
@@ -137,7 +135,7 @@ void TextBox::RefreshCursorBounds()
 {
     m_fNextCaretColorChange = Gwk::Platform::GetTimeInSeconds()+1.5f;
     m_caretColor = Gwk::Color(30, 30, 30, 255);
-    MakeCaratVisible();
+    MakeCaretVisible();
     Gwk::Rect pA = GetCharacterPosition(m_cursorPos);
     Gwk::Rect pB = GetCharacterPosition(m_cursorEnd);
     m_rectSelectionBounds.x = std::min(pA.x, pB.x);
@@ -395,7 +393,7 @@ void TextBox::OnMouseMoved(int x, int y, int /*deltaX*/, int /*deltaY*/)
     SetCursorPos(iChar);
 }
 
-void TextBox::MakeCaratVisible()
+void TextBox::MakeCaretVisible()
 {
     if (m_text->Width() < Width())
     {
@@ -403,21 +401,21 @@ void TextBox::MakeCaratVisible()
     }
     else
     {
-        int iCaratPos = m_text->GetCharacterPosition(m_cursorPos).x;
-        int iRealCaratPos = iCaratPos+m_text->X();
+        int iCaretPos = m_text->GetCharacterPosition(m_cursorPos).x;
+        int iRealCaretPos = iCaretPos+m_text->X();
         int iSlidingZone = m_text->GetFont()->size+1;   // Width()*0.1f
 
         // If the carat is already in a semi-good position, leave it.
-        if (iRealCaratPos >= iSlidingZone && iRealCaratPos <= Width()-iSlidingZone)
+        if (iRealCaretPos >= iSlidingZone && iRealCaretPos <= Width()-iSlidingZone)
             return;
 
         int x = 0;
 
-        if (iRealCaratPos > Width()-iSlidingZone)
-            x = Width()-iCaratPos-iSlidingZone;
+        if (iRealCaretPos > Width()-iSlidingZone)
+            x = Width()-iCaretPos-iSlidingZone;
 
-        if (iRealCaratPos < iSlidingZone)
-            x = -iCaratPos+iSlidingZone;
+        if (iRealCaretPos < iSlidingZone)
+            x = -iCaretPos+iSlidingZone;
 
         // Don't show too much whitespace to the right
         if (x+m_text->Width() < Width()-GetPadding().right)
@@ -520,14 +518,11 @@ void TextBoxMultiline::Render(Skin::Base* skin)
         int iSelectionStartPos =  (m_cursorPos < m_cursorEnd) ? m_cursorPos : m_cursorEnd;
         int iSelectionEndPos =    (m_cursorPos < m_cursorEnd) ? m_cursorEnd : m_cursorPos;
 
-//        int iFirstChar = 0;
-//        int iLastChar = 0;
         skin->GetRender()->SetDrawColor(Gwk::Color(50, 170, 255, 200));
         m_rectSelectionBounds.h = m_text->GetFont()->size+2;
 
         for (int iLine = iSelectionStartLine; iLine <= iSelectionEndLine; ++iLine)
         {
-//            ControlsInternal::Text* line = m_text->GetLine(iLine);
             Gwk::Rect box = m_text->GetLineBox(iLine);
             box.x += m_text->X();
             box.y += m_text->Y();
@@ -547,11 +542,11 @@ void TextBoxMultiline::Render(Skin::Base* skin)
             if (iLine == iSelectionEndLine)
             {
                 Gwk::Rect pos = GetCharacterPosition(iSelectionEndPos);
-                m_rectSelectionBounds.w = pos.x-m_rectSelectionBounds.x;
+                m_rectSelectionBounds.w = pos.x - m_rectSelectionBounds.x;
             }
             else
             {
-                m_rectSelectionBounds.w = box.x+box.w-m_rectSelectionBounds.x;
+                m_rectSelectionBounds.w = box.x + box.w - m_rectSelectionBounds.x;
             }
             if (m_rectSelectionBounds.w < 1)
                 m_rectSelectionBounds.w = 1;
@@ -572,7 +567,7 @@ void TextBoxMultiline::Render(Skin::Base* skin)
     skin->GetRender()->DrawFilledRect(m_rectCaretBounds);
 }
 
-void TextBoxMultiline::MakeCaratVisible()
+void TextBoxMultiline::MakeCaretVisible()
 {
     if (m_text->Height() < Height())
     {
@@ -587,29 +582,29 @@ void TextBoxMultiline::MakeCaratVisible()
         //if ( pos & Position::CenterV ) y = bounds.y + ( bounds.h - Height() )  * 0.5;
 
         Rect pos = m_text->GetCharacterPosition(m_cursorPos);
-        int iCaratPos = pos.y; // + pos.h;
-        int iRealCaratPos = iCaratPos+m_text->Y();
+        int iCaretPos = pos.y; // + pos.h;
+        int iRealCaretPos = iCaretPos+m_text->Y();
         //int iSlidingZone =  m_text->GetFont()->size; //Width()*0.1f
 
         // If the carat is already in a semi-good position, leave it.
 //        int mi = GetPadding().top;
 //        int ma = Height()-pos.h-GetPadding().bottom;
-        if (iRealCaratPos >= GetPadding().top && iRealCaratPos <= Height()-pos.h-
+        if (iRealCaretPos >= GetPadding().top && iRealCaretPos <= Height()-pos.h-
             GetPadding().bottom)
             return;
 
         int y = 0;
 
         // bottom of carat too low
-        if (iRealCaratPos > Height()-pos.h-GetPadding().bottom)
+        if (iRealCaretPos > Height()-pos.h-GetPadding().bottom)
         {
             //align bottom
-            y = Height()-iCaratPos-pos.h-GetPadding().bottom;
+            y = Height()-iCaretPos-pos.h-GetPadding().bottom;
         }
 
         // top of carat too low
-        if (iRealCaratPos < GetPadding().top)
-            y = -iCaratPos+GetPadding().top;
+        if (iRealCaretPos < GetPadding().top)
+            y = -iCaretPos+GetPadding().top;
 
         // Don't show too much whitespace to the bottom
         if (y+m_text->Height() < Height()-GetPadding().bottom)
@@ -739,7 +734,7 @@ void PasswordTextBox::SetText(const String& str, bool bDoEvents)
 
     m_realText = str;
     String passwordChars;
-    for (int i = 0; i < m_realText.length(); i++)
+    for (size_t i = 0; i < m_realText.length(); i++)
     {
         passwordChars += m_passwordChar;
     }

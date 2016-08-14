@@ -31,7 +31,7 @@ namespace Gwk
                          const Gwk::String& strWindowTitle = "");
             ~WindowCanvas();
 
-            virtual void DoThink();
+            virtual void DoThink() override;
 
             virtual bool WantsQuit()
             {
@@ -39,18 +39,18 @@ namespace Gwk
             }
 
             // Gwk::WindowProvider
-            virtual void* GetWindow();
+            virtual void* GetWindow() override;
 
-            virtual bool InputQuit();
+            virtual bool InputQuit() override;
 
-            Skin::Base* GetSkin(void);
+            Skin::Base* GetSkin(void) override;
 
-            virtual void Render(Skin::Base* skin);
+            virtual void Render(Skin::Base* skin) override;
 
-            virtual void SetPos(int x, int y);
-            virtual bool IsOnTop();
+            virtual void SetPos(int x, int y) override;
+            virtual bool IsOnTop() override;
 
-            virtual void Layout(Skin::Base* skin);
+            virtual void Layout(Skin::Base* skin) override;
 
             virtual bool CanMaximize()
             {
@@ -72,7 +72,7 @@ namespace Gwk
 
         protected:
 
-            virtual void RenderCanvas();
+            virtual void RenderCanvas() override;
             virtual void DestroyWindow();
 
             virtual void CloseButtonPressed(Event::Info);

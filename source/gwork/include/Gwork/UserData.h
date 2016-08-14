@@ -79,12 +79,9 @@ namespace Gwk
     
         ~UserDataStorage()
         {
-            Container::iterator it = m_list.begin(), itEnd = m_list.end();
-
-            while (it != itEnd)
+            for (auto&& item : m_list)
             {
-                it->second->DeleteThis();
-                ++it;
+                item.second->DeleteThis();
             }
         }
 

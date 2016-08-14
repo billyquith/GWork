@@ -7,6 +7,7 @@
 
 #include <Gwork/BaseRender.h>
 #include <Gwork/Renderers/SFML2.h>
+#include <Gwork/Platform.h>
 
 #include <SFML/Graphics.hpp>
 #include <SFML/Graphics/Font.hpp>
@@ -19,6 +20,7 @@
 #endif
 
 #include <cmath>
+#include <unistd.h>
 
 struct TextureData
 {
@@ -37,13 +39,15 @@ struct TextureData
 };
 
 
-Gwk::Renderer::SFML2::SFML2(sf::RenderTarget& target)
+Gwk::Renderer::SFML2::SFML2(sf::RenderTarget& target, const String& resDir)
     :   m_target(target)
     ,   m_renderStates(sf::RenderStates::Default)
     ,   m_height(m_target.getSize().y)
 {
     m_buffer.setPrimitiveType(sf::Triangles);
     m_renderStates.blendMode = sf::BlendAlpha;
+    
+    m_resourceDir = Platform::GetExecutableDir() + resDir;
 }
 
 Gwk::Renderer::SFML2::~SFML2()
@@ -189,7 +193,7 @@ void Gwk::Renderer::SFML2::LoadFont(Gwk::Font* font)
 
     sf::Font* sfFont = new sf::Font();
 
-    if (!sfFont->loadFromFile(font->facename))
+    if (!sfFont->loadFromFile(m_resourceDir + font->facename))
     {
         // Ideally here we should be setting the font to a system
         // default font here.
@@ -231,7 +235,7 @@ void Gwk::Renderer::SFML2::RenderText(Gwk::Font* font, Gwk::Point pos,
     sfStr.setFont(*sFFont);
     sfStr.move(pos.x, pos.y);
     sfStr.setCharacterSize(font->realsize);
-    sfStr.setColor(m_color);
+    sfStr.setFillColor(m_color);
     m_target.draw(sfStr);
 }
 
@@ -262,10 +266,10 @@ void Gwk::Renderer::SFML2::LoadTexture(Gwk::Texture* texture)
 
     if (texture->data)
         FreeTexture(texture);
-
+    
     sf::Texture* tex = new sf::Texture();
     tex->setSmooth(true);
-    if (!tex->loadFromFile(texture->name))
+    if (!tex->loadFromFile(m_resourceDir + texture->name))
     {
         delete tex;
         texture->failed = true;

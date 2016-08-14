@@ -51,16 +51,11 @@ void Text::SetFont(Gwk::Font* font)
     m_font = font;
     m_bTextChanged = true;
     // Change the font of multilines too!
+    for (auto&& line : m_lines)
     {
-        TextLines::iterator it = m_lines.begin();
-        TextLines::iterator itEnd = m_lines.end();
-
-        while (it != itEnd)
-        {
-            (*it)->SetFont(m_font);
-            ++it;
-        }
+        line->SetFont(m_font);
     }
+
     Invalidate();
 }
 
@@ -100,7 +95,7 @@ Gwk::Rect Text::GetCharacterPosition(unsigned int iChar)
         TextLines::iterator itEnd = m_lines.end();
         int iChars = 0;
 
-        Text* line;
+        Text* line = nullptr;
         while (it != itEnd)
         {
             line = *it;
@@ -235,7 +230,8 @@ void Text::SplitWords(const Gwk::String& s, std::vector<Gwk::String>& elems)
 {
     Gwk::String str;
 
-    int w = GetParent()->Width()-GetParent()->GetPadding().left-GetParent()->GetPadding().right;
+    int w = GetParent()->Width()
+                - (GetParent()->GetPadding().left + GetParent()->GetPadding().right);
     
     for (int i = 0; i < (int)s.length(); i++)
     {
@@ -280,15 +276,15 @@ void Text::RefreshSizeWrap()
 {
     RemoveAllChildren();
 
-    for (TextLines::iterator it = m_lines.begin(); it != m_lines.end(); ++it)
+    for (auto&& line : m_lines)
     {
-        delete *it;
+        delete line;
     }
-
     m_lines.clear();
+    
     std::vector<Gwk::String> words;
     SplitWords(GetText(), words);
-    
+
     // Adding a word to the end simplifies the code below
     // which is anything but simple.
     words.push_back("");
@@ -304,7 +300,7 @@ void Text::RefreshSizeWrap()
     int x = 0, y = 0;
     Gwk::String strLine;
 
-    for (std::vector<Gwk::String>::iterator it = words.begin(); it != words.end(); ++it)
+    for (auto&& it = words.begin(); it != words.end(); ++it)
     {
         bool bFinishLine = false;
         bool bWrapped = false;
@@ -316,13 +312,13 @@ void Text::RefreshSizeWrap()
 
         // Does adding this word drive us over the width?
         {
-            strLine += (*it);
+            strLine += *it;
             Gwk::Point p = GetSkin()->GetRender()->MeasureText(GetFont(), strLine);
 
-            if (p.x > Width())
-            if (p.x > w)
+            if (p.x > Width() && p.x > w)
             {
-                bFinishLine = true; bWrapped = true;
+                bFinishLine = true;
+                bWrapped = true;
             }
         }
 
@@ -392,15 +388,11 @@ Text* Text::GetLine(int i)
 
 int Text::GetLineFromChar(int i)
 {
-    TextLines::iterator it = m_lines.begin();
-    TextLines::iterator itEnd = m_lines.end();
     int iChars = 0;
     int iLine = 0;
 
-    while (it != itEnd)
+    for (auto&& line : m_lines)
     {
-        Text* line = *it;
-        ++it;
         iChars += line->Length();
 
         if (iChars > i)
@@ -411,20 +403,16 @@ int Text::GetLineFromChar(int i)
 
     if (iLine > 0)
         return iLine-1;
+    
     return iLine;
 }
 
 int Text::GetStartCharFromLine(int i)
 {
-    TextLines::iterator it = m_lines.begin();
-    TextLines::iterator itEnd = m_lines.end();
     int iChars = 0;
 
-    while (it != itEnd)
+    for (auto&& line : m_lines)
     {
-        Text* line = *it;
-        ++it;
-
         if (i == 0)
             return Gwk::Clamp(iChars, 0, Length());
 

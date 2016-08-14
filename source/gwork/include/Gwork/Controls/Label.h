@@ -40,7 +40,7 @@ namespace Gwk
 
             virtual void SizeToContents();
 
-            virtual void SetAlignment(enum Position area);
+            virtual void SetAlignment(Position area);
             virtual Position GetAlignment();
 
             virtual void SetFont(Gwk::String strFacename, int iSize, bool bBold);

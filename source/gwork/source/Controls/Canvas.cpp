@@ -5,7 +5,6 @@
  *  See license in Gwork.h
  */
 
-
 #include <Gwork/Gwork.h>
 #include <Gwork/Controls/Canvas.h>
 #include <Gwork/Skin.h>
@@ -16,6 +15,8 @@
 #if GWK_ANIMATE
 #include <Gwork/Anim.h>
 #endif
+
+#include <cctype>
 
 using namespace Gwk::Controls;
 
@@ -143,11 +144,8 @@ void Canvas::ProcessDelayedDeletes()
         m_deleteList.clear();
         m_deleteSet.clear();
 
-        for (Gwk::Controls::Base::List::iterator it = deleteList.begin();
-             it != deleteList.end();
-             ++it)
+        for (auto&& control : deleteList)
         {
-            Gwk::Controls::Base* control = *it;
             control->PreDelete(GetSkin());
             delete control;
             Redraw();
@@ -202,7 +200,7 @@ bool Canvas::InputMouseButton(int iButton, bool bDown)
     return Gwk::Input::OnMouseClicked(this, iButton, bDown);
 }
 
-bool Canvas::InputKey(int iKey, bool bDown)
+bool Canvas::InputModifierKey(int iKey, bool bDown)
 {
     if (Hidden())
         return false;
@@ -221,7 +219,8 @@ bool Canvas::InputCharacter(Gwk::UnicodeChar chr)
     if (Hidden())
         return false;
 
-    if (!iswprint(chr))
+    // Check if character is printable, i.e. don't want hidden codes, like backspace.
+    if (!std::isprint(chr))
         return false;
 
     // Handle Accelerators

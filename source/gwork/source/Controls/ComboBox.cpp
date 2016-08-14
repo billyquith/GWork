@@ -150,17 +150,12 @@ void ComboBox::OnItemSelected(Event::Info info)
 
 void ComboBox::SelectItemByName(const Gwk::String& name, bool bFireChangeEvents)
 {
-    Base::List& children = m_menu->GetChildren();
-    Base::List::iterator it = children.begin();
-
-    while (it != children.end())
+    for (auto&& control : m_menu->GetChildren())
     {
-        MenuItem* child = gwk_cast<MenuItem>(*it);
+        MenuItem* child = gwk_cast<MenuItem>(control);
 
         if (child->GetName() == name)
             return SelectItem(child, bFireChangeEvents);
-
-        ++it;
     }
 }
 

@@ -23,7 +23,11 @@ namespace Gwk
         {
         public:
 
-            SFML2(sf::RenderTarget& target);
+            //! Constructor for SFML2 renderer.
+            //! \param target - application render target.
+            //! \param resDir - path, relative to executable where resources are found.
+            SFML2(sf::RenderTarget& target, const String& resDir);
+            
             virtual ~SFML2();
 
             inline void EnsurePrimitiveType(sf::PrimitiveType type)
@@ -97,6 +101,7 @@ namespace Gwk
             sf::RenderStates m_renderStates;
             sf::View m_originalView;
             int m_height;
+            String m_resourceDir;
         };
 
 

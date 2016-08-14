@@ -21,7 +21,7 @@ int main()
     sf::RenderWindow app(sf::VideoMode(1004, 650, 32), "Gwork: SFML2");
 
     // Create renderer
-    Gwk::Renderer::SFML2 renderer(app);
+    Gwk::Renderer::SFML2 renderer(app, GWORK_RESOURCE_DIR);
     
     // Create a Gwork skin
     Gwk::Skin::TexturedBase skin(&renderer);
@@ -69,7 +69,10 @@ int main()
 
         // Render the control canvas
         app.clear();
+        // <user render here>
+        app.pushGLStates();
         canvas->RenderCanvas();
+        app.popGLStates();        
         app.display();
     }
 

@@ -297,11 +297,11 @@ namespace Gwk
             {
                 m_defaultFont.facename  = "Microsoft Sans Serif";
                 m_defaultFont.size      = 11;
-                
+
                 m_texture.name = TextureName;
                 m_texture.readable = true;
                 GetRender()->LoadTexture(&m_texture); // Readable texture
-                
+
                 Colors.Window.TitleActive   = GetRender()->PixelColour( &m_texture, 4 + 8 * 0, 508, Color( 255, 0, 0 ) );
                 Colors.Window.TitleInactive = GetRender()->PixelColour( &m_texture, 4 + 8 * 1, 508, Color( 255, 255, 0 ) );
                 Colors.Button.Normal        = GetRender()->PixelColour( &m_texture, 4 + 8 * 2, 508, Color( 255, 255, 0 ) );
@@ -464,7 +464,6 @@ namespace Gwk
                 Textures.GroupBox.Init( &m_texture, 0,          448, 31, 31, Margin( 8, 8, 8, 8 ) );
             }
 
-
             void DrawButton( Gwk::Controls::Base* control, bool bDepressed, bool bHovered, bool bDisabled ) override
             {
                 if ( bDisabled )    { return Textures.Input.Button.Disabled.Draw( GetRender(), control->GetRenderBounds() ); }
@@ -532,7 +531,6 @@ namespace Gwk
                     { Textures.RadioButton.Active.Normal.Draw( GetRender(), control->GetRenderBounds() ); }
                 }
             }
-
 
             void DrawCheckBox( Gwk::Controls::Base* control, bool bSelected, bool bDepressed ) override
             {
@@ -715,7 +713,7 @@ namespace Gwk
                 return Textures.Input.ListBox.OddLine.Draw( GetRender(), control->GetRenderBounds() );
             }
 
-            void DrawSliderNotchesH( Gwk::Rect rect, int numNotches, int dist )
+            virtual void DrawSliderNotchesH( Gwk::Rect rect, int numNotches, int dist )
             {
                 if ( numNotches == 0 ) { return; }
 
@@ -727,7 +725,7 @@ namespace Gwk
                 }
             }
 
-            void DrawSliderNotchesV( Gwk::Rect rect, int numNotches, int dist )
+            virtual void DrawSliderNotchesV( Gwk::Rect rect, int numNotches, int dist )
             {
                 if ( numNotches == 0 ) { return; }
 
@@ -1023,11 +1021,12 @@ namespace Gwk
             void DrawCategoryInner( Controls::Base* ctrl, bool bCollapsed ) override
             {
                 if ( bCollapsed )
-                { return Textures.CategoryList.Header.Draw( GetRender(), ctrl->GetRenderBounds() ); }
+                    return Textures.CategoryList.Header.Draw( GetRender(), ctrl->GetRenderBounds() );
 
                 Textures.CategoryList.Inner.Draw( GetRender(), ctrl->GetRenderBounds() );
             }
         };
     }
 }
+
 #endif

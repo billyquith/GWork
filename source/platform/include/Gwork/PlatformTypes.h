@@ -32,7 +32,7 @@ namespace Gwk
     // See: http://www.utf8everywhere.org
     //
     typedef std::string     String;
-    typedef char            UnicodeChar;
+    typedef char            UnicodeChar;    // TODO - deal with multibyte UTF8 chars.
 
     namespace CursorType
     {
@@ -57,6 +57,11 @@ namespace Gwk
         Point(int x_=0, int y_=0)
         :   x(x_), y(y_)
         {}
+        
+        void set(int x_, int y_)
+        {
+            x = x_, y = y_;
+        }
         
         void operator += (const Point& p)
         {
@@ -87,6 +92,10 @@ namespace Gwk
     {
         Rect(int x_ = 0, int y_ = 0, int w_ = 0, int h_ = 0)
         :   x(x_), y(y_), w(w_), h(h_)
+        {}
+        
+        Rect(const Point& o, const Point& sz)
+        :   x(o.x), y(o.y), w(sz.x), h(sz.y)
         {}
         
         bool operator == (const Rect &other) const
@@ -120,6 +129,14 @@ namespace Gwk
         ,   b(b_)
         ,   a(a_)
         {}
+
+        Color(const Color& c)
+        {
+            r = c.r;
+            g = c.g;
+            b = c.b;
+            a = c.a;
+        }
 
         void operator = (Color c)
         {
@@ -196,6 +213,7 @@ namespace Gwk
         ,   bold(false)
         ,   data(nullptr)
         ,   realsize(0)
+        ,   render_data(nullptr)
         {
         }
 
@@ -203,12 +221,12 @@ namespace Gwk
         float size;
         bool bold;
 
-        /// This should be set by the renderer
-        /// if it tries to use a font where it's nullptr.
-        void*   data;
+        void *data;             // Font data, set by renderer
 
-        /// This is the real font size, after it's been scaled by Render->Scale()
+        // This is the real font size, after it's been scaled by Render->Scale()
         float realsize;
+        
+        void *render_data;      // optional renderer data
     };
 
     struct Texture

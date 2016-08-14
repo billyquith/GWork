@@ -15,6 +15,13 @@
 #include <locale>       // Narrow/widen
 #include <codecvt>      // Narrow/widen - C++11
 
+#ifdef WIN32
+#define WIN32_LEAN_AND_MEAN
+#include <Windows.h>
+#endif
+
+#include "DebugBreak.h"
+
 namespace Gwk {
 namespace Utility {
     
@@ -320,14 +327,11 @@ void AssertCheck(bool b, const char* strMsg)
     if (!b)
     {
         Msg("Assert: %s\n", strMsg);
-#ifdef WIN32
-        MessageBoxA(nullptr, strMsg, "Assert", MB_ICONEXCLAMATION | MB_OK);
-        _asm { int 3 }      // Break to debugger.
-#endif
         
-#ifdef __APPLE__
-        __builtin_trap();   // Break to debugger.
+#if defined(WIN32)
+        MessageBoxA(nullptr, strMsg, "Assert", MB_ICONEXCLAMATION | MB_OK);
 #endif
+        debug_break();  // break into debugger        
     }
 }
 

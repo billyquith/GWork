@@ -183,9 +183,9 @@ void TreeNode::ExpandAll()
     Open();
     Base::List& children = GetChildNodes();
 
-    for (Base::List::iterator iter = children.begin(); iter != children.end(); ++iter)
+    for (auto&& childnode : children)
     {
-        TreeNode* child = gwk_cast<TreeNode>(*iter);
+        TreeNode* child = gwk_cast<TreeNode>(childnode);
 
         if (!child)
             continue;
@@ -261,9 +261,9 @@ void TreeNode::DeselectAll()
 
     Base::List& children = GetChildNodes();
 
-    for (Base::List::iterator iter = children.begin(); iter != children.end(); ++iter)
+    for (auto&& childnode : children)
     {
-        TreeNode* child = gwk_cast<TreeNode>(*iter);
+        TreeNode* child = gwk_cast<TreeNode>(childnode);
 
         if (!child)
             continue;
