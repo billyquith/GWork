@@ -59,7 +59,7 @@ void Listener::CleanLinks()
 {
     for (auto&& h : m_handlers)
     {
-        h.listener->UnRegisterCaller(this);
+        h.handler->UnRegisterCaller(this);
     }
 
     m_handlers.clear();
@@ -83,20 +83,16 @@ void Listener::Call(Controls::Base* pThis, Event::Info information)
         info.Packet = &h.Packet;
 
         if (h.callback)
-            h.callback(*h.listener, info);
+            h.callback(*h.handler, info);
     }
 }
 
-void Listener::AddInternal(Event::Handler* listener,
-                         EventListener function,
-                         const Gwk::Event::Packet& packet)
+void Listener::AddInternal(Handler *handler, EventCallback const &ecb,
+                           const Gwk::Event::Packet& packet)
 {
-    HandlerInstance h;
-    h.callback  = function;
-    h.listener  = listener;
-    h.Packet    = packet;
+    HandlerInstance h = { ecb, packet, handler };
     m_handlers.push_back(h);
-    listener->RegisterCaller(this);
+    handler->RegisterCaller(this);
 }
 
 void Listener::RemoveHandler(Event::Handler* object)
@@ -108,7 +104,7 @@ void Listener::RemoveHandler(Event::Handler* object)
     {
         HandlerInstance& h = *iter;
 
-        if (h.listener == object)
+        if (h.handler == object)
             iter = m_handlers.erase(iter);
         else
             ++iter;
