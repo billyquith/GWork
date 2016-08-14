@@ -492,7 +492,7 @@ namespace Gwk
             virtual bool DragAndDrop_Draggable();
             virtual bool DragAndDrop_ShouldStartDrag()  { return true; }
 
-            virtual void DragAndDrop_StartDragging(Gwk::DragAndDrop::Package* package, int x, int y);
+            virtual void DragAndDrop_StartDragging(DragAndDrop::Package* package, int x, int y);
             virtual Gwk::DragAndDrop::Package* DragAndDrop_GetPackage(int x, int y);
             virtual void DragAndDrop_EndDragging(bool /*bSuccess*/, int /*x*/, int /*y*/) {}
 
@@ -665,7 +665,8 @@ public: \
     GWK_DYNAMIC(THISNAME, BASENAME) \
     static  const char* GetTypeNameStatic() { return #THISNAME; } \
     virtual const char* GetTypeName() const override { return GetTypeNameStatic(); } \
-    virtual const char* GetParentTypeName() const override { return ParentClass::GetTypeNameStatic(); } \
+    virtual const char* GetParentTypeName() const override \
+        { return ParentClass::GetTypeNameStatic(); } \
     THISNAME(Gwk::Controls::Base* parent, const Gwk::String& name = "")
 
 #define GWK_CONTROL_INLINE(THISNAME, BASENAME) \
