@@ -86,6 +86,7 @@ namespace Gwk
 
         public:
 
+            // TODO - It is inefficient to store all of these for every control when not used.
             Gwk::Event::Listener onPress;
             Gwk::Event::Listener onRightPress;
             Gwk::Event::Listener onDown;

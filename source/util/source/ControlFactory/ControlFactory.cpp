@@ -41,7 +41,7 @@ void InitialiseControls()
         ;
 
     ponder::Class::declare<Gwk::Event::Listener>()
-//        .function("add", [] (Event::Handler&, Controls::Base*))
+        .function("add", &Gwk::Event::Listener::AddCb)
         ;
 
     ponder::Class::declare<Controls::Base>()
@@ -59,7 +59,8 @@ void InitialiseControls()
         .base<Controls::Label::ParentClass>()
         .constructor<Controls::Base*>()
         .property("text", &Controls::Label::GetText,
-                          [] (Controls::Label& c, const Gwk::String& s) { c.SetText(s); })
+                          // setter has >1 params
+                          [] (Controls::Label &c, const Gwk::String &s) { c.SetText(s); })
         .property("textColor",  &Controls::Label::GetTextColor, &Controls::Label::SetTextColor)
         ;
 
@@ -70,6 +71,14 @@ void InitialiseControls()
         .property("isToggle",   &Controls::Button::IsToggle, &Controls::Button::SetIsToggle)
         .property("toggled",    &Controls::Button::GetToggleState,
                                 &Controls::Button::SetToggleState)
+        .property("onPress",        &Controls::Button::onPress)
+        .property("onRightPress",   &Controls::Button::onRightPress)
+        .property("onDown",         &Controls::Button::onDown)
+        .property("onUp",           &Controls::Button::onUp)
+        .property("onDoubleClick",  &Controls::Button::onDoubleClick)
+        .property("onToggle",       &Controls::Button::onToggle)
+        .property("onToggleOn",     &Controls::Button::onToggleOn)
+        .property("onToggleOff",    &Controls::Button::onToggleOff)
         ;
 
     ponder::Class::declare<Controls::LabelClickable>()

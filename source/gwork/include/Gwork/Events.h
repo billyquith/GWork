@@ -118,7 +118,7 @@ namespace Gwk
             ~Listener();
 
             // add function object handler
-            void Add(Handler *handler, EventCallback const& cb,
+            void AddCb(Handler *handler, EventCallback const& cb,
                      const Event::Packet& packet = Event::Packet())
             {
                 AddInternal(handler, cb, packet);
@@ -129,10 +129,10 @@ namespace Gwk
             void Add(Handler* handler, void (T::*f)(Info),
                      const Packet& packet = Packet())
             {
-                auto cb = [=](Handler &h, Info i) -> void {
+                auto cb = [=](Handler &h, Info const& i) -> void {
                     (static_cast<T&>(h).*f)(i);
                 };
-                AddInternal(handler, EventCallback(cb), packet);
+                AddCb(handler, EventCallback(cb), packet);
             }
             
             void RemoveHandler(Event::Handler* object);

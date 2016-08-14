@@ -19,7 +19,7 @@ public:
 
     GWK_CONTROL(ReflectButton, TestUnit);
 
-    void onButtonA(Controls::Base* control)
+    void onButtonA(Event::Info info)
     {
         OutputToLog("Button Pressed (using 'OnPress' event)");
     }
@@ -55,12 +55,16 @@ GWK_CONTROL_CONSTRUCTOR(ReflectButton)
     //        Controls::Button* buttonA = new Controls::Button(this);
     //        buttonA->SetText("Event Tester");
     //        buttonA->onPress.Add(this, &Button::onButtonA);
-    const ponder::Class* metaclass = &ponder::classByType<Controls::Button>();
-    assert(metaclass != nullptr);
-    ponder::UserObject buttonA = metaclass->construct(ponder::Args(static_cast<Controls::Base*>(this)));
+    
+    const ponder::Class& metaclass = ponder::classByType<Controls::Button>();
+    
+    ponder::UserObject buttonA =
+        metaclass.construct(ponder::Args(static_cast<Controls::Base*>(this)));
     assert(buttonA != ponder::UserObject::nothing);
+    
     buttonA.set("text", "Hello world!");
-//    buttonA.get("onPress").call("add", this, &ReflectButton::onButtonA);
+    
+    buttonA.get("onPress").to<Event::Listener*>()->Add(this, &ReflectButton::onButtonA);
     
     //        {
     //            Controls::Button* buttonA = new Controls::Button(this);
