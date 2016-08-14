@@ -67,58 +67,58 @@ namespace Gwk
         
         //! Class to allow mapping from enums to strings and back.
         //! @param TYPE : The enum type we are mapping.
-        template <typename ENUM>
-        class ValueEnumMap
-        {
-        public:
-            typedef ENUM EnumType;
-            typedef unsigned int Count_t;
-            typedef ValueEnumMapItem<EnumType> Enum;
-            static const int Undefined = -1;
-            
-            ValueEnumMap(const Enum *pairs, Count_t count)
-            :   m_enums(pairs)
-            ,   m_enumCount(count)
-            {}
-            
-            size_t GetEnumCount() const { return m_enumCount; }
-            
-            const char* GetNameByIndex(Count_t index) const
-            {
-                return m_enums[index].name;
-            }
-
-            size_t GetIndexByName(const char *name) const
-            {
-                for (Count_t i=0; i < m_enumCount; ++i)
-                {
-                    if (strcmp(m_enums[i].name, name)==0)
-                        return i;
-                }
-                return Undefined;
-            }
-
-            ENUM GetValueByName(const char *name, EnumType defaultValue = Undefined) const
-            {
-                const size_t i = GetIndexByName(name);
-                return i!=Undefined ? m_enums[i].value : defaultValue;
-            }
-
-            const char* GetNameByValue(EnumType value, Count_t defaultIndex=0) const
-            {
-                for (size_t i=0; i < m_enumCount; ++i)
-                {
-                    const Enum &item = m_enums[i];
-                    if (item.value == value)
-                        return item.name;   // We found the item.
-                }
-                return m_enums[defaultIndex].name;   // Not found. Return default indexed.
-            }
-
-        private:
-            const Enum     *m_enums;
-            const Count_t   m_enumCount;
-        };
+//        template <typename ENUM>
+//        class ValueEnumMap
+//        {
+//        public:
+//            typedef ENUM EnumType;
+//            typedef unsigned int Count_t;
+//            typedef ValueEnumMapItem<EnumType> Enum;
+//            static const int Undefined = -1;
+//            
+//            ValueEnumMap(const Enum *pairs, Count_t count)
+//            :   m_enums(pairs)
+//            ,   m_enumCount(count)
+//            {}
+//            
+//            size_t GetEnumCount() const { return m_enumCount; }
+//            
+//            const char* GetNameByIndex(Count_t index) const
+//            {
+//                return m_enums[index].name;
+//            }
+//
+//            size_t GetIndexByName(const char *name) const
+//            {
+//                for (Count_t i=0; i < m_enumCount; ++i)
+//                {
+//                    if (strcmp(m_enums[i].name, name)==0)
+//                        return i;
+//                }
+//                return Undefined;
+//            }
+//
+//            ENUM GetValueByName(const char *name, EnumType defaultValue = Undefined) const
+//            {
+//                const size_t i = GetIndexByName(name);
+//                return i!=Undefined ? m_enums[i].value : defaultValue;
+//            }
+//
+//            const char* GetNameByValue(EnumType value, Count_t defaultIndex=0) const
+//            {
+//                for (size_t i=0; i < m_enumCount; ++i)
+//                {
+//                    const Enum &item = m_enums[i];
+//                    if (item.value == value)
+//                        return item.name;   // We found the item.
+//                }
+//                return m_enums[defaultIndex].name;   // Not found. Return default indexed.
+//            }
+//
+//        private:
+//            const Enum     *m_enums;
+//            const Count_t   m_enumCount;
+//        };
         
 
         class Property
