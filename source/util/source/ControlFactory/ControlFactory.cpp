@@ -61,8 +61,8 @@ void InitialiseControls()
     
         .property("dock",       &Controls::Base::GetDock, &Controls::Base::Dock)
         .property("margin",     &Controls::Base::GetMargin, &Controls::Base::SetMargin)
-        .property("tooltip",    &Controls::Base::GetToolTip, &Controls::Base::SetToolTip)
-        .function("setTooltip", &Controls::Base::SetToolTipText)
+        .property("tooltip",    &Controls::Base::GetTooltip, &Controls::Base::SetTooltip)
+        .function("setTooltip", &Controls::Base::SetTooltipText)
         ;
 
     ponder::Class::declare<Controls::Label>()

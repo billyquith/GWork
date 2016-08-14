@@ -11,7 +11,7 @@
 #include <Gwork/Skin.h>
 #include <Gwork/Controls/Menu.h>
 #include <Gwork/DragAndDrop.h>
-#include <Gwork/ToolTip.h>
+#include <Gwork/Tooltip.h>
 
 #if GWK_ANIMATE
 #include <Gwork/Anim.h>
@@ -161,7 +161,7 @@ void WindowCanvas::RenderCanvas()
 
         DoRender(m_skin);
         DragAndDrop::RenderOverlay(this, m_skin);
-        ToolTip::RenderToolTip(m_skin);
+        Tooltip::RenderTooltip(m_skin);
         render->End();
     }
 

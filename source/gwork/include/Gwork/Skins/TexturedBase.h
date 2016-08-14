@@ -814,7 +814,7 @@ namespace Gwk
                 }
             }
 
-            void DrawToolTip( Gwk::Controls::Base* control ) override
+            void DrawTooltip( Gwk::Controls::Base* control ) override
             {
                 return Textures.Tooltip.Draw( GetRender(), control->GetRenderBounds() );
             }

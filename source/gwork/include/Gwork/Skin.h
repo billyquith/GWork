@@ -116,7 +116,7 @@ namespace Gwk
                                             bool bDown, bool bOpen, bool bDisabled) = 0;
             virtual void DrawKeyboardHighlight(Controls::Base* control, const Gwk::Rect& rect,
                                                int offset) = 0;
-            virtual void DrawToolTip(Controls::Base* control) = 0;
+            virtual void DrawTooltip(Controls::Base* control) = 0;
 
             virtual void DrawNumericUpDownButton(Controls::Base* control, bool bDepressed,
                                                  bool bUp) = 0;

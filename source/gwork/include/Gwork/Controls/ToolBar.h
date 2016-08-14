@@ -49,7 +49,7 @@ namespace Gwk
             virtual ToolBarButton* Add(const String& text, const String& icon)
             {
                 ToolBarButton* button = new ToolBarButton(this);
-                button->SetToolTipText(text);
+                button->SetTooltipText(text);
                 button->SetImage(icon);
                 return button;
             }

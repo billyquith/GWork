@@ -5,7 +5,7 @@
  *  See license in Gwork.h
  */
 
-#include <Gwork/ToolTip.h>
+#include <Gwork/Tooltip.h>
 #include <Gwork/Utility.h>
 
 #include <cstdio>

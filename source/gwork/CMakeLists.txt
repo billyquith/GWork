@@ -17,7 +17,7 @@ set(GWK_HEADERS
     include/Gwork/Hook.h
     include/Gwork/InputHandler.h
     include/Gwork/Skin.h
-    include/Gwork/ToolTip.h
+    include/Gwork/Tooltip.h
     include/Gwork/UiTypes.h
     include/Gwork/UserData.h
     include/Gwork/Utility.h
@@ -119,7 +119,7 @@ set(GWK_SOURCES
     source/Hook.cpp
     source/InputHandler.cpp
     source/Skin.cpp
-    source/ToolTip.cpp
+    source/Tooltip.cpp
     source/Utility.cpp
     source/Controls/Base.cpp
     source/Controls/Button.cpp

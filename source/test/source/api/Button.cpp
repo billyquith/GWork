@@ -56,7 +56,7 @@ public:
         // Tooltip Button
         Controls::Button* buttonG = new Controls::Button(this);
         buttonG->SetText("With Tooltip");
-        buttonG->SetToolTipText("This is a tooltip!");
+        buttonG->SetTooltipText("This is a tooltip!");
         Gwk::Align::PlaceBelow(buttonG, buttonF, 10);
     }
 

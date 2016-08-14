@@ -38,8 +38,8 @@ namespace Gwk
             Gwk::Color m_colControlDark;
             Gwk::Color m_colHighlightBG;
             Gwk::Color m_colHighlightBorder;
-            Gwk::Color m_colToolTipBackground;
-            Gwk::Color m_colToolTipBorder;
+            Gwk::Color m_colTooltipBackground;
+            Gwk::Color m_colTooltipBorder;
             Gwk::Color m_colModal;
 
             Simple()
@@ -56,8 +56,8 @@ namespace Gwk
                 m_colControlOutlineLighter  = Gwk::Color(210, 210, 210, 255);
                 m_colHighlightBG            = Gwk::Color(192, 221, 252, 255);
                 m_colHighlightBorder        = Gwk::Color(51, 153, 255, 255);
-                m_colToolTipBackground      = Gwk::Color(255, 255, 225, 255);
-                m_colToolTipBorder          = Gwk::Color(0, 0, 0, 255);
+                m_colTooltipBackground      = Gwk::Color(255, 255, 225, 255);
+                m_colTooltipBorder          = Gwk::Color(0, 0, 0, 255);
                 m_colModal = Gwk::Color(25, 25, 25, 150);
                 m_defaultFont.facename  = "Microsoft Sans Serif";
                 m_defaultFont.size      = 11;
@@ -562,16 +562,16 @@ namespace Gwk
                 }
             }
 
-            void DrawToolTip(Gwk::Controls::Base* control) override
+            void DrawTooltip(Gwk::Controls::Base* control) override
             {
                 Gwk::Rect rct = control->GetRenderBounds();
                 rct.x -= 3;
                 rct.y -= 3;
                 rct.w += 6;
                 rct.h += 6;
-                m_render->SetDrawColor(m_colToolTipBackground);
+                m_render->SetDrawColor(m_colTooltipBackground);
                 m_render->DrawFilledRect(rct);
-                m_render->SetDrawColor(m_colToolTipBorder);
+                m_render->SetDrawColor(m_colTooltipBorder);
                 m_render->DrawLinedRect(rct);
             }
 

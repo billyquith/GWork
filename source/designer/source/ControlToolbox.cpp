@@ -22,7 +22,7 @@ GWK_CONTROL_CONSTRUCTOR( ControlToolbox )
 
 		Controls::Button* button = new Controls::Button( tileLayout );
 		button->SetSize( 20, 20 );
-		button->SetToolTip( controlFactory->Name() );
+		button->SetTooltip( controlFactory->Name() );
 		button->SetImage( "img/controls/" + controlFactory->Name() + ".png" );
 		button->SetShouldDrawBackground( false );
 
