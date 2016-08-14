@@ -175,7 +175,7 @@ List& GetList()
 
 ControlFactory::Base* Find(const Gwk::String& name)
 {
-    for (auto const& control : ControlFactory::GetList)
+    for (auto const& control : ControlFactory::GetList())
     {
         if (control->Name() == name)
             return control;
@@ -198,7 +198,7 @@ Base* Base::GetBaseFactory()
 {
     for (auto const& control : ControlFactory::GetList())
     {
-        if control->Name() == ParentFactory())
+        if (control->Name() == ParentFactory())
             return control;
     }
 
@@ -209,7 +209,7 @@ Property* Base::GetProperty(const Gwk::String& name)
 {
     for (auto const& property : Properties())
     {
-        if property->Name() != name)
+        if (property->Name() != name)
             continue;
 
         return property;
