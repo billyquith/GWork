@@ -1160,7 +1160,7 @@ void Base::RenderFocus(Gwk::Skin::Base* skin)
     skin->DrawKeyboardHighlight(this, GetRenderBounds(), 3);
 }
 
-void Base::SetToolTip(const String& strText)
+void Base::SetToolTipText(const String& strText)
 {
     Label* tooltip = new Label(this);
     tooltip->SetText(strText);

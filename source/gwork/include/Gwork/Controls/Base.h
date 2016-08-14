@@ -344,7 +344,8 @@ namespace Gwk
                 return Gwk::Point(4096, 4096);
             }
 
-            virtual void SetToolTip(const Gwk::String& strText);
+            virtual void SetToolTipText(const Gwk::String& strText);
+            
             virtual void SetToolTip(Base* tooltip)
             {
                 m_toolTip = tooltip;
@@ -354,7 +355,6 @@ namespace Gwk
                     m_toolTip->SetHidden(true);
                 }
             }
-
             virtual Base* GetToolTip()
             {
                 return m_toolTip;

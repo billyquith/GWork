@@ -9,6 +9,8 @@
 
 #include <Gwork/Gwork.h>
 #include <Gwork/Controls.h>
+#include <Gwork/Align.h>
+
 #include <ponder/pondertype.hpp>
 #include <ponder/classbuilder.hpp>
 
@@ -16,6 +18,7 @@ PONDER_TYPE(Gwk::Color)
 PONDER_TYPE(Gwk::Margin)
 PONDER_TYPE(Gwk::Point)
 PONDER_TYPE(Gwk::Position)
+PONDER_TYPE(Gwk::Align)
 
 PONDER_TYPE(Gwk::Event::Listener);
 

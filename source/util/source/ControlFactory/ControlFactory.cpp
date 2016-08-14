@@ -39,11 +39,18 @@ void InitialiseControls()
         .value("center",  Gwk::Position::Center)
         .value("fill",    Gwk::Position::Fill)
         ;
+    
+    ponder::Class::declare<Gwk::Align>()
+        .function("placeBelow", &Gwk::Align::PlaceBelow)
+        ;
 
     ponder::Class::declare<Gwk::Event::Listener>()
         .function("add", &Gwk::Event::Listener::AddCb)
         ;
 
+    //
+    // Controls::Base
+    //
     ponder::Class::declare<Controls::Base>()
         .function("typename",   &Controls::Base::GetTypeName)
         .property("name",       &Controls::Base::GetName, &Controls::Base::SetName)
@@ -51,8 +58,11 @@ void InitialiseControls()
                   static_cast<void(Controls::Base::*)(const Point&)>(&Controls::Base::SetPos))
         .property("size",       &Controls::Base::GetSize,
                                 [] (Controls::Base& c,const Point& s) {c.SetSize(s);})
-        .property("margin",     &Controls::Base::GetMargin, &Controls::Base::SetMargin)
+    
         .property("dock",       &Controls::Base::GetDock, &Controls::Base::Dock)
+        .property("margin",     &Controls::Base::GetMargin, &Controls::Base::SetMargin)
+        .property("tooltip",    &Controls::Base::GetToolTip, &Controls::Base::SetToolTip)
+        .function("setTooltip", &Controls::Base::SetToolTipText)
         ;
 
     ponder::Class::declare<Controls::Label>()

@@ -12,13 +12,13 @@
 
 namespace Gwk
 {
-    namespace Align
+    struct Align
     {
-        inline void PlaceBelow(Controls::Base* ctrl, Controls::Base* below, int iBorder = 0)
+        static inline void PlaceBelow(Controls::Base* ctrl, Controls::Base* below, int iBorder = 0)
         {
             ctrl->SetPos(ctrl->X(), below->Bottom()+iBorder);
         }
 
-    }
+    };
 }
 #endif // ifndef GWK_ALIGN_H

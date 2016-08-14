@@ -46,11 +46,11 @@ namespace Gwk
                 skin->DrawMenuStrip(this);
             }
 
-            virtual ToolBarButton* Add(const String& Text, const String& Icon)
+            virtual ToolBarButton* Add(const String& text, const String& icon)
             {
                 ToolBarButton* button = new ToolBarButton(this);
-                button->SetToolTip(Text);
-                button->SetImage(Icon);
+                button->SetToolTipText(text);
+                button->SetImage(icon);
                 return button;
             }
 
