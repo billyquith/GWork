@@ -2,12 +2,9 @@ language: cpp
 os: 
   - osx
   - linux
-compiler:
-  - clang
-  - gcc
+compiler: clang
 env:
   - BUILD_CONFIG=Debug
-  - BUILD_CONFIG=Release
 osx_image: xcode7.3
 
 sudo: required
