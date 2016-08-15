@@ -107,9 +107,8 @@ void Platform::AllocStatsAddMark(const char * const name)
     g_marks.emplace_back(m);;
 }
 
-void Platform::AllocStatsDump()
+void Platform::AllocStatsDump(FILE *fh)
 {
-    FILE *fh = stdout;
     fprintf(fh, "Mark,CurrNumAllocs,CurrAllocSize,NumAllocDiff,SizeAllocDiff\n");
     Platform::AllocStats lastStat;
     for (auto&& m : g_marks)
