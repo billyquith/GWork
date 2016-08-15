@@ -109,17 +109,12 @@ void Platform::AllocStatsAddMark(const char * const name)
 
 void Platform::AllocStatsDump(FILE *fh)
 {
-    fprintf(fh, "Mark,CurrNumAllocs,CurrAllocSize,NumAllocDiff,SizeAllocDiff\n");
-    Platform::AllocStats lastStat;
+    fprintf(fh, "Mark,CumNumAllocs,CumAllocSize,CurrNumAllocs,CurrAllocSize\n");
     for (auto&& m : g_marks)
     {
-        auto diff = m.stats;
-        diff.currentNumAllocs -= lastStat.currentNumAllocs;
-        diff.currentAllocBytes -= lastStat.currentAllocBytes;
         fprintf(fh, "%s,%ld,%ld,%ld,%ld\n", m.name,
-                m.stats.currentNumAllocs, m.stats.cumulativeAllocBytes,
-                diff.currentNumAllocs, diff.currentAllocBytes);
-        lastStat = m.stats;
+                m.stats.cumulativeNumAllocs, m.stats.cumulativeAllocBytes,
+                m.stats.currentNumAllocs, m.stats.currentAllocBytes);
     }
 }
 
