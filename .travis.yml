@@ -12,15 +12,7 @@ dist: trusty
       
 install: ./ci/travis/install.sh
   
-before_script:
-  - cmake --version
-  - mkdir build && cd build
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
-      cmake .. -GNinja $CMAKE_ARGS
-    fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-      cmake .. -G "Unix Makefiles" $CMAKE_ARGS
-    fi
+before_script: ./ci/travis/make_build.sh
     
 script:
   - cmake --build . --target $CMAKE_TARGET --config $BUILD_CONFIG && ctest -C $BUILD_CONFIG -V
