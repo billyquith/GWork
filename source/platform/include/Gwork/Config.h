@@ -56,7 +56,7 @@
 
 
 #ifndef GWK_MEMORY_STATS
-#   define GWK_MEMORY_STATS 1
+#   define GWK_MEMORY_STATS 0
 #endif
 
 #if GWK_MEMORY_STATS

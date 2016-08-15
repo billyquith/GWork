@@ -32,7 +32,7 @@ namespace Gwk
         const AllocStats& GetAllocStats();
         
         void AllocStatsAddMark(const char * const name);
-        void AllocStatsDump();
+        void AllocStatsDump(FILE *fh = stdout);
         
 #endif // GWK_MEMORY_STATS
 

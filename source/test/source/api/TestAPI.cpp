@@ -40,9 +40,9 @@ GWK_CONTROL_CONSTRUCTOR(TestAPI)
     { \
         Controls::Button *button = cat->Add(#NAME); \
         button->SetName(#NAME); \
-        Platform::AllocStatsAddMark(#NAME); \
+        GWK_IF_MEM_STATS( Platform::AllocStatsAddMark(#NAME); ) \
         TestUnit *test = RegisterTest_##NAME(center); \
-        Platform::AllocStatsAddMark(#NAME); \
+        GWK_IF_MEM_STATS( Platform::AllocStatsAddMark(#NAME); ) \
         test->SetTestCategory(this); \
         test->Hide(); \
         button->onPress.Add( this, &TestAPI::OnCategorySelect, test );\
