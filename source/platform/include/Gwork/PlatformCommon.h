@@ -10,6 +10,7 @@
 #define GWK_PLATFORM_COMMON_H
 
 #include <Gwork/PlatformTypes.h>
+#include <vector>
 
 namespace Gwk
 {
@@ -27,6 +28,28 @@ namespace Gwk
         
         //! Get the current allocation stats. Only active if GWK_MEMORY_STATS on.
         const AllocStats& GetAllocStats();
+        
+        class MemoryReporter
+        {
+        public:
+            void AddMark(const String& name)
+            {
+                Mark m = { name, Platform::GetAllocStats() };
+                m_marks.emplace_back(m);;
+            }
+            
+            void DumpStats();
+            
+        private:
+            struct Mark
+            {
+                String name;
+                Platform::AllocStats stats;
+            };
+            std::vector<Mark> m_marks;
+        };
+        
+        MemoryReporter& GetAllocReporter();
     }
 }
 

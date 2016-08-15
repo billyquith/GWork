@@ -29,7 +29,7 @@ class TestFrame : public Gwk::Controls::DockBase
 public:
     GWK_CONTROL(TestFrame, Gwk::Controls::DockBase);
     
-    void PrintText(const Gwk::String& str);
+    //void PrintText(const Gwk::String& str);
     
     void Render(Gwk::Skin::Base* skin) override;
     

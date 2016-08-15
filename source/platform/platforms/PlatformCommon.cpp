@@ -12,10 +12,33 @@
 
 
 static Gwk::Platform::AllocStats g_stats;
-    
+static Gwk::Platform::MemoryReporter g_memrep;
+
 const Gwk::Platform::AllocStats& Gwk::Platform::GetAllocStats()
 {
     return g_stats;
+}
+
+Gwk::Platform::MemoryReporter& Gwk::Platform::GetAllocReporter()
+{
+    return g_memrep;
+}
+
+void Gwk::Platform::MemoryReporter::DumpStats()
+{
+    FILE *fh = stdout;
+    fprintf(fh, "Mark,CurrNumAllocs,CurrAllocSize,NumAllocDiff,SizeAllocDiff\n");
+    Platform::AllocStats lastStat;
+    for (auto&& m : m_marks)
+    {
+        auto diff = m.stats;
+        diff.currentNumAllocs -= lastStat.currentNumAllocs;
+        diff.currentAllocBytes -= lastStat.currentAllocBytes;
+        fprintf(fh, "%s,%ld,%ld,%ld,%ld\n", m.name.c_str(),
+                m.stats.currentNumAllocs, m.stats.cumulativeAllocBytes,
+                diff.currentNumAllocs, diff.currentAllocBytes);
+        lastStat = m.stats;
+    }
 }
 
 #if GWK_MEMORY_STATS

@@ -11,8 +11,10 @@
 #include <Gwork/Controls/CollapsibleList.h>
 #include <Gwork/Controls/Layout/Position.h>
 #include <Gwork/Platform.h>
+#include <Gwork/PlatformCommon.h>
 
 using namespace Gwk;
+
 
 GWK_CONTROL_CONSTRUCTOR(TestAPI)
 {
@@ -38,7 +40,9 @@ GWK_CONTROL_CONSTRUCTOR(TestAPI)
     { \
         Controls::Button *button = cat->Add(#NAME); \
         button->SetName(#NAME); \
+        Platform::GetAllocReporter().AddMark(Utility::Format("%s pre", #NAME)); \
         TestUnit *test = RegisterTest_##NAME(center); \
+        Platform::GetAllocReporter().AddMark(Utility::Format("%s post", #NAME)); \
         test->SetTestCategory(this); \
         test->Hide(); \
         button->onPress.Add( this, &TestAPI::OnCategorySelect, test );\
