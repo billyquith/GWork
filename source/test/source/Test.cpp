@@ -8,7 +8,6 @@
 #include <Gwork/Test/Test.h>
 #include <Gwork/Test/TestAPI.h>
 #include <Gwork/Platform.h>
-#include <Gwork/PlatformCommon.h>
 
 using namespace Gwk;
 
@@ -24,16 +23,7 @@ GWK_CONTROL_CONSTRUCTOR(TestFrame)
     m_statusBar = new Controls::StatusBar(this);
     m_statusBar->Dock(Position::Bottom);
 
-    GWK_IF_ALLOC_STATS( Platform::AllocStatsAddMark("API test"); )
-    
-    m_testTabs->AddPage("API", new TestAPI(m_testTabs));
-    
-    GWK_IF_ALLOC_STATS( Platform::AllocStatsAddMark("API test"); )
-                
-    GWK_IF_ALLOC_STATS( 
-        FILE *fh = fopen(GWK_STATS_DIR "curr_allocs.csv", "w");
-        Platform::AllocStatsDump(fh);
-        fclose(fh); )
+    m_testTabs->AddPage("API", new TestAPI(m_testTabs));    
 }
 
 void TestFrame::Render(Skin::Base* skin)

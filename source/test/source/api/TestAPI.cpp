@@ -18,6 +18,8 @@ using namespace Gwk;
 
 GWK_CONTROL_CONSTRUCTOR(TestAPI)
 {
+    GWK_IF_ALLOC_STATS( Platform::AllocStatsAddMark("API test"); )
+    
     m_lastControl = nullptr;
 
     Dock(Position::Fill);
@@ -88,8 +90,14 @@ GWK_CONTROL_CONSTRUCTOR(TestAPI)
         ADD_TEST(CollapsibleList);
         ADD_TEST(ColorPicker);
     }
-    
 #undef ADD_TEST
+    
+    GWK_IF_ALLOC_STATS( Platform::AllocStatsAddMark("API test"); )
+    
+    GWK_IF_ALLOC_STATS(
+        FILE *fh = fopen(GWK_STATS_DIR "curr_allocs.csv", "w");
+        Platform::AllocStatsDump(fh);
+        fclose(fh); )
 }
 
 void TestAPI::OnCategorySelect(Gwk::Event::Info info)
