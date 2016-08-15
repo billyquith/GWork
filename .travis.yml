@@ -4,7 +4,7 @@ os:
   - linux
 compiler: clang
 env:
-  - CMAKE_ARGS="-DBUILD_TEST=ON -DBUILD_SAMPLE=ON -DRENDER_NULL=ON" CMAKE_TARGET="GworkNullSample" BUILD_CONFIG=Debug 
+  - BUILD_CONFIG=Debug 
 
 osx_image: xcode7.3
 
@@ -16,8 +16,7 @@ install: ./ci/travis/install.sh
 before_script: ./ci/travis/make_build.sh
     
 script:
-  - echo "Target:$CMAKE_TARGET, Config:$BUILD_CONFIG"
-  - cmake --build . --target $CMAKE_TARGET --config $BUILD_CONFIG 
+  - cmake --build . --target GworkNullSample --config $BUILD_CONFIG 
 
 notifications:
   email:
