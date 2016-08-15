@@ -58,7 +58,13 @@ public:
         {
             Gwk::Controls::TextBoxMultiline* label = new Gwk::Controls::TextBoxMultiline(this);
             label->SetText(
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ultrices pharetra scelerisque. Ut posuere velit ligula suscipit ut lobortis ligula congue. Aliquam lacinia cursus est, quis aliquam nisl scelerisque vitae. Nunc porta eros sem, nec rhoncus eros. Integer elementum, quam vitae egestas dictum, mi quam gravida augue, non fringilla lacus nisi sit amet nunc. Maecenas dolor tellus, consequat sed sodales ut, aliquam ac enim. Nulla facilisi. Maecenas eleifend, velit a lobortis vehicula, nunc lacus egestas leo, volutpat egestas augue.");
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ultrices pharetra "
+            "scelerisque. Ut posuere velit ligula suscipit ut lobortis ligula congue."
+            "Aliquam lacinia cursus est, quis aliquam nisl scelerisque vitae. Nunc porta eros "
+            "sem, nec rhoncus eros. Integer elementum, quam vitae egestas dictum, mi quam gravida"
+            " augue, non fringilla lacus nisi sit amet nunc. Maecenas dolor tellus, consequat sed "
+            "sodales ut, aliquam ac enim. Nulla facilisi. Maecenas eleifend, velit a lobortis "
+            "vehicula, nunc lacus egestas leo, volutpat egestas augue.");
             label->SetPos(220, 10);
             label->SetSize(200, 180);
         }
