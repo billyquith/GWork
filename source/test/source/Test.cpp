@@ -29,7 +29,11 @@ GWK_CONTROL_CONSTRUCTOR(TestFrame)
     m_testTabs->AddPage("API", new TestAPI(m_testTabs));
     
     GWK_IF_ALLOC_STATS( Platform::AllocStatsAddMark("API test"); )
-    GWK_IF_ALLOC_STATS( Platform::AllocStatsDump(); )
+                
+    GWK_IF_ALLOC_STATS( 
+        FILE *fh = fopen(GWK_STATS_DIR "curr_allocs.csv", "w");
+        Platform::AllocStatsDump(fh);
+        fclose(fh); )
 }
 
 void TestFrame::Render(Skin::Base* skin)
