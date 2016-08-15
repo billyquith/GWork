@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
+# Update the system and install the tools that Travis build requires
 
 set -e
 
-echo Lang:$LANG. OS:$TRAVIS_OS_NAME. CC:$CC.
+echo "Lang:$LANG, OS:$TRAVIS_OS_NAME, CC:$CC"
 
 if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
     brew update
