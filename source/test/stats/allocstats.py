@@ -44,12 +44,12 @@ class AllocStats:
             print k, d[0], d[1]
             
     def report(self, hr):
-        hr.el('h3', '%s allocation stats' % self.name)
+        hr.el('h2', '%s allocation stats' % self.name)
         hr.el('table', cls='reporttab')
         hr.th(['Name', 'Alloc count', 'Alloc size'])
         for k in sorted(self._diffs.keys()):
             d = self._diffs[k]
-            hr.tr([k, d[0], d[1]])
+            hr.tr([k, npad(d[0],6), XB(d[1])])
         hr.el('/table')
             
             
@@ -72,13 +72,14 @@ class AllocDiff:
             print k, d[0], d[1], '%.1f%%' % d[2]
             
     def report(self, hr):
-        hr.el('h3', 'Stats comparison: %s to %s' % (self.a.name, self.b.name))
+        hr.el('h2', 'Stats comparison: %s to %s' % (self.a.name, self.b.name))
         hr.el('table', cls='reporttab')
         hr.th(['Name', 'Count delta', 'Size delta', '% size'])
         for k in sorted(self.delta.keys()):
             d = self.delta[k]
-            hr.tr([k, d[0], d[1], '%.1f%%' % d[2]])
+            hr.tr([k, npad(d[0],6), XB(d[1]), '%.1f%%' % d[2]])
         hr.el('/table')
+
 
 class HtmlReport:
     def __init__(self, css):
@@ -115,6 +116,15 @@ def toFile(fname, str):
 def readFile(fname):
     with open(fname, 'rb') as f:
         return f.read()
+        
+def XB(n):
+    if abs(n) > 1024:
+        return '%s (%.3fKB)' % (npad(n,10), n/1024.0)
+    return npad(n,10)
+    
+def npad(n, s=8):
+    fmt = '%%%dd' % s
+    return fmt % n
         
                     
 def main():
