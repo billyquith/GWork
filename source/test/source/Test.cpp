@@ -24,12 +24,12 @@ GWK_CONTROL_CONSTRUCTOR(TestFrame)
     m_statusBar = new Controls::StatusBar(this);
     m_statusBar->Dock(Position::Bottom);
 
-    GWK_IF_MEM_STATS( Platform::AllocStatsAddMark("API test"); )
+    GWK_IF_ALLOC_STATS( Platform::AllocStatsAddMark("API test"); )
     
     m_testTabs->AddPage("API", new TestAPI(m_testTabs));
     
-    GWK_IF_MEM_STATS( Platform::AllocStatsAddMark("API test"); )
-    GWK_IF_MEM_STATS( Platform::AllocStatsDump(); )
+    GWK_IF_ALLOC_STATS( Platform::AllocStatsAddMark("API test"); )
+    GWK_IF_ALLOC_STATS( Platform::AllocStatsDump(); )
 }
 
 void TestFrame::Render(Skin::Base* skin)

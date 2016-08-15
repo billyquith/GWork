@@ -18,7 +18,7 @@ namespace Gwk
     {
         // Low level functionality shared by all of the platforms.
 
-#if GWK_MEMORY_STATS
+#if GWK_ALLOC_STATS
 
         struct AllocStats
         {
@@ -28,13 +28,13 @@ namespace Gwk
             std::size_t cumulativeNumAllocs = 0;
         };
         
-        //! Get the current allocation stats. Only active if GWK_MEMORY_STATS on.
+        //! Get the current allocation stats. Only active if GWK_ALLOC_STATS on.
         const AllocStats& GetAllocStats();
         
         void AllocStatsAddMark(const char * const name);
         void AllocStatsDump(FILE *fh = stdout);
         
-#endif // GWK_MEMORY_STATS
+#endif // GWK_ALLOC_STATS
 
     }
 }

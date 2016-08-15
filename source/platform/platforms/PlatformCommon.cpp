@@ -10,7 +10,7 @@
 #include <map>
 #include <iostream>
 
-#if GWK_MEMORY_STATS
+#if GWK_ALLOC_STATS
 
 using namespace Gwk;
 
@@ -166,5 +166,5 @@ void operator delete(void *mem) throw()
     std::free(mem);
 }
 
-#endif // GWK_MEMORY_STATS
+#endif // GWK_ALLOC_STATS
 
