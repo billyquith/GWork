@@ -15,6 +15,8 @@ namespace Gwk
 {
     namespace Platform
     {
+        // Each platform implements these functions in their own specific way.
+
         //! Go to sleep for a time. Stops CPU hogging.
         //! @param ms : Number of milliseconds to sleep for.
         GWK_EXPORT void Sleep(unsigned int ms);
