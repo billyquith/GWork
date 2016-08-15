@@ -16,7 +16,7 @@ install: ./ci/travis/install.sh
 before_script: ./ci/travis/make_build.sh
     
 script:
-  - cmake --build . --target GworkNullSample --config $BUILD_CONFIG 
+  - cd build && cmake --build . --target GworkNullSample --config $BUILD_CONFIG 
 
 notifications:
   email:
