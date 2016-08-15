@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Update the system and install the tools that Travis build requires
 
-set -e
+set -ev
 
 echo "Lang:$LANG, OS:$TRAVIS_OS_NAME, CC:$CC"
 
@@ -17,5 +17,5 @@ fi
 #     #sudo apt-get install -y cmake doxygen
 # fi
 
-export CMAKE_ARGS="-DBUILD_TEST=ON -DBUILD_SAMPLE=ON -DRENDER_NULL"
-export CMAKE_TARGET="GworkNullSample"
+CMAKE_ARGS="-DBUILD_TEST=ON -DBUILD_SAMPLE=ON -DRENDER_NULL=ON"
+CMAKE_TARGET="GworkNullSample"
