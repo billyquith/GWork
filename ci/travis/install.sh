@@ -11,10 +11,10 @@ if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
     brew outdated cmake || brew upgrade cmake
 fi
   
-if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-    #sudo apt-get -qq update
-    #sudo apt-get install -y cmake doxygen
-fi
+# if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+#     #sudo apt-get -qq update
+#     #sudo apt-get install -y cmake doxygen
+# fi
 
 export CMAKE_ARGS="-DBUILD_TEST=ON -DBUILD_SAMPLE=ON -DRENDER_NULL"
 export CMAKE_TARGET="GworkNullSample"
