@@ -65,6 +65,9 @@
     void* operator new(std::size_t size) throw(std::bad_alloc);
     void operator delete(void *mem) throw();
 
+#   define GWK_IF_MEM_STATS(X) X
+#else
+#   define GWK_IF_MEM_STATS(X) // ignore
 #endif // GWK_MEMORY_STATS
 
 #endif // GWK_CONFIG_H

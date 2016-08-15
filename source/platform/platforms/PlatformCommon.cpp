@@ -10,38 +10,18 @@
 #include <map>
 #include <iostream>
 
+#if GWK_MEMORY_STATS
 
-static Gwk::Platform::AllocStats g_stats;
-static Gwk::Platform::MemoryReporter g_memrep;
+using namespace Gwk;
 
-const Gwk::Platform::AllocStats& Gwk::Platform::GetAllocStats()
+static Platform::AllocStats g_stats;
+
+const Platform::AllocStats& Platform::GetAllocStats()
 {
     return g_stats;
 }
 
-Gwk::Platform::MemoryReporter& Gwk::Platform::GetAllocReporter()
-{
-    return g_memrep;
-}
-
-void Gwk::Platform::MemoryReporter::DumpStats()
-{
-    FILE *fh = stdout;
-    fprintf(fh, "Mark,CurrNumAllocs,CurrAllocSize,NumAllocDiff,SizeAllocDiff\n");
-    Platform::AllocStats lastStat;
-    for (auto&& m : m_marks)
-    {
-        auto diff = m.stats;
-        diff.currentNumAllocs -= lastStat.currentNumAllocs;
-        diff.currentAllocBytes -= lastStat.currentAllocBytes;
-        fprintf(fh, "%s,%ld,%ld,%ld,%ld\n", m.name.c_str(),
-                m.stats.currentNumAllocs, m.stats.cumulativeAllocBytes,
-                diff.currentNumAllocs, diff.currentAllocBytes);
-        lastStat = m.stats;
-    }
-}
-
-#if GWK_MEMORY_STATS
+//----------------------------------------------------------------------------------
 
 namespace {
 
@@ -49,20 +29,20 @@ namespace {
 
 // Custom allocator avoiding new
 template<typename T>
-struct AllocTracker : std::allocator<T>
+struct MallocAllocator : std::allocator<T>
 {
     typedef typename std::allocator<T>::pointer pointer;
     typedef typename std::allocator<T>::size_type size_type;
     
     template<typename U>
     struct rebind {
-        typedef AllocTracker<U> other;
+        typedef MallocAllocator<U> other;
     };
     
-    AllocTracker() {}
+    MallocAllocator() {}
     
     template<typename U>
-    AllocTracker(AllocTracker<U> const& u)
+    MallocAllocator(MallocAllocator<U> const& u)
     :   std::allocator<T>(u) {}
     
     pointer allocate(size_type size, std::allocator<void>::const_pointer = 0)
@@ -81,7 +61,7 @@ struct AllocTracker : std::allocator<T>
 };
 
 typedef std::map< void*, std::size_t, std::less<void*>,
-                  AllocTracker< std::pair<void* const, std::size_t> > > TrackerMemMap;
+                  MallocAllocator< std::pair<void* const, std::size_t> > > TrackerMemMap;
 
 struct AllocReporter
 {
@@ -108,7 +88,43 @@ static TrackerMemMap* GetAllocTracker()
     return track;
 }
 
+struct Mark
+{
+    const char * const name;
+    Platform::AllocStats stats;
+};
+
+typedef std::vector<Mark, MallocAllocator<Mark>> MarksType;
+MarksType g_marks;
+    
 } // namespace {
+
+//----------------------------------------------------------------------------------
+
+void Platform::AllocStatsAddMark(const char * const name)
+{
+    Mark m = { name, Platform::GetAllocStats() };
+    g_marks.emplace_back(m);;
+}
+
+void Platform::AllocStatsDump()
+{
+    FILE *fh = stdout;
+    fprintf(fh, "Mark,CurrNumAllocs,CurrAllocSize,NumAllocDiff,SizeAllocDiff\n");
+    Platform::AllocStats lastStat;
+    for (auto&& m : g_marks)
+    {
+        auto diff = m.stats;
+        diff.currentNumAllocs -= lastStat.currentNumAllocs;
+        diff.currentAllocBytes -= lastStat.currentAllocBytes;
+        fprintf(fh, "%s,%ld,%ld,%ld,%ld\n", m.name,
+                m.stats.currentNumAllocs, m.stats.cumulativeAllocBytes,
+                diff.currentNumAllocs, diff.currentAllocBytes);
+        lastStat = m.stats;
+    }
+}
+
+//----------------------------------------------------------------------------------
 
 // These are declared in Config.h, which should be included everywhere.
 
@@ -150,7 +166,6 @@ void operator delete(void *mem) throw()
         
     std::free(mem);
 }
-
 
 #endif // GWK_MEMORY_STATS
 

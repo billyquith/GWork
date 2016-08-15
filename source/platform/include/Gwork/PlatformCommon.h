@@ -18,6 +18,8 @@ namespace Gwk
     {
         // Low level functionality shared by all of the platforms.
 
+#if GWK_MEMORY_STATS
+
         struct AllocStats
         {
             std::size_t currentAllocBytes = 0;
@@ -29,27 +31,11 @@ namespace Gwk
         //! Get the current allocation stats. Only active if GWK_MEMORY_STATS on.
         const AllocStats& GetAllocStats();
         
-        class MemoryReporter
-        {
-        public:
-            void AddMark(const String& name)
-            {
-                Mark m = { name, Platform::GetAllocStats() };
-                m_marks.emplace_back(m);;
-            }
-            
-            void DumpStats();
-            
-        private:
-            struct Mark
-            {
-                String name;
-                Platform::AllocStats stats;
-            };
-            std::vector<Mark> m_marks;
-        };
+        void AllocStatsAddMark(const char * const name);
+        void AllocStatsDump();
         
-        MemoryReporter& GetAllocReporter();
+#endif // GWK_MEMORY_STATS
+
     }
 }
 
