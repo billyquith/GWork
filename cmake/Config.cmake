@@ -25,6 +25,7 @@ option(RENDER_ALLEGRO5      "Renderer: Allegro5" OFF)
 option(RENDER_OPENGL        "Renderer: OPENGL" OFF)
 option(RENDER_SDL2          "Renderer: SDL2" OFF)
 option(RENDER_SFML2         "Renderer: SFML2" OFF)
+option(RENDER_NULL          "Renderer: Null" OFF)
 
 option(BUILD_TEST           "Include unittests" ON)
 option(BUILD_SAMPLE         "Include sample" ON)
@@ -103,13 +104,23 @@ if(RENDER_SFML2)
     set(GWK_RENDER_LIBRARIES ${SFML_LIBRARIES} ${SFML_DEPENDENCIES})
 endif(RENDER_SFML2)
 
+if(RENDER_NULL)
+    set(GWK_RENDER_NAME "Null")
+    set(GWK_RENDER_INCLUDES "")
+    set(GWK_RENDER_LIBRARIES )
+endif(RENDER_NULL)
+
 
 if(NOT GWK_RENDER_NAME)
     message(FATAL_ERROR "No renderer was specified. See RENDER_<name> options.")
 endif(NOT GWK_RENDER_NAME)
 
-list(REMOVE_DUPLICATES GWK_RENDER_INCLUDES)
-list(REMOVE_DUPLICATES GWK_RENDER_LIBRARIES)
+if(GWK_RENDER_INCLUDES)
+    list(REMOVE_DUPLICATES GWK_RENDER_INCLUDES)
+endif()
+if(GWK_RENDER_LIBRARIES)
+    list(REMOVE_DUPLICATES GWK_RENDER_LIBRARIES)
+endif()
 
 message("Using renderer ${GWK_RENDER_NAME} on platform ${GWK_PLATFORM_NAME}")
 message("${GWK_RENDER_NAME} includes: ${GWK_RENDER_INCLUDES}")
