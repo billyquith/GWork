@@ -29,6 +29,9 @@ option(RENDER_SFML2         "Renderer: SFML2" OFF)
 option(BUILD_TEST           "Include unittests" ON)
 option(BUILD_SAMPLE         "Include sample" ON)
 
+# This is for development but can be used by the user.
+option(ALLOC_STATS "Track memory allocations" ON)
+
 # Set the default build type to release with debug info
 if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE RelWithDebInfo
