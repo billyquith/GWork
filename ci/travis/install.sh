@@ -17,5 +17,3 @@ fi
 #     #sudo apt-get install -y cmake doxygen
 # fi
 
-CMAKE_ARGS="-DBUILD_TEST=ON -DBUILD_SAMPLE=ON -DRENDER_NULL=ON"
-CMAKE_TARGET="GworkNullSample"
