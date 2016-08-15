@@ -8,6 +8,7 @@
 #include <Gwork/Test/Test.h>
 #include <Gwork/Test/TestAPI.h>
 #include <Gwork/Platform.h>
+#include <Gwork/PlatformCommon.h>
 
 using namespace Gwk;
 
@@ -22,8 +23,11 @@ GWK_CONTROL_CONSTRUCTOR(TestFrame)
     // status bar
     m_statusBar = new Controls::StatusBar(this);
     m_statusBar->Dock(Position::Bottom);
-    
+
+    Platform::GetAllocReporter().AddMark("pre API");
     m_testTabs->AddPage("API", new TestAPI(m_testTabs));
+    Platform::GetAllocReporter().AddMark("pre POST");
+    Platform::GetAllocReporter().DumpStats();
 }
 
 void TestFrame::Render(Skin::Base* skin)
