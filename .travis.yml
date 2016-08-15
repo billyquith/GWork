@@ -10,12 +10,13 @@ osx_image: xcode7.3
 sudo: required
 dist: trusty
       
-install: ./ci/travis/install.sh
+install: source ./ci/travis/install.sh
   
-before_script: ./ci/travis/make_build.sh
+before_script: source ./ci/travis/make_build.sh
     
 script:
-  - cmake --build . --target $CMAKE_TARGET --config $BUILD_CONFIG && ctest -C $BUILD_CONFIG -V
+  - echo "Target:$CMAKE_TARGET, Config:$BUILD_CONFIG"
+  - cmake --build . --target $CMAKE_TARGET --config $BUILD_CONFIG -V
 
 notifications:
   email:
