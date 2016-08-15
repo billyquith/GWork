@@ -1,0 +1,47 @@
+language: cpp
+os: 
+  - osx
+  - linux
+compiler:
+  - clang
+  - gcc
+env:
+  - BUILD_CONFIG=Debug
+  - BUILD_CONFIG=Release
+osx_image: xcode7.3
+
+sudo: required
+dist: trusty
+      
+install:
+  - echo Lang:$LANG. OS:$TRAVIS_OS_NAME. CC:$CC.
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+      brew update
+      #if [[ -z `brew list | grep doxygen` ]]; then brew install doxygen; fi
+      if [[ -z `brew list | grep cmake` ]]; then brew install cmake; fi
+      brew outdated cmake || brew upgrade cmake
+    fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+      #sudo apt-get -qq update
+      #sudo apt-get install -y cmake doxygen
+    fi
+  - CMAKE_ARGS="-DBUILD_TEST=ON -DBUILD_SAMPLE=ON -DRENDER_NULL"
+  - CMAKE_TARGET="GworkNullSample"
+  
+before_script:
+  - cmake --version
+  - mkdir build && cd build
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+      cmake .. -GNinja $CMAKE_ARGS
+    fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+      cmake .. -G "Unix Makefiles" $CMAKE_ARGS
+    fi
+    
+script:
+  - cmake --build . --target $CMAKE_TARGET --config $BUILD_CONFIG && ctest -C $BUILD_CONFIG -V
+
+notifications:
+  email:
+    on_failure: change
+    on_success: change
