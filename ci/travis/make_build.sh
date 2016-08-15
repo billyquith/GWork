@@ -4,13 +4,14 @@
 set -ev
 
 cmake --version
-echo "CMAKE_ARGS:$CMAKE_ARGS"
 mkdir build && cd build
 
-if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
-    cmake .. -GXcode $CMAKE_ARGS
-fi
+function prepare_osx {
+    cmake .. -GXcode -DBUILD_TEST=ON -DBUILD_SAMPLE=ON -DRENDER_NULL=ON
+}
 
-if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-    cmake .. -G "Unix Makefiles" $CMAKE_ARGS
-fi
+function prepare_linux {
+    cmake .. -G "Unix Makefiles" -DBUILD_TEST=ON -DBUILD_SAMPLE=ON -DRENDER_NULL=ON
+}
+
+prepare_$TRAVIS_OS_NAME
