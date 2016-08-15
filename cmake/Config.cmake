@@ -30,7 +30,7 @@ option(BUILD_TEST           "Include unittests" ON)
 option(BUILD_SAMPLE         "Include sample" ON)
 
 # This is for development but can be used by the user.
-option(ALLOC_STATS "Track memory allocations" ON)
+option(ALLOC_STATS "Track memory allocations" OFF)
 
 # Set the default build type to release with debug info
 if(NOT CMAKE_BUILD_TYPE)
