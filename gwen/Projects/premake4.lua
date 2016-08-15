@@ -7,7 +7,8 @@ solution "GWEN"
 	flags { "Unicode", "Symbols", "NoEditAndContinue", "NoPCH",
             "No64BitChecks", "StaticRuntime", "EnableSSE" } -- "NoRTTI"
 	targetdir ( "../lib/" .. os.get() .. "/" .. _ACTION )
-	libdirs { "../lib/", "../lib/" .. os.get() }
+	libdirs { "../lib/", "../lib/" .. os.get(), "/usr/local/lib" }
+    includedirs { "/usr/local/include" }
 
 	configurations
 	{

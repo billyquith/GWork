@@ -5,7 +5,7 @@ if MONOLITHIC then
     ALLEGRO_LIBS_D	= { "UnitTest", "Renderer-Allegro", "GWEN-Static", "alleg" }
 else
     -- Separate static libraries
-    function allib(name) return "allegro" .. name .. "-static" end
+    function allib(name) return "allegro" .. name end
 
     ALLEGRO_LIBS	= { "UnitTest", "Renderer-Allegro", "GWEN-Static",
                         "Cocoa.framework", "IOKit.framework", "OpenGL.framework",
