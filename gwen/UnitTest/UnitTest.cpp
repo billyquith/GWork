@@ -10,6 +10,7 @@
 #include "Gwen/Controls/CollapsibleList.h"
 #include "Gwen/Controls/Layout/Position.h"
 #include "Gwen/Platform.h"
+#include <Gwen/Util/PlatformCommon.h>
 
 using namespace Gwen;
 
@@ -18,7 +19,9 @@ using namespace Gwen;
 	{\
 		Controls::Button* pButton = cat->Add( #name );\
 		pButton->SetName( #name );\
+        GWK_IF_ALLOC_STATS( Gwk::Platform::AllocStatsAddMark(#name); ) \
 		GUnit* test = RegisterUnitTest_##name( pCenter );\
+        GWK_IF_ALLOC_STATS( Gwk::Platform::AllocStatsAddMark(#name); ) \
 		test->Hide();\
 		test->SetUnitTest( this );\
 		pButton->onPress.Add( this, &ThisClass::OnCategorySelect, test );\
@@ -28,6 +31,8 @@ Gwen::Controls::TabButton* pButton = NULL;
 
 GWEN_CONTROL_CONSTRUCTOR( UnitTest )
 {
+    GWK_IF_ALLOC_STATS( Gwk::Platform::AllocStatsAddMark("UnitTest"); )
+        
 	m_pLastControl = NULL;
 	Dock( Pos::Fill );
 	SetSize( 1024, 768 );
@@ -80,6 +85,10 @@ GWEN_CONTROL_CONSTRUCTOR( UnitTest )
 		ADD_UNIT_TEST( CollapsibleList );
 		ADD_UNIT_TEST( ColorPicker );
 	}
+    
+    GWK_IF_ALLOC_STATS( Gwk::Platform::AllocStatsAddMark("UnitTest"); )
+    GWK_IF_ALLOC_STATS( Gwk::Platform::AllocStatsDump(); )
+    
 	m_StatusBar->SendToBack();
 	PrintText( L"Unit Test Started.\n" );
 	m_fLastSecond = Gwen::Platform::GetTimeInSeconds();
