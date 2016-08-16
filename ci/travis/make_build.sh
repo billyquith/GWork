@@ -8,8 +8,8 @@ mkdir build && cd build
 
 function cpp2c {
     local comp=$1
-    comp=$(echo $comp | sed 's/g\\+\\+/gcc/')
-    comp=$(echo $comp | sed 's/clang\\+\\+/clang/')
+    comp=${comp/clang\+\+/clang}
+    comp=${comp/g\+\+/gcc}
     echo $comp
 }
 
