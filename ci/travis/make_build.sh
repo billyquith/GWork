@@ -11,7 +11,11 @@ function prepare_osx {
 }
 
 function prepare_linux {
-    cmake .. -G "Unix Makefiles" -DBUILD_TEST=ON -DBUILD_SAMPLE=ON -DRENDER_NULL=ON
+    # Travis doesn't pass on the COMPILER version so we'll use env CXX variable
+    local comp=$1
+    echo "Requesting compiler: $comp"
+    CXX=$comp cmake .. -G "Unix Makefiles" -DBUILD_TEST=ON -DBUILD_SAMPLE=ON -DRENDER_NULL=ON
 }
 
-prepare_$TRAVIS_OS_NAME
+# args: <C++ compiler>
+prepare_$TRAVIS_OS_NAME "$@"

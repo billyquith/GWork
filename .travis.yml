@@ -26,9 +26,7 @@ matrix:
             - g++-4.9            
       env: COMPILER=g++-4.9 BUILD_CONFIG=Debug 
     - os: linux
-      compiler:
-        - gcc
-        - g++-5
+      compiler: gcc
       addons:
         apt:
           sources:
@@ -76,7 +74,7 @@ matrix:
       
 # install: ./ci/travis/install.sh
   
-before_script: ./ci/travis/make_build.sh
+before_script: ./ci/travis/make_build.sh $COMPILER
     
 script:
   - cd build && cmake --build . --target GworkNullSample --config $BUILD_CONFIG 
