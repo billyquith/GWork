@@ -1,15 +1,75 @@
-language: cpp
-os: 
-  - osx
-  - linux
-compiler: clang
-env:
-  - BUILD_CONFIG=Debug 
+# Gwork Travis config
 
-osx_image: xcode7.3
-
+# Use Ubuntu Trusty (14) for mostly up-to-date packages
 sudo: required
 dist: trusty
+language: cpp
+
+env: BUILD_CONFIG=Debug 
+
+# Travis compilers are out of date if we want to use modern C++1y features. Need to
+# explicitly specify external packages required and versions in matrix.
+# Problems for earlier compilers include <codecvt> coverage on GCC.
+#
+# More info: http://genbattle.bitbucket.org/blog/2016/01/17/c++-travis-ci/
+# matrix example: https://github.com/ColinH/PEGTL/blob/master/.travis.yml
+#
+# currently issue for adding the Trusty LLVM ppa to Travis’ whitelist, previous, 12.04
+# issue: https://github.com/travis-ci/apt-source-whitelist/pull/205
+matrix:
+  include:
+    - os: linux
+      compiler: gcc
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-4.9
+      env: COMPILER=g++-4.9
+    - os: linux
+      compiler: gcc
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-5
+      env: COMPILER=g++-5
+    - os: linux
+      compiler: clang
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+            - llvm-toolchain-precise-3.6
+          packages:
+            - clang-3.6
+      env: COMPILER=clang++-3.6
+    - os: linux
+      compiler: clang
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+            - llvm-toolchain-precise-3.7
+          packages:
+            - clang-3.7
+      env: COMPILER=clang++-3.7
+    - os: linux
+      compiler: clang
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+            - llvm-toolchain-precise-3.8
+          packages:
+            - clang-3.8
+      env: COMPILER=clang++-3.8
+    - os: osx
+      osx_image: xcode7.3
+      compiler: clang
+      env: COMPILER=clang++
       
 install: ./ci/travis/install.sh
   
