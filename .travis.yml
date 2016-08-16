@@ -5,8 +5,6 @@ sudo: required
 dist: trusty
 language: cpp
 
-env: BUILD_CONFIG=Debug 
-
 # Travis compilers are out of date if we want to use modern C++1y features. Need to
 # explicitly specify external packages required and versions in matrix.
 # Problems for earlier compilers include <codecvt> coverage on GCC.
@@ -25,8 +23,8 @@ matrix:
           sources:
             - ubuntu-toolchain-r-test
           packages:
-            - g++-4.9
-      env: COMPILER=g++-4.9
+            - g++-4.9            
+      env: COMPILER=g++-4.9 BUILD_CONFIG=Debug 
     - os: linux
       compiler: gcc
       addons:
@@ -35,7 +33,8 @@ matrix:
             - ubuntu-toolchain-r-test
           packages:
             - g++-5
-      env: COMPILER=g++-5
+            - doxygen
+      env: COMPILER=g++-5 BUILD_CONFIG=Debug 
     - os: linux
       compiler: clang
       addons:
@@ -45,7 +44,7 @@ matrix:
             - llvm-toolchain-precise-3.6
           packages:
             - clang-3.6
-      env: COMPILER=clang++-3.6
+      env: COMPILER=clang++-3.6 BUILD_CONFIG=Debug 
     - os: linux
       compiler: clang
       addons:
@@ -55,7 +54,7 @@ matrix:
             - llvm-toolchain-precise-3.7
           packages:
             - clang-3.7
-      env: COMPILER=clang++-3.7
+      env: COMPILER=clang++-3.7 BUILD_CONFIG=Debug 
     - os: linux
       compiler: clang
       addons:
@@ -65,13 +64,15 @@ matrix:
             - llvm-toolchain-precise-3.8
           packages:
             - clang-3.8
-      env: COMPILER=clang++-3.8
+            - doxygen
+      env: COMPILER=clang++-3.8 BUILD_CONFIG=Debug 
     - os: osx
       osx_image: xcode7.3
       compiler: clang
-      env: COMPILER=clang++
+      env: COMPILER=clang++ BUILD_CONFIG=Debug
+      install: ./ci/travis/install.sh
       
-install: ./ci/travis/install.sh
+# install: ./ci/travis/install.sh
   
 before_script: ./ci/travis/make_build.sh
     
