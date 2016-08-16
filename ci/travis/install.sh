@@ -13,8 +13,9 @@ function install_osx {
 }
   
 function install_linux {
-    sudo apt-get -qq update
-    sudo apt-get install -y cmake doxygen
+    # sudo apt-get -qq update
+    # sudo apt-get install -y cmake doxygen
+    echo "See .travis.yml for packages/addons install/update"
 }
 
 install_$TRAVIS_OS_NAME
