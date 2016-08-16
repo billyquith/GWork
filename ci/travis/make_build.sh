@@ -10,7 +10,7 @@ function cpp2c {
     local comp=$1
     comp=$(echo $comp | sed 's/g++/gcc/')
     comp=$(echo $comp | sed 's/clang++/clang/')
-    echo $cmp
+    echo $comp
 }
 
 function prepare_osx {
