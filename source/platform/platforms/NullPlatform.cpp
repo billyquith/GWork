@@ -8,10 +8,10 @@
 #include <Gwork/Platform.h>
 #include <unistd.h>
 
-#if !defined(WIN32)
+#if defined(__APPLE__)
 # include <errno.h>
-# include <libproc.h>
 # include <libgen.h>
+# include <libproc.h>
 #endif
 
 static Gwk::String gs_ClipboardEmulator;
@@ -45,7 +45,7 @@ float Gwk::Platform::GetTimeInSeconds()
 
 Gwk::String Gwk::Platform::GetExecutableDir()
 {
-#if !defined(WIN32)
+#if defined(__APPLE__)
     
     pid_t pid = getpid();
     char pathbuf[PROC_PIDPATHINFO_MAXSIZE];
