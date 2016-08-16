@@ -32,6 +32,7 @@ foreach(ALLEGRO_LIB_EACH ${ALLEGRO_LIB_LIST})
     find_library(${ALLEGRO_LIB_EACH}_LIB
         NAMES
             "${ALLEGRO_LIB_EACH}.${ALLEGRO_VERSION}"
+            "${ALLEGRO_LIB_EACH}"
         PATHS
             /usr/lib
             /usr/local/lib
