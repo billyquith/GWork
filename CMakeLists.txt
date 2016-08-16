@@ -21,7 +21,8 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_HOME_DIRECTORY}/lib) # .a
 make_directory(${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
 make_directory(${CMAKE_LIBRARY_OUTPUT_DIRECTORY})
 
-add_definitions(-std=c++11 -stdlib=libc++)
+add_definitions(-std=c++11)
+#add_definitions(-stdlib=libc++)
  
 # configure projects
 include(${CMAKE_SOURCE_DIR}/cmake/Config.cmake)
