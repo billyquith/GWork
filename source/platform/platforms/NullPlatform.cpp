@@ -7,6 +7,7 @@
 
 #include <Gwork/Platform.h>
 #include <unistd.h>
+#include <time.h>
 
 #if defined(__APPLE__)
 # include <errno.h>
