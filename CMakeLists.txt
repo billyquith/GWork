@@ -27,6 +27,10 @@ make_directory(${CMAKE_LIBRARY_OUTPUT_DIRECTORY})
 # configure projects
 include(${CMAKE_SOURCE_DIR}/cmake/Config.cmake)
 
+if(UNIX AND CMAKE_CXX_COMPILER EQUAL clang++)
+    add_definitions(-stdlib=libc++)
+endif()
+
 # add our projects
 add_subdirectory(source)
 add_subdirectory(docs)
