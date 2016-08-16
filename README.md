@@ -1,6 +1,8 @@
 GWork
 =====
 
+Linux & MacOS status: [![Build Status](https://travis-ci.org/billyquith/GWork.svg?branch=gwork)](https://travis-ci.org/billyquith/GWork)
+
 GWork is a skinnable, embeddable GUI library with an extensive control set. Control rendering
 is abstracted, and can be implemented by any application wishing to use the library.
 Gwork (*pronounced "gw-orc"*) is a fork of the GUI library [GWEN][gwen]. It was forked 
