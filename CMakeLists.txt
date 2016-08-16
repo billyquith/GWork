@@ -1,8 +1,11 @@
 # CMake build instructions for Gwork
 
 # configure cmake
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 3.1)
 cmake_policy(SET CMP0004 OLD)
+
+# we require C++11 - this set appropriate flags for compilers, which may not be portable
+set(CMAKE_CXX_STANDARD 11)
 
 project(gwork)
 
@@ -21,9 +24,6 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_HOME_DIRECTORY}/lib) # .a
 make_directory(${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
 make_directory(${CMAKE_LIBRARY_OUTPUT_DIRECTORY})
 
-add_definitions(-std=c++11)
-#add_definitions(-stdlib=libc++)
- 
 # configure projects
 include(${CMAKE_SOURCE_DIR}/cmake/Config.cmake)
 
