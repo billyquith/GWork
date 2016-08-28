@@ -11,7 +11,7 @@
 #include <cstdio>
 
 // libstdc++ looks like it didn't support codecvt until at least GCC 5.4
-#if defined(__GLIBCXX__) && __GLIBCXX__ < 20160609
+#if defined(__GLIBCXX__) && __GLIBCXX__ < 20160609 && !defined(__MINGW32__)
 #   define AVOID_CPP11_CODECVT
 #endif
 
@@ -27,7 +27,7 @@
 
 #ifdef WIN32
 #   define WIN32_LEAN_AND_MEAN
-#   include <Windows.h>
+#   include <windows.h>
 #endif
 
 #include "DebugBreak.h"
