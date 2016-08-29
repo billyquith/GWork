@@ -1,7 +1,7 @@
 # Gwork platform
 
 include_directories(
-    ${CMAKE_SOURCE_DIR}/source/platform/include
+    ${GWK_SOURCE_DIR}/source/platform/include
     ${GWK_RENDER_INCLUDES}
 )
 
