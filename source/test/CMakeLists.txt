@@ -1,10 +1,10 @@
 # Gwork library
 
 include_directories(
-    ${CMAKE_SOURCE_DIR}/source/platform/include
-    ${CMAKE_SOURCE_DIR}/source/gwork/include
+    ${GWK_SOURCE_DIR}/source/platform/include
+    ${GWK_SOURCE_DIR}/source/gwork/include
     ${GWK_RENDER_INCLUDES}
-    ${CMAKE_SOURCE_DIR}/source/test/include
+    ${GWK_SOURCE_DIR}/source/test/include
 )
 
 set(GWK_TEST_SOURCES

@@ -31,13 +31,13 @@ find_package(Doxygen)
 
 if(DOXYGEN_FOUND)
     
-    set(DOXYGEN_INPUT_DIR ${CMAKE_SOURCE_DIR}/source)
+    set(DOXYGEN_INPUT_DIR ${GWK_SOURCE_DIR}/source)
        
     set(DOXYGEN_OUTPUT_TYPE html)
     set(DOXYGEN_OUTPUT_DIR ${CMAKE_BINARY_DIR}/doc/)
     
     set(DOXYGEN_CONFIG_FILENAME "Gwork.doxcfg")
-    set(DOXYGEN_CONFIG_FILE ${CMAKE_SOURCE_DIR}/docs/${DOXYGEN_CONFIG_FILENAME})
+    set(DOXYGEN_CONFIG_FILE ${GWK_SOURCE_DIR}/docs/${DOXYGEN_CONFIG_FILENAME})
 
     if(WIN32)
         set(DOXYGEN_GENERATE_MAN NO)
