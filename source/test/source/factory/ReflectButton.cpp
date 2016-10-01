@@ -73,7 +73,7 @@ GWK_CONTROL_CONSTRUCTOR(ReflectButton)
     // Gwk::Align::PlaceBelow(buttonB, buttonA, 10);
     runtime::callStatic(classByType<Align>().function("placeBelow"), buttonB, m_buttonA, 20);
     
-    //    // Tooltip Button
+    // Tooltip Button
     auto buttonC = fact.create(static_cast<Controls::Base*>(this));
     buttonC.set("text", "With tooltip");
     runtime::call(metaclass.function("setTooltip"), buttonC, "This is a tooltip!");

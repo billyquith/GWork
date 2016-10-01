@@ -7,9 +7,6 @@
 namespace Gwk {
 namespace ControlFactory {
     
-const Gwk::String PropertyBool::True    = "true";
-const Gwk::String PropertyBool::False   = "false";
-
 void InitialiseControls()
 {
     ponder::Class::declare<Gwk::Color>()
