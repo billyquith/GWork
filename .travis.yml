@@ -76,17 +76,6 @@ matrix:
             - clang-3.8
             - doxygen
       env: COMPILER=clang++-3.8 BUILD_CONFIG=Debug 
-    - os: linux
-      compiler: clang
-      addons:
-        apt:
-          sources:
-            - ubuntu-toolchain-r-test
-            - llvm-toolchain-precise-3.9
-          packages:
-            - clang-3.9
-            - doxygen
-      env: COMPILER=clang++-3.9 BUILD_CONFIG=Debug
     - os: osx
       osx_image: xcode7.3
       compiler: clang
