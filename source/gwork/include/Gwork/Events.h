@@ -80,7 +80,7 @@ namespace Gwk
          */
         class GWK_EXPORT Handler
         {
-            PONDER_RTTI()
+            PONDER_POLYMORPHIC()
         public:
 
             virtual ~Handler();

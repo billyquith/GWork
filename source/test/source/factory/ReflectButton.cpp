@@ -10,6 +10,7 @@
 #include <ponder/classget.hpp>
 #include <ponder/class.hpp>
 #include <ponder/pondertype.hpp>
+#include <ponder/uses/runtime.hpp>
 
 using namespace Gwk;
 
@@ -54,34 +55,36 @@ PONDER_AUTO_TYPE(ReflectButton, &declare);
 
 GWK_CONTROL_CONSTRUCTOR(ReflectButton)
 {
+    using namespace ponder;
+    
     const ponder::Class& metaclass = ponder::classByType<Controls::Button>();
+    runtime::ObjectFactory fact(metaclass);
 
     // Normal button
-    m_buttonA = metaclass.create(static_cast<Controls::Base*>(this));
+    m_buttonA = fact.create(static_cast<Controls::Base*>(this));
     m_buttonA.set("text", "Hello world!");
     m_buttonA.get("onPress").to<Event::Listener*>()->Add(this, &ReflectButton::onButtonA);
     
     // Unicode test
-    auto buttonB = metaclass.create(static_cast<Controls::Base*>(this));
+    auto buttonB = fact.create(static_cast<Controls::Base*>(this));
     buttonB.set("text", Utility::Narrow(
                 L"\u0417\u0430\u043C\u0435\u0436\u043D\u0430\u044F \u043C\u043E\u0432\u0430"));
     
     // Gwk::Align::PlaceBelow(buttonB, buttonA, 10);
-    ponder::classByType<Align>().function("placeBelow").call(buttonB, ponder::Args(m_buttonA, 20));
+    runtime::callStatic(classByType<Align>().function("placeBelow"), buttonB, m_buttonA, 20);
     
     //    // Tooltip Button
-    auto buttonC = metaclass.create(static_cast<Controls::Base*>(this));
+    auto buttonC = fact.create(static_cast<Controls::Base*>(this));
     buttonC.set("text", "With tooltip");
-    buttonC.call("setTooltip", ponder::Args("This is a tooltip!"));
+    runtime::call(metaclass.function("setTooltip"), buttonC, "This is a tooltip!");
     
     // Gwk::Align::PlaceBelow(buttonB, buttonA, 10);
-    ponder::classByType<Align>().function("placeBelow").call(buttonC, ponder::Args(buttonB, 30));
+    runtime::callStatic(classByType<Align>().function("placeBelow"), buttonC, buttonB, 30);
 }
 
 ReflectButton::~ReflectButton()
 {
-    const ponder::Class& metaclass = ponder::classByType<Controls::Button>();
-    metaclass.destroy(m_buttonA);
+    ponder::runtime::destroy(m_buttonA);
 }
 
 DECLARE_TEST(ReflectButton);
