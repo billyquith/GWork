@@ -10,8 +10,8 @@
 
 #include <cstdio>
 
-// libstdc++ looks like it didn't support codecvt until at least GCC 5.4
-#if (defined(__GLIBCXX__) && __GLIBCXX__ < 20160609) \
+// libstdc++ looks like it didn't support codecvt until at least GCC 5.2
+#if (defined(__GNUC__) && !(__GNUC__ >= 5 && __GNUC_MINOR__ > 1)) \
     || defined(__MINGW32__)
 #   define AVOID_CPP11_CODECVT
 #endif
