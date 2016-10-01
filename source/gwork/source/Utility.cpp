@@ -10,9 +10,12 @@
 
 #include <cstdio>
 
-// libstdc++ looks like it didn't support codecvt until at least GCC 5.2
-#if (defined(__GNUC__) && !(__GNUC__ >= 5 && __GNUC_MINOR__ > 1)) \
-    || defined(__MINGW32__)
+// codecvt causes problems due to different standard libraries implementing at different times.
+//  - libstdc++ looks like it didn't support codecvt until at least GCC 5.2.
+//  - Apple has good support (but defined __GNUC__ ?!)
+#if ((defined(__GNUC__) && !(__GNUC__ >= 5 && __GNUC_MINOR__ > 1)) \
+     || defined(__MINGW32__)) \
+    && !defined(__APPLE__)
 #   define AVOID_CPP11_CODECVT
 #endif
 
