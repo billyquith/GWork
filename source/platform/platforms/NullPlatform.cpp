@@ -6,7 +6,13 @@
  */
 
 #include <Gwork/Platform.h>
-#include <unistd.h>
+#ifdef _MSC_VER
+#   define WIN32_LEAN_AND_MEAN 
+#   include <Windows.h>
+#   include <WinBase.h>     // sleep
+#else
+#   include <unistd.h>
+#endif
 #include <time.h>
 
 #if defined(__APPLE__)
@@ -19,7 +25,11 @@ static Gwk::String gs_ClipboardEmulator;
 
 void Gwk::Platform::Sleep(unsigned int ms)
 {
+#ifdef _MSC_VER
+    ::Sleep(ms);
+#else
     ::sleep(ms);
+#endif
 }
 
 void Gwk::Platform::SetCursor(unsigned char iCursor)

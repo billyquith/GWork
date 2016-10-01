@@ -17,7 +17,9 @@ if(WIN32)
     # TODO: option(RENDER_DIRECT2D  "Renderer: Direct2D" OFF)
     # TODO: option(RENDER_DIRECTX9  "Renderer: DirectX9" OFF)
     # TODO: option(RENDER_GDIPLUS   "Renderer: GDIPlus" OFF)
-    set(GWK_PLATFORM_NAME "Windows")
+    
+    # For Windows platform:
+    # set(GWK_PLATFORM_NAME "Windows")    
 endif()
 
 # Cross-platform
