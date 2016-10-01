@@ -36,6 +36,16 @@ matrix:
             - doxygen
       env: COMPILER=g++-5 BUILD_CONFIG=Debug 
     - os: linux
+      compiler: gcc
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-6
+            - doxygen
+      env: COMPILER=g++-6 BUILD_CONFIG=Debug 
+    - os: linux
       compiler: clang
       addons:
         apt:
@@ -66,10 +76,26 @@ matrix:
             - clang-3.8
             - doxygen
       env: COMPILER=clang++-3.8 BUILD_CONFIG=Debug 
+    - os: linux
+      compiler: clang
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+            - llvm-toolchain-precise-3.9
+          packages:
+            - clang-3.9
+            - doxygen
+      env: COMPILER=clang++-3.9 BUILD_CONFIG=Debug
     - os: osx
       osx_image: xcode7.3
       compiler: clang
       env: COMPILER=clang++ BUILD_CONFIG=Debug
+      install: ./ci/travis/install.sh
+    - os: osx
+      osx_image: xcode8
+      compiler: clang
+      env: COMPILER=clang++ BUILD_CONFIG=Release
       install: ./ci/travis/install.sh
       
 # install: ./ci/travis/install.sh
