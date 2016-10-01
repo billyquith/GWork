@@ -26,15 +26,15 @@ namespace Gwk
             Allegro();
             ~Allegro();
 
-            virtual void SetDrawColor(Gwk::Color color);
+            void SetDrawColor(Gwk::Color color) override;
 
-            virtual void DrawFilledRect(Gwk::Rect rect);
+            void DrawFilledRect(Gwk::Rect rect) override;
 
-            virtual void LoadFont(Gwk::Font* font);
-            virtual void FreeFont(Gwk::Font* font);
-            virtual void RenderText(Gwk::Font* font, Gwk::Point pos,
-                                    const Gwk::String& text);
-            virtual Gwk::Point MeasureText(Gwk::Font* font, const Gwk::String& text);
+            void LoadFont(Gwk::Font* font) override;
+            void FreeFont(Gwk::Font* font) override;
+            void RenderText(Gwk::Font* font, Gwk::Point pos,
+                                    const Gwk::String& text) override;
+            Gwk::Point MeasureText(Gwk::Font* font, const Gwk::String& text) override;
 
             void StartClip();
             void EndClip();

@@ -106,7 +106,7 @@ namespace Gwk
                 {
                     ParentClass::DoChanged();
                     unsigned int r,g,b;
-#ifdef _WIN32
+#if defined(_WIN32) && !defined(__MINGW32__)
                     if (sscanf_s(m_textBox->GetText().c_str(), "%u,%u,%u", &r, &g, &b) == 3)
 #else
                     if (sscanf(m_textBox->GetText().c_str(), "%u,%u,%u", &r, &g, &b) == 3)

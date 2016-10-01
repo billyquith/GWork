@@ -3,8 +3,8 @@
 find_package(Ponder REQUIRED) # TODO - temporary hack whilst testing
 
 include_directories(
-    ${CMAKE_SOURCE_DIR}/source/platform/include
-    ${CMAKE_SOURCE_DIR}/source/gwork/include
+    ${GWK_SOURCE_DIR}/source/platform/include
+    ${GWK_SOURCE_DIR}/source/gwork/include
     ${GWK_RENDER_INCLUDES}
     ${CMAKE_SOURCE_DIR}/source/util/include
     ${PONDER_INCLUDE_DIRS}
@@ -57,7 +57,7 @@ add_library(GworkUtil STATIC ${GWK_UTIL_SOURCES})
 target_compile_features(GworkUtil PUBLIC cxx_override)
 target_link_libraries(GworkUtil Gwork)
 
-install(DIRECTORY ${CMAKE_SOURCE_DIR}/util/include/Gwork
+install(DIRECTORY ${GWK_SOURCE_DIR}/util/include/Gwork
         DESTINATION include)
 
 install(TARGETS GworkUtil

@@ -5,3 +5,6 @@ bin/
 lib/
 
 build*/
+
+source/test/stats/*_report.*
+source/test/stats/curr_allocs.*

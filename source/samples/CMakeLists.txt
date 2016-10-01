@@ -6,10 +6,10 @@ set(APP_COPYRIGHT "Copyright 2016 Bill Quith")
 set(APP_BUNDLE ON)
 
 include_directories(
-    ${CMAKE_SOURCE_DIR}/source/platform/include
-    ${CMAKE_SOURCE_DIR}/source/gwork/include
+    ${GWK_SOURCE_DIR}/source/platform/include
+    ${GWK_SOURCE_DIR}/source/gwork/include
     ${GWK_RENDER_INCLUDES}
-    ${CMAKE_SOURCE_DIR}/source/test/include
+    ${GWK_SOURCE_DIR}/source/test/include
 )
 
 if(BUILD_SAMPLE)
@@ -20,10 +20,10 @@ if(BUILD_SAMPLE)
         "${GWK_RENDER_NAME}/${GWK_RENDER_NAME}Sample.cpp")
 
     set(SAMPLE_RESOURCES
-        "${CMAKE_SOURCE_DIR}/source/gwork/resource/DefaultSkin.png"
-        "${CMAKE_SOURCE_DIR}/source/gwork/resource/OpenSans.ttf"
-        "${CMAKE_SOURCE_DIR}/source/test/resource/gwen.png"
-        "${CMAKE_SOURCE_DIR}/source/test/resource/test16.png")
+        "${GWK_SOURCE_DIR}/source/gwork/resource/DefaultSkin.png"
+        "${GWK_SOURCE_DIR}/source/gwork/resource/OpenSans.ttf"
+        "${GWK_SOURCE_DIR}/source/test/resource/gwen.png"
+        "${GWK_SOURCE_DIR}/source/test/resource/test16.png")
     
     if(APPLE AND APP_BUNDLE)
         set(APP_BUILD_TYPE MACOSX_BUNDLE)

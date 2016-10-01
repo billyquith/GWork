@@ -102,9 +102,9 @@ namespace Gwk
             ///     if you can do them faster than the default implementation it's a
             ///     good idea to.
             //
-            virtual void    DrawLinedRect(Gwk::Rect rect);
-            virtual void    DrawPixel(int x, int y);
-            virtual void    DrawShavedCornerRect(Gwk::Rect rect, bool bSlight = false);
+            virtual void DrawLinedRect(Gwk::Rect rect);
+            virtual void DrawPixel(int x, int y);
+            virtual void DrawShavedCornerRect(Gwk::Rect rect, bool bSlight = false);
             /// \}
 
             /// \sect{Translate}

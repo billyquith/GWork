@@ -1,0 +1,29 @@
+
+body {
+  font-family: Verdana, sans-serif;
+  font-size: 12px;
+  line-height: 1.5;
+  margin: 0 2em 4em 2em;
+}
+
+h1,h2,h3 {
+  padding: 2em 0 1em 2em;
+}
+
+.reporttab {
+  border: 1px solid black;
+  width: 80%;
+  margin: 0 auto; /* centre */
+}
+.reporttab td {
+  font-family: Menlo, monospace;
+  font-size: 0.8em;
+  padding-left: 2em;
+  white-space: pre;
+}
+.reporttab th {
+  background-color: #c2d4ff;
+}
+.reporttab tr:nth-child(even) {
+  background-color: #f2f2f2
+}

@@ -11,11 +11,15 @@
 #include <Gwork/Controls/CollapsibleList.h>
 #include <Gwork/Controls/Layout/Position.h>
 #include <Gwork/Platform.h>
+#include <Gwork/PlatformCommon.h>
 
 using namespace Gwk;
 
+
 GWK_CONTROL_CONSTRUCTOR(TestAPI)
 {
+    GWK_IF_ALLOC_STATS( Platform::AllocStatsAddMark("API test"); )
+    
     m_lastControl = nullptr;
 
     Dock(Position::Fill);
@@ -38,7 +42,9 @@ GWK_CONTROL_CONSTRUCTOR(TestAPI)
     { \
         Controls::Button *button = cat->Add(#NAME); \
         button->SetName(#NAME); \
+        GWK_IF_ALLOC_STATS( Platform::AllocStatsAddMark(#NAME); ) \
         TestUnit *test = RegisterTest_##NAME(center); \
+        GWK_IF_ALLOC_STATS( Platform::AllocStatsAddMark(#NAME); ) \
         test->SetTestCategory(this); \
         test->Hide(); \
         button->onPress.Add( this, &TestAPI::OnCategorySelect, test );\
@@ -84,8 +90,14 @@ GWK_CONTROL_CONSTRUCTOR(TestAPI)
         ADD_TEST(CollapsibleList);
         ADD_TEST(ColorPicker);
     }
-    
 #undef ADD_TEST
+    
+    GWK_IF_ALLOC_STATS( Platform::AllocStatsAddMark("API test"); )
+    
+    GWK_IF_ALLOC_STATS(
+        FILE *fh = fopen(GWK_STATS_DIR "curr_allocs.csv", "w");
+        Platform::AllocStatsDump(fh);
+        fclose(fh); )
 }
 
 void TestAPI::OnCategorySelect(Gwk::Event::Info info)

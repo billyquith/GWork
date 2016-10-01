@@ -1,0 +1,8 @@
+commit a95a0fde3afb68d2fd4d7af817159c4891db970d
+Author:     BQ <chinbillybilbo@gmail.com>
+AuthorDate: Mon Aug 15 20:26:21 2016 +0100
+Commit:     BQ <chinbillybilbo@gmail.com>
+CommitDate: Mon Aug 15 20:26:21 2016 +0100
+
+    Write stats file when test run.
+    - script to update report.

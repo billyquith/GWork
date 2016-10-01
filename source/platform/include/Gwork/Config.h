@@ -52,7 +52,25 @@
 #   define GWK_EXPORT
 #endif
 
+
 // Enable animation functions.
 #define GWK_ANIMATE 1
 
+
+#ifndef GWK_ALLOC_STATS
+#   define GWK_ALLOC_STATS 0
+#endif
+
+#if GWK_ALLOC_STATS
+
+#   include <memory>
+    void* operator new(std::size_t size) throw(std::bad_alloc);
+    void operator delete(void *mem) throw();
+
+#   define GWK_IF_ALLOC_STATS(X) X
+#else
+#   define GWK_IF_ALLOC_STATS(X) // ignore
+#endif // GWK_ALLOC_STATS
+
 #endif // GWK_CONFIG_H
+

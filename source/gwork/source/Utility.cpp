@@ -10,17 +10,32 @@
 
 #include <cstdio>
 
+// codecvt causes problems due to different standard libraries implementing at different times.
+//  - libstdc++ looks like it didn't support codecvt until at least GCC 5.2.
+//  - Apple has good support (but defined __GNUC__ ?!)
+#if ((defined(__GNUC__) && !(__GNUC__ >= 5 && __GNUC_MINOR__ > 1)) \
+     || defined(__MINGW32__)) \
+    && !defined(__APPLE__)
+#   define AVOID_CPP11_CODECVT
+#endif
+
 // For Unicode support.
-// Note: <codecvt> is C++11 and in Xcode you'll need to use libc++ (LLVM), not libstdc++ (GNU).
 #include <locale>       // Narrow/widen
-#include <codecvt>      // Narrow/widen - C++11
+// Note: <codecvt> is C++11. It exists in libc++ (LLVM) but is patchy in libstdc++ pre-GCC 5
+#ifndef AVOID_CPP11_CODECVT
+#   include <codecvt>      // Narrow/widen - C++11
+#else
+#   include <iconv.h>
+#   include <alloca.h>
+#endif
 
 #ifdef WIN32
-#define WIN32_LEAN_AND_MEAN
-#include <Windows.h>
+#   define WIN32_LEAN_AND_MEAN
+#   include <windows.h>
 #endif
 
 #include "DebugBreak.h"
+
 
 namespace Gwk {
 namespace Utility {
@@ -112,18 +127,31 @@ String Format(const char* _format, ...)
 
 std::wstring Widen(const Gwk::String &nstr)
 {
+#ifndef AVOID_CPP11_CODECVT
     // UTF-8 to UTF-16 (C++11)
     // See: http://en.cppreference.com/w/cpp/locale/codecvt_utf8_utf16
     // See: http://www.cplusplus.com/reference/codecvt/codecvt_utf8_utf16/
     
     std::wstring_convert< std::codecvt_utf8_utf16<wchar_t>, wchar_t > conversion;
     const std::wstring wstr( conversion.from_bytes( nstr.c_str() ) );
-    
     return wstr;
+#else
+    static iconv_t cd = iconv_open("WCHAR_T", "UTF-8"); // TODO - iconv_close() on exit
+    // size_t iconv(iconv_t cd,
+    //     const char* * inbuf, size_t * inbytesleft, char* * outbuf, size_t * outbytesleft);
+    char *inbuf = (char*) nstr.data();
+    size_t inbytesleft = std::distance(nstr.begin(), nstr.end()) * sizeof(char);
+    size_t outbytesleft = inbytesleft*2 + inbytesleft/8; // assumed 2*narrow length + pad
+    char *outbuf = (char*) alloca(outbytesleft), *retbuf = outbuf;
+    size_t numCvt = iconv(cd, &inbuf, &inbytesleft, &outbuf, &outbytesleft);
+    *outbuf = L'\0'; // terminate
+    return std::wstring((wchar_t*)retbuf);
+#endif
 }
 
 Gwk::String Narrow(const std::wstring &wstr)
 {
+#ifndef AVOID_CPP11_CODECVT
     // wide to UTF-8 (C++11)
     // See: http://en.cppreference.com/w/cpp/locale/wstring_convert/to_bytes
     
@@ -131,6 +159,18 @@ Gwk::String Narrow(const std::wstring &wstr)
     Gwk::String u8str = conv1.to_bytes(wstr);
     
     return u8str;
+#else
+    static iconv_t cd = iconv_open("UTF-8", "WCHAR_T"); // TODO - iconv_close() on exit
+    // size_t iconv(iconv_t cd,
+    //     const char* * inbuf, size_t * inbytesleft, char* * outbuf, size_t * outbytesleft);
+    char *inbuf = (char*) wstr.data();
+    size_t inbytesleft = std::distance(wstr.begin(), wstr.end()) * sizeof(wchar_t);
+    size_t outbytesleft = inbytesleft;
+    char *outbuf = (char*) alloca(outbytesleft), *retbuf = outbuf;
+    size_t numCvt = iconv(cd, &inbuf, &inbytesleft, &outbuf, &outbytesleft);
+    *outbuf = 0; // terminate
+    return String(retbuf);
+#endif
 }
 
 void Replace(String& str, const String& strFind, const String& strReplace)
