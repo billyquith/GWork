@@ -7,16 +7,19 @@
 
 
 #pragma once
-#ifndef GWK_TEST_TESTFACTORY_H
-#define GWK_TEST_TESTFACTORY_H
+#ifndef GWK_TEST_TESTREFLECT_H
+#define GWK_TEST_TESTREFLECT_H
 
 #include <Gwork/Test/Test.h>
 
-
-class TestFactory : public TestCategory
+//
+// Here we test Ponder reflection
+//  - We use the runtime API of Ponder to create controls.
+//
+class TestReflect : public TestCategory
 {
 public:
-    GWK_CONTROL(TestFactory, TestCategory);
+    GWK_CONTROL(TestReflect, TestCategory);
     
 private:
 
@@ -27,4 +30,4 @@ private:
 };
 
 
-#endif // ifndef GWK_TEST_TESTFACTORY_H
+#endif // ifndef GWK_TEST_TESTREFLECT_H

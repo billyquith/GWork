@@ -5,17 +5,17 @@
  *  See license in Gwork.h
  */
 
-#include <Gwork/Test/TestFactory.h>
+#include <Gwork/Test/TestReflect.h>
 #include <Gwork/Controls/DockedTabControl.h>
 #include <Gwork/Controls/WindowControl.h>
 #include <Gwork/Controls/CollapsibleList.h>
 #include <Gwork/Controls/Layout/Position.h>
 #include <Gwork/Platform.h>
-#include <Gwork/Util/ControlFactory.h>
+#include <Gwork/Util/ControlReflect.h>
 
 using namespace Gwk;
 
-GWK_CONTROL_CONSTRUCTOR(TestFactory)
+GWK_CONTROL_CONSTRUCTOR(TestReflect)
 {
     m_lastControl = nullptr;
     
@@ -44,12 +44,12 @@ GWK_CONTROL_CONSTRUCTOR(TestFactory)
         TestUnit *test = RegisterTest_##NAME(center); \
         test->SetTestCategory(this); \
         test->Hide(); \
-        button->onPress.Add( this, &TestFactory::OnCategorySelect, test );\
+        button->onPress.Add( this, &TestReflect::OnCategorySelect, test );\
     }
 
     // Create Controls using Gwork Ponder reflection API.
     {
-        Controls::CollapsibleCategory* cat = apiList->Add("Reflection");
+        Controls::CollapsibleCategory* cat = apiList->Add("Basic");
         ADD_TEST(ReflectButton);
 //        ADD_TEST(Label);
 //        ADD_TEST(LabelMultiline);
@@ -91,7 +91,7 @@ GWK_CONTROL_CONSTRUCTOR(TestFactory)
 #undef ADD_TEST
 }
 
-void TestFactory::OnCategorySelect(Gwk::Event::Info info)
+void TestReflect::OnCategorySelect(Gwk::Event::Info info)
 {
     if (m_lastControl)
         m_lastControl->Hide();  // hide last

@@ -6,7 +6,7 @@
  */
 
 #include <Gwork/Test/TestAPI.h>
-#include <Gwork/Util/ControlFactory.h>
+#include <Gwork/Util/ControlReflect.h>
 #include <ponder/classget.hpp>
 #include <ponder/class.hpp>
 #include <ponder/pondertype.hpp>

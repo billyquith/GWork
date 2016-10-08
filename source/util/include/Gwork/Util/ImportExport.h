@@ -9,7 +9,7 @@
 
 #include <Gwork/Gwork.h>
 #include <Gwork/Controls.h>
-#include <Gwork/Util/ControlFactory.h>
+#include <Gwork/Util/ControlReflect.h>
 
 using namespace Gwk;
 

@@ -12,8 +12,8 @@ include_directories(
 
 set(GWK_UTIL_SOURCES
     # control factory
-    include/Gwork/Util/ControlFactory.h
-    source/ControlFactory/ControlFactory.cpp
+    include/Gwork/Util/ControlReflect.h
+    source/ControlReflect/ControlReflect.cpp
     # import/export
     include/Gwork/Util/ImportExport.h
     source/ImportExport/Base.cpp
@@ -24,14 +24,14 @@ set(GWK_UTIL_SOURCES
 )
 
 # header folder groups
-source_group("${GWK_HEADER_FOLDER}\\ControlFactory"
-             FILES "include/Gwork/Util/ControlFactory.h")
+source_group("${GWK_HEADER_FOLDER}\\ControlReflect"
+             FILES "include/Gwork/Util/ControlReflect.h")
 source_group("${GWK_HEADER_FOLDER}\\ImportExport"
              FILES "include/Gwork/Util/ImportExport.h")
 
 # source folder groups
-source_group("${GWK_SOURCE_FOLDER}\\ControlFactory"
-             REGULAR_EXPRESSION "source/ControlFactory/.*")
+source_group("${GWK_SOURCE_FOLDER}\\ControlReflect"
+             REGULAR_EXPRESSION "source/ControlReflect/.*")
 source_group("${GWK_SOURCE_FOLDER}\\ImportExport"
              REGULAR_EXPRESSION "source/ImportExport/.*")
 

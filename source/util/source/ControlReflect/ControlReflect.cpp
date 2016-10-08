@@ -1,5 +1,5 @@
 
-#include <Gwork/Util/ControlFactory.h>
+#include <Gwork/Util/ControlReflect.h>
 
 #define PONDER_USES_RUNTIME_IMPL
 #include <ponder/uses/runtime.hpp>
