@@ -151,31 +151,6 @@ void InitialiseControls()
     ponder::Class::declare<Controls::ComboBox>()
         .base<Controls::ComboBox::ParentClass>()
         ;
-
-    //
-    // This sucks, but I don't think it's possible to get the factory
-    // method working inside a static lib without some shady unportable compiler capers
-    //
-//            DECLARE_GWK_CONTROL_FACTORY(Base_Factory);
-//            DECLARE_GWK_CONTROL_FACTORY(Label_Factory);
-//            DECLARE_GWK_CONTROL_FACTORY(LabelClickable_Factory);
-//    DECLARE_GWK_CONTROL_FACTORY(Button_Factory);
-//    DECLARE_GWK_CONTROL_FACTORY(TextBox_Factory);
-//    DECLARE_GWK_CONTROL_FACTORY(TextBoxMultiline_Factory);
-//    DECLARE_GWK_CONTROL_FACTORY(CheckBox_Factory);
-//    DECLARE_GWK_CONTROL_FACTORY(CheckBoxWithLabel_Factory);
-//    DECLARE_GWK_CONTROL_FACTORY(MenuStrip_Factory);
-//    DECLARE_GWK_CONTROL_FACTORY(ListBox_Factory);
-//    // DECLARE_GWK_CONTROL_FACTORY( VerticalSplitter_Factory );
-//    DECLARE_GWK_CONTROL_FACTORY(ImagePanel_Factory);
-//    DECLARE_GWK_CONTROL_FACTORY(FilePicker_Factory);
-//    DECLARE_GWK_CONTROL_FACTORY(FolderPicker_Factory);
-//    DECLARE_GWK_CONTROL_FACTORY(PageControl_Factory);
-//    DECLARE_GWK_CONTROL_FACTORY(Rectangle_Factory);
-//    DECLARE_GWK_CONTROL_FACTORY(ProgressBar_Factory);
-//    DECLARE_GWK_CONTROL_FACTORY(ComboBox_Factory);
-//    DECLARE_GWK_CONTROL_FACTORY(HorizontalSlider_Factory);
-//    DECLARE_GWK_CONTROL_FACTORY(DesignerCanvas_Factory);
 }
 
 List& GetList()
