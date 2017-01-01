@@ -88,7 +88,7 @@ namespace Gwk
         void Hide();
 
         Gwk::String GetValue();
-        void             SetValue(const Gwk::String& value);
+        void SetValue(const Gwk::String& value);
 
         template <typename T>
         void SetAction(Gwk::Event::Handler* ob,
