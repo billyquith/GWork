@@ -25,7 +25,7 @@ namespace Gwk
         public:
             GWK_CONTROL(Label, Controls::Base);
             
-            virtual void PreDelete(Gwk::Skin::Base* skin) override;
+            void PreDelete(Gwk::Skin::Base* skin) override;
 
             virtual void SetText(const String& str, bool bDoEvents = true);
 
@@ -34,10 +34,10 @@ namespace Gwk
                 return m_text->GetText();
             }
 
-            virtual void Render(Skin::Base* /*skin*/) override
+            void Render(Skin::Base* /*skin*/) override
             {}
 
-            virtual void PostLayout(Skin::Base* skin) override;
+            void PostLayout(Skin::Base* skin) override;
 
             virtual void SizeToContents();
 
@@ -119,12 +119,12 @@ namespace Gwk
                 SetTextColor(GetSkin()->Colors.Label.Highlight);
             }
 
-            virtual String GetValue() override
+            String GetValue() override
             {
                 return GetText();
             }
 
-            virtual void SetValue(const String& strValue) override
+            void SetValue(const String& strValue) override
             {
                 return SetText(strValue);
             }
@@ -139,7 +139,7 @@ namespace Gwk
                 m_text->SetWrap(b);
             }
 
-            virtual void OnBoundsChanged(Gwk::Rect oldChildBounds) override;
+            void OnBoundsChanged(Gwk::Rect oldChildBounds) override;
 
         protected:
 

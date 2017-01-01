@@ -16,7 +16,7 @@ namespace Gwk
             {
             }
 
-            virtual Gwk::Controls::Base* CreateInstance(Gwk::Controls::Base* parent) override
+            Gwk::Controls::Base* CreateInstance(Gwk::Controls::Base* parent) override
             {
                 Gwk::Controls::SplitterVertical* control =
                     new Gwk::Controls::SplitterVertical(parent);

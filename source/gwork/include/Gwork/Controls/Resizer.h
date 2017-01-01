@@ -25,7 +25,7 @@ namespace Gwk
 
             GWK_CONTROL(Resizer, Dragger);
 
-            virtual void OnMouseMoved(int x, int y, int deltaX, int deltaY) override;
+            void OnMouseMoved(int x, int y, int deltaX, int deltaY) override;
             virtual void SetResizeDir(Position dir);
 
             Event::Caller onResize;

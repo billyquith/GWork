@@ -35,7 +35,7 @@ namespace Gwk
                 ctrl->Dock(bRight ? Position::Right : Position::Left);
             }
 
-            virtual void Render(Skin::Base* skin) override
+            void Render(Skin::Base* skin) override
             {
                 skin->DrawStatusBar(this);
             }

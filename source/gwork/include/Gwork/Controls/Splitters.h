@@ -29,7 +29,7 @@ namespace Gwk
                 SetScaling(false, 100);
             }
 
-            virtual void PostLayout(Skin::Base* skin) override
+            void PostLayout(Skin::Base* skin) override
             {
                 RefreshContainers();
             }

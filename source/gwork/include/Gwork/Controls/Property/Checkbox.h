@@ -33,12 +33,12 @@ namespace Gwk
                     SetHeight(18);
                 }
 
-                virtual String GetPropertyValue() override
+                String GetPropertyValue() override
                 {
                     return m_checkbox->IsChecked() ? "1" : "0";
                 }
 
-                virtual void SetPropertyValue(const String& v, bool bFireChangeEvents) override
+                void SetPropertyValue(const String& v, bool bFireChangeEvents) override
                 {
                     if (v == "1" || v == "true" || v == "TRUE" || v == "yes" || v == "YES")
                         return m_checkbox->SetChecked(true);
@@ -46,12 +46,12 @@ namespace Gwk
                     return m_checkbox->SetChecked(false);
                 }
 
-                virtual bool IsEditing() override
+                bool IsEditing() override
                 {
                     return m_checkbox->IsFocussed();
                 }
 
-                virtual bool IsHovered() override
+                bool IsHovered() override
                 {
                     return ParentClass::IsHovered() || m_checkbox->IsHovered();
                 }

@@ -23,8 +23,8 @@ namespace Gwk
         public:
 
             GWK_CONTROL(TabButton, Button);
-            virtual void Render(Skin::Base* skin) override;
-            virtual void Layout(Skin::Base* skin) override;
+            void Render(Skin::Base* skin) override;
+            void Layout(Skin::Base* skin) override;
 
             void SetPage(Base* page)
             {
@@ -59,14 +59,14 @@ namespace Gwk
                 SetHidden(false); SetDepressed(false);
             }
 
-            virtual bool OnKeyLeft(bool bDown) override;
-            virtual bool OnKeyRight(bool bDown) override;
-            virtual bool OnKeyUp(bool bDown) override;
-            virtual bool OnKeyDown(bool bDown) override;
+            bool OnKeyLeft(bool bDown) override;
+            bool OnKeyRight(bool bDown) override;
+            bool OnKeyUp(bool bDown) override;
+            bool OnKeyDown(bool bDown) override;
 
-            virtual void UpdateColours() override;
+            void UpdateColours() override;
 
-            virtual bool ShouldClip() override
+            bool ShouldClip() override
             {
                 return false;
             }

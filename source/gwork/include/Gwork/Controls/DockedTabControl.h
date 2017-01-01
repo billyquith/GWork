@@ -32,7 +32,7 @@ namespace Gwk
 
             virtual void DragAndDrop_StartDragging(Gwk::DragAndDrop::Package* package,
                                                    int x, int y) override;
-            virtual void DragAndDrop_EndDragging(bool bSuccess, int x, int y) override;
+            void DragAndDrop_EndDragging(bool bSuccess, int x, int y) override;
 
             void MoveTabsTo(DockedTabControl* target);
 

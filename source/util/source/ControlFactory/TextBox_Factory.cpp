@@ -14,7 +14,7 @@ namespace Gwk
 //            {
 //            }
 //
-//            virtual Gwk::Controls::Base* CreateInstance(Gwk::Controls::Base* parent) override
+//            Gwk::Controls::Base* CreateInstance(Gwk::Controls::Base* parent) override
 //            {
 //                Gwk::Controls::TextBox* control = new Gwk::Controls::TextBox(parent);
 //                control->SetSize(100, 20);
@@ -33,7 +33,7 @@ namespace Gwk
 //            {
 //            }
 //
-//            virtual Gwk::Controls::Base* CreateInstance(Gwk::Controls::Base* parent) override
+//            Gwk::Controls::Base* CreateInstance(Gwk::Controls::Base* parent) override
 //            {
 //                Gwk::Controls::TextBoxMultiline* control =
 //                    new Gwk::Controls::TextBoxMultiline(parent);

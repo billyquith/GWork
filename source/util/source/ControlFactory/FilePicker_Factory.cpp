@@ -42,7 +42,7 @@ namespace Gwk
 //                AddProperty(new Properties::FileType());
             }
 
-            virtual Gwk::Controls::Base* CreateInstance(Gwk::Controls::Base* parent) override
+            Gwk::Controls::Base* CreateInstance(Gwk::Controls::Base* parent) override
             {
                 Gwk::Controls::FilePicker* control = new Gwk::Controls::FilePicker(parent);
                 control->SetSize(100, 20);

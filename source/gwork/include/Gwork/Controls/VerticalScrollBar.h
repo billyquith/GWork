@@ -21,39 +21,39 @@ namespace Gwk
         {
             GWK_CONTROL(VerticalScrollBar, BaseScrollBar);
 
-            virtual void Layout(Skin::Base* skin) override;
+            void Layout(Skin::Base* skin) override;
 
-            virtual void OnMouseClickLeft(int x, int y, bool bDown) override;
-            virtual void OnBarMoved(Controls::Base* control) override;
+            void OnMouseClickLeft(int x, int y, bool bDown) override;
+            void OnBarMoved(Controls::Base* control) override;
 
-            virtual int GetBarSize() override
+            int GetBarSize() override
             {
                 return m_bar->Height();
             }
 
-            virtual int GetBarPos() override
+            int GetBarPos() override
             {
                 return m_bar->Y()-Width();
             }
 
-            virtual void SetBarSize(int size) override
+            void SetBarSize(int size) override
             {
                 m_bar->SetHeight(size);
             }
 
-            virtual int GetButtonSize() override
+            int GetButtonSize() override
             {
                 return Width();
             }
 
-            virtual void  ScrollToTop() override;
-            virtual void  ScrollToBottom() override;
+            void  ScrollToTop() override;
+            void  ScrollToBottom() override;
             virtual void  NudgeUp(Base* control);
             virtual void  NudgeDown(Base* control);
-            virtual float GetNudgeAmount() override;
+            float GetNudgeAmount() override;
 
-            virtual float CalculateScrolledAmount() override;
-            virtual bool  SetScrolledAmount(float amount, bool forceUpdate) override;
+            float CalculateScrolledAmount() override;
+            bool  SetScrolledAmount(float amount, bool forceUpdate) override;
 
         };
 

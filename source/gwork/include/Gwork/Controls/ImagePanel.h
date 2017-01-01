@@ -68,7 +68,7 @@ namespace Gwk
                 return m_texture.name;
             }
 
-            virtual void Render(Skin::Base* skin) override
+            void Render(Skin::Base* skin) override
             {
                 skin->GetRender()->SetDrawColor(m_drawColor);
 

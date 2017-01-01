@@ -77,7 +77,7 @@ namespace Gwk
                 AddProperty(new Properties::Max());
             }
 
-            virtual Gwk::Controls::Base* CreateInstance(Gwk::Controls::Base* parent) override
+            Gwk::Controls::Base* CreateInstance(Gwk::Controls::Base* parent) override
             {
                 Gwk::Controls::HorizontalSlider* control =
                     new Gwk::Controls::HorizontalSlider(parent);

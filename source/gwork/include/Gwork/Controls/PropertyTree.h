@@ -30,7 +30,7 @@ namespace Gwk
                 m_title->SetTextColorOverride(GetSkin()->Colors.Properties.Title);
             }
 
-            virtual void Render(Skin::Base* skin) override
+            void Render(Skin::Base* skin) override
             {
                 skin->DrawPropertyTreeNode(this, m_innerPanel->X(), m_innerPanel->Y());
             }

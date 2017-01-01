@@ -184,12 +184,12 @@ namespace Gwk
             static const Gwk::String True;
             static const Gwk::String False;
 
-            virtual size_t OptionCount() const override
+            size_t OptionCount() const override
             {
                 return 2;
             }
 
-            virtual Gwk::String OptionGet(int i) override
+            Gwk::String OptionGet(int i) override
             {
                 if (i == 0)
                     return False;
@@ -268,8 +268,8 @@ namespace Gwk
 //! @param INHERITS : Name of the factory class we inherit properties from.
 #define GWK_CONTROL_FACTORY_DETAILS(CONTROL, TYPE, INHERITS) \
     typedef TYPE FactoryFor; \
-    virtual Gwk::String Name() const override { return #CONTROL; } \
-    virtual Gwk::String ParentFactory() const override { return #INHERITS; }
+    Gwk::String Name() const override { return #CONTROL; } \
+    Gwk::String ParentFactory() const override { return #INHERITS; }
 
 //! Information about the ControlFactory.
 //! @param FACTORY : Name of the control factory class.

@@ -28,8 +28,8 @@ namespace Gwk
 
             GWK_CONTROL(ScrollControl, Base);
 
-            virtual void Layout(Skin::Base* skin) override;
-            virtual void Render(Skin::Base* skin) override;
+            void Layout(Skin::Base* skin) override;
+            void Render(Skin::Base* skin) override;
 
             virtual void SetScroll(bool h, bool v);
             virtual void SetAutoHideBars(bool should)
@@ -47,7 +47,7 @@ namespace Gwk
                 return m_bCanScrollV;
             }
 
-            virtual void OnChildBoundsChanged(Gwk::Rect oldChildBounds, Base* child) override;
+            void OnChildBoundsChanged(Gwk::Rect oldChildBounds, Base* child) override;
             virtual void UpdateScrollBars();
 
             virtual void SetVScrollRequired(bool req);
@@ -58,7 +58,7 @@ namespace Gwk
             virtual void VBarMoved(Controls::Base* control);
             virtual void HBarMoved(Controls::Base* control);
 
-            virtual bool OnMouseWheeled(int iDelta) override;
+            bool OnMouseWheeled(int iDelta) override;
 
             virtual void ScrollToBottom();
             virtual void ScrollToTop();

@@ -25,11 +25,11 @@ namespace Gwk
 
             GWK_CONTROL(CheckBox, Button);
 
-            virtual void Render(Skin::Base* skin) override;
-            virtual void OnPress() override;
+            void Render(Skin::Base* skin) override;
+            void OnPress() override;
 
             virtual void SetChecked(bool Checked);
-            virtual void Toggle() override
+            void Toggle() override
             {
                 SetChecked(!IsChecked());
             }
@@ -85,7 +85,7 @@ namespace Gwk
                 return m_label;
             }
 
-            virtual bool OnKeySpace(bool bDown) override
+            bool OnKeySpace(bool bDown) override
             {
                 if (!bDown)
                     m_checkbox->SetChecked(!m_checkbox->IsChecked());

@@ -61,7 +61,7 @@ namespace Gwk
                 m_colorOverride = col;
             }
 
-            virtual void OnScaleChanged() override;
+            void OnScaleChanged() override;
 
             inline const Gwk::Color& TextColor() const
             {

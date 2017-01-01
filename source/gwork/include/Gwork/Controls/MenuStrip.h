@@ -22,16 +22,16 @@ namespace Gwk
         {
             GWK_CONTROL(MenuStrip, Menu);
 
-            virtual void Render(Skin::Base* skin) override;
-            virtual void RenderUnder(Skin::Base* /*skin*/) override {}
+            void Render(Skin::Base* skin) override;
+            void RenderUnder(Skin::Base* /*skin*/) override {}
 
-            virtual void Layout(Skin::Base* skin) override;
+            void Layout(Skin::Base* skin) override;
 
         protected:
 
-            virtual void OnAddItem(MenuItem* item) override;
-            virtual bool ShouldHoverOpenMenu() override;
-            virtual void Close() override {}
+            void OnAddItem(MenuItem* item) override;
+            bool ShouldHoverOpenMenu() override;
+            void Close() override {}
 
         };
 

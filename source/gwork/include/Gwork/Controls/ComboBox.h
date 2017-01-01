@@ -27,9 +27,9 @@ namespace Gwk
 
             GWK_CONTROL(ComboBox, Button);
 
-            virtual void Render(Skin::Base* skin) override;
-            virtual void Layout(Skin::Base* skin) override;
-            virtual void UpdateColours() override;
+            void Render(Skin::Base* skin) override;
+            void Layout(Skin::Base* skin) override;
+            void UpdateColours() override;
 
             virtual void SelectItem(MenuItem* item, bool bFireChangeEvents =
                                         true);
@@ -37,7 +37,7 @@ namespace Gwk
                                           bool bFireChangeEvents = true);
             virtual Gwk::Controls::Label* GetSelectedItem();
 
-            virtual void OnPress() override;
+            void OnPress() override;
             virtual void OnItemSelected(Controls::Base* control);
             virtual void OpenList();
             virtual void CloseList();
@@ -45,16 +45,16 @@ namespace Gwk
             virtual void ClearItems();
 
             virtual MenuItem* AddItem(const String& strLabel, const String& strName = "");
-            virtual bool      OnKeyUp(bool bDown) override;
-            virtual bool      OnKeyDown(bool bDown) override;
+            bool      OnKeyUp(bool bDown) override;
+            bool      OnKeyDown(bool bDown) override;
 
-            virtual void RenderFocus(Gwk::Skin::Base* skin) override;
-            virtual void OnLostKeyboardFocus() override;
-            virtual void OnKeyboardFocus() override;
+            void RenderFocus(Gwk::Skin::Base* skin) override;
+            void OnLostKeyboardFocus() override;
+            void OnKeyboardFocus() override;
 
             virtual bool IsMenuOpen();
 
-            virtual bool IsMenuComponent() override
+            bool IsMenuComponent() override
             {
                 return true;
             }

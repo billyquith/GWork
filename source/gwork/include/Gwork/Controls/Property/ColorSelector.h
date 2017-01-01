@@ -87,22 +87,22 @@ namespace Gwk
                     DoChanged();
                 }
 
-                virtual String GetPropertyValue() override
+                String GetPropertyValue() override
                 {
                     return m_textBox->GetText();
                 }
 
-                virtual void SetPropertyValue(const String& v, bool bFireChangeEvents) override
+                void SetPropertyValue(const String& v, bool bFireChangeEvents) override
                 {
                     m_textBox->SetText(v, bFireChangeEvents);
                 }
 
-                virtual bool IsEditing() override
+                bool IsEditing() override
                 {
                     return m_textBox == Gwk::KeyboardFocus;
                 }
 
-                virtual void DoChanged() override
+                void DoChanged() override
                 {
                     ParentClass::DoChanged();
                     unsigned int r,g,b;

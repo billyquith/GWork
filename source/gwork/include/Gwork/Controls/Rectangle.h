@@ -25,7 +25,7 @@ namespace Gwk
 
             GWK_CONTROL(Rectangle, Controls::Base);
 
-            virtual void Render(Skin::Base* skin) override;
+            void Render(Skin::Base* skin) override;
 
             const Gwk::Color& GetColor()
             {

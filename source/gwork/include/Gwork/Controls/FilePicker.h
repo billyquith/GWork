@@ -67,12 +67,12 @@ namespace Gwk
                 }
             }
 
-            virtual String GetValue() override
+            String GetValue() override
             {
                 return GetFileName();
             }
 
-            virtual void SetValue(const String& strValue) override
+            void SetValue(const String& strValue) override
             {
                 return SetFileName(strValue);
             }

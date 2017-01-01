@@ -67,7 +67,7 @@ namespace Gwk
                 AddProperty(new Properties::FinishName());
             }
 
-            virtual Gwk::Controls::Base* CreateInstance(Gwk::Controls::Base* parent) override
+            Gwk::Controls::Base* CreateInstance(Gwk::Controls::Base* parent) override
             {
                 Gwk::Controls::PageControl* control = new Gwk::Controls::PageControl(parent);
                 control->SetSize(300, 300);
