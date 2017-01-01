@@ -32,12 +32,12 @@ namespace Gwk
                 m_innerBounds = m_bounds;
             }
 
-            virtual void Layout(Skin::Base* /*skin*/) override
+            void Layout(Skin::Base* /*skin*/) override
             {
                 SetBounds(0, 0, GetCanvas()->Width(), GetCanvas()->Height());
             }
 
-            virtual void Render(Skin::Base* skin) override
+            void Render(Skin::Base* skin) override
             {
                 skin->DrawModalControl(this);
             }

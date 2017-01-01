@@ -24,16 +24,16 @@ namespace Gwk
 
             GWK_CONTROL(Button, Label);
 
-            virtual void Render(Skin::Base* skin) override;
-            virtual void OnMouseClickLeft(int x, int y, bool bDown) override;
-            virtual void OnMouseClickRight(int x, int y, bool bDown) override;
-            virtual void OnMouseDoubleClickLeft(int x, int y) override;
-            virtual bool OnKeySpace(bool bDown) override;
+            void Render(Skin::Base* skin) override;
+            void OnMouseClickLeft(int x, int y, bool bDown) override;
+            void OnMouseClickRight(int x, int y, bool bDown) override;
+            void OnMouseDoubleClickLeft(int x, int y) override;
+            bool OnKeySpace(bool bDown) override;
 
             virtual void OnPress();
             virtual void OnRightPress();
 
-            virtual void AcceleratePressed() override;
+            void AcceleratePressed() override;
 
             virtual bool IsDepressed() const
             {
@@ -69,13 +69,13 @@ namespace Gwk
 
             virtual void SetImage(const String& strName, bool bCenter = false);
 
-            virtual void SizeToContents() override;
-            virtual void PostLayout(Skin::Base* skin) override;
-            virtual void UpdateColours() override;
+            void SizeToContents() override;
+            void PostLayout(Skin::Base* skin) override;
+            void UpdateColours() override;
 
             virtual void SetImageAlpha(float fMultiply);
 
-            virtual void DoAction() override
+            void DoAction() override
             {
                 OnPress();
             }

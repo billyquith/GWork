@@ -27,15 +27,15 @@ namespace Gwk
             SDL2(SDL_Window *window);
             ~SDL2();
 
-            virtual void SetDrawColor(Gwk::Color color) override;
+            void SetDrawColor(Gwk::Color color) override;
 
-            virtual void DrawFilledRect(Gwk::Rect rect) override;
+            void DrawFilledRect(Gwk::Rect rect) override;
 
-            virtual void LoadFont(Gwk::Font* font) override;
-            virtual void FreeFont(Gwk::Font* font) override;
+            void LoadFont(Gwk::Font* font) override;
+            void FreeFont(Gwk::Font* font) override;
             virtual void RenderText(Gwk::Font* font, Gwk::Point pos,
                                     const Gwk::String& text) override;
-            virtual Gwk::Point MeasureText(Gwk::Font* font, const Gwk::String& text) override;
+            Gwk::Point MeasureText(Gwk::Font* font, const Gwk::String& text) override;
 
             void StartClip() override;
             void EndClip() override;

@@ -24,10 +24,10 @@ namespace Gwk
 
             GWK_CONTROL(Dragger, Controls::Base);
 
-            virtual void OnMouseMoved(int x, int y, int deltaX, int deltaY) override;
+            void OnMouseMoved(int x, int y, int deltaX, int deltaY) override;
 
-            virtual void OnMouseClickLeft(int x, int y, bool bDown) override;
-            virtual void Render(Skin::Base* skin) override;
+            void OnMouseClickLeft(int x, int y, bool bDown) override;
+            void Render(Skin::Base* skin) override;
 
             virtual void SetTarget(Controls::Base* base)
             {
@@ -44,7 +44,7 @@ namespace Gwk
                 m_bDoMove = b;
             }
 
-            virtual void OnMouseDoubleClickLeft(int x, int y) override;
+            void OnMouseDoubleClickLeft(int x, int y) override;
 
             Gwk::Event::Caller onDragged;
             Gwk::Event::Caller onDragStart;

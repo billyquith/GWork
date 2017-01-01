@@ -23,13 +23,13 @@ namespace Gwk
 
             GWK_CONTROL(ScrollBarBar, ControlsInternal::Dragger);
 
-            virtual void Render(Skin::Base* skin) override;
-            virtual void Layout(Skin::Base* skin) override;
+            void Render(Skin::Base* skin) override;
+            void Layout(Skin::Base* skin) override;
 
-            virtual void OnMouseMoved(int x, int y, int deltaX, int deltaY) override;
-            virtual void OnMouseClickLeft(int x, int y, bool bDown) override;
+            void OnMouseMoved(int x, int y, int deltaX, int deltaY) override;
+            void OnMouseClickLeft(int x, int y, bool bDown) override;
 
-            virtual void MoveTo(int x, int y) override;
+            void MoveTo(int x, int y) override;
 
             virtual void SetHorizontal()
             {

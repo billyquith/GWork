@@ -23,11 +23,11 @@ namespace Gwk
         public:
 
             GWK_CONTROL(ColorLerpBox, Controls::Base);
-            virtual void Render(Gwk::Skin::Base* skin) override;
+            void Render(Gwk::Skin::Base* skin) override;
             Gwk::Color  GetColorAtPos(int x, int y);
             void         SetColor(Gwk::Color color, bool onlyHue = true);
-            virtual void OnMouseMoved(int x, int y, int deltaX, int deltaY) override;
-            virtual void OnMouseClickLeft(int x, int y, bool bDown) override;
+            void OnMouseMoved(int x, int y, int deltaX, int deltaY) override;
+            void OnMouseClickLeft(int x, int y, bool bDown) override;
             Gwk::Color  GetSelectedColor();
 
             Event::Caller onSelectionChanged;
@@ -46,9 +46,9 @@ namespace Gwk
         public:
 
             GWK_CONTROL(ColorSlider, Controls::Base);
-            virtual void Render(Gwk::Skin::Base* skin) override;
-            virtual void OnMouseMoved(int x, int y, int deltaX, int deltaY) override;
-            virtual void OnMouseClickLeft(int x, int y, bool bDown) override;
+            void Render(Gwk::Skin::Base* skin) override;
+            void OnMouseMoved(int x, int y, int deltaX, int deltaY) override;
+            void OnMouseClickLeft(int x, int y, bool bDown) override;
             Gwk::Color  GetSelectedColor();
             Gwk::Color  GetColorAtHeight(int y);
             void         SetColor(Gwk::Color color);

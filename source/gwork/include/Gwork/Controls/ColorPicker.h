@@ -29,7 +29,7 @@ namespace Gwk
                 m_drawCheckers = true;
             }
 
-            virtual void Render(Gwk::Skin::Base* skin) override
+            void Render(Gwk::Skin::Base* skin) override
             {
                 skin->DrawColorDisplay(this, m_color);
             }
@@ -87,7 +87,7 @@ namespace Gwk
 
         protected:
 
-            virtual void Layout(Skin::Base* skin) override;
+            void Layout(Skin::Base* skin) override;
             virtual void CreateControls();
             virtual void SlidersMoved(Gwk::Controls::Base* control);
             virtual void NumericTyped(Gwk::Controls::Base* control);

@@ -24,7 +24,7 @@ namespace Gwk
 
             GWK_CONTROL(ProgressBar, Label);
 
-            virtual void Render(Skin::Base* skin) override;
+            void Render(Skin::Base* skin) override;
 
             virtual void SetVertical()
             {

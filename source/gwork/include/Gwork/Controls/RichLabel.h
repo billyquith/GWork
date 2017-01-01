@@ -27,7 +27,7 @@ namespace Gwk
             void AddLineBreak();
             void AddText(const Gwk::String& text, Gwk::Color color, Gwk::Font* font = nullptr);
 
-            virtual bool SizeToChildren(bool w = true, bool h = true) override;
+            bool SizeToChildren(bool w = true, bool h = true) override;
 
         protected:
 

@@ -28,12 +28,12 @@ namespace Gwk
 
             virtual ~MenuItem();
 
-            virtual void Render(Skin::Base* skin) override;
-            virtual void Layout(Skin::Base* skin) override;
+            void Render(Skin::Base* skin) override;
+            void Layout(Skin::Base* skin) override;
 
-            virtual void SizeToContents() override;
+            void SizeToContents() override;
 
-            virtual void OnPress() override;
+            void OnPress() override;
 
             Menu* GetMenu();
 

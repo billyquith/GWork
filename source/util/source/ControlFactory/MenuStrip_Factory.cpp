@@ -14,7 +14,7 @@ namespace Gwk
 //            {
 //            }
 //
-//            virtual Gwk::Controls::Base* CreateInstance(Gwk::Controls::Base* parent) override
+//            Gwk::Controls::Base* CreateInstance(Gwk::Controls::Base* parent) override
 //            {
 //                Gwk::Controls::MenuStrip* control = new Gwk::Controls::MenuStrip(parent);
 //                return control;

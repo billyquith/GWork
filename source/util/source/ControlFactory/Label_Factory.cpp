@@ -258,7 +258,7 @@ namespace Gwk
 ////                AddProperty(new Properties::HorizontalAlign());
 //            }
 //
-//            virtual Gwk::Controls::Base* CreateInstance(Gwk::Controls::Base* parent) override
+//            Gwk::Controls::Base* CreateInstance(Gwk::Controls::Base* parent) override
 //            {
 //                Gwk::Controls::Label* control = new Gwk::Controls::Label(parent);
 //                control->SetSize(100, 20);
@@ -279,7 +279,7 @@ namespace Gwk
 //            {
 //            }
 //
-//            virtual Gwk::Controls::Base* CreateInstance(Gwk::Controls::Base* parent) override
+//            Gwk::Controls::Base* CreateInstance(Gwk::Controls::Base* parent) override
 //            {
 //                Gwk::Controls::Label* control = new Gwk::Controls::LabelClickable(parent);
 //                control->SetSize(100, 20);

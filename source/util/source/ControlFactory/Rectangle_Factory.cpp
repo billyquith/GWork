@@ -103,7 +103,7 @@ namespace Gwk
 //                AddProperty(new Properties::Color());
 //            }
 //
-//            virtual Gwk::Controls::Base* CreateInstance(Gwk::Controls::Base* parent) override
+//            Gwk::Controls::Base* CreateInstance(Gwk::Controls::Base* parent) override
 //            {
 //                Gwk::Controls::Rectangle* control = new Gwk::Controls::Rectangle(parent);
 //                control->SetSize(100, 100);

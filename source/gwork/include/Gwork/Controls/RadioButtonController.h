@@ -24,7 +24,7 @@ namespace Gwk
 
             GWK_CONTROL(RadioButtonController, Base);
 
-            virtual void Render(Skin::Base* /*skin*/) override
+            void Render(Skin::Base* /*skin*/) override
             {
             }
 

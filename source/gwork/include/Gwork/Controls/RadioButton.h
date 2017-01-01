@@ -24,12 +24,12 @@ namespace Gwk
         class GWK_EXPORT RadioButton : public CheckBox
         {
             GWK_CONTROL(RadioButton, CheckBox);
-            virtual void Render(Skin::Base* skin) override;
+            void Render(Skin::Base* skin) override;
 
         private:
 
             // From CheckBox
-            virtual bool AllowUncheck() override
+            bool AllowUncheck() override
             {
                 return false;
             }
@@ -79,7 +79,7 @@ namespace Gwk
                 return m_label;
             }
 
-            virtual bool OnKeySpace(bool bDown) override
+            bool OnKeySpace(bool bDown) override
             {
                 if (bDown)
                     m_radioButton->SetChecked(!m_radioButton->IsChecked());

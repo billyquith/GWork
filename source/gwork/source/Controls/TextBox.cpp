@@ -25,7 +25,7 @@ class ChangeCaretColor : public Gwk::Anim::Animation
 {
 public:
 
-    virtual void Think() override
+    void Think() override
     {
         gwk_cast<TextBox>(m_control)->UpdateCaretColor();
     }

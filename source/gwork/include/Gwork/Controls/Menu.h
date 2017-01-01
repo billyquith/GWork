@@ -26,10 +26,10 @@ namespace Gwk
 
             GWK_CONTROL(Menu, ScrollControl);
 
-            virtual void Render(Skin::Base* skin) override;
-            virtual void RenderUnder(Skin::Base* skin) override;
+            void Render(Skin::Base* skin) override;
+            void RenderUnder(Skin::Base* skin) override;
 
-            virtual void Layout(Skin::Base* skin) override;
+            void Layout(Skin::Base* skin) override;
 
             virtual MenuItem* AddItem(const String& strName,
                                       const String& strIconName = "",
@@ -45,12 +45,12 @@ namespace Gwk
             virtual void Open(Position pos);
             virtual void Close();
 
-            virtual bool IsMenuComponent() override
+            bool IsMenuComponent() override
             {
                 return true;
             }
 
-            virtual void CloseMenus() override;
+            void CloseMenus() override;
 
             bool IconMarginDisabled()
             {

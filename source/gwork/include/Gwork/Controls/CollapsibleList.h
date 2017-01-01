@@ -52,7 +52,7 @@ namespace Gwk
                 return category;
             }
 
-            virtual void Render(Skin::Base* skin) override
+            void Render(Skin::Base* skin) override
             {
                 skin->DrawCategoryHolder(this);
             }

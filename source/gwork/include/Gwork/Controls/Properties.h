@@ -30,7 +30,7 @@ namespace Gwk
 
             GWK_CONTROL(Properties, Base);
 
-            virtual void PostLayout(Gwk::Skin::Base* skin) override;
+            void PostLayout(Gwk::Skin::Base* skin) override;
 
             PropertyRow* Add(const String& text, const String& value = "");
             PropertyRow* Add(const String& text, Property::Base* prop,
@@ -67,15 +67,15 @@ namespace Gwk
                 return m_property;
             }
 
-            virtual void Layout(Gwk::Skin::Base* skin) override;
-            virtual void Render(Gwk::Skin::Base* skin) override;
+            void Layout(Gwk::Skin::Base* skin) override;
+            void Render(Gwk::Skin::Base* skin) override;
 
             virtual bool IsEditing()
             {
                 return m_property && m_property->IsEditing();
             }
 
-            virtual bool IsHovered() override
+            bool IsHovered() override
             {
                 return ParentClass::IsHovered() || (m_property && m_property->IsHovered());
             }

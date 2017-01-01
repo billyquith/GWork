@@ -30,22 +30,22 @@ namespace Gwk
                     m_textBox->onTextChanged.Add(this, &ParentClass::OnPropertyValueChanged);
                 }
 
-                virtual String GetPropertyValue() override
+                String GetPropertyValue() override
                 {
                     return m_textBox->GetText();
                 }
 
-                virtual void SetPropertyValue(const String& v, bool bFireChangeEvents) override
+                void SetPropertyValue(const String& v, bool bFireChangeEvents) override
                 {
                     m_textBox->SetText(v, bFireChangeEvents);
                 }
 
-                virtual bool IsEditing() override
+                bool IsEditing() override
                 {
                     return m_textBox->IsFocussed();
                 }
 
-                virtual bool IsHovered() override
+                bool IsHovered() override
                 {
                     return ParentClass::IsHovered() || m_textBox->IsHovered();
                 }

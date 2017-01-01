@@ -39,9 +39,9 @@ namespace Gwk
 
             virtual Button* GetButton();
 
-            virtual void Render(Skin::Base* skin) override;
-            virtual void Layout(Skin::Base* skin) override;
-            virtual void PostLayout(Skin::Base* skin) override;
+            void Render(Skin::Base* skin) override;
+            void Layout(Skin::Base* skin) override;
+            void PostLayout(Skin::Base* skin) override;
 
             virtual void SetRoot(bool b)
             {

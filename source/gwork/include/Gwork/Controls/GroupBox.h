@@ -25,8 +25,8 @@ namespace Gwk
 
             GWK_CONTROL(GroupBox, Label);
 
-            virtual void Render(Skin::Base* skin) override;
-            virtual void Layout(Skin::Base* skin) override;
+            void Render(Skin::Base* skin) override;
+            void Layout(Skin::Base* skin) override;
 
             virtual void SetInnerMargin(int i)
             {

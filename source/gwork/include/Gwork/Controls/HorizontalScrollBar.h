@@ -26,41 +26,41 @@ namespace Gwk
 
             GWK_CONTROL(HorizontalScrollBar, BaseScrollBar);
 
-            virtual void Layout(Skin::Base* skin) override;
+            void Layout(Skin::Base* skin) override;
 
-            virtual void OnMouseClickLeft(int x, int y, bool bDown) override;
-            virtual void OnBarMoved(Controls::Base* control) override;
+            void OnMouseClickLeft(int x, int y, bool bDown) override;
+            void OnBarMoved(Controls::Base* control) override;
 
-            virtual int GetBarSize() override
+            int GetBarSize() override
             {
                 return m_bar->Width();
             }
 
-            virtual int GetBarPos() override
+            int GetBarPos() override
             {
                 return m_bar->X()-Height();
             }
 
-            virtual void SetBarSize(int size) override
+            void SetBarSize(int size) override
             {
                 m_bar->SetWidth(size);
             }
 
-            virtual int GetButtonSize() override
+            int GetButtonSize() override
             {
                 return Height();
             }
 
-            virtual void  ScrollToLeft() override;
-            virtual void  ScrollToRight() override;
+            void  ScrollToLeft() override;
+            void  ScrollToRight() override;
             virtual void  NudgeLeft(Base* control);
             virtual void  NudgeRight(Base* control);
-            virtual float GetNudgeAmount() override;
+            float GetNudgeAmount() override;
 
-            virtual float CalculateScrolledAmount() override;
-            virtual bool  SetScrolledAmount(float amount, bool forceUpdate) override;
+            float CalculateScrolledAmount() override;
+            bool  SetScrolledAmount(float amount, bool forceUpdate) override;
 
-            virtual bool IsHorizontal() override
+            bool IsHorizontal() override
             {
                 return true;
             }

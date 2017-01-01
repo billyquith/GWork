@@ -62,7 +62,7 @@ namespace Gwk
 
         private:
 
-            virtual void PostLayout(Skin::Base* skin) override;
+            void PostLayout(Skin::Base* skin) override;
             void         HandleOverflow();
 
             void ScrollPressLeft(Base* from);

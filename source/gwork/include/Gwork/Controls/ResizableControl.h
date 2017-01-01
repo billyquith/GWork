@@ -43,14 +43,14 @@ namespace Gwk
                 m_minimumSize = minSize;
             }
 
-            virtual Gwk::Point GetMinimumSize() override
+            Gwk::Point GetMinimumSize() override
             {
                 return m_minimumSize;
             }
 
             virtual void DisableResizing();
 
-            virtual bool SetBounds(int x, int y, int w, int h) override;
+            bool SetBounds(int x, int y, int w, int h) override;
 
             virtual void OnResized()
             {

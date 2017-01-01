@@ -59,7 +59,7 @@ namespace Gwk
                 AddProperty(new Properties::Stretch());
             }
 
-            virtual Gwk::Controls::Base* CreateInstance(Gwk::Controls::Base* parent) override
+            Gwk::Controls::Base* CreateInstance(Gwk::Controls::Base* parent) override
             {
                 Gwk::Controls::ImagePanel* control = new Gwk::Controls::ImagePanel(parent);
                 control->SetSize(100, 20);

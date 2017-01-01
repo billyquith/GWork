@@ -65,7 +65,7 @@ namespace Gwk
                 return m_table;
             }
 
-            virtual void Clear() override;
+            void Clear() override;
 
             // Pass through, to embedded table
             void SetColumnCount(int iCount)

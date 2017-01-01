@@ -22,7 +22,7 @@ namespace Gwk
 
             GWK_CONTROL(LabelClickable, Button);
 
-            virtual void Render(Skin::Base* skin) override;
+            void Render(Skin::Base* skin) override;
 
         };
 

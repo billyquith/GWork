@@ -644,7 +644,7 @@ namespace Gwk
         static const char* ident = #BASENAME ":" #THISNAME;             \
         return ident;                                                   \
     }                                                                   \
-    virtual Gwk::Controls::Base* DynamicCast(const char* Variable) override \
+    Gwk::Controls::Base* DynamicCast(const char* Variable) override \
     {                                                                   \
         if (GetIdentifier() == Variable)                                \
             return this;                                                \
@@ -662,8 +662,8 @@ public: \
     GWK_CLASS(THISNAME, BASENAME)  \
     GWK_DYNAMIC(THISNAME, BASENAME) \
     static  const char* GetTypeNameStatic() { return #THISNAME; } \
-    virtual const char* GetTypeName() const override { return GetTypeNameStatic(); } \
-    virtual const char* GetParentTypeName() const override { return ParentClass::GetTypeNameStatic(); } \
+    const char* GetTypeName() const override { return GetTypeNameStatic(); } \
+    const char* GetParentTypeName() const override { return ParentClass::GetTypeNameStatic(); } \
     THISNAME(Gwk::Controls::Base* parent, const Gwk::String& name = "")
 
 #define GWK_CONTROL_INLINE(THISNAME, BASENAME) \

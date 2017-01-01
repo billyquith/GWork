@@ -27,7 +27,7 @@ namespace Gwk
                 SetText("");
             }
 
-            virtual void Render(Skin::Base* skin) override
+            void Render(Skin::Base* skin) override
             {
                 if (!m_window)
                     return;
@@ -56,7 +56,7 @@ namespace Gwk
                 m_bMaximized = false;
             }
 
-            virtual void Render(Skin::Base* skin) override
+            void Render(Skin::Base* skin) override
             {
                 if (!m_window)
                     return;

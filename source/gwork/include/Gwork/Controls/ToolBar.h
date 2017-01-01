@@ -25,7 +25,7 @@ namespace Gwk
                 Dock(Position::Left);
             }
 
-            virtual bool ShouldDrawBackground() override
+            bool ShouldDrawBackground() override
             {
                 return IsHovered();
             }
@@ -41,7 +41,7 @@ namespace Gwk
                 SetPadding(Padding(2, 2, 2, 2));
             }
 
-            virtual void Render(Skin::Base* skin) override
+            void Render(Skin::Base* skin) override
             {
                 skin->DrawMenuStrip(this);
             }
