@@ -36,27 +36,27 @@ namespace Gwk
                                     const Gwk::String& text) override;
             Gwk::Point MeasureText(Gwk::Font* font, const Gwk::String& text) override;
 
-            void StartClip();
-            void EndClip();
+            void StartClip() override;
+            void EndClip() override;
 
             void DrawTexturedRect(Gwk::Texture* texture, Gwk::Rect targetRect,
                                   float u1 = 0.0f, float v1 = 0.0f,
-                                  float u2 = 1.0f, float v2 = 1.0f);
-            void        LoadTexture(Gwk::Texture* texture);
-            void        FreeTexture(Gwk::Texture* texture);
+                                  float u2 = 1.0f, float v2 = 1.0f) override;
+            void        LoadTexture(Gwk::Texture* texture) override;
+            void        FreeTexture(Gwk::Texture* texture) override;
             Gwk::Color  PixelColour(Gwk::Texture* texture, unsigned int x, unsigned int y,
-                                    const Gwk::Color& col_default);
+                                    const Gwk::Color& col_default) override;
 
-            void DrawLinedRect(Gwk::Rect rect);
-            void DrawShavedCornerRect(Gwk::Rect rect, bool bSlight = false);
+            void DrawLinedRect(Gwk::Rect rect) override;
+            void DrawShavedCornerRect(Gwk::Rect rect, bool bSlight = false) override;
             // void DrawPixel(int x, int y);
 
-            bool BeginContext(Gwk::WindowProvider* window);
-            bool EndContext(Gwk::WindowProvider* window);
-            bool PresentContext(Gwk::WindowProvider* window);
+            bool BeginContext(Gwk::WindowProvider* window) override;
+            bool EndContext(Gwk::WindowProvider* window) override;
+            bool PresentContext(Gwk::WindowProvider* window) override;
 
             // Cache to texture.
-            ICacheToTexture* GetCTT();
+            ICacheToTexture* GetCTT() override;
 
         protected:
 
