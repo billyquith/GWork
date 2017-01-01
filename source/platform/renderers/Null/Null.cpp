@@ -1,6 +1,6 @@
 /*
  *  Gwork
- *  Copyright (c) 2013-2016 Nick Trout
+ *  Copyright (c) 2013-2017 Nick Trout
  *  See license in Gwork.h
  */
 
