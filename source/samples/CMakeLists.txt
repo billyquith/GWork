@@ -1,7 +1,7 @@
 # Gwork samples
 
 set(APP_VERSION "0.1")
-set(APP_COPYRIGHT "Copyright 2016 Bill Quith")
+set(APP_COPYRIGHT "Copyright 2017 Nick Trout")
 
 set(APP_BUNDLE ON)
 
