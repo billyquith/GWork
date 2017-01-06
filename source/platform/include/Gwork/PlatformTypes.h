@@ -148,18 +148,18 @@ namespace Gwk
 
         void operator += (Color c)
         {
-            r += c.r;
-            g += c.g;
-            b += c.b;
-            a += c.a;
+            r = (unsigned char)(r + c.r);
+            g = (unsigned char)(g + c.g);
+            b = (unsigned char)(b + c.b);
+            a = (unsigned char)(a + c.a);
         }
 
         void operator -= (Color c)
         {
-            r -= c.r;
-            g -= c.g;
-            b -= c.b;
-            a -= c.a;
+            r = (unsigned char)(r - c.r);
+            g = (unsigned char)(g - c.g);
+            b = (unsigned char)(b - c.b);
+            a = (unsigned char)(a - c.a);
         }
 
         void operator *= (float f)
@@ -169,17 +169,32 @@ namespace Gwk
 
         Color operator * (float f) const
         {
-            return Color(f*r, f*g, f*b, f*a);
+            return Color(
+                    (unsigned char)(f*r),
+                    (unsigned char)(f*g),
+                    (unsigned char)(f*b),
+                    (unsigned char)(f*a)
+                    );
         }
 
         Color operator - (Color c) const
         {
-            return Color(r - c.r, g - c.g, b - c.b, a - c.a);
+            return Color(
+                    (unsigned char)(r - c.r),
+                    (unsigned char)(g - c.g),
+                    (unsigned char)(b - c.b),
+                    (unsigned char)(a - c.a)
+                    );
         }
 
         Color operator + (Color c) const
         {
-            return Color(r + c.r, g + c.g, b + c.b, a + c.a);
+            return Color(
+                    (unsigned char)(r + c.r),
+                    (unsigned char)(g + c.g),
+                    (unsigned char)(b + c.b),
+                    (unsigned char)(a + c.a)
+                    );
         }
 
         bool operator == (const Color& c) const

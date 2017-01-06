@@ -197,7 +197,7 @@ bool Gwk::Input::OnMouseClicked(Controls::Base* canvas, int iMouseButton, bool b
     if (Gwk::HoveredControl == canvas)
         return false;
 
-    if (iMouseButton > c_MaxMouseButtons)
+    if (iMouseButton > (int)c_MaxMouseButtons)
         return false;
 
     if (iMouseButton == 0)
