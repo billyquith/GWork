@@ -34,6 +34,7 @@ namespace Gwk
 
             Position m_resizeDir;
 
+
         };
 
 
