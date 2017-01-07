@@ -310,7 +310,7 @@ void DirectX9::FreeTexture(Gwk::Texture* texture)
     texture->data = nullptr;
 }
 
-Gwk::Color DirectX9::PixelColour(Gwk::Texture* texture, unsigned int x, unsigned int y,
+Gwk::Color DirectX9::PixelColor(Gwk::Texture* texture, unsigned int x, unsigned int y,
                                   const Gwk::Color& col_default)
 {
     IDirect3DTexture9* image = (IDirect3DTexture9*)texture->data;

@@ -290,7 +290,7 @@ void Gwk::Renderer::SFML2::FreeTexture(Gwk::Texture* texture)
     texture->data = nullptr;
 }
 
-Gwk::Color Gwk::Renderer::SFML2::PixelColour(Gwk::Texture* texture, unsigned int x,
+Gwk::Color Gwk::Renderer::SFML2::PixelColor(Gwk::Texture* texture, unsigned int x,
                                              unsigned int y, const Gwk::Color& col_default)
 {
     TextureData* data = static_cast<TextureData*>(texture->data);

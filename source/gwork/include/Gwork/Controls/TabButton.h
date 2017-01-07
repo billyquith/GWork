@@ -64,7 +64,7 @@ namespace Gwk
             bool OnKeyUp(bool bDown) override;
             bool OnKeyDown(bool bDown) override;
 
-            void UpdateColours() override;
+            void UpdateColors() override;
 
             bool ShouldClip() override
             {

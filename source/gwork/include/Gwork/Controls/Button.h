@@ -71,7 +71,7 @@ namespace Gwk
 
             void SizeToContents() override;
             void PostLayout(Skin::Base* skin) override;
-            void UpdateColours() override;
+            void UpdateColors() override;
 
             virtual void SetImageAlpha(float fMultiply);
 

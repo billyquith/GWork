@@ -74,7 +74,7 @@ namespace Gwk
 
             virtual void DrawMissingImage(Gwk::Rect targetRect);
 
-            virtual Gwk::Color PixelColour(Gwk::Texture* texture,
+            virtual Gwk::Color PixelColor(Gwk::Texture* texture,
                                            unsigned int x, unsigned int y,
                                            const Gwk::Color& col_default =
                                                                 Gwk::Color(255,255,255,255))

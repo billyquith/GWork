@@ -62,14 +62,14 @@ public:
         }
         {
             Gwk::Controls::Label* label = new Gwk::Controls::Label(this);
-            label->SetText("Wow, Coloured Text");
+            label->SetText("Wow, Colored Text");
             label->SetTextColor(Gwk::Color(0, 0, 255, 255));
             label->SizeToContents();
             label->SetPos(10, 130);
         }
         {
             Gwk::Controls::Label* label = new Gwk::Controls::Label(this);
-            label->SetText("Coloured Text With Alpha");
+            label->SetText("Colored Text With Alpha");
             label->SetTextColor(Gwk::Color(0, 0, 255, 100));
             label->SizeToContents();
             label->SetPos(10, 150);

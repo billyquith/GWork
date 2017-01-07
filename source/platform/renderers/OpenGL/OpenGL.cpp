@@ -223,7 +223,7 @@ void OpenGL::FreeTexture(Gwk::Texture* texture)
     texture->data = nullptr;
 }
 
-Gwk::Color OpenGL::PixelColour(Gwk::Texture* texture, unsigned int x, unsigned int y,
+Gwk::Color OpenGL::PixelColor(Gwk::Texture* texture, unsigned int x, unsigned int y,
                                const Gwk::Color& col_default)
 {
     GLuint* tex = (GLuint*)texture->data;

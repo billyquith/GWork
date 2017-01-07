@@ -109,7 +109,7 @@ bool TabButton::OnKeyRight(bool bDown)
     return true;
 }
 
-void TabButton::UpdateColours()
+void TabButton::UpdateColors()
 {
     if (!IsActive())
     {

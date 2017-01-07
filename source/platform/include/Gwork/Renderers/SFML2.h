@@ -90,7 +90,7 @@ namespace Gwk
 
             virtual void        LoadTexture(Gwk::Texture* texture);
             virtual void        FreeTexture(Gwk::Texture* texture);
-            virtual Gwk::Color PixelColour(Gwk::Texture* texture, unsigned int x, unsigned int y,
+            virtual Gwk::Color PixelColor(Gwk::Texture* texture, unsigned int x, unsigned int y,
                                             const Gwk::Color& col_default);
 
         protected:

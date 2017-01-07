@@ -42,7 +42,7 @@ class TreeNodeText : public Button
         SetHeight(16);
     }
 
-    void UpdateColours() override
+    void UpdateColors() override
     {
         if (IsDisabled())
             return SetTextColor(GetSkin()->Colors.Button.Disabled);

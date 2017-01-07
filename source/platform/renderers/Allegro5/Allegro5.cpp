@@ -239,7 +239,7 @@ void Allegro::DrawTexturedRect(Gwk::Texture* texture, Gwk::Rect rect,
                           0);
 }
 
-Gwk::Color Allegro::PixelColour(Gwk::Texture* texture, unsigned int x, unsigned int y,
+Gwk::Color Allegro::PixelColor(Gwk::Texture* texture, unsigned int x, unsigned int y,
                                  const Gwk::Color& col_default)
 {
     ALLEGRO_BITMAP* bmp = (ALLEGRO_BITMAP*)texture->data;
