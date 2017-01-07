@@ -65,17 +65,16 @@ GWK_CONTROL_CONSTRUCTOR(ResizableControl)
 
 void ResizableControl::DisableResizing()
 {
-    for (auto&& child : Children)
+    for (auto& child : Children)
     {
         Resizer* resizer = gwk_cast<Resizer>(child);
 
         if (!resizer)
             continue;
 
-        resizer->SetMouseInputEnabled(false);
-        resizer->SetHidden(false);
-        SetPadding(Padding(resizer->Width(), resizer->Width(), resizer->Width(),
-                           resizer->Width()));
+        // just disable the resizer, but leave it in place to ensure the
+        //  padding and everything of the container isn't disturbed
+        resizer->m_disabled = true;
     }
 }
 

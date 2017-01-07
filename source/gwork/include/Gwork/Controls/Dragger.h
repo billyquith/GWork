@@ -51,6 +51,9 @@ namespace Gwk
 
             Gwk::Event::Caller onDoubleClickLeft;
 
+            // used to disable this
+            bool m_disabled = false;
+
         protected:
 
             bool m_bDepressed;

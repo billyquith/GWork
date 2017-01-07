@@ -22,6 +22,9 @@ GWK_CONTROL_CONSTRUCTOR(Dragger)
 
 void Dragger::OnMouseClickLeft(int x, int y, bool bDown)
 {
+    if (m_disabled)
+        return;
+
     if (bDown)
     {
         m_bDepressed = true;
@@ -41,6 +44,9 @@ void Dragger::OnMouseClickLeft(int x, int y, bool bDown)
 
 void Dragger::OnMouseMoved(int x, int y, int deltaX, int deltaY)
 {
+    if (m_disabled)
+        return;
+
     if (!m_bDepressed)
         return;
 
@@ -67,5 +73,8 @@ void Dragger::Render(Skin::Base* skin)
 
 void Dragger::OnMouseDoubleClickLeft(int x, int y)
 {
+    if (m_disabled)
+        return;
+
     onDoubleClickLeft.Call(this);
 }
