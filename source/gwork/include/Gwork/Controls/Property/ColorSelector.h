@@ -21,9 +21,9 @@ namespace Gwk
     {
         namespace Internal
         {
-            class ColourButton : public Button
+            class ColorButton : public Button
             {
-                GWK_CONTROL_INLINE(ColourButton, Button)
+                GWK_CONTROL_INLINE(ColorButton, Button)
                 {
                     m_color = Colors::Black;
                     SetText("");
@@ -52,7 +52,7 @@ namespace Gwk
             {
                 GWK_CONTROL_INLINE(ColorSelector, Property::Text)
                 {
-                    m_button = new Controls::Internal::ColourButton(m_textBox);
+                    m_button = new Controls::Internal::ColorButton(m_textBox);
                     m_button->Dock(Position::Right);
                     m_button->SetWidth(20);
                     m_button->onPress.Add(this, &ThisClass::OnButtonPress);
@@ -116,7 +116,7 @@ namespace Gwk
                     }
                 }
 
-                Controls::Internal::ColourButton*       m_button;
+                Controls::Internal::ColorButton*       m_button;
             };
 
 

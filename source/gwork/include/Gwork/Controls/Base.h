@@ -313,14 +313,14 @@ namespace Gwk
 
             virtual void Redraw()
             {
-                UpdateColours();
+                UpdateColors();
                 m_bCacheTextureDirty = true;
 
                 if (m_parent)
                     m_parent->Redraw();
             }
 
-            virtual void UpdateColours()    {}
+            virtual void UpdateColors()    {}
 
             //! Enable caching to texture optimisation for this control.
             //! @Note Must have GetCTT() implemented in the Renderer.

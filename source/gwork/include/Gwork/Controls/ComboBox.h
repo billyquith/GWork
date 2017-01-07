@@ -29,7 +29,7 @@ namespace Gwk
 
             void Render(Skin::Base* skin) override;
             void Layout(Skin::Base* skin) override;
-            void UpdateColours() override;
+            void UpdateColors() override;
 
             virtual void SelectItem(MenuItem* item, bool bFireChangeEvents =
                                         true);

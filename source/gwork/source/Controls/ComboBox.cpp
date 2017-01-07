@@ -94,12 +94,12 @@ void ComboBox::Layout(Skin::Base* skin)
     ParentClass::Layout(skin);
 }
 
-void ComboBox::UpdateColours()
+void ComboBox::UpdateColors()
 {
     if (!ShouldDrawBackground())
         return SetTextColor(GetSkin()->Colors.Button.Normal);
 
-    ParentClass::UpdateColours();
+    ParentClass::UpdateColors();
 }
 
 void ComboBox::OnPress()

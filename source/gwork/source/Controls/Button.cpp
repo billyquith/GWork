@@ -178,7 +178,7 @@ void Button::AcceleratePressed()
     OnPress();
 }
 
-void Button::UpdateColours()
+void Button::UpdateColors()
 {
     if (IsDisabled())
         return SetTextColor(GetSkin()->Colors.Button.Disabled);

@@ -46,7 +46,7 @@ class CategoryButton : public Button
         skin->GetRender()->DrawFilledRect(this->GetRenderBounds());
     }
     
-    void UpdateColours() override
+    void UpdateColors() override
     {
         if (m_bAlt)
         {
@@ -81,7 +81,7 @@ class CategoryHeaderButton : public Button
         SetAlignment(Position::Center);
     }
     
-    void UpdateColours() override
+    void UpdateColors() override
     {
         if (IsDepressed() || GetToggleState())
             return SetTextColor(GetSkin()->Colors.Category.Header_Closed);
@@ -174,7 +174,7 @@ void CollapsibleCategory::PostLayout(Skin::Base* /*skin*/)
             continue;
 
         child->m_bAlt = b;
-        child->UpdateColours();
+        child->UpdateColors();
         b = !b;
     }
 }

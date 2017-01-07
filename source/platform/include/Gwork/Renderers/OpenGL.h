@@ -37,7 +37,7 @@ namespace Gwk
             void LoadTexture(Gwk::Texture* texture) override;
             void FreeTexture(Gwk::Texture* texture) override;
             
-            Gwk::Color PixelColour(Gwk::Texture* texture,
+            Gwk::Color PixelColor(Gwk::Texture* texture,
                                    unsigned int x, unsigned int y,
                                    const Gwk::Color& col_default) override;
 
