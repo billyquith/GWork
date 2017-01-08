@@ -17,6 +17,7 @@
 #include <Gwork/Controls/Resizer.h>
 #include <Gwork/Gwork.h>
 #include <Gwork/Skin.h>
+#include <array>
 
 namespace Gwk
 {
@@ -57,10 +58,10 @@ namespace Gwk
             }
 
             Event::Caller onResize;
-
-            virtual ControlsInternal::Resizer* GetResizer(int iResizer)
+            
+            virtual ControlsInternal::Resizer* GetResizer(int iResizer) // TODO - remove this?
             {
-                return m_resizer[iResizer];
+                return m_resizers[iResizer];
             }
 
         protected:
@@ -71,9 +72,7 @@ namespace Gwk
             bool m_bClampMovement;
             bool m_bResizable;
 
-            ControlsInternal::Resizer* m_resizer[10];
-
-
+            std::array<ControlsInternal::Resizer*, 8> m_resizers;
         };
 
 

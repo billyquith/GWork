@@ -303,7 +303,8 @@ namespace Gwk
                 if (m_bDisabled == active)
                     return;
 
-                m_bDisabled = active; Redraw();
+                m_bDisabled = active;
+                Redraw();
             }
 
             virtual bool IsDisabled()

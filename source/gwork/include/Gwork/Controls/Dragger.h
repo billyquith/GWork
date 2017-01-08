@@ -53,10 +53,10 @@ namespace Gwk
 
         protected:
 
-            bool m_bDepressed;
-            Gwk::Point m_holdPos;
+            bool                m_bDepressed;
+            Gwk::Point          m_holdPos;
             Controls::Base*     m_target;
-            bool m_bDoMove;
+            bool                m_bDoMove;
         };
 
 
