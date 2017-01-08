@@ -41,10 +41,9 @@ void Resizer::OnMouseMoved(int x, int y, int /*deltaX*/, int /*deltaY*/)
 
         // Conform to minimum size here so we don't
         // go all weird when we snap it in the base conrt
-
         if (bounds.w < pntMin.x)
         {
-            int diff = pntMin.x-bounds.w;
+            const int diff = pntMin.x-bounds.w;
             bounds.w += diff;
             bounds.x -= diff;
         }
@@ -57,10 +56,9 @@ void Resizer::OnMouseMoved(int x, int y, int /*deltaX*/, int /*deltaY*/)
 
         // Conform to minimum size here so we don't
         // go all weird when we snap it in the base conrt
-
         if (bounds.h < pntMin.y)
         {
-            int diff = pntMin.y-bounds.h;
+            const int diff = pntMin.y-bounds.h;
             bounds.h += diff;
             bounds.y -= diff;
         }
@@ -73,11 +71,10 @@ void Resizer::OnMouseMoved(int x, int y, int /*deltaX*/, int /*deltaY*/)
         // of the control
         // But we need to move the HoldPos with the window movement. Yikes.
         // I actually think this might be a big hack around the way this control
-        // works with regards
-        // to the holdpos being on the parent panel.
-        int woff = bounds.w-m_holdPos.x;
+        // works with regards to the holdpos being on the parent panel.
+        const int woff = bounds.w - m_holdPos.x;
         int diff = bounds.w;
-        bounds.w = cursorPos.x+woff;
+        bounds.w = cursorPos.x + woff;
 
         if (bounds.w < pntMin.x)
             bounds.w = pntMin.x;
@@ -88,9 +85,9 @@ void Resizer::OnMouseMoved(int x, int y, int /*deltaX*/, int /*deltaY*/)
 
     if (m_resizeDir & Position::Bottom)
     {
-        int hoff = bounds.h-m_holdPos.y;
+        const int hoff = bounds.h - m_holdPos.y;
         int diff = bounds.h;
-        bounds.h = cursorPos.y+hoff;
+        bounds.h = cursorPos.y + hoff;
 
         if (bounds.h < pntMin.y)
             bounds.h = pntMin.y;
@@ -107,15 +104,17 @@ void Resizer::SetResizeDir(Position dir)
 {
     m_resizeDir = dir;
 
-    if ((dir & Position::Left && dir & Position::Top) || (dir & Position::Right && dir & Position::Bottom))
+    if (((dir & Position::Left) && (dir & Position::Top))
+        || ((dir & Position::Right) && (dir & Position::Bottom)))
         return SetCursor(Gwk::CursorType::SizeNWSE);
 
-    if ((dir & Position::Right && dir & Position::Top) || (dir & Position::Left && dir & Position::Bottom))
+    if (((dir & Position::Right) && (dir & Position::Top))
+        || ((dir & Position::Left) && (dir & Position::Bottom)))
         return SetCursor(Gwk::CursorType::SizeNESW);
 
-    if (dir & Position::Right || dir & Position::Left)
+    if ((dir & Position::Right) || (dir & Position::Left))
         return SetCursor(Gwk::CursorType::SizeWE);
 
-    if (dir & Position::Top || dir & Position::Bottom)
+    if ((dir & Position::Top) || (dir & Position::Bottom))
         return SetCursor(Gwk::CursorType::SizeNS);
 }

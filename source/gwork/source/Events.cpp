@@ -67,7 +67,7 @@ void Caller::CleanLinks()
 
 void Caller::Call(Controls::Base* pThis)
 {
-    static Gwk::Event::Information info;
+    Gwk::Event::Information info;
     info.Control = pThis;
     Call(pThis, info);
 }
