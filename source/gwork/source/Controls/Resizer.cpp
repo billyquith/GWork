@@ -21,6 +21,9 @@ GWK_CONTROL_CONSTRUCTOR(Resizer)
 
 void Resizer::OnMouseMoved(int x, int y, int /*deltaX*/, int /*deltaY*/)
 {
+    if (m_bDisabled)
+        return;
+    
     if (!m_target)
         return;
 

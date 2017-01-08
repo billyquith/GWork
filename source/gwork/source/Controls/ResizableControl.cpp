@@ -81,7 +81,6 @@ void ResizableControl::DisableResizing()
 {
     for (auto&& resizer : m_resizers)
     {
-        resizer->SetMouseInputEnabled(false);
         resizer->SetDisabled(true);
     }
 }
