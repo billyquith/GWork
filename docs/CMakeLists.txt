@@ -65,12 +65,12 @@ if(DOXYGEN_FOUND)
     )
     
     # directories to scan for documentation
-    set(DOXYGEN_INPUT_DIRS ${DOXYGEN_CODE_DIRS} pages)
+    set(DOXYGEN_INPUT_DIRS ${DOXYGEN_CODE_DIRS} ${CMAKE_CURRENT_SOURCE_DIR}/pages)
 
     # config substitute variables
     set(DOC_PROJECT_NAME "Gwork")
     set(DOC_PROJECT_BRIEF "GUI")
-    set(DOC_LOGO "logo2.png")
+    set(DOC_LOGO "${CMAKE_CURRENT_SOURCE_DIR}/images/logo2.png")
     set(DOC_FILE_PATTERNS "*.c *.cpp *.h *.hpp *.dox")
     STRING(REPLACE ";" " " DOC_INPUT "${DOXYGEN_INPUT_DIRS}") # want space separated
     STRING(REPLACE ";" " " DOC_MACRO_DIRS "${DOXYGEN_CODE_DIRS}") # want space separated
@@ -93,7 +93,9 @@ if(DOXYGEN_FOUND)
 
     # copy necessary HTML doc files
     file(GLOB image_files images/*)
-    foreach(file ${image_files})
+    file(GLOB_RECURSE pages_image_files pages/*)
+    set(gwk_doc_images ${image_files} ${pages_image_files})
+    foreach(file ${gwk_doc_images})
         get_filename_component(filename ${file} NAME)
         configure_file(${file} ${DOXYGEN_OUTPUT_DIR}/${DOXYGEN_OUTPUT_TYPE}/${filename} COPYONLY)
     endforeach()

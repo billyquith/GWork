@@ -324,7 +324,7 @@ namespace Gwk
             virtual void UpdateColors()    {}
 
             //! Enable caching to texture optimisation for this control.
-            //! @Note Must have GetCTT() implemented in the Renderer.
+            //! @note Must have GetCTT() implemented in the Renderer.
             virtual void EnableCacheToTexture()     { m_bCacheToTexture = true; }
             
             //! Query if this control is cached to a texture.

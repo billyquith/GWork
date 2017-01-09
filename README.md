@@ -15,6 +15,18 @@ A number of rendering backends are provided for use, or as an example for your o
  * [SDL2][sdl2] (cross-platform).
  * [SFML2][sfml2] (cross-platform).
 
+## Documentation
+
+- [Online documentation][docs]
+
+## Changes
+
+- See CHANGELOG for changes to Gwork, and the differences from GWEN.
+
+## Issues
+
+Please [report problems to Github][issues] or they'll get lost.
+
 ## Build
 
 Get source code:
@@ -45,19 +57,6 @@ demonstrate all of the controls available:
 ninja                       # build project
 bin/GworkAllegro5Sample     # run sample
 ```
-
-## Documentation
-
-- [Online documentation][docs]
-
-## Changes
-
-- See CHANGELOG for changes to Gwork, and the differences from GWEN.
-
-## Issues
-
-Please [report problems to Github][issues] or they'll get lost.
-
 
 [gwen]: https://github.com/garrynewman/GWEN
 [sdl2]: https://www.libsdl.org/
