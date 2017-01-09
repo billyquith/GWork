@@ -7,6 +7,7 @@ This is a changelog for Gwork. There are also notes [on my blog][blog]
 ### 0.2
 
 - `override` used everywhere applicable to marked overridden virtual functions.
+- Online [documentation][docs] added.
 
 ### 0.1
 
@@ -61,4 +62,5 @@ This is a changelog for Gwork. There are also notes [on my blog][blog]
 [5]: http://www.utf8everywhere.org "Why you should use UTF8 everywhere."
 [6]: http://industriousone.com/premake
 [blog]: http://chinbilly.blogspot.co.uk/search/label/gwork
+[docs]: https://billyquith.github.io/GWork/
 
