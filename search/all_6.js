@@ -9,6 +9,7 @@ var searchData=
   ['getmargin',['GetMargin',['../class_gwk_1_1_controls_1_1_base.html#ab20b10840dacf712b1bf0152da114941',1,'Gwk::Controls::Base']]],
   ['getpadding',['GetPadding',['../class_gwk_1_1_controls_1_1_base.html#a4eab0e6c1e35d0396ec75e1e06a92913',1,'Gwk::Controls::Base']]],
   ['glfw',['GLFW',['../class_gwk_1_1_input_1_1_g_l_f_w.html',1,'Gwk::Input']]],
+  ['groupbox',['GroupBox',['../class_gwk_1_1_controls_1_1_group_box.html',1,'Gwk::Controls']]],
   ['groupbox',['GroupBox',['../class_gwk_1_1_controls_1_1_group_box.html#aba09a3e4927def44d723304551abf35a',1,'Gwk::Controls::GroupBox']]],
-  ['groupbox',['GroupBox',['../class_gwk_1_1_controls_1_1_group_box.html',1,'Gwk::Controls']]]
+  ['gwork',['Gwork',['../index.html',1,'']]]
 ];

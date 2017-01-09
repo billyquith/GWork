@@ -9,6 +9,7 @@ var searchData=
   ['dockbase',['DockBase',['../class_gwk_1_1_controls_1_1_dock_base.html',1,'Gwk::Controls']]],
   ['dockedtabcontrol',['DockedTabControl',['../class_gwk_1_1_controls_1_1_docked_tab_control.html#a7cf5706c235c3ac0a5d5e3b19cb74f5f',1,'Gwk::Controls::DockedTabControl']]],
   ['dockedtabcontrol',['DockedTabControl',['../class_gwk_1_1_controls_1_1_docked_tab_control.html',1,'Gwk::Controls']]],
+  ['docking',['Docking',['../docking_notes.html',1,'']]],
   ['dothink',['DoThink',['../class_gwk_1_1_controls_1_1_canvas.html#a1cea92221a3b7b1f25f483304320c27c',1,'Gwk::Controls::Canvas::DoThink()'],['../class_gwk_1_1_controls_1_1_window_canvas.html#a6ca0897cc56bf29897cb47d2ddeb4d96',1,'Gwk::Controls::WindowCanvas::DoThink()']]],
   ['down_5ft',['Down_t',['../class_gwk_1_1_skin_1_1_textured_base.html#struct_gwk_1_1_skin_1_1_textured_base_1_1_textures__t_1_1_input__t_1_1_up_down__t_1_1_down__t',1,'Gwk::Skin::TexturedBase::Textures_t::Input_t::UpDown_t']]],
   ['dragger',['Dragger',['../class_gwk_1_1_controls_internal_1_1_dragger.html#a47c0d712affc28e875d1588fe568ff74',1,'Gwk::ControlsInternal::Dragger']]],
