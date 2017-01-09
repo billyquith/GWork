@@ -74,6 +74,8 @@ if(DOXYGEN_FOUND)
     set(DOC_FILE_PATTERNS "*.c *.cpp *.h *.hpp *.dox")
     STRING(REPLACE ";" " " DOC_INPUT "${DOXYGEN_INPUT_DIRS}") # want space separated
     STRING(REPLACE ";" " " DOC_MACRO_DIRS "${DOXYGEN_CODE_DIRS}") # want space separated
+    set(DOC_STYLESHEET "${CMAKE_CURRENT_SOURCE_DIR}/style/gwkstyle.css")
+    set(DOC_HEADER "${CMAKE_CURRENT_SOURCE_DIR}/style/docheader.html")
 
     # subsitutes to make to patch up docs
     set(PREDEFINES 
