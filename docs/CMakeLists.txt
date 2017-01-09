@@ -70,7 +70,7 @@ if(DOXYGEN_FOUND)
     # config substitute variables
     set(DOC_PROJECT_NAME "Gwork")
     set(DOC_PROJECT_BRIEF "GUI")
-    set(DOC_LOGO "${CMAKE_CURRENT_SOURCE_DIR}/images/logo2.png")
+    set(DOC_LOGO "${CMAKE_CURRENT_SOURCE_DIR}/images/logo1.png")
     set(DOC_FILE_PATTERNS "*.c *.cpp *.h *.hpp *.dox")
     STRING(REPLACE ";" " " DOC_INPUT "${DOXYGEN_INPUT_DIRS}") # want space separated
     STRING(REPLACE ";" " " DOC_MACRO_DIRS "${DOXYGEN_CODE_DIRS}") # want space separated
