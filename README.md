@@ -46,9 +46,13 @@ ninja                       # build project
 bin/GworkAllegro5Sample     # run sample
 ```
 
-## Changes 
+## Documentation
 
-See CHANGELOG for changes to Gwork, and the differences from GWEN.
+- [Online documentation][docs]
+
+## Changes
+
+- See CHANGELOG for changes to Gwork, and the differences from GWEN.
 
 ## Issues
 
@@ -59,4 +63,5 @@ Please [report problems to Github][issues] or they'll get lost.
 [sdl2]: https://www.libsdl.org/
 [sfml2]: http://www.sfml-dev.org
 [al5]: http://alleg.sourceforge.net
+[docs]: https://billyquith.github.io/GWork/
 [issues]: https://github.com/billyquith/GWork/issues "Bugs/Issues"
