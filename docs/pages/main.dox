@@ -6,11 +6,17 @@
 
 This is the documentation for [Gwork][gwork], which a GUI library. Gwork is a fork of GWEN.
 
-### GWEN docs ###
+### Useful links
 
-- [Garry's blog](http://garry.tv/tagged/gwen).
-- @ref docking_notes - Notes about docking from the blog.
+- Gwork [Github project][gwork].
+- Gwork [issue tracker][issues]. Report bugs, ask questions here.
+- GWEN docs:
+    - [Garry's blog](http://garry.tv/tagged/gwen).
+    - @ref docking_notes - Notes about docking from the blog.
+- Gwork [online docs][docs].
 
 [gwork]: https://github.com/billyquith/GWork
+[docs]: https://billyquith.github.io/GWork/
+[issues]: https://github.com/billyquith/GWork/issues "Bugs/Issues"
 
 */
