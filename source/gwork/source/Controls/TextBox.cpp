@@ -82,7 +82,7 @@ void TextBox::InsertText(const Gwk::String& strInsert)
     String str = GetText();
     str.insert(m_cursorPos, strInsert);
     SetText(str);
-    m_cursorPos += (int)strInsert.size();
+    m_cursorPos += static_cast<int>(strInsert.size());
     m_cursorEnd = m_cursorPos;
     m_cursorLine = 0;
     RefreshCursorBounds();

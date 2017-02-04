@@ -17,7 +17,7 @@ namespace Gwk
 
                 String GetValueAsString(Controls::Base* ctrl) override
                 {
-                    return Utility::Format("%i", (int)gwk_cast<Controls::PageControl>(
+                    return Utility::Format("%i", gwk_cast<Controls::PageControl>(
                                                ctrl)->GetPageCount());
                 }
 

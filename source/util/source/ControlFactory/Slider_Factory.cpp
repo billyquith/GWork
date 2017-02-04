@@ -44,8 +44,7 @@ namespace Gwk
 
                 String GetValueAsString(Controls::Base* ctrl) override
                 {
-                    return Gwk::Utility::Format("%f", (int)gwk_cast<Controls::Slider>(
-                                                     ctrl)->GetMax());
+                    return Gwk::Utility::Format("%f", gwk_cast<Controls::Slider>(ctrl)->GetMax());
                 }
 
                 void SetValueFromString(Controls::Base* ctrl, const String& str) override

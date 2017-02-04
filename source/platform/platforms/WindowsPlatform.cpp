@@ -120,7 +120,7 @@ static double GetPerformanceFrequency()
     {
         __int64 perfFreq;
         QueryPerformanceFrequency((LARGE_INTEGER*)&perfFreq);
-        Frequency = 1.0/(double)perfFreq;
+        Frequency = 1.0 / perfFreq;
     }
 
     return Frequency;
