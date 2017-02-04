@@ -58,7 +58,7 @@ namespace Gwk
 //
 //                String GetValueAsString(Controls::Base* ctrl) override
 //                {
-//                    return Gwk::Utility::Format("%i", (int)gwk_cast<Controls::Label>(
+//                    return Gwk::Utility::Format("%i", gwk_cast<Controls::Label>(
 //                                                     ctrl)->GetFont()->size);
 //                }
 //

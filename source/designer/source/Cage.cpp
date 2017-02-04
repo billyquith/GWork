@@ -97,8 +97,8 @@ void Cage::OnMouseMoved( int x, int y, int deltaX, int deltaY )
 
 	Gwk::Point pos = m_dragPoint;
 
-	pos.x = ((int)((float)pos.x / 10.0f)) * 10;
-	pos.y = ((int)((float)pos.y / 10.0f)) * 10;
+	pos.x = static_cast<int>(pos.x / 10.0f) * 10;
+	pos.y = static_cast<int>(pos.y / 10.0f) * 10;
 
 	pos -= m_control->GetPos();
 

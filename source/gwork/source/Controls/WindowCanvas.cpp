@@ -220,16 +220,14 @@ void WindowCanvas::Dragger_Moved()
     Gwk::Point p;
     Gwk::Platform::GetCursorPos(p);
 
-    //
     // Dragged out of maximized
-    //
     if (m_bIsMaximized)
     {
         float fOldWidth = Width();
         SetMaximize(false);
         // Change the hold pos to be the same distance across the titlebar of
         // the resized window
-        m_holdPos.x = ((float)m_holdPos.x)*((float)Width()/fOldWidth);
+        m_holdPos.x = static_cast<float>(m_holdPos.x) * Width() / fOldWidth;
         m_holdPos.y = 10;
     }
 

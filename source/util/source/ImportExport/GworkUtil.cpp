@@ -120,7 +120,7 @@ namespace String
             return atoi(str.c_str());
         }
 
-        unsigned long long UInt64(const BString& str)
+        unsigned long long UInt64(const BString& str)   // TODO - use stdint?
         {
             unsigned long long val = 0;
             sscanf(str.c_str(), "%llu", &val);
@@ -131,14 +131,14 @@ namespace String
         {
             if (str == "")
                 return 0.0f;
-            return (float)atof(str.c_str());
+            return static_cast<float>(atof(str.c_str()));   // TODO - error handling?
         }
 
         double Double(const BString& str)
         {
             if (str == "")
-                return 0.0f;
-            return atof(str.c_str());
+                return 0.0;
+            return atof(str.c_str());   // TODO - error handling?
         }
 
         bool Bool(const BString& str)

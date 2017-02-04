@@ -95,12 +95,13 @@ namespace Gwk
 
                 void Run(float delta) override
                 {
-                    m_control->SetHeight(m_startSize+(((float)m_delta)*delta));
+                    m_control->SetHeight(m_startSize + m_delta * delta);
                 }
 
                 void OnFinish() override
                 {
-                    m_control->SetHeight(m_startSize+m_delta); m_control->SetHidden(m_bHide);
+                    m_control->SetHeight(m_startSize+m_delta);
+                    m_control->SetHidden(m_bHide);
                 }
 
             protected:
@@ -131,12 +132,13 @@ namespace Gwk
 
                 void Run(float delta) override
                 {
-                    m_control->SetWidth(m_startSize+(((float)m_delta)*delta));
+                    m_control->SetWidth(m_startSize + m_delta * delta);
                 }
 
                 void OnFinish() override
                 {
-                    m_control->SetWidth(m_startSize+m_delta); m_control->SetHidden(m_bHide);
+                    m_control->SetWidth(m_startSize+m_delta);
+                    m_control->SetHidden(m_bHide);
                 }
 
             protected:
@@ -171,7 +173,7 @@ namespace Gwk
 
                 void Run(float delta) override
                 {
-                    m_control->SetPos(m_startSize+(((float)m_delta)*delta),
+                    m_control->SetPos(m_startSize + static_cast<float>(m_delta) * delta,
                                       m_control->GetPos().y);
                 }
 
@@ -209,8 +211,7 @@ namespace Gwk
 
                 void Run(float delta) override
                 {
-                    m_control->SetPos(m_control->GetPos().x, m_startSize+
-                                      (((float)m_delta)*delta));
+                    m_control->SetPos(m_control->GetPos().x, m_startSize + m_delta * delta);
                 }
 
                 void OnFinish() override

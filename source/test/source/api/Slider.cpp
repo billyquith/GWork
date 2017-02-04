@@ -59,7 +59,7 @@ public:
     void SliderMoved(Base* control)
     {
         Gwk::Controls::Slider* slider = (Gwk::Controls::Slider*)control;
-        OutputToLog(Utility::Format("Slider Value: %.2f", (float)slider->GetFloatValue()));
+        OutputToLog(Utility::Format("Slider Value: %.2f", slider->GetFloatValue()));
     }
 
 };

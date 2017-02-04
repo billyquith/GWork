@@ -21,7 +21,7 @@ GWK_CONTROL_CONSTRUCTOR(HorizontalSlider)
 
 float HorizontalSlider::CalculateValue()
 {
-    return (float)m_sliderBar->X()/(float)(Width()-m_sliderBar->Width());
+    return static_cast<float>(m_sliderBar->X()) / (Width() - m_sliderBar->Width());
 }
 
 void HorizontalSlider::UpdateBarFromValue()

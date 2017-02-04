@@ -16,8 +16,8 @@ namespace Gwk
 //
 //                String GetValueAsString(Controls::Base* ctrl) override
 //                {
-//                    return Utility::Format("%f", (float)gwk_cast<Controls::ProgressBar>(
-//                                               ctrl)->GetCycleSpeed());
+//                    return Utility::Format("%f",static_cast<float>(gwk_cast<Controls::ProgressBar>(
+//                                               ctrl)->GetCycleSpeed()));
 //                }
 //
 //                void SetValueFromString(Controls::Base* ctrl, const String& str) override

@@ -50,8 +50,8 @@ bool Gwk::Platform::SetClipboardText(const Gwk::String& str)
 
 float Gwk::Platform::GetTimeInSeconds()
 {
-    const float fSeconds = (float)clock()/(float)CLOCKS_PER_SEC;
-    return fSeconds;
+    const float seconds = static_cast<float>(clock()) / CLOCKS_PER_SEC;
+    return seconds;
 }
 
 Gwk::String Gwk::Platform::GetExecutableDir()

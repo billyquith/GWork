@@ -21,19 +21,18 @@ GWK_CONTROL_CONSTRUCTOR(VerticalSlider)
 
 float VerticalSlider::CalculateValue()
 {
-    return 1-(float)m_sliderBar->Y()/(float)(Height()-m_sliderBar->Height());
+    return 1.f - static_cast<float>(m_sliderBar->Y()) / (Height() - m_sliderBar->Height());
 }
 
 void VerticalSlider::UpdateBarFromValue()
 {
-    m_sliderBar->MoveTo(m_sliderBar->X(), (Height()-m_sliderBar->Height())*(1-m_fValue));
+    m_sliderBar->MoveTo(m_sliderBar->X(), (Height() - m_sliderBar->Height()) * (1.f - m_fValue));
 }
 
 void VerticalSlider::OnMouseClickLeft(int x, int y, bool bDown)
 {
-    m_sliderBar->MoveTo(m_sliderBar->X(), CanvasPosToLocal(Gwk::Point(x,
-                                                                       y)).y-m_sliderBar->Height()*
-                        0.5);
+    m_sliderBar->MoveTo(m_sliderBar->X(),
+                        CanvasPosToLocal(Gwk::Point(x, y)).y - m_sliderBar->Height() * 0.5f);
     m_sliderBar->OnMouseClickLeft(x, y, bDown);
     OnMoved(m_sliderBar);
 }

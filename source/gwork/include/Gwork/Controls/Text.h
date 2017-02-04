@@ -48,7 +48,7 @@ namespace Gwk
 
             int Length() const
             {
-                return (int)m_string.size();
+                return static_cast<int>(m_string.size());
             }
 
             virtual void SetTextColor(const Gwk::Color& col)
