@@ -51,7 +51,7 @@ namespace Gwk
                 return m_bHorizontal;
             }
 
-            bool IsDepressed() override
+            bool IsDepressed() const override
             {
                 return m_bDepressed;
             }

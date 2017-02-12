@@ -75,7 +75,7 @@ namespace Gwk
                 return m_property && m_property->IsEditing();
             }
 
-            bool IsHovered() override
+            bool IsHovered() const override
             {
                 return ParentClass::IsHovered() || (m_property && m_property->IsHovered());
             }

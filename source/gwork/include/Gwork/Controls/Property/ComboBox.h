@@ -53,7 +53,7 @@ namespace Gwk
                     return m_comboBox->IsFocussed();
                 }
 
-                bool IsHovered() override
+                bool IsHovered() const override
                 {
                     return ParentClass::IsHovered() || m_comboBox->IsHovered();
                 }

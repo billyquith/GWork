@@ -35,13 +35,14 @@ void Button::Render(Skin::Base* skin)
     if (!ShouldDrawBackground())
         return;
 
-    bool bDrawDepressed = IsDepressed() && IsHovered();
+    bool drawDepressed = IsDepressed() && IsHovered();
 
     if (IsToggle())
-        bDrawDepressed = bDrawDepressed || GetToggleState();
+        drawDepressed = drawDepressed || GetToggleState();
 
-    bool bDrawHovered = IsHovered() && ShouldDrawHover();
-    skin->DrawButton(this, bDrawDepressed, bDrawHovered, IsDisabled());
+    const bool drawHovered = IsHovered() && ShouldDrawHover();
+    
+    skin->DrawButton(this, drawDepressed, drawHovered, IsDisabled());
 }
 
 void Button::OnMouseClickLeft(int /*x*/, int /*y*/, bool bDown)
