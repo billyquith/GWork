@@ -45,7 +45,7 @@ namespace Gwk
                     return m_textBox->IsFocussed();
                 }
 
-                bool IsHovered() override
+                bool IsHovered() const override
                 {
                     return ParentClass::IsHovered() || m_textBox->IsHovered();
                 }

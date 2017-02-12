@@ -51,7 +51,7 @@ namespace Gwk
                     return m_checkbox->IsFocussed();
                 }
 
-                bool IsHovered() override
+                bool IsHovered() const override
                 {
                     return ParentClass::IsHovered() || m_checkbox->IsHovered();
                 }

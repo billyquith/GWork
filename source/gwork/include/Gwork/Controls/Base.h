@@ -285,8 +285,8 @@ namespace Gwk
             virtual bool OnKeyDown(bool /*bDown*/)          { return false; }
             virtual bool OnKeyEscape(bool /*bDown*/)        { return false; }
             
-            virtual bool IsHovered();
-            virtual bool ShouldDrawHover();
+            virtual bool IsHovered() const;
+            virtual bool ShouldDrawHover() const;
 
             virtual void Touch();
             virtual void OnChildTouched(Controls::Base* child);
@@ -297,7 +297,6 @@ namespace Gwk
             virtual void Focus();
             virtual void Unfocus();
 
-            // Other
             virtual void SetDisabled(bool active)
             {
                 if (m_bDisabled == active)
@@ -321,7 +320,7 @@ namespace Gwk
                     m_parent->Redraw();
             }
 
-            virtual void UpdateColors()    {}
+            virtual void UpdateColors() {}
 
             //! Enable caching to texture optimisation for this control.
             //! @note Must have GetCTT() implemented in the Renderer.

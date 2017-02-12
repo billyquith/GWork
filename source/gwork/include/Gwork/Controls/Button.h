@@ -35,6 +35,7 @@ namespace Gwk
 
             void AcceleratePressed() override;
 
+            //! Is the button currently being pressed?
             virtual bool IsDepressed() const
             {
                 return m_bDepressed;

@@ -664,12 +664,12 @@ void Base::OnMouseLeave()
     Redraw();
 }
 
-bool Base::IsHovered()
+bool Base::IsHovered() const
 {
     return Gwk::HoveredControl == this;
 }
 
-bool Base::ShouldDrawHover()
+bool Base::ShouldDrawHover() const
 {
     return Gwk::MouseFocus == this || Gwk::MouseFocus == nullptr;
 }

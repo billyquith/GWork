@@ -34,7 +34,7 @@ namespace Gwk
                 m_target = base;
             }
 
-            virtual bool IsDepressed()
+            virtual bool IsDepressed() const
             {
                 return m_bDepressed;
             }
