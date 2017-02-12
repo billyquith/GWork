@@ -482,9 +482,11 @@ namespace Gwk
             {
                 const Gwk::Rect & rect = control->GetRenderBounds();
 
-                if ( bSubmenuOpen || control->IsHovered() ) { Textures.Menu.Hover.Draw( GetRender(), rect ); }
+                if (bSubmenuOpen || control->IsHovered())
+                    Textures.Menu.Hover.Draw(GetRender(), rect);
 
-                if ( bChecked ) { Textures.Menu.Check.Draw( GetRender(), Gwk::Rect( rect.x + 4, rect.y + 3, 15, 15 ) ); }
+                if (bChecked)
+                    Textures.Menu.Check.Draw(GetRender(), Gwk::Rect(rect.x + 4, rect.y + 3, 15, 15));
             }
 
             void DrawMenuStrip( Gwk::Controls::Base* control ) override
@@ -494,7 +496,7 @@ namespace Gwk
 
             void DrawMenu( Gwk::Controls::Base* control, bool bPaddingDisabled ) override
             {
-                if ( !bPaddingDisabled )
+                if (!bPaddingDisabled)
                 {
                     return Textures.Menu.BackgroundWithMargin.Draw( GetRender(), control->GetRenderBounds() );
                 }
@@ -509,12 +511,8 @@ namespace Gwk
 
             void DrawShadow( Gwk::Controls::Base* control ) override
             {
-                Gwk::Rect r = control->GetRenderBounds();
-                r.x -= 4;
-                r.y -= 4;
-                r.w += 10;
-                r.h += 10;
-                Textures.Shadow.Draw( GetRender(), r );
+                const Gwk::Rect r = control->GetRenderBounds() + Rect(-4,-4, 10,10);
+                Textures.Shadow.Draw(GetRender(), r);
             }
 
             void DrawRadioButton( Gwk::Controls::Base* control, bool bSelected, bool bDepressed ) override
@@ -674,7 +672,7 @@ namespace Gwk
             void DrawProgressBar( Gwk::Controls::Base* control, bool isHorizontal, float progress ) override
             {
                 Gwk::Rect rect = control->GetRenderBounds();
-                Gwk::Color FillColor( 0, 211, 40, 255 );
+                const Gwk::Color FillColor( 0, 211, 40, 255 );
 
                 if (isHorizontal)
                 {
@@ -796,13 +794,15 @@ namespace Gwk
                 {
                     m_render->SetDrawColor( Gwk::Color( 0, 0, 0, 255 ) );
 
-                    if ( !skip )
+                    if (!skip)
                     {
                         GetRender()->DrawPixel( rect.x + ( i * 2 ), rect.y );
                         GetRender()->DrawPixel( rect.x + ( i * 2 ), rect.y + rect.h - 1 );
                     }
                     else
-                    { skip = !skip; }
+                    {
+                        skip = !skip;
+                    }
                 }
 
                 skip = false;
@@ -811,13 +811,15 @@ namespace Gwk
                 {
                     GetRender()->SetDrawColor( Gwk::Color( 0, 0, 0, 255 ) );
 
-                    if ( !skip )
+                    if (!skip)
                     {
                         GetRender()->DrawPixel( rect.x , rect.y + i * 2 );
                         GetRender()->DrawPixel( rect.x + rect.w - 1, rect.y + i * 2 );
                     }
                     else
-                    { skip = !skip; }
+                    {
+                        skip = !skip;
+                    }
                 }
             }
 
@@ -850,14 +852,14 @@ namespace Gwk
             void DrawComboDownArrow(Gwk::Controls::Base* control, bool bHovered, bool bDown,
                                     bool bMenuOpen, bool bDisabled) override
             {
-                if ( bDisabled )
-                { return Textures.Input.ComboBox.Button.Disabled.Draw( GetRender(), control->GetRenderBounds() ); }
+                if (bDisabled)
+                    return Textures.Input.ComboBox.Button.Disabled.Draw( GetRender(), control->GetRenderBounds() );
 
-                if ( bDown || bMenuOpen )
-                { return Textures.Input.ComboBox.Button.Down.Draw( GetRender(), control->GetRenderBounds() ); }
+                if (bDown || bMenuOpen)
+                    return Textures.Input.ComboBox.Button.Down.Draw( GetRender(), control->GetRenderBounds() );
 
-                if ( bHovered )
-                { return Textures.Input.ComboBox.Button.Hover.Draw( GetRender(), control->GetRenderBounds() ); }
+                if (bHovered)
+                    return Textures.Input.ComboBox.Button.Hover.Draw( GetRender(), control->GetRenderBounds() );
 
                 Textures.Input.ComboBox.Button.Normal.Draw( GetRender(), control->GetRenderBounds() );
             }
@@ -897,7 +899,7 @@ namespace Gwk
 
             void DrawTreeButton( Controls::Base* control, bool bOpen ) override
             {
-                const Gwk::Rect rect = control->GetRenderBounds();
+                const Gwk::Rect& rect = control->GetRenderBounds();
 
                 if (bOpen)
                     Textures.Tree.Minus.Draw(GetRender(), rect);
@@ -907,7 +909,7 @@ namespace Gwk
 
             void DrawColorDisplay( Controls::Base* control, Gwk::Color color ) override
             {
-                Gwk::Rect rect = control->GetRenderBounds();
+                const Gwk::Rect& rect = control->GetRenderBounds();
 
                 if (color.a != 255)
                 {
@@ -926,17 +928,18 @@ namespace Gwk
 
             void DrawModalControl( Controls::Base* control ) override
             {
-                if ( !control->ShouldDrawBackground() ) { return; }
+                if (!control->ShouldDrawBackground())
+                    return;
 
-                Gwk::Rect rect = control->GetRenderBounds();
-                GetRender()->SetDrawColor( Colors.ModalBackground );
-                GetRender()->DrawFilledRect( rect );
+                const Gwk::Rect& rect = control->GetRenderBounds();
+                GetRender()->SetDrawColor(Colors.ModalBackground);
+                GetRender()->DrawFilledRect(rect);
             }
 
             void DrawMenuDivider( Controls::Base* control ) override
             {
-                Gwk::Rect rect = control->GetRenderBounds();
-                GetRender()->SetDrawColor( Gwk::Color( 0, 0, 0, 100 ) );
+                const Gwk::Rect& rect = control->GetRenderBounds();
+                GetRender()->SetDrawColor( Gwk::Color(0, 0, 0, 100) );
                 GetRender()->DrawFilledRect( rect );
             }
 

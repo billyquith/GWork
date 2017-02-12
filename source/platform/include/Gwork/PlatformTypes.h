@@ -105,11 +105,7 @@ namespace Gwk
 
         Rect operator + (const Rect& rct) const
         {
-            Rect m;
-            m.x = x+rct.x;
-            m.y = y+rct.y;
-            m.w = w+rct.w;
-            m.h = h+rct.h;
+            const Rect m(x + rct.x, y + rct.y, w + rct.w, h + rct.h);
             return m;
         }
         
