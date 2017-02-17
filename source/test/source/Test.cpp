@@ -9,6 +9,10 @@
 #include <Gwork/Test/TestReflect.h>
 #include <Gwork/Platform.h>
 
+#include <ponder/classbuilder.hpp>
+#define PONDER_USES_RUNTIME_IMPL
+#include <ponder/uses/runtime.hpp>
+
 using namespace Gwk;
 
 GWK_CONTROL_CONSTRUCTOR(TestFrame)
@@ -34,7 +38,7 @@ void TestFrame::Render(Skin::Base* skin)
     if (m_fLastSecond < Platform::GetTimeInSeconds())
     {
         m_statusBar->SetText(Utility::Format("Gwork Unit Test - %i fps", m_frames*2));
-        m_fLastSecond = Platform::GetTimeInSeconds()+0.5f;
+        m_fLastSecond = Platform::GetTimeInSeconds() + 0.5f;
         m_frames = 0;
     }
     

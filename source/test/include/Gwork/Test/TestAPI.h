@@ -13,8 +13,8 @@
 #include <Gwork/Test/Test.h>
 
 //
-// Here we test the Gwork C++ API.
-//  - All controls created with C++.
+/// Here we test the Gwork C++ API.
+///  - All controls created with C++.
 //
 class TestAPI : public TestCategory
 {

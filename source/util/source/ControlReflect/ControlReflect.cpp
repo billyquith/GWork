@@ -1,9 +1,6 @@
 
 #include <Gwork/Util/ControlReflect.h>
 
-#define PONDER_USES_RUNTIME_IMPL
-#include <ponder/uses/runtime.hpp>
-
 namespace Gwk {
 namespace ControlFactory {
     

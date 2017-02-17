@@ -13,8 +13,8 @@
 #include <Gwork/Test/Test.h>
 
 //
-// Here we test Ponder reflection
-//  - We use the runtime API of Ponder to create controls.
+/// Here we test Ponder reflection
+///  - We use the runtime API of Ponder to create controls.
 //
 class TestReflect : public TestCategory
 {
