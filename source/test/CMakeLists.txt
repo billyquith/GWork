@@ -38,8 +38,8 @@ set(GWK_TEST_SOURCES
     source/api/TestAPI.cpp
     source/api/TreeControl.cpp
     source/api/Window.cpp
-    source/factory/TestReflect.cpp
-    source/factory/ReflectButton.cpp
+    source/reflection/TestReflect.cpp
+    source/reflection/ReflectButton.cpp
 )
 
 # header folder groups
@@ -47,8 +47,8 @@ source_group("${GWK_HEADER_FOLDER}"
              REGULAR_EXPRESSION "include/Gwork/Test/.*\\.h")
 source_group("${GWK_SOURCE_FOLDER}\\API"
              REGULAR_EXPRESSION "source/api/.*\\.cpp")
-source_group("${GWK_SOURCE_FOLDER}\\Factory"
-             REGULAR_EXPRESSION "source/factory/.*\\.cpp")
+source_group("${GWK_SOURCE_FOLDER}\\Reflection"
+             REGULAR_EXPRESSION "source/reflection/.*\\.cpp")
 source_group("${GWK_SOURCE_FOLDER}"
              REGULAR_EXPRESSION "source/[^/]+\\.cpp")
 
