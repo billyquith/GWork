@@ -1,7 +1,7 @@
 /*
  *  Gwork
  *  Copyright (c) 2011 Facepunch Studios
- *  Copyright (c) 2013-16 Billy Quith
+ *  Copyright (c) 2013-17 Nick Trout
 *  See license in Gwork.h
  */
 
@@ -27,15 +27,15 @@ namespace Gwk
             SDL2(SDL_Window *window);
             ~SDL2();
 
-            virtual void SetDrawColor(Gwk::Color color) override;
+            void SetDrawColor(Gwk::Color color) override;
 
-            virtual void DrawFilledRect(Gwk::Rect rect) override;
+            void DrawFilledRect(Gwk::Rect rect) override;
 
-            virtual void LoadFont(Gwk::Font* font) override;
-            virtual void FreeFont(Gwk::Font* font) override;
+            void LoadFont(Gwk::Font* font) override;
+            void FreeFont(Gwk::Font* font) override;
             virtual void RenderText(Gwk::Font* font, Gwk::Point pos,
                                     const Gwk::String& text) override;
-            virtual Gwk::Point MeasureText(Gwk::Font* font, const Gwk::String& text) override;
+            Gwk::Point MeasureText(Gwk::Font* font, const Gwk::String& text) override;
 
             void StartClip() override;
             void EndClip() override;
@@ -45,7 +45,7 @@ namespace Gwk
                                   float u2 = 1.0f, float v2 = 1.0f) override;
             void        LoadTexture(Gwk::Texture* texture) override;
             void        FreeTexture(Gwk::Texture* texture) override;
-            Gwk::Color PixelColour(Gwk::Texture* texture, unsigned int x, unsigned int y,
+            Gwk::Color PixelColor(Gwk::Texture* texture, unsigned int x, unsigned int y,
                                     const Gwk::Color& col_default) override;
 
             void DrawLinedRect(Gwk::Rect rect) override;

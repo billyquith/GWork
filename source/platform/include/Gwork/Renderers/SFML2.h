@@ -1,7 +1,7 @@
 /*
  *  Gwork
  *  Copyright (c) 2011 Facepunch Studios
- *  Copyright (c) 2013-16 Billy Quith
+ *  Copyright (c) 2013-17 Nick Trout
  *  See license in Gwork.h
  */
 
@@ -90,7 +90,7 @@ namespace Gwk
 
             virtual void        LoadTexture(Gwk::Texture* texture);
             virtual void        FreeTexture(Gwk::Texture* texture);
-            virtual Gwk::Color PixelColour(Gwk::Texture* texture, unsigned int x, unsigned int y,
+            virtual Gwk::Color PixelColor(Gwk::Texture* texture, unsigned int x, unsigned int y,
                                             const Gwk::Color& col_default);
 
         protected:

@@ -82,7 +82,7 @@ matrix:
       env: COMPILER=clang++ BUILD_CONFIG=Debug
       install: ./ci/travis/install.sh
     - os: osx
-      osx_image: xcode8
+      osx_image: xcode8.2
       compiler: clang
       env: COMPILER=clang++ BUILD_CONFIG=Release
       install: ./ci/travis/install.sh

@@ -1,7 +1,7 @@
 /*
  *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  Copyright (c) 2013-16 Billy Quith
+ *  Copyright (c) 2013-17 Nick Trout
  *  See license in Gwork.h
  */
 
@@ -73,18 +73,18 @@ void CrossSplitter::OnVerticalMoved(Event::Info)
 
 void CrossSplitter::CalculateValueCenter()
 {
-    m_fHVal = (float)m_cSplitter->X()/(float)(Width()-m_cSplitter->Width());
-    m_fVVal = (float)m_cSplitter->Y()/(float)(Height()-m_cSplitter->Height());
+    m_fHVal = static_cast<float>(m_cSplitter->X()) / (Width() - m_cSplitter->Width());
+    m_fVVal = static_cast<float>(m_cSplitter->Y()) / (Height() - m_cSplitter->Height());
 }
 
 float CrossSplitter::CalculateValueHorizontal()
 {
-    return (float)m_hSplitter->X()/(float)(Width()-m_hSplitter->Width());
+    return static_cast<float>(m_hSplitter->X()) / (Width() - m_hSplitter->Width());
 }
 
 float CrossSplitter::CalculateValueVertical()
 {
-    return (float)m_vSplitter->Y()/(float)(Height()-m_vSplitter->Height());
+    return static_cast<float>(m_vSplitter->Y()) / (Height() - m_vSplitter->Height());
 }
 
 void CrossSplitter::Layout(Skin::Base* /*skin*/)

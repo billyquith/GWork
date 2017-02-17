@@ -1,7 +1,7 @@
 /*
  *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  Copyright (c) 2013-16 Billy Quith
+ *  Copyright (c) 2013-17 Nick Trout
  *  See license in Gwork.h
  */
 
@@ -76,17 +76,17 @@ bool ScrollControl::OnMouseWheeled(int iDelta)
 {
     if (CanScrollV() && m_verticalScrollBar->Visible())
     {
-        if (m_verticalScrollBar->SetScrolledAmount(m_verticalScrollBar->GetScrolledAmount()-
-                                                   m_verticalScrollBar->GetNudgeAmount()*
-                                                   ((float)iDelta/60.0f), true))
+        if (m_verticalScrollBar->SetScrolledAmount(
+                m_verticalScrollBar->GetScrolledAmount()
+                    - m_verticalScrollBar->GetNudgeAmount() * iDelta / 60.0f, true))
             return true;
     }
 
     if (CanScrollH() && m_horizontalScrollBar->Visible())
     {
-        if (m_horizontalScrollBar->SetScrolledAmount(m_horizontalScrollBar->GetScrolledAmount()-
-                                                     m_horizontalScrollBar->GetNudgeAmount()*
-                                                     ((float)iDelta/60.0f), true))
+        if (m_horizontalScrollBar->SetScrolledAmount(
+                m_horizontalScrollBar->GetScrolledAmount()
+                        - m_horizontalScrollBar->GetNudgeAmount() * iDelta / 60.0f, true))
             return true;
     }
 
@@ -165,13 +165,14 @@ void ScrollControl::UpdateScrollBars()
                               std::max(Height(), childrenHeight));
     }
 
-    float wPercent =
-        (float)Width() / (float)(childrenWidth + (m_verticalScrollBar->Hidden()
-                                                  ? 0 : m_verticalScrollBar->Width()));
+    const float wPercent =
+        static_cast<float>(Width()) / 
+            (childrenWidth + (m_verticalScrollBar->Hidden() ? 0 : m_verticalScrollBar->Width()));
     
-    float hPercent =
-        (float)Height() / (float)(childrenHeight + (m_horizontalScrollBar->Hidden()
-                                                    ? 0 : m_horizontalScrollBar->Height()));
+    const float hPercent =
+        static_cast<float>(Height()) / 
+            (childrenHeight 
+                + (m_horizontalScrollBar->Hidden() ? 0 : m_horizontalScrollBar->Height()));
 
     if (m_bCanScrollV)
         SetVScrollRequired(hPercent >= 1);

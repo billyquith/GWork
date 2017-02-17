@@ -1,7 +1,7 @@
 /*
  *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  Copyright (c) 2013-16 Billy Quith
+ *  Copyright (c) 2013-17 Nick Trout
  *  See license in Gwork.h
  */
 
@@ -27,7 +27,7 @@ namespace Gwk
             void AddLineBreak();
             void AddText(const Gwk::String& text, Gwk::Color color, Gwk::Font* font = nullptr);
 
-            virtual bool SizeToChildren(bool w = true, bool h = true) override;
+            bool SizeToChildren(bool w = true, bool h = true) override;
 
         protected:
 

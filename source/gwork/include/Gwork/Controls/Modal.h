@@ -1,7 +1,7 @@
 /*
  *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  Copyright (c) 2013-16 Billy Quith
+ *  Copyright (c) 2013-17 Nick Trout
  *  See license in Gwork.h
  */
 
@@ -32,12 +32,12 @@ namespace Gwk
                 m_innerBounds = m_bounds;
             }
 
-            virtual void Layout(Skin::Base* /*skin*/) override
+            void Layout(Skin::Base* /*skin*/) override
             {
                 SetBounds(0, 0, GetCanvas()->Width(), GetCanvas()->Height());
             }
 
-            virtual void Render(Skin::Base* skin) override
+            void Render(Skin::Base* skin) override
             {
                 skin->DrawModalControl(this);
             }

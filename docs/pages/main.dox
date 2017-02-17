@@ -1,21 +1,22 @@
 /*!
 
-@mainpage GWoRK
+@mainpage Gwork
 
-This is a fork of the [GWEN](https://github.com/garrynewman/GWEN) GUI library
-by Garry Newman. Thanks to Garry for his work.
+\image html logo4.png
 
+This is the documentation for [Gwork][gwork], which a GUI library. Gwork is a fork of GWEN.
 
-### On the docs ###
+### Useful links
 
-There is very little documentation for GWEN. You can look at:
-
-- [Garry's blog](http://garry.tv/tagged/gwen).
+- Gwork [Github project][gwork].
+- Gwork [issue tracker][issues]. Report bugs, ask questions here.
+- GWEN docs:
+    - [Garry's blog](http://garry.tv/tagged/gwen).
     - @ref docking_notes - Notes about docking from the blog.
-- The GWEN unit tests.
-- The source code of GWEN.
+- Gwork [online docs][docs].
 
-@note Any docs in here were existing comments, or my notes on how GWEN works,
-    so they be inaccurate due to my lack of understanding.
+[gwork]: https://github.com/billyquith/GWork
+[docs]: https://billyquith.github.io/GWork/
+[issues]: https://github.com/billyquith/GWork/issues "Bugs/Issues"
 
 */

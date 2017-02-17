@@ -1,7 +1,7 @@
 /*
  *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  Copyright (c) 2013-16 Billy Quith
+ *  Copyright (c) 2013-17 Nick Trout
  *  See license in Gwork.h
  */
 
@@ -27,13 +27,13 @@ namespace Gwk
 
             GWK_CONTROL(CollapsibleCategory, Gwk::Controls::Base);
 
-            virtual void Render(Skin::Base* skin) override;
+            void Render(Skin::Base* skin) override;
 
             virtual void SetText(const String& text);
 
             virtual Button* Add(const String& name);
 
-            virtual void PostLayout(Skin::Base* /*skin*/) override;
+            void PostLayout(Skin::Base* /*skin*/) override;
 
             virtual void SetList(Controls::CollapsibleList* p)
             {

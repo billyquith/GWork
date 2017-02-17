@@ -1,7 +1,7 @@
 /*
  *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  Copyright (c) 2013-16 Billy Quith
+ *  Copyright (c) 2013-17 Nick Trout
  *  See license in Gwork.h
  */
 
@@ -53,8 +53,8 @@ namespace Gwk
 
             TimedAnimation(float fLength, float fDelay = 0.0f, float fEase = -1.0f);
 
-            virtual void Think() override;
-            virtual bool Finished() override;
+            void Think() override;
+            bool Finished() override;
 
             //
             // These are the magic functions you should be overriding
@@ -88,19 +88,20 @@ namespace Gwk
                     m_bHide = bHide;
                 }
 
-                virtual void OnStart() override
+                void OnStart() override
                 {
                     m_control->SetHeight(m_startSize);
                 }
 
-                virtual void Run(float delta) override
+                void Run(float delta) override
                 {
-                    m_control->SetHeight(m_startSize+(((float)m_delta)*delta));
+                    m_control->SetHeight(m_startSize + m_delta * delta);
                 }
 
-                virtual void OnFinish() override
+                void OnFinish() override
                 {
-                    m_control->SetHeight(m_startSize+m_delta); m_control->SetHidden(m_bHide);
+                    m_control->SetHeight(m_startSize+m_delta);
+                    m_control->SetHidden(m_bHide);
                 }
 
             protected:
@@ -124,19 +125,20 @@ namespace Gwk
                     m_bHide = bHide;
                 }
 
-                virtual void OnStart() override
+                void OnStart() override
                 {
                     m_control->SetWidth(m_startSize);
                 }
 
-                virtual void Run(float delta) override
+                void Run(float delta) override
                 {
-                    m_control->SetWidth(m_startSize+(((float)m_delta)*delta));
+                    m_control->SetWidth(m_startSize + m_delta * delta);
                 }
 
-                virtual void OnFinish() override
+                void OnFinish() override
                 {
-                    m_control->SetWidth(m_startSize+m_delta); m_control->SetHidden(m_bHide);
+                    m_control->SetWidth(m_startSize+m_delta);
+                    m_control->SetHidden(m_bHide);
                 }
 
             protected:
@@ -164,18 +166,18 @@ namespace Gwk
                     m_bHide = bHide;
                 }
 
-                virtual void OnStart() override
+                void OnStart() override
                 {
                     m_control->SetPos(m_startSize, m_control->GetPos().y);
                 }
 
-                virtual void Run(float delta) override
+                void Run(float delta) override
                 {
-                    m_control->SetPos(m_startSize+(((float)m_delta)*delta),
+                    m_control->SetPos(m_startSize + static_cast<float>(m_delta) * delta,
                                       m_control->GetPos().y);
                 }
 
-                virtual void OnFinish() override
+                void OnFinish() override
                 {
                     m_control->SetPos(m_startSize+m_delta, m_control->GetPos().y);
                     m_control->SetHidden(m_bHide);
@@ -202,18 +204,17 @@ namespace Gwk
                     m_bHide = bHide;
                 }
 
-                virtual void OnStart() override
+                void OnStart() override
                 {
                     m_control->SetPos(m_control->GetPos().x, m_startSize);
                 }
 
-                virtual void Run(float delta) override
+                void Run(float delta) override
                 {
-                    m_control->SetPos(m_control->GetPos().x, m_startSize+
-                                      (((float)m_delta)*delta));
+                    m_control->SetPos(m_control->GetPos().x, m_startSize + m_delta * delta);
                 }
 
-                virtual void OnFinish() override
+                void OnFinish() override
                 {
                     m_control->SetPos(m_control->GetPos().x, m_startSize+m_delta);
                     m_control->SetHidden(m_bHide);
@@ -240,7 +241,7 @@ namespace Gwk
                 {
                 }
 
-                virtual void OnFinish() override
+                void OnFinish() override
                 {
                     m_control->DelayedDelete();
                 }

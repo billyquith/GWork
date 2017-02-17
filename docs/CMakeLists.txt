@@ -1,12 +1,12 @@
 # Gwork docs
-# Copyright (c) 2015-2016 Billy Quith
+# Copyright (c) 2013-2017 Nick Trout
 #
 # Portions of this file come from Ponder:
 # 
 ## The MIT License (MIT)
 ## 
 ## Copyright (c) 2009-2014 TEGESO/TEGESOFT
-## Copyright (c) 2015-2016 Billy Quith
+## Copyright (c) 2013-2017 Nick Trout
 ## 
 ## Permission is hereby granted, free of charge, to any person obtaining a copy
 ## of this software and associated documentation files (the "Software"), to deal
@@ -65,15 +65,17 @@ if(DOXYGEN_FOUND)
     )
     
     # directories to scan for documentation
-    set(DOXYGEN_INPUT_DIRS ${DOXYGEN_CODE_DIRS} pages)
+    set(DOXYGEN_INPUT_DIRS ${DOXYGEN_CODE_DIRS} ${CMAKE_CURRENT_SOURCE_DIR}/pages)
 
     # config substitute variables
     set(DOC_PROJECT_NAME "Gwork")
     set(DOC_PROJECT_BRIEF "GUI")
-    set(DOC_LOGO "logo2.png")
+    set(DOC_LOGO "${CMAKE_CURRENT_SOURCE_DIR}/images/logo1.png")
     set(DOC_FILE_PATTERNS "*.c *.cpp *.h *.hpp *.dox")
     STRING(REPLACE ";" " " DOC_INPUT "${DOXYGEN_INPUT_DIRS}") # want space separated
     STRING(REPLACE ";" " " DOC_MACRO_DIRS "${DOXYGEN_CODE_DIRS}") # want space separated
+    set(DOC_STYLESHEET "${CMAKE_CURRENT_SOURCE_DIR}/style/gwkstyle.css")
+    set(DOC_HEADER "${CMAKE_CURRENT_SOURCE_DIR}/style/docheader.html")
 
     # subsitutes to make to patch up docs
     set(PREDEFINES 
@@ -93,7 +95,9 @@ if(DOXYGEN_FOUND)
 
     # copy necessary HTML doc files
     file(GLOB image_files images/*)
-    foreach(file ${image_files})
+    file(GLOB_RECURSE pages_image_files pages/*)
+    set(gwk_doc_images ${image_files} ${pages_image_files})
+    foreach(file ${gwk_doc_images})
         get_filename_component(filename ${file} NAME)
         configure_file(${file} ${DOXYGEN_OUTPUT_DIR}/${DOXYGEN_OUTPUT_TYPE}/${filename} COPYONLY)
     endforeach()

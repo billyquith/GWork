@@ -3,7 +3,7 @@
 
 # setup version numbers
 set(GWK_VERSION_MAJOR 0)
-set(GWK_VERSION_MINOR 1)
+set(GWK_VERSION_MINOR 2)
 set(GWK_VERSION_PATCH 0)
 set(GWK_VERSION_STR "${GWK_VERSION_MAJOR}.${GWK_VERSION_MINOR}.${GWK_VERSION_PATCH}")
 message("Project version: ${GWK_VERSION_STR}")

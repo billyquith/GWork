@@ -1,7 +1,7 @@
 /*
  *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  Copyright (c) 2013-16 Billy Quith
+ *  Copyright (c) 2013-17 Nick Trout
  *  See license in Gwork.h
  */
 
@@ -21,7 +21,7 @@ GWK_CONTROL_CONSTRUCTOR(HorizontalSlider)
 
 float HorizontalSlider::CalculateValue()
 {
-    return (float)m_sliderBar->X()/(float)(Width()-m_sliderBar->Width());
+    return static_cast<float>(m_sliderBar->X()) / (Width() - m_sliderBar->Width());
 }
 
 void HorizontalSlider::UpdateBarFromValue()

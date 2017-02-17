@@ -1,7 +1,7 @@
 /*
  *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  Copyright (c) 2013-16 Billy Quith
+ *  Copyright (c) 2013-17 Nick Trout
  *  See license in Gwork.h
  */
 
@@ -330,7 +330,7 @@ void Base::RemoveAllChildren()
 unsigned int Base::NumChildren()
 {
     // Include m_innerPanel's children here?
-    return (unsigned int)Children.size();
+    return static_cast<unsigned int>(Children.size());
 }
 
 Controls::Base* Base::GetChild(unsigned int i)
@@ -664,12 +664,12 @@ void Base::OnMouseLeave()
     Redraw();
 }
 
-bool Base::IsHovered()
+bool Base::IsHovered() const
 {
     return Gwk::HoveredControl == this;
 }
 
-bool Base::ShouldDrawHover()
+bool Base::ShouldDrawHover() const
 {
     return Gwk::MouseFocus == this || Gwk::MouseFocus == nullptr;
 }

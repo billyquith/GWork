@@ -1,7 +1,7 @@
 /*
  *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  Copyright (c) 2013-16 Billy Quith
+ *  Copyright (c) 2013-17 Nick Trout
  *  See license in Gwork.h
  */
 
@@ -190,7 +190,7 @@ void Base::RenderText(Gwk::Font* font, Gwk::Point pos, const Gwk::String& text)
 Gwk::Point Base::MeasureText(Gwk::Font* font, const Gwk::String& text)
 {
     Gwk::Point p;
-    p.x = font->size*Scale()*(float)text.length()*0.4f;
+    p.x = font->size*Scale() * text.length() * 0.4f;
     p.y = font->size*Scale();
     return p;
 }

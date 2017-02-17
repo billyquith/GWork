@@ -1,7 +1,7 @@
 /*
  *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  Copyright (c) 2013-16 Billy Quith
+ *  Copyright (c) 2013-17 Nick Trout
  *  See license in Gwork.h
  */
 
@@ -25,7 +25,7 @@ namespace Gwk
 
             GWK_CONTROL(Resizer, Dragger);
 
-            virtual void OnMouseMoved(int x, int y, int deltaX, int deltaY) override;
+            void OnMouseMoved(int x, int y, int deltaX, int deltaY) override;
             virtual void SetResizeDir(Position dir);
 
             Event::Listener onResize;

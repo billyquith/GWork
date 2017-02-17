@@ -1,7 +1,7 @@
 /*
  *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  Copyright (c) 2013-16 Billy Quith
+ *  Copyright (c) 2013-17 Nick Trout
  *  See license in Gwork.h
  */
 
@@ -35,13 +35,14 @@ void Button::Render(Skin::Base* skin)
     if (!ShouldDrawBackground())
         return;
 
-    bool bDrawDepressed = IsDepressed() && IsHovered();
+    bool drawDepressed = IsDepressed() && IsHovered();
 
     if (IsToggle())
-        bDrawDepressed = bDrawDepressed || GetToggleState();
+        drawDepressed = drawDepressed || GetToggleState();
 
-    bool bDrawHovered = IsHovered() && ShouldDrawHover();
-    skin->DrawButton(this, bDrawDepressed, bDrawHovered, IsDisabled());
+    const bool drawHovered = IsHovered() && ShouldDrawHover();
+    
+    skin->DrawButton(this, drawDepressed, drawHovered, IsDisabled());
 }
 
 void Button::OnMouseClickLeft(int /*x*/, int /*y*/, bool bDown)
@@ -184,7 +185,7 @@ void Button::AcceleratePressed()
     OnPress(Event::Info(this));
 }
 
-void Button::UpdateColours()
+void Button::UpdateColors()
 {
     if (IsDisabled())
         return SetTextColor(GetSkin()->Colors.Button.Disabled);

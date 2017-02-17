@@ -1,7 +1,7 @@
 /*
  *  Gwork
  *  Copyright (c) 2012 Facepunch Studios
- *  Copyright (c) 2013-2016 Billy Quith
+ *  Copyright (c) 2013-2017 Nick Trout
  *  See license in Gwork.h
  */
 
@@ -240,7 +240,7 @@ void Allegro::DrawTexturedRect(Gwk::Texture* texture, Gwk::Rect rect,
                           0);
 }
 
-Gwk::Color Allegro::PixelColour(Gwk::Texture* texture, unsigned int x, unsigned int y,
+Gwk::Color Allegro::PixelColor(Gwk::Texture* texture, unsigned int x, unsigned int y,
                                  const Gwk::Color& col_default)
 {
     ALLEGRO_BITMAP* bmp = (ALLEGRO_BITMAP*)texture->data;

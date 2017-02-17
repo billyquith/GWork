@@ -1,7 +1,7 @@
 /*
  *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  Copyright (c) 2013-16 Billy Quith
+ *  Copyright (c) 2013-17 Nick Trout
  *  See license in Gwork.h
  */
 
@@ -59,7 +59,7 @@ public:
     void OnSliderMoved(Event::Info info)
     {
         auto slider = static_cast<Gwk::Controls::Slider*>(info.ControlCaller);
-        OutputToLog(Utility::Format("Slider Value: %.2f", (float)slider->GetFloatValue()));
+        OutputToLog(Utility::Format("Slider Value: %.2f", slider->GetFloatValue()));
     }
 
 };

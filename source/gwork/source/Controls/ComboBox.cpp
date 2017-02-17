@@ -1,7 +1,7 @@
 /*
  *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  Copyright (c) 2013-16 Billy Quith
+ *  Copyright (c) 2013-17 Nick Trout
  *  See license in Gwork.h
  */
 
@@ -94,12 +94,12 @@ void ComboBox::Layout(Skin::Base* skin)
     ParentClass::Layout(skin);
 }
 
-void ComboBox::UpdateColours()
+void ComboBox::UpdateColors()
 {
     if (!ShouldDrawBackground())
         return SetTextColor(GetSkin()->Colors.Button.Normal);
 
-    ParentClass::UpdateColours();
+    ParentClass::UpdateColors();
 }
 
 void ComboBox::OnPress(Event::Info)

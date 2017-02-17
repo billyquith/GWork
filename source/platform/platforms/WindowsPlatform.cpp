@@ -1,7 +1,7 @@
 /*
  *  Gwork
  *  Copyright (c) 2011 Facepunch Studios
- *  Copyright (c) 2013-16 Billy Quith
+ *  Copyright (c) 2013-17 Nick Trout
 *  See license in Gwork.h
  */
 
@@ -120,7 +120,7 @@ static double GetPerformanceFrequency()
     {
         __int64 perfFreq;
         QueryPerformanceFrequency((LARGE_INTEGER*)&perfFreq);
-        Frequency = 1.0/(double)perfFreq;
+        Frequency = 1.0 / perfFreq;
     }
 
     return Frequency;

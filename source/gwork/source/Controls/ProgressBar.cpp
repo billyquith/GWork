@@ -1,7 +1,7 @@
 /*
  *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  Copyright (c) 2013-16 Billy Quith
+ *  Copyright (c) 2013-17 Nick Trout
  *  See license in Gwork.h
  */
 
@@ -22,7 +22,7 @@ public:
     :   m_fLastFrame(0.f)
     {}
 
-    virtual void Think() override
+    void Think() override
     {
         float fDiff = Platform::GetTimeInSeconds()-m_fLastFrame;
         gwk_cast<ProgressBar>(m_control)->CycleThink(Gwk::Clamp(fDiff, 0.f, 0.3f));

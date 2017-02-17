@@ -1,7 +1,7 @@
 /*
  *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  Copyright (c) 2013-16 Billy Quith
+ *  Copyright (c) 2013-17 Nick Trout
  *  See license in Gwork.h
  */
 
@@ -109,7 +109,7 @@ bool TabButton::OnKeyRight(bool bDown)
     return true;
 }
 
-void TabButton::UpdateColours()
+void TabButton::UpdateColors()
 {
     if (!IsActive())
     {

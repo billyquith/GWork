@@ -1,7 +1,7 @@
 /*
  *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  Copyright (c) 2013-16 Billy Quith
+ *  Copyright (c) 2013-17 Nick Trout
  *  See license in Gwork.h
  */
 
@@ -65,7 +65,7 @@ namespace Gwk
                 return m_table;
             }
 
-            virtual void Clear() override;
+            void Clear() override;
 
             // Pass through, to embedded table
             void SetColumnCount(int iCount)

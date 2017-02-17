@@ -1,7 +1,7 @@
 /*
  *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  Copyright (c) 2013-16 Billy Quith
+ *  Copyright (c) 2013-17 Nick Trout
  *  See license in Gwork.h
  */
 
@@ -97,8 +97,8 @@ void HorizontalScrollBar::OnMouseClickLeft(int x, int y, bool bDown)
 
 float HorizontalScrollBar::CalculateScrolledAmount()
 {
-    return (float)(m_bar->X()-
-                   GetButtonSize())/(float)(Width()-m_bar->Width()-(GetButtonSize()*2));
+    return static_cast<float>(m_bar->X() - GetButtonSize())
+                                / (Width() - m_bar->Width() - GetButtonSize()*2);
 }
 
 bool HorizontalScrollBar::SetScrolledAmount(float amount, bool forceUpdate)

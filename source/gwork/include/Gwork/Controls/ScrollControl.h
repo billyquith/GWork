@@ -1,7 +1,7 @@
 /*
  *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  Copyright (c) 2013-16 Billy Quith
+ *  Copyright (c) 2013-17 Nick Trout
  *  See license in Gwork.h
  */
 
@@ -28,8 +28,8 @@ namespace Gwk
 
             GWK_CONTROL(ScrollControl, Base);
 
-            virtual void Layout(Skin::Base* skin) override;
-            virtual void Render(Skin::Base* skin) override;
+            void Layout(Skin::Base* skin) override;
+            void Render(Skin::Base* skin) override;
 
             virtual void SetScroll(bool h, bool v);
             virtual void SetAutoHideBars(bool should)
@@ -47,7 +47,7 @@ namespace Gwk
                 return m_bCanScrollV;
             }
 
-            virtual void OnChildBoundsChanged(Gwk::Rect oldChildBounds, Base* child) override;
+            void OnChildBoundsChanged(Gwk::Rect oldChildBounds, Base* child) override;
             virtual void UpdateScrollBars();
 
             virtual void SetVScrollRequired(bool req);
@@ -55,7 +55,10 @@ namespace Gwk
 
             virtual void SetInnerSize(int w, int h);
 
-            virtual bool OnMouseWheeled(int iDelta) override;
+            virtual void OnVBarMoved(Event::Info);
+            virtual void OnHBarMoved(Event::Info);
+
+            bool OnMouseWheeled(int iDelta) override;
 
             virtual void ScrollToBottom();
             virtual void ScrollToTop();
@@ -63,9 +66,6 @@ namespace Gwk
             virtual void ScrollToRight();
 
             virtual void Clear();
-
-            virtual void OnVBarMoved(Event::Info info);
-            virtual void OnHBarMoved(Event::Info info);
 
         protected:
 

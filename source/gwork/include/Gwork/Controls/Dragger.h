@@ -1,7 +1,7 @@
 /*
  *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  Copyright (c) 2013-16 Billy Quith
+ *  Copyright (c) 2013-17 Nick Trout
  *  See license in Gwork.h
  */
 
@@ -24,17 +24,17 @@ namespace Gwk
 
             GWK_CONTROL(Dragger, Controls::Base);
 
-            virtual void OnMouseMoved(int x, int y, int deltaX, int deltaY) override;
+            void OnMouseMoved(int x, int y, int deltaX, int deltaY) override;
 
-            virtual void OnMouseClickLeft(int x, int y, bool bDown) override;
-            virtual void Render(Skin::Base* skin) override;
+            void OnMouseClickLeft(int x, int y, bool bDown) override;
+            void Render(Skin::Base* skin) override;
 
             virtual void SetTarget(Controls::Base* base)
             {
                 m_target = base;
             }
 
-            virtual bool IsDepressed()
+            virtual bool IsDepressed() const
             {
                 return m_bDepressed;
             }
@@ -44,7 +44,7 @@ namespace Gwk
                 m_bDoMove = b;
             }
 
-            virtual void OnMouseDoubleClickLeft(int x, int y) override;
+            void OnMouseDoubleClickLeft(int x, int y) override;
 
             Gwk::Event::Listener onDragged;
             Gwk::Event::Listener onDragStart;
@@ -53,10 +53,10 @@ namespace Gwk
 
         protected:
 
-            bool m_bDepressed;
-            Gwk::Point m_holdPos;
+            bool                m_bDepressed;
+            Gwk::Point          m_holdPos;
             Controls::Base*     m_target;
-            bool m_bDoMove;
+            bool                m_bDoMove;
         };
 
 

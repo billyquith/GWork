@@ -1,7 +1,7 @@
 /*
  *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  Copyright (c) 2013-16 Billy Quith
+ *  Copyright (c) 2013-17 Nick Trout
  *  See license in Gwork.h
  */
 
@@ -31,11 +31,14 @@ namespace Gwk
 
             GWK_CONTROL(BaseScrollBar, Base);
 
-            virtual void Render(Skin::Base* skin) override;
+            void Render(Skin::Base* skin) override;
 
             virtual void SetBarSize(int size) = 0;
             virtual int  GetBarSize() = 0;
             virtual int  GetBarPos() = 0;
+
+            virtual void OnBarMoved(Event::Info);
+            void OnMouseClickLeft(int /*x*/, int /*y*/, bool /*bDown*/) override {}
 
             virtual void ScrollToLeft()     {}
             virtual void ScrollToRight()    {}
@@ -88,9 +91,6 @@ namespace Gwk
 
         protected:
 
-            virtual void OnBarMoved(Event::Info info);
-            virtual void OnMouseClickLeft(int /*x*/, int /*y*/, bool /*bDown*/) override {}
-            
             ControlsInternal::ScrollBarButton* m_scrollButton[2];
             ControlsInternal::ScrollBarBar* m_bar;
 

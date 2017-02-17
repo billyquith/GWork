@@ -1,7 +1,7 @@
 /*
  *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  Copyright (c) 2013-16 Billy Quith
+ *  Copyright (c) 2013-17 Nick Trout
  *  See license in Gwork.h
  */
 
@@ -27,9 +27,9 @@ namespace Gwk
 
             GWK_CONTROL(ComboBox, Button);
 
-            virtual void Render(Skin::Base* skin) override;
-            virtual void Layout(Skin::Base* skin) override;
-            virtual void UpdateColours() override;
+            void Render(Skin::Base* skin) override;
+            void Layout(Skin::Base* skin) override;
+            void UpdateColors() override;
 
             virtual void SelectItem(MenuItem* item, bool bFireChangeEvents =
                                         true);
@@ -37,22 +37,24 @@ namespace Gwk
                                           bool bFireChangeEvents = true);
             virtual Gwk::Controls::Label* GetSelectedItem();
 
+            void OnPress(Event::Info info) override;
+            virtual void OnItemSelected(Event::Info info);
             virtual void OpenList();
             virtual void CloseList();
 
             virtual void ClearItems();
 
             virtual MenuItem* AddItem(const String& strLabel, const String& strName = "");
-            virtual bool      OnKeyUp(bool bDown) override;
-            virtual bool      OnKeyDown(bool bDown) override;
+            bool OnKeyUp(bool bDown) override;
+            bool OnKeyDown(bool bDown) override;
 
-            virtual void RenderFocus(Gwk::Skin::Base* skin) override;
-            virtual void OnLostKeyboardFocus() override;
-            virtual void OnKeyboardFocus() override;
+            void RenderFocus(Gwk::Skin::Base* skin) override;
+            void OnLostKeyboardFocus() override;
+            void OnKeyboardFocus() override;
 
             virtual bool IsMenuOpen();
 
-            virtual bool IsMenuComponent() override
+            bool IsMenuComponent() override
             {
                 return true;
             }
@@ -60,9 +62,6 @@ namespace Gwk
             Gwk::Event::Listener onSelection;
 
         protected:
-
-            virtual void OnPress(Event::Info) override;
-            virtual void OnItemSelected(Event::Info info);
 
             Menu* m_menu;
             MenuItem* m_selectedItem;

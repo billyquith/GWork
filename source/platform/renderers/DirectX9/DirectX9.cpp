@@ -77,8 +77,8 @@ void DirectX9::AddVert(int x, int y)
     if (m_vertNum >= MaxVerts-1)
         Flush();
 
-    m_verts[ m_vertNum ].x = (float)x;
-    m_verts[ m_vertNum ].y = (float)y;
+    m_verts[ m_vertNum ].x = static_cast<float>(x);
+    m_verts[ m_vertNum ].y = static_cast<float>(y);
     m_verts[ m_vertNum ].color = m_color;
     m_vertNum++;
 }
@@ -88,8 +88,8 @@ void DirectX9::AddVert(int x, int y, float u, float v)
     if (m_vertNum >= MaxVerts-1)
         Flush();
 
-    m_verts[ m_vertNum ].x = -0.5f+(float)x;
-    m_verts[ m_vertNum ].y = -0.5f+(float)y;
+    m_verts[ m_vertNum ].x = -0.5f + static_cast<float>(x);
+    m_verts[ m_vertNum ].y = -0.5f + static_cast<float>(y);
     m_verts[ m_vertNum ].u = u;
     m_verts[ m_vertNum ].v = v;
     m_verts[ m_vertNum ].color = m_color;
@@ -242,10 +242,10 @@ void DirectX9::StartClip()
     m_device->SetRenderState(D3DRS_SCISSORTESTENABLE, TRUE);
     const Gwk::Rect& rect = ClipRegion();
     RECT r;
-    r.left = ceil(((float)rect.x)*Scale());
-    r.right = ceil(((float)(rect.x+rect.w))*Scale());
-    r.top = ceil((float)rect.y*Scale());
-    r.bottom = ceil(((float)(rect.y+rect.h))*Scale());
+    r.left = std::ceil(rect.x * Scale());
+    r.right = std::ceil((rect.x + rect.w) * Scale());
+    r.top = std::ceil(rect.y * Scale());
+    r.bottom = std::ceil((rect.y + rect.h) * Scale());
     m_device->SetScissorRect(&r);
 }
 
@@ -311,7 +311,7 @@ void DirectX9::FreeTexture(Gwk::Texture* texture)
     texture->data = nullptr;
 }
 
-Gwk::Color DirectX9::PixelColour(Gwk::Texture* texture, unsigned int x, unsigned int y,
+Gwk::Color DirectX9::PixelColor(Gwk::Texture* texture, unsigned int x, unsigned int y,
                                   const Gwk::Color& col_default)
 {
     IDirect3DTexture9* image = (IDirect3DTexture9*)texture->data;

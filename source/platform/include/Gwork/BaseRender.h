@@ -1,7 +1,7 @@
 /*
  *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  Copyright (c) 2013-16 Billy Quith
+ *  Copyright (c) 2013-17 Nick Trout
  *  See license in Gwork.h
  */
 
@@ -74,7 +74,7 @@ namespace Gwk
 
             virtual void DrawMissingImage(Gwk::Rect targetRect);
 
-            virtual Gwk::Color PixelColour(Gwk::Texture* texture,
+            virtual Gwk::Color PixelColor(Gwk::Texture* texture,
                                            unsigned int x, unsigned int y,
                                            const Gwk::Color& col_default =
                                                                 Gwk::Color(255,255,255,255))

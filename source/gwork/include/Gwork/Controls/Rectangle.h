@@ -1,7 +1,7 @@
 /*
  *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  Copyright (c) 2013-16 Billy Quith
+ *  Copyright (c) 2013-17 Nick Trout
  *  See license in Gwork.h
  */
 
@@ -25,7 +25,7 @@ namespace Gwk
 
             GWK_CONTROL(Rectangle, Controls::Base);
 
-            virtual void Render(Skin::Base* skin) override;
+            void Render(Skin::Base* skin) override;
 
             const Gwk::Color& GetColor()
             {

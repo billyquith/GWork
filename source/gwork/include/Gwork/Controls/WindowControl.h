@@ -1,7 +1,7 @@
 /*
  *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  Copyright (c) 2013-16 Billy Quith
+ *  Copyright (c) 2013-17 Nick Trout
  *  See license in Gwork.h
  */
 
@@ -34,17 +34,17 @@ namespace Gwk
             GWK_CONTROL(WindowControl, ResizableControl);
 
             virtual ~WindowControl();
-            virtual void Render(Skin::Base* skin) override;
-            virtual void RenderUnder(Skin::Base* skin) override;
+            void Render(Skin::Base* skin) override;
+            void RenderUnder(Skin::Base* skin) override;
 
             virtual void SetTitle(Gwk::String title);
 
             virtual void SetClosable(bool closeable);
 
-            virtual void Touch() override;
+            void Touch() override;
             bool         IsOnTop() override;
 
-            virtual void SetHidden(bool hidden) override;
+            void SetHidden(bool hidden) override;
 
             void RenderFocus(Gwk::Skin::Base* skin) override;
             void SetDeleteOnClose(bool b)

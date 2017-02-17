@@ -1,7 +1,7 @@
 /*
  *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  Copyright (c) 2013-16 Billy Quith
+ *  Copyright (c) 2013-17 Nick Trout
  *  See license in Gwork.h
  */
 
@@ -117,17 +117,17 @@ void HSVColorPicker::UpdateControls(Gwk::Color color)
     TextBoxNumeric* redBox = gwk_cast<TextBoxNumeric>(FindChildByName("RedBox", false));
 
     if (redBox)
-        redBox->SetText(Gwk::Utility::ToString((int)color.r), false);
+        redBox->SetText(Gwk::Utility::ToString(color.r), false);
 
     TextBoxNumeric* greenBox = gwk_cast<TextBoxNumeric>(FindChildByName("GreenBox", false));
 
     if (greenBox)
-        greenBox->SetText(Gwk::Utility::ToString((int)color.g), false);
+        greenBox->SetText(Gwk::Utility::ToString(color.g), false);
 
     TextBoxNumeric* blueBox = gwk_cast<TextBoxNumeric>(FindChildByName("BlueBox", false));
 
     if (blueBox)
-        blueBox->SetText(Gwk::Utility::ToString((int)color.b), false);
+        blueBox->SetText(Gwk::Utility::ToString(color.b), false);
 
     m_after->SetColor(color);
 }

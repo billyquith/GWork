@@ -1,7 +1,7 @@
 /*
  *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  Copyright (c) 2013-16 Billy Quith
+ *  Copyright (c) 2013-17 Nick Trout
  *  See license in Gwork.h
  */
 
@@ -62,7 +62,7 @@ namespace Gwk
             
         private:
 
-            virtual void PostLayout(Skin::Base* skin) override;
+            void PostLayout(Skin::Base* skin) override;
             void         HandleOverflow();
 
             void OnScrollPressLeft(Event::Info);

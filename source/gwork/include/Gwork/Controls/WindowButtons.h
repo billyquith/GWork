@@ -1,7 +1,7 @@
 /*
  *  Gwork
  *  Copyright (c) 2012 Facepunch Studios
- *  Copyright (c) 2015-2016 Billy Quith
+ *  Copyright (c) 2013-2017 Nick Trout
  *  See license in Gwork.h
  */
 
@@ -27,7 +27,7 @@ namespace Gwk
                 SetText("");
             }
 
-            virtual void Render(Skin::Base* skin) override
+            void Render(Skin::Base* skin) override
             {
                 if (!m_window)
                     return;
@@ -56,7 +56,7 @@ namespace Gwk
                 m_bMaximized = false;
             }
 
-            virtual void Render(Skin::Base* skin) override
+            void Render(Skin::Base* skin) override
             {
                 if (!m_window)
                     return;

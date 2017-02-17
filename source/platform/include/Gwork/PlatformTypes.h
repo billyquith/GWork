@@ -1,7 +1,7 @@
 /*
  *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  Copyright (c) 2013-16 Billy Quith
+ *  Copyright (c) 2013-17 Nick Trout
  *  See license in Gwork.h
  */
 
@@ -105,11 +105,7 @@ namespace Gwk
 
         Rect operator + (const Rect& rct) const
         {
-            Rect m;
-            m.x = x+rct.x;
-            m.y = y+rct.y;
-            m.w = w+rct.w;
-            m.h = h+rct.h;
+            const Rect m(x + rct.x, y + rct.y, w + rct.w, h + rct.h);
             return m;
         }
         
@@ -148,18 +144,18 @@ namespace Gwk
 
         void operator += (Color c)
         {
-            r += c.r;
-            g += c.g;
-            b += c.b;
-            a += c.a;
+            r = static_cast<unsigned char>(r + c.r);
+            g = static_cast<unsigned char>(g + c.g);
+            b = static_cast<unsigned char>(b + c.b);
+            a = static_cast<unsigned char>(a + c.a);
         }
 
         void operator -= (Color c)
         {
-            r -= c.r;
-            g -= c.g;
-            b -= c.b;
-            a -= c.a;
+            r = static_cast<unsigned char>(r - c.r);
+            g = static_cast<unsigned char>(g - c.g);
+            b = static_cast<unsigned char>(b - c.b);
+            a = static_cast<unsigned char>(a - c.a);
         }
 
         void operator *= (float f)
@@ -169,17 +165,32 @@ namespace Gwk
 
         Color operator * (float f) const
         {
-            return Color(f*r, f*g, f*b, f*a);
+            return Color(
+                    static_cast<unsigned char>(f*r),
+                    static_cast<unsigned char>(f*g),
+                    static_cast<unsigned char>(f*b),
+                    static_cast<unsigned char>(f*a)
+                    );
         }
 
         Color operator - (Color c) const
         {
-            return Color(r - c.r, g - c.g, b - c.b, a - c.a);
+            return Color(
+                    static_cast<unsigned char>(r - c.r),
+                    static_cast<unsigned char>(g - c.g),
+                    static_cast<unsigned char>(b - c.b),
+                    static_cast<unsigned char>(a - c.a)
+                    );
         }
 
         Color operator + (Color c) const
         {
-            return Color(r + c.r, g + c.g, b + c.b, a + c.a);
+            return Color(
+                    static_cast<unsigned char>(r + c.r),
+                    static_cast<unsigned char>(g + c.g),
+                    static_cast<unsigned char>(b + c.b),
+                    static_cast<unsigned char>(a + c.a)
+                    );
         }
 
         bool operator == (const Color& c) const

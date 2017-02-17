@@ -1,7 +1,7 @@
 /*
  *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  Copyright (c) 2013-16 Billy Quith
+ *  Copyright (c) 2013-17 Nick Trout
  *  See license in Gwork.h
  */
 
@@ -70,7 +70,7 @@ namespace Gwk
             virtual unsigned int    NumChildren();
             virtual Controls::Base* GetChild(unsigned int i);
             virtual bool            SizeToChildren(bool w = true, bool h = true);
-            virtual Gwk::Point     ChildrenSize();
+            virtual Gwk::Point      ChildrenSize();
             virtual Controls::Base* FindChildByName(const Gwk::String& name,
                                                     bool bRecursive = false);
 
@@ -286,8 +286,8 @@ namespace Gwk
             virtual bool OnKeyDown(bool /*bDown*/)          { return false; }
             virtual bool OnKeyEscape(bool /*bDown*/)        { return false; }
             
-            virtual bool IsHovered();
-            virtual bool ShouldDrawHover();
+            virtual bool IsHovered() const;
+            virtual bool ShouldDrawHover() const;
 
             virtual void Touch();
             virtual void OnChildTouched(Controls::Base* child);
@@ -298,13 +298,13 @@ namespace Gwk
             virtual void Focus();
             virtual void Unfocus();
 
-            // Other
             virtual void SetDisabled(bool active)
             {
                 if (m_bDisabled == active)
                     return;
 
-                m_bDisabled = active; Redraw();
+                m_bDisabled = active;
+                Redraw();
             }
 
             virtual bool IsDisabled()
@@ -314,17 +314,17 @@ namespace Gwk
 
             virtual void Redraw()
             {
-                UpdateColours();
+                UpdateColors();
                 m_bCacheTextureDirty = true;
 
                 if (m_parent)
                     m_parent->Redraw();
             }
 
-            virtual void UpdateColours()    {}
+            virtual void UpdateColors() {}
 
             //! Enable caching to texture optimisation for this control.
-            //! @Note Must have GetCTT() implemented in the Renderer.
+            //! @note Must have GetCTT() implemented in the Renderer.
             virtual void EnableCacheToTexture()     { m_bCacheToTexture = true; }
             
             //! Query if this control is cached to a texture.
@@ -646,7 +646,7 @@ namespace Gwk
         static const char* ident = #BASENAME ":" #THISNAME;             \
         return ident;                                                   \
     }                                                                   \
-    virtual Gwk::Controls::Base* DynamicCast(const char* Variable) override \
+    Gwk::Controls::Base* DynamicCast(const char* Variable) override \
     {                                                                   \
         if (GetIdentifier() == Variable)                                \
             return this;                                                \
@@ -664,9 +664,8 @@ public: \
     GWK_CLASS(THISNAME, BASENAME)  \
     GWK_DYNAMIC(THISNAME, BASENAME) \
     static  const char* GetTypeNameStatic() { return #THISNAME; } \
-    virtual const char* GetTypeName() const override { return GetTypeNameStatic(); } \
-    virtual const char* GetParentTypeName() const override \
-        { return ParentClass::GetTypeNameStatic(); } \
+    const char* GetTypeName() const override { return GetTypeNameStatic(); } \
+    const char* GetParentTypeName() const override { return ParentClass::GetTypeNameStatic(); } \
     THISNAME(Gwk::Controls::Base* parent, const Gwk::String& name = "")
 
 #define GWK_CONTROL_INLINE(THISNAME, BASENAME) \

@@ -1,7 +1,7 @@
 /*
  *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  Copyright (c) 2013-16 Billy Quith
+ *  Copyright (c) 2013-17 Nick Trout
  *  See license in Gwork.h
  */
 
@@ -10,6 +10,7 @@
 #include <Gwork/Utility.h>
 #include <Gwork/Skin.h>
 #include <Gwork/Controls/NumericUpDown.h>
+#include <cmath>
 
 using namespace Gwk;
 using namespace Gwk::Controls;
@@ -56,7 +57,7 @@ void NumericUpDown::SyncTextFromNumber()
 
 void NumericUpDown::SyncNumberFromText()
 {
-    SetIntValue((int)GetFloatFromText());
+    SetIntValue(static_cast<int>(std::lround(GetFloatFromText())));
 }
 
 void NumericUpDown::SetMin(int i)

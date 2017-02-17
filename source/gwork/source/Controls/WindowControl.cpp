@@ -1,7 +1,7 @@
 /*
  *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  Copyright (c) 2013-16 Billy Quith
+ *  Copyright (c) 2013-17 Nick Trout
  *  See license in Gwork.h
  */
 
@@ -21,18 +21,21 @@ GWK_CONTROL_CONSTRUCTOR(WindowControl)
 {
     m_modal = nullptr;
     m_bDeleteOnClose = false;
+    
     m_titleBar = new Dragger(this);
     m_titleBar->SetHeight(24);
     m_titleBar->SetPadding(Padding(0, 0, 0, 0));
     m_titleBar->SetMargin(Margin(0, 0, 0, 4));
     m_titleBar->SetTarget(this);
     m_titleBar->Dock(Position::Top);
+    
     m_title = new Label(m_titleBar);
     m_title->SetAlignment(Position::Left|Position::CenterV);
     m_title->SetText("Window");
     m_title->Dock(Position::Fill);
     m_title->SetPadding(Padding(8, 0, 0, 0));
     m_title->SetTextColor(GetSkin()->Colors.Window.TitleInactive);
+    
     m_closeButton = new Gwk::Controls::WindowCloseButton(m_titleBar);
     m_closeButton->SetText("");
     m_closeButton->Dock(Position::Right);
@@ -40,11 +43,15 @@ GWK_CONTROL_CONSTRUCTOR(WindowControl)
     m_closeButton->SetTabable(false);
     m_closeButton->SetName("closeButton");
     m_closeButton->SetWindow(this);
+    
     // Create a blank content control, dock it to the top - Should this be a
     // ScrollControl?
     m_innerPanel = new Base(this);
     m_innerPanel->Dock(Position::Fill);
-    GetResizer(8)->Hide();
+    
+    // hide the top resizer as we don't want it for window, we have a Dragger
+    GetResizer(3)->Hide();  // TODO - hack
+    
     BringToFront();
     SetTabable(false);
     Focus();

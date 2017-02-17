@@ -1,7 +1,7 @@
 /*
  *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  Copyright (c) 2013-16 Billy Quith
+ *  Copyright (c) 2013-17 Nick Trout
  *  See license in Gwork.h
  */
 
@@ -25,7 +25,7 @@ class ChangeCaretColor : public Gwk::Anim::Animation
 {
 public:
 
-    virtual void Think() override
+    void Think() override
     {
         gwk_cast<TextBox>(m_control)->UpdateCaretColor();
     }
@@ -82,7 +82,7 @@ void TextBox::InsertText(const Gwk::String& strInsert)
     String str = GetText();
     str.insert(m_cursorPos, strInsert);
     SetText(str);
-    m_cursorPos += (int)strInsert.size();
+    m_cursorPos += static_cast<int>(strInsert.size());
     m_cursorEnd = m_cursorPos;
     m_cursorLine = 0;
     RefreshCursorBounds();

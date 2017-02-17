@@ -1,7 +1,7 @@
 /*
  *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  Copyright (c) 2013-16 Billy Quith
+ *  Copyright (c) 2013-17 Nick Trout
  *  See license in Gwork.h
  */
 
@@ -21,9 +21,9 @@ namespace Gwk
     {
         namespace Internal
         {
-            class ColourButton : public Button
+            class ColorButton : public Button
             {
-                GWK_CONTROL_INLINE(ColourButton, Button)
+                GWK_CONTROL_INLINE(ColorButton, Button)
                 {
                     m_color = Colors::Black;
                     SetText("");
@@ -52,7 +52,7 @@ namespace Gwk
             {
                 GWK_CONTROL_INLINE(ColorSelector, Property::Text)
                 {
-                    m_button = new Controls::Internal::ColourButton(m_textBox);
+                    m_button = new Controls::Internal::ColorButton(m_textBox);
                     m_button->Dock(Position::Right);
                     m_button->SetWidth(20);
                     m_button->onPress.Add(this, &ThisClass::OnButtonPress);
@@ -87,22 +87,22 @@ namespace Gwk
                     DoChanged();
                 }
 
-                virtual String GetPropertyValue() override
+                String GetPropertyValue() override
                 {
                     return m_textBox->GetText();
                 }
 
-                virtual void SetPropertyValue(const String& v, bool bFireChangeEvents) override
+                void SetPropertyValue(const String& v, bool bFireChangeEvents) override
                 {
                     m_textBox->SetText(v, bFireChangeEvents);
                 }
 
-                virtual bool IsEditing() override
+                bool IsEditing() override
                 {
                     return m_textBox == Gwk::KeyboardFocus;
                 }
 
-                virtual void DoChanged() override
+                void DoChanged() override
                 {
                     ParentClass::DoChanged();
                     unsigned int r,g,b;
@@ -116,7 +116,7 @@ namespace Gwk
                     }
                 }
 
-                Controls::Internal::ColourButton*       m_button;
+                Controls::Internal::ColorButton*       m_button;
             };
 
 

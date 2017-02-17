@@ -1,7 +1,7 @@
 /*
  *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  Copyright (c) 2013-16 Billy Quith
+ *  Copyright (c) 2013-17 Nick Trout
  *  See license in Gwork.h
  *
  *  The colourspace conversion functions al_color_hsv_to_rgb & al_color_rgb_to_hsv are
@@ -163,8 +163,8 @@ void ColorLerpBox::OnMouseClickLeft(int x, int y, bool bDown)
 
 Gwk::Color ColorLerpBox::GetColorAtPos(int x, int y)
 {
-    float xPercent = (float)x / (float)Width();
-    float yPercent = 1.f - (float)y/(float)Height();
+    float xPercent = static_cast<float>(x) / Width();
+    float yPercent = 1.f - static_cast<float>(y) / Height();
     Gwk::Color result = HSVToColor(m_hue, xPercent, yPercent);
     result.a = 255;
     return result;
@@ -212,7 +212,7 @@ void ColorSlider::Render(Gwk::Skin::Base* skin)
 
     for (int y = 0; y < Height(); y++)
     {
-        float yPercent = (float)y/(float)Height();
+        const float yPercent = static_cast<float>(y) / Height();
         skin->GetRender()->SetDrawColor(HSVToColor(yPercent*360, 1, 1));
         skin->GetRender()->DrawFilledRect(Gwk::Rect(5, y, Width()-10, 1));
     }
@@ -242,7 +242,7 @@ void ColorSlider::OnMouseClickLeft(int x, int y, bool bDown)
 
 Gwk::Color ColorSlider::GetColorAtHeight(int y)
 {
-    float yPercent = (float)y/(float)Height();
+    const float yPercent = static_cast<float>(y) / Height();
     return HSVToColor(yPercent*360, 1, 1);
 }
 

@@ -1,7 +1,7 @@
 /*
  *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  Copyright (c) 2013-16 Billy Quith
+ *  Copyright (c) 2013-17 Nick Trout
  *  See license in Gwork.h
  */
 
@@ -30,7 +30,7 @@ namespace Gwk
                 m_title->SetTextColorOverride(GetSkin()->Colors.Properties.Title);
             }
 
-            virtual void Render(Skin::Base* skin) override
+            void Render(Skin::Base* skin) override
             {
                 skin->DrawPropertyTreeNode(this, m_innerPanel->X(), m_innerPanel->Y());
             }

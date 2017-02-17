@@ -1,7 +1,7 @@
 /*
  *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  Copyright (c) 2013-16 Billy Quith
+ *  Copyright (c) 2013-17 Nick Trout
  *  See license in Gwork.h
  */
 
@@ -197,7 +197,7 @@ bool Gwk::Input::OnMouseClicked(Controls::Base* canvas, int iMouseButton, bool b
     if (Gwk::HoveredControl == canvas)
         return false;
 
-    if (iMouseButton > c_MaxMouseButtons)
+    if (iMouseButton > static_cast<int>(c_MaxMouseButtons))
         return false;
 
     if (iMouseButton == 0)

@@ -1,7 +1,7 @@
 /*
  *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  Copyright (c) 2013-16 Billy Quith
+ *  Copyright (c) 2013-17 Nick Trout
  *  See license in Gwork.h
  */
 
@@ -102,8 +102,8 @@ void VerticalScrollBar::OnMouseClickLeft(int x, int y, bool bDown)
 
 float VerticalScrollBar::CalculateScrolledAmount()
 {
-    return (float)(m_bar->Y()-
-                   GetButtonSize())/(float)(Height()-m_bar->Height()-(GetButtonSize()*2));
+    return static_cast<float>(m_bar->Y() - GetButtonSize())
+        / (Height() - m_bar->Height() - GetButtonSize()*2);
 }
 
 bool VerticalScrollBar::SetScrolledAmount(float amount, bool forceUpdate)
@@ -115,7 +115,8 @@ bool VerticalScrollBar::SetScrolledAmount(float amount, bool forceUpdate)
 
     if (forceUpdate)
     {
-        int newY = GetButtonSize()+(amount*((Height()-m_bar->Height())-(GetButtonSize()*2)));
+        const int newY = GetButtonSize()
+            + amount * (Height() - m_bar->Height() - GetButtonSize()*2);
         m_bar->MoveTo(m_bar->X(), newY);
     }
 

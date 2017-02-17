@@ -1,7 +1,7 @@
 /*
  *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  Copyright (c) 2013-16 Billy Quith
+ *  Copyright (c) 2013-17 Nick Trout
  *  See license in Gwork.h
  */
 
@@ -223,7 +223,7 @@ void OpenGL::FreeTexture(Gwk::Texture* texture)
     texture->data = nullptr;
 }
 
-Gwk::Color OpenGL::PixelColour(Gwk::Texture* texture, unsigned int x, unsigned int y,
+Gwk::Color OpenGL::PixelColor(Gwk::Texture* texture, unsigned int x, unsigned int y,
                                const Gwk::Color& col_default)
 {
     GLuint* tex = (GLuint*)texture->data;

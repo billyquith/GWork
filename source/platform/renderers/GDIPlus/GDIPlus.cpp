@@ -176,7 +176,7 @@ void GDIPlus::FreeTexture(Gwk::Texture* texture)
     delete image;
 }
 
-Gwk::Color GDIPlus::PixelColour(Gwk::Texture* texture, unsigned int x, unsigned int y,
+Gwk::Color GDIPlus::PixelColor(Gwk::Texture* texture, unsigned int x, unsigned int y,
                                  const Gwk::Color& col_default)
 {
     Gdiplus::Bitmap* image = (Gdiplus::Bitmap*)texture->data;

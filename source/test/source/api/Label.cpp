@@ -1,7 +1,7 @@
 /*
  *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  Copyright (c) 2013-16 Billy Quith
+ *  Copyright (c) 2013-17 Nick Trout
  *  See license in Gwork.h
  */
 
@@ -62,14 +62,14 @@ public:
         }
         {
             Gwk::Controls::Label* label = new Gwk::Controls::Label(this);
-            label->SetText("Wow, Coloured Text");
+            label->SetText("Wow, Colored Text");
             label->SetTextColor(Gwk::Color(0, 0, 255, 255));
             label->SizeToContents();
             label->SetPos(10, 130);
         }
         {
             Gwk::Controls::Label* label = new Gwk::Controls::Label(this);
-            label->SetText("Coloured Text With Alpha");
+            label->SetText("Colored Text With Alpha");
             label->SetTextColor(Gwk::Color(0, 0, 255, 100));
             label->SizeToContents();
             label->SetPos(10, 150);

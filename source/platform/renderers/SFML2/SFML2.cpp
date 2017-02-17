@@ -1,7 +1,7 @@
 /*
  *  Gwork
  *  Copyright (c) 2012 Facepunch Studios
- *  Copyright (c) 2013-2016 Billy Quith
+ *  Copyright (c) 2013-2017 Nick Trout
  *  See license in Gwork.h
  */
 
@@ -290,7 +290,7 @@ void Gwk::Renderer::SFML2::FreeTexture(Gwk::Texture* texture)
     texture->data = nullptr;
 }
 
-Gwk::Color Gwk::Renderer::SFML2::PixelColour(Gwk::Texture* texture, unsigned int x,
+Gwk::Color Gwk::Renderer::SFML2::PixelColor(Gwk::Texture* texture, unsigned int x,
                                              unsigned int y, const Gwk::Color& col_default)
 {
     TextureData* data = static_cast<TextureData*>(texture->data);

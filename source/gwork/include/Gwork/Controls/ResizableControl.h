@@ -1,7 +1,7 @@
 /*
  *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  Copyright (c) 2013-16 Billy Quith
+ *  Copyright (c) 2013-17 Nick Trout
  *  See license in Gwork.h
  */
 
@@ -17,6 +17,7 @@
 #include <Gwork/Controls/Resizer.h>
 #include <Gwork/Gwork.h>
 #include <Gwork/Skin.h>
+#include <array>
 
 namespace Gwk
 {
@@ -43,24 +44,24 @@ namespace Gwk
                 m_minimumSize = minSize;
             }
 
-            virtual Gwk::Point GetMinimumSize() override
+            Gwk::Point GetMinimumSize() override
             {
                 return m_minimumSize;
             }
 
             virtual void DisableResizing();
 
-            virtual bool SetBounds(int x, int y, int w, int h) override;
+            bool SetBounds(int x, int y, int w, int h) override;
 
             virtual void OnResized()
             {
             }
 
             Event::Listener onResize;
-
-            virtual ControlsInternal::Resizer* GetResizer(int iResizer)
+            
+            virtual ControlsInternal::Resizer* GetResizer(int iResizer) // TODO - remove this?
             {
-                return m_resizer[iResizer];
+                return m_resizers[iResizer];
             }
 
         protected:
@@ -71,9 +72,7 @@ namespace Gwk
             bool m_bClampMovement;
             bool m_bResizable;
 
-            ControlsInternal::Resizer* m_resizer[10];
-
-
+            std::array<ControlsInternal::Resizer*, 8> m_resizers;
         };
 
 

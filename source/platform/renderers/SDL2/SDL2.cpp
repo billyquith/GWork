@@ -187,7 +187,7 @@ void SDL2::DrawTexturedRect(Gwk::Texture* texture, Gwk::Rect rect,
     SDL_RenderCopy(m_renderer, tex, &source, &dest);
 }
 
-Gwk::Color SDL2::PixelColour(Gwk::Texture* texture, unsigned int x, unsigned int y,
+Gwk::Color SDL2::PixelColor(Gwk::Texture* texture, unsigned int x, unsigned int y,
                               const Gwk::Color& col_default)
 {
     SDL_Surface *surf = static_cast<SDL_Surface*>(texture->surface);

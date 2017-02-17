@@ -1,7 +1,7 @@
 /*
  *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  Copyright (c) 2013-16 Billy Quith
+ *  Copyright (c) 2013-17 Nick Trout
  *  See license in Gwork.h
  */
 
@@ -431,7 +431,7 @@ namespace Gwk
                                  float progress) override
             {
                 Gwk::Rect rect = control->GetRenderBounds();
-                Gwk::Color FillColour(0, 211, 40, 255);
+                Gwk::Color FillColor(0, 211, 40, 255);
 
                 if (isHorizontal)
                 {
@@ -439,7 +439,7 @@ namespace Gwk
                     m_render->SetDrawColor(m_colControlDark);
                     m_render->DrawFilledRect(Gwk::Rect(1, 1, rect.w-2, rect.h-2));
                     //Right half
-                    m_render->SetDrawColor(FillColour);
+                    m_render->SetDrawColor(FillColor);
                     m_render->DrawFilledRect(Gwk::Rect(1, 1, rect.w*progress-2, rect.h-2));
                     m_render->SetDrawColor(Gwk::Color(255, 255, 255, 150));
                     m_render->DrawFilledRect(Gwk::Rect(1, 1, rect.w-2, rect.h*0.45f));
@@ -450,7 +450,7 @@ namespace Gwk
                     m_render->SetDrawColor(m_colControlDark);
                     m_render->DrawFilledRect(Gwk::Rect(1, 1, rect.w-2, rect.h-2));
                     //Top half
-                    m_render->SetDrawColor(FillColour);
+                    m_render->SetDrawColor(FillColor);
                     m_render->DrawFilledRect(Gwk::Rect(1, 1+(rect.h*(1-progress)),
                                                         rect.w-2, rect.h*progress-2));
                     m_render->SetDrawColor(Gwk::Color(255, 255, 255, 150));

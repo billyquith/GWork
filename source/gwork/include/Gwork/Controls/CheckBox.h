@@ -1,7 +1,7 @@
 /*
  *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  Copyright (c) 2013-16 Billy Quith
+ *  Copyright (c) 2013-17 Nick Trout
  *  See license in Gwork.h
  */
 
@@ -25,11 +25,11 @@ namespace Gwk
 
             GWK_CONTROL(CheckBox, Button);
 
-            virtual void Render(Skin::Base* skin) override;
-            virtual void OnPress(Event::Info) override;
+            void Render(Skin::Base* skin) override;
+            void OnPress(Event::Info) override;
 
             virtual void SetChecked(bool Checked);
-            virtual void Toggle() override
+            void Toggle() override
             {
                 SetChecked(!IsChecked());
             }
@@ -85,7 +85,7 @@ namespace Gwk
                 return m_label;
             }
 
-            virtual bool OnKeySpace(bool bDown) override
+            bool OnKeySpace(bool bDown) override
             {
                 if (!bDown)
                     m_checkbox->SetChecked(!m_checkbox->IsChecked());

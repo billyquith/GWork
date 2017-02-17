@@ -1,7 +1,7 @@
 /*
  *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  Copyright (c) 2013-16 Billy Quith
+ *  Copyright (c) 2013-17 Nick Trout
  *  See license in Gwork.h
  */
 
@@ -48,7 +48,7 @@ namespace Gwk
 
             int Length() const
             {
-                return (int)m_string.size();
+                return static_cast<int>(m_string.size());
             }
 
             virtual void SetTextColor(const Gwk::Color& col)
@@ -61,7 +61,7 @@ namespace Gwk
                 m_colorOverride = col;
             }
 
-            virtual void OnScaleChanged() override;
+            void OnScaleChanged() override;
 
             inline const Gwk::Color& TextColor() const
             {

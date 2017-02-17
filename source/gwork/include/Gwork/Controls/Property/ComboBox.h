@@ -1,7 +1,7 @@
 /*
  *  Gwork
  *  Copyright (c) 2012 Facepunch Studios
- *  Copyright (c) 2015-2016 Billy Quith
+ *  Copyright (c) 2013-2017 Nick Trout
  *  See license in Gwork.h
  */
 
@@ -33,7 +33,7 @@ namespace Gwk
                     SetHeight(18);
                 }
 
-                virtual String GetPropertyValue() override
+                String GetPropertyValue() override
                 {
                     Gwk::Controls::Label* control = m_comboBox->GetSelectedItem();
 
@@ -43,17 +43,17 @@ namespace Gwk
                     return control->GetName();
                 }
 
-                virtual void SetPropertyValue(const String& val, bool bFireChangeEvents) override
+                void SetPropertyValue(const String& val, bool bFireChangeEvents) override
                 {
                     m_comboBox->SelectItemByName(val, bFireChangeEvents);
                 }
 
-                virtual bool IsEditing() override
+                bool IsEditing() override
                 {
                     return m_comboBox->IsFocussed();
                 }
 
-                virtual bool IsHovered() override
+                bool IsHovered() const override
                 {
                     return ParentClass::IsHovered() || m_comboBox->IsHovered();
                 }

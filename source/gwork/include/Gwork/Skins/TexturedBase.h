@@ -1,7 +1,7 @@
 /*
  *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  Copyright (c) 2013-16 Billy Quith
+ *  Copyright (c) 2013-17 Nick Trout
  *  See license in Gwork.h
  */
 
@@ -302,55 +302,55 @@ namespace Gwk
                 m_texture.readable = true;
                 GetRender()->LoadTexture(&m_texture); // Readable texture
 
-                Colors.Window.TitleActive   = GetRender()->PixelColour( &m_texture, 4 + 8 * 0, 508, Color( 255, 0, 0 ) );
-                Colors.Window.TitleInactive = GetRender()->PixelColour( &m_texture, 4 + 8 * 1, 508, Color( 255, 255, 0 ) );
-                Colors.Button.Normal        = GetRender()->PixelColour( &m_texture, 4 + 8 * 2, 508, Color( 255, 255, 0 ) );
-                Colors.Button.Hover         = GetRender()->PixelColour( &m_texture, 4 + 8 * 3, 508, Color( 255, 255, 0 ) );
-                Colors.Button.Down          = GetRender()->PixelColour( &m_texture, 4 + 8 * 2, 500, Color( 255, 255, 0 ) );
-                Colors.Button.Disabled      = GetRender()->PixelColour( &m_texture, 4 + 8 * 3, 500, Color( 255, 255, 0 ) );
-                Colors.Tab.Active.Normal        = GetRender()->PixelColour( &m_texture, 4 + 8 * 4, 508, Color( 255, 255, 0 ) );
-                Colors.Tab.Active.Hover         = GetRender()->PixelColour( &m_texture, 4 + 8 * 5, 508, Color( 255, 255, 0 ) );
-                Colors.Tab.Active.Down          = GetRender()->PixelColour( &m_texture, 4 + 8 * 4, 500, Color( 255, 255, 0 ) );
-                Colors.Tab.Active.Disabled      = GetRender()->PixelColour( &m_texture, 4 + 8 * 5, 500, Color( 255, 255, 0 ) );
-                Colors.Tab.Inactive.Normal      = GetRender()->PixelColour( &m_texture, 4 + 8 * 6, 508, Color( 255, 255, 0 ) );
-                Colors.Tab.Inactive.Hover       = GetRender()->PixelColour( &m_texture, 4 + 8 * 7, 508, Color( 255, 255, 0 ) );
-                Colors.Tab.Inactive.Down        = GetRender()->PixelColour( &m_texture, 4 + 8 * 6, 500, Color( 255, 255, 0 ) );
-                Colors.Tab.Inactive.Disabled    = GetRender()->PixelColour( &m_texture, 4 + 8 * 7, 500, Color( 255, 255, 0 ) );
-                Colors.Label.Default            = GetRender()->PixelColour( &m_texture, 4 + 8 * 8, 508, Color( 255, 255, 0 ) );
-                Colors.Label.Bright             = GetRender()->PixelColour( &m_texture, 4 + 8 * 9, 508, Color( 255, 255, 0 ) );
-                Colors.Label.Dark               = GetRender()->PixelColour( &m_texture, 4 + 8 * 8, 500, Color( 255, 255, 0 ) );
-                Colors.Label.Highlight          = GetRender()->PixelColour( &m_texture, 4 + 8 * 9, 500, Color( 255, 255, 0 ) );
-                Colors.Tree.Lines               = GetRender()->PixelColour( &m_texture, 4 + 8 * 10, 508, Color( 255, 255, 0 ) );
-                Colors.Tree.Normal              = GetRender()->PixelColour( &m_texture, 4 + 8 * 11, 508, Color( 255, 255, 0 ) );
-                Colors.Tree.Hover               = GetRender()->PixelColour( &m_texture, 4 + 8 * 10, 500, Color( 255, 255, 0 ) );
-                Colors.Tree.Selected            = GetRender()->PixelColour( &m_texture, 4 + 8 * 11, 500, Color( 255, 255, 0 ) );
-                Colors.Properties.Line_Normal       = GetRender()->PixelColour( &m_texture, 4 + 8 * 12, 508, Color( 255, 255, 0 ) );
-                Colors.Properties.Line_Selected     = GetRender()->PixelColour( &m_texture, 4 + 8 * 13, 508, Color( 255, 255, 0 ) );
-                Colors.Properties.Line_Hover        = GetRender()->PixelColour( &m_texture, 4 + 8 * 12, 500, Color( 255, 255, 0 ) );
-                Colors.Properties.Title             = GetRender()->PixelColour( &m_texture, 4 + 8 * 13, 500, Color( 255, 255, 0 ) );
-                Colors.Properties.Column_Normal     = GetRender()->PixelColour( &m_texture, 4 + 8 * 14, 508, Color( 255, 255, 0 ) );
-                Colors.Properties.Column_Selected   = GetRender()->PixelColour( &m_texture, 4 + 8 * 15, 508, Color( 255, 255, 0 ) );
-                Colors.Properties.Column_Hover      = GetRender()->PixelColour( &m_texture, 4 + 8 * 14, 500, Color( 255, 255, 0 ) );
-                Colors.Properties.Border            = GetRender()->PixelColour( &m_texture, 4 + 8 * 15, 500, Color( 255, 255, 0 ) );
-                Colors.Properties.Label_Normal      = GetRender()->PixelColour( &m_texture, 4 + 8 * 16, 508, Color( 255, 255, 0 ) );
-                Colors.Properties.Label_Selected    = GetRender()->PixelColour( &m_texture, 4 + 8 * 17, 508, Color( 255, 255, 0 ) );
-                Colors.Properties.Label_Hover       = GetRender()->PixelColour( &m_texture, 4 + 8 * 16, 500, Color( 255, 255, 0 ) );
-                Colors.ModalBackground              = GetRender()->PixelColour( &m_texture, 4 + 8 * 18, 508, Color( 255, 255, 0 ) );
-                Colors.TooltipText                  = GetRender()->PixelColour( &m_texture, 4 + 8 * 19, 508, Color( 255, 255, 0 ) );
-                Colors.Category.Header              = GetRender()->PixelColour( &m_texture, 4 + 8 * 18, 500, Color( 255, 255, 0 ) );
-                Colors.Category.Header_Closed       = GetRender()->PixelColour( &m_texture, 4 + 8 * 19, 500, Color( 255, 255, 0 ) );
-                Colors.Category.Line.Text           = GetRender()->PixelColour( &m_texture, 4 + 8 * 20, 508, Color( 255, 255, 0 ) );
-                Colors.Category.Line.Text_Hover     = GetRender()->PixelColour( &m_texture, 4 + 8 * 21, 508, Color( 255, 255, 0 ) );
-                Colors.Category.Line.Text_Selected  = GetRender()->PixelColour( &m_texture, 4 + 8 * 20, 500, Color( 255, 255, 0 ) );
-                Colors.Category.Line.Button         = GetRender()->PixelColour( &m_texture, 4 + 8 * 21, 500, Color( 255, 255, 0 ) );
-                Colors.Category.Line.Button_Hover   = GetRender()->PixelColour( &m_texture, 4 + 8 * 22, 508, Color( 255, 255, 0 ) );
-                Colors.Category.Line.Button_Selected = GetRender()->PixelColour( &m_texture, 4 + 8 * 23, 508, Color( 255, 255, 0 ) );
-                Colors.Category.LineAlt.Text            = GetRender()->PixelColour( &m_texture, 4 + 8 * 22, 500, Color( 255, 255, 0 ) );
-                Colors.Category.LineAlt.Text_Hover      = GetRender()->PixelColour( &m_texture, 4 + 8 * 23, 500, Color( 255, 255, 0 ) );
-                Colors.Category.LineAlt.Text_Selected   = GetRender()->PixelColour( &m_texture, 4 + 8 * 24, 508, Color( 255, 255, 0 ) );
-                Colors.Category.LineAlt.Button          = GetRender()->PixelColour( &m_texture, 4 + 8 * 25, 508, Color( 255, 255, 0 ) );
-                Colors.Category.LineAlt.Button_Hover    = GetRender()->PixelColour( &m_texture, 4 + 8 * 24, 500, Color( 255, 255, 0 ) );
-                Colors.Category.LineAlt.Button_Selected = GetRender()->PixelColour( &m_texture, 4 + 8 * 25, 500, Color( 255, 255, 0 ) );
+                Colors.Window.TitleActive   = GetRender()->PixelColor( &m_texture, 4 + 8 * 0, 508, Color( 255, 0, 0 ) );
+                Colors.Window.TitleInactive = GetRender()->PixelColor( &m_texture, 4 + 8 * 1, 508, Color( 255, 255, 0 ) );
+                Colors.Button.Normal        = GetRender()->PixelColor( &m_texture, 4 + 8 * 2, 508, Color( 255, 255, 0 ) );
+                Colors.Button.Hover         = GetRender()->PixelColor( &m_texture, 4 + 8 * 3, 508, Color( 255, 255, 0 ) );
+                Colors.Button.Down          = GetRender()->PixelColor( &m_texture, 4 + 8 * 2, 500, Color( 255, 255, 0 ) );
+                Colors.Button.Disabled      = GetRender()->PixelColor( &m_texture, 4 + 8 * 3, 500, Color( 255, 255, 0 ) );
+                Colors.Tab.Active.Normal        = GetRender()->PixelColor( &m_texture, 4 + 8 * 4, 508, Color( 255, 255, 0 ) );
+                Colors.Tab.Active.Hover         = GetRender()->PixelColor( &m_texture, 4 + 8 * 5, 508, Color( 255, 255, 0 ) );
+                Colors.Tab.Active.Down          = GetRender()->PixelColor( &m_texture, 4 + 8 * 4, 500, Color( 255, 255, 0 ) );
+                Colors.Tab.Active.Disabled      = GetRender()->PixelColor( &m_texture, 4 + 8 * 5, 500, Color( 255, 255, 0 ) );
+                Colors.Tab.Inactive.Normal      = GetRender()->PixelColor( &m_texture, 4 + 8 * 6, 508, Color( 255, 255, 0 ) );
+                Colors.Tab.Inactive.Hover       = GetRender()->PixelColor( &m_texture, 4 + 8 * 7, 508, Color( 255, 255, 0 ) );
+                Colors.Tab.Inactive.Down        = GetRender()->PixelColor( &m_texture, 4 + 8 * 6, 500, Color( 255, 255, 0 ) );
+                Colors.Tab.Inactive.Disabled    = GetRender()->PixelColor( &m_texture, 4 + 8 * 7, 500, Color( 255, 255, 0 ) );
+                Colors.Label.Default            = GetRender()->PixelColor( &m_texture, 4 + 8 * 8, 508, Color( 255, 255, 0 ) );
+                Colors.Label.Bright             = GetRender()->PixelColor( &m_texture, 4 + 8 * 9, 508, Color( 255, 255, 0 ) );
+                Colors.Label.Dark               = GetRender()->PixelColor( &m_texture, 4 + 8 * 8, 500, Color( 255, 255, 0 ) );
+                Colors.Label.Highlight          = GetRender()->PixelColor( &m_texture, 4 + 8 * 9, 500, Color( 255, 255, 0 ) );
+                Colors.Tree.Lines               = GetRender()->PixelColor( &m_texture, 4 + 8 * 10, 508, Color( 255, 255, 0 ) );
+                Colors.Tree.Normal              = GetRender()->PixelColor( &m_texture, 4 + 8 * 11, 508, Color( 255, 255, 0 ) );
+                Colors.Tree.Hover               = GetRender()->PixelColor( &m_texture, 4 + 8 * 10, 500, Color( 255, 255, 0 ) );
+                Colors.Tree.Selected            = GetRender()->PixelColor( &m_texture, 4 + 8 * 11, 500, Color( 255, 255, 0 ) );
+                Colors.Properties.Line_Normal       = GetRender()->PixelColor( &m_texture, 4 + 8 * 12, 508, Color( 255, 255, 0 ) );
+                Colors.Properties.Line_Selected     = GetRender()->PixelColor( &m_texture, 4 + 8 * 13, 508, Color( 255, 255, 0 ) );
+                Colors.Properties.Line_Hover        = GetRender()->PixelColor( &m_texture, 4 + 8 * 12, 500, Color( 255, 255, 0 ) );
+                Colors.Properties.Title             = GetRender()->PixelColor( &m_texture, 4 + 8 * 13, 500, Color( 255, 255, 0 ) );
+                Colors.Properties.Column_Normal     = GetRender()->PixelColor( &m_texture, 4 + 8 * 14, 508, Color( 255, 255, 0 ) );
+                Colors.Properties.Column_Selected   = GetRender()->PixelColor( &m_texture, 4 + 8 * 15, 508, Color( 255, 255, 0 ) );
+                Colors.Properties.Column_Hover      = GetRender()->PixelColor( &m_texture, 4 + 8 * 14, 500, Color( 255, 255, 0 ) );
+                Colors.Properties.Border            = GetRender()->PixelColor( &m_texture, 4 + 8 * 15, 500, Color( 255, 255, 0 ) );
+                Colors.Properties.Label_Normal      = GetRender()->PixelColor( &m_texture, 4 + 8 * 16, 508, Color( 255, 255, 0 ) );
+                Colors.Properties.Label_Selected    = GetRender()->PixelColor( &m_texture, 4 + 8 * 17, 508, Color( 255, 255, 0 ) );
+                Colors.Properties.Label_Hover       = GetRender()->PixelColor( &m_texture, 4 + 8 * 16, 500, Color( 255, 255, 0 ) );
+                Colors.ModalBackground              = GetRender()->PixelColor( &m_texture, 4 + 8 * 18, 508, Color( 255, 255, 0 ) );
+                Colors.TooltipText                  = GetRender()->PixelColor( &m_texture, 4 + 8 * 19, 508, Color( 255, 255, 0 ) );
+                Colors.Category.Header              = GetRender()->PixelColor( &m_texture, 4 + 8 * 18, 500, Color( 255, 255, 0 ) );
+                Colors.Category.Header_Closed       = GetRender()->PixelColor( &m_texture, 4 + 8 * 19, 500, Color( 255, 255, 0 ) );
+                Colors.Category.Line.Text           = GetRender()->PixelColor( &m_texture, 4 + 8 * 20, 508, Color( 255, 255, 0 ) );
+                Colors.Category.Line.Text_Hover     = GetRender()->PixelColor( &m_texture, 4 + 8 * 21, 508, Color( 255, 255, 0 ) );
+                Colors.Category.Line.Text_Selected  = GetRender()->PixelColor( &m_texture, 4 + 8 * 20, 500, Color( 255, 255, 0 ) );
+                Colors.Category.Line.Button         = GetRender()->PixelColor( &m_texture, 4 + 8 * 21, 500, Color( 255, 255, 0 ) );
+                Colors.Category.Line.Button_Hover   = GetRender()->PixelColor( &m_texture, 4 + 8 * 22, 508, Color( 255, 255, 0 ) );
+                Colors.Category.Line.Button_Selected = GetRender()->PixelColor( &m_texture, 4 + 8 * 23, 508, Color( 255, 255, 0 ) );
+                Colors.Category.LineAlt.Text            = GetRender()->PixelColor( &m_texture, 4 + 8 * 22, 500, Color( 255, 255, 0 ) );
+                Colors.Category.LineAlt.Text_Hover      = GetRender()->PixelColor( &m_texture, 4 + 8 * 23, 500, Color( 255, 255, 0 ) );
+                Colors.Category.LineAlt.Text_Selected   = GetRender()->PixelColor( &m_texture, 4 + 8 * 24, 508, Color( 255, 255, 0 ) );
+                Colors.Category.LineAlt.Button          = GetRender()->PixelColor( &m_texture, 4 + 8 * 25, 508, Color( 255, 255, 0 ) );
+                Colors.Category.LineAlt.Button_Hover    = GetRender()->PixelColor( &m_texture, 4 + 8 * 24, 500, Color( 255, 255, 0 ) );
+                Colors.Category.LineAlt.Button_Selected = GetRender()->PixelColor( &m_texture, 4 + 8 * 25, 500, Color( 255, 255, 0 ) );
                 Textures.Shadow.Init( &m_texture, 448, 0,   31,     31,     Margin( 8, 8, 8, 8 ) );
                 Textures.Tooltip.Init( &m_texture, 128, 320,    127,    31,     Margin( 8, 8, 8, 8 ) );
                 Textures.StatusBar.Init( &m_texture, 128, 288, 127, 31, Margin( 8, 8, 8, 8 ) );
@@ -466,11 +466,14 @@ namespace Gwk
 
             void DrawButton( Gwk::Controls::Base* control, bool bDepressed, bool bHovered, bool bDisabled ) override
             {
-                if ( bDisabled )    { return Textures.Input.Button.Disabled.Draw( GetRender(), control->GetRenderBounds() ); }
+                if (bDisabled)
+                    return Textures.Input.Button.Disabled.Draw( GetRender(), control->GetRenderBounds() );
 
-                if ( bDepressed )   { return Textures.Input.Button.Pressed.Draw( GetRender(), control->GetRenderBounds() ); }
+                if (bDepressed)
+                    return Textures.Input.Button.Pressed.Draw( GetRender(), control->GetRenderBounds() );
 
-                if ( bHovered )     { return Textures.Input.Button.Hovered.Draw( GetRender(), control->GetRenderBounds() ); }
+                if (bHovered)
+                    return Textures.Input.Button.Hovered.Draw( GetRender(), control->GetRenderBounds() );
 
                 Textures.Input.Button.Normal.Draw( GetRender(), control->GetRenderBounds() );
             }
@@ -479,9 +482,11 @@ namespace Gwk
             {
                 const Gwk::Rect & rect = control->GetRenderBounds();
 
-                if ( bSubmenuOpen || control->IsHovered() ) { Textures.Menu.Hover.Draw( GetRender(), rect ); }
+                if (bSubmenuOpen || control->IsHovered())
+                    Textures.Menu.Hover.Draw(GetRender(), rect);
 
-                if ( bChecked ) { Textures.Menu.Check.Draw( GetRender(), Gwk::Rect( rect.x + 4, rect.y + 3, 15, 15 ) ); }
+                if (bChecked)
+                    Textures.Menu.Check.Draw(GetRender(), Gwk::Rect(rect.x + 4, rect.y + 3, 15, 15));
             }
 
             void DrawMenuStrip( Gwk::Controls::Base* control ) override
@@ -491,7 +496,7 @@ namespace Gwk
 
             void DrawMenu( Gwk::Controls::Base* control, bool bPaddingDisabled ) override
             {
-                if ( !bPaddingDisabled )
+                if (!bPaddingDisabled)
                 {
                     return Textures.Menu.BackgroundWithMargin.Draw( GetRender(), control->GetRenderBounds() );
                 }
@@ -506,47 +511,43 @@ namespace Gwk
 
             void DrawShadow( Gwk::Controls::Base* control ) override
             {
-                Gwk::Rect r = control->GetRenderBounds();
-                r.x -= 4;
-                r.y -= 4;
-                r.w += 10;
-                r.h += 10;
-                Textures.Shadow.Draw( GetRender(), r );
+                const Gwk::Rect r = control->GetRenderBounds() + Rect(-4,-4, 10,10);
+                Textures.Shadow.Draw(GetRender(), r);
             }
 
             void DrawRadioButton( Gwk::Controls::Base* control, bool bSelected, bool bDepressed ) override
             {
-                if ( bSelected )
+                if (bSelected)
                 {
-                    if ( control->IsDisabled() )
-                    { Textures.RadioButton.Disabled.Checked.Draw( GetRender(), control->GetRenderBounds() ); }
+                    if (control->IsDisabled())
+                        Textures.RadioButton.Disabled.Checked.Draw( GetRender(), control->GetRenderBounds() );
                     else
-                    { Textures.RadioButton.Active.Checked.Draw( GetRender(), control->GetRenderBounds() ); }
+                        Textures.RadioButton.Active.Checked.Draw( GetRender(), control->GetRenderBounds() );
                 }
                 else
                 {
-                    if ( control->IsDisabled() )
-                    { Textures.RadioButton.Disabled.Normal.Draw( GetRender(), control->GetRenderBounds() ); }
+                    if (control->IsDisabled())
+                        Textures.RadioButton.Disabled.Normal.Draw( GetRender(), control->GetRenderBounds() );
                     else
-                    { Textures.RadioButton.Active.Normal.Draw( GetRender(), control->GetRenderBounds() ); }
+                        Textures.RadioButton.Active.Normal.Draw( GetRender(), control->GetRenderBounds() );
                 }
             }
 
             void DrawCheckBox( Gwk::Controls::Base* control, bool bSelected, bool bDepressed ) override
             {
-                if ( bSelected )
+                if (bSelected)
                 {
-                    if ( control->IsDisabled() )
-                    { Textures.Checkbox.Disabled.Checked.Draw( GetRender(), control->GetRenderBounds() ); }
+                    if (control->IsDisabled())
+                        Textures.Checkbox.Disabled.Checked.Draw( GetRender(), control->GetRenderBounds() );
                     else
-                    { Textures.Checkbox.Active.Checked.Draw( GetRender(), control->GetRenderBounds() ); }
+                        Textures.Checkbox.Active.Checked.Draw( GetRender(), control->GetRenderBounds() );
                 }
                 else
                 {
-                    if ( control->IsDisabled() )
-                    { Textures.Checkbox.Disabled.Normal.Draw( GetRender(), control->GetRenderBounds() ); }
+                    if (control->IsDisabled())
+                        Textures.Checkbox.Disabled.Normal.Draw( GetRender(), control->GetRenderBounds() );
                     else
-                    { Textures.Checkbox.Active.Normal.Draw( GetRender(), control->GetRenderBounds() ); }
+                        Textures.Checkbox.Active.Normal.Draw( GetRender(), control->GetRenderBounds() );
                 }
             }
 
@@ -563,42 +564,42 @@ namespace Gwk
 
             void DrawTextBox( Gwk::Controls::Base* control ) override
             {
-                if ( control->IsDisabled() )
-                { return Textures.TextBox.Disabled.Draw( GetRender(), control->GetRenderBounds() ); }
+                if (control->IsDisabled())
+                    return Textures.TextBox.Disabled.Draw( GetRender(), control->GetRenderBounds() );
 
-                if ( control->IsFocussed() )
-                { Textures.TextBox.Focus.Draw( GetRender(), control->GetRenderBounds() ); }
+                if (control->IsFocussed())
+                    Textures.TextBox.Focus.Draw( GetRender(), control->GetRenderBounds() );
                 else
-                { Textures.TextBox.Normal.Draw( GetRender(), control->GetRenderBounds() ); }
+                    Textures.TextBox.Normal.Draw( GetRender(), control->GetRenderBounds() );
             }
 
             virtual void DrawActiveTabButton( Gwk::Controls::Base* control, Position dir )
             {
-                if ( dir == Position::Bottom )
-                    Textures.Tab.Bottom.Active.Draw( GetRender(), control->GetRenderBounds() + Rect( 0, -8, 0, 8 ) );
-                else if ( dir == Position::Top )
-                    Textures.Tab.Top.Active.Draw( GetRender(), control->GetRenderBounds() + Rect( 0, 0, 0, 8 ) );
-                else if ( dir == Position::Left )
-                    Textures.Tab.Left.Active.Draw( GetRender(), control->GetRenderBounds() + Rect( 0, 0, 8, 0 ) );
-                else if ( dir == Position::Right )
-                    Textures.Tab.Right.Active.Draw( GetRender(), control->GetRenderBounds() + Rect( -8, 0, 8, 0 ) );
+                if (dir == Position::Bottom)
+                    Textures.Tab.Bottom.Active.Draw( GetRender(), control->GetRenderBounds() + Rect(0, -8, 0, 8) );
+                else if (dir == Position::Top)
+                    Textures.Tab.Top.Active.Draw( GetRender(), control->GetRenderBounds() + Rect(0, 0, 0, 8) );
+                else if (dir == Position::Left)
+                    Textures.Tab.Left.Active.Draw( GetRender(), control->GetRenderBounds() + Rect(0, 0, 8, 0) );
+                else if (dir == Position::Right)
+                    Textures.Tab.Right.Active.Draw( GetRender(), control->GetRenderBounds() + Rect(-8, 0, 8, 0) );
             }
 
             void DrawTabButton( Gwk::Controls::Base* control, bool bActive, Position dir ) override
             {
-                if ( bActive )
+                if (bActive)
                 {
                     DrawActiveTabButton( control, dir );
                     return;
                 }
 
-                if ( dir == Position::Bottom )
+                if (dir == Position::Bottom)
                     Textures.Tab.Bottom.Inactive.Draw( GetRender(), control->GetRenderBounds() );
-                else if ( dir == Position::Top )
+                else if (dir == Position::Top)
                     Textures.Tab.Top.Inactive.Draw( GetRender(), control->GetRenderBounds() );
-                else if ( dir == Position::Left )
+                else if (dir == Position::Left)
                     Textures.Tab.Left.Inactive.Draw( GetRender(), control->GetRenderBounds() );
-                else if ( dir == Position::Right )
+                else if (dir == Position::Right)
                     Textures.Tab.Right.Inactive.Draw( GetRender(), control->GetRenderBounds() );
             }
 
@@ -619,8 +620,10 @@ namespace Gwk
 
             void DrawWindow( Gwk::Controls::Base* control, int topHeight, bool inFocus ) override
             {
-                if ( inFocus ) { Textures.Window.Normal.Draw( GetRender(), control->GetRenderBounds() ); }
-                else { Textures.Window.Inactive.Draw( GetRender(), control->GetRenderBounds() ); }
+                if (inFocus)
+                    Textures.Window.Normal.Draw( GetRender(), control->GetRenderBounds() );
+                else
+                    Textures.Window.Inactive.Draw( GetRender(), control->GetRenderBounds() );
             }
 
             void DrawHighlight( Gwk::Controls::Base* control ) override
@@ -632,36 +635,36 @@ namespace Gwk
 
             void DrawScrollBar( Gwk::Controls::Base* control, bool isHorizontal, bool bDepressed ) override
             {
-                if ( isHorizontal )
-                { Textures.Scroller.TrackH.Draw( GetRender(), control->GetRenderBounds() ); }
+                if (isHorizontal)
+                    Textures.Scroller.TrackH.Draw( GetRender(), control->GetRenderBounds() );
                 else
-                { Textures.Scroller.TrackV.Draw( GetRender(), control->GetRenderBounds() ); }
+                    Textures.Scroller.TrackV.Draw( GetRender(), control->GetRenderBounds() );
             }
 
             void DrawScrollBarBar( Controls::Base* control, bool bDepressed, bool isHovered, bool isHorizontal ) override
             {
-                if ( !isHorizontal )
+                if (!isHorizontal)
                 {
-                    if ( control->IsDisabled() )
-                    { return Textures.Scroller.ButtonV_Disabled.Draw( GetRender(), control->GetRenderBounds() ); }
+                    if (control->IsDisabled())
+                        return Textures.Scroller.ButtonV_Disabled.Draw( GetRender(), control->GetRenderBounds() );
 
-                    if ( bDepressed )
-                    { return Textures.Scroller.ButtonV_Down.Draw( GetRender(), control->GetRenderBounds() ); }
+                    if (bDepressed)
+                        return Textures.Scroller.ButtonV_Down.Draw( GetRender(), control->GetRenderBounds() );
 
-                    if ( isHovered )
-                    { return Textures.Scroller.ButtonV_Hover.Draw( GetRender(), control->GetRenderBounds() ); }
+                    if (isHovered)
+                        return Textures.Scroller.ButtonV_Hover.Draw( GetRender(), control->GetRenderBounds() );
 
                     return Textures.Scroller.ButtonV_Normal.Draw( GetRender(), control->GetRenderBounds() );
                 }
 
-                if ( control->IsDisabled() )
-                { return Textures.Scroller.ButtonH_Disabled.Draw( GetRender(), control->GetRenderBounds() ); }
+                if (control->IsDisabled())
+                    return Textures.Scroller.ButtonH_Disabled.Draw( GetRender(), control->GetRenderBounds() );
 
-                if ( bDepressed )
-                { return Textures.Scroller.ButtonH_Down.Draw( GetRender(), control->GetRenderBounds() ); }
+                if (bDepressed)
+                    return Textures.Scroller.ButtonH_Down.Draw( GetRender(), control->GetRenderBounds() );
 
-                if ( isHovered )
-                { return Textures.Scroller.ButtonH_Hover.Draw( GetRender(), control->GetRenderBounds() ); }
+                if (isHovered)
+                    return Textures.Scroller.ButtonH_Hover.Draw( GetRender(), control->GetRenderBounds() );
 
                 return Textures.Scroller.ButtonH_Normal.Draw( GetRender(), control->GetRenderBounds() );
             }
@@ -669,20 +672,20 @@ namespace Gwk
             void DrawProgressBar( Gwk::Controls::Base* control, bool isHorizontal, float progress ) override
             {
                 Gwk::Rect rect = control->GetRenderBounds();
-                Gwk::Color FillColour( 0, 211, 40, 255 );
+                const Gwk::Color FillColor( 0, 211, 40, 255 );
 
-                if ( isHorizontal )
+                if (isHorizontal)
                 {
                     Textures.ProgressBar.Back.Draw( GetRender(), rect );
                     rect.w *= progress;
 
                     if ( rect.w > 0 )
-                    { Textures.ProgressBar.Front.Draw( GetRender(), rect ); }
+                        Textures.ProgressBar.Front.Draw( GetRender(), rect );
                 }
                 else
                 {
                     Textures.ProgressBar.Back.Draw( GetRender(), rect );
-                    int inv_progress = rect.h * ( 1 - progress );
+                    const int inv_progress = rect.h * ( 1.f - progress );
                     rect.y += inv_progress;
                     rect.h -= inv_progress;
                     Textures.ProgressBar.Front.Draw( GetRender(), rect );
@@ -696,50 +699,52 @@ namespace Gwk
 
             void DrawListBoxLine( Gwk::Controls::Base* control, bool bSelected, bool bEven ) override
             {
-                if ( bSelected )
+                if (bSelected)
                 {
-                    if ( bEven )
-                    { return Textures.Input.ListBox.EvenLineSelected.Draw( GetRender(), control->GetRenderBounds() ); }
+                    if (bEven)
+                        return Textures.Input.ListBox.EvenLineSelected.Draw( GetRender(), control->GetRenderBounds() );
                     else
-                    { return Textures.Input.ListBox.OddLineSelected.Draw( GetRender(), control->GetRenderBounds() ); }
+                        return Textures.Input.ListBox.OddLineSelected.Draw( GetRender(), control->GetRenderBounds() );
                 }
 
-                if ( control->IsHovered() )
-                { return Textures.Input.ListBox.Hovered.Draw( GetRender(), control->GetRenderBounds() ); }
+                if (control->IsHovered())
+                    return Textures.Input.ListBox.Hovered.Draw( GetRender(), control->GetRenderBounds() );
 
-                if ( bEven )
-                { return Textures.Input.ListBox.EvenLine.Draw( GetRender(), control->GetRenderBounds() ); }
+                if (bEven)
+                    return Textures.Input.ListBox.EvenLine.Draw( GetRender(), control->GetRenderBounds() );
 
                 return Textures.Input.ListBox.OddLine.Draw( GetRender(), control->GetRenderBounds() );
             }
 
             virtual void DrawSliderNotchesH( Gwk::Rect rect, int numNotches, int dist )
             {
-                if ( numNotches == 0 ) { return; }
+                if (numNotches == 0)
+                    return;
 
-                float iSpacing = ( float ) rect.w / ( float ) numNotches;
+                const float spacing = static_cast<float>(rect.w) / numNotches;
 
-                for ( int i = 0; i < numNotches + 1; i++ )
+                for (int i = 0; i < numNotches + 1; ++i)
                 {
-                    GetRender()->DrawFilledRect( Gwk::Rect( rect.x + iSpacing * i, rect.y + dist - 2, 1, 5 ) );
+                    GetRender()->DrawFilledRect(Gwk::Rect(rect.x + spacing * i, rect.y + dist - 2, 1, 5));
                 }
             }
 
             virtual void DrawSliderNotchesV( Gwk::Rect rect, int numNotches, int dist )
             {
-                if ( numNotches == 0 ) { return; }
+                if (numNotches == 0)
+                    return;
 
-                float iSpacing = ( float ) rect.h / ( float ) numNotches;
+                const float spacing = static_cast<float>(rect.h) / numNotches;
 
-                for ( int i = 0; i < numNotches + 1; i++ )
+                for (int i = 0; i < numNotches + 1; ++i)
                 {
-                    GetRender()->DrawFilledRect( Gwk::Rect( rect.x + dist - 1, rect.y + iSpacing * i, 5, 1 ) );
+                    GetRender()->DrawFilledRect(Gwk::Rect(rect.x + dist - 1, rect.y + spacing * i, 5, 1));
                 }
             }
 
             void DrawSlider( Gwk::Controls::Base* control, bool bIsHorizontal, int numNotches, int barSize ) override
             {
-                if ( bIsHorizontal )
+                if (bIsHorizontal)
                 {
                     Gwk::Rect rect = control->GetRenderBounds();
                     rect.x += barSize/2;
@@ -789,13 +794,15 @@ namespace Gwk
                 {
                     m_render->SetDrawColor( Gwk::Color( 0, 0, 0, 255 ) );
 
-                    if ( !skip )
+                    if (!skip)
                     {
                         GetRender()->DrawPixel( rect.x + ( i * 2 ), rect.y );
                         GetRender()->DrawPixel( rect.x + ( i * 2 ), rect.y + rect.h - 1 );
                     }
                     else
-                    { skip = !skip; }
+                    {
+                        skip = !skip;
+                    }
                 }
 
                 skip = false;
@@ -804,13 +811,15 @@ namespace Gwk
                 {
                     GetRender()->SetDrawColor( Gwk::Color( 0, 0, 0, 255 ) );
 
-                    if ( !skip )
+                    if (!skip)
                     {
                         GetRender()->DrawPixel( rect.x , rect.y + i * 2 );
                         GetRender()->DrawPixel( rect.x + rect.w - 1, rect.y + i * 2 );
                     }
                     else
-                    { skip = !skip; }
+                    {
+                        skip = !skip;
+                    }
                 }
             }
 
@@ -819,7 +828,8 @@ namespace Gwk
                 return Textures.Tooltip.Draw( GetRender(), control->GetRenderBounds() );
             }
 
-            void DrawScrollButton( Gwk::Controls::Base* control, Position direction, bool bDepressed, bool bHovered, bool bDisabled ) override
+            void DrawScrollButton(Gwk::Controls::Base* control, Position direction,
+                                  bool bDepressed, bool bHovered, bool bDisabled) override
             {
                 int i = 0;
 
@@ -839,38 +849,45 @@ namespace Gwk
                 return Textures.Scroller.Button.Normal[i].Draw( GetRender(), control->GetRenderBounds() );
             }
 
-            void DrawComboDownArrow( Gwk::Controls::Base* control, bool bHovered, bool bDown, bool bMenuOpen, bool bDisabled ) override
+            void DrawComboDownArrow(Gwk::Controls::Base* control, bool bHovered, bool bDown,
+                                    bool bMenuOpen, bool bDisabled) override
             {
-                if ( bDisabled )
-                { return Textures.Input.ComboBox.Button.Disabled.Draw( GetRender(), control->GetRenderBounds() ); }
+                if (bDisabled)
+                    return Textures.Input.ComboBox.Button.Disabled.Draw( GetRender(), control->GetRenderBounds() );
 
-                if ( bDown || bMenuOpen )
-                { return Textures.Input.ComboBox.Button.Down.Draw( GetRender(), control->GetRenderBounds() ); }
+                if (bDown || bMenuOpen)
+                    return Textures.Input.ComboBox.Button.Down.Draw( GetRender(), control->GetRenderBounds() );
 
-                if ( bHovered )
-                { return Textures.Input.ComboBox.Button.Hover.Draw( GetRender(), control->GetRenderBounds() ); }
+                if (bHovered)
+                    return Textures.Input.ComboBox.Button.Hover.Draw( GetRender(), control->GetRenderBounds() );
 
                 Textures.Input.ComboBox.Button.Normal.Draw( GetRender(), control->GetRenderBounds() );
             }
 
             void DrawNumericUpDownButton( Gwk::Controls::Base* control, bool bDepressed, bool bUp ) override
             {
-                if ( bUp )
+                if (bUp)
                 {
-                    if ( control->IsDisabled() )    { return Textures.Input.UpDown.Up.Disabled.DrawCenter( GetRender(), control->GetRenderBounds() ); }
+                    if (control->IsDisabled())
+                        return Textures.Input.UpDown.Up.Disabled.DrawCenter( GetRender(), control->GetRenderBounds() );
 
-                    if ( bDepressed )               { return Textures.Input.UpDown.Up.Down.DrawCenter( GetRender(), control->GetRenderBounds() ); }
+                    if (bDepressed)
+                        return Textures.Input.UpDown.Up.Down.DrawCenter( GetRender(), control->GetRenderBounds() );
 
-                    if ( control->IsHovered() )     { return Textures.Input.UpDown.Up.Hover.DrawCenter( GetRender(), control->GetRenderBounds() ); }
+                    if (control->IsHovered())
+                        return Textures.Input.UpDown.Up.Hover.DrawCenter( GetRender(), control->GetRenderBounds() );
 
                     return Textures.Input.UpDown.Up.Normal.DrawCenter( GetRender(), control->GetRenderBounds() );
                 }
 
-                if ( control->IsDisabled() )    { return Textures.Input.UpDown.Down.Disabled.DrawCenter( GetRender(), control->GetRenderBounds() ); }
+                if (control->IsDisabled())
+                    return Textures.Input.UpDown.Down.Disabled.DrawCenter( GetRender(), control->GetRenderBounds() );
 
-                if ( bDepressed )               { return Textures.Input.UpDown.Down.Down.DrawCenter( GetRender(), control->GetRenderBounds() ); }
+                if (bDepressed)
+                    return Textures.Input.UpDown.Down.Down.DrawCenter( GetRender(), control->GetRenderBounds() );
 
-                if ( control->IsHovered() )     { return Textures.Input.UpDown.Down.Hover.DrawCenter( GetRender(), control->GetRenderBounds() ); }
+                if (control->IsHovered())
+                    return Textures.Input.UpDown.Down.Hover.DrawCenter( GetRender(), control->GetRenderBounds() );
 
                 return Textures.Input.UpDown.Down.Normal.DrawCenter( GetRender(), control->GetRenderBounds() );
             }
@@ -882,19 +899,19 @@ namespace Gwk
 
             void DrawTreeButton( Controls::Base* control, bool bOpen ) override
             {
-                Gwk::Rect rect = control->GetRenderBounds();
+                const Gwk::Rect& rect = control->GetRenderBounds();
 
-                if ( bOpen )
-                { Textures.Tree.Minus.Draw( GetRender(), rect ); }
+                if (bOpen)
+                    Textures.Tree.Minus.Draw(GetRender(), rect);
                 else
-                { Textures.Tree.Plus.Draw( GetRender(), rect ); }
+                    Textures.Tree.Plus.Draw(GetRender(), rect);
             }
 
             void DrawColorDisplay( Controls::Base* control, Gwk::Color color ) override
             {
-                Gwk::Rect rect = control->GetRenderBounds();
+                const Gwk::Rect& rect = control->GetRenderBounds();
 
-                if ( color.a != 255 )
+                if (color.a != 255)
                 {
                     GetRender()->SetDrawColor( Gwk::Color( 255, 255, 255, 255 ) );
                     GetRender()->DrawFilledRect( rect );
@@ -911,17 +928,18 @@ namespace Gwk
 
             void DrawModalControl( Controls::Base* control ) override
             {
-                if ( !control->ShouldDrawBackground() ) { return; }
+                if (!control->ShouldDrawBackground())
+                    return;
 
-                Gwk::Rect rect = control->GetRenderBounds();
-                GetRender()->SetDrawColor( Colors.ModalBackground );
-                GetRender()->DrawFilledRect( rect );
+                const Gwk::Rect& rect = control->GetRenderBounds();
+                GetRender()->SetDrawColor(Colors.ModalBackground);
+                GetRender()->DrawFilledRect(rect);
             }
 
             void DrawMenuDivider( Controls::Base* control ) override
             {
-                Gwk::Rect rect = control->GetRenderBounds();
-                GetRender()->SetDrawColor( Gwk::Color( 0, 0, 0, 100 ) );
+                const Gwk::Rect& rect = control->GetRenderBounds();
+                GetRender()->SetDrawColor( Gwk::Color(0, 0, 0, 100) );
                 GetRender()->DrawFilledRect( rect );
             }
 
@@ -934,83 +952,106 @@ namespace Gwk
             {
                 Gwk::Rect r = Gwk::Rect( control->GetRenderBounds().x, control->GetRenderBounds().y, 31, 31 );
 
-                if ( bDisabled )    { return Textures.Window.Close.Draw( GetRender(), r, Gwk::Color( 255, 255, 255, 50 ) ); }
+                if (bDisabled)
+                    return Textures.Window.Close.Draw( GetRender(), r, Gwk::Color(255, 255, 255, 50) );
 
-                if ( bDepressed )   { return Textures.Window.Close_Down.Draw( GetRender(), r ); }
+                if (bDepressed)
+                    return Textures.Window.Close_Down.Draw( GetRender(), r );
 
-                if ( bHovered )     { return Textures.Window.Close_Hover.Draw( GetRender(), r ); }
+                if (bHovered)
+                    return Textures.Window.Close_Hover.Draw( GetRender(), r );
 
-                Textures.Window.Close.Draw( GetRender(), r );
+                Textures.Window.Close.Draw(GetRender(), r);
             }
 
-            void DrawWindowMaximizeButton( Gwk::Controls::Base* control, bool bDepressed, bool bHovered, bool bDisabled, bool bMaximized ) override
+            void DrawWindowMaximizeButton(Gwk::Controls::Base* control, bool bDepressed,
+                                          bool bHovered, bool bDisabled, bool bMaximized) override
             {
                 Gwk::Rect r = Gwk::Rect( control->GetRenderBounds().x, control->GetRenderBounds().y, 31, 31 );
 
-                if ( !bMaximized )
+                if (!bMaximized)
                 {
-                    if ( bDisabled )    { return Textures.Window.Maxi.Draw( GetRender(), r, Gwk::Color( 255, 255, 255, 50 ) ); }
+                    if (bDisabled)
+                        return Textures.Window.Maxi.Draw( GetRender(), r, Gwk::Color(255, 255, 255, 50) );
 
-                    if ( bDepressed )   { return Textures.Window.Maxi_Down.Draw( GetRender(), r ); }
+                    if (bDepressed)
+                        return Textures.Window.Maxi_Down.Draw( GetRender(), r );
 
-                    if ( bHovered )     { return Textures.Window.Maxi_Hover.Draw( GetRender(), r ); }
+                    if (bHovered)
+                        return Textures.Window.Maxi_Hover.Draw( GetRender(), r );
 
                     return Textures.Window.Maxi.Draw( GetRender(), r );
                 }
 
-                if ( bDisabled )    { return Textures.Window.Restore.Draw( GetRender(), r, Gwk::Color( 255, 255, 255, 50 ) ); }
+                if (bDisabled)
+                    return Textures.Window.Restore.Draw( GetRender(), r, Gwk::Color(255, 255, 255, 50) );
 
-                if ( bDepressed )   { return Textures.Window.Restore_Down.Draw( GetRender(), r ); }
+                if (bDepressed)
+                    return Textures.Window.Restore_Down.Draw( GetRender(), r );
 
-                if ( bHovered )     { return Textures.Window.Restore_Hover.Draw( GetRender(), r ); }
+                if (bHovered)
+                    return Textures.Window.Restore_Hover.Draw( GetRender(), r );
 
                 return Textures.Window.Restore.Draw( GetRender(), r );
             }
 
-            void DrawWindowMinimizeButton( Gwk::Controls::Base* control, bool bDepressed, bool bHovered, bool bDisabled ) override
+            void DrawWindowMinimizeButton(Gwk::Controls::Base* control, bool bDepressed,
+                                          bool bHovered, bool bDisabled ) override
             {
-                Gwk::Rect r = Gwk::Rect( control->GetRenderBounds().x, control->GetRenderBounds().y, 31, 31 );
+                const Gwk::Rect r(control->GetRenderBounds().x, control->GetRenderBounds().y, 31, 31);
 
-                if ( bDisabled )    { return Textures.Window.Mini.Draw( GetRender(), r, Gwk::Color( 255, 255, 255, 100 ) ); }
+                if (bDisabled)
+                    return Textures.Window.Mini.Draw(GetRender(), r, Gwk::Color(255, 255, 255, 100) );
 
-                if ( bDepressed )   { return Textures.Window.Mini_Down.Draw( GetRender(), r ); }
+                if (bDepressed)
+                    return Textures.Window.Mini_Down.Draw(GetRender(), r);
 
-                if ( bHovered )     { return Textures.Window.Mini_Hover.Draw( GetRender(), r ); }
+                if (bHovered)
+                    return Textures.Window.Mini_Hover.Draw(GetRender(), r);
 
-                Textures.Window.Mini.Draw( GetRender(), r );
+                Textures.Window.Mini.Draw(GetRender(), r);
             }
 
 
             void DrawSlideButton( Gwk::Controls::Base* control, bool bDepressed, bool bHorizontal ) override
             {
-                if ( !bHorizontal )
+                if (!bHorizontal)
                 {
-                    if ( control->IsDisabled() )    { return Textures.Input.Slider.V.Disabled.DrawCenter( GetRender(), control->GetRenderBounds() ); }
+                    if (control->IsDisabled())
+                        return Textures.Input.Slider.V.Disabled.DrawCenter(GetRender(), control->GetRenderBounds());
 
-                    if ( bDepressed )               { return Textures.Input.Slider.V.Down.DrawCenter( GetRender(), control->GetRenderBounds() ); }
+                    if (bDepressed )
+                        return Textures.Input.Slider.V.Down.DrawCenter(GetRender(), control->GetRenderBounds());
 
-                    if ( control->IsHovered() )     { return Textures.Input.Slider.V.Hover.DrawCenter( GetRender(), control->GetRenderBounds() ); }
+                    if (control->IsHovered())
+                        return Textures.Input.Slider.V.Hover.DrawCenter(GetRender(), control->GetRenderBounds());
 
-                    return Textures.Input.Slider.V.Normal.DrawCenter( GetRender(), control->GetRenderBounds() );
+                    return Textures.Input.Slider.V.Normal.DrawCenter(GetRender(), control->GetRenderBounds());
                 }
 
-                if ( control->IsDisabled() )    { return Textures.Input.Slider.H.Disabled.DrawCenter( GetRender(), control->GetRenderBounds() ); }
+                if (control->IsDisabled())
+                    return Textures.Input.Slider.H.Disabled.DrawCenter(GetRender(), control->GetRenderBounds());
 
-                if ( bDepressed )               { return Textures.Input.Slider.H.Down.DrawCenter( GetRender(), control->GetRenderBounds() ); }
+                if (bDepressed)
+                    return Textures.Input.Slider.H.Down.DrawCenter(GetRender(), control->GetRenderBounds());
 
-                if ( control->IsHovered() )     { return Textures.Input.Slider.H.Hover.DrawCenter( GetRender(), control->GetRenderBounds() ); }
+                if (control->IsHovered())
+                    return Textures.Input.Slider.H.Hover.DrawCenter(GetRender(), control->GetRenderBounds());
 
-                Textures.Input.Slider.H.Normal.DrawCenter( GetRender(), control->GetRenderBounds() );
+                Textures.Input.Slider.H.Normal.DrawCenter(GetRender(), control->GetRenderBounds());
             }
 
-            void DrawTreeNode( Controls::Base* ctrl, bool bOpen, bool bSelected, int iLabelHeight, int iLabelWidth, int iHalfWay, int iLastBranch, bool bIsRoot ) override
+            void DrawTreeNode( Controls::Base* ctrl, bool bOpen, bool bSelected,
+                              int iLabelHeight, int iLabelWidth, int iHalfWay,
+                              int iLastBranch, bool bIsRoot ) override
             {
-                if ( bSelected )
+                if (bSelected)
                 {
-                    Textures.Selection.Draw( GetRender(), Gwk::Rect( 17, 0, iLabelWidth + 2, iLabelHeight - 1 ) );
+                    Textures.Selection.Draw(GetRender(), Gwk::Rect(17, 0, iLabelWidth+2, iLabelHeight-1));
                 }
 
-                Base::DrawTreeNode( ctrl, bOpen, bSelected, iLabelHeight, iLabelWidth, iHalfWay, iLastBranch, bIsRoot );
+                Base::DrawTreeNode(ctrl, bOpen, bSelected, iLabelHeight, iLabelWidth,
+                                   iHalfWay, iLastBranch, bIsRoot);
             }
 
             void DrawCategoryHolder( Controls::Base* ctrl ) override
@@ -1020,7 +1061,7 @@ namespace Gwk
 
             void DrawCategoryInner( Controls::Base* ctrl, bool bCollapsed ) override
             {
-                if ( bCollapsed )
+                if (bCollapsed)
                     return Textures.CategoryList.Header.Draw( GetRender(), ctrl->GetRenderBounds() );
 
                 Textures.CategoryList.Inner.Draw( GetRender(), ctrl->GetRenderBounds() );
@@ -1029,4 +1070,4 @@ namespace Gwk
     }
 }
 
-#endif
+#endif // GWK_SKINS_TEXTUREDBASE_H

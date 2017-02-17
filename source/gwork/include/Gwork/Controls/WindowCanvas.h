@@ -1,7 +1,7 @@
 /*
  *  Gwork
  *  Copyright (c) 2012 Facepunch Studios
- *  Copyright (c) 2015-2016 Billy Quith
+ *  Copyright (c) 2013-2017 Nick Trout
  *  See license in Gwork.h
  */
 
@@ -31,7 +31,7 @@ namespace Gwk
                          const Gwk::String& strWindowTitle = "");
             ~WindowCanvas();
 
-            virtual void DoThink() override;
+            void DoThink() override;
 
             virtual bool WantsQuit()
             {
@@ -39,18 +39,18 @@ namespace Gwk
             }
 
             // Gwk::WindowProvider
-            virtual void* GetWindow() override;
+            void* GetWindow() override;
 
-            virtual bool InputQuit() override;
+            bool InputQuit() override;
 
             Skin::Base* GetSkin(void) override;
 
-            virtual void Render(Skin::Base* skin) override;
+            void Render(Skin::Base* skin) override;
 
-            virtual void SetPos(int x, int y) override;
-            virtual bool IsOnTop() override;
+            void SetPos(int x, int y) override;
+            bool IsOnTop() override;
 
-            virtual void Layout(Skin::Base* skin) override;
+            void Layout(Skin::Base* skin) override;
 
             virtual bool CanMaximize()
             {
@@ -72,7 +72,7 @@ namespace Gwk
 
         protected:
 
-            virtual void RenderCanvas() override;
+            void RenderCanvas() override;
             virtual void DestroyWindow();
 
             virtual void CloseButtonPressed(Event::Info);

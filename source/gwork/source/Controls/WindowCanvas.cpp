@@ -1,7 +1,7 @@
 /*
  *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  Copyright (c) 2013-16 Billy Quith
+ *  Copyright (c) 2013-17 Nick Trout
  *  See license in Gwork.h
  */
 
@@ -220,16 +220,14 @@ void WindowCanvas::Dragger_Moved(Event::Info)
     Gwk::Point p;
     Gwk::Platform::GetCursorPos(p);
 
-    //
     // Dragged out of maximized
-    //
     if (m_bIsMaximized)
     {
         float fOldWidth = Width();
         SetMaximize(false);
         // Change the hold pos to be the same distance across the titlebar of
         // the resized window
-        m_holdPos.x = ((float)m_holdPos.x)*((float)Width()/fOldWidth);
+        m_holdPos.x = static_cast<float>(m_holdPos.x) * Width() / fOldWidth;
         m_holdPos.y = 10;
     }
 

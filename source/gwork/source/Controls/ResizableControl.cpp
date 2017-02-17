@@ -1,7 +1,7 @@
 /*
  *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  Copyright (c) 2013-16 Billy Quith
+ *  Copyright (c) 2013-17 Nick Trout
  *  See license in Gwork.h
  */
 
@@ -19,63 +19,69 @@ GWK_CONTROL_CONSTRUCTOR(ResizableControl)
     m_bResizable = true;
     m_minimumSize = Gwk::Point(5, 5);
     m_bClampMovement = false;
-    m_resizer[5] = nullptr;
-    m_resizer[0] = nullptr;
-    m_resizer[2] = new Resizer(this);
-    m_resizer[2]->Dock(Position::Bottom);
-    m_resizer[2]->SetResizeDir(Position::Bottom);
-    m_resizer[2]->SetTarget(this);
-    m_resizer[2]->onResize.Add(this, &ResizableControl::OnResizedInternal);
-    m_resizer[1] = new Resizer(m_resizer[2]);
-    m_resizer[1]->Dock(Position::Left);
-    m_resizer[1]->SetResizeDir(Position::Bottom|Position::Left);
-    m_resizer[1]->SetTarget(this);
-    m_resizer[1]->onResize.Add(this, &ResizableControl::OnResizedInternal);
-    m_resizer[3] = new Resizer(m_resizer[2]);
-    m_resizer[3]->Dock(Position::Right);
-    m_resizer[3]->SetResizeDir(Position::Bottom|Position::Right);
-    m_resizer[3]->SetTarget(this);
-    m_resizer[3]->onResize.Add(this, &ResizableControl::OnResizedInternal);
-    m_resizer[8] = new Resizer(this);
-    m_resizer[8]->Dock(Position::Top);
-    m_resizer[8]->SetResizeDir(Position::Top);
-    m_resizer[8]->SetTarget(this);
-    m_resizer[8]->onResize.Add(this, &ResizableControl::OnResizedInternal);
-    m_resizer[7] = new Resizer(m_resizer[8]);
-    m_resizer[7]->Dock(Position::Left);
-    m_resizer[7]->SetResizeDir(Position::Top|Position::Left);
-    m_resizer[7]->SetTarget(this);
-    m_resizer[7]->onResize.Add(this, &ResizableControl::OnResizedInternal);
-    m_resizer[9] = new Resizer(m_resizer[8]);
-    m_resizer[9]->Dock(Position::Right);
-    m_resizer[9]->SetResizeDir(Position::Top|Position::Right);
-    m_resizer[9]->SetTarget(this);
-    m_resizer[9]->onResize.Add(this, &ResizableControl::OnResizedInternal);
-    m_resizer[4] = new Resizer(this);
-    m_resizer[4]->Dock(Position::Left);
-    m_resizer[4]->SetResizeDir(Position::Left);
-    m_resizer[4]->SetTarget(this);
-    m_resizer[4]->onResize.Add(this, &ResizableControl::OnResizedInternal);
-    m_resizer[6] = new Resizer(this);
-    m_resizer[6]->Dock(Position::Right);
-    m_resizer[6]->SetResizeDir(Position::Right);
-    m_resizer[6]->SetTarget(this);
-    m_resizer[6]->onResize.Add(this, &ResizableControl::OnResizedInternal);
+    
+    // bottom
+    m_resizers[0] = new Resizer(this);
+    m_resizers[0]->Dock(Position::Bottom);
+    m_resizers[0]->SetResizeDir(Position::Bottom);
+    m_resizers[0]->SetTarget(this);
+    m_resizers[0]->onResize.Add(this, &ResizableControl::OnResizedInternal);
+    
+    // bottom left
+    m_resizers[1] = new Resizer(m_resizers[0]);
+    m_resizers[1]->Dock(Position::Left);
+    m_resizers[1]->SetResizeDir(Position::Bottom|Position::Left);
+    m_resizers[1]->SetTarget(this);
+    m_resizers[1]->onResize.Add(this, &ResizableControl::OnResizedInternal);
+    
+    // bottom right
+    m_resizers[2] = new Resizer(m_resizers[0]);
+    m_resizers[2]->Dock(Position::Right);
+    m_resizers[2]->SetResizeDir(Position::Bottom|Position::Right);
+    m_resizers[2]->SetTarget(this);
+    m_resizers[2]->onResize.Add(this, &ResizableControl::OnResizedInternal);
+    
+    // top
+    m_resizers[3] = new Resizer(this);
+    m_resizers[3]->Dock(Position::Top);
+    m_resizers[3]->SetResizeDir(Position::Top);
+    m_resizers[3]->SetTarget(this);
+    m_resizers[3]->onResize.Add(this, &ResizableControl::OnResizedInternal);
+    
+    // top left
+    m_resizers[4] = new Resizer(m_resizers[3]);
+    m_resizers[4]->Dock(Position::Left);
+    m_resizers[4]->SetResizeDir(Position::Top|Position::Left);
+    m_resizers[4]->SetTarget(this);
+    m_resizers[4]->onResize.Add(this, &ResizableControl::OnResizedInternal);
+    
+    // top right
+    m_resizers[5] = new Resizer(m_resizers[3]);
+    m_resizers[5]->Dock(Position::Right);
+    m_resizers[5]->SetResizeDir(Position::Top|Position::Right);
+    m_resizers[5]->SetTarget(this);
+    m_resizers[5]->onResize.Add(this, &ResizableControl::OnResizedInternal);
+    
+    // left
+    m_resizers[6] = new Resizer(this);
+    m_resizers[6]->Dock(Position::Left);
+    m_resizers[6]->SetResizeDir(Position::Left);
+    m_resizers[6]->SetTarget(this);
+    m_resizers[6]->onResize.Add(this, &ResizableControl::OnResizedInternal);
+    
+    // right
+    m_resizers[7] = new Resizer(this);
+    m_resizers[7]->Dock(Position::Right);
+    m_resizers[7]->SetResizeDir(Position::Right);
+    m_resizers[7]->SetTarget(this);
+    m_resizers[7]->onResize.Add(this, &ResizableControl::OnResizedInternal);
 }
 
 void ResizableControl::DisableResizing()
 {
-    for (auto&& child : Children)
+    for (auto&& resizer : m_resizers)
     {
-        Resizer* resizer = gwk_cast<Resizer>(child);
-
-        if (!resizer)
-            continue;
-
-        resizer->SetMouseInputEnabled(false);
-        resizer->SetHidden(false);
-        SetPadding(Padding(resizer->Width(), resizer->Width(), resizer->Width(),
-                           resizer->Width()));
+        resizer->SetDisabled(true);
     }
 }
 
@@ -110,6 +116,9 @@ bool ResizableControl::SetBounds(int x, int y, int w, int h)
 
 void ResizableControl::OnResizedInternal(Event::Info)
 {
-    onResize.Call(this);
-    OnResized();
+    if (!IsDisabled())
+    {
+        onResize.Call(this);
+        OnResized();
+    }
 }

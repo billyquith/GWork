@@ -1,7 +1,7 @@
 /*
  *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  Copyright (c) 2013-16 Billy Quith
+ *  Copyright (c) 2013-17 Nick Trout
  *  See license in Gwork.h
  */
 
@@ -13,8 +13,7 @@
 // codecvt causes problems due to different standard libraries implementing at different times.
 //  - libstdc++ looks like it didn't support codecvt until at least GCC 5.2.
 //  - Apple has good support (but defined __GNUC__ ?!)
-#if ((defined(__GNUC__) && !(__GNUC__ >= 5 && __GNUC_MINOR__ > 1)) \
-     || defined(__MINGW32__)) \
+#if (defined(__GNUC__) && !(__GNUC__ >= 5 && __GNUC_MINOR__ > 1)) \
     && !defined(__APPLE__)
 #   define AVOID_CPP11_CODECVT
 #endif
@@ -26,7 +25,11 @@
 #   include <codecvt>      // Narrow/widen - C++11
 #else
 #   include <iconv.h>
-#   include <alloca.h>
+#   if defined(_MSC_VER) || defined(__MINGW32__)
+#       include <malloc.h>     // alloca
+#   else
+#       include <alloca.h>     // alloca
+#   endif
 #endif
 
 #ifdef WIN32

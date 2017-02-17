@@ -330,7 +330,7 @@ void Direct2D::FreeTexture(Gwk::Texture* texture)
     InternalFreeTexture(texture);
 }
 
-Gwk::Color Direct2D::PixelColour(Gwk::Texture* texture, unsigned int x, unsigned int y,
+Gwk::Color Direct2D::PixelColor(Gwk::Texture* texture, unsigned int x, unsigned int y,
                                   const Gwk::Color& col_default)
 {
     TextureData* texData = (TextureData*)texture->data;

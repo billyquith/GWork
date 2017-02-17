@@ -1,7 +1,7 @@
 /*
  *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  Copyright (c) 2013-16 Billy Quith
+ *  Copyright (c) 2013-17 Nick Trout
  *  See license in Gwork.h
  */
 
@@ -22,9 +22,9 @@ namespace Gwk
 
             GWK_CONTROL(TreeControl, TreeNode);
 
-            virtual void Render(Skin::Base* skin) override;
+            void Render(Skin::Base* skin) override;
 
-            virtual void OnChildBoundsChanged(Gwk::Rect oldChildBounds, Base* child) override;
+            void OnChildBoundsChanged(Gwk::Rect oldChildBounds, Base* child) override;
 
             ScrollControl* Scroller()
             {
@@ -33,8 +33,8 @@ namespace Gwk
 
             virtual void Clear();
 
-            virtual void Layout(Skin::Base* skin) override;
-            virtual void PostLayout(Skin::Base* skin) override;
+            void Layout(Skin::Base* skin) override;
+            void PostLayout(Skin::Base* skin) override;
 
             virtual void AllowMultiSelect(bool b)
             {

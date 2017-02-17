@@ -1,7 +1,7 @@
 /*
  *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  Copyright (c) 2013-16 Billy Quith
+ *  Copyright (c) 2013-17 Nick Trout
  *  See license in Gwork.h
  */
 
@@ -23,7 +23,7 @@ namespace Gwk
         {
             GWK_CONTROL(SliderBar, ControlsInternal::Dragger);
 
-            virtual void Render(Skin::Base* skin) override;
+            void Render(Skin::Base* skin) override;
             virtual void SetHorizontal(bool b)
             {
                 m_bHorizontal = b;
@@ -48,8 +48,8 @@ namespace Gwk
         {
             GWK_CONTROL(Slider, Base);
 
-            virtual void Render(Skin::Base* skin) override = 0;
-            virtual void Layout(Skin::Base* skin) override;
+            void Render(Skin::Base* skin) override = 0;
+            void Layout(Skin::Base* skin) override;
 
             virtual void SetClampToNotches(bool bClamp)
             {
@@ -73,27 +73,11 @@ namespace Gwk
             virtual float CalculateValue();
             virtual void  OnMoved(Event::Info info);
 
-            virtual void OnMouseClickLeft(int /*x*/, int /*y*/, bool /*bDown*/) override
+            void OnMouseClickLeft(int /*x*/, int /*y*/, bool /*bDown*/) override
             {
             }
 
-            virtual bool OnKeyRight(bool bDown) override
-            {
-                if (bDown)
-                    SetFloatValue(GetFloatValue()+1, true);
-
-                return true;
-            }
-
-            virtual bool OnKeyLeft(bool bDown) override
-            {
-                if (bDown)
-                    SetFloatValue(GetFloatValue()-1, true);
-
-                return true;
-            }
-
-            virtual bool OnKeyUp(bool bDown) override
+            bool OnKeyRight(bool bDown) override
             {
                 if (bDown)
                     SetFloatValue(GetFloatValue()+1, true);
@@ -101,7 +85,7 @@ namespace Gwk
                 return true;
             }
 
-            virtual bool OnKeyDown(bool bDown) override
+            bool OnKeyLeft(bool bDown) override
             {
                 if (bDown)
                     SetFloatValue(GetFloatValue()-1, true);
@@ -109,7 +93,23 @@ namespace Gwk
                 return true;
             }
 
-            virtual void RenderFocus(Gwk::Skin::Base* skin) override;
+            bool OnKeyUp(bool bDown) override
+            {
+                if (bDown)
+                    SetFloatValue(GetFloatValue()+1, true);
+
+                return true;
+            }
+
+            bool OnKeyDown(bool bDown) override
+            {
+                if (bDown)
+                    SetFloatValue(GetFloatValue()-1, true);
+
+                return true;
+            }
+
+            void RenderFocus(Gwk::Skin::Base* skin) override;
 
             Gwk::Event::Listener onValueChanged;
 

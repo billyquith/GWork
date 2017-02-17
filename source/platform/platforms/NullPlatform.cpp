@@ -1,7 +1,7 @@
 /*
  *  Gwork
  *  Copyright (c) 2012 Facepunch Studios
- *  Copyright (c) 2013-2016 Billy Quith
+ *  Copyright (c) 2013-2017 Nick Trout
  *  See license in Gwork.h
  */
 
@@ -50,8 +50,8 @@ bool Gwk::Platform::SetClipboardText(const Gwk::String& str)
 
 float Gwk::Platform::GetTimeInSeconds()
 {
-    const float fSeconds = (float)clock()/(float)CLOCKS_PER_SEC;
-    return fSeconds;
+    const float seconds = static_cast<float>(clock()) / CLOCKS_PER_SEC;
+    return seconds;
 }
 
 Gwk::String Gwk::Platform::GetExecutableDir()

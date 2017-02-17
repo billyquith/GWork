@@ -1,7 +1,7 @@
 /*
  *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  Copyright (c) 2013-16 Billy Quith
+ *  Copyright (c) 2013-17 Nick Trout
  *  See license in Gwork.h
  */
 
@@ -25,8 +25,8 @@ namespace Gwk
 
             GWK_CONTROL(DockBase, Base);
 
-            virtual void Render(Skin::Base* skin) override;
-            virtual void RenderOver(Skin::Base* skin) override;
+            void Render(Skin::Base* skin) override;
+            void RenderOver(Skin::Base* skin) override;
             virtual bool IsEmpty();
 
             virtual TabControl* GetTabControl();
@@ -37,16 +37,16 @@ namespace Gwk
             virtual DockBase* GetBottom()   { return GetChildDock(Position::Bottom); }
 
             // No action on space (default button action is to press)
-            virtual bool OnKeySpace(bool /*bDown*/) override { return false; }
+            bool OnKeySpace(bool /*bDown*/) override { return false; }
 
         private:
 
             // Drag n Drop
-            virtual bool DragAndDrop_HandleDrop(Gwk::DragAndDrop::Package* package, int x, int y) override;
-            virtual bool DragAndDrop_CanAcceptPackage(Gwk::DragAndDrop::Package* package) override;
-            virtual void DragAndDrop_HoverEnter(Gwk::DragAndDrop::Package* package, int x, int y) override;
-            virtual void DragAndDrop_HoverLeave(Gwk::DragAndDrop::Package* package) override;
-            virtual void DragAndDrop_Hover(Gwk::DragAndDrop::Package* package, int x, int y) override;
+            bool DragAndDrop_HandleDrop(Gwk::DragAndDrop::Package* package, int x, int y) override;
+            bool DragAndDrop_CanAcceptPackage(Gwk::DragAndDrop::Package* package) override;
+            void DragAndDrop_HoverEnter(Gwk::DragAndDrop::Package* package, int x, int y) override;
+            void DragAndDrop_HoverLeave(Gwk::DragAndDrop::Package* package) override;
+            void DragAndDrop_Hover(Gwk::DragAndDrop::Package* package, int x, int y) override;
 
             virtual void SetupChildDock(Position iPos);
 

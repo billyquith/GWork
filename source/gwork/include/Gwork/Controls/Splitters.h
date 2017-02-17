@@ -1,7 +1,7 @@
 /*
  *  Gwork
  *  Copyright (c) 2012 Facepunch Studios
- *  Copyright (c) 2015-2016 Billy Quith
+ *  Copyright (c) 2013-2017 Nick Trout
  *  See license in Gwork.h
  */
 
@@ -29,7 +29,7 @@ namespace Gwk
                 SetScaling(false, 100);
             }
 
-            virtual void PostLayout(Skin::Base* skin) override
+            void PostLayout(Skin::Base* skin) override
             {
                 RefreshContainers();
             }

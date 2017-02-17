@@ -1,7 +1,7 @@
 /*
  *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  Copyright (c) 2013-16 Billy Quith
+ *  Copyright (c) 2013-17 Nick Trout
  *  See license in Gwork.h
  */
 
@@ -25,12 +25,12 @@ namespace Gwk
         {
             GWK_CONTROL(VerticalSlider, Slider);
 
-            virtual void Layout(Skin::Base* skin) override;
-            virtual void Render(Skin::Base* skin) override;
+            void Layout(Skin::Base* skin) override;
+            void Render(Skin::Base* skin) override;
 
-            virtual float CalculateValue() override;
-            virtual void  UpdateBarFromValue() override;
-            virtual void  OnMouseClickLeft(int x, int y, bool bDown) override;
+            float CalculateValue() override;
+            void  UpdateBarFromValue() override;
+            void  OnMouseClickLeft(int x, int y, bool bDown) override;
 
         };
 

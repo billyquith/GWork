@@ -1,7 +1,7 @@
 /*
  *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  Copyright (c) 2013-16 Billy Quith
+ *  Copyright (c) 2013-17 Nick Trout
  *  See license in Gwork.h
  */
 
@@ -24,7 +24,7 @@ namespace Gwk
                 SetSize(7, 7);
             }
 
-            virtual void Render(Skin::Base* skin) override
+            void Render(Skin::Base* skin) override
             {
                 skin->DrawNumericUpDownButton(this, IsDepressed(), true);
             }
@@ -39,7 +39,7 @@ namespace Gwk
                 SetSize(7, 7);
             }
 
-            virtual void Render(Skin::Base* skin) override
+            void Render(Skin::Base* skin) override
             {
                 skin->DrawNumericUpDownButton(this, IsDepressed(), false);
             }
@@ -61,14 +61,14 @@ namespace Gwk
 
         private:
 
-            virtual void OnEnter() override;
+            void OnEnter() override;
             virtual void OnChange();
-            virtual void OnTextChanged() override;
+            void OnTextChanged() override;
 
             virtual void OnButtonUp(Event::Info);
             virtual void OnButtonDown(Event::Info);
 
-            virtual bool OnKeyUp(bool bDown) override
+            bool OnKeyUp(bool bDown) override
             {
                 if (bDown)
                     OnButtonUp(nullptr);
@@ -76,7 +76,7 @@ namespace Gwk
                 return true;
             }
 
-            virtual bool OnKeyDown(bool bDown) override
+            bool OnKeyDown(bool bDown) override
             {
                 if (bDown)
                     OnButtonDown(nullptr);

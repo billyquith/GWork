@@ -1,7 +1,7 @@
 /*
  *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  Copyright (c) 2013-16 Billy Quith
+ *  Copyright (c) 2013-17 Nick Trout
  *  See license in Gwork.h
  */
 
@@ -44,14 +44,14 @@ namespace Gwk
             /// by checking NeedsRedraw().
             virtual bool NeedsRedraw() { return m_bNeedsRedraw; }
 
-            virtual void Redraw() override { m_bNeedsRedraw = true; }
+            void Redraw() override { m_bNeedsRedraw = true; }
 
             // Internal. Do not call directly.
-            virtual void Render(Skin::Base* render) override;
+            void Render(Skin::Base* render) override;
 
             /// Child panels call parent->GetCanvas() until they get to
             /// this top level function.
-            virtual Controls::Canvas* GetCanvas() override
+            Controls::Canvas* GetCanvas() override
             {
                 return this;
             }
@@ -62,7 +62,7 @@ namespace Gwk
                 return m_fScale;
             }
 
-            virtual void OnBoundsChanged(Gwk::Rect oldBounds) override;
+            void OnBoundsChanged(Gwk::Rect oldBounds) override;
 
             /// Delete all children (this is done called in the destructor too)
             virtual void ReleaseChildren();

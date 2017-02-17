@@ -1,7 +1,7 @@
 /*
  *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  Copyright (c) 2013-16 Billy Quith
+ *  Copyright (c) 2013-17 Nick Trout
  *  See license in Gwork.h
  */
 
@@ -23,17 +23,18 @@ namespace Gwk
 
             GWK_CONTROL(Button, Label);
 
-            virtual void Render(Skin::Base* skin) override;
-            virtual void OnMouseClickLeft(int x, int y, bool bDown) override;
-            virtual void OnMouseClickRight(int x, int y, bool bDown) override;
-            virtual void OnMouseDoubleClickLeft(int x, int y) override;
-            virtual bool OnKeySpace(bool bDown) override;
+            void Render(Skin::Base* skin) override;
+            void OnMouseClickLeft(int x, int y, bool bDown) override;
+            void OnMouseClickRight(int x, int y, bool bDown) override;
+            void OnMouseDoubleClickLeft(int x, int y) override;
+            bool OnKeySpace(bool bDown) override;
 
             virtual void OnPress(Event::Info);
             virtual void OnRightPress(Event::Info);
 
-            virtual void AcceleratePressed() override;
+            void AcceleratePressed() override;
 
+            //! Is the button currently being pressed?
             virtual bool IsDepressed() const
             {
                 return m_bDepressed;
@@ -68,13 +69,13 @@ namespace Gwk
 
             virtual void SetImage(const String& strName, bool bCenter = false);
 
-            virtual void SizeToContents() override;
-            virtual void PostLayout(Skin::Base* skin) override;
-            virtual void UpdateColours() override;
+            void SizeToContents() override;
+            void PostLayout(Skin::Base* skin) override;
+            void UpdateColors() override;
 
             virtual void SetImageAlpha(float fMultiply);
 
-            virtual void DoAction() override
+            void DoAction() override
             {
                 Event::Info info(this);
                 OnPress(info);

@@ -1,7 +1,7 @@
 /*
  *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  Copyright (c) 2013-16 Billy Quith
+ *  Copyright (c) 2013-17 Nick Trout
  *  See license in Gwork.h
  */
 
@@ -108,11 +108,11 @@ Position DockBase::GetDroppedTabDirection(int x, int y)
 {
     const int w = Width();
     const int h = Height();
-    float top = (float)y/(float)h;
-    float left = (float)x/(float)w;
-    float right = (float)(w-x)/(float)w;
-    float bottom = (float)(h-y)/(float)h;
-    float minimum = std::min(std::min(std::min(top, left), right), bottom);
+    const float top = static_cast<float>(y) / h;
+    const float left = static_cast<float>(x) / w;
+    const float right = static_cast<float>(w-x) / w;
+    const float bottom = static_cast<float>(h-y) / h;
+    const float minimum = std::min(std::min(std::min(top, left), right), bottom);
     m_bDropFar = (minimum < 0.2f);
 
     if (minimum > 0.3f)

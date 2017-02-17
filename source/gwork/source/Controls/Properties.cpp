@@ -1,7 +1,7 @@
 /*
  *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  Copyright (c) 2013-16 Billy Quith
+ *  Copyright (c) 2013-17 Nick Trout
  *  See license in Gwork.h
  */
 
@@ -97,7 +97,7 @@ class PropertyRowLabel : public Label
         m_propertyRow = nullptr;
     }
 
-    void UpdateColours() override
+    void UpdateColors() override
     {
         if (IsDisabled())
             return SetTextColor(GetSkin()->Colors.Button.Disabled);

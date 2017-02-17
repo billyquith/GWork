@@ -1,7 +1,7 @@
 /*
  *  Gwork
  *  Copyright (c) 2011 Facepunch Studios
- *  Copyright (c) 2013-16 Billy Quith
+ *  Copyright (c) 2013-17 Nick Trout
  *  See license in Gwork.h
  *  SDL2 Added by BQ.
  */
@@ -32,7 +32,7 @@ namespace Gwk
                 m_canvas = c;
             }
 
-            bool ProcessEvent(SDL_Event* event)
+            bool ProcessEvent(const SDL_Event* event)
             {
                 if (!m_canvas)
                     return false;
@@ -42,7 +42,7 @@ namespace Gwk
                 case SDL_KEYUP:
                 case SDL_KEYDOWN:
                     {
-                        SDL_KeyboardEvent *ke = &event->key;
+                        const SDL_KeyboardEvent *ke = &event->key;
                         int iKey = -1;
                         SDL_Scancode scancode = ke->keysym.scancode;
 
@@ -80,14 +80,14 @@ namespace Gwk
 
                 case SDL_MOUSEMOTION:
                     {
-                        SDL_MouseMotionEvent* E = &event->motion;
+                        const SDL_MouseMotionEvent* E = &event->motion;
                         return m_canvas->InputMouseMoved(E->x, E->y, E->xrel, E->yrel);
                     }
 
                 case SDL_MOUSEBUTTONDOWN:
                 case SDL_MOUSEBUTTONUP:
                     {
-                        SDL_MouseButtonEvent* E = &event->button;
+                        const SDL_MouseButtonEvent* E = &event->button;
                         int Button = -1;
 
                         switch (E->button)
@@ -113,7 +113,7 @@ namespace Gwk
 
                 case SDL_MOUSEWHEEL:
                     {
-                        SDL_MouseWheelEvent* E = &event->wheel;
+                        const SDL_MouseWheelEvent* E = &event->wheel;
                         return m_canvas->InputMouseWheel(E->y);
                     }
 

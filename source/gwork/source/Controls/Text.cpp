@@ -1,7 +1,7 @@
 /*
  *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  Copyright (c) 2013-16 Billy Quith
+ *  Copyright (c) 2013-17 Nick Trout
  *  See license in Gwork.h
  */
 
@@ -233,7 +233,7 @@ void Text::SplitWords(const Gwk::String& s, std::vector<Gwk::String>& elems)
     int w = GetParent()->Width()
                 - (GetParent()->GetPadding().left + GetParent()->GetPadding().right);
     
-    for (int i = 0; i < (int)s.length(); i++)
+    for (size_t i = 0; i < s.length(); i++)
     {
         if (s[i] == '\n')
         {
@@ -366,7 +366,7 @@ void Text::RefreshSizeWrap()
 
 unsigned int Text::NumLines()
 {
-    return (unsigned int)m_lines.size();
+    return static_cast<unsigned int>(m_lines.size());
 }
 
 Text* Text::GetLine(int i)

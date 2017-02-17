@@ -1,7 +1,7 @@
 /*
  *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  Copyright (c) 2013-16 Billy Quith
+ *  Copyright (c) 2013-17 Nick Trout
  *  See license in Gwork.h
  */
 
@@ -22,39 +22,39 @@ namespace Gwk
         {
             GWK_CONTROL(TextBox, Label);
 
-            virtual void Render(Skin::Base* skin) override;
-            virtual void RenderFocus(Gwk::Skin::Base* /*skin*/) override {}
+            void Render(Skin::Base* skin) override;
+            void RenderFocus(Gwk::Skin::Base* /*skin*/) override {}
 
-            virtual void Layout(Skin::Base* skin) override;
-            virtual void PostLayout(Skin::Base* skin) override;
+            void Layout(Skin::Base* skin) override;
+            void PostLayout(Skin::Base* skin) override;
 
 #if GWK_ANIMATE
             virtual void UpdateCaretColor();
 #endif
 
-            virtual bool OnChar(Gwk::UnicodeChar c) override;
+            bool OnChar(Gwk::UnicodeChar c) override;
 
             virtual void InsertText(const Gwk::String& str);
             virtual void DeleteText(int iStartPos, int iLength);
 
             virtual void RefreshCursorBounds();
 
-            virtual bool OnKeyReturn(bool bDown) override;
-            virtual bool OnKeyBackspace(bool bDown) override;
-            virtual bool OnKeyDelete(bool bDown) override;
-            virtual bool OnKeyRight(bool bDown) override;
-            virtual bool OnKeyLeft(bool bDown) override;
-            virtual bool OnKeyHome(bool bDown) override;
-            virtual bool OnKeyEnd(bool bDown) override;
+            bool OnKeyReturn(bool bDown) override;
+            bool OnKeyBackspace(bool bDown) override;
+            bool OnKeyDelete(bool bDown) override;
+            bool OnKeyRight(bool bDown) override;
+            bool OnKeyLeft(bool bDown) override;
+            bool OnKeyHome(bool bDown) override;
+            bool OnKeyEnd(bool bDown) override;
 
-            virtual bool AccelOnlyFocus() override { return true; }
+            bool AccelOnlyFocus() override { return true; }
 
-            virtual void OnPaste(Event::Info info) override;
-            virtual void OnCopy(Event::Info info) override;
-            virtual void OnCut(Event::Info info) override;
-            virtual void OnSelectAll(Event::Info info) override;
+            void OnPaste(Event::Info info) override;
+            void OnCopy(Event::Info info) override;
+            void OnCut(Event::Info info) override;
+            void OnSelectAll(Event::Info info) override;
 
-            virtual void OnMouseDoubleClickLeft(int x, int y) override;
+            void OnMouseDoubleClickLeft(int x, int y) override;
 
             virtual void EraseSelection();
             virtual bool HasSelection();
@@ -63,8 +63,8 @@ namespace Gwk
             virtual void SetCursorPos(int i);
             virtual void SetCursorEnd(int i);
 
-            virtual void OnMouseClickLeft(int x, int y, bool bDown) override;
-            virtual void OnMouseMoved(int x, int y, int deltaX, int deltaY) override;
+            void OnMouseClickLeft(int x, int y, bool bDown) override;
+            void OnMouseMoved(int x, int y, int deltaX, int deltaY) override;
 
             virtual void SetEditable(bool b) { m_bEditable = b; }
 
@@ -79,7 +79,7 @@ namespace Gwk
 
             virtual void OnEnter();
 
-            virtual bool NeedsInputChars() override { return true; }
+            bool NeedsInputChars() override { return true; }
 
             virtual void MoveCaretToEnd();
             virtual void MoveCaretToStart();
@@ -89,7 +89,7 @@ namespace Gwk
 
         protected:
 
-            virtual void OnTextChanged() override;
+            void OnTextChanged() override;
             virtual bool IsTextAllowed(const Gwk::String& /*str*/, int /*iPos*/)
             {
                 return true;
@@ -120,7 +120,7 @@ namespace Gwk
 
         private:
 
-            virtual bool IsTextAllowed(const Gwk::String& str, int iPos) override;
+            bool IsTextAllowed(const Gwk::String& str, int iPos) override;
 
         };
 
@@ -131,14 +131,14 @@ namespace Gwk
 
             GWK_CONTROL(TextBoxMultiline, TextBox);
 
-            virtual bool OnKeyReturn(bool bDown) override;
-            virtual void Render(Skin::Base* skin) override;
-            virtual void MakeCaretVisible() override;
+            bool OnKeyReturn(bool bDown) override;
+            void Render(Skin::Base* skin) override;
+            void MakeCaretVisible() override;
 
-            virtual bool OnKeyHome(bool bDown) override;
-            virtual bool OnKeyEnd(bool bDown) override;
-            virtual bool OnKeyUp(bool bDown) override;
-            virtual bool OnKeyDown(bool bDown) override;
+            bool OnKeyHome(bool bDown) override;
+            bool OnKeyEnd(bool bDown) override;
+            bool OnKeyUp(bool bDown) override;
+            bool OnKeyDown(bool bDown) override;
 
             virtual int GetCurrentLine();
 
@@ -153,17 +153,16 @@ namespace Gwk
 
             GWK_CONTROL(PasswordTextBox, TextBox);
 
-            virtual void SetText(const String& str, bool bDoEvents = true) override;
+            void SetText(const String& str, bool bDoEvents = true) override;
             virtual void SetPasswordChar(const char c);
 
-            virtual const String& GetText() const override { return m_realText; }
+            const String& GetText() const override { return m_realText; }
 
         protected:
 
             char m_passwordChar;
             String m_realText;
         };
-
 
     }
 }

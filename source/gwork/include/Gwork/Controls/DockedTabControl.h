@@ -1,7 +1,7 @@
 /*
  *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  Copyright (c) 2013-16 Billy Quith
+ *  Copyright (c) 2013-17 Nick Trout
  *  See license in Gwork.h
  */
 
@@ -32,7 +32,7 @@ namespace Gwk
 
             virtual void DragAndDrop_StartDragging(Gwk::DragAndDrop::Package* package,
                                                    int x, int y) override;
-            virtual void DragAndDrop_EndDragging(bool bSuccess, int x, int y) override;
+            void DragAndDrop_EndDragging(bool bSuccess, int x, int y) override;
 
             void MoveTabsTo(DockedTabControl* target);
 
