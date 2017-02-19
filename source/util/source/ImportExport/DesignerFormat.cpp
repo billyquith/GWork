@@ -2,6 +2,10 @@
 #include <Gwork/Util/ImportExport.h>
 #include "GworkUtil.h"
 
+#ifndef _MSC_VER
+#   include <string.h>
+#endif
+
 namespace Gwk {
 namespace ImportExport {
 
