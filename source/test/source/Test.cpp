@@ -12,6 +12,8 @@
 #include <ponder/classbuilder.hpp>
 #define PONDER_USES_RUNTIME_IMPL
 #include <ponder/uses/runtime.hpp>
+#define PONDER_USES_LUA_IMPL
+#include <ponder/uses/lua.hpp>
 
 using namespace Gwk;
 

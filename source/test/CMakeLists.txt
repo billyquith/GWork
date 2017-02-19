@@ -13,6 +13,7 @@ set(GWK_TEST_SOURCES
     include/Gwork/Test/TestAPI.h
     include/Gwork/Test/TestReflect.h
     source/Test.cpp
+    # Gwork API tests
     source/api/Button.cpp
     source/api/Checkbox.cpp
     source/api/CollapsibleList.cpp
@@ -38,8 +39,10 @@ set(GWK_TEST_SOURCES
     source/api/TestAPI.cpp
     source/api/TreeControl.cpp
     source/api/Window.cpp
+    # Ponder tests
     source/reflection/TestReflect.cpp
     source/reflection/ReflectButton.cpp
+    source/reflection/LuaButton.cpp
 )
 
 # header folder groups
@@ -55,7 +58,11 @@ source_group("${GWK_SOURCE_FOLDER}"
 # Test library
 if(BUILD_TEST)    
     add_library(GworkTest STATIC ${GWK_TEST_SOURCES})
-    target_link_libraries(GworkTest Gwork Gwork${GWK_RENDER_NAME})
+
+    target_compile_definitions(GworkTest PUBLIC PONDER_USING_LUA=1)    
+    find_package(Lua 5.2 REQUIRED)    
+
+    target_link_libraries(GworkTest Gwork Gwork${GWK_RENDER_NAME} ${LUA_LIBRARIES})
     
     if(ALLOC_STATS)
         # where to write stats

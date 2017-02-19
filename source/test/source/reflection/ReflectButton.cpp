@@ -12,15 +12,21 @@
 #include <ponder/pondertype.hpp>
 #include <ponder/uses/runtime.hpp>
 
+#include <lua.h>
+#include <lauxlib.h>
+#include <ponder/uses/lua.hpp>
+
 using namespace Gwk;
+
+static lua_State *g_L = NULL;
 
 class ReflectButton : public TestUnit
 {
 public:
 
-    GWK_CONTROL(ReflectButton, TestUnit);
+    GWK_CONTROL_INLINE(ReflectButton, TestUnit) {}
     
-    ~ReflectButton();
+    virtual ~ReflectButton();
 
     void onButtonA(Event::Info info)
     {
@@ -45,15 +51,38 @@ public:
     ponder::UserObject m_buttonA;
 };
 
+class ReflectAPIButton : public ReflectButton
+{
+public:
+    GWK_CONTROL(ReflectAPIButton, ReflectButton);
+    virtual ~ReflectAPIButton() {}
+};
+
+class ReflectLuaButton : public ReflectButton
+{
+public:
+    GWK_CONTROL(ReflectLuaButton, ReflectButton);
+    virtual ~ReflectLuaButton() {}
+};
+
 static void declare()
 {
     ponder::Class::declare<ReflectButton>()
         .base<Controls::Base>();
+
+    g_L = luaL_newstate();
+    ponder::lua::expose<Gwk::Controls::Button>(g_L, "Button");
+    ponder::lua::expose<ReflectButton>(g_L, "ReflectButton");
 }
 
 PONDER_AUTO_TYPE(ReflectButton, &declare);
 
-GWK_CONTROL_CONSTRUCTOR(ReflectButton)
+ReflectButton::~ReflectButton()
+{
+    ponder::runtime::destroy(m_buttonA);
+}
+
+GWK_CONTROL_CONSTRUCTOR(ReflectAPIButton)
 {
     using namespace ponder;
     
@@ -82,9 +111,23 @@ GWK_CONTROL_CONSTRUCTOR(ReflectButton)
     runtime::callStatic(classByType<Align>().function("placeBelow"), buttonC, buttonB, 30);
 }
 
-ReflectButton::~ReflectButton()
+GWK_CONTROL_CONSTRUCTOR(ReflectLuaButton)
 {
-    ponder::runtime::destroy(m_buttonA);
+    // Ensure declare() is called.
+    (void) ponder::classByType<ReflectButton>();
+    
+    // Tell Lua about the parent control, into which we'll create our controls.
+    ponder::lua::pushUserObject(g_L,
+        ponder::UserObject::makeRef(*static_cast<Gwk::Controls::Base*>(this)));
+    lua_setglobal(g_L, "parent");
+
+    const char* str = R"lua(
+        buttA = Button(parent)
+        buttA.text = 'Hello from Lua!'
+    )lua";
+    ponder::lua::runString(g_L, str);
 }
 
-DECLARE_TEST(ReflectButton);
+DECLARE_TEST(ReflectAPIButton);
+DECLARE_TEST(ReflectLuaButton);
+

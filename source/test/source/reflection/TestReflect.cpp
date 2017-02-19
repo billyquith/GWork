@@ -50,11 +50,17 @@ GWK_CONTROL_CONSTRUCTOR(TestReflect)
     // Create Controls using Gwork Ponder reflection API.
     {
         Controls::CollapsibleCategory* cat = apiList->Add("Ponder");
-        ADD_TEST(ReflectButton);
+        ADD_TEST(ReflectAPIButton);
 //        ADD_TEST(Label);
 //        ADD_TEST(LabelMultiline);
     }
-    
+
+    // Create Controls using Lua via Ponder.
+    {
+        Controls::CollapsibleCategory* cat = apiList->Add("Lua");
+        ADD_TEST(ReflectLuaButton);
+    }
+
 //    {
 //        Controls::CollapsibleCategory* cat = apiList->Add("Non-Interactive");
 //        ADD_TEST(ProgressBar);
