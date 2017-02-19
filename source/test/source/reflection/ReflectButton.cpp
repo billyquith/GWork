@@ -6,10 +6,9 @@
  */
 
 #include <Gwork/Test/TestAPI.h>
-#include <Gwork/Util/ControlReflect.h>
-#include <ponder/classget.hpp>
-#include <ponder/class.hpp>
-#include <ponder/pondertype.hpp>
+#include <Gwork/Reflection.h>
+
+#include <ponder/classbuilder.hpp>
 #include <ponder/uses/runtime.hpp>
 
 #include <lua.h>

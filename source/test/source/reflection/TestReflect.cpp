@@ -11,7 +11,7 @@
 #include <Gwork/Controls/CollapsibleList.h>
 #include <Gwork/Controls/Layout/Position.h>
 #include <Gwork/Platform.h>
-#include <Gwork/Util/ControlReflect.h>
+#include <Gwork/Reflection.h>
 
 using namespace Gwk;
 
@@ -19,7 +19,7 @@ GWK_CONTROL_CONSTRUCTOR(TestReflect)
 {
     m_lastControl = nullptr;
     
-    ControlFactory::InitialiseControls();
+    Reflect::Declare();
 
     Dock(Position::Fill);
     
