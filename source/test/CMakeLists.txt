@@ -42,7 +42,6 @@ set(GWK_TEST_SOURCES
     # Ponder tests
     source/reflection/TestReflect.cpp
     source/reflection/ReflectButton.cpp
-    source/reflection/LuaButton.cpp
 )
 
 # header folder groups
@@ -56,15 +55,15 @@ source_group("${GWK_SOURCE_FOLDER}"
              REGULAR_EXPRESSION "source/[^/]+\\.cpp")
 
 # Test library
-if(BUILD_TEST)    
+if(WANT_TESTS)    
     add_library(GworkTest STATIC ${GWK_TEST_SOURCES})
 
     target_compile_definitions(GworkTest PUBLIC PONDER_USING_LUA=1)    
     find_package(Lua 5.2 REQUIRED)    
 
-    target_link_libraries(GworkTest Gwork Gwork${GWK_RENDER_NAME} ${LUA_LIBRARIES})
+    target_link_libraries(GworkTest Gwork Gwork${GWK_RENDERER_NAME} ${LUA_LIBRARIES})
     
-    if(ALLOC_STATS)
+    if(WANT_ALLOC_STATS)
         # where to write stats
         set(STATS_DIR "${CMAKE_CURRENT_SOURCE_DIR}/stats/")
         target_compile_definitions(GworkTest PUBLIC "-DGWK_STATS_DIR=\"${STATS_DIR}\"")
@@ -77,4 +76,4 @@ if(BUILD_TEST)
             RUNTIME DESTINATION bin
             LIBRARY DESTINATION lib
             ARCHIVE DESTINATION lib)
-endif(BUILD_TEST)
+endif(WANT_TESTS)

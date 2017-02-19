@@ -12,12 +12,12 @@ set(GWK_RENDER_HEADERS
     include/Gwork/PlatformTypes.h
     include/Gwork/Platform.h
     include/Gwork/PlatformCommon.h
-    include/Gwork/Renderers/${GWK_RENDER_NAME}.h
-    include/Gwork/Input/${GWK_RENDER_NAME}.h
+    include/Gwork/Renderers/${GWK_RENDERER_NAME}.h
+    include/Gwork/Input/${GWK_RENDERER_NAME}.h
 )
 
 set(GWK_RENDER_SOURCES
-    renderers/${GWK_RENDER_NAME}/${GWK_RENDER_NAME}.cpp
+    renderers/${GWK_RENDERER_NAME}/${GWK_RENDERER_NAME}.cpp
     platforms/${GWK_PLATFORM_NAME}Platform.cpp
     platforms/PlatformCommon.cpp
 )
@@ -34,8 +34,8 @@ source_group("${GWK_SOURCE_FOLDER}"
              REGULAR_EXPRESSION ".*\\.cpp")
 
 # Gwork renderer & platform library
-add_library(Gwork${GWK_RENDER_NAME} STATIC ${GWK_RENDER_HEADERS} ${GWK_RENDER_SOURCES})
-target_link_libraries(Gwork${GWK_RENDER_NAME} Gwork)
+add_library(Gwork${GWK_RENDERER_NAME} STATIC ${GWK_RENDER_HEADERS} ${GWK_RENDER_SOURCES})
+target_link_libraries(Gwork${GWK_RENDERER_NAME} Gwork)
 
 install(FILES ${GWK_RENDER_HEADERS}
         DESTINATION include/Gwork/Input)
@@ -43,7 +43,7 @@ install(FILES ${GWK_RENDER_HEADERS}
 install(FILES ${GWK_RENDER_HEADERS}
         DESTINATION include/Gwork/Renderers)
 
-install(TARGETS Gwork${GWK_RENDER_NAME}
+install(TARGETS Gwork${GWK_RENDERER_NAME}
         RUNTIME DESTINATION bin
         LIBRARY DESTINATION lib
         ARCHIVE DESTINATION lib)      

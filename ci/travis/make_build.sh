@@ -14,7 +14,7 @@ function cpp2c {
 }
 
 function prepare_osx {
-    cmake .. -GXcode -DBUILD_TEST=ON -DBUILD_SAMPLE=ON -DRENDER_NULL=ON
+    cmake .. -GXcode -DWANT_TESTS=ON -DWANT_SAMPLE=ON -DWANT_RENDERER_NULL=ON
 }
 
 function prepare_linux {
@@ -23,7 +23,7 @@ function prepare_linux {
     local ccomp=$(cpp2c $comp)
     echo "Requesting C compiler: $ccomp, C++ compiler: $comp"
     CC=$ccomp CXX=$comp cmake .. -G "Unix Makefiles" \
-        -DBUILD_TEST=ON -DBUILD_SAMPLE=ON -DRENDER_NULL=ON
+        -DWANT_TESTS=ON -DWANT_SAMPLE=ON -DWANT_RENDERER_NULL=ON
 }
 
 # args: <C++ compiler>

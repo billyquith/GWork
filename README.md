@@ -37,17 +37,17 @@ Get source code:
 CMake is used to generate the project files. See `cmake -h` to see all the generators for 
 your platform. Only have one renderer per build directory. Choose renderer:
 
-* `-DRENDER_ALLEGRO5=ON`
-* `-DRENDER_OPENGL=ON`
-* `-DRENDER_SDL2=ON`
-* `-DRENDER_SFML2=ON`
+* `-DWANT_RENDERER_ALLEGRO5=ON`
+* `-DWANT_RENDERER_OPENGL=ON`
+* `-DWANT_RENDERER_SDL2=ON`
+* `-DWANT_RENDERER_SFML2=ON`
 
 For example to build Allegro 5 renderer using Ninja:
 
 ```bash
 cd gwork
 mkdir build && cd build                 # put build files in subdirectory
-cmake -GNinja -DRENDER_ALLEGRO5=ON ..   # create Ninja project files
+cmake -GNinja -DWANT_RENDERER_ALLEGRO5=ON ..   # create Ninja project files
 ```
 
 Providing the dependencies are present, this will create a sample executable. When run it will

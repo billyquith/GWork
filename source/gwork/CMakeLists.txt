@@ -181,8 +181,8 @@ set(GWK_SOURCES
 )
 
 set(GWK_RENDER_SOURCES
-    include/Gwork/Renderers/${GWK_RENDER_NAME}.h
-    renderers/${GWK_RENDER_NAME}/${GWK_RENDER_NAME}.cpp
+    include/Gwork/Renderers/${GWK_RENDERER_NAME}.h
+    renderers/${GWK_RENDERER_NAME}/${GWK_RENDERER_NAME}.cpp
     source/Platforms/${GWK_PLATFORM_NAME}.cpp
 )
 

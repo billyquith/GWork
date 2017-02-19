@@ -1,5 +1,5 @@
 
-if(ALLOC_STATS)
+if(WANT_ALLOC_STATS)
     add_definitions("-DGWK_ALLOC_STATS=1")
 endif()
 
