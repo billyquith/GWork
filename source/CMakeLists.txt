@@ -1,5 +1,6 @@
 
 if(WANT_REFLECTION)
+    find_package(Ponder REQUIRED)
     add_definitions("-DGWK_REFLECT=1")
 endif()
 

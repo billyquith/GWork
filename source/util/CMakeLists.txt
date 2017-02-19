@@ -1,7 +1,5 @@
 # Gwork util library
 
-find_package(Ponder REQUIRED) # TODO - temporary hack whilst testing
-
 include_directories(
     ${GWK_SOURCE_DIR}/source/platform/include
     ${GWK_SOURCE_DIR}/source/gwork/include
