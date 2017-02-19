@@ -10,6 +10,7 @@ include_directories(
     ${GWK_SOURCE_DIR}/source/gwork/include
     ${GWK_RENDER_INCLUDES}
     ${GWK_SOURCE_DIR}/source/test/include
+    ${GWK_REFLECT_INCLUDE}
 )
 
 if(WANT_SAMPLE)

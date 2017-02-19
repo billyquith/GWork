@@ -11,19 +11,19 @@ set(FIND_PONDER_PATHS
     /opt)
 
 # find header path
-find_path(PONDER_INCLUDE_DIRS ponder/version.hpp
+find_path(PONDER_INCLUDE_DIR ponder/version.hpp
           PATH_SUFFIXES include
           PATHS ${FIND_PONDER_PATHS})
           
 # check the version number
 set(PONDER_VERSION_OK TRUE)
-if(Ponder_FIND_VERSION AND PONDER_INCLUDE_DIRS)
+if(Ponder_FIND_VERSION AND PONDER_INCLUDE_DIR)
     # extract the major and minor version numbers from ponder/version.hpp
     # we have to handle framework a little bit differently:
-    if("${PONDER_INCLUDE_DIRS}" MATCHES "ponder.framework")
-        set(PONDER_CONFIG_HPP_INPUT "${PONDER_INCLUDE_DIRS}/Headers/version.hpp")
+    if("${PONDER_INCLUDE_DIR}" MATCHES "ponder.framework")
+        set(PONDER_CONFIG_HPP_INPUT "${PONDER_INCLUDE_DIR}/Headers/version.hpp")
     else()
-        set(PONDER_CONFIG_HPP_INPUT "${PONDER_INCLUDE_DIRS}/ponder/version.hpp")
+        set(PONDER_CONFIG_HPP_INPUT "${PONDER_INCLUDE_DIR}/ponder/version.hpp")
     endif()
     
     FILE(READ "${PONDER_CONFIG_HPP_INPUT}" PONDER_VERSION_HPP_CONTENTS)

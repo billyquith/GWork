@@ -6,6 +6,7 @@ include_directories(
     ${GWK_RENDER_INCLUDES}
     ${CMAKE_SOURCE_DIR}/source/util/include
     ${CMAKE_SOURCE_DIR}/source/test/include
+    ${GWK_REFLECT_INCLUDE}
 )
 
 set(GWK_TEST_API
@@ -62,11 +63,6 @@ source_group("${GWK_SOURCE_FOLDER}"
 # Test library
 if(WANT_TESTS)    
     add_library(GworkTest STATIC ${GWK_TEST_API} ${GWK_TEST_REFLECT})
-
-    if(WANT_REFLECTION)
-        target_compile_definitions(GworkTest PUBLIC PONDER_USING_LUA=1)    
-        find_package(Lua 5.2 REQUIRED)
-    endif()
 
     target_link_libraries(GworkTest Gwork Gwork${GWK_RENDERER_NAME} ${LUA_LIBRARIES})
     

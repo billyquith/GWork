@@ -4,6 +4,7 @@ include_directories(
     ${GWK_SOURCE_DIR}/source/platform/include
     ${GWK_SOURCE_DIR}/source/gwork/include
     ${GWK_RENDER_INCLUDES}
+    ${GWK_REFLECT_INCLUDE}    
 )
 
 set(GWK_HEADERS

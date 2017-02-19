@@ -5,7 +5,7 @@ include_directories(
     ${GWK_SOURCE_DIR}/source/gwork/include
     ${GWK_RENDER_INCLUDES}
     ${CMAKE_SOURCE_DIR}/source/util/include
-    ${PONDER_INCLUDE_DIRS}
+    ${GWK_REFLECT_INCLUDE}
 )
 
 set(GWK_UTIL_SOURCES

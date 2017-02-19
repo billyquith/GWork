@@ -6,6 +6,7 @@
 
 #include <Gwork/Reflection.h>
 #include <ponder/classbuilder.hpp>
+#include <ponder/uses/lua.hpp>
 
 namespace Gwk {
 namespace Reflect {
