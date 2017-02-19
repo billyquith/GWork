@@ -5,6 +5,7 @@
  *  See license in Gwork.h
  */
 
+#define GWK_SAMPLE
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 #include <objbase.h>

@@ -9,15 +9,6 @@
 #include <Gwork/Test/TestReflect.h>
 #include <Gwork/Platform.h>
 
-// Include the implementation of Ponder dependencies so we can link successfully
-#if GWK_REFLECT
-#   include <ponder/classbuilder.hpp>
-#   define PONDER_USES_RUNTIME_IMPL
-#   include <ponder/uses/runtime.hpp>
-#   define PONDER_USES_LUA_IMPL
-#   include <ponder/uses/lua.hpp>
-#endif
-
 using namespace Gwk;
 
 GWK_CONTROL_CONSTRUCTOR(TestFrame)

@@ -1,12 +1,13 @@
 /*
  *  Gwork Null Sample
  *
- *  /// NOTE: This is a null application just used to make sure that Gwork compiles. ///
+ * $$$$ NOTE: This is a null application that is used to test Gwork compiles. $$$$
  *
  *  Copyright (c) 2013-2017 Nick Trout
  *  See license in Gwork.h
  */
 
+#define GWK_SAMPLE
 #include <Gwork/Skins/TexturedBase.h>
 #include <Gwork/Test/Test.h>
 #include <Gwork/Input/Null.h>

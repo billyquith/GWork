@@ -93,5 +93,14 @@ public:
 #define DECLARE_TEST(NAME) \
     TestUnit* RegisterTest_##NAME(Gwk::Controls::Base *parent) { return new NAME(parent); }
 
+#if GWK_REFLECT && defined(GWK_SAMPLE)
+    // Include the implementation of Ponder dependencies so we can link successfully
+#   include <ponder/classbuilder.hpp>
+#   define PONDER_USES_RUNTIME_IMPL
+#   include <ponder/uses/runtime.hpp>
+#   define PONDER_USES_LUA_IMPL
+#   include <ponder/uses/lua.hpp>
+#   undef GWK_SAMPLE
+#endif
 
 #endif // ifndef GWK_TEST_TEST_H

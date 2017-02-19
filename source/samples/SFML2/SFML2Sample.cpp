@@ -5,11 +5,11 @@
  *  See license in Gwork.h
  */
 
+#define GWK_SAMPLE
 #include <SFML/Graphics.hpp>
 
 #include <Gwork/Renderers/SFML2.h>
 #include <Gwork/Input/SFML2.h>
-
 #include <Gwork/Skins/Simple.h>
 #include <Gwork/Skins/TexturedBase.h>
 #include <Gwork/Test/Test.h>
