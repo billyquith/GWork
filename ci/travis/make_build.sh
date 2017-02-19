@@ -16,6 +16,7 @@ function cpp2c {
 }
 
 function prepare_osx {
+    echo "cmake .. -GXcode $WANT_OPTS $2"
     cmake .. -GXcode $WANT_OPTS $2
 }
 
@@ -24,6 +25,7 @@ function prepare_linux {
     local comp=$1
     local ccomp=$(cpp2c $comp)
     echo "Requesting C compiler: $ccomp, C++ compiler: $comp"
+    echo "CC=$ccomp CXX=$comp cmake .. -G \"Unix Makefiles\" $WANT_OPTS $2"
     CC=$ccomp CXX=$comp cmake .. -G "Unix Makefiles" $WANT_OPTS $2
 }
 
