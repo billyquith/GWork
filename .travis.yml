@@ -90,7 +90,7 @@ matrix:
       osx_image: xcode8.2
       compiler: clang
       env: COMPILER=clang++ BUILD_CONFIG=Release WANTS="-DWANT_REFLECTION=ON"
-      install: ./ci/travis/install.sh
+      install: ./ci/travis/install.sh reflect
       
 # install: ./ci/travis/install.sh
   
