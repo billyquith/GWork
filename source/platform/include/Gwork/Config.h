@@ -60,7 +60,6 @@
 #endif
 
 #if GWK_REFLECT
-#   include <ponder/pondertype.hpp>
 #   define GWK_IF_REFLECT(SRC) SRC
 #else
 #   define GWK_IF_REFLECT(SRC) // ignore

@@ -14,6 +14,10 @@
 #include <Gwork/ControlList.h>
 #include <functional>
 
+#if GWK_REFLECT
+#   include <ponder/pondertype.hpp>
+#endif
+
 namespace Gwk
 {
     namespace Controls
