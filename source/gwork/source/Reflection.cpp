@@ -1,8 +1,8 @@
 
-#include <Gwork/Util/ControlReflect.h>
+#include <Gwork/Reflection.h>
 
 namespace Gwk {
-namespace ControlFactory {
+namespace Reflect {
     
 void InitialiseControls()
 {
@@ -150,5 +150,5 @@ void InitialiseControls()
         ;
 }
 
-} // namespace ControlFactory
+} // namespace Reflect
 } // namespace Gwk

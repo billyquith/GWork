@@ -186,6 +186,13 @@ set(GWK_RENDER_SOURCES
     source/Platforms/${GWK_PLATFORM_NAME}.cpp
 )
 
+if(WANT_REFLECTION)
+    set(GWK_REFLECT_SOURCES
+        include/Gwork/Reflection.h
+        source/Reflection.cpp
+    )    
+endif()
+
 # header folder groups
 source_group("${GWK_HEADER_FOLDER}"
              REGULAR_EXPRESSION "include/Gwork/[^/]+\\.h")
@@ -211,7 +218,7 @@ source_group("${GWK_SOURCE_FOLDER}\\Controls\\Dialog"
              REGULAR_EXPRESSION "source/Controls/Dialog/[^/]+\\.cpp")
 
 # Gwork library
-add_library(Gwork STATIC ${GWK_HEADERS} ${GWK_SOURCES})
+add_library(Gwork STATIC ${GWK_HEADERS} ${GWK_SOURCES} ${GWK_REFLECT_SOURCES})
 
 install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/Gwork
         DESTINATION include)

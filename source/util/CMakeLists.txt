@@ -9,9 +9,7 @@ include_directories(
 )
 
 set(GWK_UTIL_SOURCES
-    # control factory
-    include/Gwork/Util/ControlReflect.h
-    source/ControlReflect/ControlReflect.cpp
+    include/Gwork/Util/ControlFactory.h
     # import/export
     include/Gwork/Util/ImportExport.h
     source/ImportExport/Base.cpp
