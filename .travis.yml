@@ -86,13 +86,18 @@ matrix:
       compiler: clang
       env: COMPILER=clang++ BUILD_CONFIG=Release
       install: ./ci/travis/install.sh
+    - os: osx
+      osx_image: xcode8.2
+      compiler: clang
+      env: COMPILER=clang++ BUILD_CONFIG=Release WANTS="-DWANT_REFLECTION=ON"
+      install: ./ci/travis/install.sh
       
 # install: ./ci/travis/install.sh
   
-before_script: ./ci/travis/make_build.sh $COMPILER
+before_script: ./ci/travis/make_build.sh $COMPILER "$WANTS"
     
 script:
-  - cd build && cmake --build . --target GworkNullSample --config $BUILD_CONFIG 
+  - cd build && cmake --build . --target GworkNullSample --config $BUILD_CONFIG
 
 notifications:
   email:

@@ -6,6 +6,8 @@ set -ev
 cmake --version
 mkdir build && cd build
 
+WANT_OPTS="-DWANT_TESTS=ON -DWANT_SAMPLE=ON -DWANT_RENDERER_NULL=ON" # common
+
 function cpp2c {
     local comp=$1
     comp=${comp/clang\+\+/clang}
@@ -14,7 +16,7 @@ function cpp2c {
 }
 
 function prepare_osx {
-    cmake .. -GXcode -DWANT_TESTS=ON -DWANT_SAMPLE=ON -DWANT_RENDERER_NULL=ON
+    cmake .. -GXcode $WANT_OPTS $2
 }
 
 function prepare_linux {
@@ -22,9 +24,8 @@ function prepare_linux {
     local comp=$1
     local ccomp=$(cpp2c $comp)
     echo "Requesting C compiler: $ccomp, C++ compiler: $comp"
-    CC=$ccomp CXX=$comp cmake .. -G "Unix Makefiles" \
-        -DWANT_TESTS=ON -DWANT_SAMPLE=ON -DWANT_RENDERER_NULL=ON
+    CC=$ccomp CXX=$comp cmake .. -G "Unix Makefiles" $WANT_OPTS $2
 }
 
-# args: <C++ compiler>
+# args: <C++ compiler> "<want opts>"
 prepare_$TRAVIS_OS_NAME "$@"
