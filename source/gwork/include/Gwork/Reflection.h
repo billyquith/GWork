@@ -1,6 +1,5 @@
 /*
  *  Gwork
- *  Copyright (c) 2010 Facepunch Studios
  *  Copyright (c) 2013-17 Nick Trout
  *  See license in Gwork.h
  */
@@ -12,7 +11,6 @@
 #include <Gwork/Align.h>
 
 #include <ponder/pondertype.hpp>
-#include <ponder/classbuilder.hpp>
 
 PONDER_TYPE(Gwk::Color)
 PONDER_TYPE(Gwk::Margin)
@@ -46,3 +44,10 @@ PONDER_TYPE(Gwk::Controls::ComboBox)
 //PONDER_TYPE(Gwk::Controls::DesignerCanvas)
 
 
+namespace Gwk {
+namespace Reflect {
+    
+void Declare();
+
+} // namespace Reflect
+} // namespace Gwk

@@ -1,10 +1,17 @@
+/*
+ *  Gwork
+ *  Copyright (c) 2013-17 Nick Trout
+ *  See license in Gwork.h
+ */
 
 #include <Gwork/Reflection.h>
+#include <ponder/classbuilder.hpp>
 
 namespace Gwk {
 namespace Reflect {
     
-void InitialiseControls()
+void Declare()
+
 {
     ponder::Class::declare<Gwk::Color>()
         .property("r", &Gwk::Color::r)
