@@ -8,10 +8,9 @@ include_directories(
     ${CMAKE_SOURCE_DIR}/source/test/include
 )
 
-set(GWK_TEST_SOURCES
+set(GWK_TEST_API
     include/Gwork/Test/Test.h
     include/Gwork/Test/TestAPI.h
-    include/Gwork/Test/TestReflect.h
     source/Test.cpp
     # Gwork API tests
     source/api/Button.cpp
@@ -39,10 +38,16 @@ set(GWK_TEST_SOURCES
     source/api/TestAPI.cpp
     source/api/TreeControl.cpp
     source/api/Window.cpp
+)
+
+if(WANT_REFLECTION)
+set(GWK_TEST_REFLECT
+    include/Gwork/Test/TestReflect.h
     # Ponder tests
     source/reflection/TestReflect.cpp
     source/reflection/ReflectButton.cpp
 )
+endif()
 
 # header folder groups
 source_group("${GWK_HEADER_FOLDER}"
@@ -56,10 +61,12 @@ source_group("${GWK_SOURCE_FOLDER}"
 
 # Test library
 if(WANT_TESTS)    
-    add_library(GworkTest STATIC ${GWK_TEST_SOURCES})
+    add_library(GworkTest STATIC ${GWK_TEST_API} ${GWK_TEST_REFLECT})
 
-    target_compile_definitions(GworkTest PUBLIC PONDER_USING_LUA=1)    
-    find_package(Lua 5.2 REQUIRED)    
+    if(WANT_REFLECTION)
+        target_compile_definitions(GworkTest PUBLIC PONDER_USING_LUA=1)    
+        find_package(Lua 5.2 REQUIRED)
+    endif()
 
     target_link_libraries(GworkTest Gwork Gwork${GWK_RENDERER_NAME} ${LUA_LIBRARIES})
     

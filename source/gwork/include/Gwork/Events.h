@@ -80,7 +80,7 @@ namespace Gwk
          */
         class GWK_EXPORT Handler
         {
-            PONDER_POLYMORPHIC()
+            GWK_IF_REFLECT( PONDER_POLYMORPHIC() )
         public:
 
             virtual ~Handler();
@@ -160,6 +160,6 @@ namespace Gwk
     } // namespace Event
 } // namespace Gwk
 
-PONDER_TYPE(Gwk::Event::Handler)
+GWK_IF_REFLECT( PONDER_TYPE(Gwk::Event::Handler) )
 
 #endif // ifndef GWK_EVENTS_H

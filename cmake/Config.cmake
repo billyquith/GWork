@@ -31,6 +31,7 @@ option(WANT_RENDERER_NULL       "Renderer: Null" OFF)
 
 option(WANT_TESTS               "Include unittests" ON)
 option(WANT_SAMPLE              "Include sample" ON)
+option(WANT_REFLECTION          "Use reflection (requires external dependencies)" OFF)
 
 # This is for development but can be used by the user.
 option(WANT_ALLOC_STATS         "Track memory allocations" OFF)
@@ -65,6 +66,9 @@ if(WANT_SAMPLE)
     message("Including sample")
 endif(WANT_SAMPLE)
 
+if(WANT_REFLECTION)
+    message("Using reflection")
+endif(WANT_REFLECTION)
 
 if(WANT_RENDERER_ALLEGRO5)
     find_package(Allegro5 REQUIRED)

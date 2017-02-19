@@ -20,7 +20,6 @@
 #include <list>
 #include <map>
 #include <algorithm>
-#include <ponder/pondertype.hpp>
 
 namespace Gwk
 {    

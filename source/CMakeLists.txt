@@ -1,4 +1,8 @@
 
+if(WANT_REFLECTION)
+    add_definitions("-DGWK_REFLECT=1")
+endif()
+
 if(WANT_ALLOC_STATS)
     add_definitions("-DGWK_ALLOC_STATS=1")
 endif()
