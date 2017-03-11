@@ -20,7 +20,6 @@ set(GWK_HEADERS
     include/Gwork/ToolTip.h
     include/Gwork/UiTypes.h
     include/Gwork/UserData.h
-    include/Gwork/Utility.h
     include/Gwork/WindowProvider.h
     # controls
     include/Gwork/Controls/Base.h
@@ -112,7 +111,6 @@ set(GWK_SOURCES
     source/Anim.cpp
     source/BaseRender.cpp
     source/ControlList.cpp
-    source/DebugBreak.h
     source/DragAndDrop.cpp
     source/Events.cpp
     source/Gwork.cpp
@@ -120,7 +118,6 @@ set(GWK_SOURCES
     source/InputHandler.cpp
     source/Skin.cpp
     source/ToolTip.cpp
-    source/Utility.cpp
     source/Controls/Base.cpp
     source/Controls/Button.cpp
     source/Controls/Canvas.cpp

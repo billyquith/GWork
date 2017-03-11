@@ -12,14 +12,17 @@ set(GWK_RENDER_HEADERS
     include/Gwork/PlatformTypes.h
     include/Gwork/Platform.h
     include/Gwork/PlatformCommon.h
+    include/Gwork/Utility.h
     include/Gwork/Renderers/${GWK_RENDER_NAME}.h
-    include/Gwork/Input/${GWK_RENDER_NAME}.h
+    include/Gwork/Input/${GWK_INPUT_NAME}.h
 )
 
 set(GWK_RENDER_SOURCES
     renderers/${GWK_RENDER_NAME}/${GWK_RENDER_NAME}.cpp
     platforms/${GWK_PLATFORM_NAME}Platform.cpp
     platforms/PlatformCommon.cpp
+    platforms/Utility.cpp
+    platforms/DebugBreak.h
 )
 
 source_group("${GWK_HEADER_FOLDER}\\Input"
