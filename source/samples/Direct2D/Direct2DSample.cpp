@@ -42,15 +42,18 @@ HWND CreateGameWindow(void)
     wc.style            = CS_HREDRAW|CS_VREDRAW|CS_OWNDC;
     wc.lpfnWndProc      = DefWindowProc;
     wc.hInstance        = GetModuleHandle(nullptr);
-    wc.lpszClassName    = L"GworkWindow";
+    wc.lpszClassName    = "GworkWindow";
     wc.hCursor          = LoadCursor(nullptr, IDC_ARROW);
     RegisterClass(&wc);
-    HWND hWindow = CreateWindowEx((WS_EX_APPWINDOW|WS_EX_WINDOWEDGE), wc.lpszClassName,
-                                  L"Gwork - Direct 2D Sample",
-                                  (WS_OVERLAPPEDWINDOW|WS_CLIPSIBLINGS|
-                                   WS_CLIPCHILDREN)&~(WS_MINIMIZEBOX|WS_MAXIMIZEBOX|WS_THICKFRAME),
-                                  -1, -1, 1004, 650, nullptr, nullptr, GetModuleHandle(
-                                      nullptr), nullptr);
+    HWND hWindow = CreateWindowEx((WS_EX_APPWINDOW|WS_EX_WINDOWEDGE),
+                                  wc.lpszClassName,
+                                  "Gwork - Direct 2D Sample",
+                                  (WS_OVERLAPPEDWINDOW|WS_CLIPSIBLINGS|WS_CLIPCHILDREN) & ~(WS_MINIMIZEBOX|WS_MAXIMIZEBOX|WS_THICKFRAME),
+                                  -1, -1,
+                                  1004, 650,
+                                  nullptr, nullptr,
+                                  GetModuleHandle(nullptr),
+                                  nullptr);
     ShowWindow(hWindow, SW_SHOW);
     SetForegroundWindow(hWindow);
     SetFocus(hWindow);
@@ -142,34 +145,28 @@ void runSample()
 {
     RECT FrameBounds;
     GetClientRect(g_hWND, &FrameBounds);
-    //
+
     // Create a Gwork skin
-    //
     Gwk::Skin::TexturedBase skin(g_renderer);
     skin.Init("DefaultSkin.png");
-    //
+
     // Create a Canvas (it's root, on which all other Gwork panels are created)
-    //
     Gwk::Controls::Canvas* canvas = new Gwk::Controls::Canvas(&skin);
     canvas->SetSize(FrameBounds.right, FrameBounds.bottom);
     canvas->SetDrawBackground(true);
     canvas->SetBackgroundColor(Gwk::Color(150, 170, 170, 255));
-    //
+
     // Create our unittest control (which is a Window with controls in it)
-    //
-    UnitTest* unit = new UnitTest(canvas);
+    auto unit = new TestFrame(canvas);
     unit->SetPos(10, 10);
-    //
+
     // Create a Windows Control helper
     // (Processes Windows MSG's and fires input at Gwork)
-    //
     Gwk::Input::Windows GworkInput;
     GworkInput.Initialize(canvas);
-    //
-    // Begin the main game loop
-    //
-    MSG msg;
 
+    // Begin the main game loop
+    MSG msg;
     while (true)
     {
         // Skip out if the window is closed
@@ -182,7 +179,6 @@ void runSample()
             // .. give it to the input handler to process
             GworkInput.ProcessMessage(msg);
 
-            // if it's QUIT then quit..
             if (msg.message == WM_QUIT)
                 break;
 
@@ -191,21 +187,19 @@ void runSample()
             DispatchMessage(&msg);
         }
 
+        if (SUCCEEDED(createDeviceResources()))
         {
-            if (SUCCEEDED(createDeviceResources()))
-            {
-                g_rT->BeginDraw();
-                g_rT->SetTransform(D2D1::Matrix3x2F::Identity());
-                g_rT->Clear(D2D1::ColorF(D2D1::ColorF::White));
-                // This is how easy it is to render Gwork!
-                canvas->RenderCanvas();
-                HRESULT hr = g_rT->EndDraw();
+            g_rT->BeginDraw();
+            g_rT->SetTransform(D2D1::Matrix3x2F::Identity());
+            g_rT->Clear(D2D1::ColorF(D2D1::ColorF::White));
 
-                if (hr == D2DERR_RECREATE_TARGET)
-                {
-                    discardDeviceResources();
-                    g_renderer->DeviceLost();
-                }
+            canvas->RenderCanvas();
+            HRESULT hr = g_rT->EndDraw();
+
+            if (hr == D2DERR_RECREATE_TARGET)
+            {
+                discardDeviceResources();
+                g_renderer->DeviceLost();
             }
         }
     }

@@ -2,7 +2,7 @@
  *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
  *  Copyright (c) 2013-17 Nick Trout
-*  See license in Gwork.h
+ *  See license in Gwork.h
  */
 
 #ifndef GWK_RENDERERS_DIRECT2D_H
@@ -13,9 +13,7 @@
 #include <dwrite.h>
 #include <wincodec.h>
 
-#include <Gwork/Gwork.h>
 #include <Gwork/BaseRender.h>
-#include <Gwork/Texture.h>
 
 namespace Gwk
 {
@@ -30,19 +28,18 @@ namespace Gwk
                      IWICImagingFactory* wICFactory);
             ~Direct2D();
 
-            virtual void Begin();
-            virtual void End();
+            void Begin() override;
+            void End() override;
             virtual void Release();
 
-            virtual void SetDrawColor(Gwk::Color color);
+            void SetDrawColor(Gwk::Color color) override;
 
-            virtual void DrawFilledRect(Gwk::Rect rect);
+            void DrawFilledRect(Gwk::Rect rect) override;
 
-            virtual void LoadFont(Gwk::Font* font);
-            virtual void FreeFont(Gwk::Font* font);
-            virtual void RenderText(Gwk::Font* font, Gwk::Point pos,
-                                    const Gwk::String& text);
-            virtual Gwk::Point MeasureText(Gwk::Font* font, const Gwk::String& text);
+            void LoadFont(Gwk::Font* font) override;
+            void FreeFont(Gwk::Font* font) override;
+            void RenderText(Gwk::Font* font, Gwk::Point pos, const Gwk::String& text) override;
+            Gwk::Point MeasureText(Gwk::Font* font, const Gwk::String& text) override;
 
             virtual void DeviceLost();
             virtual void DeviceAcquired(ID2D1RenderTarget* rT);
@@ -51,20 +48,16 @@ namespace Gwk
             void EndClip();
 
             void DrawTexturedRect(Gwk::Texture* texture, Gwk::Rect targetRect, float u1 = 0.0f,
-                                  float v1 = 0.0f, float u2 = 1.0f, float v2 = 1.0f);
-            void        LoadTexture(Gwk::Texture* texture);
-            void        FreeTexture(Gwk::Texture* texture);
-            Gwk::Color PixelColor(Gwk::Texture* texture, unsigned int x, unsigned int y,
-                                    const Gwk::Color& col_default);
+                                  float v1 = 0.0f, float u2 = 1.0f, float v2 = 1.0f) override;
+            void        LoadTexture(Gwk::Texture* texture) override;
+            void        FreeTexture(Gwk::Texture* texture) override;
+            Gwk::Color  PixelColor(Gwk::Texture* texture, unsigned int x, unsigned int y,
+                                   const Gwk::Color& col_default) override;
 
-            void DrawLinedRect(Gwk::Rect rect);
-            void DrawShavedCornerRect(Gwk::Rect rect, bool bSlight = false);
+            void DrawLinedRect(Gwk::Rect rect) override;
+            void DrawShavedCornerRect(Gwk::Rect rect, bool bSlight = false) override;
 
         public:
-
-            //
-            // Self Initialization
-            //
 
             bool InitializeContext(Gwk::WindowProvider* window);
             bool ShutdownContext(Gwk::WindowProvider* window);
@@ -101,9 +94,7 @@ namespace Gwk
 
             Gwk::Texture::List m_textureList;
             Gwk::Font::List m_fontList;
-
         };
-
 
     }
 }
