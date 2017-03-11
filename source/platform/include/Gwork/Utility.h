@@ -9,10 +9,10 @@
 #ifndef GWK_UTILITY_H
 #define GWK_UTILITY_H
 
+#include <Gwork/PlatformTypes.h>
+
 #include <sstream>
 #include <vector>
-#include <Gwork/UiTypes.h>
-
 #include <stdarg.h>
 
 namespace Gwk
@@ -73,7 +73,6 @@ namespace Gwk
                 GWK_EXPORT bool  Floats(const Gwk::String& str, float* f, size_t iCount);
             }
         }
-        
         Gwk::Rect ClampRectToRect(Gwk::Rect inside, Gwk::Rect outside, bool clampSize = false);
     }
     
