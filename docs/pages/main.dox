@@ -8,6 +8,8 @@ This is the documentation for [Gwork][gwork], which a GUI library. Gwork is a fo
 
 - \ref build_gwork
 
+\image html screen_buttons.png "Screenshot" height=600px
+
 ### Useful links
 
 - Gwork [Github project][gwork].
