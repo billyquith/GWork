@@ -1,6 +1,14 @@
 var NAVTREE =
 [
   [ "Gwork", "index.html", [
+    [ "Building Gwork", "build_gwork.html", [
+      [ "Using Cmake", "build_gwork.html#using_cmake", [
+        [ "Windows", "build_gwork.html#win_build", null ],
+        [ "OSX", "build_gwork.html#osx_build", null ],
+        [ "Linux", "build_gwork.html#linux_build", null ]
+      ] ],
+      [ "Targets", "build_gwork.html#gwork_targets", null ]
+    ] ],
     [ "Docking", "docking_notes.html", null ],
     [ "Classes", "annotated.html", [
       [ "Class List", "annotated.html", "annotated_dup" ],
@@ -18,14 +26,14 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 ".html",
-"class_gwk_1_1_controls_1_1_base_scroll_bar.html#a79b428e7dc3e0144e764ccdb4de3453c",
-"class_gwk_1_1_controls_1_1_file_picker.html#a70791e73d0411df055c2997b0d5ebe5b",
-"class_gwk_1_1_controls_1_1_progress_bar.html#a19c447467417bc562c34c385e5af3b08",
-"class_gwk_1_1_controls_1_1_tree_node.html",
-"class_gwk_1_1_input_1_1_g_l_f_w.html#a4ac2b157e0666033a3cc7f7b2c4405a9",
-"class_gwk_1_1_renderer_1_1_open_g_l.html#a7da9616285895a3229cb87cf6a97ac7c",
-"class_gwk_1_1_skin_1_1_textured_base.html#a2f1addd998d297f787c2c12d75b14c27",
-"struct_gwk_1_1_event_1_1_caller_1_1_handler_instance.html#ac6fc41eabdfefd07d610f21a63f97143"
+"class_gwk_1_1_controls_1_1_base_scroll_bar.html#a4a4814c8b4cd05a14bc07fcc8c9be3db",
+"class_gwk_1_1_controls_1_1_file_picker.html#a01ade31a245acb07db1dc61845f6f117",
+"class_gwk_1_1_controls_1_1_password_text_box.html#a76e2df6e0d497a4ddb13267e6c2c4ee5",
+"class_gwk_1_1_controls_1_1_tree_control.html#a8e0db6eb62b62b2000788f053400bd17",
+"class_gwk_1_1_input_1_1_g_l_f_w.html",
+"class_gwk_1_1_renderer_1_1_open_g_l.html#a39d84b232cd1fb4f6e3fd5fdc29c434b",
+"class_gwk_1_1_skin_1_1_textured_base.html#a2b14276d826a90b29ffb657d0bb59ca7",
+"struct_gwk_1_1_drag_and_drop_1_1_package.html#ae577f23185e3ea4c3c652495fc3cbd77"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

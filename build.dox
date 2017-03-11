@@ -1,0 +1,83 @@
+/*!
+
+\page build_gwork Building Gwork
+
+\section using_cmake Using Cmake
+
+Cmake is used to generate project files in your chosen format. It is best to build the project in
+subdirectory of the main project, e.g. in a directory called "build". You might make multiple
+version of the project for different options or targets this way.
+
+\subsection win_build Windows
+
+\code{.sh}
+cmake --help    # show cmake options
+\endcode
+
+\note Currently Windows only supports cross platform targets, i.e. the ones listed below.
+
+To generate project files:
+
+\code{.sh}
+mkdir build
+cd build
+cmake -G "Visual Studio 14 2015 Win64" -DRENDER_ALLEGRO5=ON ..
+start gwork.sln
+\endcode
+
+\subsection osx_build OSX
+
+\code{.sh}
+cmake -h    # show cmake options
+\endcode
+
+To generate project files:
+
+\code{.sh}
+mkdir build && cd build
+cmake -G Xcode -DRENDER_ALLEGRO5=ON ..
+open gwork.xcodeproj
+\endcode
+
+\subsection linux_build Linux
+
+\code{.sh}
+cmake -h    # show cmake options
+\endcode
+
+To generate project files:
+
+\code{.sh}
+mkdir build && cd build
+cmake -G "Unix Makefiles" -DRENDER_ALLEGRO5=ON ..
+\endcode
+
+
+\section gwork_targets Targets
+
+Gwork currently supports the following rendering targets:
+
+- Allegro 5
+- OpenGL
+- SDL2
+- SFML2
+
+You can choose these by defining a variable when you run cmake to generate the project files,
+i.e. `-DRENDER_<TARGET>=ON`, e.g. :-
+
+- `-DRENDER_ALLEGRO5=ON`
+- `-DRENDER_OPENGL=ON`
+- `-DRENDER_SDL2=ON`
+- `-DRENDER_SFML2=ON`
+
+\note You can only choose one target at a time. If you would like to compile multiple targets,
+create multiple build folders and create different project files and targets in each.
+
+Some tests and a sample are included for each target by default. These can be turned off using:
+
+- `-DBUILD_TEST=OFF`
+- `-DBUILD_SAMPLE=OFF`
+
+You should compile and run the sample to make sure that everything is working correctly.
+
+*/
