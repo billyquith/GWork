@@ -209,6 +209,7 @@ source_group("${GWK_SOURCE_FOLDER}\\Controls\\Dialog"
 
 # Gwork library
 add_library(Gwork STATIC ${GWK_HEADERS} ${GWK_SOURCES})
+target_link_libraries(Gwork Gwork${GWK_RENDER_NAME})
 
 install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/Gwork
         DESTINATION include)
