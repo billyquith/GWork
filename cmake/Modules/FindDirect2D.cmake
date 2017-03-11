@@ -13,8 +13,6 @@ find_path(DIRECT2D_INCLUDE_DIRS
         "C:/Program Files/Windows Kits/10/include/10.0.*.0/um"
 )
 
-message(STATUS "Direct2D includes: ${DIRECT2D_INCLUDE_DIRS}")
-
 if(CMAKE_SIZEOF_VOID_P EQUAL 8)
     SET(DIRECT2D_LIBRARY_PATHS
         "$ENV{DXSDK_DIR}/Lib/x64/"

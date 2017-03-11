@@ -8,7 +8,6 @@
 #ifndef GWK_RENDERERS_GDIPLUS_H
 #define GWK_RENDERERS_GDIPLUS_H
 
-#include <Gwork/Gwork.h>
 #include <Gwork/BaseRender.h>
 
 #include <gdiplus.h>

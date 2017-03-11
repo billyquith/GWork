@@ -13,9 +13,10 @@ message("Project version: ${GWK_VERSION_STR}")
 
 # Windows only
 if(WIN32)
-    option(RENDER_DIRECT2D  "Renderer: Direct2D" OFF)
+    # TODO: Direct2D and GDI+ are partially working - use cross platform, or fix!
+    # option(RENDER_DIRECT2D  "Renderer: Direct2D" OFF)
     # TODO: option(RENDER_DIRECTX9  "Renderer: DirectX9" OFF)
-    # TODO: option(RENDER_GDIPLUS   "Renderer: GDIPlus" OFF)    
+    # option(RENDER_GDIPLUS   "Renderer: GDIPlus" OFF)    
 endif()
 
 # Cross-platform
@@ -78,15 +79,19 @@ if(RENDER_ALLEGRO5)
     set(GWK_PLATFORM_NAME "Allegro5")
 endif(RENDER_ALLEGRO5)
 
+if(RENDER_GDIPLUS)
+    set(GWK_RENDER_NAME "GDIPlus")
+    find_package(GDIPLUS REQUIRED)
+    set(GWK_RENDER_INCLUDES "${GDIPLUS_INCLUDE_DIR}")
+    set(GWK_RENDER_LIBRARIES "${GDIPLUS_LIBRARIES}")
+    set(GWK_INPUT_NAME "Windows")
+endif(RENDER_GDIPLUS)
+
 if(RENDER_DIRECT2D)
     set(GWK_RENDER_NAME "Direct2D")
     find_package(Direct2D REQUIRED)
     set(GWK_RENDER_INCLUDES "${DIRECT2D_INCLUDE_DIRS}")
     set(GWK_RENDER_LIBRARIES "${DIRECT2D_LIBRARIES}")
-    # find_package(DirectX REQUIRED)
-    # set(GWK_RENDER_INCLUDES "${DirectX_D2D1_INCLUDE_DIR}")
-    # set(GWK_RENDER_LIBRARIES "${DirectX_D2D1_LIBRARY}")
-    # set(GWK_PLATFORM_NAME "Windows")
     set(GWK_INPUT_NAME "Windows")
 endif(RENDER_DIRECT2D)
 
