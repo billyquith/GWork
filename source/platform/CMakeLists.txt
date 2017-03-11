@@ -38,7 +38,6 @@ source_group("${GWK_SOURCE_FOLDER}"
 
 # Gwork renderer & platform library
 add_library(Gwork${GWK_RENDER_NAME} STATIC ${GWK_RENDER_HEADERS} ${GWK_RENDER_SOURCES})
-target_link_libraries(Gwork${GWK_RENDER_NAME} Gwork)
 
 install(FILES ${GWK_RENDER_HEADERS}
         DESTINATION include/Gwork/Input)
