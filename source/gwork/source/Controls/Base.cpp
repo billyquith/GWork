@@ -555,10 +555,8 @@ void Base::RenderRecursive(Gwk::Skin::Base* skin, const Gwk::Rect& cliprect)
     RenderUnder(skin);
     Gwk::Rect rOldRegion = render->ClipRegion();
 
-    //
     // If this control is clipping, change the clip rect to ourselves
-    // ( if not then we still clip using our parents clip rect )
-    //
+    // else clip using our parents clip rect.
     if (ShouldClip())
     {
         render->AddClipRegion(cliprect);
@@ -571,9 +569,7 @@ void Base::RenderRecursive(Gwk::Skin::Base* skin, const Gwk::Rect& cliprect)
         }
     }
 
-    //
     // Render this control and children controls
-    //
     render->StartClip();
     {
         Render(skin);
@@ -591,9 +587,8 @@ void Base::RenderRecursive(Gwk::Skin::Base* skin, const Gwk::Rect& cliprect)
         }
     }
     render->EndClip();
-    //
+
     // Render overlay/focus
-    //
     {
         render->SetClipRegion(rOldRegion);
         render->StartClip();

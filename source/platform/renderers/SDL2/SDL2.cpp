@@ -13,8 +13,8 @@ namespace Renderer
 {
 
 SDL2::SDL2(SDL_Window *window)
-:   m_window(window)
-,   m_renderer(nullptr)
+    :   m_window(window)
+    ,   m_renderer(nullptr)
 {
     m_renderer = SDL_CreateRenderer(m_window, -1,
                                     SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
