@@ -103,11 +103,16 @@ Gwk::Point SDL2::MeasureText(Gwk::Font* font, const Gwk::String& text)
 void SDL2::StartClip()
 {
     const Gwk::Rect &rect = ClipRegion();
-    const SDL_Rect clip = { rect.x, rect.y, rect.w,rect.h };
-    
-//          TODO - BAD! There seems to be something wrong with clip rectangles in SDL2.
-//          https://bugzilla.libsdl.org/show_bug.cgi?id=2700
-//            SDL_RenderSetClipRect(m_renderer, &clip);
+
+    int w, h;
+    SDL_GetRendererOutputSize(SDL_GetRenderer(m_window), &w, &h);
+
+    // Something wrong with clip rectangles in SDL2?
+    // https://bugzilla.libsdl.org/show_bug.cgi?id=2700
+    // =>   clip.y = screenHieght - clip.y - clip.h;
+    const SDL_Rect clip = { rect.x, h - rect.y - rect.h, rect.w, rect.h };
+
+    SDL_RenderSetClipRect(m_renderer, &clip);
 }
 
 void SDL2::EndClip()
