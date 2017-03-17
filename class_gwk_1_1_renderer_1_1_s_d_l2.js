@@ -17,8 +17,5 @@ var class_gwk_1_1_renderer_1_1_s_d_l2 =
     [ "PresentContext", "class_gwk_1_1_renderer_1_1_s_d_l2.html#aa01b714bf378f3fb5983d7ce62b4a317", null ],
     [ "RenderText", "class_gwk_1_1_renderer_1_1_s_d_l2.html#aa274ca3f945b3119fc31e9f43b72fe76", null ],
     [ "SetDrawColor", "class_gwk_1_1_renderer_1_1_s_d_l2.html#ac28ce506a4a04f7b60e33ad7e9cd59c8", null ],
-    [ "StartClip", "class_gwk_1_1_renderer_1_1_s_d_l2.html#a3f67dbc70a4d7829265cf7ff36b72ea8", null ],
-    [ "m_color", "class_gwk_1_1_renderer_1_1_s_d_l2.html#a9b47a8234fe8f1bbe123e4d3868098b5", null ],
-    [ "m_renderer", "class_gwk_1_1_renderer_1_1_s_d_l2.html#ad845716bd791d4017afb566a82157f38", null ],
-    [ "m_window", "class_gwk_1_1_renderer_1_1_s_d_l2.html#a666e71a70d8febb73e3ae269a8832645", null ]
+    [ "StartClip", "class_gwk_1_1_renderer_1_1_s_d_l2.html#a3f67dbc70a4d7829265cf7ff36b72ea8", null ]
 ];
