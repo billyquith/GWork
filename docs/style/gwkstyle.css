@@ -55,9 +55,10 @@ pre.fragment {
 }
 
 div.fragment {
-    padding: 4px 6px;
-    margin: 4px 8px 4px 2px;
+    padding: 6px 10px 6px 10px;
+    margin: 8px;
     border: 1px solid #C4CFE5;
+    border-radius: 6px;
 }
 
 div.line {
@@ -179,5 +180,14 @@ blockquote {
     border-left: 2px solid #9CAFD4;
     margin: 0 24px 0 4px;
     padding: 0 12px 0 16px;
+}
+
+
+dl.note {
+    margin: 1em 8em 1em 1em;
+    padding: 0 0.8em 0 0.8em;
+    border: 2px dashed;
+    border-color: #75d266;
+    border-radius: 5px;
 }
 
