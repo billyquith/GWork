@@ -29,14 +29,14 @@
 # When you try to locate the SFML libraries, you must specify which modules you want to use (system, window, graphics, network, audio, main).
 # If none is given, the SFML_LIBRARIES variable will be empty and you'll end up linking to nothing.
 # example:
-#   find_package(SFML COMPONENTS graphics window system) // find the graphics, window and system modules
+#   find_package(SFML COMPONENTS graphics window system) # find the graphics, window and system modules
 #
 # You can enforce a specific version, either MAJOR.MINOR or only MAJOR.
 # If nothing is specified, the version won't be checked (i.e. any version will be accepted).
 # example:
-#   find_package(SFML COMPONENTS ...)     // no specific version required
-#   find_package(SFML 2 COMPONENTS ...)   // any 2.x version
-#   find_package(SFML 2.4 COMPONENTS ...) // version 2.4 or greater
+#   find_package(SFML COMPONENTS ...)     # no specific version required
+#   find_package(SFML 2 COMPONENTS ...)   # any 2.x version
+#   find_package(SFML 2.4 COMPONENTS ...) # version 2.4 or greater
 #
 # By default, the dynamic libraries of SFML will be found. To find the static ones instead,
 # you must set the SFML_STATIC_LIBRARIES variable to TRUE before calling find_package(SFML ...).
@@ -245,7 +245,7 @@ foreach(FIND_SFML_COMPONENT ${SFML_FIND_COMPONENTS})
 endforeach()
 
 # in case of static linking, we must also define the list of all the dependencies of SFML libraries
-#if(SFML_STATIC_LIBRARIES)
+if(SFML_STATIC_LIBRARIES)
 
     # detect the OS
     if(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
@@ -307,10 +307,7 @@ endforeach()
         # find libraries
         if(FIND_SFML_OS_LINUX OR FIND_SFML_OS_FREEBSD)
             find_sfml_dependency(X11_LIBRARY "X11" X11)
-            find_sfml_dependency(LIBXCB_LIBRARIES "XCB" xcb libxcb)
-            find_sfml_dependency(X11_XCB_LIBRARY "X11-xcb" X11-xcb libX11-xcb)
-            find_sfml_dependency(XCB_RANDR_LIBRARY "xcb-randr" xcb-randr libxcb-randr)
-            find_sfml_dependency(XCB_IMAGE_LIBRARY "xcb-image" xcb-image libxcb-image)
+            find_sfml_dependency(XRANDR_LIBRARY "Xrandr" Xrandr)
         endif()
 
         if(FIND_SFML_OS_LINUX)
@@ -321,9 +318,9 @@ endforeach()
         if(FIND_SFML_OS_WINDOWS)
             set(SFML_WINDOW_DEPENDENCIES ${SFML_WINDOW_DEPENDENCIES} "opengl32" "winmm" "gdi32")
         elseif(FIND_SFML_OS_LINUX)
-            set(SFML_WINDOW_DEPENDENCIES ${SFML_WINDOW_DEPENDENCIES} "GL" ${X11_LIBRARY} ${LIBXCB_LIBRARIES} ${X11_XCB_LIBRARY} ${XCB_RANDR_LIBRARY} ${XCB_IMAGE_LIBRARY} ${UDEV_LIBRARIES})
+            set(SFML_WINDOW_DEPENDENCIES ${SFML_WINDOW_DEPENDENCIES} "GL" ${X11_LIBRARY} ${XRANDR_LIBRARY} ${UDEV_LIBRARIES})
         elseif(FIND_SFML_OS_FREEBSD)
-            set(SFML_WINDOW_DEPENDENCIES ${SFML_WINDOW_DEPENDENCIES} "GL" ${X11_LIBRARY} ${LIBXCB_LIBRARIES} ${X11_XCB_LIBRARY} ${XCB_RANDR_LIBRARY} ${XCB_IMAGE_LIBRARY} "usbhid")
+            set(SFML_WINDOW_DEPENDENCIES ${SFML_WINDOW_DEPENDENCIES} "GL" ${X11_LIBRARY} ${XRANDR_LIBRARY} "usbhid")
         elseif(FIND_SFML_OS_MACOSX)
             set(SFML_WINDOW_DEPENDENCIES ${SFML_WINDOW_DEPENDENCIES} "-framework OpenGL -framework Foundation -framework AppKit -framework IOKit -framework Carbon")
         endif()
@@ -360,7 +357,7 @@ endforeach()
         set(SFML_DEPENDENCIES ${SFML_DEPENDENCIES} ${SFML_AUDIO_DEPENDENCIES})
     endif()
 
-# endif(SFML_STATIC_LIBRARIES)
+endif()
 
 # handle errors
 if(NOT SFML_VERSION_OK)
