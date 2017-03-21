@@ -144,7 +144,6 @@ span.keywordflow {
 
 span.comment {
     color: #008000;
-/*    color: #800000*/
 }
 
 span.preprocessor {
@@ -182,12 +181,16 @@ blockquote {
     padding: 0 12px 0 16px;
 }
 
-
+/*-- notes --*/
 dl.note {
-    margin: 1em 8em 1em 1em;
+    margin: 1em 1.5em 1em 1.5em;
     padding: 0 0.8em 0 0.8em;
     border: 2px dashed;
     border-color: #75d266;
     border-radius: 5px;
+    color: rgb(114, 178, 131);
 }
-
+dt.note {
+  font-family: monospace;
+  font-style: italic;
+}
