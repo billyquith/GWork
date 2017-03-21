@@ -9,7 +9,7 @@ DOCOUT=$PROJDIR/build/doc/html
 [ -d $DOCDIR ] && rm -rf $DOCDIR
 
 git clone https://github.com/billyquith/gwork.git $PROJDIR -b gwork --depth=1
-git clone https://github.com/billyquith/gwork.git $DOCDIR -b gh-pages --depth=1 
+git clone https://github.com/billyquith/gwork.git $DOCDIR -b gh-pages --depth=1
 
 pushd $PROJDIR
 mkdir build && cd build
@@ -22,9 +22,10 @@ rm -r $DOCDIR/*
 cp -r $DOCOUT/* $DOCDIR
 
 pushd $DOCDIR
-git add *
+git add --all --verbose .
 git status
-git commit -m 'update docs'
+read -p "Commit message: " MESSAGE
+git commit -m "${MESSAGE:-"Update docs"}"
 git push
 popd
 
