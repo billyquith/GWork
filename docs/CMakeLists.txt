@@ -76,6 +76,7 @@ if(DOXYGEN_FOUND)
     STRING(REPLACE ";" " " DOC_MACRO_DIRS "${DOXYGEN_CODE_DIRS}") # want space separated
     set(DOC_STYLESHEET "${CMAKE_CURRENT_SOURCE_DIR}/style/gwkstyle.css")
     set(DOC_HEADER "${CMAKE_CURRENT_SOURCE_DIR}/style/docheader.html")
+    set(DOC_IMAGE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/images")
 
     # subsitutes to make to patch up docs
     set(PREDEFINES 
@@ -94,13 +95,14 @@ if(DOXYGEN_FOUND)
     configure_file(Doxyfile.in ${DOXYGEN_CONFIG_FILE} @ONLY)
 
     # copy necessary HTML doc files
-    file(GLOB image_files images/*)
-    file(GLOB_RECURSE pages_image_files pages/*)
-    set(gwk_doc_images ${image_files} ${pages_image_files})
-    foreach(file ${gwk_doc_images})
-        get_filename_component(filename ${file} NAME)
-        configure_file(${file} ${DOXYGEN_OUTPUT_DIR}/${DOXYGEN_OUTPUT_TYPE}/${filename} COPYONLY)
-    endforeach()
+    # set(IMAGE_GLOB "*.png")
+    # file(GLOB image_files ${CMAKE_CURRENT_SOURCE_DIR}/images/${IMAGE_GLOB})
+    # file(GLOB_RECURSE pages_image_files ${CMAKE_CURRENT_SOURCE_DIR}/pages/${IMAGE_GLOB})
+    # set(gwk_doc_images ${image_files} ${pages_image_files})
+    # foreach(file ${gwk_doc_images})
+    #     get_filename_component(filename ${file} NAME)
+    #     configure_file(${file} ${DOXYGEN_OUTPUT_DIR}/${DOXYGEN_OUTPUT_TYPE}/${filename} COPYONLY)
+    # endforeach()
 
     # target setup
     add_custom_target(doc
