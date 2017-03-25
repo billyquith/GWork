@@ -24,10 +24,10 @@ namespace Gwk
         class ICacheToTexture
         {
         public:
-            virtual ~ICacheToTexture() {}
             
             typedef void* CacheHandle;
 
+            virtual ~ICacheToTexture() {}
             virtual void Initialize() = 0;
             virtual void ShutDown() = 0;
             virtual void SetupCacheTexture(CacheHandle control) = 0;
@@ -41,13 +41,14 @@ namespace Gwk
         //
         /// Base class for all renderer implementations.
         ///
-        /// @note We never instance this directly, only the derived implementations.
+        /// \note We never instance this directly, only the derived implementations.
         //
         class GWK_EXPORT Base
         {
         protected:
             
-            Base(); // We only instance subclasses of this.
+            /// Constructor. Not public as we only instance derived implementations.
+            Base();
 
         public:
 

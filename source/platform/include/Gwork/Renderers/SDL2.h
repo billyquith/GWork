@@ -19,7 +19,10 @@ namespace Gwk
     namespace Renderer
     {
         class SDL2CTT;
-        
+
+        //
+        /// Renderer for [SDL2](https://www.libsdl.org).
+        //
         class SDL2 : public Gwk::Renderer::Base
         {
         public:
