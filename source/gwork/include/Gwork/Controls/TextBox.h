@@ -63,6 +63,9 @@ namespace Gwk
             virtual void SetCursorPos(int i);
             virtual void SetCursorEnd(int i);
 
+            void SetMaxTextLength(int maxLength) { m_maxTextLength = maxLength; }
+            const int& GetMaxTextLength() const { return m_maxTextLength; }
+
             void OnMouseClickLeft(int x, int y, bool bDown) override;
             void OnMouseMoved(int x, int y, int deltaX, int deltaY) override;
 
@@ -101,6 +104,8 @@ namespace Gwk
             int m_cursorPos;
             int m_cursorEnd;
             int m_cursorLine;
+
+            int m_maxTextLength;
 
             Gwk::Rect m_rectSelectionBounds;
             Gwk::Rect m_rectCaretBounds;
