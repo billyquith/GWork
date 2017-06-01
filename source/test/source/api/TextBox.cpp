@@ -41,17 +41,30 @@ public:
             label->SetPos(10, 10+25*3);
         }
         {
+            Gwk::Controls::TextBox* label = new Gwk::Controls::TextBox(this);
+            label->SetText("Max Length 15");
+            label->SetMaxTextLength(15);
+            label->SetPos(10, 10+25*4);
+        }
+        {
             Gwk::Controls::TextBoxNumeric* label = new Gwk::Controls::TextBoxNumeric(this);
             label->SetText("2004");
             label->SetTextColor(Gwk::Color(255, 0, 255, 255));
-            label->SetPos(10, 10+25*4);
+            label->SetPos(10, 10+25*5);
+        }
+        {
+            Gwk::Controls::TextBoxNumeric* label = new Gwk::Controls::TextBoxNumeric(this);
+            label->SetText("3.14159265");
+            label->SetTextColor(Gwk::Color(255, 0, 255, 255));
+            label->SetPos(10, 10+25*6);
+            label->SetMaxTextLength(10);
         }
         {
             m_font.facename = "Impact";
             m_font.size = 50;
             Gwk::Controls::TextBox* label = new Gwk::Controls::TextBox(this);
             label->SetText("Different Font");
-            label->SetPos(10, 10+25*5);
+            label->SetPos(10, 10+25*7);
             label->SetFont(&m_font);
             label->SetSize(200, 55);
         }
@@ -67,6 +80,13 @@ public:
             "vehicula, nunc lacus egestas leo, volutpat egestas augue.");
             label->SetPos(220, 10);
             label->SetSize(200, 180);
+        }
+        {
+            Gwk::Controls::TextBoxMultiline* label = new Gwk::Controls::TextBoxMultiline(this);
+            label->SetText("Max Length 20");
+            label->SetMaxTextLength(20);
+            label->SetPos(220, 195);
+            label->SetSize(200, 45);
         }
     }
 
