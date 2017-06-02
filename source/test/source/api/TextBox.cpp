@@ -88,6 +88,13 @@ public:
             label->SetPos(220, 195);
             label->SetSize(200, 45);
         }
+        {
+            Gwk::Controls::TextBoxMultiline* label = new Gwk::Controls::TextBoxMultiline(this);
+            label->SetMaxTextLength(20);
+            label->SetText("Max Length 20 -- Set text longer than max length");
+            label->SetPos(220, 245);
+            label->SetSize(200, 45);
+        }
     }
 
     void OnEdit(Gwk::Controls::Base* control)
