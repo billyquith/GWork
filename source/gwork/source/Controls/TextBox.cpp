@@ -46,7 +46,7 @@ GWK_CONTROL_CONSTRUCTOR(TextBox)
     m_cursorLine = 0;
     m_bEditable = true;
     m_bSelectAll = false;
-    m_maxTextLength = -1;
+    m_maxTextLength = NO_MAX_LENGTH;
     SetTextColor(Gwk::Color(50, 50, 50, 255));         // TODO: From Skin
     SetTabable(true);
     AddAccelerator("Ctrl + C", &TextBox::OnCopy);
@@ -80,7 +80,7 @@ void TextBox::InsertText(const Gwk::String& strInsert)
         return;
 
     int insertSize = static_cast<int>(strInsert.size());
-    if (m_maxTextLength > -1 && TextLength() + insertSize > m_maxTextLength)
+    if (m_maxTextLength > NO_MAX_LENGTH && TextLength() + insertSize > m_maxTextLength)
     {
         insertSize = m_maxTextLength - TextLength();
         

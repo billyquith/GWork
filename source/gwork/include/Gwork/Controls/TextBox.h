@@ -64,7 +64,7 @@ namespace Gwk
             virtual void SetCursorEnd(int i);
 
             void SetMaxTextLength(int maxLength) { m_maxTextLength = maxLength; }
-            const int& GetMaxTextLength() const { return m_maxTextLength; }
+            int GetMaxTextLength() const { return m_maxTextLength; }
 
             void OnMouseClickLeft(int x, int y, bool bDown) override;
             void OnMouseMoved(int x, int y, int deltaX, int deltaY) override;
@@ -89,6 +89,8 @@ namespace Gwk
 
             Event::Caller onTextChanged;
             Event::Caller onReturnPressed;
+
+            static constexpr int NO_MAX_LENGTH = -1;
 
         protected:
 
