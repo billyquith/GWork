@@ -56,6 +56,7 @@ namespace Gwk
             virtual void SetMin(int i);
             virtual void SetMax(int i);
             virtual void SetIntValue(int i);
+            virtual int GetIntValue();
 
             Event::Caller onChanged;
 
@@ -63,7 +64,6 @@ namespace Gwk
 
             void OnEnter() override;
             virtual void OnChange();
-            void OnTextChanged() override;
 
             virtual void OnButtonUp(Base* control);
             virtual void OnButtonDown(Base* control);
@@ -84,14 +84,11 @@ namespace Gwk
                 return true;
             }
 
-            virtual void SyncTextFromNumber();
-            virtual void SyncNumberFromText();
+            virtual int GetIntValueUnclamped();
 
-
-            int m_number;
             int m_max;
             int m_min;
-
+            int m_lastNumber;
         };
 
 
