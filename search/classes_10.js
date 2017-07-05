@@ -14,7 +14,7 @@ var searchData=
   ['testcategory',['TestCategory',['../class_test_category.html',1,'']]],
   ['testframe',['TestFrame',['../class_test_frame.html',1,'']]],
   ['testunit',['TestUnit',['../class_test_unit.html',1,'']]],
-  ['text',['Text',['../class_gwk_1_1_controls_internal_1_1_text.html',1,'Gwk::ControlsInternal::Text'],['../class_gwk_1_1_controls_1_1_property_1_1_text.html',1,'Gwk::Controls::Property::Text']]],
+  ['text',['Text',['../class_gwk_1_1_controls_1_1_property_1_1_text.html',1,'Gwk::Controls::Property::Text'],['../class_gwk_1_1_controls_internal_1_1_text.html',1,'Gwk::ControlsInternal::Text']]],
   ['textbox',['TextBox',['../class_gwk_1_1_controls_1_1_text_box.html',1,'Gwk::Controls']]],
   ['textbox_5ft',['TextBox_t',['../class_gwk_1_1_skin_1_1_textured_base.html#struct_gwk_1_1_skin_1_1_textured_base_1_1_textures__t_1_1_text_box__t',1,'Gwk::Skin::TexturedBase::Textures_t']]],
   ['textboxmultiline',['TextBoxMultiline',['../class_gwk_1_1_controls_1_1_text_box_multiline.html',1,'Gwk::Controls']]],

@@ -1,5 +1,7 @@
 var NAVTREEINDEX8 =
 {
+"struct_gwk_1_1_drag_and_drop_1_1_package.html#ae577f23185e3ea4c3c652495fc3cbd77":[2,0,0,2,0,2],
+"struct_gwk_1_1_drag_and_drop_1_1_package.html#af021f745ca4ae81a58c6f6d4b602905d":[2,0,0,2,0,3],
 "struct_gwk_1_1_event_1_1_caller_1_1_handler_instance.html":[2,0,0,3,0,0],
 "struct_gwk_1_1_event_1_1_caller_1_1_handler_instance.html#a065cc63ff235f215dc25ec65c4de8a59":[2,0,0,3,0,0,5],
 "struct_gwk_1_1_event_1_1_caller_1_1_handler_instance.html#a56b868179c8cbf6a7a16b7f2ff0d67d4":[2,0,0,3,0,0,2],

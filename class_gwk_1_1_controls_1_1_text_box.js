@@ -9,6 +9,7 @@ var class_gwk_1_1_controls_1_1_text_box =
     [ "m_cursorLine", "class_gwk_1_1_controls_1_1_text_box.html#ab90a89310330a4349867e3ffb6568556", null ],
     [ "m_cursorPos", "class_gwk_1_1_controls_1_1_text_box.html#a0975981977261606e64da49bce920d84", null ],
     [ "m_fNextCaretColorChange", "class_gwk_1_1_controls_1_1_text_box.html#aab73473d315a745fb0802466ec9b1212", null ],
+    [ "m_maxTextLength", "class_gwk_1_1_controls_1_1_text_box.html#a651e8e953f92af6cd812a60b58235aee", null ],
     [ "m_rectCaretBounds", "class_gwk_1_1_controls_1_1_text_box.html#a5af6907a2bd57d5cb5b5f0e049062942", null ],
     [ "m_rectSelectionBounds", "class_gwk_1_1_controls_1_1_text_box.html#afba26f019afb7f92fb7f3e7e13db31ee", null ]
 ];
