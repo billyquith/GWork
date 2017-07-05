@@ -191,6 +191,10 @@ dl.note {
     color: rgb(114, 178, 131);
 }
 dt.note {
-  font-family: monospace;
-  font-style: italic;
+    font-family: monospace;
+    font-style: italic;
+}
+
+div.ui-resizable-handle {
+    background-repeat: repeat-y;
 }
