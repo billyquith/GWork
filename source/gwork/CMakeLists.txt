@@ -20,7 +20,6 @@ set(GWK_HEADERS
     include/Gwork/ToolTip.h
     include/Gwork/UiTypes.h
     include/Gwork/UserData.h
-    include/Gwork/WindowProvider.h
     # controls
     include/Gwork/Controls/Base.h
     include/Gwork/Controls/Button.h
