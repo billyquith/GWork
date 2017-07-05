@@ -5,7 +5,8 @@
 set(GWK_VERSION_MAJOR 0)
 set(GWK_VERSION_MINOR 2)
 set(GWK_VERSION_PATCH 0)
-set(GWK_VERSION_STR "${GWK_VERSION_MAJOR}.${GWK_VERSION_MINOR}.${GWK_VERSION_PATCH}")
+set(GWK_BRANCH "Dev")       # Dev or Release
+set(GWK_VERSION_STR "${GWK_VERSION_MAJOR}.${GWK_VERSION_MINOR}.${GWK_VERSION_PATCH} ${GWK_BRANCH}")
 message("Project version: ${GWK_VERSION_STR}")
 
 #-----------------------------------------------------------
@@ -107,6 +108,9 @@ if(RENDER_OPENGL)
         set(GLFW_DEPENDENCIES "-framework OpenGL")
     elseif(UNIX)
         set(GLFW_DEPENDENCIES "-lGL")
+    elseif(WIN32)
+        find_package(OpenGL)
+        set(GLFW_DEPENDENCIES ${OPENGL_gl_LIBRARY})
     endif()
     set(GWK_RENDER_NAME "OpenGL")
     set(GWK_RENDER_INCLUDES "${GLFW_INCLUDE_DIR}")

@@ -12,6 +12,7 @@ set(GWK_RENDER_HEADERS
     include/Gwork/PlatformTypes.h
     include/Gwork/Platform.h
     include/Gwork/PlatformCommon.h
+    include/Gwork/WindowProvider.h
     include/Gwork/Utility.h
     include/Gwork/Renderers/${GWK_RENDER_NAME}.h
     include/Gwork/Input/${GWK_INPUT_NAME}.h
