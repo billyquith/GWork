@@ -25,7 +25,7 @@ option(RENDER_ALLEGRO5      "Renderer: Allegro5" OFF)
 option(RENDER_OPENGL        "Renderer: OPENGL" OFF)
 option(RENDER_SDL2          "Renderer: SDL2" OFF)
 option(RENDER_SFML2         "Renderer: SFML2" OFF)
-option(RENDER_NULL          "Renderer: Null" OFF)
+option(RENDER_NULL          "Renderer: Null" OFF)       # Used for testing
 
 option(BUILD_TEST           "Include unittests" ON)
 option(BUILD_SAMPLE         "Include sample" ON)
