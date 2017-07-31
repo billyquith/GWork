@@ -61,9 +61,10 @@ Gwork currently supports the following rendering targets:
 - OpenGL
 - SDL2
 - SFML2
+- Null - used for testing.
 
 You can choose these by defining a variable when you run cmake to generate the project files,
-i.e. `-DRENDER_<TARGET>=ON`, e.g. :-
+i.e. `-DRENDER_<TARGET>=ON`, e.g. :-
 
 - `-DRENDER_ALLEGRO5=ON`
 - `-DRENDER_OPENGL=ON`
@@ -79,6 +80,11 @@ Some tests and a sample are included for each target by default. These can be tu
 - `-DBUILD_SAMPLE=OFF`
 
 You should compile and run the sample to make sure that everything is working correctly.
+
+The *null* render target is used for testing. It does not compile or link against any
+target API, hence "null". It can be used to generate the Gwork memory usage stats. If you 
+are having problems compiling your project against your chosen target you could try compiling
+against null to see if the problem is related to Gwork or the target API.
 
 
 \section gwork_cmake_embed Using Gwork in your project
