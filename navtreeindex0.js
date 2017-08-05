@@ -20,6 +20,7 @@ var NAVTREEINDEX0 =
 "build_gwork.html#gwork_targets":[0,1],
 "build_gwork.html#linux_build":[0,0,2],
 "build_gwork.html#osx_build":[0,0,1],
+"build_gwork.html#target_notes":[0,1,0],
 "build_gwork.html#using_cmake":[0,0],
 "build_gwork.html#win_build":[0,0,0],
 "class_gwk_1_1_control_list.html":[2,0,0,10],
@@ -248,6 +249,5 @@ var NAVTREEINDEX0 =
 "class_gwk_1_1_controls_1_1_base_scroll_bar.html#a068da74a985c2687c7f22f2672989d3f":[2,0,0,0,4,25],
 "class_gwk_1_1_controls_1_1_base_scroll_bar.html#a0fb44f8cb136260cef6063b3f6d69315":[2,0,0,0,4,17],
 "class_gwk_1_1_controls_1_1_base_scroll_bar.html#a109cb563b5d4bb2a68eb2eaf25b6ebd3":[2,0,0,0,4,3],
-"class_gwk_1_1_controls_1_1_base_scroll_bar.html#a1192de009fc75b52247df8c9f9b63db4":[2,0,0,0,4,21],
-"class_gwk_1_1_controls_1_1_base_scroll_bar.html#a452a2b9069ce86a4ccf67401c6d442d2":[2,0,0,0,4,26]
+"class_gwk_1_1_controls_1_1_base_scroll_bar.html#a1192de009fc75b52247df8c9f9b63db4":[2,0,0,0,4,21]
 };
