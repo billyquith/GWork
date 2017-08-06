@@ -7,11 +7,13 @@
 
 #include <Gwork/Renderers/OpenGL.h>
 #include <Gwork/PlatformTypes.h>
+#include <Gwork/WindowProvider.h>
 
 #include <GLFW/glfw3.h>
 #include <math.h>
 #include <sys/stat.h>
 #include <stdio.h>
+#include <algorithm>
 
 //#define STBI_ASSERT(x)  // comment in for no asserts
 #define STB_IMAGE_IMPLEMENTATION
@@ -20,6 +22,17 @@
 #define STB_TRUETYPE_IMPLEMENTATION
 #define STBTT_STATIC
 #include "stb_truetype.h"
+
+#ifdef _WIN32
+	#define CREATE_NATIVE_CONTEXT 1
+
+	#define WIN32_LEAN_AND_MEAN
+	#include <windows.h>
+	#undef min
+	#undef max
+#else
+#	define CREATE_NATIVE_CONTEXT 0
+#endif
 
 namespace Gwk
 {
@@ -373,7 +386,7 @@ Gwk::Point OpenGL::MeasureText(Gwk::Font* font, const Gwk::String& text)
 
 bool OpenGL::InitializeContext(Gwk::WindowProvider* window)
 {
-#ifdef _WIN32
+#if CREATE_NATIVE_CONTEXT
     HWND hwnd = (HWND)window->GetWindow();
 
     if (!hwnd)
@@ -416,7 +429,7 @@ bool OpenGL::InitializeContext(Gwk::WindowProvider* window)
 
 bool OpenGL::ShutdownContext(Gwk::WindowProvider* window)
 {
-#ifdef _WIN32
+#if CREATE_NATIVE_CONTEXT
     wglDeleteContext((HGLRC)m_context);
     return true;
 #endif
@@ -425,7 +438,7 @@ bool OpenGL::ShutdownContext(Gwk::WindowProvider* window)
 
 bool OpenGL::PresentContext(Gwk::WindowProvider* window)
 {
-#ifdef _WIN32
+#if CREATE_NATIVE_CONTEXT
     HWND hwnd = (HWND)window->GetWindow();
 
     if (!hwnd)
@@ -440,7 +453,7 @@ bool OpenGL::PresentContext(Gwk::WindowProvider* window)
 
 bool OpenGL::ResizedContext(Gwk::WindowProvider* window, int w, int h)
 {
-#ifdef _WIN32
+#if CREATE_NATIVE_CONTEXT
     RECT r;
 
     if (GetClientRect((HWND)window->GetWindow(), &r))

@@ -15,10 +15,10 @@ include_directories(
 
 if(WANT_SAMPLE)
     
-    set(SAMPLE_NAME Gwork${GWK_RENDERER_NAME}Sample)
+    set(SAMPLE_NAME Gwork${GWK_RENDER_NAME}Sample)
     
     set(SAMPLE_SOURCES
-        "${GWK_RENDERER_NAME}/${GWK_RENDERER_NAME}Sample.cpp")
+        "${GWK_RENDER_NAME}/${GWK_RENDER_NAME}Sample.cpp")
 
     set(SAMPLE_RESOURCES
         "${GWK_SOURCE_DIR}/source/gwork/resource/DefaultSkin.png"
@@ -41,8 +41,8 @@ if(WANT_SAMPLE)
     add_executable(${SAMPLE_NAME} ${APP_BUILD_TYPE} ${SAMPLE_SOURCES} ${SAMPLE_RESOURCES})
     
     target_link_libraries(${SAMPLE_NAME}
-                          Gwork Gwork${GWK_RENDERER_NAME} GworkUtil
-                          ${GWK_RENDER_LIBRARIES} ${PONDER_LIBRARIES})
+                          Gwork Gwork${GWK_RENDER_NAME}
+                          ${GWK_RENDER_LIBRARIES})
 
     if(WANT_TESTS)
         target_link_libraries(${SAMPLE_NAME} GworkTest)

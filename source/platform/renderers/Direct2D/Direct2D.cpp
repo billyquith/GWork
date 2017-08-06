@@ -1,3 +1,9 @@
+/*
+*  Gwork
+*  Copyright (c) 2010 Facepunch Studios
+*  Copyright (c) 2013-17 Nick Trout
+*  See license in Gwork.h
+*/
 
 #include <windows.h>
 #include <d2d1.h>
@@ -7,15 +13,11 @@
 
 #include <Gwork/Renderers/Direct2D.h>
 #include <Gwork/Utility.h>
-#include <Gwork/Font.h>
-#include <Gwork/Texture.h>
-#include <Gwork/WindowProvider.h>
 
 struct FontData
 {
     IDWriteTextFormat*  textFormat;
 };
-
 
 struct TextureData
 {
@@ -28,17 +30,17 @@ namespace Gwk
 {
 namespace Renderer
 {
-    
-// self-hosting constructor
-Direct2D::Direct2D() : m_color(D2D1::ColorF::White)
+
+Direct2D::Direct2D()
+    :   m_wICFactory(nullptr)
+    ,   m_dWriteFactory(nullptr)
+    ,   m_rT(nullptr)
+    ,   m_color(D2D1::ColorF::White)
 {
-    m_rT               = nullptr;
-    m_dWriteFactory    = nullptr;
-    m_wICFactory       = nullptr;
 }
 
-Direct2D::Direct2D(ID2D1RenderTarget* rT, IDWriteFactory* dWriteFactory,
-                   IWICImagingFactory* wICFactory) : m_color(D2D1::ColorF::White)
+Direct2D::Direct2D(ID2D1RenderTarget* rT, IDWriteFactory* dWriteFactory, IWICImagingFactory* wICFactory)
+    : m_color(D2D1::ColorF::White)
 {
     DeviceAcquired(rT);
     m_dWriteFactory    = dWriteFactory;
@@ -63,8 +65,7 @@ void Direct2D::DrawFilledRect(Gwk::Rect rect)
 
     if (m_solidColorBrush)
     {
-        m_rT->FillRectangle(D2D1::RectF(rect.x, rect.y, rect.x+rect.w,
-                                         rect.y+rect.h), m_solidColorBrush);
+        m_rT->FillRectangle(D2D1::RectF(rect.x, rect.y, rect.x+rect.w, rect.y+rect.h), m_solidColorBrush);
     }
 }
 
@@ -78,7 +79,7 @@ bool Direct2D::InternalLoadFont(Gwk::Font* font)
 {
     IDWriteTextFormat* textFormat = nullptr;
     HRESULT hr = m_dWriteFactory->CreateTextFormat(
-        font->facename.c_str(),
+        Utility::Widen(font->facename.c_str()).c_str(),
         nullptr,
         font->bold ? DWRITE_FONT_WEIGHT_BOLD : DWRITE_FONT_WEIGHT_NORMAL,
         DWRITE_FONT_STYLE_NORMAL,
@@ -125,8 +126,7 @@ void Direct2D::FreeFont(Gwk::Font* font)
     InternalFreeFont(font);
 }
 
-void Direct2D::RenderText(Gwk::Font* font, Gwk::Point pos,
-                          const Gwk::UnicodeString& text)
+void Direct2D::RenderText(Gwk::Font* font, Gwk::Point pos, const Gwk::String& text)
 {
     // If the font doesn't exist, or the font size should be changed
     if (!font->data || fabs(font->realsize-font->size*Scale()) > 2)
@@ -140,13 +140,13 @@ void Direct2D::RenderText(Gwk::Font* font, Gwk::Point pos,
 
     if (m_solidColorBrush)
     {
-        m_rT->DrawTextW(text.c_str(), text.length(), fontData->textFormat,
-                         D2D1::RectF(pos.x, pos.y, pos.x+50000,
-                                     pos.y+50000), m_solidColorBrush);
+        //m_rT->DrawTextW(text.c_str(), text.length(), fontData->textFormat,
+        //                 D2D1::RectF(pos.x, pos.y, pos.x+50000,
+        //                             pos.y+50000), m_solidColorBrush);
     }
 }
 
-Gwk::Point Direct2D::MeasureText(Gwk::Font* font, const Gwk::UnicodeString& text)
+Gwk::Point Direct2D::MeasureText(Gwk::Font* font, const Gwk::String& text)
 {
     // If the font doesn't exist, or the font size should be changed
     if (!font->data || fabs(font->realsize-font->size*Scale()) > 2)
@@ -159,8 +159,8 @@ Gwk::Point Direct2D::MeasureText(Gwk::Font* font, const Gwk::UnicodeString& text
     Gwk::Point size;
     IDWriteTextLayout* layout;
     DWRITE_TEXT_METRICS metrics;
-    m_dWriteFactory->CreateTextLayout(text.c_str(),
-                                       text.length(), fontData->textFormat, 50000, 50000,
+    m_dWriteFactory->CreateTextLayout(Utility::Widen(text).c_str(),
+                                       static_cast<UINT32>(text.length()), fontData->textFormat, 50000, 50000,
                                        &layout);
     layout->GetMetrics(&metrics);
     layout->Release();
@@ -235,7 +235,7 @@ bool Direct2D::InternalLoadTexture(Gwk::Texture* texture)
     IWICFormatConverter* converter = nullptr;
     ID2D1Bitmap*            d2DBitmap = nullptr;
     HRESULT hr = m_wICFactory->CreateDecoderFromFilename(
-        texture->name.GetUnicode().c_str(),
+        Utility::Widen(texture->name).c_str(),
         nullptr,
         GENERIC_READ,
         WICDecodeMetadataCacheOnLoad,
@@ -331,7 +331,7 @@ void Direct2D::FreeTexture(Gwk::Texture* texture)
 }
 
 Gwk::Color Direct2D::PixelColor(Gwk::Texture* texture, unsigned int x, unsigned int y,
-                                  const Gwk::Color& col_default)
+                                const Gwk::Color& col_default)
 {
     TextureData* texData = (TextureData*)texture->data;
 
@@ -342,10 +342,10 @@ Gwk::Color Direct2D::PixelColor(Gwk::Texture* texture, unsigned int x, unsigned 
     sourceRect.X = x;
     sourceRect.Y = y;
     sourceRect.Width = sourceRect.Height = 1;
+
     // these bitmaps are always in GUID_WICPixelFormat32bppPBGRA
     byte pixelBuffer[4*1*1];
-    texData->wICBitmap->CopyPixels(&sourceRect, 4, 4*texture->width*texture->height,
-                                     pixelBuffer);
+    texData->wICBitmap->CopyPixels(&sourceRect, 4, 4 * texture->width * texture->height, pixelBuffer);
     return Gwk::Color(pixelBuffer[2], pixelBuffer[1], pixelBuffer[0], pixelBuffer[3]);
 }
 
@@ -435,47 +435,48 @@ void Direct2D::InternalReleaseDeviceResources()
 
 bool Direct2D::InitializeContext(Gwk::WindowProvider* window)
 {
-    m_hWND = (HWND)window->GetWindow();
-    HRESULT hr = D2D1CreateFactory(
-        D2D1_FACTORY_TYPE_SINGLE_THREADED,
-        &m_d2DFactory
-        );
+    //m_hWND = (HWND)window->GetWindow();
+    //HRESULT hr = D2D1CreateFactory(
+    //    D2D1_FACTORY_TYPE_SINGLE_THREADED,
+    //    &m_d2DFactory
+    //    );
 
-    if (FAILED(hr))
-        return false;
+    //if (FAILED(hr))
+    //    return false;
 
-    hr = DWriteCreateFactory(
-        DWRITE_FACTORY_TYPE_SHARED,
-        __uuidof(IDWriteFactory),
-        reinterpret_cast<IUnknown**>(&m_dWriteFactory)
-        );
+    //hr = DWriteCreateFactory(
+    //    DWRITE_FACTORY_TYPE_SHARED,
+    //    __uuidof(IDWriteFactory),
+    //    reinterpret_cast<IUnknown**>(&m_dWriteFactory)
+    //    );
 
-    if (FAILED(hr))
-        return false;
+    //if (FAILED(hr))
+    //    return false;
 
-    hr = CoInitialize(nullptr);
+    //hr = CoInitialize(nullptr);
 
-    if (FAILED(hr))
-        return false;
+    //if (FAILED(hr))
+    //    return false;
 
-    hr = CoCreateInstance(
-        CLSID_WICImagingFactory,
-        nullptr,
-        CLSCTX_INPROC_SERVER,
-        IID_IWICImagingFactory,
-        reinterpret_cast<void**>(&m_wICFactory)
-        );
+    //hr = CoCreateInstance(
+    //    CLSID_WICImagingFactory,
+    //    nullptr,
+    //    CLSCTX_INPROC_SERVER,
+    //    IID_IWICImagingFactory,
+    //    reinterpret_cast<void**>(&m_wICFactory)
+    //    );
 
-    if (FAILED(hr))
-        return false;
+    //if (FAILED(hr))
+    //    return false;
 
-    return InternalCreateDeviceResources();
+    //return InternalCreateDeviceResources();
+    return false;
 }
 
 bool Direct2D::ShutdownContext(Gwk::WindowProvider* window)
 {
-    InternalReleaseDeviceResources();
-    DeviceLost();
+    //InternalReleaseDeviceResources();
+    //DeviceLost();
     return true;
 }
 
@@ -486,32 +487,34 @@ bool Direct2D::PresentContext(Gwk::WindowProvider* window)
 
 bool Direct2D::ResizedContext(Gwk::WindowProvider* window, int w, int h)
 {
-    HRESULT hr = ((ID2D1HwndRenderTarget*)m_rT)->Resize(D2D1::SizeU(w, h));
-    return SUCCEEDED(hr);
+    //HRESULT hr = ((ID2D1HwndRenderTarget*)m_rT)->Resize(D2D1::SizeU(w, h));
+    //return SUCCEEDED(hr);
+    return false;
 }
 
 bool Direct2D::BeginContext(Gwk::WindowProvider* window)
 {
-    if (SUCCEEDED(InternalCreateDeviceResources()))
-    {
-        m_rT->BeginDraw();
-        return true;
-    }
+    //if (SUCCEEDED(InternalCreateDeviceResources()))
+    //{
+    //    m_rT->BeginDraw();
+    //    return true;
+    //}
 
     return false;
 }
 
 bool Direct2D::EndContext(Gwk::WindowProvider* window)
 {
-    HRESULT hr = m_rT->EndDraw();
+    //HRESULT hr = m_rT->EndDraw();
 
-    if (hr == D2DERR_RECREATE_TARGET)
-    {
-        InternalReleaseDeviceResources();
-        DeviceLost();
-    }
+    //if (hr == D2DERR_RECREATE_TARGET)
+    //{
+    //    InternalReleaseDeviceResources();
+    //    DeviceLost();
+    //}
 
-    return SUCCEEDED(hr);
+    //return SUCCEEDED(hr);
+    return false;
 }
 
 }

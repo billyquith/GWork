@@ -19,7 +19,10 @@ namespace Gwk
     namespace Renderer
     {
         class SDL2CTT;
-        
+
+        //
+        /// Renderer for [SDL2](https://www.libsdl.org).
+        //
         class SDL2 : public Gwk::Renderer::Base
         {
         public:
@@ -45,8 +48,8 @@ namespace Gwk
                                   float u2 = 1.0f, float v2 = 1.0f) override;
             void        LoadTexture(Gwk::Texture* texture) override;
             void        FreeTexture(Gwk::Texture* texture) override;
-            Gwk::Color PixelColor(Gwk::Texture* texture, unsigned int x, unsigned int y,
-                                    const Gwk::Color& col_default) override;
+            Gwk::Color  PixelColor(Gwk::Texture* texture, unsigned int x, unsigned int y,
+                                   const Gwk::Color& col_default) override;
 
             void DrawLinedRect(Gwk::Rect rect) override;
 
@@ -54,7 +57,7 @@ namespace Gwk
             bool EndContext(Gwk::WindowProvider* window) override;
             bool PresentContext(Gwk::WindowProvider* window) override;
 
-        protected:
+        private:
 
             SDL_Window      *m_window;
             SDL_Renderer    *m_renderer;

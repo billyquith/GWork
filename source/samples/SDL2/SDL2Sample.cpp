@@ -25,9 +25,9 @@ int main(int argc, char** argv)
         return EXIT_FAILURE;
         
     //Setup our window and renderer
-    const int SCREEN_WIDTH = 1024, SCREEN_HEIGHT = 768;
+    const int screenWidth = 1024, screenHeight = 768;
 	SDL_Window *window = SDL_CreateWindow("Gwork: SDL2", 100, 100,
-                                          SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+                                          screenWidth, screenHeight, SDL_WINDOW_SHOWN);
 	if (!window)
 		return EXIT_FAILURE;
 
@@ -45,7 +45,7 @@ int main(int argc, char** argv)
     
     // Create a Canvas (it's root, on which all other Gwork panels are created)
     Gwk::Controls::Canvas* canvas = new Gwk::Controls::Canvas(&skin);
-    canvas->SetSize(SCREEN_WIDTH, SCREEN_HEIGHT);
+    canvas->SetSize(screenWidth, screenHeight);
     canvas->SetDrawBackground(true);
     canvas->SetBackgroundColor(Gwk::Color(150, 170, 170, 255));
 

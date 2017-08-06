@@ -130,7 +130,8 @@ namespace Gwk
 
             // add class method handler
             template <typename T>
-            void Add(Handler* handler, void (T::*f)(Info),
+            void Add(Handler* handler,
+                     void (T::*f)(Info),
                      const Packet& packet = Packet())
             {
                 auto cb = [=](Handler &h, Info const& i) -> void {

@@ -9,11 +9,20 @@
 #ifndef GWK_UTILITY_H
 #define GWK_UTILITY_H
 
+#include <Gwork/PlatformTypes.h>
+
 #include <sstream>
 #include <vector>
-#include <Gwork/UiTypes.h>
-
 #include <stdarg.h>
+#include <algorithm>
+
+// Some platforms (e.g. Windows) define these. We want std::min/max.
+#ifdef min
+#undef min
+#endif
+#ifdef max
+#undef max
+#endif
 
 namespace Gwk
 {
@@ -73,7 +82,7 @@ namespace Gwk
                 GWK_EXPORT bool  Floats(const Gwk::String& str, float* f, size_t iCount);
             }
         }
-        
+
         Gwk::Rect ClampRectToRect(Gwk::Rect inside, Gwk::Rect outside, bool clampSize = false);
     }
     

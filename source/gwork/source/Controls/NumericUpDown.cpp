@@ -34,30 +34,28 @@ GWK_CONTROL_CONSTRUCTOR(NumericUpDown)
     buttonUp->SetPadding(Padding(0, 1, 1, 0));
     m_max = 100;
     m_min = 0;
-    m_number = 0;
+    m_lastNumber = 0;
     SetText("0");
 }
 
 void NumericUpDown::OnButtonUp(Event::Info)
 {
-    SyncNumberFromText();
-    SetIntValue(m_number+1);
+    SetIntValue(GetIntValueUnclamped() + 1);
 }
 
 void NumericUpDown::OnButtonDown(Event::Info)
 {
-    SyncNumberFromText();
-    SetIntValue(m_number-1);
+    SetIntValue(GetIntValueUnclamped() - 1);
 }
 
-void NumericUpDown::SyncTextFromNumber()
+int NumericUpDown::GetIntValueUnclamped()
 {
-    SetText(Utility::ToString(m_number));
+    return static_cast<int>(std::lround(GetFloatFromText()));
 }
 
-void NumericUpDown::SyncNumberFromText()
+int NumericUpDown::GetIntValue()
 {
-    SetIntValue(static_cast<int>(std::lround(GetFloatFromText())));
+    return Clamp(GetIntValueUnclamped(), m_min, m_max);
 }
 
 void NumericUpDown::SetMin(int i)
@@ -74,17 +72,13 @@ void NumericUpDown::SetIntValue(int i)
 {
     i = Clamp(i, m_min, m_max);
 
-    if (m_number == i)
-        return;
+    SetText(Utility::ToString(i));
 
-    m_number = i;
-    // Don't update the text if we're typing in it..
-    // Undone - any reason why not?
-    // if ( !IsFocussed() )
+    if (m_lastNumber != i)
     {
-        SyncTextFromNumber();
+        m_lastNumber = i;
+        OnChange();
     }
-    OnChange();
 }
 
 void NumericUpDown::OnChange()
@@ -92,15 +86,8 @@ void NumericUpDown::OnChange()
     onChanged.Call(this);
 }
 
-void NumericUpDown::OnTextChanged()
-{
-    ParentClass::OnTextChanged();
-    SyncNumberFromText();
-}
-
 void NumericUpDown::OnEnter()
 {
-    SyncNumberFromText();
-    SyncTextFromNumber();
+    SetIntValue(GetIntValueUnclamped());
     ParentClass::OnEnter();
 }

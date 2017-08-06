@@ -21,12 +21,14 @@ public:
         ctrl->SetIntValue(50);
         ctrl->SetMax(1000);
         ctrl->SetMin(-1000);
-        //	ctrl->onPress.Add( this, &ThisClass::onButtonA );
+        ctrl->onChanged.Add(this, &ThisClass::OnChanged);
     }
 
-    void onButtonA(Controls::Base* control)
+    void OnChanged(Event::Info info)
     {
-        //	OutputToLog( "Button Pressed (using 'OnPress' event)" );
+        auto control = info.Control;
+        Gwk::Controls::NumericUpDown* numeric = (Gwk::Controls::NumericUpDown*)control;
+        OutputToLog(Utility::Format("Numeric Changed: %i", numeric->GetIntValue()));
     }
 
 };

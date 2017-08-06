@@ -24,10 +24,10 @@ namespace Gwk
         class ICacheToTexture
         {
         public:
-            virtual ~ICacheToTexture() {}
             
             typedef void* CacheHandle;
 
+            virtual ~ICacheToTexture() {}
             virtual void Initialize() = 0;
             virtual void ShutDown() = 0;
             virtual void SetupCacheTexture(CacheHandle control) = 0;
@@ -36,19 +36,19 @@ namespace Gwk
             virtual void CreateControlCacheTexture(CacheHandle control, const Point& size) = 0;
             virtual void UpdateControlCacheTexture(CacheHandle control) = 0;
             virtual void SetRenderer(Gwk::Renderer::Base* renderer) = 0;
-
         };
 
         //
         /// Base class for all renderer implementations.
         ///
-        /// @note We never instance this directly, only the derived implementations.
+        /// \note We never instance this directly, only the derived implementations.
         //
         class GWK_EXPORT Base
         {
         protected:
             
-            Base(); // We only instance subclasses of this.
+            /// Constructor. Not public as we only instance derived implementations.
+            Base();
 
         public:
 
@@ -70,14 +70,14 @@ namespace Gwk
 
             virtual void DrawTexturedRect(Gwk::Texture* texture, Gwk::Rect targetRect,
                                           float u1 = 0.0f, float v1 = 0.0f,
-                                          float u2 = 1.0f, float v2 = 1.0f) {}
+                                          float u2 = 1.0f, float v2 = 1.0f)
+            {}
 
             virtual void DrawMissingImage(Gwk::Rect targetRect);
 
             virtual Gwk::Color PixelColor(Gwk::Texture* texture,
                                            unsigned int x, unsigned int y,
-                                           const Gwk::Color& col_default =
-                                                                Gwk::Color(255,255,255,255))
+                                           const Gwk::Color& col_default = Gwk::Color(255,255,255,255))
             {
                 return col_default;
             }

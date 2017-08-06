@@ -1,10 +1,14 @@
 /*!
 
-@mainpage Gwork
+\mainpage Gwork
 
 \image html logo4.png
 
 This is the documentation for [Gwork][gwork], which a GUI library. Gwork is a fork of GWEN.
+
+- \ref build_gwork
+
+\image html screen_buttons.png "Screenshot" height=600px
 
 ### Useful links
 

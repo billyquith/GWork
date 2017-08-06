@@ -21,8 +21,6 @@ set(GWK_HEADERS
     include/Gwork/Tooltip.h
     include/Gwork/UiTypes.h
     include/Gwork/UserData.h
-    include/Gwork/Utility.h
-    include/Gwork/WindowProvider.h
     # controls
     include/Gwork/Controls/Base.h
     include/Gwork/Controls/Button.h
@@ -113,15 +111,13 @@ set(GWK_SOURCES
     source/Anim.cpp
     source/BaseRender.cpp
     source/ControlList.cpp
-    source/DebugBreak.h
     source/DragAndDrop.cpp
     source/Events.cpp
     source/Gwork.cpp
     source/Hook.cpp
     source/InputHandler.cpp
     source/Skin.cpp
-    source/Tooltip.cpp
-    source/Utility.cpp
+    source/ToolTip.cpp
     source/Controls/Base.cpp
     source/Controls/Button.cpp
     source/Controls/Canvas.cpp
@@ -220,6 +216,7 @@ source_group("${GWK_SOURCE_FOLDER}\\Controls\\Dialog"
 
 # Gwork library
 add_library(Gwork STATIC ${GWK_HEADERS} ${GWK_SOURCES} ${GWK_REFLECT_SOURCES})
+target_link_libraries(Gwork Gwork${GWK_RENDER_NAME})
 
 install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/Gwork
         DESTINATION include)

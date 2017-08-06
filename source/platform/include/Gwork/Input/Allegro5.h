@@ -40,6 +40,7 @@ namespace Gwk
                     return Gwk::Key::Backspace;
 
                 case ALLEGRO_KEY_ENTER:
+                case ALLEGRO_KEY_PAD_ENTER:
                     return Gwk::Key::Return;
 
                 case ALLEGRO_KEY_ESCAPE:

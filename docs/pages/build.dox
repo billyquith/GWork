@@ -1,0 +1,137 @@
+/*!
+
+\page build_gwork Building Gwork
+
+\section using_cmake Using Cmake
+
+Cmake is used to generate project files in your chosen format. It is best to build the project in
+subdirectory of the main project, e.g. in a directory called "build". You might make multiple
+version of the project for different options or targets this way.
+
+\subsection win_build Windows
+
+\code{.sh}
+cmake --help    # show cmake options
+\endcode
+
+\note Currently Windows only supports cross platform targets, i.e. the ones listed below.
+
+To generate project files:
+
+\code{.sh}
+mkdir build
+cd build
+cmake -G "Visual Studio 14 2015 Win64" -DRENDER_ALLEGRO5=ON ..
+start gwork.sln
+\endcode
+
+\subsection osx_build OSX
+
+\code{.sh}
+cmake -h    # show cmake options
+\endcode
+
+To generate project files:
+
+\code{.sh}
+mkdir build && cd build
+cmake -G Xcode -DRENDER_ALLEGRO5=ON ..
+open gwork.xcodeproj
+\endcode
+
+\subsection linux_build Linux
+
+\code{.sh}
+cmake -h    # show cmake options
+\endcode
+
+To generate project files:
+
+\code{.sh}
+mkdir build && cd build
+cmake -G "Unix Makefiles" -DRENDER_ALLEGRO5=ON ..
+\endcode
+
+\section gwork_targets Targets
+
+Gwork currently supports the following rendering targets. You can choose these by 
+defining a variable when you run cmake to generate the project files,
+i.e. `-DRENDER_<TARGET>=ON`, e.g. :-
+
+- Allegro 5: `-DRENDER_ALLEGRO5=ON`
+- OpenGL: `-DRENDER_OPENGL=ON`
+- SDL2: `-DRENDER_SDL2=ON`
+- SFML2: `-DRENDER_SFML2=ON`
+- Null (used for testing): `-DRENDER_NULL=ON`
+
+\note You can only choose one target at a time. If you would like to compile multiple targets,
+create multiple build folders and create different project files and targets in each.
+
+Some tests and a sample are included for each target by default. These can be turned off using:
+
+- `-DWANT_TESTS=OFF`
+- `-DWANT_SAMPLE=OFF`
+
+You should compile and run the sample before using Gwork in your own project to make sure that
+everything is working correctly.
+
+The *null* render target is used for testing. It does not compile or link against any
+target API, hence "null". It can be used to generate the Gwork memory usage stats. If you 
+are having problems compiling your project against your chosen target you could try compiling
+against null to see if the problem is related to Gwork or the target API.
+
+\subsection target_notes Notes on the Targets
+
+- SDL2
+  - SDL2 has a clipping bug in versions before 2.0.5. This results in most things not appearing
+    on the screen. See the issue for screenshots and 
+    [more details](https://github.com/billyquith/GWork/issues/18).
+- SFML2
+  - When creating an SFML2 project make sure you include the "window" component as this is
+    what pulls in the OpenGL dependencies:
+    `find_package(SFML 2 COMPONENTS system window graphics REQUIRED)`.
+
+\section gwork_cmake_embed Using Gwork in your project
+
+An example cmake project is supplied below.
+
+\code{.cmake}
+# CMake build instructions for app embedding Gwork 
+
+# configure cmake
+cmake_minimum_required(VERSION 3.1)
+cmake_policy(SET CMP0004 OLD)
+
+# we require C++11 - this set appropriate flags for compilers, which may not be portable
+set(CMAKE_CXX_STANDARD 11)
+
+project(AppUsingGwork)
+
+# Gwork is sub-project of this one
+set(GWORK_DIR ${CMAKE_CURRENT_SOURCE_DIR}/gwork)
+add_subdirectory(${GWORK_DIR})
+
+# GUI lib, change to suit. Borrow Gwork modules.
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${GWORK_DIR}/cmake/Modules/")
+find_package(Allegro5 REQUIRED)
+
+include_directories(${GWORK_DIR}/source/platform/include
+                    ${GWORK_DIR}/source/gwork/include
+                    ${GWORK_DIR}/source/test/include
+                    ${ALLEGRO5_INCLUDE_DIRS})
+
+add_executable(AppUsingGwork Allegro5Sample.cpp)
+
+target_link_libraries(AppUsingGwork Gwork GworkAllegro5 GworkTest ${ALLEGRO5_LIBRARIES})
+
+\endcode
+
+This assumes that you have the directory structure:
+
+- Project/
+    - CMakeLists.txt  (above config)
+    - Gwork/
+
+\note When you run cmake you still need to use the above cmake command-line arguments to generate the project. Gwork needs to know which renderer etc you want to use.
+
+*/

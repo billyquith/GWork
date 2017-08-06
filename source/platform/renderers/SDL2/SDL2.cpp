@@ -13,8 +13,8 @@ namespace Renderer
 {
 
 SDL2::SDL2(SDL_Window *window)
-:   m_window(window)
-,   m_renderer(nullptr)
+    :   m_window(window)
+    ,   m_renderer(nullptr)
 {
     m_renderer = SDL_CreateRenderer(m_window, -1,
                                     SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
@@ -103,11 +103,23 @@ Gwk::Point SDL2::MeasureText(Gwk::Font* font, const Gwk::String& text)
 void SDL2::StartClip()
 {
     const Gwk::Rect &rect = ClipRegion();
-    const SDL_Rect clip = { rect.x, rect.y, rect.w,rect.h };
+
+    // SDL2 appears to have a bug pre-version 2.0.5 where the clipping rectangle
+    // is inverted vertically. See: https://github.com/billyquith/GWork/issues/18
+    // Deal with backwards compatibility for now.
+#if SDL_VERSION_ATLEAST(2, 0, 5)
+    const SDL_Rect clip = { rect.x, rect.y, rect.w, rect.h };
+#else
+    int w, h;
+    SDL_GetRendererOutputSize(SDL_GetRenderer(m_window), &w, &h);
     
-//          TODO - BAD! There seems to be something wrong with clip rectangles in SDL2.
-//          https://bugzilla.libsdl.org/show_bug.cgi?id=2700
-//            SDL_RenderSetClipRect(m_renderer, &clip);
+    // Something wrong with clip rectangles in SDL2?
+    // https://bugzilla.libsdl.org/show_bug.cgi?id=2700
+    // =>   clip.y = screenHeight - clip.y - clip.h;
+    const SDL_Rect clip = { rect.x, h - rect.y - rect.h, rect.w, rect.h };
+#endif
+
+    SDL_RenderSetClipRect(m_renderer, &clip);
 }
 
 void SDL2::EndClip()

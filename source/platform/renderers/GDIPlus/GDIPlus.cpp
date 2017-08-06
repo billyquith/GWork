@@ -4,9 +4,6 @@
 
 #include <Gwork/Renderers/GDIPlus.h>
 #include <Gwork/Utility.h>
-#include <Gwork/Font.h>
-#include <Gwork/Texture.h>
-#include <Gwork/WindowProvider.h>
 
 #include <math.h>
 
