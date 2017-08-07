@@ -115,9 +115,6 @@ var annotated_dup =
       [ "Hook", null, [
         [ "BaseHook", "class_gwk_1_1_hook_1_1_base_hook.html", "class_gwk_1_1_hook_1_1_base_hook" ]
       ] ],
-      [ "ImportExport", null, [
-        [ "Base", "class_gwk_1_1_import_export_1_1_base.html", "class_gwk_1_1_import_export_1_1_base" ]
-      ] ],
       [ "Input", null, [
         [ "Allegro", "class_gwk_1_1_input_1_1_allegro.html", "class_gwk_1_1_input_1_1_allegro" ],
         [ "GLFW", "class_gwk_1_1_input_1_1_g_l_f_w.html", "class_gwk_1_1_input_1_1_g_l_f_w" ],

@@ -22,7 +22,6 @@ var hierarchy =
       [ "Gwk::Renderer::SDL2", "class_gwk_1_1_renderer_1_1_s_d_l2.html", null ],
       [ "Gwk::Renderer::SFML2", "class_gwk_1_1_renderer_1_1_s_f_m_l2.html", null ]
     ] ],
-    [ "Gwk::ImportExport::Base", "class_gwk_1_1_import_export_1_1_base.html", null ],
     [ "Gwk::Skin::Base.Colors", "struct_gwk_1_1_skin_1_1_base_8_colors.html", null ],
     [ "Gwk::Hook::BaseHook", "class_gwk_1_1_hook_1_1_base_hook.html", null ],
     [ "Gwk::Skin::Texturing::Bordered", "struct_gwk_1_1_skin_1_1_texturing_1_1_bordered.html", null ],

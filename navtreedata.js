@@ -2,6 +2,7 @@ var NAVTREE =
 [
   [ "Gwork", "index.html", [
     [ "Building Gwork", "build_gwork.html", [
+      [ "Introduction", "build_gwork.html#Introduction", null ],
       [ "Using Cmake", "build_gwork.html#using_cmake", [
         [ "Windows", "build_gwork.html#win_build", null ],
         [ "OSX", "build_gwork.html#osx_build", null ],
@@ -33,10 +34,10 @@ var NAVTREEINDEX =
 "class_gwk_1_1_controls_1_1_field_label.html#aeb75f37a47372ac3387122296ad2e216",
 "class_gwk_1_1_controls_1_1_password_text_box.html#a39f4cd724a629cbe4cc98f2bb784cd0e",
 "class_gwk_1_1_controls_1_1_tree_control.html",
-"class_gwk_1_1_input_1_1_allegro.html#a6ac8530d228fd26332aa32334eb72771",
-"class_gwk_1_1_renderer_1_1_open_g_l.html#a1bd432eea2cf618f2127354183eb9d3e",
-"class_gwk_1_1_skin_1_1_textured_base.html#a2a420119663a27658072a545fa09e733",
-"struct_gwk_1_1_drag_and_drop_1_1_package.html#ae3d19c9eee0465d7a2360e6e455fdfae"
+"class_gwk_1_1_input_1_1_g_l_f_w.html#a22b4d29fe30224536c5a42c9921b1629",
+"class_gwk_1_1_renderer_1_1_open_g_l.html#a6e52cdfd4b1184428004160ae000a3e1",
+"class_gwk_1_1_skin_1_1_textured_base.html#a2f6c3398447671efb93db85133cd6158",
+"struct_gwk_1_1_event_1_1_caller_1_1_handler_instance.html#ad5d1ae4bf3c2f2b8a2679e827de364aa"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
