@@ -2,11 +2,41 @@
 
 \page build_gwork Building Gwork
 
+\section Introduction
+
+Gwork is divided into layers (see [source][source]):
+
+- `platform` - Provides a common API to the supported platform.
+- `gwork` - The GUI API, which contains no target specific code.
+- `samples`/`test` - Some examples for demonstration and testing.
+
+The project creates libraries for *platform* and *gwork*, which you can then link to
+your project. You can see an example of how to do this in the samples. There is one for
+each of the targets supported. [Cmake][cmake] is used to generate project files for 
+your chosen build environment.
+
+There are two ways in which you can use the project file generation:
+
+- Generate entire project in cmake. You could then have Gwork as a sub-project.
+- Generate build files, build, and install. You use cmake to build your project,
+  then install the project to a standard location and use it as a regular library.
+
 \section using_cmake Using Cmake
 
-Cmake is used to generate project files in your chosen format. It is best to build the project in
-subdirectory of the main project, e.g. in a directory called "build". You might make multiple
-version of the project for different options or targets this way.
+If you are not familiar with cmake:
+
+- [Cmake overview](https://cmake.org/overview/) - What cmake is and why it was created.
+- [Cmake tutorial](https://cmake.org/cmake-tutorial/) - Quick introduction on how to use it.
+
+Some useful links for using Cmake: 
+
+- [Cmake download](https://cmake.org/download/) - How to get it.
+- [Cmake documentation](https://cmake.org/documentation/) - Documentation on the current version.
+- [Cmake wiki](https://cmake.org/Wiki/CMake) - Lots of miscellaneous details.
+
+It is best to build the project in subdirectory of the main project, e.g. in a directory
+called "build". You might make multiple versions of the project for different options 
+or targets this way (e.g. "build_sdl2", "build_allegro5", etc).
 
 \subsection win_build Windows
 
@@ -134,4 +164,9 @@ This assumes that you have the directory structure:
 
 \note When you run cmake you still need to use the above cmake command-line arguments to generate the project. Gwork needs to know which renderer etc you want to use.
 
+[cmake]: https://cmake.org/overview/
+[source]: https://github.com/billyquith/GWork/tree/gwork/source
+
 */
+
+
