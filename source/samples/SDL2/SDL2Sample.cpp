@@ -73,7 +73,8 @@ int main(int argc, char** argv)
         renderer->EndContext(nullptr);
     }
 
-    //TTF_Quit();   TODO: Currently crashes. Gwork needs work.
+    skin.ReleaseFont(skin.GetDefaultFont());
+    TTF_Quit();
     SDL_DestroyWindow(window);
     SDL_Quit();
     
