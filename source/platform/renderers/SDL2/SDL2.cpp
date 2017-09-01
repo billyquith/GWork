@@ -141,6 +141,10 @@ void SDL2::LoadTexture(Gwk::Texture* texture)
         // You cannot find the format of a texture once loaded to read from it
         // in SDL2 so we have to keep the surface to read from.
         SDL_Surface *surf = IMG_Load(texture->name.c_str());
+        if (!surf)
+        {
+            printf("Texture load error(readable): %s\n", IMG_GetError());
+        }
         tex = SDL_CreateTextureFromSurface(m_renderer, surf);
         texture->surface = surf;
     }
@@ -148,6 +152,10 @@ void SDL2::LoadTexture(Gwk::Texture* texture)
     {
         // Don't need to read. Just load straight into render format.
         tex = IMG_LoadTexture(m_renderer, texture->name.c_str());
+        if (!tex)
+        {
+            printf("Texture load error: %s\n", IMG_GetError());
+        }
     }
 
     if (tex)
