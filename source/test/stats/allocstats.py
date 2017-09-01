@@ -61,7 +61,7 @@ class AllocDiff:
         for ka,va in da.items():
             if ka in db:
                 vb = db[ka]
-                pctSz = 100.0 * vb[1] / va[1]
+                pctSz = 100.0 * vb[1] / va[1] - 100.0
                 delta[ka] = (vb[0] - va[0], vb[1] - va[1], pctSz)
         self.delta = delta
         

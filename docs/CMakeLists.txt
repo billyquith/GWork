@@ -60,7 +60,6 @@ if(DOXYGEN_FOUND)
     set(DOXYGEN_CODE_DIRS
         ${DOXYGEN_INPUT_DIR}/platform/include
         ${DOXYGEN_INPUT_DIR}/gwork/include
-        ${DOXYGEN_INPUT_DIR}/util/include
         ${DOXYGEN_INPUT_DIR}/test/include
     )
     

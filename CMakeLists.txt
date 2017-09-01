@@ -2,7 +2,6 @@
 
 # configure cmake
 cmake_minimum_required(VERSION 3.1)
-cmake_policy(SET CMP0004 OLD)
 
 # we require C++11 - this set appropriate flags for compilers, which may not be portable
 set(CMAKE_CXX_STANDARD 11)

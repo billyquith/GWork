@@ -16,9 +16,9 @@
 #include <time.h>
 
 #if defined(__APPLE__)
-# include <errno.h>
-# include <libgen.h>
-# include <libproc.h>
+#   include <errno.h>
+#   include <libgen.h>
+#   include <libproc.h>
 #endif
 
 static Gwk::String gs_ClipboardEmulator;
@@ -58,9 +58,9 @@ Gwk::String Gwk::Platform::GetExecutableDir()
 {
 #if defined(__APPLE__)
     
-    pid_t pid = getpid();
+    const pid_t pid = getpid();
     char pathbuf[PROC_PIDPATHINFO_MAXSIZE];
-    int ret = proc_pidpath(pid, pathbuf, sizeof(pathbuf));
+    const int ret = proc_pidpath(pid, pathbuf, sizeof(pathbuf));
     if (ret > 0)
     {
         return String(dirname(pathbuf)) + "/";

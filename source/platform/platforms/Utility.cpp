@@ -54,7 +54,7 @@ namespace Utility {
 int vsnprintf(char* _str, size_t _count, const char* _format, va_list _argList)
 {
 #if defined(_MSC_VER)
-    int len = ::vsnprintf_s(_str, _count, _count, _format, _argList);
+    const int len = ::vsnprintf_s(_str, _count, _count, _format, _argList);
     return -1 == len ? ::_vscprintf(_format, _argList) : len;
 #else
     return ::vsnprintf(_str, _count, _format, _argList);
@@ -67,7 +67,7 @@ int vsnprintf(char* _str, size_t _count, const char* _format, va_list _argList)
 int vsnwprintf(wchar_t* _str, size_t _count, const wchar_t* _format, va_list _argList)
 {
 #if defined(_MSC_VER)
-    int len = ::_vsnwprintf_s(_str, _count, _count, _format, _argList);
+    const int len = ::_vsnwprintf_s(_str, _count, _count, _format, _argList);
     return -1 == len ? ::_vscwprintf(_format, _argList) : len;
 #elif defined(__MINGW32__)
     return ::vsnwprintf(_str, _count, _format, _argList);
@@ -80,7 +80,7 @@ int snprintf(char* _str, size_t _count, const char* _format, ...)
 {
     va_list argList;
     va_start(argList, _format);
-    int len = vsnprintf(_str, _count, _format, argList);
+    const int len = vsnprintf(_str, _count, _format, argList);
     va_end(argList);
     return len;
 }
@@ -89,7 +89,7 @@ int swnprintf(wchar_t* _out, size_t _count, const wchar_t* _format, ...)
 {
     va_list argList;
     va_start(argList, _format);
-    int len = vsnwprintf(_out, _count, _format, argList);
+    const int len = vsnwprintf(_out, _count, _format, argList);
     va_end(argList);
     return len;
 }
@@ -209,18 +209,18 @@ void Strings::Split(const Gwk::String& str, const Gwk::String& seperator,
 
 int Strings::To::Int(const Gwk::String& str)
 {
-    if (str == "")
+    if (str.empty())
         return 0;
     
-    return atoi(str.c_str());
+    return std::atoi(str.c_str());
 }
 
 float Strings::To::Float(const Gwk::String& str)
 {
-    if (str == "")
+    if (str.empty())
         return 0.0f;
     
-    return static_cast<float>( atof(str.c_str()) );
+    return std::atof(str.c_str());
 }
 
 bool Strings::To::Bool(const Gwk::String& str)
@@ -295,7 +295,7 @@ void Strings::Strip(Gwk::String& str, const Gwk::String& chars)
     Gwk::String Source = str;
     str = "";
     
-    for (unsigned int i = 0; i < Source.length(); i++)
+    for (size_t i = 0; i < Source.length(); i++)
     {
         if (chars.find(Source[i]) != Gwk::String::npos)
             continue;
@@ -345,14 +345,14 @@ void Msg(const char* str, ...)
     Utility::vsnprintf(strOut, sizeof(strOut), str, s);
     va_end(s);
     
-#ifdef WIN32
+#if defined(WIN32)
     OutputDebugStringA(strOut);
 #else
     puts(strOut);
 #endif
 }
 
-#ifdef UNICODE
+#if defined(WIN32) && defined(UNICODE)
 void Msg(const wchar_t* str, ...)
 {
     wchar_t strOut[1024];

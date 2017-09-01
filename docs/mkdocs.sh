@@ -2,5 +2,11 @@
 
 pushd ../build
 cmake --build . --target doc
-open doc/html/index.html
+
+DOC=doc/html/index.html
+case "$(uname -s)" in
+  CYGWIN*) cygstart "$DOC";;
+  *) open "$DOC";;
+esac
+
 popd
