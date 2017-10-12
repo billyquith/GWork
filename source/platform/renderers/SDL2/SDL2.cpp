@@ -16,13 +16,11 @@ SDL2::SDL2(SDL_Window *window)
     :   m_window(window)
     ,   m_renderer(nullptr)
 {
-    m_renderer = SDL_CreateRenderer(m_window, -1,
-                                    SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+  m_renderer = SDL_GetRenderer( m_window );
 }
 
 SDL2::~SDL2()
 {
-    SDL_DestroyRenderer(m_renderer);
 }
 
 void SDL2::SetDrawColor(Gwk::Color color)

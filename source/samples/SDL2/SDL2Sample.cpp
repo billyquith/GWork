@@ -31,6 +31,7 @@ int main(int argc, char** argv)
 		return EXIT_FAILURE;
 
     // Create a Gwork Allegro Renderer
+    SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
     Gwk::Renderer::SDL2 *renderer = new Gwk::Renderer::SDL2(window);
 
     // Create a Gwork skin
