@@ -24,3 +24,18 @@ void LabelClickable::Render(Skin::Base* /*skin*/)
 {
     // skin->DrawButton( this, IsDepressed(), IsToggle() && GetToggleState() );
 }
+
+
+void LabelClickable::UpdateColors()
+{
+    if (IsDisabled())
+        return SetTextColor(GetSkin()->Colors.Button.Disabled);
+
+    if (IsDepressed() || GetToggleState())
+        return SetTextColor(GetSkin()->Colors.Label.Bright);
+
+    if (IsHovered())
+        return SetTextColor(GetSkin()->Colors.Button.Hover);
+
+    SetTextColor(GetSkin()->Colors.Button.Normal);
+}
