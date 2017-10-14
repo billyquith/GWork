@@ -332,6 +332,7 @@ void Text::RefreshSizeWrap()
         {
             Text* t = new Text(this);
             t->SetFont(GetFont());
+            t->SetTextColor(TextColor());
             if (bWrapped)
             {
                 t->SetString(strLine.substr(0, strLine.length()-(*it).length()));
