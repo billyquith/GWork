@@ -24,7 +24,7 @@
 #pragma comment(lib, "dwrite.lib")
 #pragma comment(lib, "windowscodecs.lib")
 
-HWND g_hWND = nullptr;
+HWND                    g_hWND = nullptr;
 ID2D1Factory*           g_d2DFactory = nullptr;
 IDWriteFactory*         g_dWriteFactory = nullptr;
 IWICImagingFactory*     g_wICFactory = nullptr;
@@ -111,10 +111,8 @@ HRESULT createDeviceResources()
     {
         RECT rc;
         GetClientRect(g_hWND, &rc);
-        D2D1_SIZE_U size = D2D1::SizeU(
-            rc.right-rc.left,
-            rc.bottom-rc.top
-            );
+        D2D1_SIZE_U size = D2D1::SizeU(rc.right - rc.left, rc.bottom - rc.top);
+
         // Create a Direct2D render target.
         hr = g_d2DFactory->CreateHwndRenderTarget(
             D2D1::RenderTargetProperties(),
