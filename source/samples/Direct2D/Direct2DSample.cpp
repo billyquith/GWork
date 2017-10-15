@@ -19,6 +19,7 @@
 #include <Gwork/Test/Test.h>
 #include <Gwork/Input/Windows.h>
 #include <Gwork/Renderers/Direct2D.h>
+#include <Gwork/Platform.h>
 
 #pragma comment(lib, "d2d1.lib")
 #pragma comment(lib, "dwrite.lib")
@@ -141,12 +142,16 @@ void discardDeviceResources()
 
 void runSample()
 {
+    SetCurrentDirectory(Gwk::Platform::GetExecutableDir().c_str());
+
     RECT FrameBounds;
     GetClientRect(g_hWND, &FrameBounds);
 
     // Create a Gwork skin
     Gwk::Skin::TexturedBase skin(g_renderer);
     skin.Init("DefaultSkin.png");
+
+    skin.SetDefaultFont("OpenSans.ttf", 11);
 
     // Create a Canvas (it's root, on which all other Gwork panels are created)
     Gwk::Controls::Canvas* canvas = new Gwk::Controls::Canvas(&skin);

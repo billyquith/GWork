@@ -68,7 +68,24 @@ Gwk::String Gwk::Platform::GetExecutableDir()
 
     // fprintf(stderr, "PID %d: %s\n", pid, strerror(errno));
     return "";
-    
+
+#elif defined(WIN32)
+
+    char path[MAX_PATH] = { '\0' };
+    HMODULE hModule = GetModuleHandle(NULL);
+    if (hModule != NULL)
+    {
+        GetModuleFileName(hModule, path, (sizeof(path)));
+
+        if (path)
+        {
+            char *dir = strrchr(path, '\\');
+            if (dir)
+                dir[1] = '\0';
+        }
+    }
+    return String(path);
+
 #else
     return "";
 #endif

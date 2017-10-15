@@ -140,9 +140,11 @@ void Direct2D::RenderText(Gwk::Font* font, Gwk::Point pos, const Gwk::String& te
 
     if (m_solidColorBrush)
     {
-        //m_rT->DrawTextW(text.c_str(), text.length(), fontData->textFormat,
-        //                 D2D1::RectF(pos.x, pos.y, pos.x+50000,
-        //                             pos.y+50000), m_solidColorBrush);
+        auto const wstr(Gwk::Utility::Widen(text));
+        m_rT->DrawText(wstr.c_str(), wstr.length(),
+                       fontData->textFormat,
+                       D2D1::RectF(pos.x, pos.y, pos.x+50000, pos.y+50000),
+                       m_solidColorBrush);
     }
 }
 
