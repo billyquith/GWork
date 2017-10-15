@@ -23,7 +23,7 @@ namespace Gwk
         //
         /// Renderer for [SDL2](https://www.libsdl.org).
         //
-        class SDL2 : public Gwk::Renderer::Base
+        class GWK_EXPORT SDL2 : public Gwk::Renderer::Base
         {
         public:
 

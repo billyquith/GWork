@@ -15,7 +15,12 @@ namespace Gwk
 {
     namespace Renderer
     {
-        class Null : public Gwk::Renderer::Base
+        //
+        /// Null renderer that does not render!
+        ///
+        /// This is used for build and unit testing.
+        //
+        class GWK_EXPORT Null : public Gwk::Renderer::Base
         {
         public:
 

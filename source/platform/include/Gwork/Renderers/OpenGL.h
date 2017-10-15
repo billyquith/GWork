@@ -14,7 +14,11 @@ namespace Gwk
 {
     namespace Renderer
     {
-        class OpenGL : public Gwk::Renderer::Base
+        
+        //
+        /// Renderer for [OpenGL](https://www.opengl.org/).
+        //
+        class GWK_EXPORT OpenGL : public Gwk::Renderer::Base
         {
         public:
 

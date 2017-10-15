@@ -19,6 +19,10 @@ namespace Gwk
 {
     namespace Renderer
     {
+        
+        //
+        /// Renderer for [Direct2D](https://msdn.microsoft.com/en-us/library/windows/desktop/dd370990(v=vs.85).aspx).
+        //
         class GWK_EXPORT Direct2D : public Gwk::Renderer::Base
         {
         public:

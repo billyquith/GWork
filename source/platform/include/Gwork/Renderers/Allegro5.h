@@ -19,7 +19,10 @@ namespace Gwk
     {
         class AllegroCTT;
         
-        class Allegro : public Gwk::Renderer::Base
+        //
+        /// Renderer for [Allegro5](http://liballeg.org/).
+        //
+        class GWK_EXPORT Allegro : public Gwk::Renderer::Base
         {
         public:
 

@@ -19,7 +19,10 @@ namespace Gwk
 {
     namespace Renderer
     {
-        class SFML2 : public Gwk::Renderer::Base
+        //
+        /// Renderer for [SFML2](https://www.sfml-dev.org/).
+        //
+        class GWK_EXPORT SFML2 : public Gwk::Renderer::Base
         {
         public:
 
