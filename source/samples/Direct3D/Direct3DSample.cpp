@@ -27,10 +27,10 @@
 #include <Gwork/Input/Windows.h>
 #include <Gwork/Renderers/DirectX9.h>
 
-HWND g_hWND = nullptr;
-LPDIRECT3D9 g_D3D = nullptr;
+HWND                    g_hWND = nullptr;
+LPDIRECT3D9             g_D3D = nullptr;
 IDirect3DDevice9*       g_D3DDevice = nullptr;
-D3DPRESENT_PARAMETERS g_D3DParams;
+D3DPRESENT_PARAMETERS   g_D3DParams;
 
 //
 // Windows bullshit to create a Window to render to.
@@ -80,8 +80,8 @@ void CreateD3DDevice()
     // g_D3DParams.AutoDepthStencilFormat = D3DFMT_D24S8;
     g_D3DParams.PresentationInterval = D3DPRESENT_INTERVAL_IMMEDIATE;
     HRESULT hr = g_D3D->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, g_hWND,
-                                      D3DCREATE_SOFTWARE_VERTEXPROCESSING, &g_D3DParams,
-                                      &g_D3DDevice);
+                                     D3DCREATE_SOFTWARE_VERTEXPROCESSING, &g_D3DParams,
+                                     &g_D3DDevice);
 
     if (FAILED(hr))
     {

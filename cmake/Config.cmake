@@ -14,9 +14,8 @@ message("Project version: ${GWK_VERSION_STR}")
 
 # Windows only
 if(WIN32)
-    # TODO: Direct2D and GDI+ are partially working - use cross platform, or fix!
     option(RENDER_DIRECT2D  "Renderer: Direct2D" OFF)
-    # TODO: option(RENDER_DIRECTX9  "Renderer: DirectX9" OFF)
+    # option(RENDER_DIRECTX9  "Renderer: DirectX9" OFF) - Deprecated?
     # option(RENDER_GDIPLUS   "Renderer: GDIPlus" OFF)
 endif()
 
@@ -95,6 +94,14 @@ if(RENDER_DIRECT2D)
     set(GWK_RENDER_LIBRARIES "${DIRECT2D_LIBRARIES}")
     set(GWK_INPUT_NAME "Windows")
 endif(RENDER_DIRECT2D)
+
+if(RENDER_DIRECTX9)
+    set(GWK_RENDER_NAME "DirectX9")
+    find_package(DirectX REQUIRED)
+    set(GWK_RENDER_INCLUDES "${DIRECTX_INCLUDE_DIRS}")
+    set(GWK_RENDER_LIBRARIES "${DIRECTX_LIBRARIES}")
+    set(GWK_INPUT_NAME "Windows")
+endif(RENDER_DIRECTX9)
 
 if(RENDER_NULL)
     set(GWK_RENDER_NAME "Null")
