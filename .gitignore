@@ -11,3 +11,4 @@ source/test/stats/curr_allocs.*
 
 # Windows
 .vs/
+CMakeSettings.json
