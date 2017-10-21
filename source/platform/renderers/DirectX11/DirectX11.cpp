@@ -298,7 +298,6 @@ void DirectX11::Begin()
 
     if (!m_Valid)
         Init();
-
             
     // Save current state
     m_pContext->OMGetBlendState(&m_pUILastBlendState, m_LastBlendFactor, &m_LastBlendMask);
@@ -317,7 +316,6 @@ void DirectX11::Begin()
     m_pContext->RSSetState(m_pRastState);
     m_pContext->IASetInputLayout(m_pInputLayout);
     m_pContext->OMSetBlendState(m_pBlendState, NULL, 0xFFFFFFFF);
-
 }
 
 void DirectX11::End()
@@ -375,8 +373,8 @@ void DirectX11::DrawFilledRect(Gwk::Rect rec)
 
     Translate(rec);
 
-    float scalex = 1 / width * 2.f;
-    float scaley = 1 / height * 2.f;
+    const float scalex = 1.f / width * 2.f;
+    const float scaley = 1.f / height * 2.f;
 
     XMFLOAT4A rect(rec.x, rec.y, rec.w, rec.h);
 
@@ -433,7 +431,6 @@ void DirectX11::LoadFont(Gwk::Font* font)
     SetMapMode(hDC, MM_TEXT);
 
     LOGFONTW fd;
-
     memset(&fd, 0, sizeof(fd));
     wcscpy_s(fd.lfFaceName, LF_FACESIZE, Utility::Widen(font->facename).c_str());
     fd.lfWidth = 0;
@@ -617,8 +614,6 @@ void DirectX11::RenderText(Gwk::Font* pFont, Gwk::Point pos, const Gwk::String &
     FontData* pFontData = (FontData*)pFont->data;
 
     Translate(pos.x, pos.y);
-
-
     XMFLOAT4A loc(pos.x, pos.y, 0, 0);
 
     FontData* data = (FontData*)pFont->data;
@@ -628,7 +623,6 @@ void DirectX11::RenderText(Gwk::Font* pFont, Gwk::Point pos, const Gwk::String &
         m_pCurrentTexture = data->m_Texture;
     }
 
-            
     float fStartX = loc.x;
             
     for each(auto c in text)
@@ -651,11 +645,10 @@ void DirectX11::RenderText(Gwk::Font* pFont, Gwk::Point pos, const Gwk::String &
 
         if (c != 0)
         {
-            float scalex = 1 / (float)width * 2.f;
-            float scaley = 1 / (float)height * 2.f;
+            const float scalex = 1.f / (float)width * 2.f;
+            const float scaley = 1.f / (float)height * 2.f;
 
             XMFLOAT4A rect(loc);
-
             rect.z = rect.z * scalex - 1.f;
             rect.w = 1.f - rect.w * scaley;
             rect.x = rect.x * scalex - 1.f;
@@ -706,9 +699,8 @@ Gwk::Point DirectX11::MeasureText(Gwk::Font* pFont, const Gwk::String& text)
         if (c < 0 || c >= 96)
             continue;
 
-
-        float tx1 = font->m_fTexCoords[c].x;
-        float tx2 = font->m_fTexCoords[c].z;
+        const float tx1 = font->m_fTexCoords[c].x;
+        const float tx2 = font->m_fTexCoords[c].z;
 
         fRowWidth += (tx2 - tx1)* font->m_TexWidth;
 
@@ -783,20 +775,6 @@ void DirectX11::DrawTexturedRect(Gwk::Texture* pTexture, Gwk::Rect rec, float u1
 
 void DirectX11::LoadTexture(Gwk::Texture* pTexture)
 {
-    //HRESULT hr = S_OK;
-    //ID3D11ShaderResourceView* pTex = NULL;
-    //HRESULT retHR;
-    //D3DX11_IMAGE_INFO imgInfo;
-
-    //retHR = D3DX11GetImageInfoFromFileW(Utility::Widen(pTexture->name).c_str(), NULL, &imgInfo, NULL);
-
-    //hr = D3DX11CreateShaderResourceViewFromFileW(m_pDevice, Utility::Widen(pTexture->name), NULL, NULL, &pTex, NULL);
-    //        
-    //if (hr != S_OK || retHR != S_OK)
-    //{
-    //    return;
-    //}
-
     int width, height, n;
     unsigned char *data = stbi_load(pTexture->name.c_str(), &width, &height, &n, 0);
 
@@ -804,11 +782,12 @@ void DirectX11::LoadTexture(Gwk::Texture* pTexture)
         goto error;
 
     D3D11_TEXTURE2D_DESC desc;
+    ZeroMemory(&desc, sizeof(desc));
     desc.Width = width;
     desc.Height = height;
     desc.MipLevels = 1;
     desc.ArraySize = 1;
-    desc.Format = DXGI_FORMAT_R8G8B8A8_UINT;
+    desc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
     desc.SampleDesc.Count = 1;
     desc.SampleDesc.Quality = 0;
     desc.Usage = D3D11_USAGE_DEFAULT;
