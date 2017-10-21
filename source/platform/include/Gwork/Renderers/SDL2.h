@@ -7,8 +7,8 @@
 
 #pragma once
 
-#ifndef GWK_RENDERERS_ALLEGRO_H
-#define GWK_RENDERERS_ALLEGRO_H
+#ifndef GWK_RENDERERS_SDL2_H
+#define GWK_RENDERERS_SDL2_H
 
 #include <Gwork/BaseRender.h>
 #include <SDL.h>
@@ -67,4 +67,4 @@ namespace Gwk
 
     }
 }
-#endif // ifndef GWK_RENDERERS_ALLEGRO_H
+#endif // ifndef GWK_RENDERERS_SDL2_H

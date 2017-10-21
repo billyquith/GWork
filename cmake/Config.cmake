@@ -14,8 +14,9 @@ message("Project version: ${GWK_VERSION_STR}")
 
 # Windows only
 if(WIN32)
-    option(RENDER_DIRECT2D  "Renderer: Direct2D" OFF)
+    option(RENDER_DIRECT2D   "Renderer: Direct2D" OFF)
     # option(RENDER_DIRECTX9  "Renderer: DirectX9" OFF) - Deprecated?
+    option(RENDER_DIRECTX11  "Renderer: DirectX11" OFF)
     # option(RENDER_GDIPLUS   "Renderer: GDIPlus" OFF)
 endif()
 
@@ -102,6 +103,14 @@ if(RENDER_DIRECTX9)
     set(GWK_RENDER_LIBRARIES "${DIRECTX_LIBRARIES}")
     set(GWK_INPUT_NAME "Windows")
 endif(RENDER_DIRECTX9)
+
+if(RENDER_DIRECTX11)
+    set(GWK_RENDER_NAME "DirectX11")
+    find_package(DirectX11 REQUIRED)
+    set(GWK_RENDER_INCLUDES "${DIRECTX_INCLUDE_DIRS}")
+    set(GWK_RENDER_LIBRARIES "${DIRECTX_LIBRARIES}")
+    set(GWK_INPUT_NAME "Windows")
+endif(RENDER_DIRECTX11)
 
 if(RENDER_NULL)
     set(GWK_RENDER_NAME "Null")
