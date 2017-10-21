@@ -7,9 +7,6 @@
 
 #include <Gwork/Renderers/DirectX11.h>
 #include <Gwork/Utility.h>
-// #include "Gwk/Font.h"
-// #include "Gwk/Texture.h"
-// #include "Gwk/WindowProvider.h"
 
 #include <DirectXMath.h>
 #include <d3d11.h>
@@ -103,7 +100,7 @@ inline HRESULT CompileShaderFromMemory(const char* szdata, SIZE_T len, LPCSTR sz
                     NULL,               // defines
                     NULL,               // include
                     szEntryPoint,       // entry
-                    "",                 // target
+                    szShaderModel,      // target
                     dwShaderFlags, 0,   // flags
                     ppBlobOut,          // [out] code
                     &pErrorBlob);       // [out] error messages
@@ -139,7 +136,7 @@ public:
 
     ~FontData()
     {
-        SafeRelease(m_Texture);
+        //SafeRelease(m_Texture);
     }
 
     DirectX::XMFLOAT4 m_fTexCoords[0x60];
@@ -803,6 +800,9 @@ void DirectX11::LoadTexture(Gwk::Texture* pTexture)
     int width, height, n;
     unsigned char *data = stbi_load(pTexture->name.c_str(), &width, &height, &n, 0);
 
+    if (!data)
+        goto error;
+
     D3D11_TEXTURE2D_DESC desc;
     desc.Width = width;
     desc.Height = height;
@@ -859,7 +859,7 @@ void DirectX11::FreeTexture(Gwk::Texture* pTexture)
     pTexture->data = NULL;
 }
 
-Gwk::Color DirectX11::PixelColour(Gwk::Texture* pTexture, unsigned int x, unsigned int y, const Gwk::Color & col_default)
+Gwk::Color DirectX11::PixelColor(Gwk::Texture* pTexture, unsigned int x, unsigned int y, const Gwk::Color & col_default)
 {
     ID3D11ShaderResourceView* pImage = (ID3D11ShaderResourceView*)pTexture->data;
     if (!pImage)

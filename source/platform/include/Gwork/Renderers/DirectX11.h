@@ -44,10 +44,11 @@ namespace Gwk
             void StartClip();
             void EndClip();
 
-            void DrawTexturedRect(Gwk::Texture* pTexture, Gwk::Rect pTargetRect, float u1 = 0.0f, float v1 = 0.0f, float u2 = 1.0f, float v2 = 1.0f) final;
-            void LoadTexture(Gwk::Texture* pTexture);
-            void FreeTexture(Gwk::Texture* pTexture);
-            Gwk::Color PixelColour(Gwk::Texture* pTexture, unsigned int x, unsigned int y, const Gwk::Color & col_default);
+            void DrawTexturedRect(Gwk::Texture* pTexture, Gwk::Rect pTargetRect,
+                                  float u1 = 0.0f, float v1 = 0.0f, float u2 = 1.0f, float v2 = 1.0f) final;
+            void LoadTexture(Gwk::Texture* pTexture) final;
+            void FreeTexture(Gwk::Texture* pTexture) final;
+            Gwk::Color PixelColor(Gwk::Texture* pTexture, unsigned int x, unsigned int y, const Gwk::Color& col_default) final;
 
             //
             // Self Initialization

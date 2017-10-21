@@ -160,6 +160,7 @@ void CreateD3DDevice()
 //
 int main( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCmdShow )
 {
+    SetCurrentDirectory(Gwk::Platform::GetExecutableDir().c_str()); 
     //
     // Create a window and attach directx to it
     //
@@ -234,7 +235,7 @@ int main( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nC
 
     delete pCanvas;
     delete pSkin;
-    delete pRenderer;
+    //delete pRenderer;
 
     if (g_pRenderTargetView)
     {
