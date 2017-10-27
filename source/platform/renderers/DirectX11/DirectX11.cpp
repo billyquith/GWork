@@ -737,7 +737,7 @@ void DirectX11::EndClip()
 
 void DirectX11::DrawTexturedRect(Gwk::Texture* pTexture, Gwk::Rect rec, float u1, float v1, float u2, float v2)
 {
-    ID3D11ShaderResourceView* pImage = (ID3D11ShaderResourceView*)pTexture->data;
+    ID3D11ShaderResourceView* pImage = (ID3D11ShaderResourceView*)pTexture->surface;
 
     if (!pImage)
         return DrawMissingImage(rec);
@@ -817,30 +817,48 @@ void DirectX11::LoadTexture(Gwk::Texture* pTexture)
         goto error;
     }
 
-    pTexture->data = pTex;
+	if (pTexture->readable)
+		pTexture->data = data;
+	else
+		stbi_image_free(data);
+
+    pTexture->surface = pTex;
     pTexture->width = width;
     pTexture->height = height;
     return;
 
 error:
-    pTexture->data = NULL;
+    pTexture->surface = NULL;
     pTexture->width = 0;
     pTexture->height = 0;
+	if (data)
+		stbi_image_free(data);
 }
 
 void DirectX11::FreeTexture(Gwk::Texture* pTexture)
 {
-    ID3D11ShaderResourceView* pImage = (ID3D11ShaderResourceView*)pTexture->data;
-    if (!pImage)
-        return;
+    ID3D11ShaderResourceView* pImage = (ID3D11ShaderResourceView*)pTexture->surface;
+	if (pImage)
+	{
+		SafeRelease(pImage);
+		pTexture->surface = NULL;
+	}
 
-    SafeRelease(pImage);
-    pTexture->data = NULL;
+	if (pTexture->data != nullptr)
+	{
+		stbi_image_free(pTexture->data);
+	}
 }
 
-Gwk::Color DirectX11::PixelColor(Gwk::Texture* pTexture, unsigned int x, unsigned int y, const Gwk::Color & col_default)
+Gwk::Color DirectX11::PixelColor(Gwk::Texture* pTexture, unsigned int x, unsigned int y, const Gwk::Color& col_default)
 {
-    ID3D11ShaderResourceView* pImage = (ID3D11ShaderResourceView*)pTexture->data;
+	if (pTexture->readable)
+	{
+		unsigned char *pPixel = static_cast<unsigned char*>(pTexture->data) + (x + (y * pTexture->width)) * 4;
+		return Gwk::Color(pPixel[0], pPixel[1], pPixel[2], pPixel[3]);
+	}
+
+    ID3D11ShaderResourceView* pImage = (ID3D11ShaderResourceView*)pTexture->surface;
     if (!pImage)
         return col_default;
 
@@ -892,10 +910,10 @@ Gwk::Color DirectX11::PixelColor(Gwk::Texture* pTexture, unsigned int x, unsigne
     stagingTexture->Release();
     t->Release();
 
-    DWORD a = ((255u << 24u) & color) >> 24u;
-    DWORD r = ((255u << 16u) & color) >> 16u;
-    DWORD g = ((255u << 8u) & color) >> 8u;
-    DWORD b = ((255u) & color);
+    const DWORD a = ((255u << 24u) & color) >> 24u;
+	const DWORD r = ((255u << 16u) & color) >> 16u;
+	const DWORD g = ((255u << 8u) & color) >> 8u;
+	const DWORD b = ((255u) & color);
 
     return Gwk::Color(r, g, b, a);
 }
