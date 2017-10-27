@@ -89,10 +89,11 @@ defining a variable when you run cmake to generate the project files,
 i.e. `-DRENDER_<TARGET>=ON`, e.g. :-
 
 - Allegro 5: `-DRENDER_ALLEGRO5=ON`
+- DirectX 11: `-DRENDER_DIRECTX11=ON`
+- Null (used for testing): `-DRENDER_NULL=ON`
 - OpenGL: `-DRENDER_OPENGL=ON`
 - SDL2: `-DRENDER_SDL2=ON`
 - SFML2: `-DRENDER_SFML2=ON`
-- Null (used for testing): `-DRENDER_NULL=ON`
 
 \note You can only choose one target at a time. If you would like to compile multiple targets,
 create multiple build folders and create different project files and targets in each.

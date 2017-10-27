@@ -8,6 +8,7 @@ This is a changelog for Gwork. There are also notes [on my blog][blog]
 
 - `override` used everywhere applicable to marked overridden virtual functions.
 - Online [documentation][docs] added.
+- DirectX 11 renderer and sample added. Thanks to @topblast.
 
 ### 0.1
 
