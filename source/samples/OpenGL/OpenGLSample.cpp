@@ -18,12 +18,6 @@
 #endif
 #include <GLFW/glfw3.h>
 
-#ifdef _WIN32
-#   define WIN32_LEAN_AND_MEAN
-#   include <Windows.h>
-#endif
-
-
 static Gwk::Input::GLFW GworkInput;
 
 static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
@@ -50,10 +44,6 @@ static void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 
 int main()
 {
-#ifdef _WIN32
-    SetCurrentDirectory(Gwk::Platform::GetExecutableDir().c_str());
-#endif
-
     if (!glfwInit())
         return -1;
     
@@ -67,12 +57,15 @@ int main()
     }
     glfwMakeContextCurrent(window);
     
+    Gwk::Platform::RelativeToExecutablePaths paths(GWORK_RESOURCE_DIR);
+    Gwk::Renderer::OpenGLResourceLoader loader(paths);
+    
     // Create a Gwork OpenGL Renderer
 #ifdef USE_DEBUG_FONT
     Gwk::Renderer::OpenGL* renderer = new Gwk::Renderer::OpenGL_DebugFont();
 #else
     Gwk::Renderer::OpenGL* renderer =
-        new Gwk::Renderer::OpenGL(Gwk::Rect(Gwk::Point(0,0), winsz));
+        new Gwk::Renderer::OpenGL(loader, Gwk::Rect(Gwk::Point(0,0), winsz));
 #endif
     renderer->Init();
 

@@ -37,14 +37,130 @@ namespace Gwk
 {
 namespace Renderer
 {
-    
+
 // See "Font Size in Pixels or Points" in "stb_truetype.h"
-const float c_pixToPoints = 1.333f;
+static constexpr float c_pixToPoints = 1.333f;
 
-static const int c_texsz = 256;   // TODO - fix this hack.
+static constexpr int c_texsz = 256;   // TODO - fix this hack.
 
-OpenGL::OpenGL(const Rect& viewRect)
-:   m_viewRect(viewRect)
+    
+Font::Status OpenGLResourceLoader::LoadFont(Font& font)
+{
+    const String fontFile = m_paths.GetPath(ResourcePaths::Type::Font, font.facename);
+    
+    FILE* f = fopen(fontFile.c_str(), "rb");
+    if (!f)
+    {
+        font.data = nullptr;
+        font.status = Font::Status::ErrorFileNotFound;
+        return font.status;
+    }
+    
+    struct stat stat_buf;
+    const int rc = stat(fontFile.c_str(), &stat_buf);
+    const size_t fsz = rc == 0 ? stat_buf.st_size : -1;
+    assert(fsz > 0);
+    
+    unsigned char* ttfdata = new unsigned char[fsz];
+    fread(ttfdata, 1, fsz, f);
+    
+    unsigned char *font_bmp = new unsigned char[c_texsz * c_texsz];
+    
+    font.render_data = new stbtt_bakedchar[96];
+    
+    stbtt_BakeFontBitmap(ttfdata, 0,
+                         font.realsize * c_pixToPoints, // height
+                         font_bmp,
+                         c_texsz, c_texsz,
+                         32,96,             // range to bake
+                         static_cast<stbtt_bakedchar*>(font.render_data));
+    delete [] ttfdata;
+    
+    font.data = new GLuint;
+    glGenTextures(1, static_cast<GLuint*>(font.data));
+    glBindTexture(GL_TEXTURE_2D, *static_cast<GLuint*>(font.data));
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA,
+                 c_texsz,c_texsz, 0,
+                 GL_ALPHA, GL_UNSIGNED_BYTE,
+                 font_bmp);
+    delete [] font_bmp;
+    
+    font.status = Font::Status::Loaded;
+    
+    return font.status;
+}
+
+void OpenGLResourceLoader::FreeFont(Gwk::Font& font)
+{
+    if (font.IsLoaded())
+    {
+        // TODO - unbind texture
+        delete [] static_cast<GLuint*>(font.data);
+        delete [] static_cast<stbtt_bakedchar*>(font.render_data);
+        
+        font.status = Font::Status::Unloaded;
+    }
+}
+    
+Texture::Status OpenGLResourceLoader::LoadTexture(Texture& texture)
+{
+    if (texture.IsLoaded())
+        FreeTexture(texture);
+
+    const String filename = m_paths.GetPath(ResourcePaths::Type::Texture, texture.name);
+
+    int x,y,n;
+    unsigned char *data = stbi_load(filename.c_str(), &x, &y, &n, 4);
+    
+    // Image failed to load..
+    if (!data)
+    {
+        texture.status = Texture::Status::ErrorFileNotFound;
+        return texture.status;
+    }
+    
+    // Create a little texture pointer..
+    GLuint* pglTexture = new GLuint;
+    
+    texture.data = pglTexture;
+    texture.width = x;
+    texture.height = y;
+    
+    // Create the opengl texture
+    glGenTextures(1, pglTexture);
+    glBindTexture(GL_TEXTURE_2D, *pglTexture);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    GLenum format = GL_RGBA;
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, texture.width, texture.height, 0, format,
+                 GL_UNSIGNED_BYTE, (const GLvoid*)data);
+    
+    stbi_image_free(data);
+    
+    return texture.status = Texture::Status::Loaded;
+}
+
+void OpenGLResourceLoader::FreeTexture(Texture& texture)
+{
+    if (texture.IsLoaded())
+    {
+        GLuint* tex = static_cast<GLuint*>(texture.data);
+        
+        glDeleteTextures(1, tex);
+        delete tex;
+        texture.data = nullptr;
+
+        texture.status = Texture::Status::Unloaded;
+    }
+}
+
+//-------------------------------------------------------------------------------
+
+OpenGL::OpenGL(ResourceLoader& loader, const Rect& viewRect)
+:   Base(loader)
+,   m_viewRect(viewRect)
 ,   m_vertNum(0)
 ,   m_context(nullptr)
 {
@@ -190,51 +306,6 @@ void OpenGL::DrawTexturedRect(Gwk::Texture* texture, Gwk::Rect rect,
     AddVert(rect.x, rect.y+rect.h,      u1, v2);
 }
 
-void OpenGL::LoadTexture(Gwk::Texture* texture)
-{
-    const std::string &fileName = texture->name;
-    
-    int x,y,n;
-    unsigned char *data = stbi_load(fileName.c_str(), &x, &y, &n, 4);
-    
-    // Image failed to load..
-    if (!data)
-    {
-        texture->failed = true;
-        return;
-    }
-
-    // Create a little texture pointer..
-    GLuint* pglTexture = new GLuint;
-
-    texture->data = pglTexture;
-    texture->width = x;
-    texture->height = y;
-
-    // Create the opengl texture
-    glGenTextures(1, pglTexture);
-    glBindTexture(GL_TEXTURE_2D, *pglTexture);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    GLenum format = GL_RGBA;
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, texture->width, texture->height, 0, format,
-                 GL_UNSIGNED_BYTE, (const GLvoid*)data);
-    
-    stbi_image_free(data);
-}
-
-void OpenGL::FreeTexture(Gwk::Texture* texture)
-{
-    GLuint* tex = (GLuint*)texture->data;
-
-    if (!tex)
-        return;
-
-    glDeleteTextures(1, tex);
-    delete tex;
-    texture->data = nullptr;
-}
-
 Gwk::Color OpenGL::PixelColor(Gwk::Texture* texture, unsigned int x, unsigned int y,
                                const Gwk::Color& col_default)
 {
@@ -261,70 +332,9 @@ Gwk::Color OpenGL::PixelColor(Gwk::Texture* texture, unsigned int x, unsigned in
     return c;
 }
 
-void OpenGL::LoadFont(Gwk::Font* font)
-{
-    std::string fontName(font->facename);
-    
-    if (fontName.find(".ttf") == std::string::npos)
-        fontName += ".ttf";
-    
-    font->realsize = font->size * Scale() * c_pixToPoints;
-    
-    FILE* f = fopen(fontName.c_str(), "rb");
-    if (!f)
-    {
-        font->data = nullptr;
-        font->facename = "";
-        return;
-    }
-    
-    struct stat stat_buf;
-    int rc = stat(fontName.c_str(), &stat_buf);
-    size_t fsz = rc == 0 ? stat_buf.st_size : -1;
-    assert(fsz > 0);
-    
-    unsigned char* ttfdata = new unsigned char[fsz];
-    fread(ttfdata, 1, fsz, f);
-    
-    unsigned char *font_bmp = new unsigned char[c_texsz * c_texsz];
-    
-    font->render_data = new stbtt_bakedchar[96];
-    
-    stbtt_BakeFontBitmap(ttfdata, 0,
-                         font->realsize,    // height
-                         font_bmp, c_texsz, c_texsz,
-                         32,96,             // range to bake
-                         static_cast<stbtt_bakedchar*>(font->render_data));
-    delete [] ttfdata;
-    
-    font->data = new GLuint;
-    glGenTextures(1, static_cast<GLuint*>(font->data));
-    glBindTexture(GL_TEXTURE_2D, *static_cast<GLuint*>(font->data));
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA,
-                 c_texsz,c_texsz, 0,
-                 GL_ALPHA, GL_UNSIGNED_BYTE,
-                 font_bmp);
-    delete [] font_bmp;
-}
-
-void OpenGL::FreeFont(Gwk::Font* font)
-{
-    // TODO - unbind texture
-    delete [] static_cast<GLuint*>(font->data);
-    delete [] static_cast<stbtt_bakedchar*>(font->render_data);
-}
-
 void OpenGL::RenderText(Gwk::Font* font, Gwk::Point pos,
                         const Gwk::String& text)
 {
-    if (font->facename.empty())
-        return;
-    
-    if (!font->data)
-        LoadFont(font);
-    
     Texture tex;
     tex.data = font->data;
     
@@ -332,7 +342,7 @@ void OpenGL::RenderText(Gwk::Font* font, Gwk::Point pos,
     const char *pc = text.c_str();
     size_t slen = text.length();
     
-    const float height = font->realsize / c_pixToPoints;
+    const float height = font->realsize * c_pixToPoints;
     while (slen > 0)
     {
         if (*pc >= 32 && *pc <= 127)
@@ -352,13 +362,10 @@ void OpenGL::RenderText(Gwk::Font* font, Gwk::Point pos,
 
 Gwk::Point OpenGL::MeasureText(Gwk::Font* font, const Gwk::String& text)
 {
-    Point sz(0, font->realsize * c_pixToPoints);
+    if (!EnsureFont(*font))
+        return Gwk::Point(0, 0);
 
-    if (font->facename.empty())
-        return sz;
-    
-    if (!font->data)
-        LoadFont(font);
+    Point sz(0, font->realsize * c_pixToPoints);
 
     float x = 0.f, y = 0.f;
     const char *pc = text.c_str();
@@ -375,7 +382,7 @@ Gwk::Point OpenGL::MeasureText(Gwk::Font* font, const Gwk::String& text)
                                &x, &y, &q, 1); // 1=opengl & d3d10+,0=d3d9
             
             sz.x = q.x1;
-            sz.y = std::max(sz.y, int(q.y1 - q.y0));
+            sz.y = std::max(sz.y, int((q.y1 - q.y0) * c_pixToPoints));
         }
         ++pc, --slen;
     }
