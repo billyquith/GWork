@@ -125,22 +125,6 @@ void SDL2::SetDrawColor(Gwk::Color color)
     SDL_SetRenderDrawColor(m_renderer, color.r, color.g, color.b, color.a);
 }
 
-bool SDL2::EnsureFont(Font& font)
-{
-    // If the font doesn't exist, or the font size should be changed
-    if (font.status == Font::Status::Unloaded
-        || (font.status == Font::Status::Loaded && font.realsize != font.size*Scale()))
-    {
-        GetLoader().FreeFont(font);
-        
-        font.realsize = font.size * Scale();
-        
-        GetLoader().LoadFont(font);
-    }
-    
-    return font.status == Font::Status::Loaded;
-}
-
 void SDL2::RenderText(Gwk::Font* font, Gwk::Point pos, const Gwk::String& text)
 {
     TTF_Font *tfont = static_cast<TTF_Font*>(font->data);

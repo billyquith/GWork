@@ -111,8 +111,6 @@ namespace Gwk
 
         protected:
             
-            bool EnsureFont(Font& font);
-
             sf::RenderTarget& m_target;
             sf::Color m_color;
             sf::VertexArray m_buffer;

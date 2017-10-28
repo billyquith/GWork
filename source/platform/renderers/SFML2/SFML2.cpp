@@ -123,22 +123,6 @@ Gwk::Renderer::SFML2::~SFML2()
 {
 }
 
-bool Gwk::Renderer::SFML2::EnsureFont(Font& font)
-{
-    // If the font doesn't exist, or the font size should be changed
-    if (font.status == Font::Status::Unloaded
-        || (font.status == Font::Status::Loaded && font.realsize != font.size*Scale()))
-    {
-        GetLoader().FreeFont(font);
-        
-        font.realsize = font.size * Scale();
-        
-        GetLoader().LoadFont(font);
-    }
-    
-    return font.status == Font::Status::Loaded;
-}
-
 void Gwk::Renderer::SFML2::Begin()
 {
     m_originalView = m_target.getView();

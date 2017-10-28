@@ -73,8 +73,6 @@ namespace Gwk
 
         private:
 
-            bool EnsureFont(Font& font);
-
             SDL_Window      *m_window;
             SDL_Renderer    *m_renderer;
             SDL_Color        m_color;
