@@ -152,7 +152,16 @@ Gwk::Platform::RelativeToExecutablePaths::RelativeToExecutablePaths(String const
 
 String Gwk::Platform::RelativeToExecutablePaths::GetPath(Type type, String const& filename)
 {
-    return m_resDir + filename;
+    String filepath(m_resDir + filename);
+    
+    if (type == Type::Font)
+    {
+        // TODO: bit hacky this...
+        if (filepath.find(".ttf") == std::string::npos)
+            filepath += ".ttf";
+    }
+
+    return filepath;
 }
 
 //==============================================================================

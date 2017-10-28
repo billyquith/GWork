@@ -16,12 +16,7 @@ namespace Renderer
 
 Font::Status SDL2ResourceLoader::LoadFont(Font& font)
 {
-    String fontFile(font.facename);
-    
-    if (fontFile.find(".ttf") == std::string::npos)
-        fontFile += ".ttf";
-    
-    fontFile = m_paths.GetPath(ResourcePaths::Type::Font, fontFile);
+    const String fontFile = m_paths.GetPath(ResourcePaths::Type::Font, font.facename);
     
     TTF_Font *tfont = TTF_OpenFont(fontFile.c_str(), font.realsize);
 
