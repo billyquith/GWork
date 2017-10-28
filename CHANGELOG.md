@@ -4,6 +4,10 @@ Changelog
 
 This is a changelog for Gwork. There are also notes [on my blog][blog]
 
+### 0.3
+
+- ResourceLoader and ResourcePaths abstract file locations and sources. #66.
+
 ### 0.2
 
 - Online [documentation][docs] added.
