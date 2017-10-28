@@ -8,12 +8,16 @@ Gwork is divided into layers (see [source][source]):
 
 - `platform` - Provides a common API to the supported platform.
 - `gwork` - The GUI API, which contains no target specific code.
-- `samples`/`test` - Some examples for demonstration and testing.
+- `test` - A test of each control type, used in the samples.
+- `samples` - Some examples for demonstration and testing.
 
-The project creates libraries for *platform* and *gwork*, which you can then link to
+The project generator creates libraries for *platform* and *gwork*, which you can then link to
 your project. You can see an example of how to do this in the samples. There is one for
 each of the targets supported. [Cmake][cmake] is used to generate project files for 
 your chosen build environment.
+
+You are free to implement your own platform, or modify the samples for your use case.
+The GUI controls can be shared between all platforms supported.
 
 There are two ways in which you can use the project file generation:
 
@@ -43,8 +47,6 @@ or targets this way (e.g. "build_sdl2", "build_allegro5", etc).
 \code{.sh}
 cmake --help    # show cmake options
 \endcode
-
-\note Currently Windows only supports cross platform targets, i.e. the ones listed below.
 
 To generate project files:
 
