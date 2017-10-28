@@ -1,7 +1,7 @@
 var searchData=
 [
   ['calcposition',['CalcPosition',['../class_gwk_1_1_controls_1_1_layout_1_1_calc_position.html#a3d8efde59778ed17bd1089384264338a',1,'Gwk::Controls::Layout::CalcPosition']]],
-  ['checkbox',['CheckBox',['../class_gwk_1_1_controls_1_1_check_box.html#ab63114db387381f016e17432b536f577',1,'Gwk::Controls::CheckBox::CheckBox()'],['../class_gwk_1_1_controls_1_1_property_1_1_checkbox.html#abf54cd5a37b42a8a3c475e56de256737',1,'Gwk::Controls::Property::Checkbox::Checkbox()']]],
+  ['checkbox',['Checkbox',['../class_gwk_1_1_controls_1_1_property_1_1_checkbox.html#abf54cd5a37b42a8a3c475e56de256737',1,'Gwk::Controls::Property::Checkbox::Checkbox()'],['../class_gwk_1_1_controls_1_1_check_box.html#ab63114db387381f016e17432b536f577',1,'Gwk::Controls::CheckBox::CheckBox()']]],
   ['checkboxwithlabel',['CheckBoxWithLabel',['../class_gwk_1_1_controls_1_1_check_box_with_label.html#a3d21b41f73b271357f74843bb2ef2f0d',1,'Gwk::Controls::CheckBoxWithLabel']]],
   ['collapsiblecategory',['CollapsibleCategory',['../class_gwk_1_1_controls_1_1_collapsible_category.html#a25430587dd734719e32ffe5eb6489302',1,'Gwk::Controls::CollapsibleCategory']]],
   ['collapsiblelist',['CollapsibleList',['../class_gwk_1_1_controls_1_1_collapsible_list.html#af9e3418da9404c5c1410ddc4cae00002',1,'Gwk::Controls::CollapsibleList']]],

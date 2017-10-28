@@ -55,7 +55,7 @@ var class_gwk_1_1_skin_1_1_base =
     [ "ReleaseFont", "class_gwk_1_1_skin_1_1_base.html#aa0915df73ccc7af85d39716d9fa37d3c", null ],
     [ "SetDefaultFont", "class_gwk_1_1_skin_1_1_base.html#a5e8c2c32d71392967cb1ab3b1ad044de", null ],
     [ "SetRender", "class_gwk_1_1_skin_1_1_base.html#a194377b1aad8ef82060e6abee0a38a8e", null ],
-    [ "Colors", "class_gwk_1_1_skin_1_1_base.html#a0934f1e6f845a968e2f82a45e06be926", null ],
+    [ "Colors", "class_gwk_1_1_skin_1_1_base.html#a1c2057044319dcc7c60d7c7b8f3a208b", null ],
     [ "m_defaultFont", "class_gwk_1_1_skin_1_1_base.html#acf44b77092845ad6b67db3d4a8901bf3", null ],
     [ "m_render", "class_gwk_1_1_skin_1_1_base.html#ab09aaedc975c9de07147b980ab47a47f", null ]
 ];

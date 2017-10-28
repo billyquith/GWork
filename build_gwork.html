@@ -88,9 +88,11 @@ Introduction</h1>
 <ul>
 <li><code>platform</code> - Provides a common API to the supported platform.</li>
 <li><code>gwork</code> - The GUI API, which contains no target specific code.</li>
-<li><code>samples</code>/<code>test</code> - Some examples for demonstration and testing.</li>
+<li><code>test</code> - A test of each control type, used in the samples.</li>
+<li><code>samples</code> - Some examples for demonstration and testing.</li>
 </ul>
-<p>The project creates libraries for <em>platform</em> and <em>gwork</em>, which you can then link to your project. You can see an example of how to do this in the samples. There is one for each of the targets supported. <a href="https://cmake.org/overview/">Cmake</a> is used to generate project files for your chosen build environment.</p>
+<p>The project generator creates libraries for <em>platform</em> and <em>gwork</em>, which you can then link to your project. You can see an example of how to do this in the samples. There is one for each of the targets supported. <a href="https://cmake.org/overview/">Cmake</a> is used to generate project files for your chosen build environment.</p>
+<p>You are free to implement your own platform, or modify the samples for your use case. The GUI controls can be shared between all platforms supported.</p>
 <p>There are two ways in which you can use the project file generation:</p>
 <ul>
 <li>Generate entire project in cmake. You could then have Gwork as a sub-project.</li>
@@ -112,8 +114,7 @@ Using Cmake</h1>
 <p>It is best to build the project in subdirectory of the main project, e.g. in a directory called "build". You might make multiple versions of the project for different options or targets this way (e.g. "build_sdl2", "build_allegro5", etc).</p>
 <h2><a class="anchor" id="win_build"></a>
 Windows</h2>
-<div class="fragment"><div class="line">cmake --help    # show cmake options</div></div><!-- fragment --><dl class="section note"><dt>Note</dt><dd>Currently Windows only supports cross platform targets, i.e. the ones listed below.</dd></dl>
-<p>To generate project files:</p>
+<div class="fragment"><div class="line">cmake --help    # show cmake options</div></div><!-- fragment --><p>To generate project files:</p>
 <div class="fragment"><div class="line">mkdir build</div><div class="line">cd build</div><div class="line">cmake -G &quot;Visual Studio 14 2015 Win64&quot; -DRENDER_ALLEGRO5=ON ..</div><div class="line">start gwork.sln</div></div><!-- fragment --><h2><a class="anchor" id="osx_build"></a>
 OSX</h2>
 <div class="fragment"><div class="line">cmake -h    # show cmake options</div></div><!-- fragment --><p>To generate project files:</p>
@@ -125,10 +126,11 @@ Targets</h1>
 <p>Gwork currently supports the following rendering targets. You can choose these by defining a variable when you run cmake to generate the project files, i.e. <code>-DRENDER_&lt;TARGET&gt;=ON</code>, e.g. :-</p>
 <ul>
 <li>Allegro 5: <code>-DRENDER_ALLEGRO5=ON</code></li>
+<li>DirectX 11: <code>-DRENDER_DIRECTX11=ON</code></li>
+<li>Null (used for testing): <code>-DRENDER_NULL=ON</code></li>
 <li>OpenGL: <code>-DRENDER_OPENGL=ON</code></li>
 <li>SDL2: <code>-DRENDER_SDL2=ON</code></li>
 <li>SFML2: <code>-DRENDER_SFML2=ON</code></li>
-<li>Null (used for testing): <code>-DRENDER_NULL=ON</code></li>
 </ul>
 <dl class="section note"><dt>Note</dt><dd>You can only choose one target at a time. If you would like to compile multiple targets, create multiple build folders and create different project files and targets in each.</dd></dl>
 <p>Some tests and a sample are included for each target by default. These can be turned off using:</p>

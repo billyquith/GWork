@@ -1,5 +1,6 @@
 var NAVTREEINDEX4 =
 {
+"class_gwk_1_1_controls_1_1_tool_bar_strip.html":[2,0,0,0,63],
 "class_gwk_1_1_controls_1_1_tree_control.html":[2,0,0,0,64],
 "class_gwk_1_1_controls_1_1_tree_control.html#a1bfd245c970c45f997d7a169e6d56c03":[2,0,0,0,64,0],
 "class_gwk_1_1_controls_1_1_tree_control.html#a25854ecef1490496f106386d4f893295":[2,0,0,0,64,8],
@@ -248,6 +249,5 @@ var NAVTREEINDEX4 =
 "class_gwk_1_1_input_1_1_allegro.html#af7d5ea15f2a5f8b1202771ec0317c531":[2,0,0,5,0,4],
 "class_gwk_1_1_input_1_1_g_l_f_w.html":[2,0,0,5,1],
 "class_gwk_1_1_input_1_1_g_l_f_w.html#a0368e7954dbc3bd3e0aae2bb891efee2":[2,0,0,5,1,1,0],
-"class_gwk_1_1_input_1_1_g_l_f_w.html#a0c688e76c61cd1262bd957f91963cc53":[2,0,0,5,1,1,1],
-"class_gwk_1_1_input_1_1_g_l_f_w.html#a1aa479d1f6fc8aa674e1264befc668f5":[2,0,0,5,1,4]
+"class_gwk_1_1_input_1_1_g_l_f_w.html#a0c688e76c61cd1262bd957f91963cc53":[2,0,0,5,1,1,1]
 };
