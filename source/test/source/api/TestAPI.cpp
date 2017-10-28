@@ -11,7 +11,6 @@
 #include <Gwork/Controls/CollapsibleList.h>
 #include <Gwork/Controls/Layout/Position.h>
 #include <Gwork/Platform.h>
-#include <Gwork/PlatformCommon.h>
 
 using namespace Gwk;
 

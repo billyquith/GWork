@@ -29,7 +29,7 @@ ID3D11RenderTargetView* g_pRenderTargetView = NULL;
 //
 // Create a Window to render to.
 //
-HWND CreateGameWindow( void )
+static HWND CreateGameWindow( void )
 {
     WNDCLASS    wc;
     ZeroMemory( &wc, sizeof( wc ) );
@@ -52,16 +52,10 @@ HWND CreateGameWindow( void )
     return hWindow;
 }
 
-
-void ResetD3DDevice()
-{
-    //g_pD3DDevice->Reset( &g_D3DParams );
-}
-
 //
 // Typical DirectX stuff to create a D3D device
 //
-void CreateD3DDevice()
+static void CreateD3DDevice()
 {
     RECT ClientRect;
     GetClientRect( g_pHWND, &ClientRect );
@@ -178,7 +172,7 @@ int main( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nC
     Gwk::Skin::TexturedBase* pSkin = new Gwk::Skin::TexturedBase( pRenderer );
     pSkin->Init( "DefaultSkin.png" );
     //
-    // Create a Canvas (it's root, on which all other GWEN panels are created)
+    // Create a Canvas (it's root, on which all other Gwork panels are created)
     //
     Gwk::Controls::Canvas* pCanvas = new Gwk::Controls::Canvas( pSkin );
     pCanvas->SetSize( FrameBounds.right, FrameBounds.bottom );
@@ -191,10 +185,9 @@ int main( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nC
     pUnit->SetPos(10, 10);
     //
     // Create a Windows Control helper
-    // (Processes Windows MSG's and fires input at GWEN)
+    // (Processes Windows MSG's and fires input at Gwork)
     //
-    Gwk::Input::Windows GwkInput;
-    GwkInput.Initialize( pCanvas );
+    Gwk::Input::Windows input(pCanvas);
     //
     // Begin the main game loop
     //
@@ -204,17 +197,18 @@ int main( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nC
     {
         // Skip out if the window is closed
         if ( !IsWindowVisible( g_pHWND ) )
-        { break; }
+            break;
 
         // If we have a message from windows..
         if ( PeekMessage( &msg, NULL, 0, 0, PM_REMOVE ) )
         {
             // .. give it to the input handler to process
-            GwkInput.ProcessMessage( msg );
+            if (input.ProcessMessage(msg))
+                continue;
 
             // if it's QUIT then quit..
             if ( msg.message == WM_QUIT )
-            { break; }
+                break;
 
             // Handle the regular window stuff..
             TranslateMessage( &msg );
@@ -226,7 +220,7 @@ int main( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nC
             // Normal DirectX rendering loop
             g_pImmediateContext->ClearRenderTargetView(g_pRenderTargetView, ClearColor);
 
-            // This is how easy it is to render GWEN!
+            // Render Gwork.
             pCanvas->RenderCanvas();
 
             g_pSwapChain->Present(0, 0);
@@ -235,7 +229,7 @@ int main( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nC
 
     delete pCanvas;
     delete pSkin;
-    //delete pRenderer;
+    //delete pRenderer;     /// @todo - Fix Windows font clean up
 
     if (g_pRenderTargetView)
     {

@@ -16,7 +16,19 @@ namespace Gwk
 {
     namespace Platform
     {
-        // Low level functionality shared by all of the platforms.
+        // Cross-platform, low level functionality shared by all of the platforms.
+
+        //! Go to sleep for a time. Stops CPU hogging.
+        //! @param ms : Number of milliseconds to sleep for.
+        GWK_EXPORT void Sleep(unsigned int ms);
+        
+        // Needed for things like double click
+        GWK_EXPORT float GetTimeInSeconds();
+
+        //! Get the directory of the running executable.
+        //! \return Path string, blank if not known.
+        //! \note Path is terminated with directory separator.
+        GWK_EXPORT String GetExecutableDir();
 
 #if GWK_ALLOC_STATS
 

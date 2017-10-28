@@ -127,16 +127,16 @@ class FontData
 {
 public:
     FontData()
+        :   m_TexWidth(0)
+        ,   m_TexHeight(0)
+        ,   m_Spacing(0.f)
+        ,   m_Texture(nullptr)
     {
-        m_Texture = NULL;
-        m_TexWidth = 0;
-        m_TexHeight = 0;
-        m_Spacing = 0.f;
     }
 
     ~FontData()
     {
-        //SafeRelease(m_Texture);
+        GwkDxSafeRelease(m_Texture);
     }
 
     DirectX::XMFLOAT4 m_fTexCoords[0x60];
@@ -190,9 +190,9 @@ void DirectX11::Init()
     if (FAILED(CompileShaderFromMemory(pixshader, sizeof(pixshader), "main", "ps_4_0", &pPSBlob))
         || FAILED(CompileShaderFromMemory(pixshader, sizeof(pixshader), "texmain", "ps_4_0", &pTexPSBlob)))
     {
-        SafeRelease(pVSBlob);
-        SafeRelease(pPSBlob);
-        SafeRelease(pTexPSBlob);
+        GwkDxSafeRelease(pVSBlob);
+        GwkDxSafeRelease(pPSBlob);
+        GwkDxSafeRelease(pTexPSBlob);
         return;
     }
 
@@ -200,16 +200,16 @@ void DirectX11::Init()
         || FAILED(m_pDevice->CreatePixelShader(pPSBlob->GetBufferPointer(), pPSBlob->GetBufferSize(), NULL, &m_pPixShader))
         || FAILED(m_pDevice->CreatePixelShader(pTexPSBlob->GetBufferPointer(), pTexPSBlob->GetBufferSize(), NULL, &m_pTexPixShader)))
     {
-        SafeRelease(pVSBlob);
-        SafeRelease(pPSBlob);
-        SafeRelease(pTexPSBlob);
+        GwkDxSafeRelease(pVSBlob);
+        GwkDxSafeRelease(pPSBlob);
+        GwkDxSafeRelease(pTexPSBlob);
 
         Release();
         return;
     }
 
-    SafeRelease(pPSBlob);
-    SafeRelease(pTexPSBlob);
+    GwkDxSafeRelease(pPSBlob);
+    GwkDxSafeRelease(pTexPSBlob);
 
     D3D11_INPUT_ELEMENT_DESC layout[] =
     {
@@ -221,13 +221,13 @@ void DirectX11::Init()
 
     if (FAILED(m_pDevice->CreateInputLayout(layout, numElements, pVSBlob->GetBufferPointer(), pVSBlob->GetBufferSize(), &m_pInputLayout)))
     {
-        SafeRelease(pVSBlob);
+        GwkDxSafeRelease(pVSBlob);
 
         Release();
         return;
     }
 
-    SafeRelease(pVSBlob);
+    GwkDxSafeRelease(pVSBlob);
 
     D3D11_BLEND_DESC blenddesc;
     blenddesc.AlphaToCoverageEnable = FALSE;
@@ -275,20 +275,17 @@ void DirectX11::Release()
 {
     m_Valid = false;
 
-    Font::List::iterator it = m_FontList.begin();
+    //while (!m_FontList.empty())
+    //{
+    //    FreeFont(m_FontList.back());
+    //}
 
-    while (it != m_FontList.end())
-    {
-        FreeFont(*it);
-        it = m_FontList.begin();
-    }
-
-    SafeRelease(m_pRastState);
-    SafeRelease(m_pPixShader);
-    SafeRelease(m_pBlendState);
-    SafeRelease(m_pVertShader);
-    SafeRelease(m_pInputLayout);
-    SafeRelease(m_pTexPixShader);
+    GwkDxSafeRelease(m_pRastState);
+    GwkDxSafeRelease(m_pPixShader);
+    GwkDxSafeRelease(m_pBlendState);
+    GwkDxSafeRelease(m_pVertShader);
+    GwkDxSafeRelease(m_pInputLayout);
+    GwkDxSafeRelease(m_pTexPixShader);
 }
 
 void DirectX11::Begin()
@@ -520,6 +517,7 @@ void DirectX11::LoadFont(Gwk::Font* font)
     if (FAILED(m_pDevice->CreateTexture2D(&texdesc, nullptr, &buftex)))
     {
         delete data;
+        data = NULL;
 
         DeleteObject(hBitmap);
         DeleteObject(hFont);
@@ -532,11 +530,12 @@ void DirectX11::LoadFont(Gwk::Font* font)
     if (FAILED(m_pContext->Map(buftex, 0, D3D11_MAP_WRITE_DISCARD, 0, &texmap)))
     {
         delete data;
+        data = NULL;
 
         DeleteObject(hBitmap);
         DeleteObject(hFont);
         DeleteDC(hDC);
-        SafeRelease(buftex);
+        GwkDxSafeRelease(buftex);
 
         return;
     }
@@ -573,13 +572,14 @@ void DirectX11::LoadFont(Gwk::Font* font)
     if (FAILED(m_pDevice->CreateShaderResourceView(buftex, nullptr, &data->m_Texture)))
     {
         delete data;
+        data = NULL;
 
-        SafeRelease(buftex);
+        GwkDxSafeRelease(buftex);
 
         return;
     }
 
-    SafeRelease(buftex);
+    GwkDxSafeRelease(buftex);
 
     font->data = data;
 
@@ -588,16 +588,14 @@ void DirectX11::LoadFont(Gwk::Font* font)
 
 void DirectX11::FreeFont(Gwk::Font* pFont)
 {
+    if (pFont->data)
+    {
+        FontData* pFontData = static_cast<FontData*>(pFont->data);
+        delete pFontData;
+        pFont->data = NULL;
+    }
+
     m_FontList.remove(pFont);
-
-    if (!pFont->data)
-        return;
-
-    FontData* pFontData = (FontData*)pFont->data;
-
-    delete pFontData;
-
-    pFont->data = NULL;
 }
 
 void DirectX11::RenderText(Gwk::Font* pFont, Gwk::Point pos, const Gwk::String & text)
@@ -840,7 +838,7 @@ void DirectX11::FreeTexture(Gwk::Texture* pTexture)
     ID3D11ShaderResourceView* pImage = (ID3D11ShaderResourceView*)pTexture->surface;
 	if (pImage)
 	{
-		SafeRelease(pImage);
+		GwkDxSafeRelease(pImage);
 		pTexture->surface = NULL;
 	}
 
@@ -898,8 +896,8 @@ Gwk::Color DirectX11::PixelColor(Gwk::Texture* pTexture, unsigned int x, unsigne
     D3D11_MAPPED_SUBRESOURCE msr;
     if (FAILED(m_pContext->Map(stagingTexture, 0, D3D11_MAP_READ, 0, &msr)))
     {
-        SafeRelease(stagingTexture);
-        SafeRelease(t);
+        GwkDxSafeRelease(stagingTexture);
+        GwkDxSafeRelease(t);
         return col_default;
     }
 
@@ -1005,7 +1003,7 @@ Gwk::Color DirectX11::PixelColor(Gwk::Texture* pTexture, unsigned int x, unsigne
 //    }
 //
 //    m_pContext->OMSetRenderTargets(1, &pRenderTargetView, NULL);
-//    SafeRelease(pRenderTargetView);
+//    GwkDxSafeRelease(pRenderTargetView);
 //
 //    D3D11_VIEWPORT vp;
 //    width = vp.Width = (FLOAT)WIDTH;
@@ -1024,10 +1022,10 @@ Gwk::Color DirectX11::PixelColor(Gwk::Texture* pTexture, unsigned int x, unsigne
 //{
 //    ID3D11RenderTargetView* pRenderTargetView;
 //    m_pContext->OMGetRenderTargets(1, &pRenderTargetView, 0);
-//    SafeRelease(pRenderTargetView);
-//    SafeRelease(m_pSwapChain);
-//    SafeRelease(m_pContext);
-//    SafeRelease(m_pDevice);
+//    GwkDxSafeRelease(pRenderTargetView);
+//    GwkDxSafeRelease(m_pSwapChain);
+//    GwkDxSafeRelease(m_pContext);
+//    GwkDxSafeRelease(m_pDevice);
 //    return true;
 //}
 //
@@ -1045,7 +1043,7 @@ Gwk::Color DirectX11::PixelColor(Gwk::Texture* pTexture, unsigned int x, unsigne
 //
 //    ID3D11RenderTargetView* pRenderTargetView;
 //    m_pContext->OMGetRenderTargets(1, &pRenderTargetView, 0);
-//    SafeRelease(pRenderTargetView);
+//    GwkDxSafeRelease(pRenderTargetView);
 //
 //    m_pSwapChain->ResizeBuffers(0, 0, 0, DXGI_FORMAT_UNKNOWN, 0);
 //
@@ -1056,10 +1054,10 @@ Gwk::Color DirectX11::PixelColor(Gwk::Texture* pTexture, unsigned int x, unsigne
 //    m_pDevice->CreateRenderTargetView(pBuffer, NULL,
 //        &pRenderTargetView);
 //    // Perform error handling here!
-//    SafeRelease(pBuffer);
+//    GwkDxSafeRelease(pBuffer);
 //
 //    m_pContext->OMSetRenderTargets(1, &pRenderTargetView, NULL);
-//    SafeRelease(pRenderTargetView);
+//    GwkDxSafeRelease(pRenderTargetView);
 //
 //    UINT WIDTH = ClientRect.right - ClientRect.left;
 //    UINT HEIGHT = ClientRect.bottom - ClientRect.top;

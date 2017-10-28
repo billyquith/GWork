@@ -17,7 +17,7 @@ namespace Gwk
     namespace Renderer
     {
 
-#define SafeRelease(var) if(var) {var->Release(); var = NULL;}
+#define GwkDxSafeRelease(var) if(var) {var->Release(); var = NULL;}
 
         class GWK_EXPORT DirectX11 : public Gwk::Renderer::Base
         {
@@ -137,7 +137,7 @@ namespace Gwk
                 {
                     if (open)
                         End();
-                    SafeRelease(m_vbuffer);
+                    GwkDxSafeRelease(m_vbuffer);
                 }
 
                 inline DWORD GetMaxVertices() const { return maxVertices; }
@@ -155,7 +155,7 @@ namespace Gwk
                     HRESULT hr;
                     if (bufferResize)
                     {
-                        SafeRelease(m_vbuffer);
+                        GwkDxSafeRelease(m_vbuffer);
 
                         D3D11_BUFFER_DESC bufdesc = CD3D11_BUFFER_DESC(maxVertices * sizeof(T), D3D11_BIND_VERTEX_BUFFER, D3D11_USAGE_DYNAMIC, D3D11_CPU_ACCESS_WRITE);
 
@@ -194,7 +194,6 @@ namespace Gwk
                 {
                     if (open && GetMaxVertices() >= GetNumVertices() + 1)
                         *data++ = vertex;
-
                 }
 
                 inline void Add(const T* vertices, int len)

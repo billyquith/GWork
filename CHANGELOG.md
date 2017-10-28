@@ -6,9 +6,10 @@ This is a changelog for Gwork. There are also notes [on my blog][blog]
 
 ### 0.2
 
-- `override` used everywhere applicable to marked overridden virtual functions.
 - Online [documentation][docs] added.
-- DirectX 11 renderer and sample added. Thanks to @topblast.
+- DirectX 11 renderer and sample added. Thanks to @topblast. #13
+- Fix Windows platform. #13
+- C++11 `override` used everywhere applicable to marked overridden virtual functions.
 
 ### 0.1
 

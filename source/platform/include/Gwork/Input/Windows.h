@@ -4,13 +4,14 @@
  *  Copyright (c) 2013-17 Nick Trout
  *  See license in Gwork.h
  */
+ 
+#pragma once
 #ifndef GWK_INPUT_WINDOWS_H
 #define GWK_INPUT_WINDOWS_H
 
-#include <Gwork/InputHandler.h>
-#include <Gwork/Gwork.h>
-#include <Gwork/Controls/Canvas.h>
+#include <Gwork/InputEventListener.h>
 
+#define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 
 namespace Gwk
@@ -21,21 +22,16 @@ namespace Gwk
         {
         public:
 
-            Windows()
+            Windows(IInputEventListener* listener)
+                :   m_eventListener(listener)
+                ,   m_mouseX(0)
+                ,   m_mouseY(0)
             {
-                m_canvas = nullptr;
-                m_mouseX = 0;
-                m_mouseY = 0;
-            }
-
-            void Initialize(Gwk::Controls::Canvas* c)
-            {
-                m_canvas = c;
             }
 
             bool ProcessMessage(MSG msg)
             {
-                if (!m_canvas)
+                if (!m_eventListener)
                     return false;
 
                 switch (msg.message)
@@ -45,55 +41,55 @@ namespace Gwk
                     if (msg.message == WM_SYSCOMMAND && msg.wParam != SC_CLOSE)
                         return false;
 
-                    return m_canvas->InputQuit();
+                    return m_eventListener->InputQuit();
 
                 case WM_MOUSEMOVE:
                     {
-                        int x = (signed short)LOWORD(msg.lParam);
-                        int y = (signed short)HIWORD(msg.lParam);
-                        int dx = x-m_mouseX;
-                        int dy = y-m_mouseY;
+                        const int x = (signed short)LOWORD(msg.lParam);
+                        const int y = (signed short)HIWORD(msg.lParam);
+                        const int dx = x - m_mouseX;
+                        const int dy = y - m_mouseY;
                         m_mouseX = x;
                         m_mouseY = y;
-                        return m_canvas->InputMouseMoved(x, y, dx, dy);
+                        return m_eventListener->InputMouseMoved(x, y, dx, dy);
                     }
 
                 case WM_CHAR:
                     {
-                        Gwk::UnicodeChar chr = (Gwk::UnicodeChar)msg.wParam;
-                        return m_canvas->InputCharacter(chr);
+                        const Gwk::UnicodeChar chr = (Gwk::UnicodeChar)msg.wParam;
+                        return m_eventListener->InputCharacter(chr);
                     }
 
 #ifdef WM_MOUSEWHEEL
 
                 case WM_MOUSEWHEEL:
-                    return m_canvas->InputMouseWheel((short)HIWORD(msg.wParam));
+                    return m_eventListener->InputMouseWheel((short)HIWORD(msg.wParam));
 
 #endif
 
                 case WM_LBUTTONDOWN:
                     SetCapture(msg.hwnd);
-                    return m_canvas->InputMouseButton(0, true);
+                    return m_eventListener->InputMouseButton(0, true);
 
                 case WM_LBUTTONUP:
                     ReleaseCapture();
-                    return m_canvas->InputMouseButton(0, false);
+                    return m_eventListener->InputMouseButton(0, false);
 
                 case WM_RBUTTONDOWN:
                     SetCapture(msg.hwnd);
-                    return m_canvas->InputMouseButton(1, true);
+                    return m_eventListener->InputMouseButton(1, true);
 
                 case WM_RBUTTONUP:
                     ReleaseCapture();
-                    return m_canvas->InputMouseButton(1, false);
+                    return m_eventListener->InputMouseButton(1, false);
 
                 case WM_MBUTTONDOWN:
                     SetCapture(msg.hwnd);
-                    return m_canvas->InputMouseButton(2, true);
+                    return m_eventListener->InputMouseButton(2, true);
 
                 case WM_MBUTTONUP:
                     ReleaseCapture();
-                    return m_canvas->InputMouseButton(2, false);
+                    return m_eventListener->InputMouseButton(2, false);
 
                 case WM_LBUTTONDBLCLK:
                 case WM_RBUTTONDBLCLK:
@@ -104,18 +100,18 @@ namespace Gwk
                 case WM_KEYDOWN:
                 case WM_KEYUP:
                     {
-                        bool bDown = msg.message == WM_KEYDOWN;
+                        const bool bDown = msg.message == WM_KEYDOWN;
                         int iKey = -1;
 
                         // These aren't sent by WM_CHAR when CTRL is down - but
-                        // we need
-                        // them internally for copy and paste etc..
-                        if (bDown && GetKeyState(VK_CONTROL)&0x80 && msg.wParam >= 'A' &&
-                            msg.wParam <=
-                            'Z')
+                        // we need them internally for copy and paste etc..
+                        if (bDown
+                            && (GetKeyState(VK_CONTROL) & 0x80) != 0
+                            && msg.wParam >= 'A'
+                            && msg.wParam <= 'Z')
                         {
-                            Gwk::UnicodeChar chr = (Gwk::UnicodeChar)msg.wParam;
-                            return m_canvas->InputCharacter(chr);
+                            const Gwk::UnicodeChar chr = (Gwk::UnicodeChar)msg.wParam;
+                            return m_eventListener->InputCharacter(chr);
                         }
 
                         if (msg.wParam == VK_SHIFT)
@@ -148,7 +144,7 @@ namespace Gwk
                             iKey = Gwk::Key::Down;
 
                         if (iKey != -1)
-                            return m_canvas->InputModifierKey(iKey, bDown);
+                            return m_eventListener->InputModifierKey(iKey, bDown);
 
                         break;
                     }
@@ -162,7 +158,7 @@ namespace Gwk
 
         protected:
 
-            Gwk::Controls::Canvas* m_canvas;
+            IInputEventListener* m_eventListener;
             int m_mouseX;
             int m_mouseY;
 
