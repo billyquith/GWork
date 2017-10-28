@@ -22,6 +22,8 @@
 #include <cmath>
 #include <unistd.h>
 
+using namespace Gwk;
+
 struct TextureData
 {
     TextureData(sf::Image* img) : texture(nullptr), image(img) {}
@@ -38,20 +40,103 @@ struct TextureData
     sf::Image *image;
 };
 
+Font::Status Gwk::Renderer::SFML2ResourceLoader::LoadFont(Font& font)
+{
+    const String fontFile = m_paths.GetPath(ResourcePaths::Type::Font, font.facename);
+    
+    sf::Font* sfFont = new sf::Font();
+    
+    if (sfFont->loadFromFile(fontFile))
+    {
+        font.data = sfFont;
+        font.status = Font::Status::Loaded;
+    }
+    else
+    {
+        delete sfFont;
+        font.status = Font::Status::ErrorFileNotFound;
+    }
+    
+    return font.status;
+}
 
-Gwk::Renderer::SFML2::SFML2(sf::RenderTarget& target, const String& resDir)
-    :   m_target(target)
+void Gwk::Renderer::SFML2ResourceLoader::FreeFont(Gwk::Font& font)
+{
+    if (font.IsLoaded())
+    {
+        sf::Font* sfFont = static_cast<sf::Font*>(font.data);
+        delete sfFont;
+        font.data = nullptr;
+        font.status = Font::Status::Unloaded;
+    }
+}
+
+Texture::Status Gwk::Renderer::SFML2ResourceLoader::LoadTexture(Texture& texture)
+{
+    if (texture.IsLoaded())
+        FreeTexture(texture);
+    
+    sf::Texture* tex = new sf::Texture();
+    tex->setSmooth(true);
+    
+    const String texFile = m_paths.GetPath(ResourcePaths::Type::Texture, texture.name);
+
+    if (tex->loadFromFile(texFile))
+    {
+        texture.height = tex->getSize().x;
+        texture.width = tex->getSize().y;
+        texture.data = new TextureData(tex);
+        texture.status = Texture::Status::Loaded;
+    }
+    else
+    {
+        delete tex;
+        texture.status = Texture::Status::ErrorFileNotFound;
+    }
+
+    return texture.status;
+}
+
+void Gwk::Renderer::SFML2ResourceLoader::FreeTexture(Texture& texture)
+{
+    if (texture.IsLoaded())
+    {
+        TextureData* data = static_cast<TextureData*>(texture.data);
+        delete data;
+        texture.data = nullptr;
+        texture.status = Texture::Status::Unloaded;
+    }
+}
+
+
+Gwk::Renderer::SFML2::SFML2(ResourceLoader& loader, sf::RenderTarget& target)
+    :   Base(loader)
+    ,   m_target(target)
     ,   m_renderStates(sf::RenderStates::Default)
     ,   m_height(m_target.getSize().y)
 {
     m_buffer.setPrimitiveType(sf::Triangles);
-    m_renderStates.blendMode = sf::BlendAlpha;
-    
-    m_resourceDir = Platform::GetExecutableDir() + resDir;
+    m_renderStates.blendMode = sf::BlendAlpha;    
 }
 
 Gwk::Renderer::SFML2::~SFML2()
 {
+}
+
+bool Gwk::Renderer::SFML2::EnsureFont(Font& font)
+{
+    // If the font doesn't exist, or the font size should be changed
+    if (font.status == Font::Status::Unloaded
+        || (font.status == Font::Status::Loaded && font.realsize != font.size*Scale()))
+    {
+        GetLoader().FreeFont(font);
+        
+        font.realsize = font.size * Scale();
+        
+        GetLoader().LoadFont(font);
+    }
+    
+    return font.status == Font::Status::Loaded;
 }
 
 void Gwk::Renderer::SFML2::Begin()
@@ -187,46 +272,12 @@ void Gwk::Renderer::SFML2::DrawTexturedRect(Gwk::Texture* texture, Gwk::Rect rec
     AddVert(rect.x, rect.y+rect.h, u1, v2);
 }
 
-void Gwk::Renderer::SFML2::LoadFont(Gwk::Font* font)
-{
-    font->realsize = font->size*Scale();
-
-    sf::Font* sfFont = new sf::Font();
-
-    if (!sfFont->loadFromFile(m_resourceDir + font->facename))
-    {
-        // Ideally here we should be setting the font to a system
-        // default font here.
-        delete sfFont;
-        sfFont = nullptr; // SFML 2 doesn't have a default font anymore
-    }
-
-    font->data = sfFont;
-}
-
-void Gwk::Renderer::SFML2::FreeFont(Gwk::Font* font)
-{
-    if (!font->data)
-        return;
-
-    sf::Font* sfFont = reinterpret_cast<sf::Font*>(font->data);
-    delete sfFont;
-    font->data = nullptr;
-}
-
 void Gwk::Renderer::SFML2::RenderText(Gwk::Font* font, Gwk::Point pos,
                                       const Gwk::String& text)
 {
     Flush();
 
     Translate(pos.x, pos.y);
-
-    // If the font doesn't exist, or the font size should be changed
-    if (!font->data || std::abs(font->realsize-font->size*Scale()) > 2)
-    {
-        FreeFont(font);
-        LoadFont(font);
-    }
 
     const sf::Font* sFFont = reinterpret_cast<sf::Font*>(font->data);
 
@@ -241,12 +292,8 @@ void Gwk::Renderer::SFML2::RenderText(Gwk::Font* font, Gwk::Point pos,
 
 Gwk::Point Gwk::Renderer::SFML2::MeasureText(Gwk::Font* font, const Gwk::String& text)
 {
-    // If the font doesn't exist, or the font size should be changed
-    if (!font->data || std::abs(font->realsize-font->size*Scale()) > 2)
-    {
-        FreeFont(font);
-        LoadFont(font);
-    }
+    if (!EnsureFont(*font))
+        return Gwk::Point(0, 0);
 
     const sf::Font* sFFont = reinterpret_cast<sf::Font*>(font->data);
 
@@ -257,37 +304,6 @@ Gwk::Point Gwk::Renderer::SFML2::MeasureText(Gwk::Font* font, const Gwk::String&
     sfStr.setCharacterSize(font->realsize);
     sf::FloatRect sz = sfStr.getLocalBounds();
     return Gwk::Point(sz.left+sz.width, sz.top+sz.height);
-}
-
-void Gwk::Renderer::SFML2::LoadTexture(Gwk::Texture* texture)
-{
-    if (!texture)
-        return;
-
-    if (texture->data)
-        FreeTexture(texture);
-    
-    sf::Texture* tex = new sf::Texture();
-    tex->setSmooth(true);
-    if (!tex->loadFromFile(m_resourceDir + texture->name))
-    {
-        delete tex;
-        texture->failed = true;
-        return;
-    }
-
-    texture->height = tex->getSize().x;
-    texture->width = tex->getSize().y;
-    texture->data = new TextureData(tex);
-}
-
-void Gwk::Renderer::SFML2::FreeTexture(Gwk::Texture* texture)
-{
-    TextureData* data = reinterpret_cast<TextureData*>(texture->data);
-
-    delete data;
-
-    texture->data = nullptr;
 }
 
 Gwk::Color Gwk::Renderer::SFML2::PixelColor(Gwk::Texture* texture, unsigned int x,

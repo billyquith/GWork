@@ -47,19 +47,21 @@ Texture::Status SDL2ResourceLoader::LoadTexture(Texture& texture)
     if (texture.IsLoaded())
         FreeTexture(texture);
     
+    const String texFile = m_paths.GetPath(ResourcePaths::Type::Texture, texture.name);
+
     SDL_Texture *tex = nullptr;
     if (texture.readable)
     {
         // You cannot find the format of a texture once loaded to read from it
         // in SDL2 so we have to keep the surface to read from.
-        SDL_Surface *surf = IMG_Load(texture.name.c_str());
+        SDL_Surface *surf = IMG_Load(texFile.c_str());
         tex = SDL_CreateTextureFromSurface(m_sdlRenderer, surf);
         texture.surface = surf;
     }
     else
     {
         // Don't need to read. Just load straight into render format.
-        tex = IMG_LoadTexture(m_sdlRenderer, texture.name.c_str());
+        tex = IMG_LoadTexture(m_sdlRenderer, texFile.c_str());
     }
     
     if (tex)

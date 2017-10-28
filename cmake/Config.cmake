@@ -153,7 +153,7 @@ if(RENDER_SDL2)
 endif(RENDER_SDL2)
 
 if(RENDER_SFML2)
-    set(SFML_STATIC_LIBRARIES FALSE)
+    set(SFML_STATIC_LIBRARIES FALSE) # But note we edited FindSFML...
     find_package(SFML 2 COMPONENTS system window graphics REQUIRED)
     if(NOT SFML_FOUND)
         message(FATAL_ERROR "SFML2 is missing components")
