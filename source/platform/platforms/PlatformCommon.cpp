@@ -35,7 +35,7 @@ using namespace Gwk;
 // avoid duplicating the functionality in the platform-specific files.
 
 // Only the following platforms require these functions:
-#if defined(GWK_PLAFORM_Null)
+#if defined(GWK_PLATFORM_Null)
 
 // GetExecutableDir()
 //-------------------

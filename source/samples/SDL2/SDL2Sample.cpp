@@ -30,9 +30,14 @@ int main(int argc, char** argv)
 	if (!window)
 		return EXIT_FAILURE;
 
+
     // Create a Gwork Allegro Renderer
-    SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-    Gwk::Renderer::SDL2 *renderer = new Gwk::Renderer::SDL2(window);
+    SDL_Renderer *rdr = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+    
+    Gwk::Platform::RelativeToExecutablePaths paths(GWORK_RESOURCE_DIR);
+    Gwk::Renderer::SDL2ResourceLoader loader(paths, rdr);
+
+    Gwk::Renderer::SDL2 *renderer = new Gwk::Renderer::SDL2(loader, window);
 
     // Create a Gwork skin
     Gwk::Skin::TexturedBase skin(renderer);
