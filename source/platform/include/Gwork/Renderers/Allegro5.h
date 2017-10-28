@@ -48,7 +48,7 @@ namespace Gwk
             void        LoadTexture(Gwk::Texture* texture) override;
             void        FreeTexture(Gwk::Texture* texture) override;
             Gwk::Color  PixelColor(Gwk::Texture* texture, unsigned int x, unsigned int y,
-                                    const Gwk::Color& col_default) override;
+                                   const Gwk::Color& col_default) override;
 
             void DrawLinedRect(Gwk::Rect rect) override;
             void DrawShavedCornerRect(Gwk::Rect rect, bool bSlight = false) override;

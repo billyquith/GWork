@@ -41,7 +41,10 @@ source_group("${GWK_HEADER_FOLDER}"
 
 # source folder groups
 source_group("${GWK_SOURCE_FOLDER}"
-             REGULAR_EXPRESSION ".*\\.cpp")
+             FILES
+                 "platforms/DebugBreak.h"
+             REGULAR_EXPRESSION
+                 ".*\\.cpp")
 
 # Gwork renderer & platform library
 add_library(Gwork${GWK_RENDER_NAME} STATIC

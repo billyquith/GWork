@@ -72,9 +72,9 @@ int main(int argc, char** argv)
     // (Processes Windows MSG's and fires input at Gwork)
     Gwk::Input::Allegro GworkInput;
     GworkInput.Initialize(canvas);
+    
     ALLEGRO_EVENT ev;
     bool haveQuit = false;
-
     while (!haveQuit)
     {
         while (al_get_next_event(event_queue, &ev))
