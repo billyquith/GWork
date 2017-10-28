@@ -18,8 +18,10 @@
 #endif
 #include <GLFW/glfw3.h>
 
-#define WIN32_LEAN_AND_MEAN
-#include <Windows.h>
+#ifdef _WIN32
+#   define WIN32_LEAN_AND_MEAN
+#   include <Windows.h>
+#endif
 
 
 static Gwk::Input::GLFW GworkInput;
