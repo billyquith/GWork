@@ -218,25 +218,37 @@ namespace Gwk
     {
         typedef std::list<Font*> List;
 
+        enum class Status
+        {
+            Unloaded,               //!< As yet, unloaded.
+            Loaded,                 //!< Loaded successful.
+            ErrorFileNotFound,      //!< File requested was not found.
+            ErrorBadData,           //!< Resource was bad data.
+            MaxStatus
+        };
+
         Font()
-        :   facename("Arial")
+        :   status(Status::Unloaded)
+        ,   facename("?")
         ,   size(10)
         ,   bold(false)
-        ,   data(nullptr)
         ,   realsize(0)
+        ,   data(nullptr)
         ,   render_data(nullptr)
-        {
-        }
+        {}
+        
+        bool IsLoaded() const { return status == Status::Loaded; }
+        
+        Status status;
 
         String facename;
         float size;
         bool bold;
 
-        void *data;             // Font data, set by renderer
-
         // This is the real font size, after it's been scaled by Render->Scale()
         float realsize;
-        
+
+        void *data;             // Font data, set by renderer
         void *render_data;      // optional renderer data
     };
 
@@ -244,25 +256,74 @@ namespace Gwk
     {
         typedef std::list<Texture*> List;
 
+        //! Status of load operation.
+        enum class Status
+        {
+            Unloaded,               //!< As yet, unloaded.
+            Loaded,                 //!< Loaded successful.
+            ErrorFileNotFound,      //!< File requested was not found.
+            ErrorBadData,           //!< Resource was bad data.
+            MaxStatus
+        };
+
+        bool IsLoaded() const { return status == Status::Loaded; }
+
+        Status  status;
+
         String  name;
-        void*   data;
-        bool    failed;
         int     width;
         int     height;
-        
         bool    readable;
+
+        void*   data;
         void*   surface;
 
         Texture()
-        :   data(nullptr)
-        ,   failed(false)
+        :   status(Status::Unloaded)
         ,   width(4)
         ,   height(4)
         ,   readable(false)
+        ,   data(nullptr)
         ,   surface(nullptr)
-        {
-        }
+        {}
     };
     
-}
+    
+    //! Base class for resource path calculation.
+    //!
+    //! Can be implemented by different platforms for different file layouts.
+    class ResourcePaths
+    {
+    public:
+        //! Resource type.
+        enum class Type
+        {
+            Font,           //!< Font resource.
+            Texture,        //!< Texture resource.
+            Other,          //!< Other type of resource.
+            MaxType
+        };
+     
+        virtual ~ResourcePaths() {}
+        virtual String GetPath(Type type, String const& name) = 0;
+    };
+    
+    
+    //! Base class for resource loaders.
+    //!
+    //! These are used to load, create and destroy resource needed for Gwork.
+    class ResourceLoader
+    {
+    public:
+        virtual ~ResourceLoader() {}
+        
+        virtual Font::Status LoadFont(Font& font) = 0;
+        virtual void FreeFont(Font& font) = 0;
+        
+        virtual Texture::Status LoadTexture(Texture& texture) = 0;
+        virtual void FreeTexture(Texture& texture) = 0;
+    };
+    
+} // namespace Gwk
+
 #endif // ifndef GWK_PLATFORMTYPES_H

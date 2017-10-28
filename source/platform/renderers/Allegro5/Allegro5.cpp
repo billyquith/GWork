@@ -113,8 +113,78 @@ void AllegroCTT::DrawCachedControlTexture(CacheHandle control)
 
 //-------------------------------------------------------------------------------
 
-Allegro::Allegro()
-:   m_ctt(new AllegroCTT)
+Font::Status AllegroResourceLoader::LoadFont(Font& font)
+{
+    String fontName(font.facename);
+    
+    if (fontName.find(".ttf") == std::string::npos)
+        fontName += ".ttf";
+    
+    fontName = m_paths.GetPath(ResourcePaths::Type::Font, fontName);
+    
+    ALLEGRO_FONT* afont = al_load_font(fontName.c_str(),
+                                       font.realsize,
+                                       ALLEGRO_TTF_NO_KERNING);
+    
+    if (afont)
+    {
+        font.data = afont;
+        font.status = Font::Status::Loaded;
+    }
+    else
+    {
+        font.status = Font::Status::ErrorFileNotFound;
+    }
+    
+    return font.status;
+}
+
+void AllegroResourceLoader::FreeFont(Gwk::Font& font)
+{
+    if (font.status == Font::Status::Loaded)
+    {
+        al_destroy_font((ALLEGRO_FONT*)font.data);
+        font.status = Font::Status::Unloaded;
+    }
+}
+
+Texture::Status AllegroResourceLoader::LoadTexture(Texture& texture)
+{
+    if (texture.IsLoaded())
+        FreeTexture(texture);
+    
+    ALLEGRO_BITMAP* bmp = al_load_bitmap(texture.name.c_str());
+    
+    if (bmp)
+    {
+        texture.data = bmp;
+        texture.width = al_get_bitmap_width(bmp);
+        texture.height = al_get_bitmap_height(bmp);
+        texture.status = Texture::Status::Loaded;
+    }
+    else
+    {
+        texture.status = Texture::Status::ErrorFileNotFound;
+        texture.data = nullptr;
+    }
+    
+    return texture.status;
+}
+
+void AllegroResourceLoader::FreeTexture(Texture& texture)
+{
+    if (texture.IsLoaded())
+    {
+        al_destroy_bitmap((ALLEGRO_BITMAP*)texture.data);
+        texture.status = Texture::Status::Unloaded;
+    }
+}
+
+//-------------------------------------------------------------------------------
+
+Allegro::Allegro(ResourceLoader& loader)
+:   Base(loader)
+,   m_ctt(new AllegroCTT)
 {
     m_ctt->SetRenderer(this);
     m_ctt->Initialize();
@@ -129,27 +199,20 @@ void Allegro::SetDrawColor(Gwk::Color color)
     m_color = al_map_rgba(color.r, color.g, color.b, color.a);
 }
 
-void Allegro::LoadFont(Gwk::Font* font)
+bool Allegro::EnsureFont(Font& font)
 {
-    font->realsize = font->size*Scale();
-    std::string fontName(font->facename);
-
-    if (fontName.find(".ttf") == std::string::npos)
-        fontName += ".ttf";
-
-    ALLEGRO_FONT* afont = al_load_font(fontName.c_str(),
-                                       font->realsize,
-                                       ALLEGRO_TTF_NO_KERNING);
-    font->data = afont;
-}
-
-void Allegro::FreeFont(Gwk::Font* font)
-{
-    if (font->data)
+    // If the font doesn't exist, or the font size should be changed
+    if (font.status == Font::Status::Unloaded
+        || (font.status == Font::Status::Loaded && font.realsize != font.size*Scale()))
     {
-        al_destroy_font((ALLEGRO_FONT*)font->data);
-        font->data = nullptr;
+        GetLoader().FreeFont(font);
+        
+        font.realsize = font.size * Scale();
+        
+        GetLoader().LoadFont(font);
     }
+    
+    return font.status == Font::Status::Loaded;
 }
 
 void Allegro::RenderText(Gwk::Font* font, Gwk::Point pos,
@@ -162,19 +225,11 @@ void Allegro::RenderText(Gwk::Font* font, Gwk::Point pos,
 
 Gwk::Point Allegro::MeasureText(Gwk::Font* font, const Gwk::String& text)
 {
-    ALLEGRO_FONT* afont = (ALLEGRO_FONT*)font->data;
-
-    // If the font doesn't exist, or the font size should be changed
-    if (!afont || font->realsize != font->size*Scale())
-    {
-        FreeFont(font);
-        LoadFont(font);
-        afont = (ALLEGRO_FONT*)font->data;
-    }
-
-    if (!afont)
+    if (!EnsureFont(*font))
         return Gwk::Point(0, 0);
 
+    ALLEGRO_FONT* afont = static_cast<ALLEGRO_FONT*>(font->data);
+    
     return Point(al_get_text_width(afont, text.c_str()), al_get_font_line_height(afont));
 }
 
@@ -189,36 +244,6 @@ void Allegro::EndClip()
     ALLEGRO_BITMAP* targ = al_get_target_bitmap();
     al_set_clipping_rectangle(0, 0,
                               al_get_bitmap_width(targ), al_get_bitmap_height(targ));
-}
-
-void Allegro::LoadTexture(Gwk::Texture* texture)
-{
-    if (!texture)
-        return;
-
-    if (texture->data)
-        FreeTexture(texture);
-
-    ALLEGRO_BITMAP* bmp = al_load_bitmap(texture->name.c_str());
-
-    if (bmp)
-    {
-        texture->data = bmp;
-        texture->width = al_get_bitmap_width(bmp);
-        texture->height = al_get_bitmap_height(bmp);
-        texture->failed = false;
-    }
-    else
-    {
-        texture->data = nullptr;
-        texture->failed = true;
-    }
-}
-
-void Allegro::FreeTexture(Gwk::Texture* texture)
-{
-    al_destroy_bitmap((ALLEGRO_BITMAP*)texture->data);
-    texture->data = nullptr;
 }
 
 void Allegro::DrawTexturedRect(Gwk::Texture* texture, Gwk::Rect rect,

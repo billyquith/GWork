@@ -28,7 +28,7 @@ namespace Gwk
 
             ~TexturedBase()
             {
-                m_render->FreeTexture(&m_texture);
+                m_render->GetLoader().FreeTexture(m_texture);
             }
 
             Texture m_texture;
@@ -300,7 +300,7 @@ namespace Gwk
 
                 m_texture.name = TextureName;
                 m_texture.readable = true;
-                GetRender()->LoadTexture(&m_texture); // Readable texture
+                GetRender()->GetLoader().LoadTexture(m_texture); // Readable texture
 
                 Colors.Window.TitleActive   = GetRender()->PixelColor( &m_texture, 4 + 8 * 0, 508, Color( 255, 0, 0 ) );
                 Colors.Window.TitleInactive = GetRender()->PixelColor( &m_texture, 4 + 8 * 1, 508, Color( 255, 255, 0 ) );

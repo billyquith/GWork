@@ -129,6 +129,15 @@ float Gwk::Platform::GetTimeInSeconds()
 
 #endif 
 
+Gwk::Platform::RelativeToExecutablePaths::RelativeToExecutablePaths(String const& resourceDir)
+:   m_resDir(GetExecutableDir() + resourceDir)
+{}
+
+String Gwk::Platform::RelativeToExecutablePaths::GetPath(Type type, String const& filename)
+{
+    return m_resDir + filename;
+}
+
 //==============================================================================
 
 #if GWK_ALLOC_STATS

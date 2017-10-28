@@ -48,7 +48,7 @@ namespace Gwk
         protected:
             
             /// Constructor. Not public as we only instance derived implementations.
-            Base();
+            Base(ResourceLoader& loader);
 
         public:
 
@@ -58,15 +58,14 @@ namespace Gwk
             virtual void Begin()        {}
             virtual void End()          {}
 
+            ResourceLoader& GetLoader() { return m_loader; }
+            
             virtual void SetDrawColor(Color color) {}
 
             virtual void DrawFilledRect(Gwk::Rect rect) {}
 
             virtual void StartClip()    {}
             virtual void EndClip()      {}
-
-            virtual void LoadTexture(Gwk::Texture* texture)   {}
-            virtual void FreeTexture(Gwk::Texture* texture)   {}
 
             virtual void DrawTexturedRect(Gwk::Texture* texture, Gwk::Rect targetRect,
                                           float u1 = 0.0f, float v1 = 0.0f,
@@ -86,9 +85,6 @@ namespace Gwk
             {
                 return m_RTT;
             }
-
-            virtual void LoadFont(Gwk::Font* font)    {}
-            virtual void FreeFont(Gwk::Font* font)    {}
 
             virtual void RenderText(Gwk::Font* font,
                                     Gwk::Point pos,
@@ -181,6 +177,7 @@ namespace Gwk
             
         private:
             
+            ResourceLoader& m_loader;
             Gwk::Point m_renderOffset;
             
             Gwk::Rect m_rectClipRegion;

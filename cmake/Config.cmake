@@ -36,7 +36,8 @@ option(ALLOC_STATS "Track memory allocations" OFF)
 #-----------------------------------------------------------
 # Configure once options known
 
-set(GWK_PLATFORM_NAME "Null")   # default/fallback platform
+set(GWK_PLATFORM_NAME "Null")       # default/fallback platform
+set(GWK_TARGET_ARCH "Unknown")      # default architecture e.g. x86, x64
 
 # Set the default build type to release with debug info
 if(NOT CMAKE_BUILD_TYPE)
@@ -52,8 +53,6 @@ endif()
 #     )
 # endif()
 set(BUILD_SHARED_LIBS FALSE)
-
-set(GWK_TARGET_ARCH "Unknown")      # e.g. x86/x64
 
 # define install directory for miscelleneous files
 if(WIN32 AND NOT UNIX)

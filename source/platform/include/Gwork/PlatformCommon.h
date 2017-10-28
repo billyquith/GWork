@@ -30,6 +30,17 @@ namespace Gwk
         //! \note Path is terminated with directory separator.
         GWK_EXPORT String GetExecutableDir();
 
+        //! Calculate resource paths relative to the executable.
+        class RelativeToExecutablePaths : public ResourcePaths
+        {
+            String m_resDir;
+        public:
+            //! Constructor
+            //! \param resourceDir : optional directory, relative to the executable.
+            RelativeToExecutablePaths(String const& resourceDir = String());
+            String GetPath(Type type, String const& name) final;
+        };
+
 #if GWK_ALLOC_STATS
 
         struct AllocStats
