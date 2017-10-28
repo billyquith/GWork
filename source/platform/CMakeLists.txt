@@ -47,6 +47,8 @@ source_group("${GWK_SOURCE_FOLDER}"
              REGULAR_EXPRESSION
                  ".*\\.cpp")
 
+add_definitions(${GWK_LIB_DEFINES})
+
 # Gwork renderer & platform library
 add_library(Gwork${GWK_RENDER_NAME} STATIC
             ${GWK_PLATFORM_HEADERS} ${GWK_RENDERER_HEADERS} ${GWK_INPUT_HEADERS}

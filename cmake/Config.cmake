@@ -166,6 +166,8 @@ endif(RENDER_SFML2)
 #-----------------------------------------------------------
 # Sanity checks and summary
 
+set(GWK_LIB_DEFINES "-DGWK_PLATFORM_${GWK_PLATFORM_NAME}=1 -DGWK_RENDER_${GWK_RENDER_NAME}=1")
+
 if(NOT GWK_INPUT_NAME)
     set(GWK_INPUT_NAME ${GWK_RENDER_NAME})
 endif()

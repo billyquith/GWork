@@ -5,7 +5,6 @@
  */
 
 #include <Gwork/PlatformCommon.h>
-#include <Gwork/Version.h>
 
 #ifdef _MSC_VER
 #   define WIN32_LEAN_AND_MEAN 
