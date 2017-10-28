@@ -147,8 +147,10 @@ Texture::Status AllegroResourceLoader::LoadTexture(Texture& texture)
 {
     if (texture.IsLoaded())
         FreeTexture(texture);
-    
-    ALLEGRO_BITMAP* bmp = al_load_bitmap(texture.name.c_str());
+
+    const String filename = m_paths.GetPath(ResourcePaths::Type::Texture, texture.name);
+
+    ALLEGRO_BITMAP* bmp = al_load_bitmap(filename.c_str());
     
     if (bmp)
     {
