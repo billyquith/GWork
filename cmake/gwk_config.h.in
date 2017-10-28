@@ -1,0 +1,14 @@
+/*
+ *  Gwork
+ *  Copyright (c) 2013-17 Nick Trout
+ *  See license in Gwork.h
+ */
+
+#define GWK_VERSION ((@GWK_VERSION_MAJOR@)*1000000 + (@GWK_VERSION_MINOR@)*1000 + (@GWK_VERSION_PATCH@))
+#define GWK_VERSION_STR "@GWK_VERSION_STR@"
+
+#define GWK_PLATFORM_NAME @GWK_PLATFORM_NAME@
+#define GWK_PLATFORM_@GWK_PLATFORM_NAME@ 1
+
+#define GWK_RENDER_NAME @GWK_RENDER_NAME@
+#define GWK_RENDER_@GWK_RENDER_NAME@ 1

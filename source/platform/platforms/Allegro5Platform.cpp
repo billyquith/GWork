@@ -35,10 +35,19 @@ static const ALLEGRO_SYSTEM_MOUSE_CURSOR g_cursorConversion[] =
     ALLEGRO_SYSTEM_MOUSE_CURSOR_LINK        // IDC_HAND
 };
 
-//void Gwk::Platform::Sleep(unsigned int iMS)
-//{
-//    al_rest(iMS*0.001);
-//}
+Gwk::String Gwk::Platform::GetExecutableDir()
+{
+    ALLEGRO_PATH *apath = al_get_standard_path(ALLEGRO_EXENAME_PATH);
+    al_set_path_filename(apath, NULL);
+    const String edir(al_path_cstr(apath, ALLEGRO_NATIVE_PATH_SEP));
+    al_destroy_path(apath);
+    return edir;
+}
+
+void Gwk::Platform::Sleep(unsigned int iMS)
+{
+    al_rest(iMS*0.001);
+}
 
 void Gwk::Platform::SetCursor(unsigned char iCursor)
 {
@@ -68,10 +77,10 @@ bool Gwk::Platform::SetClipboardText(const Gwk::String& str)
     return al_set_clipboard_text(g_display, str.c_str());
 }
 
-//float Gwk::Platform::GetTimeInSeconds()
-//{
-//    return al_get_time();
-//}
+float Gwk::Platform::GetTimeInSeconds()
+{
+    return al_get_time();
+}
 
 bool Gwk::Platform::FileOpen(const String& Name,
                              const String& StartPath,

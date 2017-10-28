@@ -20,6 +20,7 @@ set(GWK_PLATFORM_HEADERS
     include/Gwork/PlatformTypes.h
     include/Gwork/Platform.h
     include/Gwork/PlatformCommon.h
+    include/Gwork/Version.h             # Auto-generated
     include/Gwork/WindowProvider.h
     include/Gwork/Utility.h
 )

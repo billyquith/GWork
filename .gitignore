@@ -1,4 +1,5 @@
 
+source/platform/include/Gwork/Version.h
 *.doxcfg
 
 bin/

@@ -5,6 +5,7 @@
  */
 
 #include <Gwork/PlatformCommon.h>
+#include <Gwork/Version.h>
 
 #ifdef _MSC_VER
 #   define WIN32_LEAN_AND_MEAN 
@@ -32,6 +33,12 @@ using namespace Gwk;
 //------------------------------------------------------------------------------
 // Platform functions, implemented in a cross-platform way. This is to
 // avoid duplicating the functionality in the platform-specific files.
+
+// Only the following platforms require these functions:
+#if defined(GWK_PLAFORM_Null)
+
+// GetExecutableDir()
+//-------------------
 
 Gwk::String Gwk::Platform::GetExecutableDir()
 {
@@ -77,6 +84,9 @@ Gwk::String Gwk::Platform::GetExecutableDir()
 #endif
 }
 
+// Sleep()
+//--------
+
 void Gwk::Platform::Sleep(unsigned int ms)
 {
 #ifdef _MSC_VER
@@ -85,6 +95,9 @@ void Gwk::Platform::Sleep(unsigned int ms)
     ::sleep(ms);
 #endif
 }
+
+// GetTimeInSeconds()
+//-------------------
 
 #ifdef WIN32
 
@@ -128,6 +141,10 @@ float Gwk::Platform::GetTimeInSeconds()
 }
 
 #endif 
+
+#endif // defined(GWK_PLAFORM_Null)
+
+//------------------------------------------------------------------------------
 
 Gwk::Platform::RelativeToExecutablePaths::RelativeToExecutablePaths(String const& resourceDir)
 :   m_resDir(GetExecutableDir() + resourceDir)
