@@ -173,6 +173,8 @@ namespace Gwk
             
         protected:
             
+            bool EnsureFont(Font& font);
+
             float m_fScale;
             
         private:

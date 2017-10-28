@@ -196,22 +196,6 @@ void Allegro::SetDrawColor(Gwk::Color color)
     m_color = al_map_rgba(color.r, color.g, color.b, color.a);
 }
 
-bool Allegro::EnsureFont(Font& font)
-{
-    // If the font doesn't exist, or the font size should be changed
-    if (font.status == Font::Status::Unloaded
-        || (font.status == Font::Status::Loaded && font.realsize != font.size*Scale()))
-    {
-        GetLoader().FreeFont(font);
-        
-        font.realsize = font.size * Scale();
-        
-        GetLoader().LoadFont(font);
-    }
-    
-    return font.status == Font::Status::Loaded;
-}
-
 void Allegro::RenderText(Gwk::Font* font, Gwk::Point pos,
                          const Gwk::String& text)
 {

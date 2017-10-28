@@ -72,8 +72,6 @@ namespace Gwk
 
         private:
             
-            bool EnsureFont(Font& font);
-
             ALLEGRO_COLOR m_color;
             AllegroCTT *m_ctt;
         };
