@@ -18,6 +18,9 @@
 #endif
 #include <GLFW/glfw3.h>
 
+#define WIN32_LEAN_AND_MEAN
+#include <Windows.h>
+
 
 static Gwk::Input::GLFW GworkInput;
 
@@ -45,6 +48,10 @@ static void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 
 int main()
 {
+#ifdef _WIN32
+    SetCurrentDirectory(Gwk::Platform::GetExecutableDir().c_str());
+#endif
+
     if (!glfwInit())
         return -1;
     

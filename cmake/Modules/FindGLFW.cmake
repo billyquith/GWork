@@ -1,5 +1,5 @@
 #
-#   Copyright 2013 Pixar
+#   Copyright 2013 Pixar - Modified by BQ.
 #
 #   Licensed under the Apache License, Version 2.0 (the "Apache License")
 #   with the following modification; you may not use this file except in
@@ -54,32 +54,8 @@ find_path( GLFW_INCLUDE_DIR
         "The directory where GLFW/glfw3.h resides"
 )
 
-#
-# XXX: Do we still need to search for GL/glfw.h?
-#
-find_path( GLFW_INCLUDE_DIR 
-    NAMES
-        GL/glfw.h
-    HINTS
-        "${GLFW_LOCATION}/include"
-        "$ENV{GLFW_LOCATION}/include"
-    PATHS
-        "$ENV{PROGRAMFILES}/GLFW/include"
-        "${OPENGL_INCLUDE_DIR}"
-        /usr/openwin/share/include
-        /usr/openwin/include
-        /usr/X11R6/include
-        /usr/include/X11
-        /opt/graphics/OpenGL/include
-        /opt/graphics/OpenGL/contrib/libglfw
-        /usr/local/include
-        /usr/include/GL
-        /usr/include
-    DOC 
-        "The directory where GL/glfw.h resides"
-)
-
 if (WIN32)
+
     if(CYGWIN)
         find_library( GLFW_glfw_LIBRARY 
             NAMES
@@ -98,21 +74,24 @@ if (WIN32)
                 "The GLFW library"
         )
     else()
+    
+        # For if we want to specify lib type, e.g. NuGet
+        if("${GWK_TARGET_ARCH}" EQUAL "x64")
+            set(GLFW_LIB_TYPE "v140/x64/static")
+        else()
+            set(GLFW_LIB_TYPE "v140/Win32/static")
+        endif()
+
         find_library( GLFW_glfw_LIBRARY
             NAMES 
-                glfw32 
-                glfw32s 
-                glfw
                 glfw3
+                glfw
             HINTS
+                "${GLFW_LOCATION}/lib/${GLFW_LIB_TYPE}"
                 "${GLFW_LOCATION}/lib"
                 "${GLFW_LOCATION}/lib/x64"
-                "${GLFW_LOCATION}/lib-msvc110"
-                "${GLFW_LOCATION}/lib-vc2012"
                 "$ENV{GLFW_LOCATION}/lib"
                 "$ENV{GLFW_LOCATION}/lib/x64"
-                "$ENV{GLFW_LOCATION}/lib-msvc110"
-                "$ENV{GLFW_LOCATION}/lib-vc2012"
             PATHS
                 "$ENV{PROGRAMFILES}/GLFW/lib"
                 "${OPENGL_LIBRARY_DIR}"
@@ -189,6 +168,8 @@ endif (WIN32)
 set( GLFW_FOUND "NO" )
 
 if(GLFW_INCLUDE_DIR)
+
+    message("Using GLFW3 include dir: ${GLFW_INCLUDE_DIR}")
 
     if(GLFW_glfw_LIBRARY)
         set( GLFW_LIBRARIES "${GLFW_glfw_LIBRARY}"

@@ -53,9 +53,19 @@ endif()
 # endif()
 set(BUILD_SHARED_LIBS FALSE)
 
+set(GWK_TARGET_ARCH "Unknown")      # e.g. x86/x64
+
 # define install directory for miscelleneous files
 if(WIN32 AND NOT UNIX)
     set(INSTALL_MISC_DIR .)
+    
+    # Determine the target architecture, which is useful for linking.
+    if (CMAKE_GENERATOR MATCHES "Win64")
+        set(GWK_TARGET_ARCH "x64")
+    else()
+        set(GWK_TARGET_ARCH "x86")
+    endif()
+    message(STATUS "Generator: ${CMAKE_GENERATOR}. Architecture: ${GWK_TARGET_ARCH}")
 elseif(UNIX)
     set(INSTALL_MISC_DIR share/gwork)
 endif()
@@ -172,6 +182,6 @@ if(GWK_RENDER_LIBRARIES)
     list(REMOVE_DUPLICATES GWK_RENDER_LIBRARIES)
 endif()
 
-message("Using renderer ${GWK_RENDER_NAME} on platform ${GWK_PLATFORM_NAME}")
-message("${GWK_RENDER_NAME} includes: ${GWK_RENDER_INCLUDES}")
-message("${GWK_RENDER_NAME} libs: ${GWK_RENDER_LIBRARIES}")
+message(STATUS "Using renderer ${GWK_RENDER_NAME} on platform ${GWK_PLATFORM_NAME}")
+message(STATUS "${GWK_RENDER_NAME} includes: ${GWK_RENDER_INCLUDES}")
+message(STATUS "${GWK_RENDER_NAME} libs: ${GWK_RENDER_LIBRARIES}")

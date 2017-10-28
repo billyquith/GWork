@@ -9,6 +9,16 @@
 #include <Gwork/PlatformTypes.h>
 #include <Gwork/WindowProvider.h>
 
+#ifdef _WIN32
+#   define WIN32_LEAN_AND_MEAN
+#   include <windows.h>
+#   undef min
+#   undef max
+#   define CREATE_NATIVE_CONTEXT 1
+#else
+#   define CREATE_NATIVE_CONTEXT 0
+#endif
+
 #include <GLFW/glfw3.h>
 #include <math.h>
 #include <sys/stat.h>
@@ -17,22 +27,11 @@
 
 //#define STBI_ASSERT(x)  // comment in for no asserts
 #define STB_IMAGE_IMPLEMENTATION
-#include "stb_image.h"
+#include <Gwork/External/stb_image.h>
 
 #define STB_TRUETYPE_IMPLEMENTATION
 #define STBTT_STATIC
-#include "stb_truetype.h"
-
-#ifdef _WIN32
-	#define CREATE_NATIVE_CONTEXT 1
-
-	#define WIN32_LEAN_AND_MEAN
-	#include <windows.h>
-	#undef min
-	#undef max
-#else
-#	define CREATE_NATIVE_CONTEXT 0
-#endif
+#include <Gwork/External/stb_truetype.h>
 
 namespace Gwk
 {
