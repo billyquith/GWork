@@ -115,14 +115,14 @@ void AllegroCTT::DrawCachedControlTexture(CacheHandle control)
 
 Font::Status AllegroResourceLoader::LoadFont(Font& font)
 {
-    String fontName(font.facename);
+    String fontFile(font.facename);
     
-    if (fontName.find(".ttf") == std::string::npos)
-        fontName += ".ttf";
+    if (fontFile.find(".ttf") == std::string::npos)
+        fontFile += ".ttf";
     
-    fontName = m_paths.GetPath(ResourcePaths::Type::Font, fontName);
+    fontFile = m_paths.GetPath(ResourcePaths::Type::Font, fontFile);
     
-    ALLEGRO_FONT* afont = al_load_font(fontName.c_str(),
+    ALLEGRO_FONT* afont = al_load_font(fontFile.c_str(),
                                        font.realsize,
                                        ALLEGRO_TTF_NO_KERNING);
     
