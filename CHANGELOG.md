@@ -7,6 +7,7 @@ This is a changelog for Gwork. There are also notes [on my blog][blog]
 ### 0.3
 
 - ResourceLoader and ResourcePaths abstract file locations and sources. #66.
+- Windows Direct2D renderer and sample. #13.
 
 ### 0.2
 
