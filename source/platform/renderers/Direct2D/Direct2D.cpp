@@ -14,6 +14,11 @@
 #include <Gwork/Renderers/Direct2D.h>
 #include <Gwork/Utility.h>
 
+namespace Gwk
+{
+namespace Renderer
+{
+
 struct FontData
 {
     IDWriteTextFormat*  textFormat;
@@ -25,26 +30,203 @@ struct TextureData
     IWICBitmapSource*   wICBitmap;
 };
 
+Font::Status Direct2DResourceLoader::LoadFont(Font& font)
+{
+    const String filename = m_paths.GetPath(ResourcePaths::Type::Font, font.facename);
 
-namespace Gwk
-{
-namespace Renderer
-{
+    IDWriteTextFormat* textFormat = nullptr;
+    HRESULT hr = m_dWriteFactory->CreateTextFormat(
+        Utility::Widen(filename).c_str(),
+        nullptr,
+        font.bold ? DWRITE_FONT_WEIGHT_BOLD : DWRITE_FONT_WEIGHT_NORMAL,
+        DWRITE_FONT_STYLE_NORMAL,
+        DWRITE_FONT_STRETCH_NORMAL,
+        font.size,
+        L"",
+        &textFormat
+    );
 
-Direct2D::Direct2D()
-    :   m_wICFactory(nullptr)
-    ,   m_dWriteFactory(nullptr)
-    ,   m_rT(nullptr)
-    ,   m_color(D2D1::ColorF::White)
-{
+    if (SUCCEEDED(hr))
+    {
+        FontData* fontData = new FontData();
+        fontData->textFormat = textFormat;
+        font.data = fontData;
+        font.status = Font::Status::Loaded;
+
+        m_fontList.push_back(&font);
+    }
+    else
+    {
+        font.status = Font::Status::ErrorFileNotFound;
+    }
+
+    return font.status;
 }
 
-Direct2D::Direct2D(ID2D1RenderTarget* rT, IDWriteFactory* dWriteFactory, IWICImagingFactory* wICFactory)
-    : m_color(D2D1::ColorF::White)
+void Direct2DResourceLoader::FreeFont(Font& font)
+{
+    if (font.IsLoaded())
+    {
+        m_fontList.remove(&font);
+
+        FontData* fontData = (FontData*)font.data;
+        fontData->textFormat->Release();
+        delete fontData;
+        font.data = nullptr;
+
+        font.status = Font::Status::Unloaded;
+    }
+}
+
+Texture::Status Direct2DResourceLoader::LoadTexture(Texture& texture)
+{
+    IWICBitmapDecoder* decoder = nullptr;
+    IWICBitmapFrameDecode* source = nullptr;
+    IWICFormatConverter* converter = nullptr;
+    ID2D1Bitmap* d2DBitmap = nullptr;
+
+    const String filename = m_paths.GetPath(ResourcePaths::Type::Texture, texture.name);
+
+    HRESULT hr = m_wICFactory->CreateDecoderFromFilename(
+        Utility::Widen(filename).c_str(),
+        nullptr,
+        GENERIC_READ,
+        WICDecodeMetadataCacheOnLoad,
+        &decoder
+    );
+
+    if (SUCCEEDED(hr))
+        hr = decoder->GetFrame(0, &source);
+
+    if (SUCCEEDED(hr))
+    {
+        // Convert the image format to 32bppPBGRA
+        // (DXGI_FORMAT_B8G8R8A8_UNORM + D2D1_ALPHA_MODE_PREMULTIPLIED).
+        hr = m_wICFactory->CreateFormatConverter(&converter);
+    }
+
+    if (SUCCEEDED(hr))
+    {
+        hr = converter->Initialize(
+            source,
+            GUID_WICPixelFormat32bppPBGRA,
+            WICBitmapDitherTypeNone,
+            nullptr,
+            0.f,
+            WICBitmapPaletteTypeMedianCut
+        );
+    }
+
+    if (SUCCEEDED(hr))
+    {
+        hr = m_rT->CreateBitmapFromWicBitmap(
+            converter,
+            nullptr,
+            &d2DBitmap
+        );
+    }
+
+    if (SUCCEEDED(hr))
+    {
+        TextureData* texdata = new TextureData();
+        texdata->wICBitmap = source;
+        texdata->bitmap = d2DBitmap;
+        texture.data = texdata;
+
+        D2D1_SIZE_F size = texdata->bitmap->GetSize();
+        texture.width = size.width;
+        texture.height = size.height;
+
+        texture.status = Texture::Status::Loaded;
+    }
+    else
+    {
+        texture.status = Texture::Status::ErrorBadData;
+    }
+
+    if (decoder != nullptr)
+        decoder->Release();
+
+    if (converter != nullptr)
+        converter->Release();
+
+    m_textureList.push_back(&texture);
+
+    return texture.status;
+}
+
+void Direct2DResourceLoader::FreeTexture(Texture& texture)
+{
+    if (texture.IsLoaded())
+    {
+        m_textureList.remove(&texture);
+
+        if (texture.data != nullptr)
+        {
+            TextureData* texdata = (TextureData*)texture.data;
+
+            if (texdata->wICBitmap != nullptr)
+                texdata->wICBitmap->Release();
+
+            if (texdata->bitmap != nullptr)
+                texdata->bitmap->Release();
+
+            delete texdata;
+        }
+
+        texture.data = nullptr;
+
+    }
+}
+
+void Direct2DResourceLoader::Notify(NotificationType msg)
+{
+    switch (msg)
+    {
+    case ResourceLoader::NotificationType::DeviceLost:
+        // We lost the device so free the texture resources, but remember what we lost.
+        m_texturesLost.clear();
+        while (!m_textureList.empty())
+        {
+            Texture* tex = m_textureList.front();
+            m_texturesLost.push_back(tex);
+            FreeTexture(*tex);
+        }
+        break;
+
+    case ResourceLoader::NotificationType::DeviceAcquired:
+        // Reload any resources we lost.
+        for (auto&& tex : m_texturesLost)
+        {
+            LoadTexture(*tex);
+        }
+        m_texturesLost.clear();
+        break;
+
+    case ResourceLoader::NotificationType::ReleaseResources:
+        while (!m_textureList.empty())
+        {
+            FreeTexture(*m_textureList.front());
+        }
+        while (!m_fontList.empty())
+        {
+            FreeFont(*m_fontList.front());
+        }
+        break;
+
+    default:
+        ;
+    }
+
+}
+
+Direct2D::Direct2D(ResourceLoader& loader, ID2D1RenderTarget* rT, IDWriteFactory* dWriteFactory)
+    :   Base(loader)
+    ,   m_rT(nullptr)
+    ,   m_dWriteFactory(dWriteFactory)
+    ,   m_color(D2D1::ColorF::White)
 {
     DeviceAcquired(rT);
-    m_dWriteFactory    = dWriteFactory;
-    m_wICFactory       = wICFactory;
 }
 
 Direct2D::~Direct2D()
@@ -75,66 +257,8 @@ void Direct2D::SetDrawColor(Gwk::Color color)
     m_solidColorBrush->SetColor(m_color);
 }
 
-bool Direct2D::InternalLoadFont(Gwk::Font* font)
-{
-    IDWriteTextFormat* textFormat = nullptr;
-    HRESULT hr = m_dWriteFactory->CreateTextFormat(
-        Utility::Widen(font->facename.c_str()).c_str(),
-        nullptr,
-        font->bold ? DWRITE_FONT_WEIGHT_BOLD : DWRITE_FONT_WEIGHT_NORMAL,
-        DWRITE_FONT_STYLE_NORMAL,
-        DWRITE_FONT_STRETCH_NORMAL,
-        font->size,
-        L"",
-        &textFormat
-        );
-
-    if (SUCCEEDED(hr))
-    {
-        FontData*   fontData = new FontData();
-        fontData->textFormat = textFormat;
-        font->data = fontData;
-        font->realsize = font->size*Scale();
-        return true;
-    }
-
-    return false;
-}
-
-void Direct2D::LoadFont(Gwk::Font* font)
-{
-    if (InternalLoadFont(font))
-        m_fontList.push_back(font);
-}
-
-void Direct2D::InternalFreeFont(Gwk::Font* font, bool bRemove)
-{
-    if (bRemove)
-        m_fontList.remove(font);
-
-    if (!font->data)
-        return;
-
-    FontData* fontData = (FontData*)font->data;
-    fontData->textFormat->Release();
-    delete fontData;
-    font->data = nullptr;
-}
-
-void Direct2D::FreeFont(Gwk::Font* font)
-{
-    InternalFreeFont(font);
-}
-
 void Direct2D::RenderText(Gwk::Font* font, Gwk::Point pos, const Gwk::String& text)
 {
-    // If the font doesn't exist, or the font size should be changed
-    if (!font->data || fabs(font->realsize-font->size*Scale()) > 2)
-    {
-        InternalFreeFont(font, false);
-        InternalLoadFont(font);
-    }
-
     FontData* fontData = (FontData*)font->data;
     Translate(pos.x, pos.y);
 
@@ -150,20 +274,18 @@ void Direct2D::RenderText(Gwk::Font* font, Gwk::Point pos, const Gwk::String& te
 
 Gwk::Point Direct2D::MeasureText(Gwk::Font* font, const Gwk::String& text)
 {
-    // If the font doesn't exist, or the font size should be changed
-    if (!font->data || fabs(font->realsize-font->size*Scale()) > 2)
-    {
-        InternalFreeFont(font, false);
-        InternalLoadFont(font);
-    }
+    if (!EnsureFont(*font))
+        return Gwk::Point(0, 0);
 
     FontData* fontData = (FontData*)font->data;
     Gwk::Point size;
     IDWriteTextLayout* layout;
     DWRITE_TEXT_METRICS metrics;
     m_dWriteFactory->CreateTextLayout(Utility::Widen(text).c_str(),
-                                       static_cast<UINT32>(text.length()), fontData->textFormat, 50000, 50000,
-                                       &layout);
+                                      static_cast<UINT32>(text.length()),
+                                      fontData->textFormat,
+                                      50000, 50000,
+                                      &layout);
     layout->GetMetrics(&metrics);
     layout->Release();
     return Gwk::Point(metrics.widthIncludingTrailingWhitespace, metrics.height);
@@ -177,12 +299,7 @@ void Direct2D::DeviceLost()
         m_solidColorBrush = nullptr;
     }
 
-    for (Texture::List::const_iterator tex_it = m_textureList.begin();
-         tex_it != m_textureList.end();
-         ++tex_it)
-    {
-        InternalFreeTexture(*tex_it, false);
-    }
+    GetLoader().Notify(ResourceLoader::NotificationType::DeviceLost);
 }
 
 void Direct2D::DeviceAcquired(ID2D1RenderTarget* rT)
@@ -190,12 +307,7 @@ void Direct2D::DeviceAcquired(ID2D1RenderTarget* rT)
     m_rT = rT;
     HRESULT hr = m_rT->CreateSolidColorBrush(m_color, &m_solidColorBrush);
 
-    for (Texture::List::const_iterator tex_it = m_textureList.begin();
-         tex_it != m_textureList.end();
-         ++tex_it)
-    {
-        InternalLoadTexture(*tex_it);
-    }
+    GetLoader().Notify(ResourceLoader::NotificationType::DeviceAcquired);
 }
 
 void Direct2D::StartClip()
@@ -228,108 +340,6 @@ void Direct2D::DrawTexturedRect(Gwk::Texture* texture, Gwk::Rect rect, float u1,
                       D2D1::RectF(u1*texture->width, v1*texture->height, u2*
                                   texture->width, v2*texture->height)
                       );
-}
-
-bool Direct2D::InternalLoadTexture(Gwk::Texture* texture)
-{
-    IWICBitmapDecoder* decoder = nullptr;
-    IWICBitmapFrameDecode* source = nullptr;
-    IWICFormatConverter* converter = nullptr;
-    ID2D1Bitmap*            d2DBitmap = nullptr;
-    HRESULT hr = m_wICFactory->CreateDecoderFromFilename(
-        Utility::Widen(texture->name).c_str(),
-        nullptr,
-        GENERIC_READ,
-        WICDecodeMetadataCacheOnLoad,
-        &decoder
-        );
-
-    if (SUCCEEDED(hr))
-        hr = decoder->GetFrame(0, &source);
-
-    if (SUCCEEDED(hr))
-    {
-        // Convert the image format to 32bppPBGRA
-        // (DXGI_FORMAT_B8G8R8A8_UNORM + D2D1_ALPHA_MODE_PREMULTIPLIED).
-        hr = m_wICFactory->CreateFormatConverter(&converter);
-    }
-
-    if (SUCCEEDED(hr))
-    {
-        hr = converter->Initialize(
-            source,
-            GUID_WICPixelFormat32bppPBGRA,
-            WICBitmapDitherTypeNone,
-            nullptr,
-            0.f,
-            WICBitmapPaletteTypeMedianCut
-            );
-    }
-
-    if (SUCCEEDED(hr))
-    {
-        hr = m_rT->CreateBitmapFromWicBitmap(
-            converter,
-            nullptr,
-            &d2DBitmap
-            );
-    }
-
-    if (SUCCEEDED(hr))
-    {
-        TextureData* texdata = new TextureData();
-        texdata->wICBitmap = source;
-        texdata->bitmap = d2DBitmap;
-        texture->data = texdata;
-        D2D1_SIZE_F size = texdata->bitmap->GetSize();
-        texture->width = size.width;
-        texture->height = size.height;
-        texture->failed = false;
-    }
-    else
-    {
-        texture->failed = true;
-    }
-
-    if (decoder != nullptr)
-        decoder->Release();
-
-    if (converter != nullptr)
-        converter->Release();
-
-    return SUCCEEDED(hr);
-}
-
-void Direct2D::LoadTexture(Gwk::Texture* texture)
-{
-    if (InternalLoadTexture(texture))
-        m_textureList.push_back(texture);
-}
-
-void Direct2D::InternalFreeTexture(Gwk::Texture* texture, bool bRemove)
-{
-    if (bRemove)
-        m_textureList.remove(texture);
-
-    if (texture->data != nullptr)
-    {
-        TextureData* texdata = (TextureData*)texture->data;
-
-        if (texdata->wICBitmap != nullptr)
-            texdata->wICBitmap->Release();
-
-        if (texdata->bitmap != nullptr)
-            texdata->bitmap->Release();
-
-        delete texdata;
-    }
-
-    texture->data = nullptr;
-}
-
-void Direct2D::FreeTexture(Gwk::Texture* texture)
-{
-    InternalFreeTexture(texture);
 }
 
 Gwk::Color Direct2D::PixelColor(Gwk::Texture* texture, unsigned int x, unsigned int y,
@@ -368,30 +378,14 @@ void Direct2D::DrawShavedCornerRect(Gwk::Rect rect, bool bSlight)
 
     if (m_solidColorBrush)
     {
-        m_rT->DrawRoundedRectangle(D2D1::RoundedRect(D2D1::RectF(rect.x, rect.y, rect.x+
-                                                                  rect.w,
-                                                                  rect.y+rect.h), 10.f,
-                                                      10.f), m_solidColorBrush);
+        m_rT->DrawRoundedRectangle(D2D1::RoundedRect(D2D1::RectF(rect.x, rect.y, rect.x+rect.w, rect.y+rect.h), 10.f, 10.f),
+                                   m_solidColorBrush);
     }
 }
 
 void Direct2D::Release()
 {
-    Texture::List::iterator tex_it = m_textureList.begin();
-
-    while (tex_it != m_textureList.end())
-    {
-        FreeTexture(*tex_it);
-        tex_it = m_textureList.begin();
-    }
-
-    Font::List::iterator it = m_fontList.begin();
-
-    while (it != m_fontList.end())
-    {
-        FreeFont(*it);
-        it = m_fontList.begin();
-    }
+    GetLoader().Notify(ResourceLoader::NotificationType::ReleaseResources);
 }
 
 bool Direct2D::InternalCreateDeviceResources()

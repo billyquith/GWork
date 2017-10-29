@@ -315,6 +315,17 @@ namespace Gwk
     class ResourceLoader
     {
     public:
+
+        //! Types of notification that the loader might want to know about.
+        enum class NotificationType
+        {
+            DeviceLost,             //!< Device lost, perhaps release resources.
+            DeviceAcquired,         //!< Device reappeared, perhaps reload resources.
+            ReleaseResources,       //!< Release any resources held.
+            MaxMessages,
+            UserMessageStart = 100
+        };
+
         virtual ~ResourceLoader() {}
         
         virtual Font::Status LoadFont(Font& font) = 0;
@@ -322,6 +333,10 @@ namespace Gwk
         
         virtual Texture::Status LoadTexture(Texture& texture) = 0;
         virtual void FreeTexture(Texture& texture) = 0;
+
+        //! Notification of certain events. May be platform specific.
+        //! Loader can deal with the events accordingly.
+        virtual void Notify(NotificationType msg) {}
     };
     
 } // namespace Gwk

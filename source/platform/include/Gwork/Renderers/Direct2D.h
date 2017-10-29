@@ -19,6 +19,32 @@ namespace Gwk
 {
     namespace Renderer
     {
+        class Direct2DResourceLoader : public ResourceLoader
+        {
+            ResourcePaths& m_paths;
+            ID2D1RenderTarget* m_rT;
+            IDWriteFactory* m_dWriteFactory;
+            IWICImagingFactory* m_wICFactory;
+
+            Gwk::Texture::List m_textureList, m_texturesLost;
+            Gwk::Font::List m_fontList;
+
+        public:
+            Direct2DResourceLoader(ResourcePaths& paths, ID2D1RenderTarget* rT, IDWriteFactory* dWriteFactory, IWICImagingFactory* wICFactory)
+                :   m_paths(paths)
+                ,   m_rT(rT)
+                ,   m_dWriteFactory(dWriteFactory)
+                ,   m_wICFactory(wICFactory)
+            {}
+
+            Font::Status LoadFont(Font& font) override;
+            void FreeFont(Font& font) override;
+
+            Texture::Status LoadTexture(Texture& texture) override;
+            void FreeTexture(Texture& texture) override;
+
+            void Notify(NotificationType msg) override;
+        };
         
         //
         /// Renderer for [Direct2D](https://msdn.microsoft.com/en-us/library/windows/desktop/dd370990(v=vs.85).aspx).
@@ -27,10 +53,8 @@ namespace Gwk
         {
         public:
 
-            Direct2D();
-            Direct2D(ID2D1RenderTarget* device, IDWriteFactory* dWriteFactory,
-                     IWICImagingFactory* wICFactory);
-            ~Direct2D();
+            Direct2D(ResourceLoader& loader, ID2D1RenderTarget* device, IDWriteFactory* dWriteFactory);
+            virtual ~Direct2D();
 
             void Begin() override;
             void End() override;
@@ -40,8 +64,6 @@ namespace Gwk
 
             void DrawFilledRect(Gwk::Rect rect) override;
 
-            void LoadFont(Gwk::Font* font) override;
-            void FreeFont(Gwk::Font* font) override;
             void RenderText(Gwk::Font* font, Gwk::Point pos, const Gwk::String& text) override;
             Gwk::Point MeasureText(Gwk::Font* font, const Gwk::String& text) override;
 
@@ -53,15 +75,12 @@ namespace Gwk
 
             void DrawTexturedRect(Gwk::Texture* texture, Gwk::Rect targetRect, float u1 = 0.0f,
                                   float v1 = 0.0f, float u2 = 1.0f, float v2 = 1.0f) override;
-            void        LoadTexture(Gwk::Texture* texture) override;
-            void        FreeTexture(Gwk::Texture* texture) override;
+
             Gwk::Color  PixelColor(Gwk::Texture* texture, unsigned int x, unsigned int y,
                                    const Gwk::Color& col_default) override;
 
             void DrawLinedRect(Gwk::Rect rect) override;
             void DrawShavedCornerRect(Gwk::Rect rect, bool bSlight = false) override;
-
-        public:
 
             bool InitializeContext(Gwk::WindowProvider* window);
             bool ShutdownContext(Gwk::WindowProvider* window);
@@ -78,26 +97,12 @@ namespace Gwk
             ID2D1Factory*   m_d2DFactory;
             HWND m_hWND;
 
-        private:
-
-            bool InternalLoadTexture(Gwk::Texture* texture);
-            bool InternalLoadFont(Gwk::Font* font);
-
-            void InternalFreeFont(Gwk::Font* font, bool bRemove = true);
-            void InternalFreeTexture(Gwk::Texture* texture, bool bRemove = true);
-
-        private:
-
-            IDWriteFactory*     m_dWriteFactory;
-            IWICImagingFactory* m_wICFactory;
             ID2D1RenderTarget*  m_rT;
+            IDWriteFactory*     m_dWriteFactory;
 
             ID2D1SolidColorBrush* m_solidColorBrush;
 
             D2D1::ColorF m_color;
-
-            Gwk::Texture::List m_textureList;
-            Gwk::Font::List m_fontList;
         };
 
     }
