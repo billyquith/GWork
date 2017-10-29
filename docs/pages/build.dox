@@ -57,6 +57,12 @@ cmake -G "Visual Studio 14 2015 Win64" -DRENDER_ALLEGRO5=ON ..
 start gwork.sln
 \endcode
 
+Windows has no standard installation locations, or they keep moving (e.g. DirectX).
+The cmake "package finders" don't always find what they are looking for. You may have to run
+cmake once (e.g. like the above), see what errors are reported, and then either run it again
+with the variables specified, or edit the CMakeCache.txt. Or you can use the cmake-gui to do
+the same. It is likely you will have to manually specify where the SDK you require is installed.
+
 \subsection osx_build OSX
 
 \code{.sh}
