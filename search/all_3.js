@@ -1,6 +1,9 @@
 var searchData=
 [
+  ['deviceacquired',['DeviceAcquired',['../class_gwk_1_1_resource_loader.html#afdb9dc02d968c0c8972bd94808396610a36e8f4cc66ec5e8c1d7941fcc8dcf55b',1,'Gwk::ResourceLoader']]],
+  ['devicelost',['DeviceLost',['../class_gwk_1_1_resource_loader.html#afdb9dc02d968c0c8972bd94808396610ae21f64304b84d5a977e1a00f2137428c',1,'Gwk::ResourceLoader']]],
   ['direct2d',['Direct2D',['../class_gwk_1_1_renderer_1_1_direct2_d.html',1,'Gwk::Renderer']]],
+  ['direct2dresourceloader',['Direct2DResourceLoader',['../class_gwk_1_1_renderer_1_1_direct2_d_resource_loader.html',1,'Gwk::Renderer']]],
   ['directx11',['DirectX11',['../class_gwk_1_1_renderer_1_1_direct_x11.html',1,'Gwk::Renderer']]],
   ['directx9',['DirectX9',['../class_gwk_1_1_renderer_1_1_direct_x9.html',1,'Gwk::Renderer']]],
   ['disabled_5ft',['Disabled_t',['../class_gwk_1_1_skin_1_1_textured_base.html#struct_gwk_1_1_skin_1_1_textured_base_1_1_textures__t_1_1_checkbox__t_1_1_disabled__t',1,'Gwk::Skin::TexturedBase::Textures_t::Checkbox_t::Disabled_t'],['../class_gwk_1_1_skin_1_1_textured_base.html#struct_gwk_1_1_skin_1_1_textured_base_1_1_textures__t_1_1_radio_button__t_1_1_disabled__t',1,'Gwk::Skin::TexturedBase::Textures_t::RadioButton_t::Disabled_t']]],
@@ -12,5 +15,6 @@ var searchData=
   ['down_5ft',['Down_t',['../class_gwk_1_1_skin_1_1_textured_base.html#struct_gwk_1_1_skin_1_1_textured_base_1_1_textures__t_1_1_input__t_1_1_up_down__t_1_1_down__t',1,'Gwk::Skin::TexturedBase::Textures_t::Input_t::UpDown_t']]],
   ['dragger',['Dragger',['../class_gwk_1_1_controls_internal_1_1_dragger.html',1,'Gwk::ControlsInternal::Dragger'],['../class_gwk_1_1_controls_internal_1_1_dragger.html#a47c0d712affc28e875d1588fe568ff74',1,'Gwk::ControlsInternal::Dragger::Dragger()']]],
   ['draw',['Draw',['../struct_gwk_1_1_skin_1_1_texturing_1_1_bordered.html#ae601e48e7abd38769d69fa5127fb8fd5',1,'Gwk::Skin::Texturing::Bordered']]],
-  ['drawlinedrect',['DrawLinedRect',['../class_gwk_1_1_renderer_1_1_base.html#aee845db2673912eaddffe33c24820965',1,'Gwk::Renderer::Base::DrawLinedRect()'],['../class_gwk_1_1_renderer_1_1_allegro.html#a86eb4c0b859a9bf42f8d305b9c2834eb',1,'Gwk::Renderer::Allegro::DrawLinedRect()'],['../class_gwk_1_1_renderer_1_1_direct2_d.html#ae783538e045d7f8cd13c4ca57d863d8a',1,'Gwk::Renderer::Direct2D::DrawLinedRect()'],['../class_gwk_1_1_renderer_1_1_s_d_l2.html#af6de7aa4ccdeb782eeb7064d7e75629d',1,'Gwk::Renderer::SDL2::DrawLinedRect()'],['../class_gwk_1_1_renderer_1_1_s_f_m_l2.html#a19f0a4502a1b0ec31f0709929b69d3ed',1,'Gwk::Renderer::SFML2::DrawLinedRect()']]]
+  ['drawlinedrect',['DrawLinedRect',['../class_gwk_1_1_renderer_1_1_base.html#aee845db2673912eaddffe33c24820965',1,'Gwk::Renderer::Base::DrawLinedRect()'],['../class_gwk_1_1_renderer_1_1_allegro.html#a86eb4c0b859a9bf42f8d305b9c2834eb',1,'Gwk::Renderer::Allegro::DrawLinedRect()'],['../class_gwk_1_1_renderer_1_1_direct2_d.html#ae783538e045d7f8cd13c4ca57d863d8a',1,'Gwk::Renderer::Direct2D::DrawLinedRect()'],['../class_gwk_1_1_renderer_1_1_s_d_l2.html#af6de7aa4ccdeb782eeb7064d7e75629d',1,'Gwk::Renderer::SDL2::DrawLinedRect()'],['../class_gwk_1_1_renderer_1_1_s_f_m_l2.html#a1512556114184c18500bda0c2165f41b',1,'Gwk::Renderer::SFML2::DrawLinedRect()']]],
+  ['dx11resourceloader',['DX11ResourceLoader',['../class_gwk_1_1_renderer_1_1_d_x11_resource_loader.html',1,'Gwk::Renderer']]]
 ];

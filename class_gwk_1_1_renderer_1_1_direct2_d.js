@@ -1,8 +1,7 @@
 var class_gwk_1_1_renderer_1_1_direct2_d =
 [
-    [ "Direct2D", "class_gwk_1_1_renderer_1_1_direct2_d.html#ac002e05de05ccdb9b9350616b77b922e", null ],
-    [ "Direct2D", "class_gwk_1_1_renderer_1_1_direct2_d.html#a1ee4b4bb6f0d2a3066c16d4985ecf746", null ],
-    [ "~Direct2D", "class_gwk_1_1_renderer_1_1_direct2_d.html#ab4227796d8281b3f3b0e58f79cb78921", null ],
+    [ "Direct2D", "class_gwk_1_1_renderer_1_1_direct2_d.html#a609183a22c545d3065f2f6628ab01dd5", null ],
+    [ "~Direct2D", "class_gwk_1_1_renderer_1_1_direct2_d.html#a8280c5149b61b564d04ebf16e50ef8bb", null ],
     [ "Begin", "class_gwk_1_1_renderer_1_1_direct2_d.html#acc3d3c95ce1a2b704f2b29626b6af8ef", null ],
     [ "BeginContext", "class_gwk_1_1_renderer_1_1_direct2_d.html#aecb601b773de58f4662186dd24112a94", null ],
     [ "DeviceAcquired", "class_gwk_1_1_renderer_1_1_direct2_d.html#a5c91c176aa363d292473819d5e8b1d0d", null ],
@@ -14,11 +13,7 @@ var class_gwk_1_1_renderer_1_1_direct2_d =
     [ "End", "class_gwk_1_1_renderer_1_1_direct2_d.html#a619f3826ecc86fc76444d6fe83bd68d5", null ],
     [ "EndClip", "class_gwk_1_1_renderer_1_1_direct2_d.html#abb0aaa2248bc911805ba9d97735c7f86", null ],
     [ "EndContext", "class_gwk_1_1_renderer_1_1_direct2_d.html#a3daacdd4353e29457c4fe4b992f3183f", null ],
-    [ "FreeFont", "class_gwk_1_1_renderer_1_1_direct2_d.html#abfd79d5671334c7b53a9ae59b01da3a0", null ],
-    [ "FreeTexture", "class_gwk_1_1_renderer_1_1_direct2_d.html#ac664acddec2ffdd3c403072b7d2a6e8a", null ],
     [ "InitializeContext", "class_gwk_1_1_renderer_1_1_direct2_d.html#ac965a0f05dce41d6a3b67374b039e450", null ],
-    [ "LoadFont", "class_gwk_1_1_renderer_1_1_direct2_d.html#a52e8f1248c88c8695031164e5c6f2dce", null ],
-    [ "LoadTexture", "class_gwk_1_1_renderer_1_1_direct2_d.html#a72ec1dcd34a37426bc84530312ce719d", null ],
     [ "MeasureText", "class_gwk_1_1_renderer_1_1_direct2_d.html#ac730f12f6ca9169972504087b440b6e2", null ],
     [ "PixelColor", "class_gwk_1_1_renderer_1_1_direct2_d.html#ad63e1d684eadb1c783acfa2b799f23ff", null ],
     [ "PresentContext", "class_gwk_1_1_renderer_1_1_direct2_d.html#a4ab9809ae687c5f3528b9ae7a301821d", null ],

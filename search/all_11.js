@@ -14,12 +14,12 @@ var searchData=
   ['testcategory',['TestCategory',['../class_test_category.html',1,'TestCategory'],['../class_test_category.html#a16d5613c61eced477e8e216a884cb6c3',1,'TestCategory::TestCategory()']]],
   ['testframe',['TestFrame',['../class_test_frame.html',1,'TestFrame'],['../class_test_frame.html#a7e3de2a8324c7f2c01251e7aa861b807',1,'TestFrame::TestFrame()']]],
   ['testunit',['TestUnit',['../class_test_unit.html',1,'TestUnit'],['../class_test_unit.html#a9b8fa0a6a8d067e1d342222d149b8a0b',1,'TestUnit::TestUnit()']]],
-  ['text',['Text',['../class_gwk_1_1_controls_internal_1_1_text.html',1,'Gwk::ControlsInternal::Text'],['../class_gwk_1_1_controls_1_1_property_1_1_text.html',1,'Gwk::Controls::Property::Text'],['../class_gwk_1_1_controls_1_1_property_1_1_text.html#a2ad1ea6e9dd207e64b0033ff7598f5e5',1,'Gwk::Controls::Property::Text::Text()'],['../class_gwk_1_1_controls_internal_1_1_text.html#abd75c7ce25c694d56759043a28a6a862',1,'Gwk::ControlsInternal::Text::Text()']]],
+  ['text',['Text',['../class_gwk_1_1_controls_1_1_property_1_1_text.html',1,'Gwk::Controls::Property::Text'],['../class_gwk_1_1_controls_internal_1_1_text.html',1,'Gwk::ControlsInternal::Text'],['../class_gwk_1_1_controls_1_1_property_1_1_text.html#a2ad1ea6e9dd207e64b0033ff7598f5e5',1,'Gwk::Controls::Property::Text::Text()'],['../class_gwk_1_1_controls_internal_1_1_text.html#abd75c7ce25c694d56759043a28a6a862',1,'Gwk::ControlsInternal::Text::Text()']]],
   ['textbox',['TextBox',['../class_gwk_1_1_controls_1_1_text_box.html',1,'Gwk::Controls']]],
   ['textbox_5ft',['TextBox_t',['../class_gwk_1_1_skin_1_1_textured_base.html#struct_gwk_1_1_skin_1_1_textured_base_1_1_textures__t_1_1_text_box__t',1,'Gwk::Skin::TexturedBase::Textures_t']]],
   ['textboxmultiline',['TextBoxMultiline',['../class_gwk_1_1_controls_1_1_text_box_multiline.html',1,'Gwk::Controls::TextBoxMultiline'],['../class_gwk_1_1_controls_1_1_text_box_multiline.html#a4d3849877b7c49a9602a8535523def34',1,'Gwk::Controls::TextBoxMultiline::TextBoxMultiline()']]],
   ['textboxnumeric',['TextBoxNumeric',['../class_gwk_1_1_controls_1_1_text_box_numeric.html',1,'Gwk::Controls::TextBoxNumeric'],['../class_gwk_1_1_controls_1_1_text_box_numeric.html#a9296fa125d154bee2021c6a44db03230',1,'Gwk::Controls::TextBoxNumeric::TextBoxNumeric()']]],
-  ['texture',['Texture',['../struct_gwk_1_1_texture.html',1,'Gwk']]],
+  ['texture',['Texture',['../struct_gwk_1_1_texture.html',1,'Gwk::Texture'],['../class_gwk_1_1_resource_paths.html#a6b782f20bdfc1552a3b1c2a21659384eaa3e8ae43188ae76d38f414b2bdb0077b',1,'Gwk::ResourcePaths::Texture()']]],
   ['texturedbase',['TexturedBase',['../class_gwk_1_1_skin_1_1_textured_base.html',1,'Gwk::Skin']]],
   ['textures_5ft',['Textures_t',['../class_gwk_1_1_skin_1_1_textured_base.html#struct_gwk_1_1_skin_1_1_textured_base_1_1_textures__t',1,'Gwk::Skin::TexturedBase']]],
   ['tile',['Tile',['../class_gwk_1_1_controls_1_1_layout_1_1_tile.html',1,'Gwk::Controls::Layout::Tile'],['../class_gwk_1_1_controls_1_1_layout_1_1_tile.html#aff67b80ef73c28cca79c87b37e6792ee',1,'Gwk::Controls::Layout::Tile::Tile()']]],
@@ -30,5 +30,6 @@ var searchData=
   ['tree_5ft',['Tree_t',['../class_gwk_1_1_skin_1_1_textured_base.html#struct_gwk_1_1_skin_1_1_textured_base_1_1_textures__t_1_1_tree__t',1,'Gwk::Skin::TexturedBase::Textures_t']]],
   ['tree_5ft_2ecolors_2etree',['Tree_t.Colors.Tree',['../struct_gwk_1_1_skin_1_1_base_1_1_tree__t_8_colors_8_tree.html',1,'Gwk::Skin']]],
   ['treecontrol',['TreeControl',['../class_gwk_1_1_controls_1_1_tree_control.html',1,'Gwk::Controls::TreeControl'],['../class_gwk_1_1_controls_1_1_tree_control.html#a1bfd245c970c45f997d7a169e6d56c03',1,'Gwk::Controls::TreeControl::TreeControl()']]],
-  ['treenode',['TreeNode',['../class_gwk_1_1_controls_1_1_tree_node.html',1,'Gwk::Controls::TreeNode'],['../class_gwk_1_1_controls_1_1_tree_node.html#ab18b4287013bfa1bb0829843abd9a0fd',1,'Gwk::Controls::TreeNode::TreeNode()']]]
+  ['treenode',['TreeNode',['../class_gwk_1_1_controls_1_1_tree_node.html',1,'Gwk::Controls::TreeNode'],['../class_gwk_1_1_controls_1_1_tree_node.html#ab18b4287013bfa1bb0829843abd9a0fd',1,'Gwk::Controls::TreeNode::TreeNode()']]],
+  ['type',['Type',['../class_gwk_1_1_resource_paths.html#a6b782f20bdfc1552a3b1c2a21659384e',1,'Gwk::ResourcePaths']]]
 ];

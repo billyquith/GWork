@@ -7,7 +7,7 @@ var searchData=
   ['setistoggle',['SetIsToggle',['../class_gwk_1_1_controls_1_1_button.html#a429b52effce17703fe1e013110007bb1',1,'Gwk::Controls::Button']]],
   ['setred',['SetRed',['../class_gwk_1_1_controls_1_1_color_picker.html#aaa0bef148adf26466a96adf3c89a013f',1,'Gwk::Controls::ColorPicker']]],
   ['setrenderoffset',['SetRenderOffset',['../class_gwk_1_1_renderer_1_1_base.html#a6cef2c9ee0c64bf9c3b6a74603e71d4f',1,'Gwk::Renderer::Base']]],
-  ['sfml2',['SFML2',['../class_gwk_1_1_renderer_1_1_s_f_m_l2.html#ab2c7a90d1c1706fc3b7ca7f2d2dc4d20',1,'Gwk::Renderer::SFML2']]],
+  ['sfml2',['SFML2',['../class_gwk_1_1_renderer_1_1_s_f_m_l2.html#a2d16e43d2c50e72e975bc3668edb1a46',1,'Gwk::Renderer::SFML2']]],
   ['show',['Show',['../class_gwk_1_1_controls_1_1_base.html#a253857b5ebad355d244238b7a1169927',1,'Gwk::Controls::Base']]],
   ['splitterbar',['SplitterBar',['../class_gwk_1_1_controls_1_1_splitter_bar.html#a56021c9ae1a8bbf7331303b8b4e1fc62',1,'Gwk::Controls::SplitterBar']]],
   ['statusbar',['StatusBar',['../class_gwk_1_1_controls_1_1_status_bar.html#adbef4ccd4015e07e13c65e1f8dabdb1c',1,'Gwk::Controls::StatusBar']]]

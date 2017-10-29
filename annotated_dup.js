@@ -124,20 +124,29 @@ var annotated_dup =
         [ "SFML", "class_gwk_1_1_input_1_1_s_f_m_l.html", "class_gwk_1_1_input_1_1_s_f_m_l" ],
         [ "Windows", "class_gwk_1_1_input_1_1_windows.html", "class_gwk_1_1_input_1_1_windows" ]
       ] ],
+      [ "Platform", null, [
+        [ "RelativeToExecutablePaths", "class_gwk_1_1_platform_1_1_relative_to_executable_paths.html", "class_gwk_1_1_platform_1_1_relative_to_executable_paths" ]
+      ] ],
       [ "Renderer", null, [
         [ "Allegro", "class_gwk_1_1_renderer_1_1_allegro.html", "class_gwk_1_1_renderer_1_1_allegro" ],
+        [ "AllegroResourceLoader", "class_gwk_1_1_renderer_1_1_allegro_resource_loader.html", "class_gwk_1_1_renderer_1_1_allegro_resource_loader" ],
         [ "Base", "class_gwk_1_1_renderer_1_1_base.html", "class_gwk_1_1_renderer_1_1_base" ],
         [ "Direct2D", "class_gwk_1_1_renderer_1_1_direct2_d.html", "class_gwk_1_1_renderer_1_1_direct2_d" ],
+        [ "Direct2DResourceLoader", "class_gwk_1_1_renderer_1_1_direct2_d_resource_loader.html", "class_gwk_1_1_renderer_1_1_direct2_d_resource_loader" ],
         [ "DirectX11", "class_gwk_1_1_renderer_1_1_direct_x11.html", "class_gwk_1_1_renderer_1_1_direct_x11" ],
         [ "DirectX9", "class_gwk_1_1_renderer_1_1_direct_x9.html", "class_gwk_1_1_renderer_1_1_direct_x9" ],
+        [ "DX11ResourceLoader", "class_gwk_1_1_renderer_1_1_d_x11_resource_loader.html", "class_gwk_1_1_renderer_1_1_d_x11_resource_loader" ],
         [ "GDIPlus", "class_gwk_1_1_renderer_1_1_g_d_i_plus.html", "class_gwk_1_1_renderer_1_1_g_d_i_plus" ],
         [ "GDIPlusBuffered", "class_gwk_1_1_renderer_1_1_g_d_i_plus_buffered.html", "class_gwk_1_1_renderer_1_1_g_d_i_plus_buffered" ],
         [ "ICacheToTexture", "class_gwk_1_1_renderer_1_1_i_cache_to_texture.html", "class_gwk_1_1_renderer_1_1_i_cache_to_texture" ],
         [ "Null", "class_gwk_1_1_renderer_1_1_null.html", "class_gwk_1_1_renderer_1_1_null" ],
         [ "OpenGL", "class_gwk_1_1_renderer_1_1_open_g_l.html", "class_gwk_1_1_renderer_1_1_open_g_l" ],
         [ "OpenGL_DebugFont", "class_gwk_1_1_renderer_1_1_open_g_l___debug_font.html", "class_gwk_1_1_renderer_1_1_open_g_l___debug_font" ],
+        [ "OpenGLResourceLoader", "class_gwk_1_1_renderer_1_1_open_g_l_resource_loader.html", "class_gwk_1_1_renderer_1_1_open_g_l_resource_loader" ],
         [ "SDL2", "class_gwk_1_1_renderer_1_1_s_d_l2.html", "class_gwk_1_1_renderer_1_1_s_d_l2" ],
-        [ "SFML2", "class_gwk_1_1_renderer_1_1_s_f_m_l2.html", "class_gwk_1_1_renderer_1_1_s_f_m_l2" ]
+        [ "SDL2ResourceLoader", "class_gwk_1_1_renderer_1_1_s_d_l2_resource_loader.html", "class_gwk_1_1_renderer_1_1_s_d_l2_resource_loader" ],
+        [ "SFML2", "class_gwk_1_1_renderer_1_1_s_f_m_l2.html", "class_gwk_1_1_renderer_1_1_s_f_m_l2" ],
+        [ "SFML2ResourceLoader", "class_gwk_1_1_renderer_1_1_s_f_m_l2_resource_loader.html", "class_gwk_1_1_renderer_1_1_s_f_m_l2_resource_loader" ]
       ] ],
       [ "Skin", null, [
         [ "Texturing", null, [
@@ -168,6 +177,8 @@ var annotated_dup =
       [ "Margin", "struct_gwk_1_1_margin.html", "struct_gwk_1_1_margin" ],
       [ "Point", "struct_gwk_1_1_point.html", "struct_gwk_1_1_point" ],
       [ "Rect", "struct_gwk_1_1_rect.html", "struct_gwk_1_1_rect" ],
+      [ "ResourceLoader", "class_gwk_1_1_resource_loader.html", "class_gwk_1_1_resource_loader" ],
+      [ "ResourcePaths", "class_gwk_1_1_resource_paths.html", "class_gwk_1_1_resource_paths" ],
       [ "TEasyList", "class_gwk_1_1_t_easy_list.html", "class_gwk_1_1_t_easy_list" ],
       [ "Texture", "struct_gwk_1_1_texture.html", "struct_gwk_1_1_texture" ],
       [ "UserDataStorage", "class_gwk_1_1_user_data_storage.html", "class_gwk_1_1_user_data_storage" ],

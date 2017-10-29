@@ -29,7 +29,7 @@
 <table cellspacing="0" cellpadding="0">
  <tbody>
  <tr class="gwktitle">
-   <td>Gwork: 0.2.0Dev</td>
+   <td>Gwork: 0.3.0Dev</td>
  </tr>
  </tbody>
 </table>
@@ -80,6 +80,7 @@ $(document).ready(function(){initNavTree('struct_gwk_1_1_font.html','');});
 <div class="header">
   <div class="summary">
 <a href="#pub-types">Public Types</a> &#124;
+<a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="struct_gwk_1_1_font-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -89,12 +90,31 @@ $(document).ready(function(){initNavTree('struct_gwk_1_1_font.html','');});
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
+<tr class="memitem:ab6de372dd154c14af89dac967776c795"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_gwk_1_1_font.html#ab6de372dd154c14af89dac967776c795">Status</a> { <br />
+&#160;&#160;<a class="el" href="struct_gwk_1_1_font.html#ab6de372dd154c14af89dac967776c795aa5ae20aa7fda5bd38bf0dce98e65bd2d">Status::Unloaded</a>, 
+<a class="el" href="struct_gwk_1_1_font.html#ab6de372dd154c14af89dac967776c795a7381d487d18845b379422325c0a768d6">Status::Loaded</a>, 
+<a class="el" href="struct_gwk_1_1_font.html#ab6de372dd154c14af89dac967776c795abe78aa55f62b5e1e6bd8a62ddedefcc9">Status::ErrorFileNotFound</a>, 
+<a class="el" href="struct_gwk_1_1_font.html#ab6de372dd154c14af89dac967776c795a3bbc6aac02f215a5a11cf8208bcfa0bc">Status::ErrorBadData</a>, 
+<br />
+&#160;&#160;<b>MaxStatus</b>
+<br />
+ }</td></tr>
+<tr class="separator:ab6de372dd154c14af89dac967776c795"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acb8656d61670563eaa2f395a2c046b89"><td class="memItemLeft" align="right" valign="top"><a id="acb8656d61670563eaa2f395a2c046b89"></a>
 typedef std::list&lt; <a class="el" href="struct_gwk_1_1_font.html">Font</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>List</b></td></tr>
 <tr class="separator:acb8656d61670563eaa2f395a2c046b89"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:a2c3cc33adb27b91a4080314deb864ba8"><td class="memItemLeft" align="right" valign="top"><a id="a2c3cc33adb27b91a4080314deb864ba8"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>IsLoaded</b> () const</td></tr>
+<tr class="separator:a2c3cc33adb27b91a4080314deb864ba8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
+<tr class="memitem:a438b28e90ef3b51a31cf0e034f6b889d"><td class="memItemLeft" align="right" valign="top"><a id="a438b28e90ef3b51a31cf0e034f6b889d"></a>
+<a class="el" href="struct_gwk_1_1_font.html#ab6de372dd154c14af89dac967776c795">Status</a>&#160;</td><td class="memItemRight" valign="bottom"><b>status</b></td></tr>
+<tr class="separator:a438b28e90ef3b51a31cf0e034f6b889d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab7d915bc0988f5c5a8fb3f02c6e07a57"><td class="memItemLeft" align="right" valign="top"><a id="ab7d915bc0988f5c5a8fb3f02c6e07a57"></a>
 String&#160;</td><td class="memItemRight" valign="bottom"><b>facename</b></td></tr>
 <tr class="separator:ab7d915bc0988f5c5a8fb3f02c6e07a57"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -104,16 +124,49 @@ float&#160;</td><td class="memItemRight" valign="bottom"><b>size</b></td></tr>
 <tr class="memitem:a6eedabb4f49ed2cbff4b1a9745b3555e"><td class="memItemLeft" align="right" valign="top"><a id="a6eedabb4f49ed2cbff4b1a9745b3555e"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>bold</b></td></tr>
 <tr class="separator:a6eedabb4f49ed2cbff4b1a9745b3555e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aba5423d1cde3d0a3c46205fc4e0fc5a0"><td class="memItemLeft" align="right" valign="top"><a id="aba5423d1cde3d0a3c46205fc4e0fc5a0"></a>
-void *&#160;</td><td class="memItemRight" valign="bottom"><b>data</b></td></tr>
-<tr class="separator:aba5423d1cde3d0a3c46205fc4e0fc5a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2eaa5885763e6161b178f5ba8e366304"><td class="memItemLeft" align="right" valign="top"><a id="a2eaa5885763e6161b178f5ba8e366304"></a>
 float&#160;</td><td class="memItemRight" valign="bottom"><b>realsize</b></td></tr>
 <tr class="separator:a2eaa5885763e6161b178f5ba8e366304"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aba5423d1cde3d0a3c46205fc4e0fc5a0"><td class="memItemLeft" align="right" valign="top"><a id="aba5423d1cde3d0a3c46205fc4e0fc5a0"></a>
+void *&#160;</td><td class="memItemRight" valign="bottom"><b>data</b></td></tr>
+<tr class="separator:aba5423d1cde3d0a3c46205fc4e0fc5a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a96ce514e26de19006645f6437f7c7b16"><td class="memItemLeft" align="right" valign="top"><a id="a96ce514e26de19006645f6437f7c7b16"></a>
 void *&#160;</td><td class="memItemRight" valign="bottom"><b>render_data</b></td></tr>
 <tr class="separator:a96ce514e26de19006645f6437f7c7b16"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Member Enumeration Documentation</h2>
+<a id="ab6de372dd154c14af89dac967776c795"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab6de372dd154c14af89dac967776c795">&#9670;&nbsp;</a></span>Status</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="struct_gwk_1_1_font.html#ab6de372dd154c14af89dac967776c795">Gwk::Font::Status</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ab6de372dd154c14af89dac967776c795aa5ae20aa7fda5bd38bf0dce98e65bd2d"></a>Unloaded&#160;</td><td class="fielddoc"><p>As yet, unloaded. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ab6de372dd154c14af89dac967776c795a7381d487d18845b379422325c0a768d6"></a>Loaded&#160;</td><td class="fielddoc"><p>Loaded successful. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ab6de372dd154c14af89dac967776c795abe78aa55f62b5e1e6bd8a62ddedefcc9"></a>ErrorFileNotFound&#160;</td><td class="fielddoc"><p>File requested was not found. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ab6de372dd154c14af89dac967776c795a3bbc6aac02f215a5a11cf8208bcfa0bc"></a>ErrorBadData&#160;</td><td class="fielddoc"><p>Resource was bad data. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
 <hr/>The documentation for this struct was generated from the following file:<ul>
 <li><a class="el" href="_platform_types_8h_source.html">PlatformTypes.h</a></li>
 </ul>

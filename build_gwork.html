@@ -29,7 +29,7 @@
 <table cellspacing="0" cellpadding="0">
  <tbody>
  <tr class="gwktitle">
-   <td>Gwork: 0.2.0Dev</td>
+   <td>Gwork: 0.3.0Dev</td>
  </tr>
  </tbody>
 </table>
@@ -115,7 +115,8 @@ Using Cmake</h1>
 <h2><a class="anchor" id="win_build"></a>
 Windows</h2>
 <div class="fragment"><div class="line">cmake --help    # show cmake options</div></div><!-- fragment --><p>To generate project files:</p>
-<div class="fragment"><div class="line">mkdir build</div><div class="line">cd build</div><div class="line">cmake -G &quot;Visual Studio 14 2015 Win64&quot; -DRENDER_ALLEGRO5=ON ..</div><div class="line">start gwork.sln</div></div><!-- fragment --><h2><a class="anchor" id="osx_build"></a>
+<div class="fragment"><div class="line">mkdir build</div><div class="line">cd build</div><div class="line">cmake -G &quot;Visual Studio 14 2015 Win64&quot; -DRENDER_ALLEGRO5=ON ..</div><div class="line">start gwork.sln</div></div><!-- fragment --><p>Windows has no standard installation locations, or they keep moving (e.g. DirectX). The cmake "package finders" don't always find what they are looking for. You may have to run cmake once (e.g. like the above), see what errors are reported, and then either run it again with the variables specified, or edit the CMakeCache.txt. Or you can use the cmake-gui to do the same. It is likely you will have to manually specify where the SDK you require is installed.</p>
+<h2><a class="anchor" id="osx_build"></a>
 OSX</h2>
 <div class="fragment"><div class="line">cmake -h    # show cmake options</div></div><!-- fragment --><p>To generate project files:</p>
 <div class="fragment"><div class="line">mkdir build &amp;&amp; cd build</div><div class="line">cmake -G Xcode -DRENDER_ALLEGRO5=ON ..</div><div class="line">open gwork.xcodeproj</div></div><!-- fragment --><h2><a class="anchor" id="linux_build"></a>
@@ -126,8 +127,9 @@ Targets</h1>
 <p>Gwork currently supports the following rendering targets. You can choose these by defining a variable when you run cmake to generate the project files, i.e. <code>-DRENDER_&lt;TARGET&gt;=ON</code>, e.g. :-</p>
 <ul>
 <li>Allegro 5: <code>-DRENDER_ALLEGRO5=ON</code></li>
+<li>Direct2D: <code>-DRENDER_DIRECT2D=ON</code></li>
 <li>DirectX 11: <code>-DRENDER_DIRECTX11=ON</code></li>
-<li>Null (used for testing): <code>-DRENDER_NULL=ON</code></li>
+<li>Null: (Used for testing) <code>-DRENDER_NULL=ON</code></li>
 <li>OpenGL: <code>-DRENDER_OPENGL=ON</code></li>
 <li>SDL2: <code>-DRENDER_SDL2=ON</code></li>
 <li>SFML2: <code>-DRENDER_SFML2=ON</code></li>

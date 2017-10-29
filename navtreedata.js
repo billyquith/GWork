@@ -21,7 +21,8 @@ var NAVTREE =
       [ "Class Members", "functions.html", [
         [ "All", "functions.html", null ],
         [ "Functions", "functions_func.html", null ],
-        [ "Variables", "functions_vars.html", null ]
+        [ "Variables", "functions_vars.html", null ],
+        [ "Enumerations", "functions_enum.html", null ]
       ] ]
     ] ]
   ] ]
@@ -30,14 +31,14 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 ".html",
-"class_gwk_1_1_controls_1_1_base_scroll_bar.html#a452a2b9069ce86a4ccf67401c6d442d2",
-"class_gwk_1_1_controls_1_1_field_label.html#aeb75f37a47372ac3387122296ad2e216",
-"class_gwk_1_1_controls_1_1_password_text_box.html",
-"class_gwk_1_1_controls_1_1_tool_bar_strip.html",
-"class_gwk_1_1_input_1_1_g_l_f_w.html#a1aa479d1f6fc8aa674e1264befc668f5",
-"class_gwk_1_1_renderer_1_1_direct_x9.html#a95636ec3a772a8bd81508c9312ac00f1",
-"class_gwk_1_1_skin_1_1_simple.html#a4eb9978fccc2c411504d1e34e5bbc26d",
-"class_gwk_1_1_skin_1_1_textured_base.html#struct_gwk_1_1_skin_1_1_textured_base_1_1_textures__t_1_1_tab__t_1_1_bottom__t"
+"class_gwk_1_1_controls_1_1_base_scroll_bar.html#a1192de009fc75b52247df8c9f9b63db4",
+"class_gwk_1_1_controls_1_1_field_label.html#ae9c21fbd40451dc17b111d29477fef9b",
+"class_gwk_1_1_controls_1_1_page_control.html#af48e5ec9428a84c9bfe9fd90e1dd1964",
+"class_gwk_1_1_controls_1_1_tool_bar_button.html",
+"class_gwk_1_1_input_1_1_g_l_f_w.html#a0c688e76c61cd1262bd957f91963cc53",
+"class_gwk_1_1_renderer_1_1_direct_x9.html#a7ad201af9e396e8df47e40aa3882e143",
+"class_gwk_1_1_skin_1_1_base.html#ad9a36e23e095c675e93d3daa69f4fb32",
+"class_gwk_1_1_skin_1_1_textured_base.html#afc3ab5055b8ccfc96ddf039225f25c95"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

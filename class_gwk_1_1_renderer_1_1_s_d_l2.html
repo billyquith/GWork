@@ -29,7 +29,7 @@
 <table cellspacing="0" cellpadding="0">
  <tbody>
  <tr class="gwktitle">
-   <td>Gwork: 0.2.0Dev</td>
+   <td>Gwork: 0.3.0Dev</td>
  </tr>
  </tbody>
 </table>
@@ -102,24 +102,18 @@ Inheritance diagram for Gwk::Renderer::SDL2:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a4d43279074a6cdaa9aca14a87cf29346"><td class="memItemLeft" align="right" valign="top"><a id="a4d43279074a6cdaa9aca14a87cf29346"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>SDL2</b> (SDL_Window *window)</td></tr>
-<tr class="separator:a4d43279074a6cdaa9aca14a87cf29346"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af57bbd88d850674e6c44a7a0328214a5"><td class="memItemLeft" align="right" valign="top"><a id="af57bbd88d850674e6c44a7a0328214a5"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>SDL2</b> (<a class="el" href="class_gwk_1_1_resource_loader.html">ResourceLoader</a> &amp;loader, SDL_Window *window)</td></tr>
+<tr class="separator:af57bbd88d850674e6c44a7a0328214a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac28ce506a4a04f7b60e33ad7e9cd59c8"><td class="memItemLeft" align="right" valign="top"><a id="ac28ce506a4a04f7b60e33ad7e9cd59c8"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>SetDrawColor</b> (<a class="el" href="struct_gwk_1_1_color.html">Gwk::Color</a> color) override</td></tr>
 <tr class="separator:ac28ce506a4a04f7b60e33ad7e9cd59c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a357777761ecba7db9e5517a7fce1c0c4"><td class="memItemLeft" align="right" valign="top"><a id="a357777761ecba7db9e5517a7fce1c0c4"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>DrawFilledRect</b> (<a class="el" href="struct_gwk_1_1_rect.html">Gwk::Rect</a> rect) override</td></tr>
 <tr class="separator:a357777761ecba7db9e5517a7fce1c0c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa6645731b4481ce467db78c64d53e4bc"><td class="memItemLeft" align="right" valign="top"><a id="aa6645731b4481ce467db78c64d53e4bc"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>LoadFont</b> (<a class="el" href="struct_gwk_1_1_font.html">Gwk::Font</a> *font) override</td></tr>
-<tr class="separator:aa6645731b4481ce467db78c64d53e4bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a163316eff2befe8a5222be35e09fd8e3"><td class="memItemLeft" align="right" valign="top"><a id="a163316eff2befe8a5222be35e09fd8e3"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>FreeFont</b> (<a class="el" href="struct_gwk_1_1_font.html">Gwk::Font</a> *font) override</td></tr>
-<tr class="separator:a163316eff2befe8a5222be35e09fd8e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa274ca3f945b3119fc31e9f43b72fe76"><td class="memItemLeft" align="right" valign="top"><a id="aa274ca3f945b3119fc31e9f43b72fe76"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>RenderText</b> (<a class="el" href="struct_gwk_1_1_font.html">Gwk::Font</a> *font, <a class="el" href="struct_gwk_1_1_point.html">Gwk::Point</a> pos, const Gwk::String &amp;text) override</td></tr>
-<tr class="separator:aa274ca3f945b3119fc31e9f43b72fe76"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a92d4f2d4f5d5f1dd24206dbbd6849d7b"><td class="memItemLeft" align="right" valign="top"><a id="a92d4f2d4f5d5f1dd24206dbbd6849d7b"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>RenderText</b> (<a class="el" href="struct_gwk_1_1_font.html">Gwk::Font</a> *font, <a class="el" href="struct_gwk_1_1_point.html">Gwk::Point</a> pos, const Gwk::String &amp;text) override</td></tr>
+<tr class="separator:a92d4f2d4f5d5f1dd24206dbbd6849d7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aae999d78612c97ccc008219f811dd52a"><td class="memItemLeft" align="right" valign="top"><a id="aae999d78612c97ccc008219f811dd52a"></a>
 <a class="el" href="struct_gwk_1_1_point.html">Gwk::Point</a>&#160;</td><td class="memItemRight" valign="bottom"><b>MeasureText</b> (<a class="el" href="struct_gwk_1_1_font.html">Gwk::Font</a> *font, const Gwk::String &amp;text) override</td></tr>
 <tr class="separator:aae999d78612c97ccc008219f811dd52a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -132,12 +126,6 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>EndClip</b> () overri
 <tr class="memitem:a3b65ecdf5a39908e9cdb0da5e8f05965"><td class="memItemLeft" align="right" valign="top"><a id="a3b65ecdf5a39908e9cdb0da5e8f05965"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>DrawTexturedRect</b> (<a class="el" href="struct_gwk_1_1_texture.html">Gwk::Texture</a> *texture, <a class="el" href="struct_gwk_1_1_rect.html">Gwk::Rect</a> targetRect, float u1=0.0f, float v1=0.0f, float u2=1.0f, float v2=1.0f) override</td></tr>
 <tr class="separator:a3b65ecdf5a39908e9cdb0da5e8f05965"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af62e488f9e74942ef328dde57035e296"><td class="memItemLeft" align="right" valign="top"><a id="af62e488f9e74942ef328dde57035e296"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>LoadTexture</b> (<a class="el" href="struct_gwk_1_1_texture.html">Gwk::Texture</a> *texture) override</td></tr>
-<tr class="separator:af62e488f9e74942ef328dde57035e296"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a10741b71fe9810b5423f06a1249baf4d"><td class="memItemLeft" align="right" valign="top"><a id="a10741b71fe9810b5423f06a1249baf4d"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>FreeTexture</b> (<a class="el" href="struct_gwk_1_1_texture.html">Gwk::Texture</a> *texture) override</td></tr>
-<tr class="separator:a10741b71fe9810b5423f06a1249baf4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ace7cc12c56baafd72bf0964322da23bc"><td class="memItemLeft" align="right" valign="top"><a id="ace7cc12c56baafd72bf0964322da23bc"></a>
 <a class="el" href="struct_gwk_1_1_color.html">Gwk::Color</a>&#160;</td><td class="memItemRight" valign="bottom"><b>PixelColor</b> (<a class="el" href="struct_gwk_1_1_texture.html">Gwk::Texture</a> *texture, unsigned int x, unsigned int y, const <a class="el" href="struct_gwk_1_1_color.html">Gwk::Color</a> &amp;col_default) override</td></tr>
 <tr class="separator:ace7cc12c56baafd72bf0964322da23bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -162,6 +150,9 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>Begin</b> ()<
 <tr class="memitem:a9b3748a4837810fe1debf12f2e2d8845 inherit pub_methods_class_gwk_1_1_renderer_1_1_base"><td class="memItemLeft" align="right" valign="top"><a id="a9b3748a4837810fe1debf12f2e2d8845"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>End</b> ()</td></tr>
 <tr class="separator:a9b3748a4837810fe1debf12f2e2d8845 inherit pub_methods_class_gwk_1_1_renderer_1_1_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7ab5b243558038b83a3173f4cc9272ed inherit pub_methods_class_gwk_1_1_renderer_1_1_base"><td class="memItemLeft" align="right" valign="top"><a id="a7ab5b243558038b83a3173f4cc9272ed"></a>
+<a class="el" href="class_gwk_1_1_resource_loader.html">ResourceLoader</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>GetLoader</b> ()</td></tr>
+<tr class="separator:a7ab5b243558038b83a3173f4cc9272ed inherit pub_methods_class_gwk_1_1_renderer_1_1_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afe1f7a4c0259a0d9a339fdf303703e02 inherit pub_methods_class_gwk_1_1_renderer_1_1_base"><td class="memItemLeft" align="right" valign="top"><a id="afe1f7a4c0259a0d9a339fdf303703e02"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>DrawMissingImage</b> (<a class="el" href="struct_gwk_1_1_rect.html">Gwk::Rect</a> targetRect)</td></tr>
 <tr class="separator:afe1f7a4c0259a0d9a339fdf303703e02 inherit pub_methods_class_gwk_1_1_renderer_1_1_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -220,10 +211,13 @@ virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>ResizedContex
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
 <tr class="inherit_header pro_methods_class_gwk_1_1_renderer_1_1_base"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_class_gwk_1_1_renderer_1_1_base')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="class_gwk_1_1_renderer_1_1_base.html">Gwk::Renderer::Base</a></td></tr>
-<tr class="memitem:a0e8e47c04149f0b987ac2fe7d72937b0 inherit pro_methods_class_gwk_1_1_renderer_1_1_base"><td class="memItemLeft" align="right" valign="top"><a id="a0e8e47c04149f0b987ac2fe7d72937b0"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_gwk_1_1_renderer_1_1_base.html#a0e8e47c04149f0b987ac2fe7d72937b0">Base</a> ()</td></tr>
-<tr class="memdesc:a0e8e47c04149f0b987ac2fe7d72937b0 inherit pro_methods_class_gwk_1_1_renderer_1_1_base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor. Not public as we only instance derived implementations. <br /></td></tr>
-<tr class="separator:a0e8e47c04149f0b987ac2fe7d72937b0 inherit pro_methods_class_gwk_1_1_renderer_1_1_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a54a1b9ac3a7f6e76a5299f985dededc9 inherit pro_methods_class_gwk_1_1_renderer_1_1_base"><td class="memItemLeft" align="right" valign="top"><a id="a54a1b9ac3a7f6e76a5299f985dededc9"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_gwk_1_1_renderer_1_1_base.html#a54a1b9ac3a7f6e76a5299f985dededc9">Base</a> (<a class="el" href="class_gwk_1_1_resource_loader.html">ResourceLoader</a> &amp;loader)</td></tr>
+<tr class="memdesc:a54a1b9ac3a7f6e76a5299f985dededc9 inherit pro_methods_class_gwk_1_1_renderer_1_1_base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor. Not public as we only instance derived implementations. <br /></td></tr>
+<tr class="separator:a54a1b9ac3a7f6e76a5299f985dededc9 inherit pro_methods_class_gwk_1_1_renderer_1_1_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acf25e59a944f5f3f9ddaa72717e440d8 inherit pro_methods_class_gwk_1_1_renderer_1_1_base"><td class="memItemLeft" align="right" valign="top"><a id="acf25e59a944f5f3f9ddaa72717e440d8"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>EnsureFont</b> (<a class="el" href="struct_gwk_1_1_font.html">Font</a> &amp;font)</td></tr>
+<tr class="separator:acf25e59a944f5f3f9ddaa72717e440d8 inherit pro_methods_class_gwk_1_1_renderer_1_1_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_attribs_class_gwk_1_1_renderer_1_1_base"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_class_gwk_1_1_renderer_1_1_base')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="class_gwk_1_1_renderer_1_1_base.html">Gwk::Renderer::Base</a></td></tr>
 <tr class="memitem:a7c9b4829e24016bdd90d5394556d1e09 inherit pro_attribs_class_gwk_1_1_renderer_1_1_base"><td class="memItemLeft" align="right" valign="top"><a id="a7c9b4829e24016bdd90d5394556d1e09"></a>
 float&#160;</td><td class="memItemRight" valign="bottom"><b>m_fScale</b></td></tr>
