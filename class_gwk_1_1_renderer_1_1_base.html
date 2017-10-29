@@ -88,6 +88,9 @@ $(document).ready(function(){initNavTree('class_gwk_1_1_renderer_1_1_base.html',
 </div><!--header-->
 <div class="contents">
 
+<p><a class="el" href="class_gwk_1_1_renderer_1_1_base.html" title="Base class for all renderer implementations. ">Base</a> class for all renderer implementations.  
+ <a href="class_gwk_1_1_renderer_1_1_base.html#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="_base_render_8h_source.html">BaseRender.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for Gwk::Renderer::Base:</div>
@@ -98,9 +101,9 @@ Inheritance diagram for Gwk::Renderer::Base:</div>
 <area href="class_gwk_1_1_renderer_1_1_allegro.html" title="Renderer for Allegro5. " alt="Gwk::Renderer::Allegro" shape="rect" coords="168,56,326,80"/>
 <area href="class_gwk_1_1_renderer_1_1_direct2_d.html" title="Renderer for Direct2D. " alt="Gwk::Renderer::Direct2D" shape="rect" coords="168,112,326,136"/>
 <area href="class_gwk_1_1_renderer_1_1_direct_x11.html" title="Renderer for DirectX11. " alt="Gwk::Renderer::DirectX11" shape="rect" coords="168,168,326,192"/>
-<area href="class_gwk_1_1_renderer_1_1_direct_x9.html" alt="Gwk::Renderer::DirectX9" shape="rect" coords="168,224,326,248"/>
+<area href="class_gwk_1_1_renderer_1_1_direct_x9.html" title="Renderer for DirectX9. " alt="Gwk::Renderer::DirectX9" shape="rect" coords="168,224,326,248"/>
 <area href="class_gwk_1_1_renderer_1_1_g_d_i_plus.html" alt="Gwk::Renderer::GDIPlus" shape="rect" coords="168,280,326,304"/>
-<area href="class_gwk_1_1_renderer_1_1_null.html" alt="Gwk::Renderer::Null" shape="rect" coords="168,336,326,360"/>
+<area href="class_gwk_1_1_renderer_1_1_null.html" title="Null renderer that does not render! " alt="Gwk::Renderer::Null" shape="rect" coords="168,336,326,360"/>
 <area href="class_gwk_1_1_renderer_1_1_open_g_l.html" title="Renderer for OpenGL. " alt="Gwk::Renderer::OpenGL" shape="rect" coords="168,392,326,416"/>
 <area href="class_gwk_1_1_renderer_1_1_s_d_l2.html" title="Renderer for SDL2. " alt="Gwk::Renderer::SDL2" shape="rect" coords="168,448,326,472"/>
 <area href="class_gwk_1_1_renderer_1_1_s_f_m_l2.html" title="Renderer for SFML2. " alt="Gwk::Renderer::SFML2" shape="rect" coords="168,504,326,528"/>
@@ -119,29 +122,45 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>Begin</b> ()<
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>End</b> ()</td></tr>
 <tr class="separator:a9b3748a4837810fe1debf12f2e2d8845"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7ab5b243558038b83a3173f4cc9272ed"><td class="memItemLeft" align="right" valign="top"><a id="a7ab5b243558038b83a3173f4cc9272ed"></a>
-<a class="el" href="class_gwk_1_1_resource_loader.html">ResourceLoader</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>GetLoader</b> ()</td></tr>
+<a class="el" href="class_gwk_1_1_resource_loader.html">ResourceLoader</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_gwk_1_1_renderer_1_1_base.html#a7ab5b243558038b83a3173f4cc9272ed">GetLoader</a> ()</td></tr>
+<tr class="memdesc:a7ab5b243558038b83a3173f4cc9272ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get <a class="el" href="class_gwk_1_1_resource_loader.html">ResourceLoader</a> we are using for the renderer. <br /></td></tr>
 <tr class="separator:a7ab5b243558038b83a3173f4cc9272ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a161d5981b40ccb6536b5adccca8972cf"><td class="memItemLeft" align="right" valign="top"><a id="a161d5981b40ccb6536b5adccca8972cf"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>SetDrawColor</b> (<a class="el" href="struct_gwk_1_1_color.html">Color</a> color)</td></tr>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_gwk_1_1_renderer_1_1_base.html#a161d5981b40ccb6536b5adccca8972cf">SetDrawColor</a> (<a class="el" href="struct_gwk_1_1_color.html">Color</a> color)</td></tr>
+<tr class="memdesc:a161d5981b40ccb6536b5adccca8972cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the current drawing color. <br /></td></tr>
 <tr class="separator:a161d5981b40ccb6536b5adccca8972cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae17f9657af6f399975e28d332be7230c"><td class="memItemLeft" align="right" valign="top"><a id="ae17f9657af6f399975e28d332be7230c"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>DrawFilledRect</b> (<a class="el" href="struct_gwk_1_1_rect.html">Gwk::Rect</a> rect)</td></tr>
-<tr class="separator:ae17f9657af6f399975e28d332be7230c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a89cef4aebd7f6a382b88f4b0bf50657a"><td class="memItemLeft" align="right" valign="top"><a id="a89cef4aebd7f6a382b88f4b0bf50657a"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>StartClip</b> ()</td></tr>
+<tr class="memitem:a89cef4aebd7f6a382b88f4b0bf50657a"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_gwk_1_1_renderer_1_1_base.html#a89cef4aebd7f6a382b88f4b0bf50657a">StartClip</a> ()</td></tr>
+<tr class="memdesc:a89cef4aebd7f6a382b88f4b0bf50657a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start clipping the drawing.  <a href="#a89cef4aebd7f6a382b88f4b0bf50657a">More...</a><br /></td></tr>
 <tr class="separator:a89cef4aebd7f6a382b88f4b0bf50657a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a22e873407971ea3cb9c4a9f2fcbe7ede"><td class="memItemLeft" align="right" valign="top"><a id="a22e873407971ea3cb9c4a9f2fcbe7ede"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>EndClip</b> ()</td></tr>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_gwk_1_1_renderer_1_1_base.html#a22e873407971ea3cb9c4a9f2fcbe7ede">EndClip</a> ()</td></tr>
+<tr class="memdesc:a22e873407971ea3cb9c4a9f2fcbe7ede"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stop clipping the drawing. <br /></td></tr>
 <tr class="separator:a22e873407971ea3cb9c4a9f2fcbe7ede"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6c74730386e11dd6e778b8fcc367e1c3"><td class="memItemLeft" align="right" valign="top"><a id="a6c74730386e11dd6e778b8fcc367e1c3"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>SetClipRegion</b> (<a class="el" href="struct_gwk_1_1_rect.html">Gwk::Rect</a> const &amp;rect)</td></tr>
+<tr class="separator:a6c74730386e11dd6e778b8fcc367e1c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6440ed4adff033216843e0ced592d162"><td class="memItemLeft" align="right" valign="top"><a id="a6440ed4adff033216843e0ced592d162"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>AddClipRegion</b> (<a class="el" href="struct_gwk_1_1_rect.html">Gwk::Rect</a> rect)</td></tr>
+<tr class="separator:a6440ed4adff033216843e0ced592d162"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a52cf54ff602ecf324d9abcf13a44d845"><td class="memItemLeft" align="right" valign="top"><a id="a52cf54ff602ecf324d9abcf13a44d845"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>ClipRegionVisible</b> ()</td></tr>
+<tr class="separator:a52cf54ff602ecf324d9abcf13a44d845"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adb169374e63ebfbdd153c0cf583e277e"><td class="memItemLeft" align="right" valign="top"><a id="adb169374e63ebfbdd153c0cf583e277e"></a>
+const <a class="el" href="struct_gwk_1_1_rect.html">Gwk::Rect</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>ClipRegion</b> () const</td></tr>
+<tr class="separator:adb169374e63ebfbdd153c0cf583e277e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae17f9657af6f399975e28d332be7230c"><td class="memItemLeft" align="right" valign="top"><a id="ae17f9657af6f399975e28d332be7230c"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_gwk_1_1_renderer_1_1_base.html#ae17f9657af6f399975e28d332be7230c">DrawFilledRect</a> (<a class="el" href="struct_gwk_1_1_rect.html">Gwk::Rect</a> rect)</td></tr>
+<tr class="memdesc:ae17f9657af6f399975e28d332be7230c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Draw a filled rectangle using the current color. <br /></td></tr>
+<tr class="separator:ae17f9657af6f399975e28d332be7230c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa19730f82dc78dad1b1c2dc54dd9dc67"><td class="memItemLeft" align="right" valign="top"><a id="aa19730f82dc78dad1b1c2dc54dd9dc67"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>DrawTexturedRect</b> (<a class="el" href="struct_gwk_1_1_texture.html">Gwk::Texture</a> *texture, <a class="el" href="struct_gwk_1_1_rect.html">Gwk::Rect</a> targetRect, float u1=0.0f, float v1=0.0f, float u2=1.0f, float v2=1.0f)</td></tr>
 <tr class="separator:aa19730f82dc78dad1b1c2dc54dd9dc67"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afe1f7a4c0259a0d9a339fdf303703e02"><td class="memItemLeft" align="right" valign="top"><a id="afe1f7a4c0259a0d9a339fdf303703e02"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>DrawMissingImage</b> (<a class="el" href="struct_gwk_1_1_rect.html">Gwk::Rect</a> targetRect)</td></tr>
 <tr class="separator:afe1f7a4c0259a0d9a339fdf303703e02"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8c89af2e748e513ba16dedd6630b7abb"><td class="memItemLeft" align="right" valign="top"><a id="a8c89af2e748e513ba16dedd6630b7abb"></a>
-virtual <a class="el" href="struct_gwk_1_1_color.html">Gwk::Color</a>&#160;</td><td class="memItemRight" valign="bottom"><b>PixelColor</b> (<a class="el" href="struct_gwk_1_1_texture.html">Gwk::Texture</a> *texture, unsigned int x, unsigned int y, const <a class="el" href="struct_gwk_1_1_color.html">Gwk::Color</a> &amp;col_default=<a class="el" href="struct_gwk_1_1_color.html">Gwk::Color</a>(255, 255, 255, 255))</td></tr>
-<tr class="separator:a8c89af2e748e513ba16dedd6630b7abb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a39fd070e87a326ba37a057a6b9959fd4"><td class="memItemLeft" align="right" valign="top"><a id="a39fd070e87a326ba37a057a6b9959fd4"></a>
+virtual <a class="el" href="struct_gwk_1_1_color.html">Gwk::Color</a>&#160;</td><td class="memItemRight" valign="bottom"><b>PixelColor</b> (<a class="el" href="struct_gwk_1_1_texture.html">Gwk::Texture</a> *texture, unsigned int x, unsigned int y, const <a class="el" href="struct_gwk_1_1_color.html">Gwk::Color</a> &amp;col_default=Gwk::Colors::White)</td></tr>
+<tr class="separator:a39fd070e87a326ba37a057a6b9959fd4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9c5ec9e4c21e42e8f7b3d861cee99fea"><td class="memItemLeft" align="right" valign="top"><a id="a9c5ec9e4c21e42e8f7b3d861cee99fea"></a>
 virtual <a class="el" href="class_gwk_1_1_renderer_1_1_i_cache_to_texture.html">ICacheToTexture</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>GetCTT</b> ()</td></tr>
 <tr class="separator:a9c5ec9e4c21e42e8f7b3d861cee99fea"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -174,18 +193,6 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>AddRenderOffset</b> (
 <tr class="memitem:a978cbd9c166b9cde2eeb59b88ad5d820"><td class="memItemLeft" align="right" valign="top"><a id="a978cbd9c166b9cde2eeb59b88ad5d820"></a>
 const <a class="el" href="struct_gwk_1_1_point.html">Gwk::Point</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>GetRenderOffset</b> () const</td></tr>
 <tr class="separator:a978cbd9c166b9cde2eeb59b88ad5d820"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a24a8a79f9a837eb3d83b9bda683cd536"><td class="memItemLeft" align="right" valign="top"><a id="a24a8a79f9a837eb3d83b9bda683cd536"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>SetClipRegion</b> (<a class="el" href="struct_gwk_1_1_rect.html">Gwk::Rect</a> rect)</td></tr>
-<tr class="separator:a24a8a79f9a837eb3d83b9bda683cd536"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6440ed4adff033216843e0ced592d162"><td class="memItemLeft" align="right" valign="top"><a id="a6440ed4adff033216843e0ced592d162"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>AddClipRegion</b> (<a class="el" href="struct_gwk_1_1_rect.html">Gwk::Rect</a> rect)</td></tr>
-<tr class="separator:a6440ed4adff033216843e0ced592d162"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a52cf54ff602ecf324d9abcf13a44d845"><td class="memItemLeft" align="right" valign="top"><a id="a52cf54ff602ecf324d9abcf13a44d845"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>ClipRegionVisible</b> ()</td></tr>
-<tr class="separator:a52cf54ff602ecf324d9abcf13a44d845"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adb169374e63ebfbdd153c0cf583e277e"><td class="memItemLeft" align="right" valign="top"><a id="adb169374e63ebfbdd153c0cf583e277e"></a>
-const <a class="el" href="struct_gwk_1_1_rect.html">Gwk::Rect</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>ClipRegion</b> () const</td></tr>
-<tr class="separator:adb169374e63ebfbdd153c0cf583e277e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4a730b91f84550ef593a78e8c3724967"><td class="memItemLeft" align="right" valign="top"><a id="a4a730b91f84550ef593a78e8c3724967"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>SetScale</b> (float fScale)</td></tr>
 <tr class="separator:a4a730b91f84550ef593a78e8c3724967"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -228,8 +235,8 @@ float&#160;</td><td class="memItemRight" valign="bottom"><b>m_fScale</b></td></t
 <tr class="separator:a7c9b4829e24016bdd90d5394556d1e09"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p><a class="el" href="class_gwk_1_1_renderer_1_1_base.html">Base</a> class for all renderer implementations.</p>
-<dl class="section note"><dt>Note</dt><dd>We never instance this directly, only the derived implementations. </dd></dl>
+<div class="textblock"><p><a class="el" href="class_gwk_1_1_renderer_1_1_base.html" title="Base class for all renderer implementations. ">Base</a> class for all renderer implementations. </p>
+<p>Each renderer implements this functionality so that the skin can draw the GUI. </p><dl class="section note"><dt>Note</dt><dd>We never instance this directly, only the derived implementations. </dd></dl>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="aee845db2673912eaddffe33c24820965"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aee845db2673912eaddffe33c24820965">&#9670;&nbsp;</a></span>DrawLinedRect()</h2>
@@ -257,6 +264,36 @@ float&#160;</td><td class="memItemRight" valign="bottom"><b>m_fScale</b></td></t
 <p>"\name Render Specialisation" No need to implement these functions in your derived class, but if you can do them faster than the default implementation it's a good idea to. </p>
 
 <p>Reimplemented in <a class="el" href="class_gwk_1_1_renderer_1_1_s_f_m_l2.html#a1512556114184c18500bda0c2165f41b">Gwk::Renderer::SFML2</a>, <a class="el" href="class_gwk_1_1_renderer_1_1_direct2_d.html#ae783538e045d7f8cd13c4ca57d863d8a">Gwk::Renderer::Direct2D</a>, <a class="el" href="class_gwk_1_1_renderer_1_1_s_d_l2.html#af6de7aa4ccdeb782eeb7064d7e75629d">Gwk::Renderer::SDL2</a>, and <a class="el" href="class_gwk_1_1_renderer_1_1_allegro.html#a86eb4c0b859a9bf42f8d305b9c2834eb">Gwk::Renderer::Allegro</a>.</p>
+
+</div>
+</div>
+<a id="a89cef4aebd7f6a382b88f4b0bf50657a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a89cef4aebd7f6a382b88f4b0bf50657a">&#9670;&nbsp;</a></span>StartClip()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void Gwk::Renderer::Base::StartClip </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Start clipping the drawing. </p>
+<dl class="section see"><dt>See also</dt><dd>SetClipRegion(). </dd></dl>
+
+<p>Reimplemented in <a class="el" href="class_gwk_1_1_renderer_1_1_s_f_m_l2.html#ae8a94ffedac727b83b3d6b5b8c6b9cbd">Gwk::Renderer::SFML2</a>, <a class="el" href="class_gwk_1_1_renderer_1_1_direct2_d.html#a2592e02d896522b234d088ea73ca7411">Gwk::Renderer::Direct2D</a>, <a class="el" href="class_gwk_1_1_renderer_1_1_direct_x11.html#a5405581650d1fa7911828d77aaf85204">Gwk::Renderer::DirectX11</a>, <a class="el" href="class_gwk_1_1_renderer_1_1_s_d_l2.html#a3f67dbc70a4d7829265cf7ff36b72ea8">Gwk::Renderer::SDL2</a>, <a class="el" href="class_gwk_1_1_renderer_1_1_allegro.html#a0ebeb72fcadb558a39cf7c0a03affc8a">Gwk::Renderer::Allegro</a>, <a class="el" href="class_gwk_1_1_renderer_1_1_open_g_l.html#a6c520187ba39bb063bf2991390a3bc74">Gwk::Renderer::OpenGL</a>, <a class="el" href="class_gwk_1_1_renderer_1_1_direct_x9.html#a3ebeefeb098dcce7243faf62a2e16b09">Gwk::Renderer::DirectX9</a>, and <a class="el" href="class_gwk_1_1_renderer_1_1_g_d_i_plus.html#acaeb8796d3605528e5c3eb3c707ccced">Gwk::Renderer::GDIPlus</a>.</p>
 
 </div>
 </div>

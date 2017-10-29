@@ -5,7 +5,7 @@ var searchData=
   ['scrollcontrol',['ScrollControl',['../class_gwk_1_1_controls_1_1_scroll_control.html',1,'Gwk::Controls']]],
   ['scroller_5ft',['Scroller_t',['../class_gwk_1_1_skin_1_1_textured_base.html#struct_gwk_1_1_skin_1_1_textured_base_1_1_textures__t_1_1_scroller__t',1,'Gwk::Skin::TexturedBase::Textures_t']]],
   ['sdl13',['SDL13',['../class_gwk_1_1_input_1_1_s_d_l13.html',1,'Gwk::Input']]],
-  ['sdl2',['SDL2',['../class_gwk_1_1_input_1_1_s_d_l2.html',1,'Gwk::Input::SDL2'],['../class_gwk_1_1_renderer_1_1_s_d_l2.html',1,'Gwk::Renderer::SDL2']]],
+  ['sdl2',['SDL2',['../class_gwk_1_1_renderer_1_1_s_d_l2.html',1,'Gwk::Renderer::SDL2'],['../class_gwk_1_1_input_1_1_s_d_l2.html',1,'Gwk::Input::SDL2']]],
   ['sdl2resourceloader',['SDL2ResourceLoader',['../class_gwk_1_1_renderer_1_1_s_d_l2_resource_loader.html',1,'Gwk::Renderer']]],
   ['sfml',['SFML',['../class_gwk_1_1_input_1_1_s_f_m_l.html',1,'Gwk::Input']]],
   ['sfml2',['SFML2',['../class_gwk_1_1_renderer_1_1_s_f_m_l2.html',1,'Gwk::Renderer']]],
@@ -19,14 +19,5 @@ var searchData=
   ['splitterhorizontal',['SplitterHorizontal',['../class_gwk_1_1_controls_1_1_splitter_horizontal.html',1,'Gwk::Controls']]],
   ['splittervertical',['SplitterVertical',['../class_gwk_1_1_controls_1_1_splitter_vertical.html',1,'Gwk::Controls']]],
   ['statusbar',['StatusBar',['../class_gwk_1_1_controls_1_1_status_bar.html',1,'Gwk::Controls']]],
-  ['stbi_5fio_5fcallbacks',['stbi_io_callbacks',['../structstbi__io__callbacks.html',1,'']]],
-  ['stbtt_5f_5fbitmap',['stbtt__bitmap',['../structstbtt____bitmap.html',1,'']]],
-  ['stbtt_5faligned_5fquad',['stbtt_aligned_quad',['../structstbtt__aligned__quad.html',1,'']]],
-  ['stbtt_5fbakedchar',['stbtt_bakedchar',['../structstbtt__bakedchar.html',1,'']]],
-  ['stbtt_5ffontinfo',['stbtt_fontinfo',['../structstbtt__fontinfo.html',1,'']]],
-  ['stbtt_5fpack_5fcontext',['stbtt_pack_context',['../structstbtt__pack__context.html',1,'']]],
-  ['stbtt_5fpack_5frange',['stbtt_pack_range',['../structstbtt__pack__range.html',1,'']]],
-  ['stbtt_5fpackedchar',['stbtt_packedchar',['../structstbtt__packedchar.html',1,'']]],
-  ['stbtt_5fvertex',['stbtt_vertex',['../structstbtt__vertex.html',1,'']]],
   ['subrect',['SubRect',['../struct_gwk_1_1_skin_1_1_texturing_1_1_bordered.html#struct_gwk_1_1_skin_1_1_texturing_1_1_bordered_1_1_sub_rect',1,'Gwk::Skin::Texturing::Bordered']]]
 ];

@@ -94,7 +94,7 @@ Inheritance diagram for Gwk::Renderer::GDIPlus:</div>
  <div class="center">
   <img src="class_gwk_1_1_renderer_1_1_g_d_i_plus.png" usemap="#Gwk::Renderer::GDIPlus_map" alt=""/>
   <map id="Gwk::Renderer::GDIPlus_map" name="Gwk::Renderer::GDIPlus_map">
-<area href="class_gwk_1_1_renderer_1_1_base.html" alt="Gwk::Renderer::Base" shape="rect" coords="0,0,195,24"/>
+<area href="class_gwk_1_1_renderer_1_1_base.html" title="Base class for all renderer implementations. " alt="Gwk::Renderer::Base" shape="rect" coords="0,0,195,24"/>
 <area href="class_gwk_1_1_renderer_1_1_g_d_i_plus_buffered.html" alt="Gwk::Renderer::GDIPlusBuffered" shape="rect" coords="0,112,195,136"/>
 </map>
  </div></div>
@@ -111,10 +111,12 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>Begin</b> ()<
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>End</b> ()</td></tr>
 <tr class="separator:a676eb00f72c594720da36a04c0164cc9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1465ef74a2c37661c9242dc01b170821"><td class="memItemLeft" align="right" valign="top"><a id="a1465ef74a2c37661c9242dc01b170821"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>SetDrawColor</b> (<a class="el" href="struct_gwk_1_1_color.html">Gwk::Color</a> color)</td></tr>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_gwk_1_1_renderer_1_1_g_d_i_plus.html#a1465ef74a2c37661c9242dc01b170821">SetDrawColor</a> (<a class="el" href="struct_gwk_1_1_color.html">Gwk::Color</a> color)</td></tr>
+<tr class="memdesc:a1465ef74a2c37661c9242dc01b170821"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the current drawing color. <br /></td></tr>
 <tr class="separator:a1465ef74a2c37661c9242dc01b170821"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaf1aacca35df2b6f4a476af553199cb7"><td class="memItemLeft" align="right" valign="top"><a id="aaf1aacca35df2b6f4a476af553199cb7"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>DrawFilledRect</b> (<a class="el" href="struct_gwk_1_1_rect.html">Gwk::Rect</a> rect)</td></tr>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_gwk_1_1_renderer_1_1_g_d_i_plus.html#aaf1aacca35df2b6f4a476af553199cb7">DrawFilledRect</a> (<a class="el" href="struct_gwk_1_1_rect.html">Gwk::Rect</a> rect)</td></tr>
+<tr class="memdesc:aaf1aacca35df2b6f4a476af553199cb7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Draw a filled rectangle using the current color. <br /></td></tr>
 <tr class="separator:aaf1aacca35df2b6f4a476af553199cb7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab9f0951a157b5a6acc4227b8b2b2193d"><td class="memItemLeft" align="right" valign="top"><a id="ab9f0951a157b5a6acc4227b8b2b2193d"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>LoadFont</b> (<a class="el" href="struct_gwk_1_1_font.html">Gwk::Font</a> *font)</td></tr>
@@ -128,11 +130,12 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>RenderText</b
 <tr class="memitem:a245b2ed7167fca799fa4b1699f3dd938"><td class="memItemLeft" align="right" valign="top"><a id="a245b2ed7167fca799fa4b1699f3dd938"></a>
 virtual <a class="el" href="struct_gwk_1_1_point.html">Gwk::Point</a>&#160;</td><td class="memItemRight" valign="bottom"><b>MeasureText</b> (<a class="el" href="struct_gwk_1_1_font.html">Gwk::Font</a> *font, const Gwk::String &amp;text)</td></tr>
 <tr class="separator:a245b2ed7167fca799fa4b1699f3dd938"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acaeb8796d3605528e5c3eb3c707ccced"><td class="memItemLeft" align="right" valign="top"><a id="acaeb8796d3605528e5c3eb3c707ccced"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>StartClip</b> ()</td></tr>
+<tr class="memitem:acaeb8796d3605528e5c3eb3c707ccced"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_gwk_1_1_renderer_1_1_g_d_i_plus.html#acaeb8796d3605528e5c3eb3c707ccced">StartClip</a> ()</td></tr>
+<tr class="memdesc:acaeb8796d3605528e5c3eb3c707ccced"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start clipping the drawing.  <a href="#acaeb8796d3605528e5c3eb3c707ccced">More...</a><br /></td></tr>
 <tr class="separator:acaeb8796d3605528e5c3eb3c707ccced"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a08961f3d83e41b1dd8cc237bc28b2f1e"><td class="memItemLeft" align="right" valign="top"><a id="a08961f3d83e41b1dd8cc237bc28b2f1e"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>EndClip</b> ()</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_gwk_1_1_renderer_1_1_g_d_i_plus.html#a08961f3d83e41b1dd8cc237bc28b2f1e">EndClip</a> ()</td></tr>
+<tr class="memdesc:a08961f3d83e41b1dd8cc237bc28b2f1e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stop clipping the drawing. <br /></td></tr>
 <tr class="separator:a08961f3d83e41b1dd8cc237bc28b2f1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0ef60813905892cac35ef66e66d2a52a"><td class="memItemLeft" align="right" valign="top"><a id="a0ef60813905892cac35ef66e66d2a52a"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>DrawTexturedRect</b> (<a class="el" href="struct_gwk_1_1_texture.html">Gwk::Texture</a> *texture, <a class="el" href="struct_gwk_1_1_rect.html">Gwk::Rect</a> targetRect, float u1=0.0f, float v1=0.0f, float u2=1.0f, float v2=1.0f)</td></tr>
@@ -169,8 +172,21 @@ virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>EndContext</b
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>Init</b> ()</td></tr>
 <tr class="separator:a3e9db73821a8897c7b75b922b09845f8 inherit pub_methods_class_gwk_1_1_renderer_1_1_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7ab5b243558038b83a3173f4cc9272ed inherit pub_methods_class_gwk_1_1_renderer_1_1_base"><td class="memItemLeft" align="right" valign="top"><a id="a7ab5b243558038b83a3173f4cc9272ed"></a>
-<a class="el" href="class_gwk_1_1_resource_loader.html">ResourceLoader</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>GetLoader</b> ()</td></tr>
+<a class="el" href="class_gwk_1_1_resource_loader.html">ResourceLoader</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_gwk_1_1_renderer_1_1_base.html#a7ab5b243558038b83a3173f4cc9272ed">GetLoader</a> ()</td></tr>
+<tr class="memdesc:a7ab5b243558038b83a3173f4cc9272ed inherit pub_methods_class_gwk_1_1_renderer_1_1_base"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get <a class="el" href="class_gwk_1_1_resource_loader.html">ResourceLoader</a> we are using for the renderer. <br /></td></tr>
 <tr class="separator:a7ab5b243558038b83a3173f4cc9272ed inherit pub_methods_class_gwk_1_1_renderer_1_1_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6c74730386e11dd6e778b8fcc367e1c3 inherit pub_methods_class_gwk_1_1_renderer_1_1_base"><td class="memItemLeft" align="right" valign="top"><a id="a6c74730386e11dd6e778b8fcc367e1c3"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>SetClipRegion</b> (<a class="el" href="struct_gwk_1_1_rect.html">Gwk::Rect</a> const &amp;rect)</td></tr>
+<tr class="separator:a6c74730386e11dd6e778b8fcc367e1c3 inherit pub_methods_class_gwk_1_1_renderer_1_1_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6440ed4adff033216843e0ced592d162 inherit pub_methods_class_gwk_1_1_renderer_1_1_base"><td class="memItemLeft" align="right" valign="top"><a id="a6440ed4adff033216843e0ced592d162"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>AddClipRegion</b> (<a class="el" href="struct_gwk_1_1_rect.html">Gwk::Rect</a> rect)</td></tr>
+<tr class="separator:a6440ed4adff033216843e0ced592d162 inherit pub_methods_class_gwk_1_1_renderer_1_1_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a52cf54ff602ecf324d9abcf13a44d845 inherit pub_methods_class_gwk_1_1_renderer_1_1_base"><td class="memItemLeft" align="right" valign="top"><a id="a52cf54ff602ecf324d9abcf13a44d845"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>ClipRegionVisible</b> ()</td></tr>
+<tr class="separator:a52cf54ff602ecf324d9abcf13a44d845 inherit pub_methods_class_gwk_1_1_renderer_1_1_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adb169374e63ebfbdd153c0cf583e277e inherit pub_methods_class_gwk_1_1_renderer_1_1_base"><td class="memItemLeft" align="right" valign="top"><a id="adb169374e63ebfbdd153c0cf583e277e"></a>
+const <a class="el" href="struct_gwk_1_1_rect.html">Gwk::Rect</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>ClipRegion</b> () const</td></tr>
+<tr class="separator:adb169374e63ebfbdd153c0cf583e277e inherit pub_methods_class_gwk_1_1_renderer_1_1_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afe1f7a4c0259a0d9a339fdf303703e02 inherit pub_methods_class_gwk_1_1_renderer_1_1_base"><td class="memItemLeft" align="right" valign="top"><a id="afe1f7a4c0259a0d9a339fdf303703e02"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>DrawMissingImage</b> (<a class="el" href="struct_gwk_1_1_rect.html">Gwk::Rect</a> targetRect)</td></tr>
 <tr class="separator:afe1f7a4c0259a0d9a339fdf303703e02 inherit pub_methods_class_gwk_1_1_renderer_1_1_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -200,18 +216,6 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>AddRenderOffset</b> (
 <tr class="memitem:a978cbd9c166b9cde2eeb59b88ad5d820 inherit pub_methods_class_gwk_1_1_renderer_1_1_base"><td class="memItemLeft" align="right" valign="top"><a id="a978cbd9c166b9cde2eeb59b88ad5d820"></a>
 const <a class="el" href="struct_gwk_1_1_point.html">Gwk::Point</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>GetRenderOffset</b> () const</td></tr>
 <tr class="separator:a978cbd9c166b9cde2eeb59b88ad5d820 inherit pub_methods_class_gwk_1_1_renderer_1_1_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a24a8a79f9a837eb3d83b9bda683cd536 inherit pub_methods_class_gwk_1_1_renderer_1_1_base"><td class="memItemLeft" align="right" valign="top"><a id="a24a8a79f9a837eb3d83b9bda683cd536"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>SetClipRegion</b> (<a class="el" href="struct_gwk_1_1_rect.html">Gwk::Rect</a> rect)</td></tr>
-<tr class="separator:a24a8a79f9a837eb3d83b9bda683cd536 inherit pub_methods_class_gwk_1_1_renderer_1_1_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6440ed4adff033216843e0ced592d162 inherit pub_methods_class_gwk_1_1_renderer_1_1_base"><td class="memItemLeft" align="right" valign="top"><a id="a6440ed4adff033216843e0ced592d162"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>AddClipRegion</b> (<a class="el" href="struct_gwk_1_1_rect.html">Gwk::Rect</a> rect)</td></tr>
-<tr class="separator:a6440ed4adff033216843e0ced592d162 inherit pub_methods_class_gwk_1_1_renderer_1_1_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a52cf54ff602ecf324d9abcf13a44d845 inherit pub_methods_class_gwk_1_1_renderer_1_1_base"><td class="memItemLeft" align="right" valign="top"><a id="a52cf54ff602ecf324d9abcf13a44d845"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>ClipRegionVisible</b> ()</td></tr>
-<tr class="separator:a52cf54ff602ecf324d9abcf13a44d845 inherit pub_methods_class_gwk_1_1_renderer_1_1_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adb169374e63ebfbdd153c0cf583e277e inherit pub_methods_class_gwk_1_1_renderer_1_1_base"><td class="memItemLeft" align="right" valign="top"><a id="adb169374e63ebfbdd153c0cf583e277e"></a>
-const <a class="el" href="struct_gwk_1_1_rect.html">Gwk::Rect</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>ClipRegion</b> () const</td></tr>
-<tr class="separator:adb169374e63ebfbdd153c0cf583e277e inherit pub_methods_class_gwk_1_1_renderer_1_1_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4a730b91f84550ef593a78e8c3724967 inherit pub_methods_class_gwk_1_1_renderer_1_1_base"><td class="memItemLeft" align="right" valign="top"><a id="a4a730b91f84550ef593a78e8c3724967"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>SetScale</b> (float fScale)</td></tr>
 <tr class="separator:a4a730b91f84550ef593a78e8c3724967 inherit pub_methods_class_gwk_1_1_renderer_1_1_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -261,7 +265,38 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>EnsureFont</b> (<a cl
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Render for <a href="https://msdn.microsoft.com/en-us/library/windows/desktop/ms533798(v=vs.85).aspx">GDI+</a>.</p>
 <p>GDI(plus) is pretty slow for rendering Gwork, because we're re-rendering everything on redraw. Therefore its usage should be as a test - rather than production. </p>
-</div><hr/>The documentation for this class was generated from the following file:<ul>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="acaeb8796d3605528e5c3eb3c707ccced"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acaeb8796d3605528e5c3eb3c707ccced">&#9670;&nbsp;</a></span>StartClip()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Gwk::Renderer::GDIPlus::StartClip </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Start clipping the drawing. </p>
+<dl class="section see"><dt>See also</dt><dd>SetClipRegion(). </dd></dl>
+
+<p>Reimplemented from <a class="el" href="class_gwk_1_1_renderer_1_1_base.html#a89cef4aebd7f6a382b88f4b0bf50657a">Gwk::Renderer::Base</a>.</p>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following file:<ul>
 <li><a class="el" href="_g_d_i_plus_8h_source.html">GDIPlus.h</a></li>
 </ul>
 </div><!-- contents -->
