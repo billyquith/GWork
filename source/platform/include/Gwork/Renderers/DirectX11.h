@@ -17,14 +17,36 @@ namespace Gwk
     namespace Renderer
     {
 
+        class DX11ResourceLoader : public ResourceLoader
+        {
+            ResourcePaths&      m_paths;
+            ID3D11Device*       m_pDevice;
+            Gwk::Font::List     m_FontList;
+
+        public:
+            DX11ResourceLoader(ResourcePaths& paths, ID3D11Device* pDevice)
+                :   m_paths(paths)
+                ,   m_pDevice(pDevice)
+            {}
+
+            Font::Status LoadFont(Font& font) override;
+            void FreeFont(Font& font) override;
+
+            Texture::Status LoadTexture(Texture& texture) override;
+            void FreeTexture(Texture& texture) override;
+        };
+
 #define GwkDxSafeRelease(var) if(var) {var->Release(); var = NULL;}
 
+        //
+        //! Renderer for [DirectX11](https://en.wikipedia.org/wiki/DirectX#DirectX_11).
+        //
         class GWK_EXPORT DirectX11 : public Gwk::Renderer::Base
         {
         public:
 
-            DirectX11(ID3D11Device* pDevice = NULL);
-            ~DirectX11();
+            DirectX11(ResourceLoader& loader, ID3D11Device* pDevice = NULL);
+            virtual ~DirectX11();
 
             virtual void Init();
 
@@ -36,8 +58,6 @@ namespace Gwk
 
             void DrawFilledRect(Gwk::Rect rect) final;
 
-            void LoadFont(Gwk::Font* pFont) final;
-            void FreeFont(Gwk::Font* pFont) final;
             void RenderText(Gwk::Font* pFont, Gwk::Point pos, const Gwk::String& text) final;
             Gwk::Point MeasureText(Gwk::Font* pFont, const Gwk::String& text) final;
 
@@ -46,13 +66,7 @@ namespace Gwk
 
             void DrawTexturedRect(Gwk::Texture* pTexture, Gwk::Rect pTargetRect,
                                   float u1 = 0.0f, float v1 = 0.0f, float u2 = 1.0f, float v2 = 1.0f) final;
-            void LoadTexture(Gwk::Texture* pTexture) final;
-            void FreeTexture(Gwk::Texture* pTexture) final;
             Gwk::Color PixelColor(Gwk::Texture* pTexture, unsigned int x, unsigned int y, const Gwk::Color& col_default) final;
-
-            //
-            // Self Initialization
-            //
 
             //virtual bool InitializeContext(Gwk::WindowProvider* pWindow) final;
             //virtual bool ShutdownContext(Gwk::WindowProvider* pWindow) final;
@@ -65,10 +79,9 @@ namespace Gwk
 
             //virtual void FillPresentParameters(Gwk::WindowProvider* pWindow, DXGI_SWAP_CHAIN_DESC & Params);
 
-            FLOAT               width, height;
-            DWORD               m_Color;
-            Gwk::Font::List     m_FontList;
-            bool m_Valid;
+            FLOAT                   width, height;
+            DWORD                   m_Color;
+            bool                    m_Valid;
 
             //Rendering
             ID3D11Device*           m_pDevice;
@@ -97,7 +110,7 @@ namespace Gwk
             ID3D11ShaderResourceView* m_pLastTexture[8];
             ID3D11DepthStencilState* m_LastDepthState;
             ID3D11RasterizerState*  m_pUILastRasterizerState;
-            D3D11_RECT region;
+            D3D11_RECT              region;
 
             void Flush();
             void Present();

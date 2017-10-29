@@ -146,7 +146,6 @@ static void CreateD3DDevice()
     vp.TopLeftX = 0;
     vp.TopLeftY = 0;
     g_pImmediateContext->RSSetViewports(1, &vp);
-
 }
 
 //
@@ -155,44 +154,40 @@ static void CreateD3DDevice()
 int main( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCmdShow )
 {
     SetCurrentDirectory(Gwk::Platform::GetExecutableDir().c_str()); 
-    //
-    // Create a window and attach directx to it
-    //
+
+    // Create a window and attach DirectX to it
     g_pHWND = CreateGameWindow();
     CreateD3DDevice();
     RECT FrameBounds;
     GetClientRect( g_pHWND, &FrameBounds );
-    //
+
+    // Create resource path calculator and loader.
+    Gwk::Platform::RelativeToExecutablePaths paths(GWORK_RESOURCE_DIR);
+    Gwk::Renderer::DX11ResourceLoader loader(paths, g_pd3dDevice);
+
     // Create a GWork DirectX renderer
-    //
-    Gwk::Renderer::DirectX11* pRenderer = new Gwk::Renderer::DirectX11(g_pd3dDevice);
-    //
+    Gwk::Renderer::DirectX11* pRenderer = new Gwk::Renderer::DirectX11(loader, g_pd3dDevice);
+
     // Create a GWork skin
-    //
     Gwk::Skin::TexturedBase* pSkin = new Gwk::Skin::TexturedBase( pRenderer );
     pSkin->Init( "DefaultSkin.png" );
-    //
+
     // Create a Canvas (it's root, on which all other Gwork panels are created)
-    //
     Gwk::Controls::Canvas* pCanvas = new Gwk::Controls::Canvas( pSkin );
     pCanvas->SetSize( FrameBounds.right, FrameBounds.bottom );
     pCanvas->SetDrawBackground( true );
     pCanvas->SetBackgroundColor( Gwk::Color( 150, 170, 170, 255 ) );
-    //
+
     // Create our unittest control (which is a Window with controls in it)
-    //
     auto pUnit = new TestFrame(pCanvas);
     pUnit->SetPos(10, 10);
-    //
+
     // Create a Windows Control helper
     // (Processes Windows MSG's and fires input at Gwork)
-    //
     Gwk::Input::Windows input(pCanvas);
-    //
-    // Begin the main game loop
-    //
-    MSG msg;
 
+    // Begin the main game loop
+    MSG msg;
     while ( true )
     {
         // Skip out if the window is closed
