@@ -69,9 +69,9 @@ namespace Gwk
             virtual void EndClip() {}       //!< Stop clipping the drawing.
             
             void    SetClipRegion(Gwk::Rect const& rect);
-            void    AddClipRegion(Gwk::Rect const& rect);
+            void    AddClipRegion(Gwk::Rect rect);
             bool    ClipRegionVisible();
-            const Gwk::Rect&    ClipRegion() const;
+            const Gwk::Rect& ClipRegion() const;
             
             //! Draw a filled rectangle using the current color.
             virtual void DrawFilledRect(Gwk::Rect rect) {}

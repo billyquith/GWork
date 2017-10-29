@@ -127,6 +127,9 @@ void SDL2::SetDrawColor(Gwk::Color color)
 
 void SDL2::RenderText(Gwk::Font* font, Gwk::Point pos, const Gwk::String& text)
 {
+    if (!EnsureFont(*font))
+        return;
+    
     TTF_Font *tfont = static_cast<TTF_Font*>(font->data);
     Translate(pos.x, pos.y);
     

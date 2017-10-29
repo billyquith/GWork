@@ -91,12 +91,11 @@ void Gwk::Renderer::Base::SetClipRegion(Gwk::Rect const& rect)
     m_rectClipRegion = rect;
 }
 
-void Base::AddClipRegion(Gwk::Rect const& rect)
+void Base::AddClipRegion(Gwk::Rect rect)
 {
-    auto out(rect);
-    
-    out.x = m_renderOffset.x;
-    out.y = m_renderOffset.y;
+    rect.x = m_renderOffset.x;
+    rect.y = m_renderOffset.y;
+    Gwk::Rect out = rect;
 
     if (rect.x < m_rectClipRegion.x)
     {
