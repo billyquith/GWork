@@ -21,6 +21,9 @@ namespace Gwk
 {
     namespace Renderer
     {
+        //
+        //! Renderer for DirectX9. 
+        //        
         class GWK_EXPORT DirectX9 : public Gwk::Renderer::Base
         {
         public:

@@ -18,10 +18,10 @@
 
 // Some platforms (e.g. Windows) define these. We want std::min/max.
 #ifdef min
-#undef min
+#   undef min
 #endif
 #ifdef max
-#undef max
+#   undef max
 #endif
 
 namespace Gwk
@@ -36,6 +36,7 @@ namespace Gwk
         GWK_EXPORT int vsnwprintf(wchar_t* _str, size_t _count, const wchar_t* _format, va_list _argList);
         GWK_EXPORT int snprintf(char* _str, size_t _count, const char* _format, ...);
         GWK_EXPORT int swnprintf(wchar_t* _out, size_t _count, const wchar_t* _format, ...);
+        
         GWK_EXPORT void PrintfVargs(String& _out, const char* _format, va_list _argList);
         GWK_EXPORT void Printf(String& _out, const char* _format, ...);
         GWK_EXPORT String Format(const char* fmt, ...);
@@ -89,7 +90,7 @@ namespace Gwk
     namespace Debug
     {
         GWK_EXPORT void Msg(const char* str, ...);
-#ifdef UNICODE
+#if defined(WIN32) && defined(UNICODE)
         GWK_EXPORT void Msg(const wchar_t* str, ...);
 #endif
         GWK_EXPORT void AssertCheck(bool b, const char* strMsg);

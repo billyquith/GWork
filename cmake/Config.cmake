@@ -3,7 +3,7 @@
 
 # Version
 set(GWK_VERSION_MAJOR 0)
-set(GWK_VERSION_MINOR 2)
+set(GWK_VERSION_MINOR 3)
 set(GWK_VERSION_PATCH 0)
 set(GWK_BRANCH "Dev")       # Dev or Release
 set(GWK_VERSION_STR "${GWK_VERSION_MAJOR}.${GWK_VERSION_MINOR}.${GWK_VERSION_PATCH} ${GWK_BRANCH}")
@@ -14,10 +14,10 @@ message("Project version: ${GWK_VERSION_STR}")
 
 # Windows only
 if(WIN32)
-    # TODO: Direct2D and GDI+ are partially working - use cross platform, or fix!
-    # option(RENDER_DIRECT2D  "Renderer: Direct2D" OFF)
-    # TODO: option(RENDER_DIRECTX9  "Renderer: DirectX9" OFF)
-    # option(RENDER_GDIPLUS   "Renderer: GDIPlus" OFF)    
+    option(RENDER_DIRECT2D   "Renderer: Direct2D" OFF)
+    # option(RENDER_DIRECTX9  "Renderer: DirectX9" OFF) - Deprecated?
+    option(RENDER_DIRECTX11  "Renderer: DirectX11" OFF)
+    # option(RENDER_GDIPLUS   "Renderer: GDIPlus" OFF)
 endif()
 
 # Cross-platform
@@ -37,7 +37,8 @@ option(WANT_ALLOC_STATS         "Track memory allocations" OFF)
 #-----------------------------------------------------------
 # Configure once options known
 
-set(GWK_PLATFORM_NAME "Null")   # default/fallback platform
+set(GWK_PLATFORM_NAME "Null")       # default/fallback platform
+set(GWK_TARGET_ARCH "Unknown")      # default architecture e.g. x86, x64
 
 # Set the default build type to release with debug info
 if(NOT CMAKE_BUILD_TYPE)
@@ -57,6 +58,14 @@ set(BUILD_SHARED_LIBS FALSE)
 # define install directory for miscelleneous files
 if(WIN32 AND NOT UNIX)
     set(INSTALL_MISC_DIR .)
+    
+    # Determine the target architecture, which is useful for linking.
+    if (CMAKE_GENERATOR MATCHES "Win64")
+        set(GWK_TARGET_ARCH "x64")
+    else()
+        set(GWK_TARGET_ARCH "x86")
+    endif()
+    message(STATUS "Generator: ${CMAKE_GENERATOR}. Architecture: ${GWK_TARGET_ARCH}")
 elseif(UNIX)
     set(INSTALL_MISC_DIR share/gwork)
 endif()
@@ -101,6 +110,23 @@ if(RENDER_DIRECT2D)
     set(GWK_INPUT_NAME "Windows")
 endif(RENDER_DIRECT2D)
 
+if(RENDER_DIRECTX9)
+    set(GWK_RENDER_NAME "DirectX9")
+    find_package(DirectX REQUIRED)
+    set(GWK_RENDER_INCLUDES "${DIRECTX_INCLUDE_DIRS}")
+    set(GWK_RENDER_LIBRARIES "${DIRECTX_LIBRARIES}")
+    set(GWK_INPUT_NAME "Windows")
+endif(RENDER_DIRECTX9)
+
+if(RENDER_DIRECTX11)
+    set(GWK_RENDER_NAME "DirectX11")
+    find_package(DirectX11 REQUIRED)
+    set(GWK_RENDER_INCLUDES "${DIRECTX_INCLUDE_DIRS}")
+    set(GWK_RENDER_LIBRARIES "${DIRECTX_LIBRARIES}")
+    set(GWK_PLATFORM_NAME "Windows")
+    set(GWK_INPUT_NAME "Windows")
+endif(RENDER_DIRECTX11)
+
 if(RENDER_NULL)
     set(GWK_RENDER_NAME "Null")
     set(GWK_RENDER_INCLUDES "")
@@ -132,7 +158,7 @@ if(RENDER_SDL2)
 endif(RENDER_SDL2)
 
 if(RENDER_SFML2)
-    set(SFML_STATIC_LIBRARIES FALSE)
+    set(SFML_STATIC_LIBRARIES FALSE) # But note we edited FindSFML...
     find_package(SFML 2 COMPONENTS system window graphics REQUIRED)
     if(NOT SFML_FOUND)
         message(FATAL_ERROR "SFML2 is missing components")
@@ -144,6 +170,8 @@ endif(RENDER_SFML2)
 
 #-----------------------------------------------------------
 # Sanity checks and summary
+
+set(GWK_LIB_DEFINES "-DGWK_PLATFORM_${GWK_PLATFORM_NAME}=1 -DGWK_RENDER_${GWK_RENDER_NAME}=1")
 
 if(NOT GWK_INPUT_NAME)
     set(GWK_INPUT_NAME ${GWK_RENDER_NAME})
@@ -160,6 +188,6 @@ if(GWK_RENDER_LIBRARIES)
     list(REMOVE_DUPLICATES GWK_RENDER_LIBRARIES)
 endif()
 
-message("Using renderer ${GWK_RENDER_NAME} on platform ${GWK_PLATFORM_NAME}")
-message("${GWK_RENDER_NAME} includes: ${GWK_RENDER_INCLUDES}")
-message("${GWK_RENDER_NAME} libs: ${GWK_RENDER_LIBRARIES}")
+message(STATUS "Using renderer ${GWK_RENDER_NAME} on platform ${GWK_PLATFORM_NAME}")
+message(STATUS "${GWK_RENDER_NAME} includes: ${GWK_RENDER_INCLUDES}")
+message(STATUS "${GWK_RENDER_NAME} libs: ${GWK_RENDER_LIBRARIES}")

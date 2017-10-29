@@ -49,13 +49,8 @@ namespace Gwk
 
             virtual void ReleaseFont(Gwk::Font* fnt)
             {
-                if (!fnt)
-                    return;
-
-                if (!m_render)
-                    return;
-
-                m_render->FreeFont(fnt);
+                if (fnt && m_render)
+                    m_render->GetLoader().FreeFont(*fnt);
             }
 
             virtual void DrawGenericPanel(Controls::Base* control) = 0;

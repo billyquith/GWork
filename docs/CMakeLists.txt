@@ -60,7 +60,6 @@ if(DOXYGEN_FOUND)
     set(DOXYGEN_CODE_DIRS
         ${DOXYGEN_INPUT_DIR}/platform/include
         ${DOXYGEN_INPUT_DIR}/gwork/include
-        ${DOXYGEN_INPUT_DIR}/util/include
         ${DOXYGEN_INPUT_DIR}/test/include
     )
     
@@ -72,6 +71,7 @@ if(DOXYGEN_FOUND)
     set(DOC_PROJECT_BRIEF "GUI")
     set(DOC_LOGO "${CMAKE_CURRENT_SOURCE_DIR}/images/logo1.png")
     set(DOC_FILE_PATTERNS "*.c *.cpp *.h *.hpp *.dox")
+    set(DOC_EXCLUDE_PATTERNS "stb_*.h")
     STRING(REPLACE ";" " " DOC_INPUT "${DOXYGEN_INPUT_DIRS}") # want space separated
     STRING(REPLACE ";" " " DOC_MACRO_DIRS "${DOXYGEN_CODE_DIRS}") # want space separated
     set(DOC_STYLESHEET "${CMAKE_CURRENT_SOURCE_DIR}/style/gwkstyle.css")

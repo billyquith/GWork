@@ -13,12 +13,29 @@
 namespace Gwk
 {
     namespace Renderer
-    {
-        class OpenGL : public Gwk::Renderer::Base
+    {        
+        //! Default resource loader for Allegro5.
+        class OpenGLResourceLoader : public ResourceLoader
+        {
+            ResourcePaths& m_paths;
+        public:
+            OpenGLResourceLoader(ResourcePaths& paths) : m_paths(paths) {}
+            
+            Font::Status LoadFont(Font& font) override;
+            void FreeFont(Font& font) override;
+            
+            Texture::Status LoadTexture(Texture& texture) override;
+            void FreeTexture(Texture& texture) override;
+        };
+
+        //
+        //! Renderer for [OpenGL](https://www.opengl.org/).
+        //
+        class GWK_EXPORT OpenGL : public Gwk::Renderer::Base
         {
         public:
 
-            OpenGL(const Gwk::Rect& viewRect);
+            OpenGL(ResourceLoader& loader, const Gwk::Rect& viewRect);
             virtual ~OpenGL();
 
             void Init() override;
@@ -34,16 +51,11 @@ namespace Gwk
 
             void DrawTexturedRect(Gwk::Texture* texture, Gwk::Rect targetRect, float u1 = 0.0f,
                                   float v1 = 0.0f, float u2 = 1.0f, float v2 = 1.0f) override;
-            void LoadTexture(Gwk::Texture* texture) override;
-            void FreeTexture(Gwk::Texture* texture) override;
             
             Gwk::Color PixelColor(Gwk::Texture* texture,
                                    unsigned int x, unsigned int y,
                                    const Gwk::Color& col_default) override;
 
-            void LoadFont(Gwk::Font* font) override;
-            void FreeFont(Gwk::Font* font) override;
-            
             void RenderText(Gwk::Font* font,
                             Gwk::Point pos,
                             const Gwk::String& text) override;

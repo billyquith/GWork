@@ -18,8 +18,9 @@ namespace Gwk
 namespace Renderer
 {
     
-Base::Base()
+Base::Base(ResourceLoader& loader)
 :   m_fScale(1.0f)
+,   m_loader(loader)
 ,   m_renderOffset(Gwk::Point(0, 0))
 ,   m_RTT(nullptr)
 {
@@ -85,7 +86,7 @@ void Base::Translate(Gwk::Rect& rect)
     rect.h = std::ceil(float(rect.h) * m_fScale);
 }
 
-void Gwk::Renderer::Base::SetClipRegion(Gwk::Rect rect)
+void Gwk::Renderer::Base::SetClipRegion(Gwk::Rect const& rect)
 {
     m_rectClipRegion = rect;
 }
@@ -134,6 +135,22 @@ void Base::DrawMissingImage(Gwk::Rect targetRect)
 {
     SetDrawColor(Colors::Red);
     DrawFilledRect(targetRect);
+}
+
+bool Base::EnsureFont(Font& font)
+{
+    // If the font doesn't exist, or the font size should be changed
+    if (font.status == Font::Status::Unloaded
+        || (font.status == Font::Status::Loaded && font.realsize != font.size*Scale()))
+    {
+        GetLoader().FreeFont(font);
+        
+        font.realsize = font.size * Scale();
+        
+        GetLoader().LoadFont(font);
+    }
+    
+    return font.status == Font::Status::Loaded;
 }
 
 ///  If they haven't defined these font functions in their renderer code

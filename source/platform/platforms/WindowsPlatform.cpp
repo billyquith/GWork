@@ -5,17 +5,12 @@
 *  See license in Gwork.h
  */
 
-#ifdef GWK_PLATFORM_WINDOWS
+#include <windows.h>
 
-#ifndef _WIN32_WINNT
-#define _WIN32_WINNT 0x06000000
-#else
-#if _WIN32_WINNT < 0x06000000
-#error Unsupported platform
-#endif
+#if !defined(_WIN32_WINNT) || (_WIN32_WINNT < _WIN32_WINNT_VISTA)
+#   error Unsupported platform
 #endif
 
-#include <Gwork/Macros.h>
 #include <Gwork/Utility.h>
 #include <Gwork/Platform.h>
 #include <Gwork/Input/Windows.h>
@@ -24,13 +19,16 @@
 #include <ShlObj.h>
 #include <Shobjidl.h>
 
+#undef min
+#undef max
+
 using namespace Gwk;
 using namespace Gwk::Platform;
 
 static const size_t FILESTRING_SIZE = 256;
 static const size_t FILTERBUFFER_SIZE = 512;
 
-static Gwk::Input::Windows GworkInput;
+//static Gwk::Input::Windows g_input;
 
 static LPCTSTR iCursorConversion[] =
 {
@@ -68,12 +66,12 @@ void Gwk::Platform::GetDesktopSize(int& w, int& h)
 
 Gwk::String Gwk::Platform::GetClipboardText()
 {
-    if (!OpenClipboard(nullptr))
+    if (!OpenClipboard(NULL))
         return "";
 
     HANDLE hData = GetClipboardData(CF_UNICODETEXT);
 
-    if (hData == nullptr)
+    if (hData == NULL)
     {
         CloseClipboard();
         return "";
@@ -89,7 +87,7 @@ Gwk::String Gwk::Platform::GetClipboardText()
 
 bool Gwk::Platform::SetClipboardText(const Gwk::String& str)
 {
-    if (!OpenClipboard(nullptr))
+    if (!OpenClipboard(NULL))
         return false;
 
     EmptyClipboard();
@@ -112,37 +110,6 @@ bool Gwk::Platform::SetClipboardText(const Gwk::String& str)
     return true;
 }
 
-static double GetPerformanceFrequency()
-{
-    static double Frequency = 0.0f;
-
-    if (Frequency == 0.0f)
-    {
-        __int64 perfFreq;
-        QueryPerformanceFrequency((LARGE_INTEGER*)&perfFreq);
-        Frequency = 1.0 / perfFreq;
-    }
-
-    return Frequency;
-}
-
-float Gwk::Platform::GetTimeInSeconds()
-{
-    static float fCurrentTime = 0.0f;
-    static __int64 iLastTime = 0;
-    __int64 thistime;
-
-    QueryPerformanceCounter((LARGE_INTEGER*)&thistime);
-    double fSecondsDifference = (thistime-iLastTime)*GetPerformanceFrequency();
-
-    if (fSecondsDifference > 0.1)
-        fSecondsDifference = 0.1;
-
-    fCurrentTime += fSecondsDifference;
-    iLastTime = thistime;
-    return fCurrentTime;
-}
-
 bool Gwk::Platform::FileOpen(const String& Name, const String& StartPath, const String& Extension,
                              String& filePathOut)
 {
@@ -152,7 +119,7 @@ bool Gwk::Platform::FileOpen(const String& Name, const String& StartPath, const 
     {
         memset(FilterBuffer, 0, sizeof(FilterBuffer));
         memcpy(FilterBuffer, Extension.c_str(),
-               Gwk::Min(Extension.length(), sizeof(FilterBuffer)));
+               std::min(Extension.length(), sizeof(FilterBuffer)));
 
         for (int i = 0; i < FILTERBUFFER_SIZE; i++)
         {
@@ -183,10 +150,7 @@ bool Gwk::Platform::FileOpen(const String& Name, const String& StartPath, const 
 
     if (GetOpenFileNameA(&opf))
     {
-        if (handler && fnCallback)
-        {
-            filePathOut = opf.lpstrFile;
-        }
+        filePathOut = opf.lpstrFile;
     }
 
     return true;
@@ -227,10 +191,7 @@ bool Gwk::Platform::FolderOpen(const String& Name, const String& StartPath,
             if (psi->GetDisplayName(SIGDN_DESKTOPABSOLUTEPARSING, &strOut) != S_OK)
                 return bSuccess;
 
-            if (handler && fnCallback)
-            {
-                filePathOut = Utility::Narrow(strOut); // set result
-            }
+            filePathOut = Utility::Narrow(strOut); // set result
 
             CoTaskMemFree(strOut);
             psi->Release();
@@ -243,7 +204,7 @@ bool Gwk::Platform::FolderOpen(const String& Name, const String& StartPath,
 }
 
 bool Gwk::Platform::FileSave(const String& Name, const String& StartPath, const String& Extension,
-                             String& filePathOut);
+                             String& filePathOut)
 {
     char Filestring[FILESTRING_SIZE];
     String returnstring;
@@ -251,7 +212,7 @@ bool Gwk::Platform::FileSave(const String& Name, const String& StartPath, const 
     {
         memset(FilterBuffer, 0, sizeof(FilterBuffer));
         memcpy(FilterBuffer, Extension.c_str(),
-               Gwk::Min(Extension.size(), sizeof(FilterBuffer)));
+               std::min(Extension.size(), sizeof(FilterBuffer)));
 
         for (int i = 0; i < FILTERBUFFER_SIZE; i++)
         {
@@ -282,17 +243,14 @@ bool Gwk::Platform::FileSave(const String& Name, const String& StartPath, const 
 
     if (GetSaveFileNameA(&opf))
     {
-        if (handler && fnCallback)
-        {
-            filePathOut = opf.lpstrFile;
-        }
+        filePathOut = opf.lpstrFile;
     }
 
     return true;
 }
 
 void* Gwk::Platform::CreatePlatformWindow(int x, int y, int w, int h,
-                                           const Gwk::String& strWindowTitle)
+                                          const Gwk::String& strWindowTitle)
 {
     CoInitializeEx(nullptr, COINIT_APARTMENTTHREADED);
     WNDCLASSA wc;
@@ -325,33 +283,33 @@ void Gwk::Platform::DestroyPlatformWindow(void* ptr)
 
 bool Gwk::Platform::MessagePump(void* window)
 {
-    GworkInput.Initialize(ptarget);
-    MSG msg;
+    //g_input.Initialize(window);
+    //MSG msg;
 
-    while (PeekMessage(&msg, (HWND)window, 0, 0, PM_REMOVE))
-    {
-        if (GworkInput.ProcessMessage(msg))
-            continue;
+    //while (PeekMessage(&msg, (HWND)window, 0, 0, PM_REMOVE))
+    //{
+    //    if (g_input.ProcessMessage(msg))
+    //        continue;
 
-        if (msg.message == WM_PAINT)
-            ptarget->Redraw();
+    //    if (msg.message == WM_PAINT)
+    //        ptarget->Redraw();
 
-        TranslateMessage(&msg);
-        DispatchMessage(&msg);
-    }
+    //    TranslateMessage(&msg);
+    //    DispatchMessage(&msg);
+    //}
 
-    // If the active window has changed then force a redraw of our canvas
-    // since we might paint ourselves a different colour if we're inactive etc
-    {
-        static HWND g_lastFocus = nullptr;
+    //// If the active window has changed then force a redraw of our canvas
+    //// since we might paint ourselves a different colour if we're inactive etc
+    //{
+    //    static HWND g_lastFocus = NULL;
 
-        if (GetActiveWindow() != g_lastFocus)
-        {
-            g_lastFocus = GetActiveWindow();
-            return true;
-        }
-    }
-    
+    //    if (GetActiveWindow() != g_lastFocus)
+    //    {
+    //        g_lastFocus = GetActiveWindow();
+    //        return true;
+    //    }
+    //}
+    //
     return false;
 }
 
@@ -390,7 +348,7 @@ void Gwk::Platform::SetWindowMaximized(void* ptr, bool bMax, Gwk::Point& newPos,
         {
             RECT r;
             GetWindowRect((HWND)ptr, &r);
-            HRGN rgn = CreateRoundRectRgn(0, 0, (r.right-r.left)+1, (r.bottom-r.top)+1, 4, 4);
+            HRGN rgn = CreateRoundRectRgn(0, 0, (r.right - r.left)+1, (r.bottom - r.top)+1, 4, 4);
             SetWindowRgn((HWND)ptr, rgn, false);
         }
     }
@@ -416,9 +374,4 @@ bool Gwk::Platform::IsFocussedPlatformWindow(void* ptr)
     return GetActiveWindow() == (HWND)ptr;
 }
 
-void Gwk::Platform::Sleep(unsigned int iMS)
-{
-    ::Sleep(iMS);
-}
 
-#endif // GWK_PLATFORM_WINDOWS

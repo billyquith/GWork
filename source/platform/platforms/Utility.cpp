@@ -3,6 +3,10 @@
  *  Copyright (c) 2010 Facepunch Studios
  *  Copyright (c) 2013-17 Nick Trout
  *  See license in Gwork.h
+
+ *  Portions of this code from: https://github.com/bkaradzic/bx/blob/master/include/bx/string.h
+ *  Copyright 2010-2013 Branimir Karadzic. All rights reserved.
+ *  License: http://www.opensource.org/licenses/BSD-2-Clause
  */
 
 #include <Gwork/Utility.h>
@@ -42,32 +46,26 @@
 namespace Gwk {
 namespace Utility {
     
-//  This section from: https://github.com/bkaradzic/bx/blob/master/include/bx/string.h
-//
-//  Copyright 2010-2013 Branimir Karadzic. All rights reserved.
-//  License: http://www.opensource.org/licenses/BSD-2-Clause
-//
-
-/// Cross platform implementation of vsnprintf that returns number of
-/// characters which would have been written to the final string if
-/// enough space had been available.
+//! Cross platform implementation of vsnprintf that returns number of
+//! characters which would have been written to the final string if
+//! enough space had been available.
 int vsnprintf(char* _str, size_t _count, const char* _format, va_list _argList)
 {
 #if defined(_MSC_VER)
-    int len = ::vsnprintf_s(_str, _count, _count, _format, _argList);
+    const int len = ::vsnprintf_s(_str, _count, _count, _format, _argList);
     return -1 == len ? ::_vscprintf(_format, _argList) : len;
 #else
     return ::vsnprintf(_str, _count, _format, _argList);
 #endif
 }
 
-/// Cross platform implementation of vsnwprintf that returns number of
-/// characters which would have been written to the final string if
-/// enough space had been available.
+//! Cross platform implementation of vsnwprintf that returns number of
+//! characters which would have been written to the final string if
+//! enough space had been available.
 int vsnwprintf(wchar_t* _str, size_t _count, const wchar_t* _format, va_list _argList)
 {
 #if defined(_MSC_VER)
-    int len = ::_vsnwprintf_s(_str, _count, _count, _format, _argList);
+    const int len = ::_vsnwprintf_s(_str, _count, _count, _format, _argList);
     return -1 == len ? ::_vscwprintf(_format, _argList) : len;
 #elif defined(__MINGW32__)
     return ::vsnwprintf(_str, _count, _format, _argList);
@@ -80,7 +78,7 @@ int snprintf(char* _str, size_t _count, const char* _format, ...)
 {
     va_list argList;
     va_start(argList, _format);
-    int len = vsnprintf(_str, _count, _format, argList);
+    const int len = vsnprintf(_str, _count, _format, argList);
     va_end(argList);
     return len;
 }
@@ -89,7 +87,7 @@ int swnprintf(wchar_t* _out, size_t _count, const wchar_t* _format, ...)
 {
     va_list argList;
     va_start(argList, _format);
-    int len = vsnwprintf(_out, _count, _format, argList);
+    const int len = vsnwprintf(_out, _count, _format, argList);
     va_end(argList);
     return len;
 }
@@ -209,35 +207,42 @@ void Strings::Split(const Gwk::String& str, const Gwk::String& seperator,
 
 int Strings::To::Int(const Gwk::String& str)
 {
-    if (str == "")
+    if (str.empty())
         return 0;
     
-    return atoi(str.c_str());
+    return std::atoi(str.c_str());
 }
 
 float Strings::To::Float(const Gwk::String& str)
 {
-    if (str == "")
+    if (str.empty())
         return 0.0f;
     
-    return static_cast<float>( atof(str.c_str()) );
+    return std::atof(str.c_str());
 }
 
 bool Strings::To::Bool(const Gwk::String& str)
 {
     if (str.size() == 0)
         return false;
+
+    const char first = tolower(str[0]);
     
-    if (str[0] == 'T' || str[0] == 't' || str[0] == 'y' || str[0] == 'Y')
-        return true;
+    switch (first)
+    {
+        case 't':
+        case 'y':
+            return true;
+            
+        case 'f':
+        case 'n':
+            return false;
+            
+        default:
+            break;
+    }
     
-    if (str[0] == 'F' || str[0] == 'f' || str[0] == 'n' || str[0] == 'N')
-        return false;
-    
-    if (str[0] == '0')
-        return false;
-    
-    return true;
+    return To::Int(str) != 0;
 }
 
 bool Strings::To::Floats(const Gwk::String& str, float* f, size_t iCount)
@@ -295,7 +300,7 @@ void Strings::Strip(Gwk::String& str, const Gwk::String& chars)
     Gwk::String Source = str;
     str = "";
     
-    for (unsigned int i = 0; i < Source.length(); i++)
+    for (size_t i = 0; i < Source.length(); i++)
     {
         if (chars.find(Source[i]) != Gwk::String::npos)
             continue;
@@ -345,14 +350,14 @@ void Msg(const char* str, ...)
     Utility::vsnprintf(strOut, sizeof(strOut), str, s);
     va_end(s);
     
-#ifdef WIN32
+#if defined(WIN32)
     OutputDebugStringA(strOut);
 #else
     puts(strOut);
 #endif
 }
 
-#ifdef UNICODE
+#if defined(WIN32) && defined(UNICODE)
 void Msg(const wchar_t* str, ...)
 {
     wchar_t strOut[1024];

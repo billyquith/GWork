@@ -6,31 +6,8 @@
  */
 
 #include <Gwork/Platform.h>
-#ifdef _MSC_VER
-#   define WIN32_LEAN_AND_MEAN 
-#   include <Windows.h>
-#   include <WinBase.h>     // sleep
-#else
-#   include <unistd.h>
-#endif
-#include <time.h>
-
-#if defined(__APPLE__)
-# include <errno.h>
-# include <libgen.h>
-# include <libproc.h>
-#endif
 
 static Gwk::String gs_ClipboardEmulator;
-
-void Gwk::Platform::Sleep(unsigned int ms)
-{
-#ifdef _MSC_VER
-    ::Sleep(ms);
-#else
-    ::sleep(ms);
-#endif
-}
 
 void Gwk::Platform::SetCursor(unsigned char iCursor)
 {
@@ -46,32 +23,6 @@ bool Gwk::Platform::SetClipboardText(const Gwk::String& str)
 {
     gs_ClipboardEmulator = str;
     return true;
-}
-
-float Gwk::Platform::GetTimeInSeconds()
-{
-    const float seconds = static_cast<float>(clock()) / CLOCKS_PER_SEC;
-    return seconds;
-}
-
-Gwk::String Gwk::Platform::GetExecutableDir()
-{
-#if defined(__APPLE__)
-    
-    pid_t pid = getpid();
-    char pathbuf[PROC_PIDPATHINFO_MAXSIZE];
-    int ret = proc_pidpath(pid, pathbuf, sizeof(pathbuf));
-    if (ret > 0)
-    {
-        return String(dirname(pathbuf)) + "/";
-    }
-
-    // fprintf(stderr, "PID %d: %s\n", pid, strerror(errno));
-    return "";
-    
-#else
-    return "";
-#endif
 }
 
 bool Gwk::Platform::FileOpen(const String& Name, const String& StartPath, const String& Extension,

@@ -6,13 +6,166 @@
 
 #include <Gwork/PlatformCommon.h>
 
+#ifdef _MSC_VER
+#   define WIN32_LEAN_AND_MEAN 
+#   include <Windows.h>
+#   include <WinBase.h>     // sleep
+#   undef min
+#   undef max
+#else
+#   include <unistd.h>
+#endif
+#include <time.h>
+
+#if defined(__APPLE__)
+#   include <errno.h>
+#   include <libgen.h>
+#   include <libproc.h>
+#endif
+
 #include <cstdlib>
 #include <map>
 #include <iostream>
 
-#if GWK_ALLOC_STATS
-
 using namespace Gwk;
+
+//------------------------------------------------------------------------------
+// Platform functions, implemented in a cross-platform way. This is to
+// avoid duplicating the functionality in the platform-specific files.
+
+// Only the following platforms require these functions:
+#if defined(GWK_PLATFORM_Null) || defined(GWK_PLATFORM_Windows)
+
+// GetExecutableDir()
+//-------------------
+
+Gwk::String Gwk::Platform::GetExecutableDir()
+{
+#if defined(__APPLE__)
+
+    // OSX: Use process information.
+
+    const pid_t pid = getpid();
+    char pathbuf[PROC_PIDPATHINFO_MAXSIZE];
+    const int ret = proc_pidpath(pid, pathbuf, sizeof(pathbuf));
+    if (ret > 0)
+    {
+        return String(dirname(pathbuf)) + "/";
+    }
+
+    // fprintf(stderr, "PID %d: %s\n", pid, strerror(errno));
+    return "";
+
+#elif defined(WIN32)
+
+    // Windows: Use the module information.
+
+    char path[MAX_PATH] = { '\0' };
+    HMODULE hModule = GetModuleHandle(NULL);
+    if (hModule != NULL)
+    {
+        GetModuleFileName(hModule, path, sizeof(path));
+
+        if (path)
+        {
+            // get directory name
+            char *dir = strrchr(path, '\\');
+            if (dir)
+                dir[1] = '\0';
+        }
+    }
+    return String(path);
+
+#else
+    
+    return String();
+    
+#endif
+}
+
+// Sleep()
+//--------
+
+void Gwk::Platform::Sleep(unsigned int ms)
+{
+#ifdef _MSC_VER
+    ::Sleep(ms);
+#else
+    ::sleep(ms);
+#endif
+}
+
+// GetTimeInSeconds()
+//-------------------
+
+#ifdef WIN32
+
+static double GetPerformanceFrequency()
+{
+    static double Frequency = 0.0f;
+
+    if (Frequency == 0.0f)
+    {
+        __int64 perfFreq;
+        QueryPerformanceFrequency((LARGE_INTEGER*)&perfFreq);
+        Frequency = 1.0 / perfFreq;
+    }
+
+    return Frequency;
+}
+
+float Gwk::Platform::GetTimeInSeconds()
+{
+    static float fCurrentTime = 0.0f;
+    static __int64 iLastTime = 0;
+    __int64 thistime;
+
+    QueryPerformanceCounter((LARGE_INTEGER*)&thistime);
+    double fSecondsDifference = (thistime - iLastTime)*GetPerformanceFrequency();
+
+    if (fSecondsDifference > 0.1)
+        fSecondsDifference = 0.1;
+
+    fCurrentTime += fSecondsDifference;
+    iLastTime = thistime;
+    return fCurrentTime;
+}
+
+#else
+
+float Gwk::Platform::GetTimeInSeconds()
+{
+    const float seconds = static_cast<float>(clock()) / CLOCKS_PER_SEC;
+    return seconds;
+}
+
+#endif 
+
+#endif // defined(GWK_PLAFORM_Null)
+
+//------------------------------------------------------------------------------
+
+Gwk::Platform::RelativeToExecutablePaths::RelativeToExecutablePaths(String const& resourceDir)
+:   m_resDir(GetExecutableDir() + resourceDir)
+{}
+
+String Gwk::Platform::RelativeToExecutablePaths::GetPath(Type type, String const& filename)
+{
+    String filepath(m_resDir + filename);
+    
+    if (type == Type::Font)
+    {
+        // TODO: bit hacky this...
+        if (filepath.find(".ttf") == std::string::npos)
+            filepath += ".ttf";
+    }
+
+    return filepath;
+}
+
+//==============================================================================
+
+#if GWK_ALLOC_STATS
 
 static Platform::AllocStats g_stats;
 
@@ -21,7 +174,7 @@ const Platform::AllocStats& Platform::GetAllocStats()
     return g_stats;
 }
 
-//----------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 
 namespace {
 
@@ -118,7 +271,7 @@ void Platform::AllocStatsDump(FILE *fh)
     }
 }
 
-//----------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 
 // These are declared in Config.h, which should be included everywhere.
 

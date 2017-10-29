@@ -20,6 +20,7 @@ set(GWK_PLATFORM_HEADERS
     include/Gwork/PlatformTypes.h
     include/Gwork/Platform.h
     include/Gwork/PlatformCommon.h
+    include/Gwork/Version.h             # Auto-generated
     include/Gwork/WindowProvider.h
     include/Gwork/Utility.h
 )
@@ -41,7 +42,12 @@ source_group("${GWK_HEADER_FOLDER}"
 
 # source folder groups
 source_group("${GWK_SOURCE_FOLDER}"
-             REGULAR_EXPRESSION ".*\\.cpp")
+             FILES
+                 "platforms/DebugBreak.h"
+             REGULAR_EXPRESSION
+                 ".*\\.cpp")
+
+add_definitions(${GWK_LIB_DEFINES})
 
 # Gwork renderer & platform library
 add_library(Gwork${GWK_RENDER_NAME} STATIC

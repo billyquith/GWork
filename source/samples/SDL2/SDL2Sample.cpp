@@ -31,8 +31,14 @@ int main(int argc, char** argv)
 	if (!window)
 		return EXIT_FAILURE;
 
+
     // Create a Gwork Allegro Renderer
-    Gwk::Renderer::SDL2 *renderer = new Gwk::Renderer::SDL2(window);
+    SDL_Renderer *rdr = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+    
+    Gwk::Platform::RelativeToExecutablePaths paths(GWORK_RESOURCE_DIR);
+    Gwk::Renderer::SDL2ResourceLoader loader(paths, rdr);
+
+    Gwk::Renderer::SDL2 *renderer = new Gwk::Renderer::SDL2(loader, window);
 
     // Create a Gwork skin
     Gwk::Skin::TexturedBase skin(renderer);
@@ -74,7 +80,8 @@ int main(int argc, char** argv)
         renderer->EndContext(nullptr);
     }
 
-    //TTF_Quit();   TODO: Currently crashes. Gwork needs work.
+    skin.ReleaseFont(skin.GetDefaultFont());
+    TTF_Quit();
     SDL_DestroyWindow(window);
     SDL_Quit();
     

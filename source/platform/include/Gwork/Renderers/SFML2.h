@@ -9,6 +9,7 @@
 #define SFML2_HPP
 
 #include <Gwork/BaseRender.h>
+#include <Gwork/Platform.h>
 
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/Color.hpp>
@@ -19,14 +20,33 @@ namespace Gwk
 {
     namespace Renderer
     {
-        class SFML2 : public Gwk::Renderer::Base
+        //! Default resource loader for SFML2.
+        class SFML2ResourceLoader : public ResourceLoader
+        {
+            ResourcePaths& m_paths;
+        public:
+            SFML2ResourceLoader(ResourcePaths& paths)
+            :   m_paths(paths)
+            {}
+            
+            Font::Status LoadFont(Font& font) override;
+            void FreeFont(Font& font) override;
+            
+            Texture::Status LoadTexture(Texture& texture) override;
+            void FreeTexture(Texture& texture) override;
+        };
+
+        //
+        //! Renderer for [SFML2](https://www.sfml-dev.org/).
+        //
+        class GWK_EXPORT SFML2 : public Gwk::Renderer::Base
         {
         public:
 
             //! Constructor for SFML2 renderer.
-            //! \param target - application render target.
-            //! \param resDir - path, relative to executable where resources are found.
-            SFML2(sf::RenderTarget& target, const String& resDir);
+            //! \param loader : ResourceLoader for renderer.
+            //! \param target : application render target.
+            SFML2(ResourceLoader& loader, sf::RenderTarget& target);
             
             virtual ~SFML2();
 
@@ -68,40 +88,36 @@ namespace Gwk
                 }
             }
 
-            virtual void Begin();
-            virtual void End();
+            void Begin() override;
+            void End() override;
 
-            virtual void StartClip();
-            virtual void EndClip();
+            void StartClip() override;
+            void EndClip() override;
 
-            virtual void SetDrawColor(Gwk::Color color);
-            virtual void DrawPixel(int x, int y);
-            virtual void DrawLinedRect(Gwk::Rect rect);
-            virtual void DrawFilledRect(Gwk::Rect rect);
-            virtual void DrawShavedCornerRect(Gwk::Rect rect, bool bSlight = false);
-            virtual void DrawTexturedRect(Gwk::Texture* texture, Gwk::Rect rect, float u1,
-                                          float v1, float u2, float v2);
+            void SetDrawColor(Gwk::Color color) override;
+            void DrawPixel(int x, int y) override;
+            void DrawLinedRect(Gwk::Rect rect) override;
+            void DrawFilledRect(Gwk::Rect rect) override;
+            void DrawShavedCornerRect(Gwk::Rect rect, bool bSlight = false) override;
+            void DrawTexturedRect(Gwk::Texture* texture,
+                                  Gwk::Rect rect,
+                                  float u1, float v1, float u2, float v2) override;
 
-            virtual void RenderText(Gwk::Font* font, Gwk::Point pos,
-                                    const Gwk::String& text);
-            virtual Gwk::Point MeasureText(Gwk::Font* font, const Gwk::String& text);
-            virtual void        LoadFont(Gwk::Font* font);
-            virtual void        FreeFont(Gwk::Font* font);
+            void RenderText(Gwk::Font* font, Gwk::Point pos, const Gwk::String& text) override;
+            Gwk::Point MeasureText(Gwk::Font* font, const Gwk::String& text) override;
 
-            virtual void        LoadTexture(Gwk::Texture* texture);
-            virtual void        FreeTexture(Gwk::Texture* texture);
-            virtual Gwk::Color PixelColor(Gwk::Texture* texture, unsigned int x, unsigned int y,
-                                            const Gwk::Color& col_default);
+            Gwk::Color PixelColor(Gwk::Texture* texture,
+                                  unsigned int x, unsigned int y,
+                                  const Gwk::Color& col_default) override;
 
         protected:
-
+            
             sf::RenderTarget& m_target;
             sf::Color m_color;
             sf::VertexArray m_buffer;
             sf::RenderStates m_renderStates;
             sf::View m_originalView;
             int m_height;
-            String m_resourceDir;
         };
 
 

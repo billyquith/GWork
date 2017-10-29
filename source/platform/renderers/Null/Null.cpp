@@ -9,29 +9,23 @@
 namespace Gwk {
 namespace Renderer {
 
-Null::Null() {}
+class NullResourceLoader : public ResourceLoader
+{
+public:
+    Font::Status LoadFont(Font& font) final { return Font::Status::Loaded; }
+    void FreeFont(Font& font) final {}
+    
+    Texture::Status LoadTexture(Texture& texture) final {  return Texture::Status::Loaded; }
+    void FreeTexture(Texture& texture) final {}
+};
+
+static NullResourceLoader g_loader;
+    
+Null::Null()
+    :   Base(g_loader)
+{}
 
 Null::~Null() {}
     
-void Null::LoadFont(Gwk::Font* font)
-{
-}
-
-void Null::FreeFont(Gwk::Font* font)
-{
-    if (font->data)
-    {
-        font->data = nullptr;
-    }
-}
-
-void Null::LoadTexture(Gwk::Texture* texture)
-{
-}
-
-void Null::FreeTexture(Gwk::Texture* texture)
-{
-}
-
 } // Renderer
 } // Gwork

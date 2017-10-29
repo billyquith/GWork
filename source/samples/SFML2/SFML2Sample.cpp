@@ -20,8 +20,11 @@ int main()
     // Create the window of the application
     sf::RenderWindow app(sf::VideoMode(1004, 650, 32), "Gwork: SFML2");
 
+    Gwk::Platform::RelativeToExecutablePaths paths(GWORK_RESOURCE_DIR);
+    Gwk::Renderer::SFML2ResourceLoader loader(paths);
+
     // Create renderer
-    Gwk::Renderer::SFML2 renderer(app, GWORK_RESOURCE_DIR);
+    Gwk::Renderer::SFML2 renderer(loader, app);
     
     // Create a Gwork skin
     Gwk::Skin::TexturedBase skin(&renderer);

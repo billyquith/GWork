@@ -143,7 +143,7 @@ void TextBox::Render(Skin::Base* skin)
 void TextBox::RefreshCursorBounds()
 {
     m_fNextCaretColorChange = Gwk::Platform::GetTimeInSeconds()+1.5f;
-    m_caretColor = Gwk::Color(30, 30, 30, 255);
+    m_caretColor = GetSkin()->Colors.Label.Bright;
     MakeCaretVisible();
     Gwk::Rect pA = GetCharacterPosition(m_cursorPos);
     Gwk::Rect pB = GetCharacterPosition(m_cursorEnd);

@@ -31,7 +31,7 @@ namespace Gwk
 
             virtual ~ImagePanel()
             {
-                GetSkin()->GetRender()->FreeTexture(&m_texture);
+                GetSkin()->GetRender()->GetLoader().FreeTexture(m_texture);
             }
 
             virtual void SetUV(float u1, float v1, float u2, float v2)
@@ -45,7 +45,7 @@ namespace Gwk
             virtual void SetImage(const String& imageName)
             {
                 m_texture.name = imageName;
-                GetSkin()->GetRender()->LoadTexture(&m_texture);
+                GetSkin()->GetRender()->GetLoader().LoadTexture(m_texture);
             }
 
             virtual String& GetImage()
@@ -97,9 +97,9 @@ namespace Gwk
                 m_drawColor = color;
             }
 
-            virtual bool FailedToLoad()
+            virtual bool FailedToLoad() 
             {
-                return m_texture.failed;
+                return !m_texture.IsLoaded();
             }
 
             virtual bool GetStretch()

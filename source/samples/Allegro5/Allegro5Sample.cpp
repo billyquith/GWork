@@ -44,9 +44,12 @@ int main(int argc, char** argv)
     al_register_event_source(event_queue, al_get_display_event_source(display));
     al_register_event_source(event_queue, al_get_mouse_event_source());
     al_register_event_source(event_queue, al_get_keyboard_event_source());
+
+    Gwk::Platform::RelativeToExecutablePaths paths(GWORK_RESOURCE_DIR);
+    Gwk::Renderer::AllegroResourceLoader loader(paths);
     
     // Create a Gwork Allegro Renderer
-    Gwk::Renderer::Allegro* renderer = new Gwk::Renderer::Allegro();
+    Gwk::Renderer::Allegro* renderer = new Gwk::Renderer::Allegro(loader);
 
     // Create a Gwork skin
     Gwk::Skin::TexturedBase skin(renderer);
@@ -73,9 +76,9 @@ int main(int argc, char** argv)
     // (Processes Windows MSG's and fires input at Gwork)
     Gwk::Input::Allegro GworkInput;
     GworkInput.Initialize(canvas);
+    
     ALLEGRO_EVENT ev;
     bool haveQuit = false;
-
     while (!haveQuit)
     {
         while (al_get_next_event(event_queue, &ev))

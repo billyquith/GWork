@@ -1,0 +1,9 @@
+/*
+ *  Gwork
+ *  Copyright (c) 2013-17 Nick Trout
+ *  See license in Gwork.h
+ */
+
+#define GWK_VERSION ((@GWK_VERSION_MAJOR@)*1000000 + (@GWK_VERSION_MINOR@)*1000 + (@GWK_VERSION_PATCH@))
+#define GWK_VERSION_STR "@GWK_VERSION_STR@"
+

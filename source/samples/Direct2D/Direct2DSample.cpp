@@ -20,12 +20,13 @@
 #include <Gwork/Test/Test.h>
 #include <Gwork/Input/Windows.h>
 #include <Gwork/Renderers/Direct2D.h>
+#include <Gwork/Platform.h>
 
 #pragma comment(lib, "d2d1.lib")
 #pragma comment(lib, "dwrite.lib")
 #pragma comment(lib, "windowscodecs.lib")
 
-HWND g_hWND = nullptr;
+HWND                    g_hWND = nullptr;
 ID2D1Factory*           g_d2DFactory = nullptr;
 IDWriteFactory*         g_dWriteFactory = nullptr;
 IWICImagingFactory*     g_wICFactory = nullptr;
@@ -34,9 +35,9 @@ ID2D1HwndRenderTarget*  g_rT = nullptr; // this is device-specific
 Gwk::Renderer::Direct2D* g_renderer = nullptr;
 
 //
-// Windows bullshit to create a Window to render to.
+// Create a Window to render to.
 //
-HWND CreateGameWindow(void)
+static HWND CreateGameWindow(void)
 {
     WNDCLASS wc;
     ZeroMemory(&wc, sizeof(wc));
@@ -48,7 +49,7 @@ HWND CreateGameWindow(void)
     RegisterClass(&wc);
     HWND hWindow = CreateWindowEx((WS_EX_APPWINDOW|WS_EX_WINDOWEDGE),
                                   wc.lpszClassName,
-                                  "Gwork - Direct 2D Sample",
+                                  "Gwork: Direct2D Sample",
                                   (WS_OVERLAPPEDWINDOW|WS_CLIPSIBLINGS|WS_CLIPCHILDREN) & ~(WS_MINIMIZEBOX|WS_MAXIMIZEBOX|WS_THICKFRAME),
                                   -1, -1,
                                   1004, 650,
@@ -61,50 +62,7 @@ HWND CreateGameWindow(void)
     return hWindow;
 }
 
-HRESULT createDeviceResources();
-void    discardDeviceResources();
-void    runSample();
-
-//
-// Program starts here
-//
-int main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCmdShow)
-{
-    HRESULT hr = D2D1CreateFactory(
-        D2D1_FACTORY_TYPE_SINGLE_THREADED,
-        &g_d2DFactory
-        );
-    hr = DWriteCreateFactory(
-        DWRITE_FACTORY_TYPE_SHARED,
-        __uuidof(IDWriteFactory),
-        reinterpret_cast<IUnknown**>(&g_dWriteFactory)
-        );
-    hr = CoInitialize(nullptr);
-    hr = CoCreateInstance(
-        CLSID_WICImagingFactory,
-        nullptr,
-        CLSCTX_INPROC_SERVER,
-        IID_IWICImagingFactory,
-        reinterpret_cast<void**>(&g_wICFactory)
-        );
-    g_hWND = CreateGameWindow();
-    createDeviceResources();
-    //
-    // Create a Gwork Direct2D renderer
-    //
-    g_renderer = new Gwk::Renderer::Direct2D(g_rT, g_dWriteFactory, g_wICFactory);
-    runSample();
-    delete g_renderer;
-    g_renderer = nullptr;
-
-    if (g_rT != nullptr)
-    {
-        g_rT->Release();
-        g_rT = nullptr;
-    }
-}
-
-HRESULT createDeviceResources()
+static HRESULT createDeviceResources()
 {
     HRESULT hr = S_OK;
 
@@ -112,10 +70,8 @@ HRESULT createDeviceResources()
     {
         RECT rc;
         GetClientRect(g_hWND, &rc);
-        D2D1_SIZE_U size = D2D1::SizeU(
-            rc.right-rc.left,
-            rc.bottom-rc.top
-            );
+        D2D1_SIZE_U size = D2D1::SizeU(rc.right - rc.left, rc.bottom - rc.top);
+
         // Create a Direct2D render target.
         hr = g_d2DFactory->CreateHwndRenderTarget(
             D2D1::RenderTargetProperties(),
@@ -133,7 +89,7 @@ HRESULT createDeviceResources()
     return hr;
 }
 
-void discardDeviceResources()
+static void discardDeviceResources()
 {
     if (g_rT != nullptr)
     {
@@ -142,7 +98,7 @@ void discardDeviceResources()
     }
 }
 
-void runSample()
+static void runSample()
 {
     RECT FrameBounds;
     GetClientRect(g_hWND, &FrameBounds);
@@ -150,6 +106,8 @@ void runSample()
     // Create a Gwork skin
     Gwk::Skin::TexturedBase skin(g_renderer);
     skin.Init("DefaultSkin.png");
+
+    skin.SetDefaultFont("OpenSans.ttf", 11);
 
     // Create a Canvas (it's root, on which all other Gwork panels are created)
     Gwk::Controls::Canvas* canvas = new Gwk::Controls::Canvas(&skin);
@@ -163,8 +121,7 @@ void runSample()
 
     // Create a Windows Control helper
     // (Processes Windows MSG's and fires input at Gwork)
-    Gwk::Input::Windows GworkInput;
-    GworkInput.Initialize(canvas);
+    Gwk::Input::Windows GworkInput(canvas);
 
     // Begin the main game loop
     MSG msg;
@@ -207,3 +164,48 @@ void runSample()
 
     delete canvas;
 }
+
+//
+// Program starts here
+//
+int main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCmdShow)
+{
+    HRESULT hr = D2D1CreateFactory(
+        D2D1_FACTORY_TYPE_SINGLE_THREADED,
+        &g_d2DFactory
+    );
+    hr = DWriteCreateFactory(
+        DWRITE_FACTORY_TYPE_SHARED,
+        __uuidof(IDWriteFactory),
+        reinterpret_cast<IUnknown**>(&g_dWriteFactory)
+    );
+    hr = CoInitialize(nullptr);
+    hr = CoCreateInstance(
+        CLSID_WICImagingFactory,
+        nullptr,
+        CLSCTX_INPROC_SERVER,
+        IID_IWICImagingFactory,
+        reinterpret_cast<void**>(&g_wICFactory)
+    );
+    g_hWND = CreateGameWindow();
+    createDeviceResources();
+
+    // Create path calculator and resource loader.
+    Gwk::Platform::RelativeToExecutablePaths paths(GWORK_RESOURCE_DIR);
+    Gwk::Renderer::Direct2DResourceLoader loader(paths, g_rT, g_dWriteFactory, g_wICFactory);
+
+    // Create a Gwork Direct2D renderer
+    g_renderer = new Gwk::Renderer::Direct2D(loader, g_rT, g_dWriteFactory);
+    runSample();
+    delete g_renderer;
+    g_renderer = nullptr;
+
+    if (g_rT != nullptr)
+    {
+        g_rT->Release();
+        g_rT = nullptr;
+    }
+
+    return EXIT_SUCCESS;
+}
+

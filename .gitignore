@@ -1,4 +1,5 @@
 
+source/platform/include/Gwork/Version.h
 *.doxcfg
 
 bin/
@@ -8,3 +9,7 @@ build*/
 
 source/test/stats/*_report.*
 source/test/stats/curr_allocs.*
+
+# Windows
+.vs/
+CMakeSettings.json

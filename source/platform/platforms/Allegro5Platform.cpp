@@ -35,6 +35,14 @@ static const ALLEGRO_SYSTEM_MOUSE_CURSOR g_cursorConversion[] =
     ALLEGRO_SYSTEM_MOUSE_CURSOR_LINK        // IDC_HAND
 };
 
+Gwk::String Gwk::Platform::GetExecutableDir()
+{
+    ALLEGRO_PATH *apath = al_get_standard_path(ALLEGRO_EXENAME_PATH);
+    al_set_path_filename(apath, NULL);
+    const String edir(al_path_cstr(apath, ALLEGRO_NATIVE_PATH_SEP));
+    al_destroy_path(apath);
+    return edir;
+}
 
 void Gwk::Platform::Sleep(unsigned int iMS)
 {

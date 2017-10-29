@@ -12,17 +12,107 @@ namespace Gwk
 namespace Renderer
 {
 
-SDL2::SDL2(SDL_Window *window)
-    :   m_window(window)
+//-------------------------------------------------------------------------------
+
+Font::Status SDL2ResourceLoader::LoadFont(Font& font)
+{
+    const String fontFile = m_paths.GetPath(ResourcePaths::Type::Font, font.facename);
+    
+    TTF_Font *tfont = TTF_OpenFont(fontFile.c_str(), font.realsize);
+
+    if (tfont)
+    {
+        font.data = tfont;
+        font.status = Font::Status::Loaded;
+    }
+    else
+    {
+        font.status = Font::Status::ErrorFileNotFound;
+    }
+    
+    return font.status;
+}
+
+void SDL2ResourceLoader::FreeFont(Gwk::Font& font)
+{
+    if (font.status == Font::Status::Loaded)
+    {
+        TTF_CloseFont(static_cast<TTF_Font*>(font.data));
+        font.status = Font::Status::Unloaded;
+    }
+}
+
+Texture::Status SDL2ResourceLoader::LoadTexture(Texture& texture)
+{
+    if (texture.IsLoaded())
+        FreeTexture(texture);
+    
+    const String texFile = m_paths.GetPath(ResourcePaths::Type::Texture, texture.name);
+
+    SDL_Texture *tex = nullptr;
+    if (texture.readable)
+    {
+        // You cannot find the format of a texture once loaded to read from it
+        // in SDL2 so we have to keep the surface to read from.
+        SDL_Surface *surf = IMG_Load(texFile.c_str());
+        tex = SDL_CreateTextureFromSurface(m_sdlRenderer, surf);
+        texture.surface = surf;
+    }
+    else
+    {
+        // Don't need to read. Just load straight into render format.
+        tex = IMG_LoadTexture(m_sdlRenderer, texFile.c_str());
+    }
+    
+    if (tex)
+    {
+        int w, h;
+        SDL_QueryTexture(tex, NULL, NULL, &w, &h);
+        
+        texture.data = tex;
+        texture.width = w;
+        texture.height = h;
+        texture.status = Texture::Status::Loaded;
+    }
+    else
+    {
+        texture.data = nullptr;
+        texture.status = Texture::Status::ErrorFileNotFound;
+    }
+    
+    return texture.status;
+}
+
+void SDL2ResourceLoader::FreeTexture(Texture& texture)
+{
+    if (texture.IsLoaded())
+    {
+        SDL_DestroyTexture(static_cast<SDL_Texture*>(texture.data));
+        texture.data = nullptr;
+        
+        if (texture.surface)
+        {
+            SDL_FreeSurface(static_cast<SDL_Surface*>(texture.surface));
+            texture.surface = nullptr;
+            texture.readable = false;
+        }
+        
+        texture.status = Texture::Status::Unloaded;
+    }
+}
+
+//-------------------------------------------------------------------------------
+    
+SDL2::SDL2(ResourceLoader& loader, SDL_Window *window)
+    :   Base(loader)
+    ,   m_window(window)
     ,   m_renderer(nullptr)
 {
-    m_renderer = SDL_CreateRenderer(m_window, -1,
-                                    SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+  m_renderer = SDL_GetRenderer( m_window );
 }
 
 SDL2::~SDL2()
 {
-    SDL_DestroyRenderer(m_renderer);
 }
 
 void SDL2::SetDrawColor(Gwk::Color color)
@@ -35,34 +125,11 @@ void SDL2::SetDrawColor(Gwk::Color color)
     SDL_SetRenderDrawColor(m_renderer, color.r, color.g, color.b, color.a);
 }
 
-void SDL2::LoadFont(Gwk::Font* font)
-{
-    font->realsize = font->size*Scale();
-    std::string fontFile(font->facename);
-
-    if (fontFile.find(".ttf") == std::string::npos)
-        fontFile += ".ttf";
-
-    TTF_Font *tfont = TTF_OpenFont(fontFile.c_str(), font->realsize);
-    if (!tfont)
-    {
-        printf("Font load error: %s\n", TTF_GetError());
-    }            
-    
-    font->data = tfont;
-}
-
-void SDL2::FreeFont(Gwk::Font* font)
-{
-    if (font->data)
-    {
-        TTF_CloseFont(static_cast<TTF_Font*>(font->data));
-        font->data = nullptr;
-    }
-}
-
 void SDL2::RenderText(Gwk::Font* font, Gwk::Point pos, const Gwk::String& text)
 {
+    if (!EnsureFont(*font))
+        return;
+    
     TTF_Font *tfont = static_cast<TTF_Font*>(font->data);
     Translate(pos.x, pos.y);
     
@@ -81,18 +148,10 @@ void SDL2::RenderText(Gwk::Font* font, Gwk::Point pos, const Gwk::String& text)
 
 Gwk::Point SDL2::MeasureText(Gwk::Font* font, const Gwk::String& text)
 {
-    TTF_Font *tfont = static_cast<TTF_Font*>(font->data);
-
-    // If the font doesn't exist, or the font size should be changed.
-    if (!tfont || font->realsize != font->size*Scale())
-    {
-        FreeFont(font);
-        LoadFont(font);
-        tfont = static_cast<TTF_Font*>(font->data);
-    }
-
-    if (!tfont)
+    if (!EnsureFont(*font))
         return Gwk::Point(0, 0);
+
+    TTF_Font *tfont = static_cast<TTF_Font*>(font->data);
 
     int w,h;
     TTF_SizeUTF8(tfont, text.c_str(), &w,&h);
@@ -125,59 +184,6 @@ void SDL2::StartClip()
 void SDL2::EndClip()
 {
     SDL_RenderSetClipRect(m_renderer, 0);
-}
-
-void SDL2::LoadTexture(Gwk::Texture* texture)
-{
-    if (!texture)
-        return;
-
-    if (texture->data)
-        FreeTexture(texture);
-    
-    SDL_Texture *tex = nullptr;
-    if (texture->readable)
-    {
-        // You cannot find the format of a texture once loaded to read from it
-        // in SDL2 so we have to keep the surface to read from.
-        SDL_Surface *surf = IMG_Load(texture->name.c_str());
-        tex = SDL_CreateTextureFromSurface(m_renderer, surf);
-        texture->surface = surf;
-    }
-    else
-    {
-        // Don't need to read. Just load straight into render format.
-        tex = IMG_LoadTexture(m_renderer, texture->name.c_str());
-    }
-
-    if (tex)
-    {
-        int w, h;
-        SDL_QueryTexture(tex, nullptr, nullptr, &w, &h);
-        
-        texture->data = tex;
-        texture->width = w;
-        texture->height = h;
-        texture->failed = false;
-    }
-    else
-    {
-        texture->data = nullptr;
-        texture->failed = true;
-    }
-}
-
-void SDL2::FreeTexture(Gwk::Texture* texture)
-{
-    SDL_DestroyTexture(static_cast<SDL_Texture*>(texture->data));
-    texture->data = nullptr;
-    
-    if (texture->surface)
-    {
-        SDL_FreeSurface(static_cast<SDL_Surface*>(texture->surface));
-        texture->surface = nullptr;
-        texture->readable = false;
-    }
 }
 
 void SDL2::DrawTexturedRect(Gwk::Texture* texture, Gwk::Rect rect,

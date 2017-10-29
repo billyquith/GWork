@@ -1,6 +1,21 @@
 #!/usr/bin/env bash
 
-pushd ../build
+DOCDIR=../build_docs
+
+if [ ! -d $DOCDIR ]; then
+    mkdir $DOCDIR
+    pushd $DOCDIR
+    cmake -GNinja -DRENDER_NULL=ON ..
+    popd
+fi
+
+pushd $DOCDIR
 cmake --build . --target doc
-open doc/html/index.html
+
+DOC=doc/html/index.html
+case "$(uname -s)" in
+  CYGWIN*) cygstart "$DOC";;
+  *) open "$DOC";;
+esac
+
 popd

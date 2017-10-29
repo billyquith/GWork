@@ -27,6 +27,12 @@ make_directory(${CMAKE_LIBRARY_OUTPUT_DIRECTORY})
 # configure projects
 include(${GWK_SOURCE_DIR}/cmake/Config.cmake)
 
+# write the version info
+configure_file(
+    ${CMAKE_CURRENT_SOURCE_DIR}/cmake/gwk_config.h.in
+    ${CMAKE_CURRENT_SOURCE_DIR}/source/platform/include/Gwork/Version.h
+    @ONLY)
+
 # add our projects
 add_subdirectory(source)
 add_subdirectory(docs)

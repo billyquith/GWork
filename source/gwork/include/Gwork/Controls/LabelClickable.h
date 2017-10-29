@@ -23,7 +23,7 @@ namespace Gwk
             GWK_CONTROL(LabelClickable, Button);
 
             void Render(Skin::Base* skin) override;
-
+            void UpdateColors() override;
         };
 
 
