@@ -19,14 +19,14 @@ public:
         // Normal
         {
             Controls::ImagePanel* img = new Controls::ImagePanel(this);
-            img->SetImage("gwen.png");
-            img->SetBounds(10, 10, 100, 100);
+            img->SetImage("logo.png");
+            img->SetBounds(10, 30, 159, 69);
         }
         // Missing
         {
             Controls::ImagePanel* img = new Controls::ImagePanel(this);
             img->SetImage("missingimage.png");
-            img->SetBounds(120, 10, 100, 100);
+            img->SetBounds(200, 10, 100, 100);
         }
     }
 

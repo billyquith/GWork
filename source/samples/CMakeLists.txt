@@ -22,7 +22,7 @@ if(BUILD_SAMPLE)
     set(SAMPLE_RESOURCES
         "${GWK_SOURCE_DIR}/source/gwork/resource/DefaultSkin.png"
         "${GWK_SOURCE_DIR}/source/gwork/resource/OpenSans.ttf"
-        "${GWK_SOURCE_DIR}/source/test/resource/gwen.png"
+        "${GWK_SOURCE_DIR}/source/test/resource/logo.png"
         "${GWK_SOURCE_DIR}/source/test/resource/test16.png")
     
     if(APPLE AND APP_BUNDLE)
