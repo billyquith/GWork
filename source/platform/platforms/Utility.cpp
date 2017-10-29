@@ -226,7 +226,7 @@ bool Strings::To::Bool(const Gwk::String& str)
     if (str.size() == 0)
         return false;
 
-    const char first = std::tolower(str[0]);
+    const char first = tolower(str[0]);
     
     switch (first)
     {
