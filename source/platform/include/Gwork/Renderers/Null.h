@@ -23,16 +23,8 @@ namespace Gwk
         class GWK_EXPORT Null : public Gwk::Renderer::Base
         {
         public:
-
             Null();
-            ~Null();
-
-            void LoadFont(Gwk::Font* font) override;
-            void FreeFont(Gwk::Font* font) override;
-            
-            void        LoadTexture(Gwk::Texture* texture) override;
-            void        FreeTexture(Gwk::Texture* texture) override;
-
+            virtual ~Null();
         };
     }
 }
