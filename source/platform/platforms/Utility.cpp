@@ -3,6 +3,10 @@
  *  Copyright (c) 2010 Facepunch Studios
  *  Copyright (c) 2013-17 Nick Trout
  *  See license in Gwork.h
+
+ *  Portions of this code from: https://github.com/bkaradzic/bx/blob/master/include/bx/string.h
+ *  Copyright 2010-2013 Branimir Karadzic. All rights reserved.
+ *  License: http://www.opensource.org/licenses/BSD-2-Clause
  */
 
 #include <Gwork/Utility.h>
@@ -42,15 +46,9 @@
 namespace Gwk {
 namespace Utility {
     
-//  This section from: https://github.com/bkaradzic/bx/blob/master/include/bx/string.h
-//
-//  Copyright 2010-2013 Branimir Karadzic. All rights reserved.
-//  License: http://www.opensource.org/licenses/BSD-2-Clause
-//
-
-/// Cross platform implementation of vsnprintf that returns number of
-/// characters which would have been written to the final string if
-/// enough space had been available.
+//! Cross platform implementation of vsnprintf that returns number of
+//! characters which would have been written to the final string if
+//! enough space had been available.
 int vsnprintf(char* _str, size_t _count, const char* _format, va_list _argList)
 {
 #if defined(_MSC_VER)
@@ -61,9 +59,9 @@ int vsnprintf(char* _str, size_t _count, const char* _format, va_list _argList)
 #endif
 }
 
-/// Cross platform implementation of vsnwprintf that returns number of
-/// characters which would have been written to the final string if
-/// enough space had been available.
+//! Cross platform implementation of vsnwprintf that returns number of
+//! characters which would have been written to the final string if
+//! enough space had been available.
 int vsnwprintf(wchar_t* _str, size_t _count, const wchar_t* _format, va_list _argList)
 {
 #if defined(_MSC_VER)
@@ -227,17 +225,24 @@ bool Strings::To::Bool(const Gwk::String& str)
 {
     if (str.size() == 0)
         return false;
+
+    const char first = std::tolower(str[0]);
     
-    if (str[0] == 'T' || str[0] == 't' || str[0] == 'y' || str[0] == 'Y')
-        return true;
+    switch (first)
+    {
+        case 't':
+        case 'y':
+            return true;
+            
+        case 'f':
+        case 'n':
+            return false;
+            
+        default:
+            break;
+    }
     
-    if (str[0] == 'F' || str[0] == 'f' || str[0] == 'n' || str[0] == 'N')
-        return false;
-    
-    if (str[0] == '0')
-        return false;
-    
-    return true;
+    return To::Int(str) != 0;
 }
 
 bool Strings::To::Floats(const Gwk::String& str, float* f, size_t iCount)

@@ -13,8 +13,8 @@
 namespace Gwk
 {
     namespace Renderer
-    {
-        
+    {        
+        //! Default resource loader for Allegro5.
         class OpenGLResourceLoader : public ResourceLoader
         {
             ResourcePaths& m_paths;
@@ -29,7 +29,7 @@ namespace Gwk
         };
 
         //
-        /// Renderer for [OpenGL](https://www.opengl.org/).
+        //! Renderer for [OpenGL](https://www.opengl.org/).
         //
         class GWK_EXPORT OpenGL : public Gwk::Renderer::Base
         {

@@ -16,15 +16,15 @@ namespace Gwk
 {
     namespace Renderer
     {
-
-        class DX11ResourceLoader : public ResourceLoader
+        //! Default resource loader for DirectX 11.
+        class DirectX11ResourceLoader : public ResourceLoader
         {
             ResourcePaths&      m_paths;
             ID3D11Device*       m_pDevice;
             Gwk::Font::List     m_FontList;
 
         public:
-            DX11ResourceLoader(ResourcePaths& paths, ID3D11Device* pDevice)
+            DirectX11ResourceLoader(ResourcePaths& paths, ID3D11Device* pDevice)
                 :   m_paths(paths)
                 ,   m_pDevice(pDevice)
             {}

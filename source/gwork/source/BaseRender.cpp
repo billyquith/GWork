@@ -86,16 +86,17 @@ void Base::Translate(Gwk::Rect& rect)
     rect.h = std::ceil(float(rect.h) * m_fScale);
 }
 
-void Gwk::Renderer::Base::SetClipRegion(Gwk::Rect rect)
+void Gwk::Renderer::Base::SetClipRegion(Gwk::Rect const& rect)
 {
     m_rectClipRegion = rect;
 }
 
-void Base::AddClipRegion(Gwk::Rect rect)
+void Base::AddClipRegion(Gwk::Rect const& rect)
 {
-    rect.x = m_renderOffset.x;
-    rect.y = m_renderOffset.y;
-    Gwk::Rect out = rect;
+    auto out(rect);
+    
+    out.x = m_renderOffset.x;
+    out.y = m_renderOffset.y;
 
     if (rect.x < m_rectClipRegion.x)
     {

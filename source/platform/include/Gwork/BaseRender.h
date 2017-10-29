@@ -39,33 +39,42 @@ namespace Gwk
         };
 
         //
-        /// Base class for all renderer implementations.
-        ///
-        /// \note We never instance this directly, only the derived implementations.
+        //! \brief Base class for all renderer implementations.
+        //!
+        //! Each renderer implements this functionality so that the skin can draw the GUI.
+        //! \note We never instance this directly, only the derived implementations.
         //
         class GWK_EXPORT Base
         {
         protected:
             
-            /// Constructor. Not public as we only instance derived implementations.
+            //! Constructor. Not public as we only instance derived implementations.
             Base(ResourceLoader& loader);
 
         public:
 
             virtual ~Base();
 
-            virtual void Init()         {}
-            virtual void Begin()        {}
-            virtual void End()          {}
+            virtual void Init() {}
+            virtual void Begin() {}
+            virtual void End() {}
 
+            //! Get ResourceLoader we are using for the renderer.
             ResourceLoader& GetLoader() { return m_loader; }
             
+            //! Set the current drawing color.
             virtual void SetDrawColor(Color color) {}
-
+                        
+            virtual void StartClip() {}     //!< Start clipping the drawing. \see SetClipRegion().  
+            virtual void EndClip() {}       //!< Stop clipping the drawing.
+            
+            void    SetClipRegion(Gwk::Rect const& rect);
+            void    AddClipRegion(Gwk::Rect const& rect);
+            bool    ClipRegionVisible();
+            const Gwk::Rect&    ClipRegion() const;
+            
+            //! Draw a filled rectangle using the current color.
             virtual void DrawFilledRect(Gwk::Rect rect) {}
-
-            virtual void StartClip()    {}
-            virtual void EndClip()      {}
 
             virtual void DrawTexturedRect(Gwk::Texture* texture, Gwk::Rect targetRect,
                                           float u1 = 0.0f, float v1 = 0.0f,
@@ -75,8 +84,8 @@ namespace Gwk
             virtual void DrawMissingImage(Gwk::Rect targetRect);
 
             virtual Gwk::Color PixelColor(Gwk::Texture* texture,
-                                           unsigned int x, unsigned int y,
-                                           const Gwk::Color& col_default = Gwk::Color(255,255,255,255))
+                                          unsigned int x, unsigned int y,
+                                          const Gwk::Color& col_default = Gwk::Colors::White)
             {
                 return col_default;
             }
@@ -93,27 +102,23 @@ namespace Gwk
             virtual Gwk::Point MeasureText(Gwk::Font* font,
                                            const Gwk::String& text);
 
-            /// \sect{Render Specialisation}
-            ///     No need to implement these functions in your derived class, but
-            ///     if you can do them faster than the default implementation it's a
-            ///     good idea to.
-            //
+            //! \sect{Render Specialisation}
+            //!     No need to implement these functions in your derived class, but
+            //!     if you can do them faster than the default implementation it's a
+            //!     good idea to.
             virtual void DrawLinedRect(Gwk::Rect rect);
             virtual void DrawPixel(int x, int y);
             virtual void DrawShavedCornerRect(Gwk::Rect rect, bool bSlight = false);
-            /// \}
+            //! \}
 
-            /// \sect{Translate}
-            ///     Translate a panel's local drawing coordinate
-            ///     into view space, taking Offsets into account.
-            //
+            //! \sect{Translate}
+            //!     Translate a panel's local drawing coordinate
+            //!     into view space, taking Offsets into account.
             void Translate(int& x, int& y);
             void Translate(Gwk::Rect& rect);
-            /// \}
+            //! \}
 
-            //
-            /// Set the rendering offset. You shouldn't have to touch these, ever.
-            //
+            //! Set the rendering offset. You shouldn't have to touch these, ever.
             void SetRenderOffset(const Gwk::Point& offset)
             {
                 m_renderOffset = offset;
@@ -130,10 +135,6 @@ namespace Gwk
                 return m_renderOffset;
             }
 
-            void                SetClipRegion(Gwk::Rect rect);
-            void                AddClipRegion(Gwk::Rect rect);
-            bool                ClipRegionVisible();
-            const Gwk::Rect&    ClipRegion() const;
 
             void SetScale(float fScale)     { m_fScale = fScale; }
             float Scale() const             { return m_fScale; }

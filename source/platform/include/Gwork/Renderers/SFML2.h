@@ -20,6 +20,7 @@ namespace Gwk
 {
     namespace Renderer
     {
+        //! Default resource loader for SFML2.
         class SFML2ResourceLoader : public ResourceLoader
         {
             ResourcePaths& m_paths;
@@ -36,7 +37,7 @@ namespace Gwk
         };
 
         //
-        /// Renderer for [SFML2](https://www.sfml-dev.org/).
+        //! Renderer for [SFML2](https://www.sfml-dev.org/).
         //
         class GWK_EXPORT SFML2 : public Gwk::Renderer::Base
         {

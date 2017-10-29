@@ -163,7 +163,7 @@ int main( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nC
 
     // Create resource path calculator and loader.
     Gwk::Platform::RelativeToExecutablePaths paths(GWORK_RESOURCE_DIR);
-    Gwk::Renderer::DX11ResourceLoader loader(paths, g_pd3dDevice);
+    Gwk::Renderer::DirectX11ResourceLoader loader(paths, g_pd3dDevice);
 
     // Create a GWork DirectX renderer
     Gwk::Renderer::DirectX11* pRenderer = new Gwk::Renderer::DirectX11(loader, g_pd3dDevice);

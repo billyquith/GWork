@@ -19,6 +19,7 @@ namespace Gwk
 {
     namespace Renderer
     {
+        //! Default resource loader for Direct2D.        
         class Direct2DResourceLoader : public ResourceLoader
         {
             ResourcePaths& m_paths;
@@ -30,7 +31,10 @@ namespace Gwk
             Gwk::Font::List m_fontList;
 
         public:
-            Direct2DResourceLoader(ResourcePaths& paths, ID2D1RenderTarget* rT, IDWriteFactory* dWriteFactory, IWICImagingFactory* wICFactory)
+            Direct2DResourceLoader(ResourcePaths& paths,
+                                   ID2D1RenderTarget* rT,
+                                   IDWriteFactory* dWriteFactory,
+                                   IWICImagingFactory* wICFactory)
                 :   m_paths(paths)
                 ,   m_rT(rT)
                 ,   m_dWriteFactory(dWriteFactory)
@@ -47,7 +51,7 @@ namespace Gwk
         };
         
         //
-        /// Renderer for [Direct2D](https://msdn.microsoft.com/en-us/library/windows/desktop/dd370990(v=vs.85).aspx).
+        //! Renderer for [Direct2D](https://msdn.microsoft.com/en-us/library/windows/desktop/dd370990(v=vs.85).aspx).
         //
         class GWK_EXPORT Direct2D : public Gwk::Renderer::Base
         {
@@ -76,8 +80,8 @@ namespace Gwk
             void DrawTexturedRect(Gwk::Texture* texture, Gwk::Rect targetRect, float u1 = 0.0f,
                                   float v1 = 0.0f, float u2 = 1.0f, float v2 = 1.0f) override;
 
-            Gwk::Color  PixelColor(Gwk::Texture* texture, unsigned int x, unsigned int y,
-                                   const Gwk::Color& col_default) override;
+            Gwk::Color PixelColor(Gwk::Texture* texture, unsigned int x, unsigned int y,
+                                  const Gwk::Color& col_default) override;
 
             void DrawLinedRect(Gwk::Rect rect) override;
             void DrawShavedCornerRect(Gwk::Rect rect, bool bSlight = false) override;

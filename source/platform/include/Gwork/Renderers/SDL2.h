@@ -21,6 +21,7 @@ namespace Gwk
     {
         class SDL2CTT;
         
+        //! Default resource loader for SDL2.
         class SDL2ResourceLoader : public ResourceLoader
         {
             ResourcePaths& m_paths;
@@ -39,7 +40,7 @@ namespace Gwk
         };
 
         //
-        /// Renderer for [SDL2](https://www.libsdl.org).
+        //! Renderer for [SDL2](https://www.libsdl.org).
         //
         class GWK_EXPORT SDL2 : public Gwk::Renderer::Base
         {

@@ -19,6 +19,7 @@ namespace Gwk
     {
         class AllegroCTT;
         
+        //! Default resource loader for Allegro5.
         class AllegroResourceLoader : public ResourceLoader
         {
             ResourcePaths& m_paths;
@@ -33,7 +34,7 @@ namespace Gwk
         };
         
         //
-        /// Renderer for [Allegro5](http://liballeg.org/).
+        //! Renderer for [Allegro5](http://liballeg.org/).
         //
         class GWK_EXPORT Allegro : public Gwk::Renderer::Base
         {

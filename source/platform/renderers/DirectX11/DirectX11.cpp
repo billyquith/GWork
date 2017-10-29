@@ -146,7 +146,7 @@ public:
 };
 
 
-Font::Status DX11ResourceLoader::LoadFont(Font& font)
+Font::Status DirectX11ResourceLoader::LoadFont(Font& font)
 {
     DWORD texWidth, texHeight;
     if (font.realsize > 60)
@@ -338,7 +338,7 @@ Font::Status DX11ResourceLoader::LoadFont(Font& font)
     return font.status;
 }
 
-void DX11ResourceLoader::FreeFont(Font& font)
+void DirectX11ResourceLoader::FreeFont(Font& font)
 {
     if (font.IsLoaded())
     {
@@ -355,7 +355,7 @@ void DX11ResourceLoader::FreeFont(Font& font)
     }
 }
 
-Texture::Status DX11ResourceLoader::LoadTexture(Texture& texture)
+Texture::Status DirectX11ResourceLoader::LoadTexture(Texture& texture)
 {
     if (texture.IsLoaded())
         FreeTexture(texture);
@@ -434,7 +434,7 @@ error:
     return texture.status;
 }
 
-void DX11ResourceLoader::FreeTexture(Texture& texture)
+void DirectX11ResourceLoader::FreeTexture(Texture& texture)
 {
     if (texture.IsLoaded())
     {
