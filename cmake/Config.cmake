@@ -14,10 +14,10 @@ message("Project version: ${GWK_VERSION_STR}")
 
 # Windows only
 if(WIN32)
-    option(RENDER_DIRECT2D   "Renderer: Direct2D" OFF)
-    # option(RENDER_DIRECTX9  "Renderer: DirectX9" OFF) - Deprecated?
+    # option(RENDER_DIRECTX9  "Renderer: DirectX9" OFF)
     option(RENDER_DIRECTX11  "Renderer: DirectX11" OFF)
-    # option(RENDER_GDIPLUS   "Renderer: GDIPlus" OFF)
+    # option(RENDER_DIRECT2D   "Renderer: Direct2D" OFF) - retired
+    # option(RENDER_GDIPLUS   "Renderer: GDIPlus" OFF) - retired
 endif()
 
 # Cross-platform
@@ -88,22 +88,6 @@ if(RENDER_ALLEGRO5)
     set(GWK_RENDER_LIBRARIES "${ALLEGRO5_LIBRARIES}")
     set(GWK_PLATFORM_NAME "Allegro5")
 endif(RENDER_ALLEGRO5)
-
-if(RENDER_GDIPLUS)
-    set(GWK_RENDER_NAME "GDIPlus")
-    find_package(GDIPLUS REQUIRED)
-    set(GWK_RENDER_INCLUDES "${GDIPLUS_INCLUDE_DIR}")
-    set(GWK_RENDER_LIBRARIES "${GDIPLUS_LIBRARIES}")
-    set(GWK_INPUT_NAME "Windows")
-endif(RENDER_GDIPLUS)
-
-if(RENDER_DIRECT2D)
-    set(GWK_RENDER_NAME "Direct2D")
-    find_package(Direct2D REQUIRED)
-    set(GWK_RENDER_INCLUDES "${DIRECT2D_INCLUDE_DIRS}")
-    set(GWK_RENDER_LIBRARIES "${DIRECT2D_LIBRARIES}")
-    set(GWK_INPUT_NAME "Windows")
-endif(RENDER_DIRECT2D)
 
 if(RENDER_DIRECTX9)
     set(GWK_RENDER_NAME "DirectX9")

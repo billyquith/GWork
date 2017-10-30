@@ -11,7 +11,6 @@ to fix issues with GWEN and add new features.
 A number of rendering backends are provided for use, or as an example for your own:
 
  * [Allegro5][al5] (cross-platform).
- * Direct2D (Windows 7+)
  * DirectX 11 (Windows 7+).
  * OpenGL (cross-platform. Uses GLFW).
  * [SDL2][sdl2] (cross-platform).
@@ -40,7 +39,6 @@ CMake is used to generate the project files. See `cmake -h` to see all the gener
 your platform. Only have one renderer per build directory. Choose renderer:
 
 * `-DRENDER_ALLEGRO5=ON`
-* `-DRENDER_DIRECT2D=ON`
 * `-DRENDER_DIRECTX11=ON`
 * `-DRENDER_OPENGL=ON`
 * `-DRENDER_SDL2=ON`

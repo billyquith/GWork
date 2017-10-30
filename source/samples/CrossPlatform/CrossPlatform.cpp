@@ -17,8 +17,6 @@
 // (you need to include the relevant libs to use them)
 //
 #include <Gwork/Renderers/OpenGL_DebugFont.h>
-// #include <Gwork/Renderers/GDIPlus.h>
-// #include <Gwork/Renderers/Direct2D.h>
 // #include <Gwork/Renderers/DirectX9.h>
 
 
