@@ -17,6 +17,18 @@ namespace Gwk
     {
         // Each platform implements these functions in their own specific way.
 
+        //! Go to sleep for a time. Stops CPU hogging.
+        //! @param ms : Number of milliseconds to sleep for.
+        GWK_EXPORT void Sleep(unsigned int ms);
+        
+        // Needed for things like double click
+        GWK_EXPORT float GetTimeInSeconds();
+
+        //! Get the directory of the running executable.
+        //! \return Path string, blank if not known.
+        //! \note Path is terminated with directory separator.
+        GWK_EXPORT String GetExecutableDir();
+
         //! Set the system cursor.
         //! @param cursor : Cursor number to use. @see CursorType
         GWK_EXPORT void SetCursor(unsigned char cursor);

@@ -36,7 +36,6 @@ option(ALLOC_STATS "Track memory allocations" OFF)
 #-----------------------------------------------------------
 # Configure once options known
 
-set(GWK_PLATFORM_NAME "Null")       # default/fallback platform
 set(GWK_TARGET_ARCH "Unknown")      # default architecture e.g. x86, x64
 
 # Set the default build type to release with debug info
@@ -83,36 +82,43 @@ endif(BUILD_SAMPLE)
 
 if(RENDER_ALLEGRO5)
     set(GWK_RENDER_NAME "Allegro5")
+    set(GWK_INPUT_NAME "Allegro5")
+    set(GWK_PLATFORM_NAME "Allegro5")
     find_package(Allegro5 REQUIRED)
     set(GWK_RENDER_INCLUDES "${ALLEGRO5_INCLUDE_DIRS}")
     set(GWK_RENDER_LIBRARIES "${ALLEGRO5_LIBRARIES}")
-    set(GWK_PLATFORM_NAME "Allegro5")
 endif(RENDER_ALLEGRO5)
 
 if(RENDER_DIRECTX9)
     set(GWK_RENDER_NAME "DirectX9")
+    set(GWK_INPUT_NAME "Windows")
+    set(GWK_PLATFORM_NAME "Windows")
     find_package(DirectX REQUIRED)
     set(GWK_RENDER_INCLUDES "${DIRECTX_INCLUDE_DIRS}")
     set(GWK_RENDER_LIBRARIES "${DIRECTX_LIBRARIES}")
-    set(GWK_INPUT_NAME "Windows")
 endif(RENDER_DIRECTX9)
 
 if(RENDER_DIRECTX11)
     set(GWK_RENDER_NAME "DirectX11")
+    set(GWK_INPUT_NAME "Windows")
+    set(GWK_PLATFORM_NAME "Windows")
     find_package(DirectX11 REQUIRED)
     set(GWK_RENDER_INCLUDES "${DIRECTX_INCLUDE_DIRS}")
     set(GWK_RENDER_LIBRARIES "${DIRECTX_LIBRARIES}")
-    set(GWK_PLATFORM_NAME "Windows")
-    set(GWK_INPUT_NAME "Windows")
 endif(RENDER_DIRECTX11)
 
 if(RENDER_NULL)
     set(GWK_RENDER_NAME "Null")
+    set(GWK_INPUT_NAME "Null")
+    set(GWK_PLATFORM_NAME "Null")
     set(GWK_RENDER_INCLUDES "")
     set(GWK_RENDER_LIBRARIES )
 endif(RENDER_NULL)
 
 if(RENDER_OPENGL)
+    set(GWK_RENDER_NAME "OpenGL")
+    set(GWK_INPUT_NAME "OpenGL")
+    set(GWK_PLATFORM_NAME "Cross")
     find_package(GLFW REQUIRED)
     if (APPLE)
         set(GLFW_DEPENDENCIES "-framework OpenGL")
@@ -122,43 +128,52 @@ if(RENDER_OPENGL)
         find_package(OpenGL)
         set(GLFW_DEPENDENCIES ${OPENGL_gl_LIBRARY})
     endif()
-    set(GWK_RENDER_NAME "OpenGL")
     set(GWK_RENDER_INCLUDES "${GLFW_INCLUDE_DIR}")
     set(GWK_RENDER_LIBRARIES ${GLFW_LIBRARIES} ${GLFW_DEPENDENCIES})
 endif(RENDER_OPENGL)
 
 if(RENDER_SDL2)
+    set(GWK_RENDER_NAME "SDL2")
+    set(GWK_INPUT_NAME "SDL2")
+    set(GWK_PLATFORM_NAME "Cross")
     find_package(SDL2 REQUIRED)
     find_package(SDL2_ttf REQUIRED)
     find_package(SDL2_image REQUIRED)
-    set(GWK_RENDER_NAME "SDL2")
     set(GWK_RENDER_INCLUDES ${SDL2_INCLUDE_DIR} ${SDL2_IMAGE_INCLUDE_DIR} ${SDL2_TTF_INCLUDE_DIR})
     set(GWK_RENDER_LIBRARIES ${SDL2_LIBRARY} ${SDL2_IMAGE_LIBRARIES} ${SDL2_TTF_LIBRARIES})
 endif(RENDER_SDL2)
 
 if(RENDER_SFML2)
+    set(GWK_RENDER_NAME "SFML2")
+    set(GWK_INPUT_NAME "SFML2")
+    set(GWK_PLATFORM_NAME "Cross")
     set(SFML_STATIC_LIBRARIES FALSE) # But note we edited FindSFML...
     find_package(SFML 2 COMPONENTS system window graphics REQUIRED)
     if(NOT SFML_FOUND)
         message(FATAL_ERROR "SFML2 is missing components")
     endif()
-    set(GWK_RENDER_NAME "SFML2")
     set(GWK_RENDER_INCLUDES "${SFML_INCLUDE_DIR}")
     set(GWK_RENDER_LIBRARIES ${SFML_LIBRARIES} ${SFML_DEPENDENCIES})
 endif(RENDER_SFML2)
 
 #-----------------------------------------------------------
-# Sanity checks and summary
-
-set(GWK_LIB_DEFINES "-DGWK_PLATFORM_${GWK_PLATFORM_NAME}=1 -DGWK_RENDER_${GWK_RENDER_NAME}=1")
-
-if(NOT GWK_INPUT_NAME)
-    set(GWK_INPUT_NAME ${GWK_RENDER_NAME})
-endif()
+# Sanity checks
 
 if(NOT GWK_RENDER_NAME)
     message(FATAL_ERROR "No renderer was specified. See RENDER_<name> options.")
 endif(NOT GWK_RENDER_NAME)
+
+if(NOT GWK_INPUT_NAME)
+    message(FATAL_ERROR "No GWK_INPUT_NAME specified")
+endif()
+
+if(NOT GWK_PLATFORM_NAME)
+    message(FATAL_ERROR "No GWK_PLATFORM_NAME specified")
+endif()
+
+#-----------------------------------------------------------
+
+set(GWK_LIB_DEFINES "-DGWK_PLATFORM_${GWK_PLATFORM_NAME}=1 -DGWK_RENDER_${GWK_RENDER_NAME}=1")
 
 if(GWK_RENDER_INCLUDES)
     list(REMOVE_DUPLICATES GWK_RENDER_INCLUDES)
@@ -167,6 +182,7 @@ if(GWK_RENDER_LIBRARIES)
     list(REMOVE_DUPLICATES GWK_RENDER_LIBRARIES)
 endif()
 
+# Summary
 message(STATUS "Using renderer ${GWK_RENDER_NAME} on platform ${GWK_PLATFORM_NAME}")
 message(STATUS "${GWK_RENDER_NAME} includes: ${GWK_RENDER_INCLUDES}")
 message(STATUS "${GWK_RENDER_NAME} libs: ${GWK_RENDER_LIBRARIES}")

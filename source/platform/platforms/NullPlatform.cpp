@@ -9,9 +9,22 @@
 
 static Gwk::String gs_ClipboardEmulator;
 
+Gwk::String Gwk::Platform::GetExecutableDir()
+{
+    return String();
+}
+
+void Gwk::Platform::Sleep(unsigned int ms)
+{
+}
+
+float Gwk::Platform::GetTimeInSeconds()
+{
+    return 0.f;
+}
+
 void Gwk::Platform::SetCursor(unsigned char iCursor)
 {
-    // No platform independent way to do this
 }
 
 Gwk::String Gwk::Platform::GetClipboardText()
