@@ -25,6 +25,7 @@ option(RENDER_ALLEGRO5      "Renderer: Allegro5" OFF)
 option(RENDER_OPENGL        "Renderer: OPENGL" OFF)
 option(RENDER_SDL2          "Renderer: SDL2" OFF)
 option(RENDER_SFML2         "Renderer: SFML2" OFF)
+option(RENDER_SW            "Renderer: Software" OFF)   # Used for testing
 option(RENDER_NULL          "Renderer: Null" OFF)       # Used for testing
 
 option(BUILD_TEST           "Include unittests" ON)
@@ -112,7 +113,7 @@ if(RENDER_NULL)
     set(GWK_INPUT_NAME "Null")
     set(GWK_PLATFORM_NAME "Null")
     set(GWK_RENDER_INCLUDES "")
-    set(GWK_RENDER_LIBRARIES )
+    set(GWK_RENDER_LIBRARIES "")
 endif(RENDER_NULL)
 
 if(RENDER_OPENGL)
@@ -156,6 +157,14 @@ if(RENDER_SFML2)
     set(GWK_RENDER_LIBRARIES ${SFML_LIBRARIES} ${SFML_DEPENDENCIES})
 endif(RENDER_SFML2)
 
+if(RENDER_SW)
+    set(GWK_RENDER_NAME "Software")
+    set(GWK_INPUT_NAME "Null")
+    set(GWK_PLATFORM_NAME "Null")
+    set(GWK_RENDER_INCLUDES "")
+    set(GWK_RENDER_LIBRARIES "")
+endif(RENDER_SW)
+
 #-----------------------------------------------------------
 # Sanity checks
 
@@ -183,6 +192,6 @@ if(GWK_RENDER_LIBRARIES)
 endif()
 
 # Summary
-message(STATUS "Using renderer ${GWK_RENDER_NAME} on platform ${GWK_PLATFORM_NAME}")
+message(STATUS "Using renderer '${GWK_RENDER_NAME}' with input '${GWK_INPUT_NAME}' on platform '${GWK_PLATFORM_NAME}'")
 message(STATUS "${GWK_RENDER_NAME} includes: ${GWK_RENDER_INCLUDES}")
 message(STATUS "${GWK_RENDER_NAME} libs: ${GWK_RENDER_LIBRARIES}")
