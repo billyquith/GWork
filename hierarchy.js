@@ -6,12 +6,8 @@ var hierarchy =
     [ "Gwk::Input::Allegro", "class_gwk_1_1_input_1_1_allegro.html", null ],
     [ "Gwk::Renderer::Base", "class_gwk_1_1_renderer_1_1_base.html", [
       [ "Gwk::Renderer::Allegro", "class_gwk_1_1_renderer_1_1_allegro.html", null ],
-      [ "Gwk::Renderer::Direct2D", "class_gwk_1_1_renderer_1_1_direct2_d.html", null ],
       [ "Gwk::Renderer::DirectX11", "class_gwk_1_1_renderer_1_1_direct_x11.html", null ],
       [ "Gwk::Renderer::DirectX9", "class_gwk_1_1_renderer_1_1_direct_x9.html", null ],
-      [ "Gwk::Renderer::GDIPlus", "class_gwk_1_1_renderer_1_1_g_d_i_plus.html", [
-        [ "Gwk::Renderer::GDIPlusBuffered", "class_gwk_1_1_renderer_1_1_g_d_i_plus_buffered.html", null ]
-      ] ],
       [ "Gwk::Renderer::Null", "class_gwk_1_1_renderer_1_1_null.html", null ],
       [ "Gwk::Renderer::OpenGL", "class_gwk_1_1_renderer_1_1_open_g_l.html", [
         [ "Gwk::Renderer::OpenGL_DebugFont", "class_gwk_1_1_renderer_1_1_open_g_l___debug_font.html", null ]
@@ -194,7 +190,6 @@ var hierarchy =
     [ "Gwk::Rect", "struct_gwk_1_1_rect.html", null ],
     [ "Gwk::ResourceLoader", "class_gwk_1_1_resource_loader.html", [
       [ "Gwk::Renderer::AllegroResourceLoader", "class_gwk_1_1_renderer_1_1_allegro_resource_loader.html", null ],
-      [ "Gwk::Renderer::Direct2DResourceLoader", "class_gwk_1_1_renderer_1_1_direct2_d_resource_loader.html", null ],
       [ "Gwk::Renderer::DirectX11ResourceLoader", "class_gwk_1_1_renderer_1_1_direct_x11_resource_loader.html", null ],
       [ "Gwk::Renderer::OpenGLResourceLoader", "class_gwk_1_1_renderer_1_1_open_g_l_resource_loader.html", null ],
       [ "Gwk::Renderer::SDL2ResourceLoader", "class_gwk_1_1_renderer_1_1_s_d_l2_resource_loader.html", null ],

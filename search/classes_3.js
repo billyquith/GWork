@@ -1,7 +1,5 @@
 var searchData=
 [
-  ['direct2d',['Direct2D',['../class_gwk_1_1_renderer_1_1_direct2_d.html',1,'Gwk::Renderer']]],
-  ['direct2dresourceloader',['Direct2DResourceLoader',['../class_gwk_1_1_renderer_1_1_direct2_d_resource_loader.html',1,'Gwk::Renderer']]],
   ['directx11',['DirectX11',['../class_gwk_1_1_renderer_1_1_direct_x11.html',1,'Gwk::Renderer']]],
   ['directx11resourceloader',['DirectX11ResourceLoader',['../class_gwk_1_1_renderer_1_1_direct_x11_resource_loader.html',1,'Gwk::Renderer']]],
   ['directx9',['DirectX9',['../class_gwk_1_1_renderer_1_1_direct_x9.html',1,'Gwk::Renderer']]],

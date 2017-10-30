@@ -1,7 +1,5 @@
 var searchData=
 [
-  ['gdiplus',['GDIPlus',['../class_gwk_1_1_renderer_1_1_g_d_i_plus.html',1,'Gwk::Renderer']]],
-  ['gdiplusbuffered',['GDIPlusBuffered',['../class_gwk_1_1_renderer_1_1_g_d_i_plus_buffered.html',1,'Gwk::Renderer']]],
   ['getcanvas',['GetCanvas',['../class_gwk_1_1_controls_1_1_canvas.html#ae73b0b4542cc5876f5617b4e35b2839b',1,'Gwk::Controls::Canvas']]],
   ['getcolorbyname',['GetColorByName',['../class_gwk_1_1_controls_1_1_color_picker.html#a155ed7f0bbe1bb874f9313c0aef6c516',1,'Gwk::Controls::ColorPicker']]],
   ['getinnerbounds',['GetInnerBounds',['../class_gwk_1_1_controls_1_1_base.html#a091e622a6d00ffd3199265efafc0bf13',1,'Gwk::Controls::Base']]],
