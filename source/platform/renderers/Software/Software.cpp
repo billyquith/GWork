@@ -5,11 +5,60 @@
  */
 
 #include <Gwork/Renderers/Software.h>
+#define STB_IMAGE_IMPLEMENTATION
+#include <Gwork/External/stb_image.h>
 
 namespace Gwk
 {
 namespace Renderer
 {
+    
+namespace Drawing
+{
+    //! Draw filled rectangle.
+    void FillRect(PixelBuffer& pb, Rect const& r, Color const& c)
+    {
+        for (int y = 0; y < r.h; ++y)
+        {
+            for (int x = 0; x < r.w; ++x)
+            {
+                pb.At(r.x + x, r.y + y) = c;
+            }
+        }
+    }
+    
+    //! Draw rectangle outline.
+    void DrawRect(PixelBuffer& pb, Rect const& r, Color const& c)
+    {
+        for (int x = 0; x < r.w; ++x)
+        {
+            pb.At(r.x + x, r.y) = c;  // top
+            pb.At(r.x + x, r.y + r.h - 1) = c;  // bottom
+        }
+        for (int y = 0; y < r.h; ++y)
+        {
+            pb.At(r.x, r.y + y) = c;  // left
+            pb.At(r.x + r.w - 1, r.y + y) = c;  // right
+        }
+    }
+    
+    void TexturedRect(PixelBuffer& pb, const PixelBuffer& pbsrc,
+                      const Gwk::Rect& rect, float u1, float v1, float u2, float v2)
+    {
+        const Point srcsz(pbsrc.GetSize());
+        const Point uvtl(srcsz.x * u1, srcsz.y * v1);
+        
+        const float dv = (v2 - v1) * srcsz.y / rect.h;
+        for (int y = 0; y < rect.h; ++y)
+        {
+            const float du = (u2 - u1) * srcsz.x / rect.w;
+            for (int x = 0; x < rect.w; ++x)
+            {
+                pb.At(rect.x + x, rect.y + y) = pbsrc.At(uvtl.x + du*x, uvtl.y + dv*y);
+            }
+        }
+    }
+}
     
 //-------------------------------------------------------------------------------
 
@@ -33,7 +82,26 @@ Texture::Status SoftwareResourceLoader::LoadTexture(Texture& texture)
     if (texture.IsLoaded())
         FreeTexture(texture);
     
-    const String texFile = m_paths.GetPath(ResourcePaths::Type::Texture, texture.name);
+    const String filename = m_paths.GetPath(ResourcePaths::Type::Texture, texture.name);
+
+    int x,y,n;
+    unsigned char *data = stbi_load(filename.c_str(), &x, &y, &n, 4);
+    
+    if (!data)
+    {
+        texture.status = Texture::Status::ErrorFileNotFound;
+        return texture.status;
+    }
+    
+    auto pbuff = new PixelBuffer();
+    pbuff->Init(Point(x,y));
+    memcpy(&pbuff->At(0,0), data, x*y*4);
+    stbi_image_free(data);
+
+    texture.width = x;
+    texture.height = y;
+    texture.data = pbuff;
+    texture.status = Texture::Status::Loaded;
 
     return texture.status;
 }
@@ -42,6 +110,8 @@ void SoftwareResourceLoader::FreeTexture(Texture& texture)
 {
     if (texture.IsLoaded())
     {
+        delete static_cast<PixelBuffer*>(texture.data);
+        texture.data = nullptr;
         texture.status = Texture::Status::Unloaded;
     }
 }
@@ -86,51 +156,40 @@ void Software::EndClip()
 {
 }
 
-void Software::DrawTexturedRect(Gwk::Texture* texture, Gwk::Rect rect,
-                            float u1, float v1, float u2, float v2)
+void Software::DrawPixel(int x, int y)
 {
-}
-
-Gwk::Color Software::PixelColor(Gwk::Texture* texture, unsigned int x, unsigned int y,
-                              const Gwk::Color& col_default)
-{
-    Gwk::Color col;
-    return col;
+    Translate(x, y);
+    m_pixbuf->At(x, y) = m_color;
 }
 
 void Software::DrawFilledRect(Gwk::Rect rect)
 {
     Translate(rect);
-    
-    // const SDL_Rect srect = { rect.x, rect.y, rect.w, rect.h };
-    // SDL_RenderFillRect(m_renderer, &srect);
+    Drawing::FillRect(*m_pixbuf, rect, m_color);
 }
 
 void Software::DrawLinedRect(Gwk::Rect rect)
 {
     Translate(rect);
+    Drawing::DrawRect(*m_pixbuf, rect, m_color);
+}
     
-    // const SDL_Rect srect = { rect.x, rect.y, rect.w, rect.h };
-    // SDL_RenderDrawRect(m_renderer, &srect);
+void Software::DrawTexturedRect(Gwk::Texture* texture, Gwk::Rect rect,
+                                float u1, float v1, float u2, float v2)
+{
+    Translate(rect);
+    const PixelBuffer *srcbuf = static_cast<const PixelBuffer*>(texture->data);
+    Drawing::TexturedRect(*m_pixbuf, *srcbuf, rect, u1,v1, u2,v2);
 }
 
-bool Software::BeginContext(Gwk::WindowProvider* )
+Gwk::Color Software::PixelColor(Gwk::Texture* texture, unsigned int x, unsigned int y,
+                                const Gwk::Color& col_default)
 {
-    // SDL_RenderClear(m_renderer);
-    // SDL_SetRenderDrawBlendMode(m_renderer, SDL_BLENDMODE_BLEND);
-    return true;
+    auto pbuff = static_cast<PixelBuffer*>(texture->data);
+    const Gwk::Color col = pbuff->At(x, y);
+    return col;
 }
-
-bool Software::EndContext(Gwk::WindowProvider* window)
-{
-    return true;
-}
-
-bool Software::PresentContext(Gwk::WindowProvider* window)
-{
-    // SDL_RenderPresent(m_renderer);
-    return true;
-}
+    
 
 } // Renderer
 } // Gwork
