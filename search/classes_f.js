@@ -15,6 +15,8 @@ var searchData=
   ['slider',['Slider',['../class_gwk_1_1_controls_1_1_slider.html',1,'Gwk::Controls']]],
   ['slider_5ft',['Slider_t',['../class_gwk_1_1_skin_1_1_textured_base.html#struct_gwk_1_1_skin_1_1_textured_base_1_1_textures__t_1_1_input__t_1_1_slider__t',1,'Gwk::Skin::TexturedBase::Textures_t::Input_t']]],
   ['sliderbar',['SliderBar',['../class_gwk_1_1_controls_internal_1_1_slider_bar.html',1,'Gwk::ControlsInternal']]],
+  ['software',['Software',['../class_gwk_1_1_renderer_1_1_software.html',1,'Gwk::Renderer']]],
+  ['softwareresourceloader',['SoftwareResourceLoader',['../class_gwk_1_1_renderer_1_1_software_resource_loader.html',1,'Gwk::Renderer']]],
   ['splitterbar',['SplitterBar',['../class_gwk_1_1_controls_1_1_splitter_bar.html',1,'Gwk::Controls']]],
   ['splitterhorizontal',['SplitterHorizontal',['../class_gwk_1_1_controls_1_1_splitter_horizontal.html',1,'Gwk::Controls']]],
   ['splittervertical',['SplitterVertical',['../class_gwk_1_1_controls_1_1_splitter_vertical.html',1,'Gwk::Controls']]],

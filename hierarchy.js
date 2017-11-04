@@ -4,6 +4,10 @@ var hierarchy =
     [ "Gwk::Skin::TexturedBase::Textures_t::RadioButton_t::Active_t", "class_gwk_1_1_skin_1_1_textured_base.html#struct_gwk_1_1_skin_1_1_textured_base_1_1_textures__t_1_1_radio_button__t_1_1_active__t", null ],
     [ "Gwk::Skin::Active_t.Colors.Tab.Active", "struct_gwk_1_1_skin_1_1_base_1_1_tab__t_1_1_active__t_8_colors_8_tab_8_active.html", null ],
     [ "Gwk::Input::Allegro", "class_gwk_1_1_input_1_1_allegro.html", null ],
+    [ "Gwk::Skin::Base", "class_gwk_1_1_skin_1_1_base.html", [
+      [ "Gwk::Skin::Simple", "class_gwk_1_1_skin_1_1_simple.html", null ],
+      [ "Gwk::Skin::TexturedBase", "class_gwk_1_1_skin_1_1_textured_base.html", null ]
+    ] ],
     [ "Gwk::Renderer::Base", "class_gwk_1_1_renderer_1_1_base.html", [
       [ "Gwk::Renderer::Allegro", "class_gwk_1_1_renderer_1_1_allegro.html", null ],
       [ "Gwk::Renderer::DirectX11", "class_gwk_1_1_renderer_1_1_direct_x11.html", null ],
@@ -13,11 +17,8 @@ var hierarchy =
         [ "Gwk::Renderer::OpenGL_DebugFont", "class_gwk_1_1_renderer_1_1_open_g_l___debug_font.html", null ]
       ] ],
       [ "Gwk::Renderer::SDL2", "class_gwk_1_1_renderer_1_1_s_d_l2.html", null ],
-      [ "Gwk::Renderer::SFML2", "class_gwk_1_1_renderer_1_1_s_f_m_l2.html", null ]
-    ] ],
-    [ "Gwk::Skin::Base", "class_gwk_1_1_skin_1_1_base.html", [
-      [ "Gwk::Skin::Simple", "class_gwk_1_1_skin_1_1_simple.html", null ],
-      [ "Gwk::Skin::TexturedBase", "class_gwk_1_1_skin_1_1_textured_base.html", null ]
+      [ "Gwk::Renderer::SFML2", "class_gwk_1_1_renderer_1_1_s_f_m_l2.html", null ],
+      [ "Gwk::Renderer::Software", "class_gwk_1_1_renderer_1_1_software.html", null ]
     ] ],
     [ "Gwk::Skin::Base.Colors", "struct_gwk_1_1_skin_1_1_base_8_colors.html", null ],
     [ "Gwk::Hook::BaseHook", "class_gwk_1_1_hook_1_1_base_hook.html", null ],
@@ -183,6 +184,7 @@ var hierarchy =
     [ "Gwk::DragAndDrop::Package", "struct_gwk_1_1_drag_and_drop_1_1_package.html", null ],
     [ "Gwk::Event::Packet", "struct_gwk_1_1_event_1_1_packet.html", null ],
     [ "Gwk::Skin::TexturedBase::Textures_t::Panel_t", "class_gwk_1_1_skin_1_1_textured_base.html#struct_gwk_1_1_skin_1_1_textured_base_1_1_textures__t_1_1_panel__t", null ],
+    [ "Gwk::Renderer::PixelBuffer", "class_gwk_1_1_renderer_1_1_pixel_buffer.html", null ],
     [ "Gwk::Point", "struct_gwk_1_1_point.html", null ],
     [ "Gwk::Skin::TexturedBase::Textures_t::ProgressBar_t", "class_gwk_1_1_skin_1_1_textured_base.html#struct_gwk_1_1_skin_1_1_textured_base_1_1_textures__t_1_1_progress_bar__t", null ],
     [ "Gwk::Skin::Properties_t.Colors.Properties", "struct_gwk_1_1_skin_1_1_base_1_1_properties__t_8_colors_8_properties.html", null ],
@@ -193,7 +195,8 @@ var hierarchy =
       [ "Gwk::Renderer::DirectX11ResourceLoader", "class_gwk_1_1_renderer_1_1_direct_x11_resource_loader.html", null ],
       [ "Gwk::Renderer::OpenGLResourceLoader", "class_gwk_1_1_renderer_1_1_open_g_l_resource_loader.html", null ],
       [ "Gwk::Renderer::SDL2ResourceLoader", "class_gwk_1_1_renderer_1_1_s_d_l2_resource_loader.html", null ],
-      [ "Gwk::Renderer::SFML2ResourceLoader", "class_gwk_1_1_renderer_1_1_s_f_m_l2_resource_loader.html", null ]
+      [ "Gwk::Renderer::SFML2ResourceLoader", "class_gwk_1_1_renderer_1_1_s_f_m_l2_resource_loader.html", null ],
+      [ "Gwk::Renderer::SoftwareResourceLoader", "class_gwk_1_1_renderer_1_1_software_resource_loader.html", null ]
     ] ],
     [ "Gwk::ResourcePaths", "class_gwk_1_1_resource_paths.html", [
       [ "Gwk::Platform::RelativeToExecutablePaths", "class_gwk_1_1_platform_1_1_relative_to_executable_paths.html", null ]

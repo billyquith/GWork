@@ -98,14 +98,14 @@ Inheritance diagram for Gwk::Renderer::Base:</div>
  <div class="center">
   <img src="class_gwk_1_1_renderer_1_1_base.png" usemap="#Gwk::Renderer::Base_map" alt=""/>
   <map id="Gwk::Renderer::Base_map" name="Gwk::Renderer::Base_map">
-<area href="class_gwk_1_1_renderer_1_1_allegro.html" title="Renderer for Allegro5. " alt="Gwk::Renderer::Allegro" shape="rect" coords="0,56,217,80"/>
-<area href="class_gwk_1_1_renderer_1_1_direct_x11.html" title="Renderer for DirectX11. " alt="Gwk::Renderer::DirectX11" shape="rect" coords="227,56,444,80"/>
-<area href="class_gwk_1_1_renderer_1_1_direct_x9.html" title="Renderer for DirectX9. " alt="Gwk::Renderer::DirectX9" shape="rect" coords="454,56,671,80"/>
-<area href="class_gwk_1_1_renderer_1_1_null.html" title="Null renderer that does not render! " alt="Gwk::Renderer::Null" shape="rect" coords="681,56,898,80"/>
-<area href="class_gwk_1_1_renderer_1_1_open_g_l.html" title="Renderer for OpenGL. " alt="Gwk::Renderer::OpenGL" shape="rect" coords="908,56,1125,80"/>
-<area href="class_gwk_1_1_renderer_1_1_s_d_l2.html" title="Renderer for SDL2. " alt="Gwk::Renderer::SDL2" shape="rect" coords="1135,56,1352,80"/>
-<area href="class_gwk_1_1_renderer_1_1_s_f_m_l2.html" title="Renderer for SFML2. " alt="Gwk::Renderer::SFML2" shape="rect" coords="1362,56,1579,80"/>
-<area href="class_gwk_1_1_renderer_1_1_open_g_l___debug_font.html" alt="Gwk::Renderer::OpenGL_DebugFont" shape="rect" coords="908,112,1125,136"/>
+<area href="class_gwk_1_1_renderer_1_1_allegro.html" title="Renderer for Allegro5. " alt="Gwk::Renderer::Allegro" shape="rect" coords="168,56,326,80"/>
+<area href="class_gwk_1_1_renderer_1_1_direct_x11.html" title="Renderer for DirectX11. " alt="Gwk::Renderer::DirectX11" shape="rect" coords="168,112,326,136"/>
+<area href="class_gwk_1_1_renderer_1_1_direct_x9.html" title="Renderer for DirectX9. " alt="Gwk::Renderer::DirectX9" shape="rect" coords="168,168,326,192"/>
+<area href="class_gwk_1_1_renderer_1_1_null.html" title="Null renderer that does not render! " alt="Gwk::Renderer::Null" shape="rect" coords="168,224,326,248"/>
+<area href="class_gwk_1_1_renderer_1_1_open_g_l.html" title="Renderer for OpenGL. " alt="Gwk::Renderer::OpenGL" shape="rect" coords="168,280,326,304"/>
+<area href="class_gwk_1_1_renderer_1_1_s_d_l2.html" title="Renderer for SDL2. " alt="Gwk::Renderer::SDL2" shape="rect" coords="168,336,326,360"/>
+<area href="class_gwk_1_1_renderer_1_1_s_f_m_l2.html" title="Renderer for SFML2. " alt="Gwk::Renderer::SFML2" shape="rect" coords="168,392,326,416"/>
+<area href="class_gwk_1_1_renderer_1_1_software.html" title="Renders to a buffer without needing external dependencies. " alt="Gwk::Renderer::Software" shape="rect" coords="168,448,326,472"/>
 </map>
  </div></div>
 <table class="memberdecls">
@@ -262,7 +262,7 @@ float&#160;</td><td class="memItemRight" valign="bottom"><b>m_fScale</b></td></t
 </div><div class="memdoc">
 <p>"\name Render Specialisation" No need to implement these functions in your derived class, but if you can do them faster than the default implementation it's a good idea to. </p>
 
-<p>Reimplemented in <a class="el" href="class_gwk_1_1_renderer_1_1_s_f_m_l2.html#a1512556114184c18500bda0c2165f41b">Gwk::Renderer::SFML2</a>, <a class="el" href="class_gwk_1_1_renderer_1_1_s_d_l2.html#af6de7aa4ccdeb782eeb7064d7e75629d">Gwk::Renderer::SDL2</a>, and <a class="el" href="class_gwk_1_1_renderer_1_1_allegro.html#a86eb4c0b859a9bf42f8d305b9c2834eb">Gwk::Renderer::Allegro</a>.</p>
+<p>Reimplemented in <a class="el" href="class_gwk_1_1_renderer_1_1_s_f_m_l2.html#a1512556114184c18500bda0c2165f41b">Gwk::Renderer::SFML2</a>, <a class="el" href="class_gwk_1_1_renderer_1_1_software.html#a6ad0903d0f466e21b271b6e730ba377a">Gwk::Renderer::Software</a>, <a class="el" href="class_gwk_1_1_renderer_1_1_s_d_l2.html#af6de7aa4ccdeb782eeb7064d7e75629d">Gwk::Renderer::SDL2</a>, and <a class="el" href="class_gwk_1_1_renderer_1_1_allegro.html#a86eb4c0b859a9bf42f8d305b9c2834eb">Gwk::Renderer::Allegro</a>.</p>
 
 </div>
 </div>
@@ -292,7 +292,7 @@ float&#160;</td><td class="memItemRight" valign="bottom"><b>m_fScale</b></td></t
 <p>Start clipping the drawing. </p>
 <dl class="section see"><dt>See also</dt><dd>SetClipRegion(). </dd></dl>
 
-<p>Reimplemented in <a class="el" href="class_gwk_1_1_renderer_1_1_s_f_m_l2.html#ae8a94ffedac727b83b3d6b5b8c6b9cbd">Gwk::Renderer::SFML2</a>, <a class="el" href="class_gwk_1_1_renderer_1_1_direct_x11.html#a5405581650d1fa7911828d77aaf85204">Gwk::Renderer::DirectX11</a>, <a class="el" href="class_gwk_1_1_renderer_1_1_s_d_l2.html#a3f67dbc70a4d7829265cf7ff36b72ea8">Gwk::Renderer::SDL2</a>, <a class="el" href="class_gwk_1_1_renderer_1_1_allegro.html#a0ebeb72fcadb558a39cf7c0a03affc8a">Gwk::Renderer::Allegro</a>, <a class="el" href="class_gwk_1_1_renderer_1_1_open_g_l.html#a6c520187ba39bb063bf2991390a3bc74">Gwk::Renderer::OpenGL</a>, and <a class="el" href="class_gwk_1_1_renderer_1_1_direct_x9.html#a3ebeefeb098dcce7243faf62a2e16b09">Gwk::Renderer::DirectX9</a>.</p>
+<p>Reimplemented in <a class="el" href="class_gwk_1_1_renderer_1_1_s_f_m_l2.html#ae8a94ffedac727b83b3d6b5b8c6b9cbd">Gwk::Renderer::SFML2</a>, <a class="el" href="class_gwk_1_1_renderer_1_1_software.html#a3e4bb72d987dd0b04b981f80e678feee">Gwk::Renderer::Software</a>, <a class="el" href="class_gwk_1_1_renderer_1_1_direct_x11.html#a5405581650d1fa7911828d77aaf85204">Gwk::Renderer::DirectX11</a>, <a class="el" href="class_gwk_1_1_renderer_1_1_s_d_l2.html#a3f67dbc70a4d7829265cf7ff36b72ea8">Gwk::Renderer::SDL2</a>, <a class="el" href="class_gwk_1_1_renderer_1_1_allegro.html#a0ebeb72fcadb558a39cf7c0a03affc8a">Gwk::Renderer::Allegro</a>, <a class="el" href="class_gwk_1_1_renderer_1_1_open_g_l.html#a6c520187ba39bb063bf2991390a3bc74">Gwk::Renderer::OpenGL</a>, and <a class="el" href="class_gwk_1_1_renderer_1_1_direct_x9.html#a3ebeefeb098dcce7243faf62a2e16b09">Gwk::Renderer::DirectX9</a>.</p>
 
 </div>
 </div>

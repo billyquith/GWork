@@ -139,10 +139,13 @@ var annotated_dup =
         [ "OpenGL", "class_gwk_1_1_renderer_1_1_open_g_l.html", "class_gwk_1_1_renderer_1_1_open_g_l" ],
         [ "OpenGL_DebugFont", "class_gwk_1_1_renderer_1_1_open_g_l___debug_font.html", "class_gwk_1_1_renderer_1_1_open_g_l___debug_font" ],
         [ "OpenGLResourceLoader", "class_gwk_1_1_renderer_1_1_open_g_l_resource_loader.html", "class_gwk_1_1_renderer_1_1_open_g_l_resource_loader" ],
+        [ "PixelBuffer", "class_gwk_1_1_renderer_1_1_pixel_buffer.html", "class_gwk_1_1_renderer_1_1_pixel_buffer" ],
         [ "SDL2", "class_gwk_1_1_renderer_1_1_s_d_l2.html", "class_gwk_1_1_renderer_1_1_s_d_l2" ],
         [ "SDL2ResourceLoader", "class_gwk_1_1_renderer_1_1_s_d_l2_resource_loader.html", "class_gwk_1_1_renderer_1_1_s_d_l2_resource_loader" ],
         [ "SFML2", "class_gwk_1_1_renderer_1_1_s_f_m_l2.html", "class_gwk_1_1_renderer_1_1_s_f_m_l2" ],
-        [ "SFML2ResourceLoader", "class_gwk_1_1_renderer_1_1_s_f_m_l2_resource_loader.html", "class_gwk_1_1_renderer_1_1_s_f_m_l2_resource_loader" ]
+        [ "SFML2ResourceLoader", "class_gwk_1_1_renderer_1_1_s_f_m_l2_resource_loader.html", "class_gwk_1_1_renderer_1_1_s_f_m_l2_resource_loader" ],
+        [ "Software", "class_gwk_1_1_renderer_1_1_software.html", "class_gwk_1_1_renderer_1_1_software" ],
+        [ "SoftwareResourceLoader", "class_gwk_1_1_renderer_1_1_software_resource_loader.html", "class_gwk_1_1_renderer_1_1_software_resource_loader" ]
       ] ],
       [ "Skin", null, [
         [ "Texturing", null, [
