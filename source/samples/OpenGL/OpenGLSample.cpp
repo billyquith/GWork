@@ -83,7 +83,7 @@ int main()
     canvas->SetBackgroundColor(Gwk::Color(150, 170, 170, 255));
 
     // Create our unittest control (which is a Window with controls in it)
-    new TestFrame(canvas);
+    auto unit = new TestFrame(canvas);
     GworkInput.Initialize(canvas);
     
     glfwSetKeyCallback(window, key_callback);
@@ -103,6 +103,7 @@ int main()
         Gwk::Platform::Sleep(0);
     }
 
+    delete unit;
     delete canvas;
     delete skin;
     delete renderer;

@@ -8,6 +8,7 @@
 #include <Gwork/Renderers/OpenGL.h>
 #include <Gwork/PlatformTypes.h>
 #include <Gwork/WindowProvider.h>
+#include <Gwork/PlatformCommon.h>
 
 #ifdef _WIN32
 #   define WIN32_LEAN_AND_MEAN
@@ -39,10 +40,9 @@ namespace Renderer
 {
 
 // See "Font Size in Pixels or Points" in "stb_truetype.h"
-static constexpr float c_pixToPoints = 1.333f;
-
-static constexpr int c_texsz = 256;   // TODO - fix this hack.
-
+static constexpr float c_pointsToPixels = 1.333f;
+// Arbitrary size chosen for texture cache target.
+static constexpr int c_texsz = 256;    
     
 Font::Status OpenGLResourceLoader::LoadFont(Font& font)
 {
@@ -71,7 +71,7 @@ Font::Status OpenGLResourceLoader::LoadFont(Font& font)
     font.render_data = new stbtt_bakedchar[96];
     
     stbtt_BakeFontBitmap(ttfdata, 0,
-                         font.realsize * c_pixToPoints, // height
+                         font.realsize * c_pointsToPixels, // height
                          font_bmp,
                          c_texsz, c_texsz,
                          32,96,             // range to bake
@@ -345,7 +345,9 @@ void OpenGL::RenderText(Gwk::Font* font, Gwk::Point pos,
     const char *pc = text.c_str();
     size_t slen = text.length();
     
-    const float height = font->realsize * c_pixToPoints;
+    // Height of font, allowing for descenders, because baseline is bottom of capitals.
+    const float height = font->realsize * c_pointsToPixels * 0.8f;
+    
     while (slen > 0)
     {
         if (*pc >= 32 && *pc <= 127)
@@ -356,7 +358,7 @@ void OpenGL::RenderText(Gwk::Font* font, Gwk::Point pos,
                                *pc - 32,
                                &x, &y, &q, 1); // 1=opengl & d3d10+,0=d3d9
 
-            Rect r(q.x0, height + q.y0, q.x1 - q.x0, q.y1 - q.y0);
+            Rect r(q.x0, q.y0 + height, q.x1 - q.x0, q.y1 - q.y0);
             DrawTexturedRect(&tex, r, q.s0,q.t0, q.s1,q.t1);
         }
         ++pc, --slen;
@@ -368,7 +370,7 @@ Gwk::Point OpenGL::MeasureText(Gwk::Font* font, const Gwk::String& text)
     if (!EnsureFont(*font))
         return Gwk::Point(0, 0);
 
-    Point sz(0, font->realsize * c_pixToPoints);
+    Point sz(0, font->realsize * c_pointsToPixels);
 
     float x = 0.f, y = 0.f;
     const char *pc = text.c_str();
@@ -385,7 +387,7 @@ Gwk::Point OpenGL::MeasureText(Gwk::Font* font, const Gwk::String& text)
                                &x, &y, &q, 1); // 1=opengl & d3d10+,0=d3d9
             
             sz.x = q.x1;
-            sz.y = std::max(sz.y, int((q.y1 - q.y0) * c_pixToPoints));
+            sz.y = std::max(sz.y, int((q.y1 - q.y0) * c_pointsToPixels));
         }
         ++pc, --slen;
     }
