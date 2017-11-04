@@ -50,13 +50,13 @@ void Log::Write(Level lvl, const char *format, ...)
     
     va_list argList;
     va_start(argList, format);
-    slen = Utility::vsnprintf(buff + slen, sizeof(buff) - slen, format, argList);
+    const int mlen = Utility::vsnprintf(buff + slen, sizeof(buff) - slen, format, argList);
     va_end(argList);
     
-    if (slen < sizeof(buff)-2)
+    if (slen+mlen < sizeof(buff)-2)
     {
-        buff[slen] = '\n';
-        buff[slen+1] = '\0';
+        buff[slen+mlen] = '\n';
+        buff[slen+mlen+1] = '\0';
     }
     g_logListener(lvl, buff);
 }
