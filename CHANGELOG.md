@@ -8,7 +8,8 @@ This is a changelog for Gwork. There are also notes [on my blog][blog]
 
 - ResourceLoader and ResourcePaths abstract file locations and sources. #66.
 - Retired Direct2D and GDI+ renderers.
-- Add CrossPlatform platform. Null should do nothing!
+- Added CrossPlatform platform. Null should do nothing!
+- Added Software renderer. Draws to a texture/pixel buffer.
 
 ### 0.2
 
