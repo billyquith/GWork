@@ -44,16 +44,16 @@ int main(int argc, char** argv)
     Gwk::Renderer::Software *renderer = new Gwk::Renderer::Software(loader, pixbuff);
 
     // Create a Gwork skin
-    Gwk::Skin::TexturedBase skin(renderer);
-    skin.SetRender(renderer);
-    skin.Init("DefaultSkin.png");
+    auto skin = new Gwk::Skin::TexturedBase(renderer);
+    skin->SetRender(renderer);
+    skin->Init("DefaultSkin.png");
 
     // Note, you can get fonts that cover many languages/locales to do Chinese,
     //       Arabic, Korean, etc. e.g. "Arial Unicode" (but it's 23MB!).
-    skin.SetDefaultFont("OpenSans.ttf", 11);
+    skin->SetDefaultFont("OpenSans.ttf", 11);
 
     // Create a Canvas (it's root, on which all other Gwork panels are created)
-    Gwk::Controls::Canvas* canvas = new Gwk::Controls::Canvas(&skin);
+    Gwk::Controls::Canvas* canvas = new Gwk::Controls::Canvas(skin);
     canvas->SetSize(screenSize);
     canvas->SetDrawBackground(true);
     canvas->SetBackgroundColor(Gwk::Color(150, 170, 170, 255));
@@ -104,10 +104,11 @@ int main(int argc, char** argv)
     // write screen shot
     stbi_write_png("sw.png", screenSize.x, screenSize.y, 4, &pixbuff.At(0,0), 4*screenSize.x);
 #endif
-    
-//    skin.ReleaseFont(skin.GetDefaultFont());
-//    delete unit;
-//    delete renderer;
+
+    delete unit;
+    delete canvas;
+    delete skin;
+    delete renderer;
     
 #if VIEWER
     SDL_DestroyTexture(texture);

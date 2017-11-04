@@ -5,6 +5,7 @@
  */
 
 #include <Gwork/Renderers/Software.h>
+#include <Gwork/PlatformCommon.h>
 #include <Gwork/Utility.h>
 #define STB_IMAGE_IMPLEMENTATION
 #include <Gwork/External/stb_image.h>
