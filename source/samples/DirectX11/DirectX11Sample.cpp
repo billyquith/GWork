@@ -41,8 +41,9 @@ static HWND CreateGameWindow( void )
     RegisterClass( &wc );
     HWND hWindow = CreateWindowEx( ( WS_EX_APPWINDOW | WS_EX_WINDOWEDGE ),
                                    wc.lpszClassName,
-                                   "GWork - Direct X11 Sample",
-                                   ( WS_OVERLAPPEDWINDOW | WS_CLIPSIBLINGS | WS_CLIPCHILDREN ) & ~( WS_MINIMIZEBOX | WS_MAXIMIZEBOX | WS_THICKFRAME ),
+                                   "GWork DirectX11 Sample",
+                                   ( WS_OVERLAPPEDWINDOW | WS_CLIPSIBLINGS | WS_CLIPCHILDREN )
+                                       & ~( WS_MINIMIZEBOX | WS_MAXIMIZEBOX | WS_THICKFRAME ),
                                    -1, -1, 1004, 650, NULL, NULL,
                                    GetModuleHandle( NULL ),
                                    NULL );

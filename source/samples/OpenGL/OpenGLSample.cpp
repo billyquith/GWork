@@ -44,12 +44,14 @@ static void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 
 int main()
 {
+    const Gwk::Point screenSize(1024,768);
+
     if (!glfwInit())
         return -1;
     
     // Create a new window
-    const Gwk::Point winsz(1024,768);
-    GLFWwindow* window = glfwCreateWindow(winsz.x, winsz.y, "Gwork: OpenGL", NULL, NULL);
+    GLFWwindow* window = glfwCreateWindow(screenSize.x, screenSize.y,
+                                          "Gwork OpenGL Sample", NULL, NULL);
     if (!window)
     {
         glfwTerminate();
@@ -65,7 +67,7 @@ int main()
     Gwk::Renderer::OpenGL* renderer = new Gwk::Renderer::OpenGL_DebugFont();
 #else
     Gwk::Renderer::OpenGL* renderer =
-        new Gwk::Renderer::OpenGL(loader, Gwk::Rect(Gwk::Point(0,0), winsz));
+        new Gwk::Renderer::OpenGL(loader, Gwk::Rect(Gwk::Point(0,0), screenSize));
 #endif
     renderer->Init();
 
@@ -76,7 +78,7 @@ int main()
 
     // Create a Canvas (it's root, on which all other Gwork panels are created)
     Gwk::Controls::Canvas* canvas = new Gwk::Controls::Canvas(skin);
-    canvas->SetSize(winsz.x, winsz.y);
+    canvas->SetSize(screenSize.x, screenSize.y);
     canvas->SetDrawBackground(true);
     canvas->SetBackgroundColor(Gwk::Color(150, 170, 170, 255));
 
@@ -101,10 +103,13 @@ int main()
         Gwk::Platform::Sleep(0);
     }
 
-    // Clean up OpenGL
-    glfwTerminate();
     delete canvas;
     delete skin;
     delete renderer;
+    
+    // Clean up OpenGL
+    glfwTerminate();
+    
+    return EXIT_SUCCESS;    
 }
 

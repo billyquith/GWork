@@ -46,7 +46,7 @@ HWND CreateGameWindow(void)
     wc.hCursor          = LoadCursor(nullptr, IDC_ARROW);
     RegisterClass(&wc);
     HWND hWindow = CreateWindowEx((WS_EX_APPWINDOW|WS_EX_WINDOWEDGE), wc.lpszClassName,
-                                  L"Gwork - Direct 3D Sample",
+                                  L"Gwork DirectX9 Sample",
                                   (WS_OVERLAPPEDWINDOW|WS_CLIPSIBLINGS|
                                    WS_CLIPCHILDREN)&~(WS_MINIMIZEBOX|WS_MAXIMIZEBOX|WS_THICKFRAME),
                                   -1, -1, 1004, 650, nullptr, nullptr, GetModuleHandle(

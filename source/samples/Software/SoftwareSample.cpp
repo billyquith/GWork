@@ -20,7 +20,6 @@
 
 int main(int argc, char** argv)
 {
-    // Setup our window and renderer
     const Gwk::Point screenSize(1024, 768);
 
 #if VIEWER
@@ -39,9 +38,9 @@ int main(int argc, char** argv)
     Gwk::Platform::RelativeToExecutablePaths paths(GWORK_RESOURCE_DIR);
     Gwk::Renderer::SoftwareResourceLoader loader(paths);
     
+    // Create pixel buffer to draw into and attach renderer.
     Gwk::Renderer::PixelBuffer pixbuff;
     pixbuff.Init(screenSize);
-
     Gwk::Renderer::Software *renderer = new Gwk::Renderer::Software(loader, pixbuff);
 
     // Create a Gwork skin

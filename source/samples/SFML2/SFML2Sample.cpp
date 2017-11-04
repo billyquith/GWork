@@ -18,7 +18,7 @@
 int main()
 {
     // Create the window of the application
-    sf::RenderWindow app(sf::VideoMode(1004, 650, 32), "Gwork: SFML2");
+    sf::RenderWindow app(sf::VideoMode(1004, 650, 32), "Gwork SFML2 Sample");
 
     Gwk::Platform::RelativeToExecutablePaths paths(GWORK_RESOURCE_DIR);
     Gwk::Renderer::SFML2ResourceLoader loader(paths);

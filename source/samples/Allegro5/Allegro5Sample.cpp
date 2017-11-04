@@ -20,10 +20,12 @@
 
 int main(int argc, char** argv)
 {
+    const Gwk::Point screenSize(1024, 768);
+    
     if (!al_init())
         return EXIT_FAILURE;
 
-    ALLEGRO_DISPLAY* display = al_create_display(1024, 768);
+    ALLEGRO_DISPLAY* display = al_create_display(screenSize.x, screenSize.y);
     Gwk::Platform::SetPlatformWindow(display);
 
     if (!display)
@@ -63,7 +65,7 @@ int main(int argc, char** argv)
     
     // Create a Canvas (it's root, on which all other Gwork panels are created)
     Gwk::Controls::Canvas* canvas = new Gwk::Controls::Canvas(&skin);
-    canvas->SetSize(1024, 768);
+    canvas->SetSize(screenSize.x, screenSize.y);
     canvas->SetDrawBackground(true);
     canvas->SetBackgroundColor(Gwk::Color(150, 170, 170, 255));
 
