@@ -68,17 +68,16 @@ namespace Gwk
             Software(ResourceLoader& loader, PixelBuffer& pbuff);
             virtual ~Software();
 
-            void SetDrawColor(Gwk::Color color) override;
-
-            void DrawFilledRect(Gwk::Rect rect) override;
-
-            void RenderText(Gwk::Font* font, Gwk::Point pos,
-                                    const Gwk::String& text) override;
-            Gwk::Point MeasureText(Gwk::Font* font, const Gwk::String& text) override;
-
             void StartClip() override;
             void EndClip() override;
 
+            void SetDrawColor(Gwk::Color color) override;
+
+            Gwk::Point MeasureText(Gwk::Font* font, const Gwk::String& text) override;
+            void RenderText(Gwk::Font* font, Gwk::Point pos,
+                            const Gwk::String& text) override;
+
+            void DrawFilledRect(Gwk::Rect rect) override;
             void DrawTexturedRect(Gwk::Texture* texture, Gwk::Rect targetRect,
                                   float u1 = 0.0f, float v1 = 0.0f,
                                   float u2 = 1.0f, float v2 = 1.0f) override;

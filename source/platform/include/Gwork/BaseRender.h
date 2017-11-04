@@ -181,8 +181,7 @@ namespace Gwk
         private:
             
             ResourceLoader& m_loader;
-            Gwk::Point m_renderOffset;
-            
+            Gwk::Point m_renderOffset;            
             Gwk::Rect m_rectClipRegion;
             ICacheToTexture* m_RTT;            
         };
