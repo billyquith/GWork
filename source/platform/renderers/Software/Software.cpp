@@ -28,7 +28,7 @@ namespace Drawing
         const Color r(src.r * a + dst.r * b,
                       src.g * a + dst.g * b,
                       src.b * a + dst.b * b,
-                      src.a * a + dst.a * b);
+                      src.a);
         return r;
     }
 
@@ -84,7 +84,7 @@ namespace Drawing
 //-------------------------------------------------------------------------------
 
 // See "Font Size in Pixels or Points" in "stb_truetype.h"
-static constexpr float c_pixToPoints = 1.333f;
+static constexpr float c_pointsToPixels = 1.333f;
 static constexpr int c_texsz = 256;   // TODO - fix this hack.
 
 Font::Status SoftwareResourceLoader::LoadFont(Font& font)
@@ -113,7 +113,7 @@ Font::Status SoftwareResourceLoader::LoadFont(Font& font)
     font.render_data = new stbtt_bakedchar[96];
     
     stbtt_BakeFontBitmap(ttfdata, 0,
-                         font.realsize * c_pixToPoints, // height
+                         font.realsize * c_pointsToPixels, // height
                          font_bmp,
                          c_texsz, c_texsz,
                          32,96,             // range to bake
@@ -198,7 +198,7 @@ Gwk::Point Software::MeasureText(Gwk::Font* font, const Gwk::String& text)
     if (!EnsureFont(*font))
         return Gwk::Point(0, 0);
     
-    Point sz(0, font->realsize * c_pixToPoints);
+    Point sz(0, font->realsize * c_pointsToPixels);
     
     float x = 0.f, y = 0.f;
     const char *pc = text.c_str();
@@ -215,7 +215,7 @@ Gwk::Point Software::MeasureText(Gwk::Font* font, const Gwk::String& text)
                                &x, &y, &q, 1); // 1=opengl & d3d10+,0=d3d9
             
             sz.x = q.x1;
-            sz.y = std::max(sz.y, int((q.y1 - q.y0) * c_pixToPoints));
+            sz.y = std::max(sz.y, int((q.y1 - q.y0) * c_pointsToPixels));
         }
         ++pc, --slen;
     }
@@ -232,12 +232,14 @@ void Software::RenderText(Gwk::Font* font, Gwk::Point pos, const Gwk::String& te
     Translate(ix, iy);
     
     float x = ix, y = iy;
+    auto clipRect = ClipRegion();
+    const Point srcSize(c_texsz, c_texsz);
 
     const char *pc = text.c_str();
     size_t slen = text.length();
-    const float height = font->realsize * c_pixToPoints;
+    const float offset = font->realsize * c_pointsToPixels * 0.8f;
     const unsigned char * const fontBmp = static_cast<const unsigned char*>(font->data);
-    
+
     while (slen > 0)
     {
         if (*pc >= 32 && *pc <= 127)
@@ -248,25 +250,33 @@ void Software::RenderText(Gwk::Font* font, Gwk::Point pos, const Gwk::String& te
                                *pc - 32,
                                &x, &y, &q, 1); // 1=opengl & d3d10+,0=d3d9
             
-            const Rect r(q.x0, height-3 + q.y0, q.x1 - q.x0, q.y1 - q.y0);
-            
+            const Rect srcCharRect(q.x0, q.y0, q.x1 - q.x0, q.y1 - q.y0);
+
+            Color col(m_color);
+            Point fpos(0, srcCharRect.y + offset);
+            for (int fy = 0; fy < srcCharRect.h; ++fy, ++fpos.y)
             {
-                const Point srcsz(c_texsz, c_texsz);
-                const Point uvtl(srcsz.x * q.s0, srcsz.y * q.t0);
-                Color col(m_color);
+                if (fpos.y < clipRect.Top())
+                    continue;
                 
-                const float dv = (q.t1 - q.t0) * srcsz.y / r.h;
-                for (int fy = 0; fy < r.h; ++fy)
+                if (fpos.y > clipRect.Bottom())
+                    return;
+                
+                fpos.x = srcCharRect.x;
+                for (int fx = 0; fx < srcCharRect.w; ++fx, ++fpos.x)
                 {
-                    const float du = (q.s1 - q.s0) * srcsz.x / r.w;
-                    for (int fx = 0; fx < r.w; ++fx)
-                    {
-                        const Point fp(uvtl.x + du*fx, uvtl.y + dv*fy);
-                        const unsigned char fi = fontBmp[fp.y * c_texsz + fp.x];
-                        col.a = fi;
-                        m_pixbuf->At(r.x + fx, r.y + fy) =
-                            Drawing::BlendAlpha(col, m_pixbuf->At(x + fx, y + fy));
-                    }
+                    if (fpos.x < clipRect.Left())
+                        continue;
+
+                    if (fpos.x > clipRect.Right())
+                        return;
+                    
+                    const Point srcPix(q.s0*srcSize.x + fx, q.t0*srcSize.y + fy);
+                    const unsigned char fi = fontBmp[srcPix.y * srcSize.x + srcPix.x];
+                    col.a = fi;
+
+                    Color& dst = m_pixbuf->At(fpos);
+                    dst = Drawing::BlendAlpha(col, dst);
                 }
             }
         }
