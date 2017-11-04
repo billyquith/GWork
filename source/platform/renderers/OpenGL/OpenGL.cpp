@@ -63,6 +63,7 @@ Font::Status OpenGLResourceLoader::LoadFont(Font& font)
     
     unsigned char* ttfdata = new unsigned char[fsz];
     fread(ttfdata, 1, fsz, f);
+    fclose(f);
     
     unsigned char *font_bmp = new unsigned char[c_texsz * c_texsz];
     
