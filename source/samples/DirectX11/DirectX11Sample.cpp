@@ -43,7 +43,7 @@ static HWND CreateGameWindow( void )
                                    wc.lpszClassName,
                                    "GWork DirectX11 Sample",
                                    ( WS_OVERLAPPEDWINDOW | WS_CLIPSIBLINGS | WS_CLIPCHILDREN )
-                                       & ~( WS_MINIMIZEBOX | WS_MAXIMIZEBOX | WS_THICKFRAME ),
+                                        & ~( WS_MINIMIZEBOX | WS_MAXIMIZEBOX | WS_THICKFRAME ),
                                    -1, -1, 1004, 650, NULL, NULL,
                                    GetModuleHandle( NULL ),
                                    NULL );
@@ -154,8 +154,6 @@ static void CreateD3DDevice()
 //
 int main( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCmdShow )
 {
-    SetCurrentDirectory(Gwk::Platform::GetExecutableDir().c_str()); 
-
     // Create a window and attach DirectX to it
     g_pHWND = CreateGameWindow();
     CreateD3DDevice();
