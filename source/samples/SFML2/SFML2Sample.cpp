@@ -35,18 +35,17 @@ int main()
     skin.SetDefaultFont("OpenSans.ttf", 11);
 
     // Create a Canvas (it's root, on which all other Gwork panels are created)
-    Gwk::Controls::Canvas* canvas = new Gwk::Controls::Canvas(&skin);
-
-    canvas->SetSize(app.getSize().x, app.getSize().y);
-    canvas->SetDrawBackground(true);
-    canvas->SetBackgroundColor(Gwk::Color(150, 170, 170, 255));
+    Gwk::Controls::Canvas canvas(&skin);
+    canvas.SetSize(app.getSize().x, app.getSize().y);
+    canvas.SetDrawBackground(true);
+    canvas.SetBackgroundColor(Gwk::Color(150, 170, 170, 255));
 
     // Create our unittest control (which is a Window with controls in it)
-    new TestFrame(canvas);
+    TestFrame unit(&canvas);
 
     // Create an input processor
-    Gwk::Input::SFML GworkInput;
-    GworkInput.Initialize(canvas);
+    Gwk::Input::SFML input;
+    input.Initialize(&canvas);
     
     while (app.isOpen())
     {
@@ -64,20 +63,20 @@ int main()
             }
             else if (Event.type == sf::Event::Resized)
             {
-                canvas->SetSize(Event.size.width, Event.size.height);
+                canvas.SetSize(Event.size.width, Event.size.height);
             }
 
-            GworkInput.ProcessMessage(Event);
+            input.ProcessMessage(Event);
         }
 
         // Render the control canvas
         app.clear();
         // <user render here>
         app.pushGLStates();
-        canvas->RenderCanvas();
+        canvas.RenderCanvas();
         app.popGLStates();        
         app.display();
     }
-
+    
     return EXIT_SUCCESS;
 }
