@@ -16,9 +16,9 @@ namespace Renderer
 
 Font::Status SDL2ResourceLoader::LoadFont(Font& font)
 {
-    const String fontFile = m_paths.GetPath(ResourcePaths::Type::Font, font.facename);
+    const String filename = m_paths.GetPath(ResourcePaths::Type::Font, font.facename);
     
-    TTF_Font *tfont = TTF_OpenFont(fontFile.c_str(), font.realsize);
+    TTF_Font *tfont = TTF_OpenFont(filename.c_str(), font.realsize);
 
     if (tfont)
     {
@@ -27,6 +27,7 @@ Font::Status SDL2ResourceLoader::LoadFont(Font& font)
     }
     else
     {
+        Gwk::Log::Write(Log::Level::Error, "Font file not found: %s", filename.c_str());
         font.status = Font::Status::ErrorFileNotFound;
     }
     
@@ -47,21 +48,33 @@ Texture::Status SDL2ResourceLoader::LoadTexture(Texture& texture)
     if (texture.IsLoaded())
         FreeTexture(texture);
     
-    const String texFile = m_paths.GetPath(ResourcePaths::Type::Texture, texture.name);
+    const String filename = m_paths.GetPath(ResourcePaths::Type::Texture, texture.name);
 
     SDL_Texture *tex = nullptr;
     if (texture.readable)
     {
         // You cannot find the format of a texture once loaded to read from it
         // in SDL2 so we have to keep the surface to read from.
-        SDL_Surface *surf = IMG_Load(texFile.c_str());
-        tex = SDL_CreateTextureFromSurface(m_sdlRenderer, surf);
-        texture.surface = surf;
+        SDL_Surface *surf = IMG_Load(filename.c_str());
+        
+        if (!surf)
+        {
+            Gwk::Log::Write(Log::Level::Error, "Texture file not found: %s", filename.c_str());                        
+        }
+        else
+        {
+            tex = SDL_CreateTextureFromSurface(m_sdlRenderer, surf);
+            texture.surface = surf;            
+        }        
     }
     else
     {
         // Don't need to read. Just load straight into render format.
-        tex = IMG_LoadTexture(m_sdlRenderer, texFile.c_str());
+        tex = IMG_LoadTexture(m_sdlRenderer, filename.c_str());
+        if (!tex)
+        {
+            Gwk::Log::Write(Log::Level::Error, "Texture file not found: %s", filename.c_str());                        
+        }
     }
     
     if (tex)

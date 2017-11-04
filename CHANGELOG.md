@@ -10,6 +10,7 @@ This is a changelog for Gwork. There are also notes [on my blog][blog]
 - Retired Direct2D and GDI+ renderers.
 - Added CrossPlatform platform. Null should do nothing!
 - Added Software renderer. Draws to a texture/pixel buffer.
+- Added Gwk::Log::Write() so that error messages can be logged.
 
 ### 0.2
 

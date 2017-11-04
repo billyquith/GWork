@@ -115,9 +115,9 @@ void AllegroCTT::DrawCachedControlTexture(CacheHandle control)
 
 Font::Status AllegroResourceLoader::LoadFont(Font& font)
 {
-    const String fontFile = m_paths.GetPath(ResourcePaths::Type::Font, font.facename);
+    const String filename = m_paths.GetPath(ResourcePaths::Type::Font, font.facename);
     
-    ALLEGRO_FONT* afont = al_load_font(fontFile.c_str(),
+    ALLEGRO_FONT* afont = al_load_font(filename.c_str(),
                                        font.realsize,
                                        ALLEGRO_TTF_NO_KERNING);
     
@@ -128,6 +128,7 @@ Font::Status AllegroResourceLoader::LoadFont(Font& font)
     }
     else
     {
+        Gwk::Log::Write(Log::Level::Error, "Font file not found: %s", filename.c_str());
         font.status = Font::Status::ErrorFileNotFound;
     }
     
@@ -161,6 +162,7 @@ Texture::Status AllegroResourceLoader::LoadTexture(Texture& texture)
     }
     else
     {
+        Gwk::Log::Write(Log::Level::Error, "Texture file not found: %s", filename.c_str());
         texture.status = Texture::Status::ErrorFileNotFound;
         texture.data = nullptr;
     }

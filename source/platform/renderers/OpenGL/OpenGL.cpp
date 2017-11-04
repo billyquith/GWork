@@ -46,18 +46,19 @@ static constexpr int c_texsz = 256;   // TODO - fix this hack.
     
 Font::Status OpenGLResourceLoader::LoadFont(Font& font)
 {
-    const String fontFile = m_paths.GetPath(ResourcePaths::Type::Font, font.facename);
+    const String filename = m_paths.GetPath(ResourcePaths::Type::Font, font.facename);
     
-    FILE* f = fopen(fontFile.c_str(), "rb");
+    FILE* f = fopen(filename.c_str(), "rb");
     if (!f)
     {
+        Gwk::Log::Write(Log::Level::Error, "Font file not found: %s", filename.c_str());
         font.data = nullptr;
         font.status = Font::Status::ErrorFileNotFound;
         return font.status;
     }
     
     struct stat stat_buf;
-    const int rc = stat(fontFile.c_str(), &stat_buf);
+    const int rc = stat(filename.c_str(), &stat_buf);
     const size_t fsz = rc == 0 ? stat_buf.st_size : -1;
     assert(fsz > 0);
     
@@ -118,6 +119,7 @@ Texture::Status OpenGLResourceLoader::LoadTexture(Texture& texture)
     // Image failed to load..
     if (!data)
     {
+        Gwk::Log::Write(Log::Level::Error, "Texture file not found: %s", filename.c_str());
         texture.status = Texture::Status::ErrorFileNotFound;
         return texture.status;
     }

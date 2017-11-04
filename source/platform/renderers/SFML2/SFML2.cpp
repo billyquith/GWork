@@ -42,17 +42,18 @@ struct TextureData
 
 Font::Status Gwk::Renderer::SFML2ResourceLoader::LoadFont(Font& font)
 {
-    const String fontFile = m_paths.GetPath(ResourcePaths::Type::Font, font.facename);
+    const String filename = m_paths.GetPath(ResourcePaths::Type::Font, font.facename);
     
     sf::Font* sfFont = new sf::Font();
     
-    if (sfFont->loadFromFile(fontFile))
+    if (sfFont->loadFromFile(filename))
     {
         font.data = sfFont;
         font.status = Font::Status::Loaded;
     }
     else
     {
+        Gwk::Log::Write(Log::Level::Error, "Font file not found: %s", filename.c_str());
         delete sfFont;
         font.status = Font::Status::ErrorFileNotFound;
     }
@@ -79,9 +80,9 @@ Texture::Status Gwk::Renderer::SFML2ResourceLoader::LoadTexture(Texture& texture
     sf::Texture* tex = new sf::Texture();
     tex->setSmooth(true);
     
-    const String texFile = m_paths.GetPath(ResourcePaths::Type::Texture, texture.name);
+    const String filename = m_paths.GetPath(ResourcePaths::Type::Texture, texture.name);
 
-    if (tex->loadFromFile(texFile))
+    if (tex->loadFromFile(filename))
     {
         texture.height = tex->getSize().x;
         texture.width = tex->getSize().y;
@@ -90,6 +91,7 @@ Texture::Status Gwk::Renderer::SFML2ResourceLoader::LoadTexture(Texture& texture
     }
     else
     {
+        Gwk::Log::Write(Log::Level::Error, "Texture file not found: %s", filename.c_str());                        
         delete tex;
         texture.status = Texture::Status::ErrorFileNotFound;
     }

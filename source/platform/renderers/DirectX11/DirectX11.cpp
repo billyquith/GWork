@@ -193,7 +193,10 @@ Font::Status DirectX11ResourceLoader::LoadFont(Font& font)
     HFONT hFont = CreateFontIndirectW(&fd);
 
     if (!hFont)
-        return font.status = Font::Status::ErrorFileNotFound;
+    {
+        Gwk::Log::Write(Log::Level::Error, "Font file not found: %s", filename.c_str());
+        return font.status = Font::Status::ErrorFileNotFound;        
+    }
 
     SelectObject(hDC, hBitmap);
     SelectObject(hDC, hFont);
@@ -367,6 +370,7 @@ Texture::Status DirectX11ResourceLoader::LoadTexture(Texture& texture)
 
     if (!data)
     {
+        Gwk::Log::Write(Log::Level::Error, "Texture file not found: %s", filename.c_str());
         texture.status = Texture::Status::ErrorFileNotFound;
         goto error;
     }
