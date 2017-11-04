@@ -98,6 +98,11 @@ namespace Gwk
         :   x(o.x), y(o.y), w(sz.x), h(sz.y)
         {}
         
+        int Left() const { return x; }
+        int Right() const { return x + w; }
+        int Top() const { return y; }
+        int Bottom() const { return y + h; }
+        
         bool operator == (const Rect &other) const
         {
             return x == other.x && y == other.y && w == other.w && h == other.h;

@@ -105,6 +105,9 @@ namespace Gwk
 
         private:
             
+            bool Clip(Rect& rect);
+            bool m_isClipping;
+            
             Gwk::Color m_color;
             PixelBuffer *m_pixbuf;
         };

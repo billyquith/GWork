@@ -309,33 +309,6 @@ void Strings::Strip(Gwk::String& str, const Gwk::String& chars)
     }
 }
 
-Gwk::Rect ClampRectToRect(Gwk::Rect inside, Gwk::Rect outside, bool clampSize)
-{
-    if (inside.x < outside.x)
-        inside.x = outside.x;
-    
-    if (inside.y  < outside.y)
-        inside.y = outside.y;
-    
-    if (inside.x+inside.w > outside.x+outside.w)
-    {
-        if (clampSize)
-            inside.w = outside.w;
-        else
-            inside.x = outside.x+outside.w-inside.w;
-    }
-    
-    if (inside.y+inside.h > outside.y+outside.h)
-    {
-        if (clampSize)
-            inside.h = outside.h;
-        else
-            inside.y = outside.w+outside.h-inside.h;
-    }
-    
-    return inside;
-}
-
 } // namespace Utility
     
 namespace Debug

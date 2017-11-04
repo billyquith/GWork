@@ -83,8 +83,6 @@ namespace Gwk
                 GWK_EXPORT bool  Floats(const Gwk::String& str, float* f, size_t iCount);
             }
         }
-
-        Gwk::Rect ClampRectToRect(Gwk::Rect inside, Gwk::Rect outside, bool clampSize = false);
     }
     
     namespace Debug

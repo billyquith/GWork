@@ -127,7 +127,7 @@ bool Base::ClipRegionVisible()
 {
     if (m_rectClipRegion.w <= 0 || m_rectClipRegion.h <= 0)
         return false;
-
+    
     return true;
 }
 

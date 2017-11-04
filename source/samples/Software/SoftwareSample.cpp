@@ -92,7 +92,7 @@ int main(int argc, char** argv)
         SDL_RenderClear(sdlRenderer);
         SDL_RenderCopy(sdlRenderer, texture, NULL, NULL);
         SDL_RenderPresent(sdlRenderer);
-        SDL_Delay(5);
+        SDL_Delay(1);
     }
 #else
     // render GUI to buffer

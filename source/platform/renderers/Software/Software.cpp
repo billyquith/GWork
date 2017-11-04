@@ -5,6 +5,7 @@
  */
 
 #include <Gwork/Renderers/Software.h>
+#include <Gwork/Utility.h>
 #define STB_IMAGE_IMPLEMENTATION
 #include <Gwork/External/stb_image.h>
 #define STB_TRUETYPE_IMPLEMENTATION
@@ -73,9 +74,8 @@ namespace Drawing
             const float du = (u2 - u1) * srcsz.x / rect.w;
             for (int x = 0; x < rect.w; ++x)
             {
-                
-                pb.At(rect.x + x, rect.y + y) = BlendAlpha(pbsrc.At(uvtl.x + du*x, uvtl.y + dv*y),
-                                                           pb.At(rect.x + x, rect.y + y));
+                Color& dst = pb.At(rect.x + x, rect.y + y);
+                dst = BlendAlpha(pbsrc.At(uvtl.x + du*x, uvtl.y + dv*y), dst);
             }
         }
     }
@@ -86,7 +86,6 @@ namespace Drawing
 // See "Font Size in Pixels or Points" in "stb_truetype.h"
 static constexpr float c_pixToPoints = 1.333f;
 static constexpr int c_texsz = 256;   // TODO - fix this hack.
-static PixelBuffer missing;
 
 Font::Status SoftwareResourceLoader::LoadFont(Font& font)
 {
@@ -181,9 +180,8 @@ void SoftwareResourceLoader::FreeTexture(Texture& texture)
 Software::Software(ResourceLoader& loader, PixelBuffer& pbuff)
     :   Base(loader)
     ,   m_pixbuf(&pbuff)
+    ,   m_isClipping(false)
 {
-    missing.Init(Point(1,1));
-    missing.At(0,0) = Color(255,0,0,255);
 }
 
 Software::~Software()
@@ -266,7 +264,8 @@ void Software::RenderText(Gwk::Font* font, Gwk::Point pos, const Gwk::String& te
                         const Point fp(uvtl.x + du*fx, uvtl.y + dv*fy);
                         const unsigned char fi = fontBmp[fp.y * c_texsz + fp.x];
                         col.a = fi;
-                        m_pixbuf->At(r.x + fx, r.y + fy) = Drawing::BlendAlpha(col, m_pixbuf->At(x + fx, y + fy));
+                        m_pixbuf->At(r.x + fx, r.y + fy) =
+                            Drawing::BlendAlpha(col, m_pixbuf->At(x + fx, y + fy));
                     }
                 }
             }
@@ -277,43 +276,95 @@ void Software::RenderText(Gwk::Font* font, Gwk::Point pos, const Gwk::String& te
 
 void Software::StartClip()
 {
-//    const Gwk::Rect &rect = ClipRegion();
+    m_isClipping = true;
 }
 
 void Software::EndClip()
 {
+    m_isClipping = false;
 }
 
+bool Software::Clip(Rect& rect)
+{
+    if (m_isClipping)
+    {
+        if (!ClipRegionVisible())
+        {
+            rect = Rect();
+            return false;
+        }
+        
+        const Rect& cr(ClipRegion());
+
+        // left
+        if (rect.x < cr.x)
+        {
+            rect.w -= cr.x - rect.x;
+            rect.x = cr.x;
+        }
+
+        // top
+        if (rect.y < cr.y)
+        {
+            rect.h -= cr.y - rect.y;
+            rect.y = cr.y;
+        }
+        
+        // right
+        if (rect.Right() > cr.Right())
+        {
+            rect.w -= rect.Right() - cr.Right();
+        }
+        
+        // bottom
+        if (rect.Bottom() > cr.Bottom())
+        {
+            rect.h -= rect.Bottom() - cr.Bottom();
+        }
+        
+        return rect.w >= 0 && rect.h >= 0;
+    }
+
+    return true;
+}
+    
 void Software::DrawPixel(int x, int y)
 {
     Translate(x, y);
-    m_pixbuf->At(x, y) = m_color;
+    
+    if (ClipRegionVisible())
+        m_pixbuf->At(x, y) = m_color;
 }
 
 void Software::DrawFilledRect(Gwk::Rect rect)
 {
     Translate(rect);
-    Drawing::FillRect(*m_pixbuf, rect, m_color);
+    if (Clip(rect))
+        Drawing::FillRect(*m_pixbuf, rect, m_color);
 }
 
 void Software::DrawLinedRect(Gwk::Rect rect)
 {
     Translate(rect);
-    Drawing::OutlineRect(*m_pixbuf, rect, m_color);
+    if (Clip(rect))
+        Drawing::OutlineRect(*m_pixbuf, rect, m_color);
 }
     
 void Software::DrawTexturedRect(Gwk::Texture* texture, Gwk::Rect rect,
                                 float u1, float v1, float u2, float v2)
 {
     Translate(rect);
-    const PixelBuffer *srcbuf = static_cast<const PixelBuffer*>(texture->data);
-    if (srcbuf != nullptr)
+    if (Clip(rect))
     {
-        Drawing::TexturedRect(*m_pixbuf, *srcbuf, rect, u1,v1, u2,v2);
-    }
-    else
-    {
-        Drawing::TexturedRect(*m_pixbuf, missing, rect, 0.f,0.f, 1.f,1.f);
+        const PixelBuffer *srcbuf = static_cast<const PixelBuffer*>(texture->data);
+        if (srcbuf != nullptr)
+        {
+            Drawing::TexturedRect(*m_pixbuf, *srcbuf, rect, u1,v1, u2,v2);
+        }
+        else
+        {
+            DrawMissingImage(rect);
+        }
     }
 }
 
