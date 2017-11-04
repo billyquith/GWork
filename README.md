@@ -43,6 +43,7 @@ your platform. Only have one renderer per build directory. Choose renderer:
 * `-DRENDER_OPENGL=ON`
 * `-DRENDER_SDL2=ON`
 * `-DRENDER_SFML2=ON`
+* `-DRENDER_SW=ON`
 
 For example to build Allegro 5 renderer using Ninja:
 

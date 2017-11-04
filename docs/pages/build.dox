@@ -102,6 +102,7 @@ i.e. `-DRENDER_<TARGET>=ON`, e.g. :-
 - OpenGL: `-DRENDER_OPENGL=ON`
 - SDL2: `-DRENDER_SDL2=ON`
 - SFML2: `-DRENDER_SFML2=ON`
+- Software: `-DRENDER_SW=ON`. This is a standalone software GUI renderer. Writes to texture.
 
 \note You can only choose one target at a time. If you would like to compile multiple targets,
 create multiple build folders and create different project files and targets in each.
