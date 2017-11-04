@@ -7,6 +7,7 @@
 
 #include <Gwork/BaseRender.h>
 #include <Gwork/Renderers/Allegro5.h>
+#include <Gwork/PlatformCommon.h>
 
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_ttf.h>
