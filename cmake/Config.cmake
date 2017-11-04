@@ -16,8 +16,6 @@ message("Project version: ${GWK_VERSION_STR}")
 if(WIN32)
     # option(RENDER_DIRECTX9  "Renderer: DirectX9" OFF)
     option(RENDER_DIRECTX11  "Renderer: DirectX11" OFF)
-    # option(RENDER_DIRECT2D   "Renderer: Direct2D" OFF) - retired
-    # option(RENDER_GDIPLUS   "Renderer: GDIPlus" OFF) - retired
 endif()
 
 # Cross-platform
