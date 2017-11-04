@@ -33,24 +33,24 @@ int main(int argc, char** argv)
 
 
     // Create a Gwork Allegro Renderer
-    SDL_Renderer *rdr = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+    SDL_Renderer *sdlRenderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
     
     Gwk::Platform::RelativeToExecutablePaths paths(GWORK_RESOURCE_DIR);
-    Gwk::Renderer::SDL2ResourceLoader loader(paths, rdr);
+    Gwk::Renderer::SDL2ResourceLoader loader(paths, sdlRenderer);
 
     Gwk::Renderer::SDL2 *renderer = new Gwk::Renderer::SDL2(loader, window);
 
     // Create a Gwork skin
-    Gwk::Skin::TexturedBase skin(renderer);
-    skin.SetRender(renderer);
-    skin.Init("DefaultSkin.png");
+    auto skin = new Gwk::Skin::TexturedBase(renderer);
+    skin->SetRender(renderer);
+    skin->Init("DefaultSkin.png");
     
     // Note, you can get fonts that cover many languages/locales to do Chinese,
     //       Arabic, Korean, etc. e.g. "Arial Unicode" (but it's 23MB!).
-    skin.SetDefaultFont("OpenSans.ttf", 11);
+    skin->SetDefaultFont("OpenSans.ttf", 11);
     
     // Create a Canvas (it's root, on which all other Gwork panels are created)
-    Gwk::Controls::Canvas* canvas = new Gwk::Controls::Canvas(&skin);
+    Gwk::Controls::Canvas* canvas = new Gwk::Controls::Canvas(skin);
     canvas->SetSize(screenSize.x, screenSize.y);
     canvas->SetDrawBackground(true);
     canvas->SetBackgroundColor(Gwk::Color(150, 170, 170, 255));
@@ -80,8 +80,12 @@ int main(int argc, char** argv)
         renderer->EndContext(nullptr);
     }
 
-    skin.ReleaseFont(skin.GetDefaultFont());
+    delete unit;
+    delete skin;
+    delete renderer;
+    
     TTF_Quit();
+    SDL_DestroyRenderer(sdlRenderer);
     SDL_DestroyWindow(window);
     SDL_Quit();
     
