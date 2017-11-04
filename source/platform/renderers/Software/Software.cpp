@@ -19,6 +19,18 @@ namespace Renderer
     
 namespace Drawing
 {
+    //! Blend two colors using: result = S_rgb*S_alpha + D_rgb*(1 - S_alpha)
+    static inline Color BlendAlpha(Color const& src, Color const& dst)
+    {
+        const float a = src.a * (1.f/255.f);
+        const float b = 1.f - a;
+        const Color r(src.r * a + dst.r * b,
+                      src.g * a + dst.g * b,
+                      src.b * a + dst.b * b,
+                      src.a * a + dst.a * b);
+        return r;
+    }
+
     //! Draw filled rectangle.
     void FillRect(PixelBuffer& pb, Rect const& r, Color const& c)
     {
@@ -32,20 +44,23 @@ namespace Drawing
     }
     
     //! Draw rectangle outline.
-    void DrawRect(PixelBuffer& pb, Rect const& r, Color const& c)
+    void OutlineRect(PixelBuffer& pb, Rect const& r, Color const& c)
     {
         for (int x = 0; x < r.w; ++x)
         {
             pb.At(r.x + x, r.y) = c;  // top
-            pb.At(r.x + x, r.y + r.h - 1) = c;  // bottom
+            if (r.h > 1)
+                pb.At(r.x + x, r.y + r.h - 1) = c;  // bottom
         }
         for (int y = 0; y < r.h; ++y)
         {
             pb.At(r.x, r.y + y) = c;  // left
-            pb.At(r.x + r.w - 1, r.y + y) = c;  // right
+            if (r.w > 1)
+                pb.At(r.x + r.w - 1, r.y + y) = c;  // right
         }
     }
     
+    //! Draw textured rectangle.
     void TexturedRect(PixelBuffer& pb, const PixelBuffer& pbsrc,
                       const Gwk::Rect& rect, float u1, float v1, float u2, float v2)
     {
@@ -58,7 +73,9 @@ namespace Drawing
             const float du = (u2 - u1) * srcsz.x / rect.w;
             for (int x = 0; x < rect.w; ++x)
             {
-                pb.At(rect.x + x, rect.y + y) = pbsrc.At(uvtl.x + du*x, uvtl.y + dv*y);
+                
+                pb.At(rect.x + x, rect.y + y) = BlendAlpha(pbsrc.At(uvtl.x + du*x, uvtl.y + dv*y),
+                                                           pb.At(rect.x + x, rect.y + y));
             }
         }
     }
@@ -69,6 +86,7 @@ namespace Drawing
 // See "Font Size in Pixels or Points" in "stb_truetype.h"
 static constexpr float c_pixToPoints = 1.333f;
 static constexpr int c_texsz = 256;   // TODO - fix this hack.
+static PixelBuffer missing;
 
 Font::Status SoftwareResourceLoader::LoadFont(Font& font)
 {
@@ -164,6 +182,8 @@ Software::Software(ResourceLoader& loader, PixelBuffer& pbuff)
     :   Base(loader)
     ,   m_pixbuf(&pbuff)
 {
+    missing.Init(Point(1,1));
+    missing.At(0,0) = Color(255,0,0,255);
 }
 
 Software::~Software()
@@ -204,17 +224,6 @@ Gwk::Point Software::MeasureText(Gwk::Font* font, const Gwk::String& text)
     
     return sz;
 }
-
-static Color BlendAlpha(Color const& src, Color const& dst)
-{
-    const float a = src.a * (1.f/255.f);
-    const float b = 1.f - a;
-    const Color r(src.r * a + dst.r * b,
-                  src.g * a + dst.g * b,
-                  src.b * a + dst.b * b,
-                  src.a);
-    return r;
-}
     
 void Software::RenderText(Gwk::Font* font, Gwk::Point pos, const Gwk::String& text)
 {
@@ -241,12 +250,8 @@ void Software::RenderText(Gwk::Font* font, Gwk::Point pos, const Gwk::String& te
                                *pc - 32,
                                &x, &y, &q, 1); // 1=opengl & d3d10+,0=d3d9
             
-            const Rect r(q.x0, height + q.y0, q.x1 - q.x0, q.y1 - q.y0);
+            const Rect r(q.x0, height-3 + q.y0, q.x1 - q.x0, q.y1 - q.y0);
             
-//            DrawTexturedRect(&tex, r, q.s0,q.t0, q.s1,q.t1);
-            
-//            void TexturedRect(PixelBuffer& pb, const PixelBuffer& pbsrc,
-//                              const Gwk::Rect& rect, float u1, float v1, float u2, float v2)
             {
                 const Point srcsz(c_texsz, c_texsz);
                 const Point uvtl(srcsz.x * q.s0, srcsz.y * q.t0);
@@ -261,7 +266,7 @@ void Software::RenderText(Gwk::Font* font, Gwk::Point pos, const Gwk::String& te
                         const Point fp(uvtl.x + du*fx, uvtl.y + dv*fy);
                         const unsigned char fi = fontBmp[fp.y * c_texsz + fp.x];
                         col.a = fi;
-                        m_pixbuf->At(x + fx, y + fy) = BlendAlpha(col, m_pixbuf->At(x + fx, y + fy));
+                        m_pixbuf->At(r.x + fx, r.y + fy) = Drawing::BlendAlpha(col, m_pixbuf->At(x + fx, y + fy));
                     }
                 }
             }
@@ -272,7 +277,7 @@ void Software::RenderText(Gwk::Font* font, Gwk::Point pos, const Gwk::String& te
 
 void Software::StartClip()
 {
-    const Gwk::Rect &rect = ClipRegion();
+//    const Gwk::Rect &rect = ClipRegion();
 }
 
 void Software::EndClip()
@@ -294,7 +299,7 @@ void Software::DrawFilledRect(Gwk::Rect rect)
 void Software::DrawLinedRect(Gwk::Rect rect)
 {
     Translate(rect);
-    Drawing::DrawRect(*m_pixbuf, rect, m_color);
+    Drawing::OutlineRect(*m_pixbuf, rect, m_color);
 }
     
 void Software::DrawTexturedRect(Gwk::Texture* texture, Gwk::Rect rect,
@@ -302,7 +307,14 @@ void Software::DrawTexturedRect(Gwk::Texture* texture, Gwk::Rect rect,
 {
     Translate(rect);
     const PixelBuffer *srcbuf = static_cast<const PixelBuffer*>(texture->data);
-    Drawing::TexturedRect(*m_pixbuf, *srcbuf, rect, u1,v1, u2,v2);
+    if (srcbuf != nullptr)
+    {
+        Drawing::TexturedRect(*m_pixbuf, *srcbuf, rect, u1,v1, u2,v2);
+    }
+    else
+    {
+        Drawing::TexturedRect(*m_pixbuf, missing, rect, 0.f,0.f, 1.f,1.f);
+    }
 }
 
 Gwk::Color Software::PixelColor(Gwk::Texture* texture, unsigned int x, unsigned int y,
