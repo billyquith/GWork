@@ -58,6 +58,12 @@ void Gwk::Platform::GetCursorPos(Gwk::Point& po)
     po.y = p.y;
 }
 
+// Default place log messages are sent to.
+void Gwk::Platform::DefaultLogListener(Gwk::Log::Level lvl, const char *message)
+{
+    OutputDebugString(message);
+}
+
 void Gwk::Platform::GetDesktopSize(int& w, int& h)
 {
     w = GetSystemMetrics(SM_CXFULLSCREEN);

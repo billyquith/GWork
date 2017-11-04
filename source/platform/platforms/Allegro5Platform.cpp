@@ -49,6 +49,21 @@ void Gwk::Platform::Sleep(unsigned int iMS)
     al_rest(iMS*0.001);
 }
 
+// Default place log messages are sent to.
+void Gwk::Platform::DefaultLogListener(Gwk::Log::Level lvl, const char *message)
+{
+    // TODO: al_open_native_text_log() ??
+    
+#if defined(_MSC_VER)
+    OutputDebugString(message);
+#else
+    if (lvl >= Gwk::Log::Level::Error)
+        fputs(message, stderr);
+    else
+        fputs(message, stdout);
+#endif
+}
+
 void Gwk::Platform::SetCursor(unsigned char iCursor)
 {
     al_set_system_mouse_cursor(g_display, g_cursorConversion[iCursor]);

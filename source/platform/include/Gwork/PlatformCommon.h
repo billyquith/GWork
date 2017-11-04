@@ -48,6 +48,33 @@ namespace Gwk
 #endif // GWK_ALLOC_STATS
 
     }
+    
+    namespace Log
+    {
+        enum class Level
+        {
+            Info,
+            Warning,
+            Error,
+            Fatal
+        };
+
+        //! Write a message to the platform log.
+        //! \param lvl : The level of the log.
+        //! \param format : A message, using printf() style formatting.
+        void Write(Level lvl, const char *format, ...);
+        
+        typedef void (*LogListener)(Level,const char*);
+        
+        //! Set where logs messages are sent to.
+        //! \param listener : The new listener.
+        //! \return The current log listener.
+        LogListener SetLogListener(LogListener listener);
+    }
+    
+    // Do not use this! Use Gwk::Log::Write()
+    // Needs to be implemented by the platform.
+    namespace Platform { void DefaultLogListener(Gwk::Log::Level lvl, const char *message); }
 }
 
 #endif // ifndef GWK_PLATFORM_COMMON_H

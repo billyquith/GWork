@@ -128,6 +128,19 @@ float Gwk::Platform::GetTimeInSeconds()
 
 #endif 
 
+// Default place log messages are sent to.
+void Gwk::Platform::DefaultLogListener(Gwk::Log::Level lvl, const char *message)
+{
+#if defined(_MSC_VER)
+    OutputDebugString(message);
+#else
+    if (lvl >= Gwk::Log::Level::Error)
+        fputs(message, stderr);
+    else
+        fputs(message, stdout);
+#endif
+}
+
 void Gwk::Platform::SetCursor(unsigned char iCursor)
 {
     // No platform independent way to do this

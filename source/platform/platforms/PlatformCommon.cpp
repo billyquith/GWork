@@ -6,6 +6,7 @@
 
 #include <Gwork/PlatformCommon.h>
 #include <Gwork/Platform.h>
+#include <Gwork/Utility.h>
 
 #include <cstdlib>
 #include <map>
@@ -31,6 +32,40 @@ String Gwk::Platform::RelativeToExecutablePaths::GetPath(Type type, String const
     }
 
     return filepath;
+}
+
+//------------------------------------------------------------------------------
+
+namespace Gwk { namespace Platform {
+    extern void DefaultLogListener(Log::Level lvl, const char *message);
+}}
+
+static Log::LogListener g_logListener = &Gwk::Platform::DefaultLogListener;
+
+void Log::Write(Level lvl, const char *format, ...)
+{
+    char buff[512];
+    const char *logname[] = { "INFO", "WARNING", "ERROR", "FATAL" };
+    int slen = Utility::snprintf(buff, sizeof(buff), "[%s] ", logname[(int)lvl]);
+    
+    va_list argList;
+    va_start(argList, format);
+    slen = Utility::vsnprintf(buff + slen, sizeof(buff) - slen, format, argList);
+    va_end(argList);
+    
+    if (slen < sizeof(buff)-2)
+    {
+        buff[slen] = '\n';
+        buff[slen+1] = '\0';
+    }
+    g_logListener(lvl, buff);
+}
+
+Log::LogListener SetLogListener(Log::LogListener listener)
+{
+    auto old = g_logListener;
+    g_logListener = listener;
+    return old;
 }
 
 //==============================================================================
