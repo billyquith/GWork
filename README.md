@@ -15,6 +15,7 @@ A number of rendering backends are provided for use, or as an example for your o
  * OpenGL (cross-platform. Uses GLFW).
  * [SDL2][sdl2] (cross-platform).
  * [SFML2][sfml2] (cross-platform).
+ * Software (cross-platform). Render to texture.
 
 ## Documentation
 
@@ -22,7 +23,7 @@ A number of rendering backends are provided for use, or as an example for your o
 
 ## Changes
 
-- See CHANGELOG for changes to Gwork, and the differences from GWEN.
+- See [CHANGELOG][changes] for changes to Gwork, and the differences from GWEN.
 
 ## Issues
 
@@ -66,4 +67,5 @@ bin/GworkAllegro5Sample     # run sample
 [sfml2]: http://www.sfml-dev.org
 [al5]: http://alleg.sourceforge.net
 [docs]: https://billyquith.github.io/GWork/
+[changes]: https://github.com/billyquith/GWork/blob/gwork/CHANGELOG.md
 [issues]: https://github.com/billyquith/GWork/issues "Bugs/Issues"
