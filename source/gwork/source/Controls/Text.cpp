@@ -9,7 +9,7 @@
 #include <Gwork/Gwork.h>
 #include <Gwork/Controls/Text.h>
 #include <Gwork/Skin.h>
-#include <Gwork/Utility.h>
+#include <Gwork/PlatformCommon.h>
 
 using namespace Gwk;
 using namespace Gwk::ControlsInternal;
@@ -205,7 +205,7 @@ void Text::RefreshSize()
 
     if (!GetFont())
     {
-        Debug::AssertCheck(0, "Text::RefreshSize() - No Font!!\n");
+        GWK_ASSERT_MSG(false, "Text::RefreshSize() - No Font!");
         return;
     }
 
@@ -293,7 +293,7 @@ void Text::RefreshSizeWrap()
 
     if (!GetFont())
     {
-        Debug::AssertCheck(0, "Text::RefreshSize() - No Font!!\n");
+        GWK_ASSERT_MSG(false, "Text::RefreshSize() - No Font!");
         return;
     }
 

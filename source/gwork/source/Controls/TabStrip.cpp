@@ -12,7 +12,7 @@
 #include <Gwork/Controls/TabControl.h>
 #include <Gwork/Controls/Highlight.h>
 #include <Gwork/DragAndDrop.h>
-#include <Gwork/Utility.h>
+#include <Gwork/PlatformCommon.h>
 
 using namespace Gwk;
 using namespace Gwk::Controls;
@@ -122,8 +122,7 @@ void TabStrip::Layout(Skin::Base* skin)
 void TabStrip::DragAndDrop_HoverEnter(Gwk::DragAndDrop::Package* /*package*/, int /*x*/,
                                       int /*y*/)
 {
-    if (m_tabDragControl)
-        Debug::Msg("ERROR! TabStrip::DragAndDrop_HoverEnter\n");
+    GWK_ASSERT_MSG(!m_tabDragControl, "TabStrip::DragAndDrop_HoverEnter");
 
     m_tabDragControl = new ControlsInternal::Highlight(this);
     m_tabDragControl->SetMouseInputEnabled(false);

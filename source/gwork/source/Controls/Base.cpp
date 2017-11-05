@@ -368,7 +368,7 @@ Skin::Base* Base::GetSkin(void)
     if (m_parent)
         return m_parent->GetSkin();
 
-    Debug::AssertCheck(0, "Base::GetSkin Returning nullptr!\n");
+    GWK_ASSERT_MSG(false, "Base::GetSkin Returning null!");
     return nullptr;
 }
 

@@ -8,6 +8,7 @@
 #include <Gwork/Gwork.h>
 #include <Gwork/Controls/CrossSplitter.h>
 #include <Gwork/Controls/Button.h>
+#include <Gwork/PlatformCommon.h>
 
 using namespace Gwk;
 using namespace Controls;
@@ -139,7 +140,7 @@ void CrossSplitter::Layout(Skin::Base* /*skin*/)
 
 void CrossSplitter::SetPanel(int index, Controls::Base* panel)
 {
-    Debug::AssertCheck(index >= 0 && index <= 3, "CrossSplitter::SetPanel out of range");
+    GWK_ASSERT_MSG(index >= 0 && index <= 3, "CrossSplitter::SetPanel out of range");
     m_sections[index] = panel;
 
     if (panel)

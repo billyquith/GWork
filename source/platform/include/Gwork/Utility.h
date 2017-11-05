@@ -85,21 +85,11 @@ namespace Gwk
         }
     }
 
-    namespace Debug
-    {
-        GWK_EXPORT void Msg(const char* str, ...);
-#if defined(WIN32) && defined(UNICODE)
-        GWK_EXPORT void Msg(const wchar_t* str, ...);
-#endif
-        GWK_EXPORT void AssertCheck(bool b, const char* strMsg);
-    }
-
     template <typename T>
     inline T Clamp(T current, T vmin, T vmax)
     {
         return current < vmin ? vmin : (current > vmax ? vmax : current);
     }
-
  }
 
 #endif // ifndef GWK_UTILITY_H

@@ -72,6 +72,22 @@ namespace Gwk
         LogListener SetLogListener(LogListener listener);
     }
 
+    namespace Debug
+    {
+        //! Assertion check.
+        //! If fails, application aborts.
+        //! \param TEST : The Boolean assertion check.
+#define GWK_ASSERT(TEST) if (!(TEST)) Gwk::Debug::AssertFail(#TEST)
+        
+        //! Assertion check.
+        //! If fails, application logs message and aborts.
+        //! \param TEST : The Boolean assertion check.
+        //! \param MESSAGE : The message to output on failure.
+#define GWK_ASSERT_MSG(TEST, MESSAGE) if (!(TEST)) Gwk::Debug::AssertFail(MESSAGE)        
+
+        GWK_EXPORT void AssertFail(const char* strMsg);
+    }
+    
     // Do not use this! Use Gwk::Log::Write()
     // Needs to be implemented by the platform.
     namespace Platform { void DefaultLogListener(Gwk::Log::Level lvl, const char *message); }

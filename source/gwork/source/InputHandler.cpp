@@ -297,8 +297,6 @@ bool Gwk::Input::HandleAccelerator(Controls::Base* canvas, Gwk::UnicodeChar chr)
     chr = towupper(chr);
     accelString += chr;
 
-    // Debug::Msg("Accelerator string :%S\n", accelString.c_str());
-
     if (Gwk::KeyboardFocus && Gwk::KeyboardFocus->HandleAccelerator(accelString))
         return true;
 

@@ -12,6 +12,8 @@
 #include <map>
 #include <iostream>
 
+#include "DebugBreak.h"
+
 using namespace Gwk;
 
 //------------------------------------------------------------------------------
@@ -66,6 +68,16 @@ Log::LogListener SetLogListener(Log::LogListener listener)
     auto old = g_logListener;
     g_logListener = listener;
     return old;
+}
+
+void Gwk::Debug::AssertFail(const char* strMsg)
+{
+    Log::Write(Log::Level::Fatal, "Assert: %s\n", strMsg);
+    
+#if defined(WIN32)
+    MessageBoxA(nullptr, strMsg, "Assert", MB_ICONEXCLAMATION | MB_OK);
+#endif
+    debug_break();  // break into debugger
 }
 
 //==============================================================================

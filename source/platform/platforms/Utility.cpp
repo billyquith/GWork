@@ -40,9 +40,6 @@
 #   include <windows.h>
 #endif
 
-#include "DebugBreak.h"
-
-
 namespace Gwk {
 namespace Utility {
 
@@ -310,51 +307,4 @@ void Strings::Strip(Gwk::String& str, const Gwk::String& chars)
 }
 
 } // namespace Utility
-
-namespace Debug
-{
-
-void Msg(const char* str, ...)
-{
-    char strOut[1024];
-    va_list s;
-
-    va_start(s, str);
-    Utility::vsnprintf(strOut, sizeof(strOut), str, s);
-    va_end(s);
-
-#if defined(WIN32)
-    OutputDebugStringA(strOut);
-#else
-    puts(strOut);
-#endif
-}
-
-#if defined(WIN32) && defined(UNICODE)
-void Msg(const wchar_t* str, ...)
-{
-    wchar_t strOut[1024];
-    va_list s;
-    va_start(s, str);
-    vswprintf(strOut, sizeof(strOut), str, s);
-    va_end(s);
-    GwkUtil_OutputDebugWideString(strOut);
-}
-#endif // ifdef UNICODE
-
-void AssertCheck(bool b, const char* strMsg)
-{
-    if (!b)
-    {
-        Msg("Assert: %s\n", strMsg);
-
-#if defined(WIN32)
-        MessageBoxA(nullptr, strMsg, "Assert", MB_ICONEXCLAMATION | MB_OK);
-#endif
-        debug_break();  // break into debugger
-    }
-}
-
-} // namespace Debug
-
 } // namespace Gwk
