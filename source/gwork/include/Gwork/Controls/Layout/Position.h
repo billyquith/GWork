@@ -44,7 +44,7 @@ namespace Gwk
                     if (m_position != p)
                     {
                         m_position = p;
-                        Invalidate();                        
+                        Invalidate();
                     }
                 }
 

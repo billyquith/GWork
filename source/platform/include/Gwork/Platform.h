@@ -20,7 +20,7 @@ namespace Gwk
         //! Go to sleep for a time. Stops CPU hogging.
         //! @param ms : Number of milliseconds to sleep for.
         GWK_EXPORT void Sleep(unsigned int ms);
-        
+
         // Needed for things like double click
         GWK_EXPORT float GetTimeInSeconds();
 
@@ -40,7 +40,7 @@ namespace Gwk
         GWK_EXPORT String GetClipboardText();
         //! Set platform clipboard from a string.
         GWK_EXPORT bool   SetClipboardText(const String& str);
-               
+
         //
         // System Dialogs (Can return false if unhandled)
         //
@@ -64,7 +64,7 @@ namespace Gwk
         GWK_EXPORT void SetWindowMaximized(void* ptr, bool bMaximized, Gwk::Point& newPos,
                                            Gwk::Point& newSize);
         GWK_EXPORT void SetWindowMinimized(void* ptr, bool bMinimized);
-        
+
         //! If the user created the window, notify the plaform so it can do its housekeeping.
         GWK_EXPORT void SetPlatformWindow(void* handle);
     }

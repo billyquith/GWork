@@ -55,7 +55,7 @@ set(BUILD_SHARED_LIBS FALSE)
 # define install directory for miscelleneous files
 if(WIN32 AND NOT UNIX)
     set(INSTALL_MISC_DIR .)
-    
+
     # Determine the target architecture, which is useful for linking.
     if (CMAKE_GENERATOR MATCHES "Win64")
         set(GWK_TARGET_ARCH "x64")
@@ -70,7 +70,7 @@ endif()
 if(BUILD_TEST)
     message("Including tests")
 endif(BUILD_TEST)
-    
+
 if(BUILD_SAMPLE)
     message("Including sample")
 endif(BUILD_SAMPLE)

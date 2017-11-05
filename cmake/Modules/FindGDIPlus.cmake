@@ -65,9 +65,9 @@ else()
 endif()
 
 if (MINGW)
-	find_library(GDIPLUS_LIBRARY NAMES libgdiplus gdiplus)
+    find_library(GDIPLUS_LIBRARY NAMES libgdiplus gdiplus)
 else(MINGW)
-	set(GDIPLUS_LIBRARY gdiplus)
+    set(GDIPLUS_LIBRARY gdiplus)
 endif(MINGW)
 
 

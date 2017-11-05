@@ -22,8 +22,8 @@ namespace Gwk
     namespace Renderer
     {
         //
-        //! Renderer for DirectX9. 
-        //        
+        //! Renderer for DirectX9.
+        //
         class GWK_EXPORT DirectX9 : public Gwk::Renderer::Base
         {
         public:
@@ -80,7 +80,7 @@ namespace Gwk
             IDirect3D9*         m_D3D;
             DWORD m_color;
             Gwk::Font::List m_fontList;
-            // Gwk::Texture::List	m_textureList;
+            // Gwk::Texture::List   m_textureList;
 
             void Flush();
             void AddVert(int x, int y);

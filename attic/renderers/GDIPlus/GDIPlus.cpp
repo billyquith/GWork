@@ -11,7 +11,7 @@ namespace Gwk
 {
 namespace Renderer
 {
-    
+
 GDIPlus::GDIPlus(HWND hWND)
 {
     m_hWND = hWND;

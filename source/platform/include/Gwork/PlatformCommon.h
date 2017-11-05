@@ -38,17 +38,17 @@ namespace Gwk
             std::size_t cumulativeAllocBytes = 0;
             std::size_t cumulativeNumAllocs = 0;
         };
-        
+
         //! Get the current allocation stats. Only active if GWK_ALLOC_STATS on.
         const AllocStats& GetAllocStats();
-        
+
         void AllocStatsAddMark(const char * const name);
         void AllocStatsDump(FILE *fh = stdout);
-        
+
 #endif // GWK_ALLOC_STATS
 
     }
-    
+
     namespace Log
     {
         enum class Level
@@ -63,15 +63,15 @@ namespace Gwk
         //! \param lvl : The level of the log.
         //! \param format : A message, using printf() style formatting.
         void Write(Level lvl, const char *format, ...);
-        
+
         typedef void (*LogListener)(Level,const char*);
-        
+
         //! Set where logs messages are sent to.
         //! \param listener : The new listener.
         //! \return The current log listener.
         LogListener SetLogListener(LogListener listener);
     }
-    
+
     // Do not use this! Use Gwk::Log::Write()
     // Needs to be implemented by the platform.
     namespace Platform { void DefaultLogListener(Gwk::Log::Level lvl, const char *message); }

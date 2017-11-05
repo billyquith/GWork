@@ -22,9 +22,9 @@ int main(int argc, char** argv)
     Gwk::Skin::TexturedBase skin(renderer);
     skin.SetRender(renderer);
     skin.Init("DefaultSkin.png");
-    
+
     skin.SetDefaultFont("OpenSans.ttf", 11);
-    
+
     // Create a Canvas (it's root, on which all other Gwork panels are created)
     Gwk::Controls::Canvas *canvas = new Gwk::Controls::Canvas(&skin);
     canvas->SetSize(1024, 768);

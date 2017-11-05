@@ -41,7 +41,7 @@ void Button::Render(Skin::Base* skin)
         drawDepressed = drawDepressed || GetToggleState();
 
     const bool drawHovered = IsHovered() && ShouldDrawHover();
-    
+
     skin->DrawButton(this, drawDepressed, drawHovered, IsDisabled());
 }
 

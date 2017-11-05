@@ -166,12 +166,12 @@ void ScrollControl::UpdateScrollBars()
     }
 
     const float wPercent =
-        static_cast<float>(Width()) / 
+        static_cast<float>(Width()) /
             (childrenWidth + (m_verticalScrollBar->Hidden() ? 0 : m_verticalScrollBar->Width()));
-    
+
     const float hPercent =
-        static_cast<float>(Height()) / 
-            (childrenHeight 
+        static_cast<float>(Height()) /
+            (childrenHeight
                 + (m_horizontalScrollBar->Hidden() ? 0 : m_horizontalScrollBar->Height()));
 
     if (m_bCanScrollV)

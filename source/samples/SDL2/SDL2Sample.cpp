@@ -16,25 +16,25 @@
 
 
 int main(int argc, char** argv)
-{    
+{
     const Gwk::Point screenSize(1024, 768);
-    
+
     if(SDL_Init(SDL_INIT_EVERYTHING) != 0)
         return EXIT_FAILURE;
-    
+
     if (TTF_Init() != 0)
         return EXIT_FAILURE;
-        
+
     //Setup our window and renderer
-	SDL_Window *window = SDL_CreateWindow("Gwork SDL2 Sample", 100, 100,
+    SDL_Window *window = SDL_CreateWindow("Gwork SDL2 Sample", 100, 100,
                                           screenSize.x, screenSize.y, SDL_WINDOW_SHOWN);
-	if (!window)
-		return EXIT_FAILURE;
+    if (!window)
+        return EXIT_FAILURE;
 
 
     // Create a Gwork Allegro Renderer
     SDL_Renderer *sdlRenderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-    
+
     Gwk::Platform::RelativeToExecutablePaths paths(GWORK_RESOURCE_DIR);
     Gwk::Renderer::SDL2ResourceLoader loader(paths, sdlRenderer);
 
@@ -44,11 +44,11 @@ int main(int argc, char** argv)
     auto skin = new Gwk::Skin::TexturedBase(renderer);
     skin->SetRender(renderer);
     skin->Init("DefaultSkin.png");
-    
+
     // Note, you can get fonts that cover many languages/locales to do Chinese,
     //       Arabic, Korean, etc. e.g. "Arial Unicode" (but it's 23MB!).
     skin->SetDefaultFont("OpenSans.ttf", 11);
-    
+
     // Create a Canvas (it's root, on which all other Gwork panels are created)
     Gwk::Controls::Canvas* canvas = new Gwk::Controls::Canvas(skin);
     canvas->SetSize(screenSize.x, screenSize.y);
@@ -73,7 +73,7 @@ int main(int argc, char** argv)
 
             input.ProcessEvent(&evt);
         }
-        
+
         renderer->BeginContext(nullptr);
         canvas->RenderCanvas();
         renderer->PresentContext(nullptr);
@@ -83,11 +83,11 @@ int main(int argc, char** argv)
     delete unit;
     delete skin;
     delete renderer;
-    
+
     TTF_Quit();
     SDL_DestroyRenderer(sdlRenderer);
     SDL_DestroyWindow(window);
     SDL_Quit();
-    
+
     return EXIT_SUCCESS;
 }

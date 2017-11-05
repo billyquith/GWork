@@ -25,35 +25,35 @@ namespace Renderer
 class AllegroCTT : public ICacheToTexture
 {
 public:
-    
+
     AllegroCTT() : m_oldTarget(nullptr) {}
     ~AllegroCTT() {}
-    
+
     void Initialize() {}
     void ShutDown();
     void SetRenderer(Gwk::Renderer::Base* renderer) { m_renderer = renderer; }
-    
+
     void SetupCacheTexture(CacheHandle control);
     void FinishCacheTexture(CacheHandle control);
-    
+
     void DrawCachedControlTexture(CacheHandle control);
     void CreateControlCacheTexture(CacheHandle control, const Point& size);
     void UpdateControlCacheTexture(CacheHandle control) {}
-    
+
     // TODO What destroys the cached textures? Does this assume they always exist?
-    
+
 private:
-    
+
     Gwk::Renderer::Base *m_renderer;
-    
+
     struct CacheEntry
     {
         ALLEGRO_BITMAP *m_bitmap;
     };
-    
+
     typedef std::map< CacheHandle, CacheEntry > CacheMap;
     CacheMap m_cache;
-    
+
     ALLEGRO_BITMAP *m_oldTarget;
 };
 
@@ -84,11 +84,11 @@ void AllegroCTT::SetupCacheTexture(CacheHandle control)
         // Prepare for rendering.
         assert(m_oldTarget==nullptr);
         m_oldTarget = al_get_target_bitmap();
-        
+
         auto albmp = it->second.m_bitmap;
         assert(albmp != nullptr);
         al_set_target_bitmap(albmp);
-        
+
         al_clear_to_color(al_map_rgb_f(1.f, 1.f, 1.f));
     }
 }
@@ -117,11 +117,11 @@ void AllegroCTT::DrawCachedControlTexture(CacheHandle control)
 Font::Status AllegroResourceLoader::LoadFont(Font& font)
 {
     const String filename = m_paths.GetPath(ResourcePaths::Type::Font, font.facename);
-    
+
     ALLEGRO_FONT* afont = al_load_font(filename.c_str(),
                                        font.realsize,
                                        ALLEGRO_TTF_NO_KERNING);
-    
+
     if (afont)
     {
         font.data = afont;
@@ -132,7 +132,7 @@ Font::Status AllegroResourceLoader::LoadFont(Font& font)
         Gwk::Log::Write(Log::Level::Error, "Font file not found: %s", filename.c_str());
         font.status = Font::Status::ErrorFileNotFound;
     }
-    
+
     return font.status;
 }
 
@@ -153,7 +153,7 @@ Texture::Status AllegroResourceLoader::LoadTexture(Texture& texture)
     const String filename = m_paths.GetPath(ResourcePaths::Type::Texture, texture.name);
 
     ALLEGRO_BITMAP* bmp = al_load_bitmap(filename.c_str());
-    
+
     if (bmp)
     {
         texture.data = bmp;
@@ -167,7 +167,7 @@ Texture::Status AllegroResourceLoader::LoadTexture(Texture& texture)
         texture.status = Texture::Status::ErrorFileNotFound;
         texture.data = nullptr;
     }
-    
+
     return texture.status;
 }
 
@@ -213,7 +213,7 @@ Gwk::Point Allegro::MeasureText(Gwk::Font* font, const Gwk::String& text)
         return Gwk::Point(0, 0);
 
     ALLEGRO_FONT* afont = static_cast<ALLEGRO_FONT*>(font->data);
-    
+
     return Point(al_get_text_width(afont, text.c_str()), al_get_font_line_height(afont));
 }
 
@@ -282,7 +282,7 @@ void Allegro::DrawShavedCornerRect(Gwk::Rect rect, bool bSlight)
     // Draw INSIDE the w/h.
     rect.w -= 1;
     rect.h -= 1;
-    
+
 #define SET_VERT(I, X,Y)            vtx[I].x = (X), vtx[I].y = (Y), vtx[I].color = m_color
 #define ADD_LINE(I, X0,Y0, X1,Y1)   SET_VERT(I, X0,Y0); SET_VERT(I+1, X1,Y1)
 
@@ -295,7 +295,7 @@ void Allegro::DrawShavedCornerRect(Gwk::Rect rect, bool bSlight)
         //    DrawFilledRect(Gwk::Rect(rect.x+1, rect.y+rect.h, rect.w-1, 1));
         //    DrawFilledRect(Gwk::Rect(rect.x, rect.y+1, 1, rect.h-1));
         //    DrawFilledRect(Gwk::Rect(rect.x+rect.w, rect.y+1, 1, rect.h-1));
-        
+
         ALLEGRO_VERTEX vtx[4*2];
         ADD_LINE(0, fx+1.f,fy,         fx+fw-1.f,fy   ); // top
         ADD_LINE(2, fx+fw,fy+1.f,      fx+fw,fy+fh-1.f); // right
@@ -313,7 +313,7 @@ void Allegro::DrawShavedCornerRect(Gwk::Rect rect, bool bSlight)
         //    DrawFilledRect(Gwk::Rect(rect.x+2, rect.y+rect.h, rect.w-3, 1));
         //    DrawFilledRect(Gwk::Rect(rect.x, rect.y+2, 1, rect.h-3));
         //    DrawFilledRect(Gwk::Rect(rect.x+rect.w, rect.y+2, 1, rect.h-3));
-        
+
         ALLEGRO_VERTEX vtx[4*2];
         ADD_LINE(0, fx+2.f,fy,          fx+fw-2.f,fy    ); // top
         ADD_LINE(2, fx+fw,fy+2.f,       fx+fw,fy+fh-2.f ); // right
@@ -321,7 +321,7 @@ void Allegro::DrawShavedCornerRect(Gwk::Rect rect, bool bSlight)
         ADD_LINE(6, fx,fy+fh-2.f,       fx,fy+2.f       ); // left
         al_draw_prim(vtx, nullptr, nullptr, 0, 7, ALLEGRO_PRIM_LINE_LOOP);
     }
-    
+
 #undef SET_VERT
 #undef ADD_LINE
 }

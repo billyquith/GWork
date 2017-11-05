@@ -58,7 +58,7 @@ namespace Gwk
             }
 
             Event::Caller onResize;
-            
+
             virtual ControlsInternal::Resizer* GetResizer(int iResizer) // TODO - remove this?
             {
                 return m_resizers[iResizer];

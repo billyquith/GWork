@@ -28,7 +28,7 @@ GWK_CONTROL_CONSTRUCTOR(GroupBox)
 
 void GroupBox::Layout(Skin::Base* skin)
 {
-	m_innerPanel->SetMargin( Margin(m_innerMargin, TextHeight()/2 + m_innerMargin,
+    m_innerPanel->SetMargin( Margin(m_innerMargin, TextHeight()/2 + m_innerMargin,
                                     m_innerMargin, m_innerMargin) );
     ParentClass::Layout(skin);
 }

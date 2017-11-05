@@ -18,7 +18,7 @@ namespace Gwk
 {
 namespace Renderer
 {
-    
+
 namespace Drawing
 {
     //! Blend two colors using: result = S_rgb*S_alpha + D_rgb*(1 - S_alpha)
@@ -44,7 +44,7 @@ namespace Drawing
             }
         }
     }
-    
+
     //! Draw rectangle outline.
     void OutlineRect(PixelBuffer& pb, Rect const& r, Color const& c)
     {
@@ -61,14 +61,14 @@ namespace Drawing
                 pb.At(r.x + r.w - 1, r.y + y) = c;  // right
         }
     }
-    
+
     //! Draw textured rectangle.
     void TexturedRect(PixelBuffer& pb, const PixelBuffer& pbsrc,
                       const Gwk::Rect& rect, float u1, float v1, float u2, float v2)
     {
         const Point srcsz(pbsrc.GetSize());
         const Point uvtl(srcsz.x * u1, srcsz.y * v1);
-        
+
         const float dv = (v2 - v1) * srcsz.y / rect.h;
         for (int y = 0; y < rect.h; ++y)
         {
@@ -81,7 +81,7 @@ namespace Drawing
         }
     }
 }
-    
+
 //-------------------------------------------------------------------------------
 
 // See "Font Size in Pixels or Points" in "stb_truetype.h"
@@ -91,7 +91,7 @@ static constexpr int c_texsz = 256;   // TODO - fix this hack.
 Font::Status SoftwareResourceLoader::LoadFont(Font& font)
 {
     const String filename = m_paths.GetPath(ResourcePaths::Type::Font, font.facename);
-    
+
     FILE* f = fopen(filename.c_str(), "rb");
     if (!f)
     {
@@ -100,20 +100,20 @@ Font::Status SoftwareResourceLoader::LoadFont(Font& font)
         font.status = Font::Status::ErrorFileNotFound;
         return font.status;
     }
-    
+
     struct stat finfo;
     const int rc = stat(filename.c_str(), &finfo);
     const size_t fsz = rc == 0 ? finfo.st_size : -1;
     assert(fsz > 0);
-    
+
     unsigned char* ttfdata = new unsigned char[fsz];
     fread(ttfdata, 1, fsz, f);
     fclose(f);
-    
+
     unsigned char *font_bmp = new unsigned char[c_texsz * c_texsz];
-    
+
     font.render_data = new stbtt_bakedchar[96];
-    
+
     stbtt_BakeFontBitmap(ttfdata, 0,
                          font.realsize * c_pointsToPixels, // height
                          font_bmp,
@@ -121,10 +121,10 @@ Font::Status SoftwareResourceLoader::LoadFont(Font& font)
                          32,96,             // range to bake
                          static_cast<stbtt_bakedchar*>(font.render_data));
     delete [] ttfdata;
-    
+
     font.data = font_bmp;
     font.status = Font::Status::Loaded;
-    
+
     return font.status;
 }
 
@@ -142,19 +142,19 @@ Texture::Status SoftwareResourceLoader::LoadTexture(Texture& texture)
 {
     if (texture.IsLoaded())
         FreeTexture(texture);
-    
+
     const String filename = m_paths.GetPath(ResourcePaths::Type::Texture, texture.name);
 
     int x,y,n;
     unsigned char *data = stbi_load(filename.c_str(), &x, &y, &n, 4);
-    
+
     if (!data)
     {
-        Gwk::Log::Write(Log::Level::Error, "Texture file not found: %s", filename.c_str());                        
+        Gwk::Log::Write(Log::Level::Error, "Texture file not found: %s", filename.c_str());
         texture.status = Texture::Status::ErrorFileNotFound;
         return texture.status;
     }
-    
+
     auto pbuff = new PixelBuffer();
     pbuff->Init(Point(x,y));
     memcpy(&pbuff->At(0,0), data, x*y*4);
@@ -179,7 +179,7 @@ void SoftwareResourceLoader::FreeTexture(Texture& texture)
 }
 
 //-------------------------------------------------------------------------------
-    
+
 Software::Software(ResourceLoader& loader, PixelBuffer& pbuff)
     :   Base(loader)
     ,   m_pixbuf(&pbuff)
@@ -200,13 +200,13 @@ Gwk::Point Software::MeasureText(Gwk::Font* font, const Gwk::String& text)
 {
     if (!EnsureFont(*font))
         return Gwk::Point(0, 0);
-    
+
     Point sz(0, font->realsize * c_pointsToPixels);
-    
+
     float x = 0.f, y = 0.f;
     const char *pc = text.c_str();
     size_t slen = text.length();
-    
+
     while (slen > 0)
     {
         if (*pc >= 32 && *pc <= 127)
@@ -216,16 +216,16 @@ Gwk::Point Software::MeasureText(Gwk::Font* font, const Gwk::String& text)
                                c_texsz,c_texsz,
                                *pc - 32,
                                &x, &y, &q, 1); // 1=opengl & d3d10+,0=d3d9
-            
+
             sz.x = q.x1;
             sz.y = std::max(sz.y, int((q.y1 - q.y0) * c_pointsToPixels));
         }
         ++pc, --slen;
     }
-    
+
     return sz;
 }
-    
+
 void Software::RenderText(Gwk::Font* font, Gwk::Point pos, const Gwk::String& text)
 {
     if (!EnsureFont(*font))
@@ -233,7 +233,7 @@ void Software::RenderText(Gwk::Font* font, Gwk::Point pos, const Gwk::String& te
 
     int ix = pos.x, iy = pos.y;
     Translate(ix, iy);
-    
+
     float x = ix, y = iy;
     auto clipRect = ClipRegion();
     const Point srcSize(c_texsz, c_texsz);
@@ -252,7 +252,7 @@ void Software::RenderText(Gwk::Font* font, Gwk::Point pos, const Gwk::String& te
                                c_texsz, c_texsz,
                                *pc - 32,
                                &x, &y, &q, 1); // 1=opengl & d3d10+,0=d3d9
-            
+
             const Rect srcCharRect(q.x0, q.y0, q.x1 - q.x0, q.y1 - q.y0);
 
             Color col(m_color);
@@ -261,10 +261,10 @@ void Software::RenderText(Gwk::Font* font, Gwk::Point pos, const Gwk::String& te
             {
                 if (fpos.y < clipRect.Top())
                     continue;
-                
+
                 if (fpos.y > clipRect.Bottom())
                     return;
-                
+
                 fpos.x = srcCharRect.x;
                 for (int fx = 0; fx < srcCharRect.w; ++fx, ++fpos.x)
                 {
@@ -273,7 +273,7 @@ void Software::RenderText(Gwk::Font* font, Gwk::Point pos, const Gwk::String& te
 
                     if (fpos.x > clipRect.Right())
                         return;
-                    
+
                     const Point srcPix(q.s0*srcSize.x + fx, q.t0*srcSize.y + fy);
                     const unsigned char fi = fontBmp[srcPix.y * srcSize.x + srcPix.x];
                     col.a = fi;
@@ -306,7 +306,7 @@ bool Software::Clip(Rect& rect)
             rect = Rect();
             return false;
         }
-        
+
         const Rect& cr(ClipRegion());
 
         // left
@@ -322,29 +322,29 @@ bool Software::Clip(Rect& rect)
             rect.h -= cr.y - rect.y;
             rect.y = cr.y;
         }
-        
+
         // right
         if (rect.Right() > cr.Right())
         {
             rect.w -= rect.Right() - cr.Right();
         }
-        
+
         // bottom
         if (rect.Bottom() > cr.Bottom())
         {
             rect.h -= rect.Bottom() - cr.Bottom();
         }
-        
+
         return rect.w >= 0 && rect.h >= 0;
     }
 
     return true;
 }
-    
+
 void Software::DrawPixel(int x, int y)
 {
     Translate(x, y);
-    
+
     if (ClipRegionVisible())
         m_pixbuf->At(x, y) = m_color;
 }
@@ -362,7 +362,7 @@ void Software::DrawLinedRect(Gwk::Rect rect)
     if (Clip(rect))
         Drawing::OutlineRect(*m_pixbuf, rect, m_color);
 }
-    
+
 void Software::DrawTexturedRect(Gwk::Texture* texture, Gwk::Rect rect,
                                 float u1, float v1, float u2, float v2)
 {
@@ -388,7 +388,7 @@ Gwk::Color Software::PixelColor(Gwk::Texture* texture, unsigned int x, unsigned 
     const Gwk::Color col = pbuff->At(x, y);
     return col;
 }
-    
+
 
 } // Renderer
 } // Gwork

@@ -52,7 +52,7 @@ void Text::SetFont(Gwk::Font* font)
     m_bTextChanged = true;
     // Change the font of multilines too!
     {
-	for (auto&& line : m_lines)
+        for (auto&& line : m_lines)
         {
             line->SetFont(m_font);
         }
@@ -171,7 +171,7 @@ int Text::GetClosestCharacter(Gwk::Point p)
         }
 
         iChars -= line->Length();
-        int iLinePos = line->GetClosestCharacter(Gwk::Point(p.x-line->X(), p.y-line->Y()));        
+        int iLinePos = line->GetClosestCharacter(Gwk::Point(p.x-line->X(), p.y-line->Y()));
         return iChars+iLinePos;
     }
 
@@ -234,7 +234,7 @@ void Text::SplitWords(const Gwk::String& s, std::vector<Gwk::String>& elems)
 
     int w = GetParent()->Width()
                 - (GetParent()->GetPadding().left + GetParent()->GetPadding().right);
-    
+
     for (size_t i = 0; i < s.length(); i++)
     {
         if (s[i] == '\n')
@@ -283,7 +283,7 @@ void Text::RefreshSizeWrap()
         delete line;
     }
     m_lines.clear();
-    
+
     std::vector<Gwk::String> words;
     SplitWords(GetText(), words);
 
@@ -402,7 +402,7 @@ int Text::GetLineFromChar(int i)
 
     if (iLine > 0)
         return iLine-1;
-    
+
     return iLine;
 }
 

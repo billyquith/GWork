@@ -23,7 +23,7 @@ namespace Gwk
         class Base;
         class Canvas;
     }
-    
+
     struct GWK_EXPORT Margin
     {
         Margin(int left_ = 0, int top_ = 0, int right_ = 0, int bottom_ = 0)
@@ -90,7 +90,7 @@ namespace Gwk
         Fill        = (1<<7),
         Center      = CenterV | CenterH
     };
-    
+
     inline Position operator | (Position a, Position b)
     {
         return Position(static_cast<int>(a) | static_cast<int>(b));
@@ -102,5 +102,5 @@ namespace Gwk
     }
 
 } // namespace Gwk
-    
+
 #endif // ifndef GWK_UITYPES_H

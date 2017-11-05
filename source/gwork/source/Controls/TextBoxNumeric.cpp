@@ -66,4 +66,3 @@ float TextBoxNumeric::GetFloatFromText()
     float temp = Gwk::Utility::Strings::To::Float(GetText());
     return temp;
 }
-

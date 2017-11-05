@@ -48,18 +48,18 @@ protected:
 GWK_CONTROL_CONSTRUCTOR(ComboBox)
 {
     SetSize(100, 20);
-    
+
     m_menu = new Menu(this);
     m_menu->SetHidden(true);
     m_menu->SetDisableIconMargin(true);
     m_menu->SetTabable(false);
-    
+
     DownArrow* arrow = new DownArrow(this);
     arrow->SetComboBox(this);
-    
+
     m_button = arrow;
     m_selectedItem = nullptr;
-    
+
     SetAlignment(Gwk::Position::Left|Gwk::Position::CenterV);
     SetText("");
     SetMargin(Margin(3, 0, 0, 0));

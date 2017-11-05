@@ -13,9 +13,9 @@ include_directories(
 )
 
 if(BUILD_SAMPLE)
-    
+
     set(SAMPLE_NAME Gwork${GWK_RENDER_NAME}Sample)
-    
+
     set(SAMPLE_SOURCES
         "${GWK_RENDER_NAME}/${GWK_RENDER_NAME}Sample.cpp")
 
@@ -24,7 +24,7 @@ if(BUILD_SAMPLE)
         "${GWK_SOURCE_DIR}/source/gwork/resource/OpenSans.ttf"
         "${GWK_SOURCE_DIR}/source/test/resource/logo.png"
         "${GWK_SOURCE_DIR}/source/test/resource/test16.png")
-    
+
     if(APPLE AND APP_BUNDLE)
         set(APP_BUILD_TYPE MACOSX_BUNDLE)
         set(APP_RESOURCE_DIR "Resources")
@@ -34,11 +34,11 @@ if(BUILD_SAMPLE)
         set(APP_RESOURCE_DIR "$<TARGET_FILE_DIR:${SAMPLE_NAME}>")
         set(APP_RUNTIME_RESOURCE_DIR "")
     endif()
-    
+
     add_definitions("-DGWORK_RESOURCE_DIR=\"${APP_RUNTIME_RESOURCE_DIR}\"")
 
     add_executable(${SAMPLE_NAME} ${APP_BUILD_TYPE} ${SAMPLE_SOURCES} ${SAMPLE_RESOURCES})
-    
+
     target_link_libraries(${SAMPLE_NAME}
                           Gwork Gwork${GWK_RENDER_NAME}
                           ${GWK_RENDER_LIBRARIES})
@@ -46,7 +46,7 @@ if(BUILD_SAMPLE)
     if(BUILD_TEST)
         target_link_libraries(${SAMPLE_NAME} GworkTest)
     endif(BUILD_TEST)
-    
+
     if(APPLE AND APP_BUNDLE)
         # make MacOS bundle
         set_target_properties(${SAMPLE_NAME} PROPERTIES
@@ -67,10 +67,10 @@ if(BUILD_SAMPLE)
                 COMMAND ${CMAKE_COMMAND} -E copy "${RES_FROM}" "${APP_RESOURCE_DIR}/${FNANE}"
                 COMMENT "Copying sample resource")
         endmacro(CopyAppResource)
-        
+
         foreach(RESFILE ${SAMPLE_RESOURCES})
             CopyAppResource(${RESFILE})
         endforeach()
     endif()
-    
+
 endif(BUILD_SAMPLE)

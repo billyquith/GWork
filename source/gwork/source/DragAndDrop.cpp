@@ -13,7 +13,7 @@
 
 namespace Gwk
 {
-    
+
 using namespace Gwk::DragAndDrop;
 
 DragAndDrop::Package* DragAndDrop::CurrentPackage = nullptr;

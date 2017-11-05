@@ -17,7 +17,7 @@ namespace Gwk
 {
 namespace Renderer
 {
-    
+
 Base::Base(ResourceLoader& loader)
 :   m_fScale(1.0f)
 ,   m_loader(loader)
@@ -127,7 +127,7 @@ bool Base::ClipRegionVisible()
 {
     if (m_rectClipRegion.w <= 0 || m_rectClipRegion.h <= 0)
         return false;
-    
+
     return true;
 }
 
@@ -144,12 +144,12 @@ bool Base::EnsureFont(Font& font)
         || (font.status == Font::Status::Loaded && font.realsize != font.size*Scale()))
     {
         GetLoader().FreeFont(font);
-        
+
         font.realsize = font.size * Scale();
-        
+
         GetLoader().LoadFont(font);
     }
-    
+
     return font.status == Font::Status::Loaded;
 }
 
@@ -211,4 +211,3 @@ Gwk::Point Base::MeasureText(Gwk::Font* font, const Gwk::String& text)
 
 } // namespace Renderer
 } // namespace Gwk
-

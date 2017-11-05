@@ -14,7 +14,7 @@ namespace Gwk
 {
 namespace Controls
 {
-    
+
 Properties* PropertyTree::Add(const String& text)
 {
     TreeNode* node = new PropertyTreeNode(this);

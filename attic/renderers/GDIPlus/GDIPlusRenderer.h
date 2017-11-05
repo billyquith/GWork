@@ -137,12 +137,12 @@ public:
 
     virtual void PushMaterial(const void* material)
     {
-        //	IGet::Render()->PushMaterial((IMaterial*)material);
+        //  IGet::Render()->PushMaterial((IMaterial*)material);
     }
 
     virtual void PopMaterial(void)
     {
-        //	IGet::Render()->PopMaterial();
+        //  IGet::Render()->PopMaterial();
     }
 
     // Why is this here
@@ -153,7 +153,7 @@ public:
 
     virtual void* ImagePointer(const char* image)
     {
-        //	return IGet::Render()->LoadMaterial( image );
+        //  return IGet::Render()->LoadMaterial( image );
         return nullptr;
     }
 

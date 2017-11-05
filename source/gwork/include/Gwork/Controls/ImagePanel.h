@@ -97,7 +97,7 @@ namespace Gwk
                 m_drawColor = color;
             }
 
-            virtual bool FailedToLoad() 
+            virtual bool FailedToLoad()
             {
                 return !m_texture.IsLoaded();
             }

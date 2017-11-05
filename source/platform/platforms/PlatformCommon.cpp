@@ -23,7 +23,7 @@ Gwk::Platform::RelativeToExecutablePaths::RelativeToExecutablePaths(String const
 String Gwk::Platform::RelativeToExecutablePaths::GetPath(Type type, String const& filename)
 {
     String filepath(m_resDir + filename);
-    
+
     if (type == Type::Font)
     {
         // TODO: bit hacky this...
@@ -47,12 +47,12 @@ void Log::Write(Level lvl, const char *format, ...)
     char buff[512];
     const char *logname[] = { "INFO", "WARNING", "ERROR", "FATAL" };
     int slen = Utility::snprintf(buff, sizeof(buff), "[%s] ", logname[(int)lvl]);
-    
+
     va_list argList;
     va_start(argList, format);
     const int mlen = Utility::vsnprintf(buff + slen, sizeof(buff) - slen, format, argList);
     va_end(argList);
-    
+
     if (slen+mlen < sizeof(buff)-2)
     {
         buff[slen+mlen] = '\n';
@@ -91,27 +91,27 @@ struct MallocAllocator : std::allocator<T>
 {
     typedef typename std::allocator<T>::pointer pointer;
     typedef typename std::allocator<T>::size_type size_type;
-    
+
     template<typename U>
     struct rebind {
         typedef MallocAllocator<U> other;
     };
-    
+
     MallocAllocator() {}
-    
+
     template<typename U>
     MallocAllocator(MallocAllocator<U> const& u)
     :   std::allocator<T>(u) {}
-    
+
     pointer allocate(size_type size, std::allocator<void>::const_pointer = 0)
     {
         void * p = std::malloc(size * sizeof(T));
         if(p == 0)
             throw std::bad_alloc();
-        
+
         return static_cast<pointer>(p);
     }
-    
+
     void deallocate(pointer p, size_type)
     {
         std::free(p);
@@ -124,9 +124,9 @@ typedef std::map< void*, std::size_t, std::less<void*>,
 struct AllocReporter
 {
     TrackerMemMap *track;
-    
+
     AllocReporter(TrackerMemMap *track) : track(track) {}
-    
+
     ~AllocReporter()
     {
         TrackerMemMap::const_iterator it = track->begin();
@@ -154,7 +154,7 @@ struct Mark
 
 typedef std::vector<Mark, MallocAllocator<Mark>> MarksType;
 MarksType g_marks;
-    
+
 } // namespace {
 
 //----------------------------------------------------------------------------------
@@ -186,13 +186,13 @@ void* operator new(std::size_t size) throw(std::bad_alloc)
     void *mem = std::malloc(size == 0 ? 1 : size);
     if (mem == 0)
         throw std::bad_alloc();
-    
+
     ++g_stats.currentNumAllocs;
     ++g_stats.cumulativeNumAllocs;
     g_stats.currentAllocBytes += size;
     g_stats.cumulativeAllocBytes += size;
     (*GetAllocTracker())[mem] = size;
-    
+
     return mem;
 }
 
@@ -200,14 +200,14 @@ void operator delete(void *mem) throw()
 {
     TrackerMemMap *trk = GetAllocTracker();
     auto it = trk->find(mem);
-    
+
     if (it != trk->end())
     {
         const std::size_t size = it->second;
-        
+
         --g_stats.currentNumAllocs;
         g_stats.currentAllocBytes -= size;
-        
+
         trk->erase(it);
     }
     else
@@ -215,9 +215,8 @@ void operator delete(void *mem) throw()
         // this indicates a serious bug
         std::cerr << "bug: memory at " << mem << " wasn't allocated by us\n";
     }
-        
+
     std::free(mem);
 }
 
 #endif // GWK_ALLOC_STATS
-

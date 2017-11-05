@@ -11,7 +11,7 @@ function install_osx {
     if [[ -z `brew list | grep cmake` ]]; then brew install cmake; fi
     brew outdated cmake || brew upgrade cmake
 }
-  
+
 function install_linux {
     # sudo apt-get -qq update
     # sudo apt-get install -y cmake doxygen

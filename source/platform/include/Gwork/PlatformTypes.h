@@ -51,40 +51,40 @@ namespace Gwk
             Cursor_Count = 10
         };
     }
-    
+
     struct GWK_EXPORT Point
     {
         Point(int x_=0, int y_=0)
         :   x(x_), y(y_)
         {}
-        
+
         void set(int x_, int y_)
         {
             x = x_, y = y_;
         }
-        
+
         void operator += (const Point& p)
         {
             x += p.x;
             y += p.y;
         }
-        
+
         Point operator + (const Point& p) const
         {
             return Point(x + p.x, p.y + y);
         }
-        
+
         void operator -= (const Point& p)
         {
             x -= p.x;
             y -= p.y;
         }
-        
+
         Point operator - (const Point& p) const
         {
             return Point(x - p.x, y - p.y);
         }
-        
+
         int x, y;
     };
 
@@ -93,16 +93,16 @@ namespace Gwk
         Rect(int x_ = 0, int y_ = 0, int w_ = 0, int h_ = 0)
         :   x(x_), y(y_), w(w_), h(h_)
         {}
-        
+
         Rect(const Point& o, const Point& sz)
         :   x(o.x), y(o.y), w(sz.x), h(sz.y)
         {}
-        
+
         int Left() const { return x; }
         int Right() const { return x + w; }
         int Top() const { return y; }
         int Bottom() const { return y + h; }
-        
+
         bool operator == (const Rect &other) const
         {
             return x == other.x && y == other.y && w == other.w && h == other.h;
@@ -113,7 +113,7 @@ namespace Gwk
             const Rect m(x + rct.x, y + rct.y, w + rct.w, h + rct.h);
             return m;
         }
-        
+
         Point GetSize() const { return Point(w,h); }
 
         int x, y, w, h;
@@ -218,7 +218,7 @@ namespace Gwk
         static const Color GreyLight(230, 230, 230, 255);
         static const Color GworkPink(255, 65, 199, 255);
     }
-    
+
     struct Font
     {
         typedef std::list<Font*> List;
@@ -241,9 +241,9 @@ namespace Gwk
         ,   data(nullptr)
         ,   render_data(nullptr)
         {}
-        
+
         bool IsLoaded() const { return status == Status::Loaded; }
-        
+
         Status status;
 
         String facename;
@@ -292,8 +292,8 @@ namespace Gwk
         ,   surface(nullptr)
         {}
     };
-    
-    
+
+
     //! Base class for resource path calculation.
     //!
     //! Can be implemented by different platforms for different file layouts.
@@ -308,12 +308,12 @@ namespace Gwk
             Other,          //!< Other type of resource.
             MaxType
         };
-     
+
         virtual ~ResourcePaths() {}
         virtual String GetPath(Type type, String const& name) = 0;
     };
-    
-    
+
+
     //! Base class for resource loaders.
     //!
     //! These are used to load, create and destroy resource needed for Gwork.
@@ -332,10 +332,10 @@ namespace Gwk
         };
 
         virtual ~ResourceLoader() {}
-        
+
         virtual Font::Status LoadFont(Font& font) = 0;
         virtual void FreeFont(Font& font) = 0;
-        
+
         virtual Texture::Status LoadTexture(Texture& texture) = 0;
         virtual void FreeTexture(Texture& texture) = 0;
 
@@ -343,7 +343,7 @@ namespace Gwk
         //! Loader can deal with the events accordingly.
         virtual void Notify(NotificationType msg) {}
     };
-    
+
 } // namespace Gwk
 
 #endif // ifndef GWK_PLATFORMTYPES_H

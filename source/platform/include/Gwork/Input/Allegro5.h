@@ -87,13 +87,13 @@ namespace Gwk
 
                 case ALLEGRO_KEY_RSHIFT:
                     return Gwk::Key::Shift;
-                        
+
                 case ALLEGRO_KEY_RCTRL:
                     return Gwk::Key::Control;
 
                 case ALLEGRO_KEY_ALTGR:
                     return Gwk::Key::Alt;
-                        
+
                 default: ;
                 }
 

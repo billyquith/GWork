@@ -5,7 +5,7 @@ Linux & MacOS status: [![Build Status](https://travis-ci.org/billyquith/GWork.sv
 
 GWork is a skinnable, embeddable GUI library with an extensive control set. Control rendering
 is abstracted, and can be implemented by any application wishing to use the library.
-Gwork (*pronounced "gw-orc"*) is a fork of the GUI library [GWEN][gwen]. It was forked 
+Gwork (*pronounced "gw-orc"*) is a fork of the GUI library [GWEN][gwen]. It was forked
 to fix issues with GWEN and add new features.
 
 A number of rendering backends are provided for use, or as an example for your own:
@@ -36,7 +36,7 @@ Get source code:
 * From git: `git clone https://github.com/billyquith/GWork.git gwork` or
 * [Download zip](https://github.com/billyquith/GWork/archive/gwork.zip) & unzip
 
-CMake is used to generate the project files. See `cmake -h` to see all the generators for 
+CMake is used to generate the project files. See `cmake -h` to see all the generators for
 your platform. Only have one renderer per build directory. Choose renderer:
 
 * `-DRENDER_ALLEGRO5=ON`

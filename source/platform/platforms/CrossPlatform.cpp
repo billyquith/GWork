@@ -12,7 +12,7 @@
 #include <Gwork/Platform.h>
 
 #ifdef _MSC_VER
-#   define WIN32_LEAN_AND_MEAN 
+#   define WIN32_LEAN_AND_MEAN
 #   include <Windows.h>
 #   include <WinBase.h>     // sleep
 #   undef min
@@ -69,9 +69,9 @@ Gwk::String Gwk::Platform::GetExecutableDir()
     return String(path);
 
 #else
-    
+
     return String();
-    
+
 #endif
 }
 
@@ -126,7 +126,7 @@ float Gwk::Platform::GetTimeInSeconds()
     return seconds;
 }
 
-#endif 
+#endif
 
 // Default place log messages are sent to.
 void Gwk::Platform::DefaultLogListener(Gwk::Log::Level lvl, const char *message)

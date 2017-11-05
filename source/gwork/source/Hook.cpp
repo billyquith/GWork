@@ -12,7 +12,7 @@
 
 namespace Gwk
 {
-    
+
 using namespace Gwk::Hook;
 
 static std::list<BaseHook*> g_hookList;

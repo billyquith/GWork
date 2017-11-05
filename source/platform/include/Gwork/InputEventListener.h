@@ -37,12 +37,12 @@ namespace Gwk
             KeysCount //!< number of keys
         };
     }
-    
+
     class IInputEventListener
     {
     public:
         virtual ~IInputEventListener() {}
-        
+
         virtual bool InputMouseMoved(int x, int y, int deltaX, int deltaY) = 0;
         virtual bool InputMouseButton(int iButton, bool bDown) = 0;
         virtual bool InputModifierKey(int iKey, bool bDown) = 0;

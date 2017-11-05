@@ -383,7 +383,7 @@ bool Gwk::Input::OnKeyEvent(Controls::Base* canvas, int iKey, bool bDown)
             //! @bug This causes shift left arrow in textboxes
             //! to not work. What is disabling it here breaking?
             //! `g_keyData.Target = nullptr;`
-            
+
             if (target)
                 return target->OnKeyRelease(iKey);
         }

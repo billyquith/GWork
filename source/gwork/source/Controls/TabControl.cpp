@@ -24,18 +24,18 @@ inline T Approach(T fCurrent, T fTarget, T2 fDelta)
     if (fCurrent < fTarget)
     {
         fCurrent += fDelta;
-        
+
         if (fCurrent > fTarget)
             return fTarget;
     }
     else if (fCurrent > fTarget)
     {
         fCurrent -= fDelta;
-        
+
         if (fCurrent < fTarget)
             return fTarget;
     }
-    
+
     return fCurrent;
 }
 

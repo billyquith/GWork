@@ -42,10 +42,10 @@ public:
         group->SetText("Group Box");
         group->SetSize(300, 200);
 
-		Gwk::Controls::Label* label = new Gwk::Controls::Label( group );
-		label->SetText(c_text);
-		label->SetWrap( true );
-		label->Dock(Position::Fill);
+        Gwk::Controls::Label* label = new Gwk::Controls::Label( group );
+        label->SetText(c_text);
+        label->SetWrap( true );
+        label->Dock(Position::Fill);
     }
 };
 

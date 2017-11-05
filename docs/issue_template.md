@@ -5,4 +5,3 @@ Issue:
 - Compiler (name & version):
 - Target renderer:
 - cmake command-line used:
-

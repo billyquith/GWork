@@ -25,7 +25,7 @@ int main()
 
     // Create renderer
     Gwk::Renderer::SFML2 renderer(loader, app);
-    
+
     // Create a Gwork skin
     Gwk::Skin::TexturedBase skin(&renderer);
     skin.Init("DefaultSkin.png");
@@ -46,7 +46,7 @@ int main()
     // Create an input processor
     Gwk::Input::SFML input;
     input.Initialize(&canvas);
-    
+
     while (app.isOpen())
     {
         // Handle events
@@ -74,9 +74,9 @@ int main()
         // <user render here>
         app.pushGLStates();
         canvas.RenderCanvas();
-        app.popGLStates();        
+        app.popGLStates();
         app.display();
     }
-    
+
     return EXIT_SUCCESS;
 }

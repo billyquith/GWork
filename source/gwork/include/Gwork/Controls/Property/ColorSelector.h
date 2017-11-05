@@ -65,7 +65,7 @@ namespace Gwk
                     menu->SetSize(256, 180);
                     menu->SetDeleteOnClose(true);
                     menu->SetDisableIconMargin(true);
-                    
+
                     Gwk::Controls::HSVColorPicker* picker = new Gwk::Controls::HSVColorPicker(menu);
                     picker->Dock(Position::Fill);
                     picker->SetSize(256, 128);
@@ -74,7 +74,7 @@ namespace Gwk
                     picker->SetColor(Gwk::Color(defaultColor[0], defaultColor[1], defaultColor[2], 255),
                                      false, true);
                     picker->onColorChanged.Add(this, &ThisClass::ColorChanged);
-                    
+
                     menu->Open(Position::Right | Position::Top);
                 }
 

@@ -22,4 +22,3 @@ build_script:
   - cmd: cd build
   - cmd: cmake .. -DBUILD_TEST=ON -DBUILD_SAMPLE=ON -DRENDER_NULL=ON -G "%GENERATOR%"
   - cmd: cmake --build . --config "%CFG%"
-

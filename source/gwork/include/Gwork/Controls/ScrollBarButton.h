@@ -31,7 +31,7 @@ namespace Gwk
         protected:
 
             Position m_direction;
-            
+
         };
 
     }

@@ -14,7 +14,7 @@ class AllocStats:
         self.name = name
         self._colnames = []
         self._data = []
-        
+
     def readCsvFile(self, fname):
         with open(fname, 'rb') as csvfile:
             sr = csv.reader(csvfile)
@@ -24,7 +24,7 @@ class AllocStats:
                 else:
                     self._data.append(row)
         self.process()
-        
+
     def process(self):
         seen, diff = {}, {}
         for d in self._data:
@@ -37,12 +37,12 @@ class AllocStats:
                 nd = (CurrNumAllocs - cal, CurrAllocSize - csz)
                 diff[name] = nd
         self._diffs = diff
-        
+
     def dump(self):
         for k in sorted(self._diffs.keys()):
             d = self._diffs[k]
             print k, d[0], d[1]
-            
+
     def report(self, hr):
         hr.el('h2', '%s allocation stats' % self.name)
         hr.el('table', cls='reporttab')
@@ -51,8 +51,8 @@ class AllocStats:
             d = self._diffs[k]
             hr.tr([k, npad(d[0],6), XB(d[1])])
         hr.el('/table')
-            
-            
+
+
 class AllocDiff:
     def __init__(self, a,b):
         self.a, self.b = a, b
@@ -64,13 +64,13 @@ class AllocDiff:
                 pctSz = 100.0 * vb[1] / va[1] - 100.0
                 delta[ka] = (vb[0] - va[0], vb[1] - va[1], pctSz)
         self.delta = delta
-        
+
     def dump(self):
         print 'Diff', self.a.name, '->', self.b.name
         for k in sorted(self.delta.keys()):
             d = self.delta[k]
             print k, d[0], d[1], '%.1f%%' % d[2]
-            
+
     def report(self, hr):
         hr.el('h2', 'Stats comparison: %s to %s' % (self.a.name, self.b.name))
         hr.el('table', cls='reporttab')
@@ -91,7 +91,7 @@ class HtmlReport:
         if content:
             h += '%s</%s>' % (content, el)
         return h
-        
+
     def el(self, el, content = None, cls = None):
         self._h.append(self.et(el, content, cls))
         return self
@@ -104,7 +104,7 @@ class HtmlReport:
         self._trow(cols, 'th')
     def tr(self, cols):
         self._trow(cols, 'td')
-    
+
     def toString(self):
         self.el('/body').el('/html')
         return '\n'.join(self._h)
@@ -112,31 +112,31 @@ class HtmlReport:
 def toFile(fname, str):
     with open(fname, 'w') as f:
         f.write(str)
-        
+
 def readFile(fname):
     with open(fname, 'rb') as f:
         return f.read()
-        
+
 def XB(n):
     if abs(n) > 1024:
         return '%s (%.3fKB)' % (npad(n,10), n/1024.0)
     return npad(n,10)
-    
+
 def npad(n, s=8):
     fmt = '%%%dd' % s
     return fmt % n
-        
-                    
+
+
 def main():
     gwen = AllocStats('GWEN')
     gwen.readCsvFile(GWEN_STATS)
 
     gwk = AllocStats('Gwork reference')
     gwk.readCsvFile(GWK_STATS)
-    
+
     curr = AllocStats('Gwork current')
     curr.readCsvFile(CURR_STATS)
-    
+
     ggd = AllocDiff(gwen, gwk)
     ggd.dump()
     gcd = AllocDiff(gwk, curr)
@@ -148,7 +148,7 @@ def main():
     curr.report(hr)
     ggd.report(hr)
     gcd.report(hr)
-    
+
     txtRep = hr.toString()
     # print txtRep
     toFile('alloc_report.html', txtRep)

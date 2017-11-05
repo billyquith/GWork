@@ -24,7 +24,7 @@ namespace Gwk
         {
         public:
             GWK_CONTROL(Label, Controls::Base);
-            
+
             void PreDelete(Gwk::Skin::Base* skin) override;
 
             virtual void SetText(const String& str, bool bDoEvents = true);
@@ -79,7 +79,7 @@ namespace Gwk
             virtual int TextY()             { return m_text->Y(); }
 
             virtual int TextLength()        { return m_text->Length(); }
-            
+
             Gwk::Rect GetCharacterPosition(int iChar);
 
             virtual void SetTextPadding(const Padding& padding)

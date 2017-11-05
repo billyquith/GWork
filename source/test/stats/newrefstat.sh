@@ -11,4 +11,3 @@ echo "$INFO"
 
 cat $CURRSTATS > $STATSTORE
 echo "$INFO" > $STATINFO
-

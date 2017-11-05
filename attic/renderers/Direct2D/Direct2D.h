@@ -19,7 +19,7 @@ namespace Gwk
 {
     namespace Renderer
     {
-        //! Default resource loader for Direct2D.        
+        //! Default resource loader for Direct2D.
         class Direct2DResourceLoader : public ResourceLoader
         {
             ResourcePaths& m_paths;
@@ -49,7 +49,7 @@ namespace Gwk
 
             void Notify(NotificationType msg) override;
         };
-        
+
         //
         //! Renderer for [Direct2D](https://msdn.microsoft.com/en-us/library/windows/desktop/dd370990(v=vs.85).aspx).
         //

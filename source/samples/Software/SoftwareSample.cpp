@@ -26,18 +26,18 @@ int main(int argc, char** argv)
     // We'll use SDL2 for the window and rendering management
     if(SDL_Init(SDL_INIT_EVERYTHING) != 0)
         return EXIT_FAILURE;
-    
+
     SDL_Window *window = SDL_CreateWindow("Gwork Software Sample", 100, 100,
                                           screenSize.x, screenSize.y, SDL_WINDOW_SHOWN);
     if (!window)
         return EXIT_FAILURE;
-    
+
     SDL_Renderer *sdlRenderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 #endif
 
     Gwk::Platform::RelativeToExecutablePaths paths(GWORK_RESOURCE_DIR);
     Gwk::Renderer::SoftwareResourceLoader loader(paths);
-    
+
     // Create pixel buffer to draw into and attach renderer.
     Gwk::Renderer::PixelBuffer pixbuff;
     pixbuff.Init(screenSize);
@@ -61,7 +61,7 @@ int main(int argc, char** argv)
     // Create our unittest control (which is a Window with controls in it)
     TestAPI* unit = new TestAPI(canvas);
     unit->SetPos(10, 10);
-    
+
 #if VIEWER
     Gwk::Input::SDL2 input;
     input.Initialize(canvas);
@@ -77,16 +77,16 @@ int main(int argc, char** argv)
         {
             if (evt.type == SDL_QUIT)
                 haveQuit = true;
-            
+
             input.ProcessEvent(&evt);
         }
-        
+
         // render the GUI to our buffer
         renderer->BeginContext(nullptr);
         canvas->RenderCanvas();
         renderer->PresentContext(nullptr);
         renderer->EndContext(nullptr);
-        
+
         // show the software rendered GUI on the screen
         SDL_UpdateTexture(texture, NULL, &pixbuff.At(0,0), screenSize.x*4);
         SDL_RenderClear(sdlRenderer);
@@ -100,7 +100,7 @@ int main(int argc, char** argv)
     canvas->RenderCanvas();
     renderer->PresentContext(nullptr);
     renderer->EndContext(nullptr);
-    
+
     // write screen shot
     stbi_write_png("sw.png", screenSize.x, screenSize.y, 4, &pixbuff.At(0,0), 4*screenSize.x);
 #endif
@@ -109,12 +109,12 @@ int main(int argc, char** argv)
     delete canvas;
     delete skin;
     delete renderer;
-    
+
 #if VIEWER
     SDL_DestroyTexture(texture);
     SDL_DestroyWindow(window);
     SDL_Quit();
 #endif
-    
+
     return EXIT_SUCCESS;
 }

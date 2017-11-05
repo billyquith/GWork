@@ -93,7 +93,7 @@ static void CreateD3DDevice()
     sd.BufferDesc.Height = height;
     sd.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
     sd.BufferDesc.Scaling = DXGI_MODE_SCALING_UNSPECIFIED;
-    
+
     HRESULT hr = S_OK;
     for (UINT driverTypeIndex = 0; driverTypeIndex < numDriverTypes; driverTypeIndex++)
     {

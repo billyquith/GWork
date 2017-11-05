@@ -48,7 +48,7 @@ int main()
 
     if (!glfwInit())
         return -1;
-    
+
     // Create a new window
     GLFWwindow* window = glfwCreateWindow(screenSize.x, screenSize.y,
                                           "Gwork OpenGL Sample", NULL, NULL);
@@ -58,10 +58,10 @@ int main()
         return -1;
     }
     glfwMakeContextCurrent(window);
-    
+
     Gwk::Platform::RelativeToExecutablePaths paths(GWORK_RESOURCE_DIR);
     Gwk::Renderer::OpenGLResourceLoader loader(paths);
-    
+
     // Create a Gwork OpenGL Renderer
 #ifdef USE_DEBUG_FONT
     Gwk::Renderer::OpenGL* renderer = new Gwk::Renderer::OpenGL_DebugFont();
@@ -85,12 +85,12 @@ int main()
     // Create our unittest control (which is a Window with controls in it)
     auto unit = new TestFrame(canvas);
     GworkInput.Initialize(canvas);
-    
+
     glfwSetKeyCallback(window, key_callback);
     glfwSetCursorPosCallback(window, cursor_pos_callback);
     glfwSetMouseButtonCallback(window, mouse_button_callback);
     glfwSetScrollCallback(window, scroll_callback);
-    
+
     // Begin the main game loop
     while (!glfwWindowShouldClose(window))
     {
@@ -99,7 +99,7 @@ int main()
         glfwSwapBuffers(window);
 
         glfwPollEvents();
-        
+
         Gwk::Platform::Sleep(0);
     }
 
@@ -107,10 +107,9 @@ int main()
     delete canvas;
     delete skin;
     delete renderer;
-    
+
     // Clean up OpenGL
     glfwTerminate();
-    
-    return EXIT_SUCCESS;    
-}
 
+    return EXIT_SUCCESS;
+}

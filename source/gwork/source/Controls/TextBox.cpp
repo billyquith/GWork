@@ -17,7 +17,7 @@
 
 namespace Gwk
 {
-    
+
 using namespace Gwk::Controls;
 
 #if GWK_ANIMATE
@@ -83,7 +83,7 @@ void TextBox::InsertText(const Gwk::String& strInsert)
     if (m_maxTextLength > NO_MAX_LENGTH && TextLength() + insertSize > m_maxTextLength)
     {
         insertSize = m_maxTextLength - TextLength();
-        
+
         if (insertSize <= 0)
             return;
     }
