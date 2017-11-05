@@ -133,21 +133,25 @@ namespace Gwk
 
         Color(const Color& c)
         {
-            r = c.r;
-            g = c.g;
-            b = c.b;
-            a = c.a;
+            rgba = c.rgba;
         }
 
-        void operator = (Color c)
+        Color(Color&& c)
         {
-            r = c.r;
-            g = c.g;
-            b = c.b;
-            a = c.a;
+            rgba = c.rgba;
         }
 
-        void operator += (Color c)
+        void operator = (const Color& c)
+        {
+            rgba = c.rgba;
+        }
+
+        void operator = (Color&& c)
+        {
+            rgba = c.rgba;
+        }
+
+        void operator += (const Color& c)
         {
             r = static_cast<unsigned char>(r + c.r);
             g = static_cast<unsigned char>(g + c.g);
@@ -155,7 +159,7 @@ namespace Gwk
             a = static_cast<unsigned char>(a + c.a);
         }
 
-        void operator -= (Color c)
+        void operator -= (const Color& c)
         {
             r = static_cast<unsigned char>(r - c.r);
             g = static_cast<unsigned char>(g - c.g);
@@ -178,7 +182,7 @@ namespace Gwk
                     );
         }
 
-        Color operator - (Color c) const
+        Color operator - (const Color& c) const
         {
             return Color(
                     static_cast<unsigned char>(r - c.r),
@@ -188,7 +192,7 @@ namespace Gwk
                     );
         }
 
-        Color operator + (Color c) const
+        Color operator + (const Color& c) const
         {
             return Color(
                     static_cast<unsigned char>(r + c.r),
@@ -203,7 +207,10 @@ namespace Gwk
             return c.r==r && c.g==g && c.b==b && c.a==a;
         }
 
-        unsigned char r, g, b, a;
+        union {
+            uint32_t rgba;
+            struct { unsigned char r, g, b, a; };
+        };
     };
 
     namespace Colors

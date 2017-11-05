@@ -24,29 +24,34 @@ namespace Drawing
     //! Blend two colors using: result = S_rgb*S_alpha + D_rgb*(1 - S_alpha)
     static inline Color BlendAlpha(Color const& src, Color const& dst)
     {
-        const float a = src.a * (1.f/255.f);
-        const float b = 1.f - a;
-        const Color r(src.r * a + dst.r * b,
-                      src.g * a + dst.g * b,
-                      src.b * a + dst.b * b,
+        // use fixed point to blend
+        constexpr unsigned sh = 16;
+        constexpr uint32_t s = (1u << sh) / (255u);
+        const uint32_t a = (src.a * s);
+        const uint32_t b = (1u << sh) - a;;
+        
+        const Color r(((src.r * a) + (dst.r * b)) >> sh,
+                      ((src.g * a) + (dst.g * b)) >> sh,
+                      ((src.b * a) + (dst.b * b)) >> sh,
                       src.a);
         return r;
     }
 
     //! Draw filled rectangle.
-    void FillRect(PixelBuffer& pb, Rect const& r, Color const& c)
+    void RectFill(PixelBuffer& pb, Rect const& r, Color const& c)
     {
         for (int y = 0; y < r.h; ++y)
         {
-            for (int x = 0; x < r.w; ++x)
+            Color *px = &pb.At(r.x, r.y + y);
+            for (int x = r.w; x > 0; --x)
             {
-                pb.At(r.x + x, r.y + y) = c;
+                *px++ = c;
             }
         }
     }
 
     //! Draw rectangle outline.
-    void OutlineRect(PixelBuffer& pb, Rect const& r, Color const& c)
+    void RectOutline(PixelBuffer& pb, Rect const& r, Color const& c)
     {
         for (int x = 0; x < r.w; ++x)
         {
@@ -63,21 +68,26 @@ namespace Drawing
     }
 
     //! Draw textured rectangle.
-    void TexturedRect(PixelBuffer& pb, const PixelBuffer& pbsrc,
+    void RectTextured(PixelBuffer& pb, const PixelBuffer& pbsrc,
                       const Gwk::Rect& rect, float u1, float v1, float u2, float v2)
     {
         const Point srcsz(pbsrc.GetSize());
         const Point uvtl(srcsz.x * u1, srcsz.y * v1);
 
         const float dv = (v2 - v1) * srcsz.y / rect.h;
+        float v = uvtl.y;
         for (int y = 0; y < rect.h; ++y)
         {
             const float du = (u2 - u1) * srcsz.x / rect.w;
+            float u = uvtl.x;
+            Color *px = &pb.At(rect.x, rect.y + y);
             for (int x = 0; x < rect.w; ++x)
             {
-                Color& dst = pb.At(rect.x + x, rect.y + y);
-                dst = BlendAlpha(pbsrc.At(uvtl.x + du*x, uvtl.y + dv*y), dst);
+                *px = BlendAlpha(pbsrc.At(u, v), *px);
+                ++px;
+                u += du;
             }
+            v += dv;
         }
     }
 }
@@ -353,14 +363,14 @@ void Software::DrawFilledRect(Gwk::Rect rect)
 {
     Translate(rect);
     if (Clip(rect))
-        Drawing::FillRect(*m_pixbuf, rect, m_color);
+        Drawing::RectFill(*m_pixbuf, rect, m_color);
 }
 
 void Software::DrawLinedRect(Gwk::Rect rect)
 {
     Translate(rect);
     if (Clip(rect))
-        Drawing::OutlineRect(*m_pixbuf, rect, m_color);
+        Drawing::RectOutline(*m_pixbuf, rect, m_color);
 }
 
 void Software::DrawTexturedRect(Gwk::Texture* texture, Gwk::Rect rect,
@@ -372,7 +382,7 @@ void Software::DrawTexturedRect(Gwk::Texture* texture, Gwk::Rect rect,
         const PixelBuffer *srcbuf = static_cast<const PixelBuffer*>(texture->data);
         if (srcbuf != nullptr)
         {
-            Drawing::TexturedRect(*m_pixbuf, *srcbuf, rect, u1,v1, u2,v2);
+            Drawing::RectTextured(*m_pixbuf, *srcbuf, rect, u1,v1, u2,v2);
         }
         else
         {
