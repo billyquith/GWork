@@ -12,6 +12,8 @@ var searchData=
   ['collapsiblecategory',['CollapsibleCategory',['../class_gwk_1_1_controls_1_1_collapsible_category.html',1,'Gwk::Controls::CollapsibleCategory'],['../class_gwk_1_1_controls_1_1_collapsible_category.html#a25430587dd734719e32ffe5eb6489302',1,'Gwk::Controls::CollapsibleCategory::CollapsibleCategory()']]],
   ['collapsiblelist',['CollapsibleList',['../class_gwk_1_1_controls_1_1_collapsible_list.html',1,'Gwk::Controls::CollapsibleList'],['../class_gwk_1_1_controls_1_1_collapsible_list.html#af9e3418da9404c5c1410ddc4cae00002',1,'Gwk::Controls::CollapsibleList::CollapsibleList()']]],
   ['color',['Color',['../struct_gwk_1_1_color.html',1,'Gwk']]],
+  ['color_2e_5f_5funnamed_5f_5f',['Color.__unnamed__',['../union_gwk_1_1_color_8____unnamed____.html',1,'Gwk']]],
+  ['color_2e_5f_5funnamed_5f_5f_2e_5f_5funnamed_5f_5f',['Color.__unnamed__.__unnamed__',['../struct_gwk_1_1_color_8____unnamed_____8____unnamed____.html',1,'Gwk']]],
   ['colorbutton',['ColorButton',['../class_gwk_1_1_controls_1_1_internal_1_1_color_button.html',1,'Gwk::Controls::Internal']]],
   ['colordisplay',['ColorDisplay',['../class_gwk_1_1_controls_internal_1_1_color_display.html',1,'Gwk::ControlsInternal::ColorDisplay'],['../class_gwk_1_1_controls_internal_1_1_color_display.html#aaac2ebae882e6966b6fa6220dd7d2997',1,'Gwk::ControlsInternal::ColorDisplay::ColorDisplay()']]],
   ['colorlerpbox',['ColorLerpBox',['../class_gwk_1_1_controls_1_1_color_lerp_box.html',1,'Gwk::Controls::ColorLerpBox'],['../class_gwk_1_1_controls_1_1_color_lerp_box.html#a45abbab0bca72002d457d1c8560fc1ad',1,'Gwk::Controls::ColorLerpBox::ColorLerpBox()']]],

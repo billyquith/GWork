@@ -12,6 +12,8 @@ var searchData=
   ['collapsiblecategory',['CollapsibleCategory',['../class_gwk_1_1_controls_1_1_collapsible_category.html',1,'Gwk::Controls']]],
   ['collapsiblelist',['CollapsibleList',['../class_gwk_1_1_controls_1_1_collapsible_list.html',1,'Gwk::Controls']]],
   ['color',['Color',['../struct_gwk_1_1_color.html',1,'Gwk']]],
+  ['color_2e_5f_5funnamed_5f_5f',['Color.__unnamed__',['../union_gwk_1_1_color_8____unnamed____.html',1,'Gwk']]],
+  ['color_2e_5f_5funnamed_5f_5f_2e_5f_5funnamed_5f_5f',['Color.__unnamed__.__unnamed__',['../struct_gwk_1_1_color_8____unnamed_____8____unnamed____.html',1,'Gwk']]],
   ['colorbutton',['ColorButton',['../class_gwk_1_1_controls_1_1_internal_1_1_color_button.html',1,'Gwk::Controls::Internal']]],
   ['colordisplay',['ColorDisplay',['../class_gwk_1_1_controls_internal_1_1_color_display.html',1,'Gwk::ControlsInternal']]],
   ['colorlerpbox',['ColorLerpBox',['../class_gwk_1_1_controls_1_1_color_lerp_box.html',1,'Gwk::Controls']]],

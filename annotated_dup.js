@@ -119,7 +119,6 @@ var annotated_dup =
         [ "Allegro", "class_gwk_1_1_input_1_1_allegro.html", "class_gwk_1_1_input_1_1_allegro" ],
         [ "GLFW", "class_gwk_1_1_input_1_1_g_l_f_w.html", "class_gwk_1_1_input_1_1_g_l_f_w" ],
         [ "Null", "class_gwk_1_1_input_1_1_null.html", "class_gwk_1_1_input_1_1_null" ],
-        [ "SDL13", "class_gwk_1_1_input_1_1_s_d_l13.html", "class_gwk_1_1_input_1_1_s_d_l13" ],
         [ "SDL2", "class_gwk_1_1_input_1_1_s_d_l2.html", "class_gwk_1_1_input_1_1_s_d_l2" ],
         [ "SFML", "class_gwk_1_1_input_1_1_s_f_m_l.html", "class_gwk_1_1_input_1_1_s_f_m_l" ],
         [ "Windows", "class_gwk_1_1_input_1_1_windows.html", "class_gwk_1_1_input_1_1_windows" ]
@@ -169,6 +168,8 @@ var annotated_dup =
         [ "Window_t.Colors.Window", "struct_gwk_1_1_skin_1_1_base_1_1_window__t_8_colors_8_window.html", "struct_gwk_1_1_skin_1_1_base_1_1_window__t_8_colors_8_window" ]
       ] ],
       [ "Color", "struct_gwk_1_1_color.html", "struct_gwk_1_1_color" ],
+      [ "Color.__unnamed__", "union_gwk_1_1_color_8____unnamed____.html", "union_gwk_1_1_color_8____unnamed____" ],
+      [ "Color.__unnamed__.__unnamed__", "struct_gwk_1_1_color_8____unnamed_____8____unnamed____.html", "struct_gwk_1_1_color_8____unnamed_____8____unnamed____" ],
       [ "ControlList", "class_gwk_1_1_control_list.html", "class_gwk_1_1_control_list" ],
       [ "Font", "struct_gwk_1_1_font.html", "struct_gwk_1_1_font" ],
       [ "HSV", "struct_gwk_1_1_h_s_v.html", "struct_gwk_1_1_h_s_v" ],
