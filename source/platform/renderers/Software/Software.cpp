@@ -96,7 +96,7 @@ namespace Drawing
 
 // See "Font Size in Pixels or Points" in "stb_truetype.h"
 static constexpr float c_pointsToPixels = 1.333f;
-static constexpr int c_texsz = 256;   // TODO - fix this hack.
+static constexpr int c_texsz = 256; // arbitrary font cache texture size
 
 Font::Status SoftwareResourceLoader::LoadFont(Font& font)
 {
@@ -192,8 +192,8 @@ void SoftwareResourceLoader::FreeTexture(Texture& texture)
 
 Software::Software(ResourceLoader& loader, PixelBuffer& pbuff)
     :   Base(loader)
-    ,   m_pixbuf(&pbuff)
     ,   m_isClipping(false)
+    ,   m_pixbuf(&pbuff)
 {
 }
 
@@ -345,7 +345,7 @@ bool Software::Clip(Rect& rect)
             rect.h -= rect.Bottom() - cr.Bottom();
         }
 
-        return rect.w >= 0 && rect.h >= 0;
+        return rect.w > 0 && rect.h > 0;
     }
 
     return true;
@@ -355,7 +355,8 @@ void Software::DrawPixel(int x, int y)
 {
     Translate(x, y);
 
-    if (ClipRegionVisible())
+    Rect r(x,y,1,1);
+    if (Clip(r))
         m_pixbuf->At(x, y) = m_color;
 }
 
