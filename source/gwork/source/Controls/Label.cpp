@@ -8,7 +8,7 @@
 
 #include <Gwork/Gwork.h>
 #include <Gwork/Controls/Label.h>
-#include <Gwork/Utility.h>
+#include <Gwork/PlatformCommon.h>
 
 using namespace Gwk;
 using namespace Gwk::Controls;
@@ -103,7 +103,7 @@ void Label::SetFont(Gwk::String strFacename, int iSize, bool bBold)
     }
 
     m_createdFont = new Gwk::Font();
-    Debug::AssertCheck(m_createdFont != nullptr, "Couldn't Create Font!");
+    GWK_ASSERT_MSG(m_createdFont != nullptr, "Couldn't Create Font!");
     m_createdFont->bold = bBold;
     m_createdFont->facename = strFacename;
     m_createdFont->size = iSize;

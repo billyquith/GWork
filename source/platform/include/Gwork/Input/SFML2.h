@@ -135,7 +135,7 @@ namespace Gwk
                         const unsigned char iKey = TranslateKeyCode(keyCode);
                         return m_eventListener->InputModifierKey(iKey, bPressed);
                     }
-                        
+
                 default:
                     ;
                 }

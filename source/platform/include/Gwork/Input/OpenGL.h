@@ -18,7 +18,7 @@ namespace Gwk
         class GLFW
         {
         public:
-            
+
             struct KeyEvent {
                 int key, scancode, action, mods;
             };
@@ -94,25 +94,25 @@ namespace Gwk
 
                 case GLFW_KEY_RIGHT_SHIFT:
                     return Gwk::Key::Shift;
-                        
+
                 default: ;
                 }
 
                 return Gwk::Key::Invalid;
             }
-            
+
             bool ProcessKeyEvent(const KeyEvent& event)
             {
                 if (!m_eventListener)
                     return false;
-                
+
                 const bool bPressed = (event.action == GLFW_PRESS);
                 const char keyCode = event.key;
                 const bool control = (event.mods & GLFW_MOD_CONTROL) != 0;
-                
+
                 if (control && bPressed && keyCode >= 'a' && keyCode <= 'z')
                     return m_eventListener->InputCharacter(keyCode);
-                
+
                 const unsigned char iKey = TranslateKeyCode(keyCode);
                 return m_eventListener->InputModifierKey(iKey, bPressed);
             }
@@ -121,15 +121,15 @@ namespace Gwk
             {
                 if (m_mouse.x < 0)
                     m_lastMouse = m_mouse;
-                
+
                 m_mouse.set(x, y);
                 const Point delta(m_lastMouse - m_mouse);
                 m_lastMouse = m_mouse;
-                
+
                 return m_eventListener->InputMouseMoved(m_mouse.x, m_mouse.y,
                                                         delta.x, delta.y);
             }
-            
+
             bool ProcessMouseButtons(int button, int action, int mods)
             {
                 return m_eventListener->InputMouseButton(button, action == GLFW_PRESS);

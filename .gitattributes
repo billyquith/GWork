@@ -3,6 +3,7 @@
 
 *.h text
 *.hpp text
+*.inl text
 *.c text
 *.cpp text
 *.txt text
@@ -14,4 +15,7 @@
 *.bat eol=crlf
 
 *.png binary
-
+*.tga binary
+*.bmp binary
+*.psd binary
+*.ttf binary

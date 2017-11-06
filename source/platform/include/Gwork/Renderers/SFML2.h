@@ -28,10 +28,10 @@ namespace Gwk
             SFML2ResourceLoader(ResourcePaths& paths)
             :   m_paths(paths)
             {}
-            
+
             Font::Status LoadFont(Font& font) override;
             void FreeFont(Font& font) override;
-            
+
             Texture::Status LoadTexture(Texture& texture) override;
             void FreeTexture(Texture& texture) override;
         };
@@ -47,7 +47,7 @@ namespace Gwk
             //! \param loader : ResourceLoader for renderer.
             //! \param target : application render target.
             SFML2(ResourceLoader& loader, sf::RenderTarget& target);
-            
+
             virtual ~SFML2();
 
             inline void EnsurePrimitiveType(sf::PrimitiveType type)
@@ -111,7 +111,7 @@ namespace Gwk
                                   const Gwk::Color& col_default) override;
 
         protected:
-            
+
             sf::RenderTarget& m_target;
             sf::Color m_color;
             sf::VertexArray m_buffer;

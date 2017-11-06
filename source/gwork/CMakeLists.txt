@@ -224,4 +224,4 @@ install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/Gwork
 install(TARGETS Gwork
         RUNTIME DESTINATION bin
         LIBRARY DESTINATION lib
-        ARCHIVE DESTINATION lib)      
+        ARCHIVE DESTINATION lib)

@@ -185,8 +185,8 @@ void Base::InvalidateChildren(bool bRecursive)
 
     if (m_innerPanel)
     {
-	for (auto&& innerchild : m_innerPanel->Children)
-	{
+        for (auto&& innerchild : m_innerPanel->Children)
+        {
             innerchild->Invalidate();
 
             if (bRecursive)
@@ -368,7 +368,7 @@ Skin::Base* Base::GetSkin(void)
     if (m_parent)
         return m_parent->GetSkin();
 
-    Debug::AssertCheck(0, "Base::GetSkin Returning nullptr!\n");
+    GWK_ASSERT_MSG(false, "Base::GetSkin Returning null!");
     return nullptr;
 }
 
@@ -834,7 +834,7 @@ void Base::RecurseLayout(Skin::Base* skin)
         child->RecurseLayout(skin);
     }
 
-    m_innerBounds = rBounds; 
+    m_innerBounds = rBounds;
 
     //
     // Fill uses the left over space, so do that now.
@@ -1241,7 +1241,6 @@ void Base::Anim_heightOut(float fLength, bool bHide, float fDelay, float fEase)
 
 #endif // if GWK_ANIMATE
 
-    
+
 } // namespace Gwk
 } // namespace Controls
-

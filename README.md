@@ -5,17 +5,17 @@ Linux & MacOS status: [![Build Status](https://travis-ci.org/billyquith/GWork.sv
 
 GWork is a skinnable, embeddable GUI library with an extensive control set. Control rendering
 is abstracted, and can be implemented by any application wishing to use the library.
-Gwork (*pronounced "gw-orc"*) is a fork of the GUI library [GWEN][gwen]. It was forked 
+Gwork (*pronounced "gw-orc"*) is a fork of the GUI library [GWEN][gwen]. It was forked
 to fix issues with GWEN and add new features.
 
 A number of rendering backends are provided for use, or as an example for your own:
 
  * [Allegro5][al5] (cross-platform).
- * Direct2D (Windows 7+)
  * DirectX 11 (Windows 7+).
  * OpenGL (cross-platform. Uses GLFW).
  * [SDL2][sdl2] (cross-platform).
  * [SFML2][sfml2] (cross-platform).
+ * Software (cross-platform). Render to texture.
 
 ## Documentation
 
@@ -23,7 +23,7 @@ A number of rendering backends are provided for use, or as an example for your o
 
 ## Changes
 
-- See CHANGELOG for changes to Gwork, and the differences from GWEN.
+- See [CHANGELOG][changes] for changes to Gwork, and the differences from GWEN.
 
 ## Issues
 
@@ -36,15 +36,15 @@ Get source code:
 * From git: `git clone https://github.com/billyquith/GWork.git gwork` or
 * [Download zip](https://github.com/billyquith/GWork/archive/gwork.zip) & unzip
 
-CMake is used to generate the project files. See `cmake -h` to see all the generators for 
+CMake is used to generate the project files. See `cmake -h` to see all the generators for
 your platform. Only have one renderer per build directory. Choose renderer:
 
 * `-DRENDER_ALLEGRO5=ON`
-* `-DRENDER_DIRECT2D=ON`
 * `-DRENDER_DIRECTX11=ON`
 * `-DRENDER_OPENGL=ON`
 * `-DRENDER_SDL2=ON`
 * `-DRENDER_SFML2=ON`
+* `-DRENDER_SW=ON`
 
 For example to build Allegro 5 renderer using Ninja:
 
@@ -67,4 +67,5 @@ bin/GworkAllegro5Sample     # run sample
 [sfml2]: http://www.sfml-dev.org
 [al5]: http://alleg.sourceforge.net
 [docs]: https://billyquith.github.io/GWork/
+[changes]: https://github.com/billyquith/GWork/blob/gwork/CHANGELOG.md
 [issues]: https://github.com/billyquith/GWork/issues "Bugs/Issues"

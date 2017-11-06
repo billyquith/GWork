@@ -9,9 +9,35 @@
 
 static Gwk::String gs_ClipboardEmulator;
 
+Gwk::String Gwk::Platform::GetExecutableDir()
+{
+    return String();
+}
+
+void Gwk::Platform::Sleep(unsigned int ms)
+{
+}
+
+float Gwk::Platform::GetTimeInSeconds()
+{
+    return 0.f;
+}
+
+// Default place log messages are sent to.
+void Gwk::Platform::DefaultLogListener(Gwk::Log::Level lvl, const char *message)
+{
+#if defined(_MSC_VER)
+    OutputDebugString(message);
+#else
+    if (lvl >= Gwk::Log::Level::Error)
+        fputs(message, stderr);
+    else
+        fputs(message, stdout);
+#endif
+}
+
 void Gwk::Platform::SetCursor(unsigned char iCursor)
 {
-    // No platform independent way to do this
 }
 
 Gwk::String Gwk::Platform::GetClipboardText()

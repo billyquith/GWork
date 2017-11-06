@@ -40,12 +40,9 @@
 #   include <windows.h>
 #endif
 
-#include "DebugBreak.h"
-
-
 namespace Gwk {
 namespace Utility {
-    
+
 //! Cross platform implementation of vsnprintf that returns number of
 //! characters which would have been written to the final string if
 //! enough space had been available.
@@ -95,7 +92,7 @@ int swnprintf(wchar_t* _out, size_t _count, const wchar_t* _format, ...)
 void PrintfVargs(std::string& _out, const char* _format, va_list _argList)
 {
     char temp[2048];
-    
+
     char* out = temp;
     int len = Utility::vsnprintf(out, sizeof(temp), _format, _argList);
     if ( int(sizeof(temp)) < len)
@@ -131,7 +128,7 @@ std::wstring Widen(const Gwk::String &nstr)
     // UTF-8 to UTF-16 (C++11)
     // See: http://en.cppreference.com/w/cpp/locale/codecvt_utf8_utf16
     // See: http://www.cplusplus.com/reference/codecvt/codecvt_utf8_utf16/
-    
+
     std::wstring_convert< std::codecvt_utf8_utf16<wchar_t>, wchar_t > conversion;
     const std::wstring wstr( conversion.from_bytes( nstr.c_str() ) );
     return wstr;
@@ -154,10 +151,10 @@ Gwk::String Narrow(const std::wstring &wstr)
 #ifndef AVOID_CPP11_CODECVT
     // wide to UTF-8 (C++11)
     // See: http://en.cppreference.com/w/cpp/locale/wstring_convert/to_bytes
-    
+
     std::wstring_convert< std::codecvt_utf8<wchar_t> > conv1;
     Gwk::String u8str = conv1.to_bytes(wstr);
-    
+
     return u8str;
 #else
     static iconv_t cd = iconv_open("UTF-8", "WCHAR_T"); // TODO - iconv_close() on exit
@@ -176,7 +173,7 @@ Gwk::String Narrow(const std::wstring &wstr)
 void Replace(String& str, const String& strFind, const String& strReplace)
 {
     size_t pos = 0;
-    
+
     while ((pos = str.find(strFind, pos)) != String::npos)
     {
         str.replace(pos, strFind.length(), strReplace);
@@ -191,17 +188,17 @@ void Strings::Split(const Gwk::String& str, const Gwk::String& seperator,
     size_t iLength = str.length();
     size_t iSepLen = seperator.length();
     size_t i = str.find(seperator, 0);
-    
+
     while (i != std::string::npos)
     {
         outbits.push_back(str.substr(iOffset, i-iOffset));
         iOffset = i+iSepLen;
         i = str.find(seperator, iOffset);
-        
+
         if (bLeave)
             iOffset -= iSepLen;
     }
-    
+
     outbits.push_back(str.substr(iOffset, iLength-iOffset));
 }
 
@@ -209,7 +206,7 @@ int Strings::To::Int(const Gwk::String& str)
 {
     if (str.empty())
         return 0;
-    
+
     return std::atoi(str.c_str());
 }
 
@@ -217,7 +214,7 @@ float Strings::To::Float(const Gwk::String& str)
 {
     if (str.empty())
         return 0.0f;
-    
+
     return std::atof(str.c_str());
 }
 
@@ -227,21 +224,21 @@ bool Strings::To::Bool(const Gwk::String& str)
         return false;
 
     const char first = tolower(str[0]);
-    
+
     switch (first)
     {
         case 't':
         case 'y':
             return true;
-            
+
         case 'f':
         case 'n':
             return false;
-            
+
         default:
             break;
     }
-    
+
     return To::Int(str) != 0;
 }
 
@@ -249,15 +246,15 @@ bool Strings::To::Floats(const Gwk::String& str, float* f, size_t iCount)
 {
     Strings::List lst;
     Strings::Split(str, " ", lst);
-    
+
     if (lst.size() != iCount)
         return false;
-    
+
     for (size_t i = 0; i < iCount; i++)
     {
         f[i] = Strings::To::Float(lst[i]);
     }
-    
+
     return true;
 }
 
@@ -265,28 +262,28 @@ bool Strings::Wildcard(const String& strWildcard, const String& strHaystack)
 {
     const String& W = strWildcard;
     const String& H = strHaystack;
-    
+
     if (strWildcard == "*")
         return true;
-    
+
     size_t iPos = W.find("*", 0);
-    
+
     if (iPos == String::npos)
         return strWildcard == strHaystack;
-    
+
     // First half matches
     if (iPos > 0 && W.substr(0, iPos) != H.substr(0, iPos))
         return false;
-    
+
     // Second half matches
     if (iPos != W.length()-1)
     {
         String strEnd = W.substr(iPos+1, W.length());
-        
+
         if (strEnd != H.substr(H.length()-strEnd.length(), H.length()))
             return false;
     }
-    
+
     return true;
 }
 
@@ -299,91 +296,15 @@ void Strings::Strip(Gwk::String& str, const Gwk::String& chars)
 {
     Gwk::String Source = str;
     str = "";
-    
+
     for (size_t i = 0; i < Source.length(); i++)
     {
         if (chars.find(Source[i]) != Gwk::String::npos)
             continue;
-        
+
         str += Source[i];
     }
 }
 
-Gwk::Rect ClampRectToRect(Gwk::Rect inside, Gwk::Rect outside, bool clampSize)
-{
-    if (inside.x < outside.x)
-        inside.x = outside.x;
-    
-    if (inside.y  < outside.y)
-        inside.y = outside.y;
-    
-    if (inside.x+inside.w > outside.x+outside.w)
-    {
-        if (clampSize)
-            inside.w = outside.w;
-        else
-            inside.x = outside.x+outside.w-inside.w;
-    }
-    
-    if (inside.y+inside.h > outside.y+outside.h)
-    {
-        if (clampSize)
-            inside.h = outside.h;
-        else
-            inside.y = outside.w+outside.h-inside.h;
-    }
-    
-    return inside;
-}
-
 } // namespace Utility
-    
-namespace Debug
-{
-    
-void Msg(const char* str, ...)
-{
-    char strOut[1024];
-    va_list s;
-    
-    va_start(s, str);
-    Utility::vsnprintf(strOut, sizeof(strOut), str, s);
-    va_end(s);
-    
-#if defined(WIN32)
-    OutputDebugStringA(strOut);
-#else
-    puts(strOut);
-#endif
-}
-
-#if defined(WIN32) && defined(UNICODE)
-void Msg(const wchar_t* str, ...)
-{
-    wchar_t strOut[1024];
-    va_list s;
-    va_start(s, str);
-    vswprintf(strOut, sizeof(strOut), str, s);
-    va_end(s);
-    GwkUtil_OutputDebugWideString(strOut);
-}
-#endif // ifdef UNICODE
-
-void AssertCheck(bool b, const char* strMsg)
-{
-    if (!b)
-    {
-        Msg("Assert: %s\n", strMsg);
-        
-#if defined(WIN32)
-        MessageBoxA(nullptr, strMsg, "Assert", MB_ICONEXCLAMATION | MB_OK);
-#endif
-        debug_break();  // break into debugger        
-    }
-}
-
-} // namespace Debug
-    
 } // namespace Gwk
-
-

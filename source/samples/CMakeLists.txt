@@ -1,6 +1,6 @@
 # Gwork samples
 
-set(APP_VERSION "0.1")
+set(APP_VERSION "Sample 1.0 - Gwork ${GWK_VERSION_STR}")
 set(APP_COPYRIGHT "Copyright 2017 Billy Quith")
 
 set(APP_BUNDLE ON)
@@ -14,9 +14,9 @@ include_directories(
 )
 
 if(WANT_SAMPLE)
-    
+
     set(SAMPLE_NAME Gwork${GWK_RENDER_NAME}Sample)
-    
+
     set(SAMPLE_SOURCES
         "${GWK_RENDER_NAME}/${GWK_RENDER_NAME}Sample.cpp")
 
@@ -25,7 +25,7 @@ if(WANT_SAMPLE)
         "${GWK_SOURCE_DIR}/source/gwork/resource/OpenSans.ttf"
         "${GWK_SOURCE_DIR}/source/test/resource/logo.png"
         "${GWK_SOURCE_DIR}/source/test/resource/test16.png")
-    
+
     if(APPLE AND APP_BUNDLE)
         set(APP_BUILD_TYPE MACOSX_BUNDLE)
         set(APP_RESOURCE_DIR "Resources")
@@ -35,19 +35,22 @@ if(WANT_SAMPLE)
         set(APP_RESOURCE_DIR "$<TARGET_FILE_DIR:${SAMPLE_NAME}>")
         set(APP_RUNTIME_RESOURCE_DIR "")
     endif()
-    
+
     add_definitions("-DGWORK_RESOURCE_DIR=\"${APP_RUNTIME_RESOURCE_DIR}\"")
 
     add_executable(${SAMPLE_NAME} ${APP_BUILD_TYPE} ${SAMPLE_SOURCES} ${SAMPLE_RESOURCES})
-    
+
     target_link_libraries(${SAMPLE_NAME}
-                          Gwork Gwork${GWK_RENDER_NAME}
-                          ${GWK_RENDER_LIBRARIES})
+                          Gwork
+                          GworkUtil
+                          Gwork${GWK_RENDER_NAME}
+                          ${GWK_RENDER_LIBRARIES}
+                          ${GWK_REFLECT_LIBRARIES})
 
     if(WANT_TESTS)
         target_link_libraries(${SAMPLE_NAME} GworkTest)
     endif(WANT_TESTS)
-    
+
     if(APPLE AND APP_BUNDLE)
         # make MacOS bundle
         set_target_properties(${SAMPLE_NAME} PROPERTIES
@@ -68,10 +71,10 @@ if(WANT_SAMPLE)
                 COMMAND ${CMAKE_COMMAND} -E copy "${RES_FROM}" "${APP_RESOURCE_DIR}/${FNANE}"
                 COMMENT "Copying sample resource")
         endmacro(CopyAppResource)
-        
+
         foreach(RESFILE ${SAMPLE_RESOURCES})
             CopyAppResource(${RESFILE})
         endforeach()
     endif()
-    
+
 endif(WANT_SAMPLE)

@@ -58,6 +58,12 @@ void Gwk::Platform::GetCursorPos(Gwk::Point& po)
     po.y = p.y;
 }
 
+// Default place log messages are sent to.
+void Gwk::Platform::DefaultLogListener(Gwk::Log::Level lvl, const char *message)
+{
+    OutputDebugString(message);
+}
+
 void Gwk::Platform::GetDesktopSize(int& w, int& h)
 {
     w = GetSystemMetrics(SM_CXFULLSCREEN);
@@ -95,7 +101,7 @@ bool Gwk::Platform::SetClipboardText(const Gwk::String& str)
 
     // Create a buffer to hold the string
     const std::wstring wstr( Utility::Widen(str) );
-    const size_t dataSize = (wstr.length()+1)*sizeof(wchar_t);    
+    const size_t dataSize = (wstr.length()+1)*sizeof(wchar_t);
     HGLOBAL clipbuffer = GlobalAlloc(GMEM_DDESHARE, dataSize);
 
     // Copy the string into the buffer
@@ -373,5 +379,3 @@ bool Gwk::Platform::IsFocussedPlatformWindow(void* ptr)
 {
     return GetActiveWindow() == (HWND)ptr;
 }
-
-

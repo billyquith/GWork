@@ -14,13 +14,13 @@ bool Gwk::Dialogs::FileOpen(bool bUseSystem, const String& Name, const String& S
                             const String& Extension, String& fileOpenOut)
 {
     String fileOpened;
-    
+
     if (bUseSystem)
     {
         return Gwk::Platform::FileOpen(Name, StartPath, Extension, fileOpened);
     }
 
     // TODO: SHOW Gwork FILE SELECTION DIALOG
-    
+
     return false;
 }

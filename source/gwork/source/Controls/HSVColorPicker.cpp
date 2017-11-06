@@ -22,24 +22,24 @@ GWK_CONTROL_CONSTRUCTOR(HSVColorPicker)
     SetMouseInputEnabled(true);
     SetSize(256, 64);
 //    EnableCacheToTexture();   // TODO - fix texture caching.
-    
+
     m_lerpBox = new Gwk::Controls::ColorLerpBox(this);
     m_lerpBox->onSelectionChanged.Add(this, &HSVColorPicker::ColorBoxChanged);
     m_lerpBox->Dock(Position::Left);
-    
+
     m_colorSlider = new Gwk::Controls::ColorSlider(this);
     m_colorSlider->SetPos(m_lerpBox->Width()+15, 5);
     m_colorSlider->onSelectionChanged.Add(this, &HSVColorPicker::ColorSliderChanged);
     m_colorSlider->Dock(Position::Left);
-    
+
     m_after = new Gwk::ControlsInternal::ColorDisplay(this);
     m_after->SetSize(48, 24);
     m_after->SetPos(m_colorSlider->X()+m_colorSlider->Width()+15, 5);
-    
+
     m_before = new Gwk::ControlsInternal::ColorDisplay(this);
     m_before->SetSize(48, 24);
     m_before->SetPos(m_after->X(), 28);
-    
+
     int x = m_before->X();
     int y = m_before->Y()+30;
     {
@@ -47,7 +47,7 @@ GWK_CONTROL_CONSTRUCTOR(HSVColorPicker)
         label->SetText("R:");
         label->SizeToContents();
         label->SetPos(x, y);
-        
+
         TextBoxNumeric* numeric = new TextBoxNumeric(this);
         numeric->SetName("RedBox");
         numeric->SetPos(x+15, y-1);
@@ -61,7 +61,7 @@ GWK_CONTROL_CONSTRUCTOR(HSVColorPicker)
         label->SetText("G:");
         label->SizeToContents();
         label->SetPos(x, y);
-        
+
         TextBoxNumeric* numeric = new TextBoxNumeric(this);
         numeric->SetName("GreenBox");
         numeric->SetPos(x+15, y-1);
@@ -75,7 +75,7 @@ GWK_CONTROL_CONSTRUCTOR(HSVColorPicker)
         label->SetText("B:");
         label->SizeToContents();
         label->SetPos(x, y);
-        
+
         TextBoxNumeric* numeric = new TextBoxNumeric(this);
         numeric->SetName("BlueBox");
         numeric->SetPos(x+15, y-1);

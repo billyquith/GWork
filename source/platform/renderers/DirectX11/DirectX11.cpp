@@ -78,8 +78,8 @@ static HRESULT CompileShaderFromMemory(const char* szdata, SIZE_T len, LPCSTR sz
     DWORD dwShaderFlags = D3DCOMPILE_ENABLE_STRICTNESS;
 #if defined( _DEBUG )
     // Set the D3DCOMPILE_DEBUG flag to embed debug information in the shaders.
-    // Setting this flag improves the shader debugging experience, but still allows 
-    // the shaders to be optimized and to run exactly the way they will run in 
+    // Setting this flag improves the shader debugging experience, but still allows
+    // the shaders to be optimized and to run exactly the way they will run in
     // the release configuration of this program.
     dwShaderFlags |= D3DCOMPILE_DEBUG;
 #endif
@@ -193,7 +193,10 @@ Font::Status DirectX11ResourceLoader::LoadFont(Font& font)
     HFONT hFont = CreateFontIndirectW(&fd);
 
     if (!hFont)
+    {
+        Gwk::Log::Write(Log::Level::Error, "Font file not found: %s", filename.c_str());
         return font.status = Font::Status::ErrorFileNotFound;
+    }
 
     SelectObject(hDC, hBitmap);
     SelectObject(hDC, hFont);
@@ -367,6 +370,7 @@ Texture::Status DirectX11ResourceLoader::LoadTexture(Texture& texture)
 
     if (!data)
     {
+        Gwk::Log::Write(Log::Level::Error, "Texture file not found: %s", filename.c_str());
         texture.status = Texture::Status::ErrorFileNotFound;
         goto error;
     }
@@ -604,7 +608,7 @@ void DirectX11::Begin()
 
     if (!m_Valid)
         Init();
-            
+
     // Save current state
     m_pContext->OMGetBlendState(&m_pUILastBlendState, m_LastBlendFactor, &m_LastBlendMask);
     m_pContext->RSGetState(&m_pUILastRasterizerState);
@@ -616,7 +620,7 @@ void DirectX11::Begin()
     m_pContext->PSGetShader(&m_LastPSShader, NULL, 0);
     m_pContext->GSGetShader(&m_LastGSShader, NULL, 0);
     m_pContext->VSGetShader(&m_LastVSShader, NULL, 0);
-            
+
     m_pCurrentTexture = m_pLastTexture[0];
 
     m_pContext->RSSetState(m_pRastState);
@@ -628,7 +632,7 @@ void DirectX11::End()
 {
     m_Buffer.End();
     Present();
-            
+
     m_pContext->OMSetBlendState(m_pUILastBlendState, m_LastBlendFactor, m_LastBlendMask);
     m_pContext->RSSetState(m_pUILastRasterizerState);
     m_pContext->OMSetDepthStencilState(m_LastDepthState, m_LastStencilRef);
@@ -724,7 +728,7 @@ void DirectX11::RenderText(Gwk::Font* pFont, Gwk::Point pos, const Gwk::String &
     }
 
     float fStartX = loc.x;
-            
+
     for each(auto c in text)
     {
         if (c < 32 || c >= 128)
@@ -819,7 +823,7 @@ void DirectX11::StartClip()
     region.right = ceil(((float)(rect.x + rect.w)) * Scale());
     region.top = ceil((float)rect.y * Scale());
     region.bottom = ceil(((float)(rect.y + rect.h)) * Scale());
-            
+
     m_pContext->RSSetScissorRects(1, &region);
 }
 
@@ -886,7 +890,7 @@ Gwk::Color DirectX11::PixelColor(Gwk::Texture* pTexture, unsigned int x, unsigne
 
     ID3D11Texture2D *t = NULL;
     pImage->GetResource(reinterpret_cast<ID3D11Resource**>(&t));
-            
+
     // We have to create a staging texture to copy the texture to, because textures cannot
     // be used as shader resources and have CPU read access at the same time.
 
@@ -908,7 +912,7 @@ Gwk::Color DirectX11::PixelColor(Gwk::Texture* pTexture, unsigned int x, unsigne
     tdesc.BindFlags = 0;
     tdesc.CPUAccessFlags = D3D11_CPU_ACCESS_READ;
     tdesc.MiscFlags = 0;
-            
+
     if (FAILED(m_pDevice->CreateTexture2D(&tdesc, NULL, &stagingTexture)))
     {
         return col_default;
@@ -971,7 +975,7 @@ Gwk::Color DirectX11::PixelColor(Gwk::Texture* pTexture, unsigned int x, unsigne
 //    HWND pHWND = (HWND)pWindow->GetWindow();
 //    RECT ClientRect;
 //    GetClientRect(pHWND, &ClientRect);
-//            
+//
 //    UINT WIDTH = ClientRect.right - ClientRect.left;
 //    UINT HEIGHT = ClientRect.bottom - ClientRect.top;
 //
@@ -994,7 +998,7 @@ Gwk::Color DirectX11::PixelColor(Gwk::Texture* pTexture, unsigned int x, unsigne
 //    };
 //    UINT numFeatureLevels = ARRAYSIZE(featureLevels);
 //
-//            
+//
 //    DXGI_SWAP_CHAIN_DESC Params;
 //    FillPresentParameters(pWindow, Params);
 //    HRESULT hr = S_OK;
@@ -1008,7 +1012,7 @@ Gwk::Color DirectX11::PixelColor(Gwk::Texture* pTexture, unsigned int x, unsigne
 //    }
 //    if (FAILED(hr))
 //        return false;
-//            
+//
 //    ID3D11Texture2D* pBackBuffer = NULL;
 //    hr = m_pSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&pBackBuffer);
 //    if (FAILED(hr))
@@ -1038,7 +1042,7 @@ Gwk::Color DirectX11::PixelColor(Gwk::Texture* pTexture, unsigned int x, unsigne
 //    vp.TopLeftY = 0;
 //
 //    m_pContext->RSSetViewports(1, &vp);
-//            
+//
 //    return true;
 //}
 //

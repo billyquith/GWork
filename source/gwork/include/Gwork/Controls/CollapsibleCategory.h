@@ -42,7 +42,7 @@ namespace Gwk
 
             virtual void    UnselectAll();
             virtual Button* GetSelected();
-            
+
             /// Set the expanded state of the category.
             /// @param expanded : New state.
             void SetExpanded(bool expanded);

@@ -61,7 +61,7 @@ source_group("${GWK_SOURCE_FOLDER}"
              REGULAR_EXPRESSION "source/[^/]+\\.cpp")
 
 # Test library
-if(WANT_TESTS)    
+if(WANT_TESTS)
     add_library(GworkTest STATIC ${GWK_TEST_API} ${GWK_TEST_REFLECT})
 
     target_link_libraries(GworkTest Gwork Gwork${GWK_RENDERER_NAME} ${LUA_LIBRARIES})
@@ -71,7 +71,7 @@ if(WANT_TESTS)
         set(STATS_DIR "${CMAKE_CURRENT_SOURCE_DIR}/stats/")
         target_compile_definitions(GworkTest PUBLIC "-DGWK_STATS_DIR=\"${STATS_DIR}\"")
     endif()
-    
+
     install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/Gwork
             DESTINATION include)
 

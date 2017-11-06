@@ -41,8 +41,9 @@ static HWND CreateGameWindow( void )
     RegisterClass( &wc );
     HWND hWindow = CreateWindowEx( ( WS_EX_APPWINDOW | WS_EX_WINDOWEDGE ),
                                    wc.lpszClassName,
-                                   "GWork - Direct X11 Sample",
-                                   ( WS_OVERLAPPEDWINDOW | WS_CLIPSIBLINGS | WS_CLIPCHILDREN ) & ~( WS_MINIMIZEBOX | WS_MAXIMIZEBOX | WS_THICKFRAME ),
+                                   "GWork DirectX11 Sample",
+                                   ( WS_OVERLAPPEDWINDOW | WS_CLIPSIBLINGS | WS_CLIPCHILDREN )
+                                        & ~( WS_MINIMIZEBOX | WS_MAXIMIZEBOX | WS_THICKFRAME ),
                                    -1, -1, 1004, 650, NULL, NULL,
                                    GetModuleHandle( NULL ),
                                    NULL );
@@ -92,7 +93,7 @@ static void CreateD3DDevice()
     sd.BufferDesc.Height = height;
     sd.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
     sd.BufferDesc.Scaling = DXGI_MODE_SCALING_UNSPECIFIED;
-    
+
     HRESULT hr = S_OK;
     for (UINT driverTypeIndex = 0; driverTypeIndex < numDriverTypes; driverTypeIndex++)
     {
@@ -153,8 +154,6 @@ static void CreateD3DDevice()
 //
 int main( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCmdShow )
 {
-    SetCurrentDirectory(Gwk::Platform::GetExecutableDir().c_str()); 
-
     // Create a window and attach DirectX to it
     g_pHWND = CreateGameWindow();
     CreateD3DDevice();

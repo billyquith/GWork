@@ -42,21 +42,22 @@ struct TextureData
 
 Font::Status Gwk::Renderer::SFML2ResourceLoader::LoadFont(Font& font)
 {
-    const String fontFile = m_paths.GetPath(ResourcePaths::Type::Font, font.facename);
-    
+    const String filename = m_paths.GetPath(ResourcePaths::Type::Font, font.facename);
+
     sf::Font* sfFont = new sf::Font();
-    
-    if (sfFont->loadFromFile(fontFile))
+
+    if (sfFont->loadFromFile(filename))
     {
         font.data = sfFont;
         font.status = Font::Status::Loaded;
     }
     else
     {
+        Gwk::Log::Write(Log::Level::Error, "Font file not found: %s", filename.c_str());
         delete sfFont;
         font.status = Font::Status::ErrorFileNotFound;
     }
-    
+
     return font.status;
 }
 
@@ -75,13 +76,13 @@ Texture::Status Gwk::Renderer::SFML2ResourceLoader::LoadTexture(Texture& texture
 {
     if (texture.IsLoaded())
         FreeTexture(texture);
-    
+
     sf::Texture* tex = new sf::Texture();
     tex->setSmooth(true);
-    
-    const String texFile = m_paths.GetPath(ResourcePaths::Type::Texture, texture.name);
 
-    if (tex->loadFromFile(texFile))
+    const String filename = m_paths.GetPath(ResourcePaths::Type::Texture, texture.name);
+
+    if (tex->loadFromFile(filename))
     {
         texture.height = tex->getSize().x;
         texture.width = tex->getSize().y;
@@ -90,6 +91,7 @@ Texture::Status Gwk::Renderer::SFML2ResourceLoader::LoadTexture(Texture& texture
     }
     else
     {
+        Gwk::Log::Write(Log::Level::Error, "Texture file not found: %s", filename.c_str());
         delete tex;
         texture.status = Texture::Status::ErrorFileNotFound;
     }
@@ -116,7 +118,7 @@ Gwk::Renderer::SFML2::SFML2(ResourceLoader& loader, sf::RenderTarget& target)
     ,   m_height(m_target.getSize().y)
 {
     m_buffer.setPrimitiveType(sf::Triangles);
-    m_renderStates.blendMode = sf::BlendAlpha;    
+    m_renderStates.blendMode = sf::BlendAlpha;
 }
 
 Gwk::Renderer::SFML2::~SFML2()
@@ -126,19 +128,19 @@ Gwk::Renderer::SFML2::~SFML2()
 void Gwk::Renderer::SFML2::Begin()
 {
     m_originalView = m_target.getView();
-    
+
     sf::FloatRect vrect;
     vrect.left = 0;
     vrect.top = 0;
     vrect.width = m_target.getSize().x;
     vrect.height = m_height = m_target.getSize().y;
-    
+
     sf::FloatRect vprect;
     vprect.left = 0;
     vprect.top = 0;
     vprect.width = 1.0f;
     vprect.height = 1.0f;
-    
+
     sf::View view(vrect);
     view.setViewport(vprect);
     m_target.setView(view);

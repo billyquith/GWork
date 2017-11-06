@@ -28,7 +28,7 @@ WindowCanvas::WindowCanvas(int x, int y, int w, int h, Gwk::Skin::Base* skin,
     m_bCanMaximize = true;
     m_bIsMaximized = false;
     SetPadding(Padding(1, 0, 1, 1));
-    
+
     // Centering the window on the desktop
     {
         int dw, dh;
@@ -40,14 +40,14 @@ WindowCanvas::WindowCanvas(int x, int y, int w, int h, Gwk::Skin::Base* skin,
         if (y < 0)
             y = (dh-h)/2;
     }
-    
+
     m_oSWindowSWindow = Gwk::Platform::CreatePlatformWindow(x, y, w, h, strWindowTitle);
     m_windowPos  = Gwk::Point(x, y);
     skin->GetRender()->InitializeContext(this);
     skin->GetRender()->Init();
     m_skinChange = skin;
     SetSize(w, h);
-    
+
     m_titleBar = new Gwk::ControlsInternal::Dragger(this);
     m_titleBar->SetHeight(24);
     m_titleBar->SetPadding(Padding(0, 0, 0, 0));
@@ -57,14 +57,14 @@ WindowCanvas::WindowCanvas(int x, int y, int w, int h, Gwk::Skin::Base* skin,
     m_titleBar->onDragged.Add(this, &ThisClass::Dragger_Moved);
     m_titleBar->onDragStart.Add(this, &ThisClass::Dragger_Start);
     m_titleBar->onDoubleClickLeft.Add(this, &ThisClass::OnTitleDoubleClicked);
-    
+
     m_title = new Gwk::Controls::Label(m_titleBar);
     m_title->SetAlignment(Position::Left|Position::CenterV);
     m_title->SetText(strWindowTitle);
     m_title->Dock(Position::Fill);
     m_title->SetPadding(Padding(8, 0, 0, 0));
     m_title->SetTextColor(GetSkin()->Colors.Window.TitleInactive);
-    
+
     // CLOSE
     {
         m_close = new Gwk::Controls::WindowCloseButton(m_titleBar, "Close");

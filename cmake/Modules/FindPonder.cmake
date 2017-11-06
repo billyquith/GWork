@@ -14,7 +14,7 @@ set(FIND_PONDER_PATHS
 find_path(PONDER_INCLUDE_DIR ponder/version.hpp
           PATH_SUFFIXES include
           PATHS ${FIND_PONDER_PATHS})
-          
+
 # check the version number
 set(PONDER_VERSION_OK TRUE)
 if(Ponder_FIND_VERSION AND PONDER_INCLUDE_DIR)
@@ -25,7 +25,7 @@ if(Ponder_FIND_VERSION AND PONDER_INCLUDE_DIR)
     else()
         set(PONDER_CONFIG_HPP_INPUT "${PONDER_INCLUDE_DIR}/ponder/version.hpp")
     endif()
-    
+
     FILE(READ "${PONDER_CONFIG_HPP_INPUT}" PONDER_VERSION_HPP_CONTENTS)
     STRING(REGEX REPLACE ".*#define PONDER_VERSION_STR \"([0-9\\.]+)\".*" "\\1" PONDER_VERSION_STR "${PONDER_VERSION_HPP_CONTENTS}")
     STRING(REGEX REPLACE ".*#define PONDER_VERSION[ \t]+\\((.*)\\).*" "\\1" PONDER_VERSION_CALC_STR "${PONDER_VERSION_HPP_CONTENTS}")
@@ -48,4 +48,3 @@ find_library(PONDER_LIBRARIES
              NAMES ponder
              PATH_SUFFIXES lib
              PATHS ${FIND_PONDER_PATHS})
-

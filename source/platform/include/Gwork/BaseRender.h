@@ -12,7 +12,7 @@
 #include <Gwork/PlatformTypes.h>
 
 namespace Gwk
-{    
+{
     struct Font;
     struct Texture;
     class WindowProvider;
@@ -24,7 +24,7 @@ namespace Gwk
         class ICacheToTexture
         {
         public:
-            
+
             typedef void* CacheHandle;
 
             virtual ~ICacheToTexture() {}
@@ -47,7 +47,7 @@ namespace Gwk
         class GWK_EXPORT Base
         {
         protected:
-            
+
             //! Constructor. Not public as we only instance derived implementations.
             Base(ResourceLoader& loader);
 
@@ -61,18 +61,18 @@ namespace Gwk
 
             //! Get ResourceLoader we are using for the renderer.
             ResourceLoader& GetLoader() { return m_loader; }
-            
+
             //! Set the current drawing color.
             virtual void SetDrawColor(Color color) {}
-                        
-            virtual void StartClip() {}     //!< Start clipping the drawing. \see SetClipRegion().  
+
+            virtual void StartClip() {}     //!< Start clipping the drawing. \see SetClipRegion().
             virtual void EndClip() {}       //!< Stop clipping the drawing.
-            
+
             void    SetClipRegion(Gwk::Rect const& rect);
             void    AddClipRegion(Gwk::Rect rect);
             bool    ClipRegionVisible();
             const Gwk::Rect& ClipRegion() const;
-            
+
             //! Draw a filled rectangle using the current color.
             virtual void DrawFilledRect(Gwk::Rect rect) {}
 
@@ -98,7 +98,7 @@ namespace Gwk
             virtual void RenderText(Gwk::Font* font,
                                     Gwk::Point pos,
                                     const Gwk::String& text);
-            
+
             virtual Gwk::Point MeasureText(Gwk::Font* font,
                                            const Gwk::String& text);
 
@@ -171,20 +171,19 @@ namespace Gwk
             {
                 return false;
             }
-            
+
         protected:
-            
+
             bool EnsureFont(Font& font);
 
             float m_fScale;
-            
+
         private:
-            
+
             ResourceLoader& m_loader;
             Gwk::Point m_renderOffset;
-            
             Gwk::Rect m_rectClipRegion;
-            ICacheToTexture* m_RTT;            
+            ICacheToTexture* m_RTT;
         };
 
     }

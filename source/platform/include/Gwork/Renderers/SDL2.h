@@ -20,7 +20,7 @@ namespace Gwk
     namespace Renderer
     {
         class SDL2CTT;
-        
+
         //! Default resource loader for SDL2.
         class SDL2ResourceLoader : public ResourceLoader
         {
@@ -31,10 +31,10 @@ namespace Gwk
                 :   m_paths(paths)
                 ,   m_sdlRenderer(rdr)
             {}
-            
+
             Font::Status LoadFont(Font& font) override;
             void FreeFont(Font& font) override;
-            
+
             Texture::Status LoadTexture(Texture& texture) override;
             void FreeTexture(Texture& texture) override;
         };
@@ -62,7 +62,7 @@ namespace Gwk
             void DrawTexturedRect(Gwk::Texture* texture, Gwk::Rect targetRect,
                                   float u1 = 0.0f, float v1 = 0.0f,
                                   float u2 = 1.0f, float v2 = 1.0f) override;
-            
+
             Gwk::Color  PixelColor(Gwk::Texture* texture, unsigned int x, unsigned int y,
                                    const Gwk::Color& col_default) override;
 

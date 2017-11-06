@@ -17,8 +17,8 @@ bool Gwk::Dialogs::FileSave(bool bUseSystem, const String& Name, const String& S
     {
         return Gwk::Platform::FileSave(Name, StartPath, Extension, fileOpenOut);
     }
-    
+
     // TODO: SHOW Gwork FILE SELECTION DIALOG
-    
+
     return false;
 }

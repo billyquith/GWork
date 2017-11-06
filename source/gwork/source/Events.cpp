@@ -10,7 +10,7 @@
 
 namespace Gwk
 {
-    
+
 using namespace Gwk::Event;
 
 Handler::Handler()

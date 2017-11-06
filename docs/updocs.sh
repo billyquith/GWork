@@ -31,4 +31,3 @@ popd
 
 [ -d $PROJDIR ] && rm -rf $PROJDIR
 [ -d $DOCDIR ] && rm -rf $DOCDIR
-

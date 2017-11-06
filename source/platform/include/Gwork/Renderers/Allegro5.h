@@ -18,21 +18,21 @@ namespace Gwk
     namespace Renderer
     {
         class AllegroCTT;
-        
+
         //! Default resource loader for Allegro5.
         class AllegroResourceLoader : public ResourceLoader
         {
             ResourcePaths& m_paths;
         public:
             AllegroResourceLoader(ResourcePaths& paths) : m_paths(paths) {}
-            
+
             Font::Status LoadFont(Font& font) override;
             void FreeFont(Font& font) override;
-            
+
             Texture::Status LoadTexture(Texture& texture) override;
             void FreeTexture(Texture& texture) override;
         };
-        
+
         //
         //! Renderer for [Allegro5](http://liballeg.org/).
         //
@@ -72,7 +72,7 @@ namespace Gwk
             ICacheToTexture* GetCTT() override;
 
         private:
-            
+
             ALLEGRO_COLOR m_color;
             AllegroCTT *m_ctt;
         };

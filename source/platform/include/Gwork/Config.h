@@ -50,10 +50,8 @@
 #   define GWK_EXPORT
 #endif
 
-
 // Enable animation functions.
 #define GWK_ANIMATE 1
-
 
 #ifndef GWK_REFLECT
 #   define GWK_REFLECT 0
@@ -64,7 +62,6 @@
 #else
 #   define GWK_IF_REFLECT(SRC) // ignore
 #endif
-
 
 #ifndef GWK_ALLOC_STATS
 #   define GWK_ALLOC_STATS 0
@@ -80,4 +77,3 @@
 #endif // GWK_ALLOC_STATS
 
 #endif // GWK_CONFIG_H
-

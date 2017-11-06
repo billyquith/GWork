@@ -47,10 +47,10 @@ public:
         window->SetSize(200 + rand() % 100, 200 + rand() % 100);
         window->SetPos(rand() % 700, rand() % 400);
         window->SetDeleteOnClose(true);
-        
+
         auto&& button = new Controls::Button(window);
         button->SetText("Click!");
-        
+
         m_windowCount++;
     }
 
@@ -73,10 +73,10 @@ public:
         window->SetPos(rand() % 700, rand() % 400);
         window->SetDeleteOnClose(true);
         window->DisableResizing();
-        
+
         auto&& button = new Controls::Button(window);
         button->SetText("Click!");
-        
+
         m_windowCount++;
     }
 

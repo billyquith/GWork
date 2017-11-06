@@ -74,9 +74,9 @@ namespace Gwk
             Controls::Base* FirstTab;
             Controls::Base* NextTab;
 
-            /// \sect{Input}            
+            /// \sect{Input}
             bool InputMouseMoved(int x, int y, int deltaX, int deltaY) override;
-            bool InputMouseButton(int iButton, bool bDown) override;            
+            bool InputMouseButton(int iButton, bool bDown) override;
             /// A modifier key was inputted.
             /// \param key - Key code
             /// \param down - Key state. Pressed?
@@ -86,7 +86,7 @@ namespace Gwk
             /// \param chr - Unicode character code.
             /// \return Event consumed?
             bool InputCharacter(Gwk::UnicodeChar chr) override;
-            
+
             bool InputMouseWheel(int val) override;
             bool InputQuit() override
             {

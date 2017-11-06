@@ -39,7 +39,7 @@ else()
 endif()
 
 # Find components
-foreach(ALLEGRO_LIB_EACH ${ALLEGRO_LIB_LIST})    
+foreach(ALLEGRO_LIB_EACH ${ALLEGRO_LIB_LIST})
     find_library(${ALLEGRO_LIB_EACH}_LIB
         NAMES
             "${ALLEGRO_LIB_EACH}.${ALLEGRO_VERSION}"
@@ -74,5 +74,3 @@ else (ALLEGRO5_FOUND)
         message(FATAL_ERROR "Could not find Allegro")
     endif (Allegro_FIND_REQUIRED)
 endif (ALLEGRO5_FOUND)
-
-

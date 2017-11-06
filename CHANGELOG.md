@@ -7,7 +7,10 @@ This is a changelog for Gwork. There are also notes [on my blog][blog]
 ### 0.3
 
 - ResourceLoader and ResourcePaths abstract file locations and sources. #66.
-- Windows Direct2D renderer and sample. #13.
+- Retired Direct2D and GDI+ renderers.
+- Added CrossPlatform platform. Null should do nothing!
+- Added Software renderer. Draws to a texture/pixel buffer.
+- Added Gwk::Log::Write() so that error messages can be logged.
 
 ### 0.2
 
@@ -27,10 +30,10 @@ This is a changelog for Gwork. There are also notes [on my blog][blog]
   - This makes CI testing easier as no graphical API dependencies.
   - Memory stats can be gathered more simply.
 - [UTF-8 everywhere][5]. Unicode support simplified.
-  - `Gwen::UnicodeString` removed. This assumed that all Unicode was best as a 
+  - `Gwen::UnicodeString` removed. This assumed that all Unicode was best as a
     wide encoding. This is not the case on all platforms.
-  - `Gwen::TextObject` removed. This stored two copies of each string, one as 
-    ASCII and one in wide Unicode. This is no longer necessary as all Unicode 
+  - `Gwen::TextObject` removed. This stored two copies of each string, one as
+    ASCII and one in wide Unicode. This is no longer necessary as all Unicode
     is dealt with as UTF-8, which is backwards compatible with `std::string`.
 - Added **Travis continuous integration**.
   - This was hard work due to Travis' poor support for up-to-date compilers.
@@ -47,17 +50,17 @@ This is a changelog for Gwork. There are also notes [on my blog][blog]
 - Many warnings fixed.
 
 ### Source code formatting
-  
-* The source code has been reformated to be more consistent with other C++ 
+
+* The source code has been reformated to be more consistent with other C++
   projects and [how I like it][1].
 * Indentation: [Spaces instead of tabs](http://www.jwz.org/doc/tabs-vs-spaces.html).
-  Github, Google Code, etc use 8 space tabs. GWEN uses 4 space tabs. This 
+  Github, Google Code, etc use 8 space tabs. GWEN uses 4 space tabs. This
   messes up the indentation when reading code on Github.
 * Brackets: [Allman][2]/BSD indentation.
-* Line length ~100 chars. Github has width around 100. Easier for 3 way merge. Everything 
+* Line length ~100 chars. Github has width around 100. Easier for 3 way merge. Everything
   on regular screen.
 * camelCase variables.
-  
+
 
 [gwen]: https://github.com/garrynewman/GWEN
 [sdl2]: https://www.libsdl.org/
@@ -70,4 +73,3 @@ This is a changelog for Gwork. There are also notes [on my blog][blog]
 [6]: http://industriousone.com/premake
 [blog]: http://chinbilly.blogspot.co.uk/search/label/gwork
 [docs]: https://billyquith.github.io/GWork/
-

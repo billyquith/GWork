@@ -18,40 +18,41 @@
 
 int main(int argc, char** argv)
 {
+    const Gwk::Point screenSize(1024, 768);
+
     if(SDL_Init(SDL_INIT_EVERYTHING) != 0)
         return EXIT_FAILURE;
-    
+
     if (TTF_Init() != 0)
         return EXIT_FAILURE;
-        
+
     //Setup our window and renderer
-    const int screenWidth = 1024, screenHeight = 768;
-	SDL_Window *window = SDL_CreateWindow("Gwork: SDL2", 100, 100,
-                                          screenWidth, screenHeight, SDL_WINDOW_SHOWN);
-	if (!window)
-		return EXIT_FAILURE;
+    SDL_Window *window = SDL_CreateWindow("Gwork SDL2 Sample", 100, 100,
+                                          screenSize.x, screenSize.y, SDL_WINDOW_SHOWN);
+    if (!window)
+        return EXIT_FAILURE;
 
 
     // Create a Gwork Allegro Renderer
-    SDL_Renderer *rdr = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-    
+    SDL_Renderer *sdlRenderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+
     Gwk::Platform::RelativeToExecutablePaths paths(GWORK_RESOURCE_DIR);
-    Gwk::Renderer::SDL2ResourceLoader loader(paths, rdr);
+    Gwk::Renderer::SDL2ResourceLoader loader(paths, sdlRenderer);
 
     Gwk::Renderer::SDL2 *renderer = new Gwk::Renderer::SDL2(loader, window);
 
     // Create a Gwork skin
-    Gwk::Skin::TexturedBase skin(renderer);
-    skin.SetRender(renderer);
-    skin.Init("DefaultSkin.png");
-    
+    auto skin = new Gwk::Skin::TexturedBase(renderer);
+    skin->SetRender(renderer);
+    skin->Init("DefaultSkin.png");
+
     // Note, you can get fonts that cover many languages/locales to do Chinese,
     //       Arabic, Korean, etc. e.g. "Arial Unicode" (but it's 23MB!).
-    skin.SetDefaultFont("OpenSans.ttf", 11);
-    
+    skin->SetDefaultFont("OpenSans.ttf", 11);
+
     // Create a Canvas (it's root, on which all other Gwork panels are created)
-    Gwk::Controls::Canvas* canvas = new Gwk::Controls::Canvas(&skin);
-    canvas->SetSize(screenWidth, screenHeight);
+    Gwk::Controls::Canvas* canvas = new Gwk::Controls::Canvas(skin);
+    canvas->SetSize(screenSize.x, screenSize.y);
     canvas->SetDrawBackground(true);
     canvas->SetBackgroundColor(Gwk::Color(150, 170, 170, 255));
 
@@ -59,8 +60,8 @@ int main(int argc, char** argv)
     TestAPI* unit = new TestAPI(canvas);
     unit->SetPos(10, 10);
 
-    Gwk::Input::SDL2 GworkInput;
-    GworkInput.Initialize(canvas);
+    Gwk::Input::SDL2 input;
+    input.Initialize(canvas);
     bool haveQuit = false;
 
     while (!haveQuit)
@@ -71,19 +72,23 @@ int main(int argc, char** argv)
             if (evt.type == SDL_QUIT)
                 haveQuit = true;
 
-            GworkInput.ProcessEvent(&evt);
+            input.ProcessEvent(&evt);
         }
-        
+
         renderer->BeginContext(nullptr);
         canvas->RenderCanvas();
         renderer->PresentContext(nullptr);
         renderer->EndContext(nullptr);
     }
 
-    skin.ReleaseFont(skin.GetDefaultFont());
+    delete unit;
+    delete skin;
+    delete renderer;
+
     TTF_Quit();
+    SDL_DestroyRenderer(sdlRenderer);
     SDL_DestroyWindow(window);
     SDL_Quit();
-    
+
     return EXIT_SUCCESS;
 }

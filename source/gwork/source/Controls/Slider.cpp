@@ -11,7 +11,7 @@
 
 namespace Gwk
 {
-    
+
 using namespace Gwk::Controls;
 using namespace Gwk::ControlsInternal;
 

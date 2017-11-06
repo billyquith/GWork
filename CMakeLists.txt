@@ -16,7 +16,7 @@ set(GWK_SOURCE_FOLDER "Source")
 set(CMAKE_FIND_FRAMEWORK LAST)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${GWK_SOURCE_DIR}/cmake/Modules/")
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
-             
+
 # output directory
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${GWK_SOURCE_DIR}/bin) # exe
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${GWK_SOURCE_DIR}/bin) # .dylib
@@ -36,5 +36,3 @@ configure_file(
 # add our projects
 add_subdirectory(source)
 add_subdirectory(docs)
-
-

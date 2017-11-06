@@ -49,6 +49,21 @@ void Gwk::Platform::Sleep(unsigned int iMS)
     al_rest(iMS*0.001);
 }
 
+// Default place log messages are sent to.
+void Gwk::Platform::DefaultLogListener(Gwk::Log::Level lvl, const char *message)
+{
+    // TODO: al_open_native_text_log() ??
+
+#if defined(_MSC_VER)
+    OutputDebugString(message);
+#else
+    if (lvl >= Gwk::Log::Level::Error)
+        fputs(message, stderr);
+    else
+        fputs(message, stdout);
+#endif
+}
+
 void Gwk::Platform::SetCursor(unsigned char iCursor)
 {
     al_set_system_mouse_cursor(g_display, g_cursorConversion[iCursor]);
@@ -153,14 +168,14 @@ static bool InitAllegro()
 {
     if (al_is_system_installed())
         return true;
-    
-	if (!al_init())
+
+    if (!al_init())
         return false;
-	
+
     ALLEGRO_EVENT_QUEUE* event_queue = al_create_event_queue();
     if (!event_queue)
         return false;
-	
+
     al_init_image_addon();
     al_init_font_addon();
     al_init_primitives_addon();
@@ -170,7 +185,7 @@ static bool InitAllegro()
     al_init_native_dialog_addon();
     al_register_event_source(event_queue, al_get_mouse_event_source());
     al_register_event_source(event_queue, al_get_keyboard_event_source());
-    
+
     return true;
 }
 
@@ -210,7 +225,7 @@ void* Gwk::Platform::CreatePlatformWindow(int x, int y, int w, int h,
     al_register_event_source(g_event_queue, al_get_display_event_source(display));
     al_register_event_source(g_event_queue, al_get_mouse_event_source());
     al_register_event_source(g_event_queue, al_get_keyboard_event_source());
-    
+
     return display;
 }
 
@@ -236,7 +251,7 @@ bool Gwk::Platform::MessagePump(void* window)
     {
         g_gworkInput.ProcessMessage(ev);
     }
-    
+
     return false;
 }
 
@@ -313,4 +328,3 @@ void Gwk::Platform::GetCursorPos(Gwk::Point& po)
     po.x = mouse.x+wx;
     po.y = mouse.y+wy;
 }
-

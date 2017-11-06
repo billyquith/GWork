@@ -30,17 +30,17 @@ GWK_CONTROL_CONSTRUCTOR(ColorPicker)
 void ColorPicker::CreateColorControl(Gwk::String name, int y)
 {
     const int colorSize = 10;
-    
+
     GroupBox* colorGroup = new GroupBox(this);
     colorGroup->SetPos(10, y);
     colorGroup->SetText(name);
     colorGroup->SetSize(160, gc_pickChannelHeight);
     colorGroup->SetName(name+"groupbox");
-    
+
     ColorDisplay* disp = new ColorDisplay(colorGroup);
     disp->SetName(name);
     disp->SetBounds(0, 0, colorSize, colorSize);
-    
+
     TextBoxNumeric* numeric = new TextBoxNumeric(colorGroup);
     numeric->SetName(name+"Box");
     numeric->SetPos(105, 0);
@@ -92,18 +92,18 @@ void ColorPicker::SetColor(Gwk::Color color)
 void ColorPicker::CreateControls()
 {
     const int startY = 0;
-    
+
     CreateColorControl("Red",   startY);
     CreateColorControl("Green", startY+gc_pickChannelHeight);
     CreateColorControl("Blue",  startY+gc_pickChannelHeight*2);
     CreateColorControl("Alpha", startY+gc_pickChannelHeight*3);
-    
+
     GroupBox* finalGroup = new GroupBox(this);
     finalGroup->SetPos(180, 40);
     finalGroup->SetSize(60, 60);
     finalGroup->SetText("Result");
     finalGroup->SetName("ResultGroupBox");
-    
+
     ColorDisplay* disp = new ColorDisplay(finalGroup);
     disp->SetName("Result");
     disp->SetBounds(0, 10, 32, 32);
@@ -115,10 +115,10 @@ void ColorPicker::UpdateColorControls(Gwk::String name, Gwk::Color col, int slid
 {
     ColorDisplay* disp = gwk_cast<ColorDisplay>(FindChildByName(name, true));
     disp->SetColor(col);
-    
+
     HorizontalSlider* slider = gwk_cast<HorizontalSlider>(FindChildByName(name+"Slider", true));
     slider->SetFloatValue(sliderVal);
-    
+
     TextBoxNumeric* box = gwk_cast<TextBoxNumeric>(FindChildByName(name+"Box", true));
     box->SetText(Gwk::Utility::ToString(sliderVal));
 }
@@ -130,7 +130,7 @@ void ColorPicker::UpdateControls()
     UpdateColorControls("Green",   Color(0, GetColor().g, 0, 255), GetColor().g);
     UpdateColorControls("Blue",    Color(0, 0, GetColor().b, 255), GetColor().b);
     UpdateColorControls("Alpha",   Color(255, 255, 255, GetColor().a), GetColor().a);
-    
+
     ColorDisplay* disp = gwk_cast<ColorDisplay>(FindChildByName("Result", true));
     disp->SetColor(Color(GetColor().r, GetColor().g, GetColor().b, GetColor().a));
     onColorChanged.Call(this);
@@ -139,13 +139,13 @@ void ColorPicker::UpdateControls()
 void ColorPicker::OnSlidersMoved(Event::Info info)
 {
     /*
-     * HorizontalSlider* redSlider		= gwk_cast<HorizontalSlider>(	FindChildByName(
+     * HorizontalSlider* redSlider      = gwk_cast<HorizontalSlider>(   FindChildByName(
      * "RedSlider",   true ) );
-     * HorizontalSlider* greenSlider	= gwk_cast<HorizontalSlider>(	FindChildByName(
+     * HorizontalSlider* greenSlider    = gwk_cast<HorizontalSlider>(   FindChildByName(
      * "GreenSlider", true ) );
-     * HorizontalSlider* blueSlider	= gwk_cast<HorizontalSlider>(	FindChildByName(
+     * HorizontalSlider* blueSlider = gwk_cast<HorizontalSlider>(   FindChildByName(
      * "BlueSlider",  true ) );
-     * HorizontalSlider* alphaSlider	= gwk_cast<HorizontalSlider>(	FindChildByName(
+     * HorizontalSlider* alphaSlider    = gwk_cast<HorizontalSlider>(   FindChildByName(
      * "AlphaSlider", true ) );
      */
     HorizontalSlider* slider = gwk_cast<HorizontalSlider>(info.ControlCaller);

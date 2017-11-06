@@ -16,7 +16,7 @@
 
 namespace Gwk
 {
-    
+
 using namespace Gwk::Controls;
 
 static void al_color_hsv_to_rgb(float hue, float saturation, float value,
@@ -66,7 +66,7 @@ static void al_color_rgb_to_hsv(float red, float green, float blue,
                         a = blue, b = red - green, c = red, d = 4;
                 }
             }
-    
+
     if (a == c)
         *hue = 0;
     else
@@ -75,7 +75,7 @@ static void al_color_rgb_to_hsv(float red, float green, float blue,
         *hue += 360;
     if (*hue > 360)
         *hue -= 360;
-    
+
     if (a == 0)
         *saturation = 0;
     else
@@ -93,7 +93,7 @@ static inline Color HSVToColor(float h, float s, float v)
 static inline HSV RGBtoHSV(int r, int g, int b)
 {
     HSV hsv;
-    al_color_rgb_to_hsv(r,g,b, &hsv.h,&hsv.s,&hsv.v);    
+    al_color_rgb_to_hsv(r,g,b, &hsv.h,&hsv.s,&hsv.v);
     return hsv;
 }
 

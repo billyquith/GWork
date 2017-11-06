@@ -18,11 +18,11 @@ using namespace Gwk;
 GWK_CONTROL_CONSTRUCTOR(TestAPI)
 {
     GWK_IF_ALLOC_STATS( Platform::AllocStatsAddMark("API test"); )
-    
+
     m_lastControl = nullptr;
 
     Dock(Position::Fill);
-    
+
     Controls::CollapsibleList* apiList = new Controls::CollapsibleList( this );
     GetLeft()->GetTabControl()->AddPage( "Tests", apiList );
     GetLeft()->SetWidth( 150 );
@@ -30,7 +30,7 @@ GWK_CONTROL_CONSTRUCTOR(TestAPI)
     // Where to put the demo controls.
     auto center = new Controls::Layout::Center(this);
     center->Dock(Position::Fill);
-    
+
     m_textOutput = new Controls::ListBox(GetBottom());
     GetBottom()->GetTabControl()->AddPage("Output", m_textOutput);
     GetBottom()->SetHeight(140);
@@ -90,9 +90,9 @@ GWK_CONTROL_CONSTRUCTOR(TestAPI)
         ADD_TEST(ColorPicker);
     }
 #undef ADD_TEST
-    
+
     GWK_IF_ALLOC_STATS( Platform::AllocStatsAddMark("API test"); )
-    
+
     GWK_IF_ALLOC_STATS(
         FILE *fh = fopen(GWK_STATS_DIR "curr_allocs.csv", "w");
         Platform::AllocStatsDump(fh);

@@ -52,7 +52,7 @@ namespace Gwk
 
 
     }
-    
+
     namespace Controls
     {
         class GWK_EXPORT ColorPicker : public Base
@@ -94,7 +94,7 @@ namespace Gwk
             virtual void UpdateControls();
             virtual void UpdateColorControls(Gwk::String name, Gwk::Color col, int sliderVal);
             virtual void CreateColorControl(Gwk::String name, int y);
-            
+
             Gwk::Color m_color;
         };
 

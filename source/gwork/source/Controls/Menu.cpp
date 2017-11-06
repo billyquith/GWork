@@ -53,11 +53,11 @@ void Menu::Layout(Skin::Base* skin)
     {
         const int dy = GetCanvas()->Height() - Y();
         const int ytop = std::max(Y() - dy, 0);
-        
+
         SetPos(X(), ytop);
         menuHeight = std::min(menuHeight, GetCanvas()->Height());
     }
-    
+
     SetSize(Width(), menuHeight);
 
     ParentClass::Layout(skin);
@@ -83,7 +83,7 @@ void Menu::OnAddItem(MenuItem* item)
     item->SizeToContents();
     item->SetAlignment(Position::CenterV|Position::Left);
     item->onHoverEnter.Add(this, &Menu::OnHoverItem);
-    
+
     // Do this here - after Top Docking these values mean nothing in layout
     const int w = std::max(item->Width()+10+32, Width());
 

@@ -19,6 +19,6 @@ bool Gwk::Dialogs::FolderOpen(bool bUseSystem, const String& Name, const String&
     }
 
     // TODO: SHOW Gwork FOLDER SELECTION DIALOG
-    
+
     return false;
 }

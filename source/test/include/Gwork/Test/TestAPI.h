@@ -20,13 +20,13 @@ class TestAPI : public TestCategory
 {
 public:
     GWK_CONTROL(TestAPI, TestCategory);
-    
+
 private:
 
     void OnCategorySelect(Gwk::Event::Info info);
 
     Gwk::Controls::Base *m_lastControl;
-    
+
 };
 
 

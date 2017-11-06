@@ -22,7 +22,7 @@
 #include <algorithm>
 
 namespace Gwk
-{    
+{
     namespace Controls
     {
         class Canvas;
@@ -40,12 +40,12 @@ namespace Gwk
 
             Base(Base* parent, const Gwk::String& Name = "");
             virtual ~Base();
-            
+
             static const char* GetTypeNameStatic() { return "Base"; }
-            
+
             virtual const char* GetTypeName() const { return GetTypeNameStatic(); }
             virtual const char* GetParentTypeName() const { return nullptr; }
-            
+
             virtual void DelayedDelete();
             virtual void PreDelete(Gwk::Skin::Base* skin) {}
 
@@ -122,9 +122,9 @@ namespace Gwk
                 return m_bounds.x+m_bounds.w+m_margin.right;
             }
 
-            //! Get the margin of the control. 
+            //! Get the margin of the control.
             virtual const Margin& GetMargin() const     { return m_margin; }
-            
+
             //! Get the padding for the control.
             virtual const Padding& GetPadding() const   { return m_padding; }
 
@@ -207,7 +207,7 @@ namespace Gwk
 
             virtual bool Hidden() const;    //!< Returns true only if this control is hidden.
             virtual bool Visible() const;   //!< Returns false if this control or its parents are hidden.
-            
+
             virtual void Hide()     { SetHidden(true); }    //!< Make control invisible.
             virtual void Show()     { SetHidden(false); }   //!< Make control visible if hidden.
 
@@ -234,7 +234,7 @@ namespace Gwk
 
             virtual void OnMouseMoved(int x, int y, int deltaX, int deltaY);
             virtual bool OnMouseWheeled(int iDelta);
-            
+
             virtual void OnMouseClickLeft(int /*x*/, int /*y*/, bool /*bDown*/)     {}
             virtual void OnMouseClickRight(int /*x*/, int /*y*/, bool /*bDown*/)    {}
 
@@ -247,7 +247,7 @@ namespace Gwk
             {
                 OnMouseClickRight(x, y, true);
             }
-            
+
             virtual void OnMouseEnter();
             virtual void OnMouseLeave();
 
@@ -256,7 +256,7 @@ namespace Gwk
 
             virtual void SetMouseInputEnabled(bool b)       { m_bMouseInputEnabled = b; }
             virtual bool GetMouseInputEnabled()             { return m_bMouseInputEnabled; }
-            
+
             virtual void SetKeyboardInputEnabled(bool b)    { m_bKeyboardInputEnabled = b; }
             virtual bool GetKeyboardInputEnabled() const    { return m_bKeyboardInputEnabled; }
 
@@ -284,7 +284,7 @@ namespace Gwk
             virtual bool OnKeyUp(bool /*bDown*/)            { return false; }
             virtual bool OnKeyDown(bool /*bDown*/)          { return false; }
             virtual bool OnKeyEscape(bool /*bDown*/)        { return false; }
-            
+
             virtual bool IsHovered() const;
             virtual bool ShouldDrawHover() const;
 
@@ -325,7 +325,7 @@ namespace Gwk
             //! Enable caching to texture optimisation for this control.
             //! @note Must have GetCTT() implemented in the Renderer.
             virtual void EnableCacheToTexture()     { m_bCacheToTexture = true; }
-            
+
             //! Query if this control is cached to a texture.
             virtual bool IsCachedToTexture() const  { return m_bCacheToTexture; }
 
@@ -418,7 +418,7 @@ namespace Gwk
             //! become children of that instead of us - allowing us to move
             //! them all around by moving that panel (useful for scrolling etc).
             Base* m_innerPanel;
-            
+
             virtual Base* Inner()   { return m_innerPanel; }
 
             //! This is the panel's actual parent - most likely the logical

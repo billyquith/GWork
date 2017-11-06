@@ -9,7 +9,7 @@
 #include <Gwork/Gwork.h>
 #include <Gwork/Controls/Text.h>
 #include <Gwork/Skin.h>
-#include <Gwork/Utility.h>
+#include <Gwork/PlatformCommon.h>
 
 using namespace Gwk;
 using namespace Gwk::ControlsInternal;
@@ -169,7 +169,7 @@ int Text::GetClosestCharacter(Gwk::Point p)
         }
 
         iChars -= line->Length();
-        int iLinePos = line->GetClosestCharacter(Gwk::Point(p.x-line->X(), p.y-line->Y()));        
+        int iLinePos = line->GetClosestCharacter(Gwk::Point(p.x-line->X(), p.y-line->Y()));
         return iChars+iLinePos;
     }
 
@@ -203,7 +203,7 @@ void Text::RefreshSize()
 
     if (!GetFont())
     {
-        Debug::AssertCheck(0, "Text::RefreshSize() - No Font!!\n");
+        GWK_ASSERT_MSG(false, "Text::RefreshSize() - No Font!");
         return;
     }
 
@@ -232,7 +232,7 @@ void Text::SplitWords(const Gwk::String& s, std::vector<Gwk::String>& elems)
 
     int w = GetParent()->Width()
                 - (GetParent()->GetPadding().left + GetParent()->GetPadding().right);
-    
+
     for (size_t i = 0; i < s.length(); i++)
     {
         if (s[i] == '\n')
@@ -281,7 +281,7 @@ void Text::RefreshSizeWrap()
         delete line;
     }
     m_lines.clear();
-    
+
     std::vector<Gwk::String> words;
     SplitWords(GetText(), words);
 
@@ -291,7 +291,7 @@ void Text::RefreshSizeWrap()
 
     if (!GetFont())
     {
-        Debug::AssertCheck(0, "Text::RefreshSize() - No Font!!\n");
+        GWK_ASSERT_MSG(false, "Text::RefreshSize() - No Font!");
         return;
     }
 
@@ -404,7 +404,7 @@ int Text::GetLineFromChar(int i)
 
     if (iLine > 0)
         return iLine-1;
-    
+
     return iLine;
 }
 

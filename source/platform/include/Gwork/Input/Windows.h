@@ -4,7 +4,7 @@
  *  Copyright (c) 2013-17 Nick Trout
  *  See license in Gwork.h
  */
- 
+
 #pragma once
 #ifndef GWK_INPUT_WINDOWS_H
 #define GWK_INPUT_WINDOWS_H

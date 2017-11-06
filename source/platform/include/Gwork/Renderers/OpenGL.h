@@ -13,17 +13,17 @@
 namespace Gwk
 {
     namespace Renderer
-    {        
+    {
         //! Default resource loader for Allegro5.
         class OpenGLResourceLoader : public ResourceLoader
         {
             ResourcePaths& m_paths;
         public:
             OpenGLResourceLoader(ResourcePaths& paths) : m_paths(paths) {}
-            
+
             Font::Status LoadFont(Font& font) override;
             void FreeFont(Font& font) override;
-            
+
             Texture::Status LoadTexture(Texture& texture) override;
             void FreeTexture(Texture& texture) override;
         };
@@ -51,7 +51,7 @@ namespace Gwk
 
             void DrawTexturedRect(Gwk::Texture* texture, Gwk::Rect targetRect, float u1 = 0.0f,
                                   float v1 = 0.0f, float u2 = 1.0f, float v2 = 1.0f) override;
-            
+
             Gwk::Color PixelColor(Gwk::Texture* texture,
                                    unsigned int x, unsigned int y,
                                    const Gwk::Color& col_default) override;
@@ -59,14 +59,14 @@ namespace Gwk
             void RenderText(Gwk::Font* font,
                             Gwk::Point pos,
                             const Gwk::String& text) override;
-            
+
             Gwk::Point MeasureText(Gwk::Font* font, const Gwk::String& text) override;
 
         protected:
 
             Rect m_viewRect;
             Color m_color;
-            
+
             static const int MaxVerts = 1024;
             struct Vertex
             {
@@ -74,7 +74,7 @@ namespace Gwk
                 float u, v;
                 unsigned char r, g, b, a;
             };
-            
+
             int m_vertNum;
             Vertex m_vertices[ MaxVerts ];
 

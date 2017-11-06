@@ -1,6 +1,7 @@
+# Gwork projects
 
 if(WANT_REFLECTION)
-    find_package(Ponder REQUIRED)
+    find_package(Ponder 2.2 REQUIRED)
     message(STATUS "Including Ponder from ${PONDER_INCLUDE_DIR}")
 
     find_package(Lua 5.2 REQUIRED)
@@ -11,7 +12,8 @@ if(WANT_REFLECTION)
     
     set(GWK_REFLECT_INCLUDE ${PONDER_INCLUDE_DIR} ${LUA_INCLUDE_DIR})
     list(REMOVE_DUPLICATES GWK_REFLECT_INCLUDE)
-    message(STATUS "Relection include: ${GWK_REFLECT_INCLUDE}")    
+    set(GWK_REFLECT_LIBRARIES ${PONDER_LIBRARIES} ${LUA_LIBRARIES})
+    message(STATUS "Relection include: ${GWK_REFLECT_INCLUDE}. Libs: ${GWK_REFLECT_LIBRARIES}")
 endif()
 
 if(WANT_ALLOC_STATS)

@@ -10,10 +10,10 @@
 
 
 namespace Gwk {
-    
+
 using namespace Gwk::Controls;
 
-    
+
 class CategoryButton : public Button
 {
     GWK_CONTROL_INLINE(CategoryButton, Button)
@@ -21,7 +21,7 @@ class CategoryButton : public Button
         SetAlignment(Position::Left | Position::CenterV);
         m_bAlt = false;
     }
-    
+
     void Render(Skin::Base* skin) override
     {
         if (m_bAlt)
@@ -42,32 +42,32 @@ class CategoryButton : public Button
             else
                 skin->GetRender()->SetDrawColor(skin->Colors.Category.Line.Button);
         }
-        
+
         skin->GetRender()->DrawFilledRect(this->GetRenderBounds());
     }
-    
+
     void UpdateColors() override
     {
         if (m_bAlt)
         {
             if (IsDepressed() || GetToggleState())
                 return SetTextColor(GetSkin()->Colors.Category.LineAlt.Text_Selected);
-            
+
             if (IsHovered())
                 return SetTextColor(GetSkin()->Colors.Category.LineAlt.Text_Hover);
-            
+
             return SetTextColor(GetSkin()->Colors.Category.LineAlt.Text);
         }
-        
+
         if (IsDepressed() || GetToggleState())
             return SetTextColor(GetSkin()->Colors.Category.Line.Text_Selected);
-        
+
         if (IsHovered())
             return SetTextColor(GetSkin()->Colors.Category.Line.Text_Hover);
-        
+
         return SetTextColor(GetSkin()->Colors.Category.Line.Text);
     }
-    
+
     bool m_bAlt;
 };
 
@@ -80,15 +80,15 @@ class CategoryHeaderButton : public Button
         SetIsToggle(true);
         SetAlignment(Position::Center);
     }
-    
+
     void UpdateColors() override
     {
         if (IsDepressed() || GetToggleState())
             return SetTextColor(GetSkin()->Colors.Category.Header_Closed);
-        
+
         return SetTextColor(GetSkin()->Colors.Category.Header);
     }
-    
+
 };
 
 
@@ -121,12 +121,12 @@ void CollapsibleCategory::OnSelection(Event::Info info)
     
     if (!child)
         return;
-    
+
     if (m_list)
         m_list->UnselectAll();
     else
         UnselectAll();
-    
+
     child->SetToggleState(true);
     onSelection.Call(this);
 }
@@ -207,6 +207,5 @@ bool CollapsibleCategory::IsExpanded() const
 {
     return !m_button->GetToggleState();
 }
-    
-} // namespace Gwk
 
+} // namespace Gwk

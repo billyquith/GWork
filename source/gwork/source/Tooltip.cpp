@@ -15,7 +15,7 @@ namespace Gwk
 {
 namespace Tooltip
 {
-    
+
 static Controls::Base* g_toolTip = nullptr;
 
 bool TooltipActive()
@@ -37,6 +37,33 @@ void Disable(Controls::Base* control)
         g_toolTip = nullptr;
 }
 
+static Gwk::Rect ClampRectToRect(Gwk::Rect inside, Gwk::Rect const& outside, bool clampSize)
+{
+    if (inside.x < outside.x)
+        inside.x = outside.x;
+
+    if (inside.y  < outside.y)
+        inside.y = outside.y;
+
+    if (inside.x+inside.w > outside.x+outside.w)
+    {
+        if (clampSize)
+            inside.w = outside.w;
+        else
+            inside.x = outside.x+outside.w-inside.w;
+    }
+
+    if (inside.y+inside.h > outside.y+outside.h)
+    {
+        if (clampSize)
+            inside.h = outside.h;
+        else
+            inside.y = outside.w+outside.h-inside.h;
+    }
+
+    return inside;
+}
+
 void RenderTooltip(Skin::Base* skin)
 {
     if (!g_toolTip)
@@ -46,11 +73,10 @@ void RenderTooltip(Skin::Base* skin)
     Gwk::Point oldRenderOffset = render->GetRenderOffset();
     Gwk::Point MousePos = Input::GetMousePosition();
     Gwk::Rect Bounds = g_toolTip->GetTooltip()->GetBounds();
-    Gwk::Rect rOffset = Gwk::Rect(MousePos.x-Bounds.w*0.5f, MousePos.y-Bounds.h-10,
-                                    Bounds.w,
-                                    Bounds.h);
-    rOffset = Utility::ClampRectToRect(rOffset, g_toolTip->GetCanvas()->GetBounds());
-    
+    Gwk::Rect rOffset = Gwk::Rect(MousePos.x - Bounds.w*0.5f, MousePos.y-Bounds.h-10,
+                                  Bounds.w, Bounds.h);
+    rOffset = ClampRectToRect(rOffset, g_toolTip->GetCanvas()->GetBounds(), false);
+
     // Calculate offset on screen bounds
     render->AddRenderOffset(rOffset);
     render->EndClip();

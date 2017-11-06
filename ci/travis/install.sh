@@ -27,7 +27,7 @@ function install_osx {
         get_ponder Xcode
     fi
 }
-  
+
 function install_linux {
     # sudo apt-get -qq update
     # sudo apt-get install -y cmake doxygen

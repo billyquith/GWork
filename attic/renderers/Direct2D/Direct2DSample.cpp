@@ -208,4 +208,3 @@ int main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCm
 
     return EXIT_SUCCESS;
 }
-

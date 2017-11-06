@@ -33,8 +33,10 @@ source_group("${GWK_SOURCE_FOLDER}\\ImportExport"
 
 # Gwork utils
 add_library(GworkUtil STATIC ${GWK_UTIL_SOURCES})
-target_compile_features(GworkUtil PUBLIC cxx_override)
-target_link_libraries(GworkUtil Gwork)
+
+target_link_libraries(GworkUtil
+                      Gwork Gwork${GWK_RENDER_NAME}
+                      ${GWK_REFLECT_LIBRARIES})
 
 install(DIRECTORY ${GWK_SOURCE_DIR}/util/include/Gwork
         DESTINATION include)

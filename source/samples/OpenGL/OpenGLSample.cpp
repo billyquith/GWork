@@ -45,28 +45,30 @@ static void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 
 int main()
 {
+    const Gwk::Point screenSize(1024,768);
+
     if (!glfwInit())
         return -1;
-    
+
     // Create a new window
-    const Gwk::Point winsz(1024,768);
-    GLFWwindow* window = glfwCreateWindow(winsz.x, winsz.y, "Gwork: OpenGL", NULL, NULL);
+    GLFWwindow* window = glfwCreateWindow(screenSize.x, screenSize.y,
+                                          "Gwork OpenGL Sample", NULL, NULL);
     if (!window)
     {
         glfwTerminate();
         return -1;
     }
     glfwMakeContextCurrent(window);
-    
+
     Gwk::Platform::RelativeToExecutablePaths paths(GWORK_RESOURCE_DIR);
     Gwk::Renderer::OpenGLResourceLoader loader(paths);
-    
+
     // Create a Gwork OpenGL Renderer
 #ifdef USE_DEBUG_FONT
     Gwk::Renderer::OpenGL* renderer = new Gwk::Renderer::OpenGL_DebugFont();
 #else
     Gwk::Renderer::OpenGL* renderer =
-        new Gwk::Renderer::OpenGL(loader, Gwk::Rect(Gwk::Point(0,0), winsz));
+        new Gwk::Renderer::OpenGL(loader, Gwk::Rect(Gwk::Point(0,0), screenSize));
 #endif
     renderer->Init();
 
@@ -77,19 +79,19 @@ int main()
 
     // Create a Canvas (it's root, on which all other Gwork panels are created)
     Gwk::Controls::Canvas* canvas = new Gwk::Controls::Canvas(skin);
-    canvas->SetSize(winsz.x, winsz.y);
+    canvas->SetSize(screenSize.x, screenSize.y);
     canvas->SetDrawBackground(true);
     canvas->SetBackgroundColor(Gwk::Color(150, 170, 170, 255));
 
     // Create our unittest control (which is a Window with controls in it)
-    new TestFrame(canvas);
+    auto unit = new TestFrame(canvas);
     GworkInput.Initialize(canvas);
-    
+
     glfwSetKeyCallback(window, key_callback);
     glfwSetCursorPosCallback(window, cursor_pos_callback);
     glfwSetMouseButtonCallback(window, mouse_button_callback);
     glfwSetScrollCallback(window, scroll_callback);
-    
+
     // Begin the main game loop
     while (!glfwWindowShouldClose(window))
     {
@@ -98,14 +100,17 @@ int main()
         glfwSwapBuffers(window);
 
         glfwPollEvents();
-        
+
         Gwk::Platform::Sleep(0);
     }
 
-    // Clean up OpenGL
-    glfwTerminate();
+    delete unit;
     delete canvas;
     delete skin;
     delete renderer;
-}
 
+    // Clean up OpenGL
+    glfwTerminate();
+
+    return EXIT_SUCCESS;
+}

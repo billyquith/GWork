@@ -27,7 +27,7 @@ namespace Gwk
                 SetMouseInputEnabled(true);
                 SetShouldDrawBackground(true);
                 SetBounds(0, 0, GetParent()->Width(), GetParent()->Height());
-                
+
                 // RecurseLayout() may not be called before Position is set.
                 m_innerBounds = m_bounds;
             }

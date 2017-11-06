@@ -13,7 +13,7 @@ Gwork is divided into layers (see [source][source]):
 
 The project generator creates libraries for *platform* and *gwork*, which you can then link to
 your project. You can see an example of how to do this in the samples. There is one for
-each of the targets supported. [Cmake][cmake] is used to generate project files for 
+each of the targets supported. [Cmake][cmake] is used to generate project files for
 your chosen build environment.
 
 You are free to implement your own platform, or modify the samples for your use case.
@@ -32,14 +32,14 @@ If you are not familiar with cmake:
 - [Cmake overview](https://cmake.org/overview/) - What cmake is and why it was created.
 - [Cmake tutorial](https://cmake.org/cmake-tutorial/) - Quick introduction on how to use it.
 
-Some useful links for using Cmake: 
+Some useful links for using Cmake:
 
 - [Cmake download](https://cmake.org/download/) - How to get it.
 - [Cmake documentation](https://cmake.org/documentation/) - Documentation on the current version.
 - [Cmake wiki](https://cmake.org/Wiki/CMake) - Lots of miscellaneous details.
 
 It is best to build the project in subdirectory of the main project, e.g. in a directory
-called "build". You might make multiple versions of the project for different options 
+called "build". You might make multiple versions of the project for different options
 or targets this way (e.g. "build_sdl2", "build_allegro5", etc).
 
 \subsection win_build Windows
@@ -92,17 +92,17 @@ cmake -G "Unix Makefiles" -DRENDER_ALLEGRO5=ON ..
 
 \section gwork_targets Targets
 
-Gwork currently supports the following rendering targets. You can choose these by 
+Gwork currently supports the following rendering targets. You can choose these by
 defining a variable when you run cmake to generate the project files,
 i.e. `-DRENDER_<TARGET>=ON`, e.g. :-
 
 - Allegro 5: `-DRENDER_ALLEGRO5=ON`
-- Direct2D: `-DRENDER_DIRECT2D=ON`
 - DirectX 11: `-DRENDER_DIRECTX11=ON`
-- Null: (Used for testing) `-DRENDER_NULL=ON` 
+- Null: (Used for testing) `-DRENDER_NULL=ON`
 - OpenGL: `-DRENDER_OPENGL=ON`
 - SDL2: `-DRENDER_SDL2=ON`
 - SFML2: `-DRENDER_SFML2=ON`
+- Software: `-DRENDER_SW=ON`. This is a standalone software GUI renderer. Writes to texture.
 
 \note You can only choose one target at a time. If you would like to compile multiple targets,
 create multiple build folders and create different project files and targets in each.
@@ -116,7 +116,7 @@ You should compile and run the sample before using Gwork in your own project to 
 everything is working correctly.
 
 The *null* render target is used for testing. It does not compile or link against any
-target API, hence "null". It can be used to generate the Gwork memory usage stats. If you 
+target API, hence "null". It can be used to generate the Gwork memory usage stats. If you
 are having problems compiling your project against your chosen target you could try compiling
 against null to see if the problem is related to Gwork or the target API.
 
@@ -124,7 +124,7 @@ against null to see if the problem is related to Gwork or the target API.
 
 - SDL2
   - SDL2 has a clipping bug in versions before 2.0.5. This results in most things not appearing
-    on the screen. See the issue for screenshots and 
+    on the screen. See the issue for screenshots and
     [more details](https://github.com/billyquith/GWork/issues/18).
 - SFML2
   - When creating an SFML2 project make sure you include the "window" component as this is
@@ -136,7 +136,7 @@ against null to see if the problem is related to Gwork or the target API.
 An example cmake project is supplied below.
 
 \code{.cmake}
-# CMake build instructions for app embedding Gwork 
+# CMake build instructions for app embedding Gwork
 
 # configure cmake
 cmake_minimum_required(VERSION 3.1)
@@ -178,5 +178,3 @@ This assumes that you have the directory structure:
 [source]: https://github.com/billyquith/GWork/tree/gwork/source
 
 */
-
-

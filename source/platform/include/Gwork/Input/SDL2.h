@@ -10,7 +10,7 @@
 
 #include <Gwork/InputHandler.h>
 #include <Gwork/Gwork.h>
-#include <Gwork/Controls/Canvas.h>
+#include <Gwork/InputEventListener.h>
 #include <SDL.h>
 
 
@@ -24,17 +24,17 @@ namespace Gwk
 
             SDL2()
             {
-                m_canvas = nullptr;
+                m_listener = nullptr;
             }
 
-            void Initialize(Gwk::Controls::Canvas* c)
+            void Initialize(Gwk::IInputEventListener* c)
             {
-                m_canvas = c;
+                m_listener = c;
             }
 
             bool ProcessEvent(const SDL_Event* event)
             {
-                if (!m_canvas)
+                if (!m_listener)
                     return false;
 
                 switch (event->type)
@@ -69,19 +69,19 @@ namespace Gwk
                         default:                        return false;
                         }
 
-                        return m_canvas->InputModifierKey(iKey, ke->state != 0);
+                        return m_listener->InputModifierKey(iKey, ke->state != 0);
                     }
 
                 case SDL_TEXTINPUT:
                     {
                         // TODO: This will probably need fixing for UTF-8.
-                        return m_canvas->InputCharacter(event->text.text[0]);
+                        return m_listener->InputCharacter(event->text.text[0]);
                     }
 
                 case SDL_MOUSEMOTION:
                     {
                         const SDL_MouseMotionEvent* E = &event->motion;
-                        return m_canvas->InputMouseMoved(E->x, E->y, E->xrel, E->yrel);
+                        return m_listener->InputMouseMoved(E->x, E->y, E->xrel, E->yrel);
                     }
 
                 case SDL_MOUSEBUTTONDOWN:
@@ -108,13 +108,13 @@ namespace Gwk
                             return false;
                         }
 
-                        return m_canvas->InputMouseButton(Button, E->state != 0);
+                        return m_listener->InputMouseButton(Button, E->state != 0);
                     }
 
                 case SDL_MOUSEWHEEL:
                     {
                         const SDL_MouseWheelEvent* E = &event->wheel;
-                        return m_canvas->InputMouseWheel(E->y);
+                        return m_listener->InputMouseWheel(E->y);
                     }
 
                 default:
@@ -124,7 +124,7 @@ namespace Gwk
 
         protected:
 
-            Gwk::Controls::Canvas* m_canvas;
+            Gwk::IInputEventListener* m_listener;
 
         };
 

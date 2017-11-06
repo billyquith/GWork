@@ -23,8 +23,8 @@ matrix:
           sources:
             - ubuntu-toolchain-r-test
           packages:
-            - g++-4.9            
-      env: COMPILER=g++-4.9 BUILD_CONFIG=Debug 
+            - g++-4.9
+      env: COMPILER=g++-4.9 BUILD_CONFIG=Debug
     - os: linux
       compiler: gcc
       addons:
@@ -34,7 +34,7 @@ matrix:
           packages:
             - g++-5
             - doxygen
-      env: COMPILER=g++-5 BUILD_CONFIG=Debug 
+      env: COMPILER=g++-5 BUILD_CONFIG=Debug
     - os: linux
       compiler: gcc
       addons:
@@ -44,7 +44,7 @@ matrix:
           packages:
             - g++-6
             - doxygen
-      env: COMPILER=g++-6 BUILD_CONFIG=Debug 
+      env: COMPILER=g++-6 BUILD_CONFIG=Debug
     - os: linux
       compiler: clang
       addons:
@@ -54,7 +54,7 @@ matrix:
             - llvm-toolchain-precise-3.6
           packages:
             - clang-3.6
-      env: COMPILER=clang++-3.6 BUILD_CONFIG=Debug 
+      env: COMPILER=clang++-3.6 BUILD_CONFIG=Debug
     - os: linux
       compiler: clang
       addons:
@@ -64,7 +64,7 @@ matrix:
             - llvm-toolchain-precise-3.7
           packages:
             - clang-3.7
-      env: COMPILER=clang++-3.7 BUILD_CONFIG=Debug 
+      env: COMPILER=clang++-3.7 BUILD_CONFIG=Debug
     - os: linux
       compiler: clang
       addons:
@@ -75,7 +75,7 @@ matrix:
           packages:
             - clang-3.8
             - doxygen
-      env: COMPILER=clang++-3.8 BUILD_CONFIG=Debug 
+      env: COMPILER=clang++-3.8 BUILD_CONFIG=Debug
     - os: osx
       osx_image: xcode7.3
       compiler: clang

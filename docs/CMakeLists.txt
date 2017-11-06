@@ -2,22 +2,22 @@
 # Copyright (c) 2013-2017 Nick Trout
 #
 # Portions of this file come from Ponder:
-# 
+#
 ## The MIT License (MIT)
-## 
+##
 ## Copyright (c) 2009-2014 TEGESO/TEGESOFT
 ## Copyright (c) 2013-2017 Nick Trout
-## 
+##
 ## Permission is hereby granted, free of charge, to any person obtaining a copy
 ## of this software and associated documentation files (the "Software"), to deal
 ## in the Software without restriction, including without limitation the rights
 ## to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 ## copies of the Software, and to permit persons to whom the Software is
 ## furnished to do so, subject to the following conditions:
-## 
+##
 ## The above copyright notice and this permission notice shall be included in
 ## all copies or substantial portions of the Software.
-## 
+##
 ## THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 ## IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 ## FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -30,19 +30,19 @@
 find_package(Doxygen)
 
 if(DOXYGEN_FOUND)
-    
+
     set(DOXYGEN_INPUT_DIR ${GWK_SOURCE_DIR}/source)
-       
+
     set(DOXYGEN_OUTPUT_TYPE html)
     set(DOXYGEN_OUTPUT_DIR ${CMAKE_BINARY_DIR}/doc/)
-    
+
     set(DOXYGEN_CONFIG_FILENAME "Gwork.doxcfg")
     set(DOXYGEN_CONFIG_FILE ${GWK_SOURCE_DIR}/docs/${DOXYGEN_CONFIG_FILENAME})
 
     if(WIN32)
         set(DOXYGEN_GENERATE_MAN NO)
-        find_program(HHC_PROGRAM 
-            NAMES hhc.exe 
+        find_program(HHC_PROGRAM
+            NAMES hhc.exe
             PATHS "c:/Program Files/HTML Help Workshop"
             DOC "HTML Help Compiler program")
         if(HHC_PROGRAM)
@@ -62,7 +62,7 @@ if(DOXYGEN_FOUND)
         ${DOXYGEN_INPUT_DIR}/gwork/include
         ${DOXYGEN_INPUT_DIR}/test/include
     )
-    
+
     # directories to scan for documentation
     set(DOXYGEN_INPUT_DIRS ${DOXYGEN_CODE_DIRS} ${CMAKE_CURRENT_SOURCE_DIR}/pages)
 
@@ -79,7 +79,7 @@ if(DOXYGEN_FOUND)
     set(DOC_IMAGE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/images")
 
     # subsitutes to make to patch up docs
-    set(PREDEFINES 
+    set(PREDEFINES
         "GWK_CONTROL(CLS,BASE)=/** Constructor. */ CLS(Gwk::Control::Base *parent)"
         "GWK_CONTROL_INLINE(CLS,BASE)=/** Constructor. */ CLS(Gwk::Control::Base *parent)"
         "__cplusplus"
@@ -100,10 +100,9 @@ if(DOXYGEN_FOUND)
         COMMAND ${DOXYGEN_EXECUTABLE} ${DOXYGEN_CONFIG_FILE}
         COMMAND ${CMAKE_COMMAND} -E echo "Done."
     )
-    
+
     # install(DIRECTORY ${DOXYGEN_OUTPUT_DIR}
     #     DESTINATION ${INSTALL_MISC_DIR}/doc
     #     COMPONENT apidoc
     # )
 endif()
-

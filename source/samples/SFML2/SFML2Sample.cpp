@@ -18,14 +18,14 @@
 int main()
 {
     // Create the window of the application
-    sf::RenderWindow app(sf::VideoMode(1004, 650, 32), "Gwork: SFML2");
+    sf::RenderWindow app(sf::VideoMode(1004, 650, 32), "Gwork SFML2 Sample");
 
     Gwk::Platform::RelativeToExecutablePaths paths(GWORK_RESOURCE_DIR);
     Gwk::Renderer::SFML2ResourceLoader loader(paths);
 
     // Create renderer
     Gwk::Renderer::SFML2 renderer(loader, app);
-    
+
     // Create a Gwork skin
     Gwk::Skin::TexturedBase skin(&renderer);
     skin.Init("DefaultSkin.png");
@@ -35,19 +35,18 @@ int main()
     skin.SetDefaultFont("OpenSans.ttf", 11);
 
     // Create a Canvas (it's root, on which all other Gwork panels are created)
-    Gwk::Controls::Canvas* canvas = new Gwk::Controls::Canvas(&skin);
-
-    canvas->SetSize(app.getSize().x, app.getSize().y);
-    canvas->SetDrawBackground(true);
-    canvas->SetBackgroundColor(Gwk::Color(150, 170, 170, 255));
+    Gwk::Controls::Canvas canvas(&skin);
+    canvas.SetSize(app.getSize().x, app.getSize().y);
+    canvas.SetDrawBackground(true);
+    canvas.SetBackgroundColor(Gwk::Color(150, 170, 170, 255));
 
     // Create our unittest control (which is a Window with controls in it)
-    new TestFrame(canvas);
+    TestFrame unit(&canvas);
 
     // Create an input processor
-    Gwk::Input::SFML GworkInput;
-    GworkInput.Initialize(canvas);
-    
+    Gwk::Input::SFML input;
+    input.Initialize(&canvas);
+
     while (app.isOpen())
     {
         // Handle events
@@ -64,18 +63,18 @@ int main()
             }
             else if (Event.type == sf::Event::Resized)
             {
-                canvas->SetSize(Event.size.width, Event.size.height);
+                canvas.SetSize(Event.size.width, Event.size.height);
             }
 
-            GworkInput.ProcessMessage(Event);
+            input.ProcessMessage(Event);
         }
 
         // Render the control canvas
         app.clear();
         // <user render here>
         app.pushGLStates();
-        canvas->RenderCanvas();
-        app.popGLStates();        
+        canvas.RenderCanvas();
+        app.popGLStates();
         app.display();
     }
 

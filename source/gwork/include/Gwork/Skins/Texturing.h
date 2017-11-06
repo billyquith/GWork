@@ -150,7 +150,7 @@ namespace Gwk
                     if (draw & (1<<4))
                         DrawRect( render, 4, r.x + m_margin.left, r.y + m_margin.top,
                                              r.w - m_margin.left - m_margin.right, r.h - m_margin.top - m_margin.bottom );
-                    
+
                     if (draw & (1<<5))
                         DrawRect( render, 5, ( r.x + r.w ) - m_margin.right, r.y + m_margin.top, m_margin.right, r.h - m_margin.top - m_margin.bottom );
 

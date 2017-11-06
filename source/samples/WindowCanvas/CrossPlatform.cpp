@@ -18,8 +18,6 @@
 // (you need to include the relevant libs to use them)
 //
 #include <Gwork/Renderers/OpenGL_DebugFont.h>
-// #include <Gwork/Renderers/GDIPlus.h>
-// #include <Gwork/Renderers/Direct2D.h>
 // #include <Gwork/Renderers/DirectX9.h>
 
 
@@ -35,9 +33,9 @@ int main()
     //
     // Create the skin and renderer
     //
-    // Gwk::Renderer::GDIPlusBuffered		renderer;
-    // Gwk::Renderer::Direct2D				renderer;
-    // Gwk::Renderer::DirectX9				renderer;
+    // Gwk::Renderer::GDIPlusBuffered       renderer;
+    // Gwk::Renderer::Direct2D              renderer;
+    // Gwk::Renderer::DirectX9              renderer;
     Gwk::Renderer::OpenGL_DebugFont renderer;
     Gwk::Skin::TexturedBase skin(&renderer);
     //

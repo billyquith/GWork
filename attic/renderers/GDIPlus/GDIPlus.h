@@ -20,7 +20,7 @@ namespace Gwk
          * Render for [GDI+](https://msdn.microsoft.com/en-us/library/windows/desktop/ms533798(v=vs.85).aspx).
          *
          * GDI(plus) is pretty slow for rendering Gwork, because we're
-         * re-rendering everything on redraw. Therefore its usage should 
+         * re-rendering everything on redraw. Therefore its usage should
          * be as a test - rather than production.
          *
          */

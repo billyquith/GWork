@@ -21,10 +21,12 @@
 
 int main(int argc, char** argv)
 {
+    const Gwk::Point screenSize(1024, 768);
+
     if (!al_init())
         return EXIT_FAILURE;
 
-    ALLEGRO_DISPLAY* display = al_create_display(1024, 768);
+    ALLEGRO_DISPLAY* display = al_create_display(screenSize.x, screenSize.y);
     Gwk::Platform::SetPlatformWindow(display);
 
     if (!display)
@@ -47,24 +49,24 @@ int main(int argc, char** argv)
 
     Gwk::Platform::RelativeToExecutablePaths paths(GWORK_RESOURCE_DIR);
     Gwk::Renderer::AllegroResourceLoader loader(paths);
-    
+
     // Create a Gwork Allegro Renderer
     Gwk::Renderer::Allegro* renderer = new Gwk::Renderer::Allegro(loader);
 
     // Create a Gwork skin
-    Gwk::Skin::TexturedBase skin(renderer);
-    skin.SetRender(renderer);
-    skin.Init("DefaultSkin.png");
-    
+    auto skin = new Gwk::Skin::TexturedBase(renderer);
+    skin->SetRender(renderer);
+    skin->Init("DefaultSkin.png");
+
     // The fonts work differently in Allegro - it can't use
     // system fonts. So force the skin to use a local one.
     // Note, you can get fonts that cover many languages/locales to do Chinese,
     //       Arabic, Korean, etc. e.g. "Arial Unicode" (but it's 23MB!).
-    skin.SetDefaultFont("OpenSans.ttf", 11);
-    
+    skin->SetDefaultFont("OpenSans.ttf", 11);
+
     // Create a Canvas (it's root, on which all other Gwork panels are created)
-    Gwk::Controls::Canvas* canvas = new Gwk::Controls::Canvas(&skin);
-    canvas->SetSize(1024, 768);
+    Gwk::Controls::Canvas* canvas = new Gwk::Controls::Canvas(skin);
+    canvas->SetSize(screenSize.x, screenSize.y);
     canvas->SetDrawBackground(true);
     canvas->SetBackgroundColor(Gwk::Color(150, 170, 170, 255));
 
@@ -74,9 +76,9 @@ int main(int argc, char** argv)
 
     // Create a Windows Control helper
     // (Processes Windows MSG's and fires input at Gwork)
-    Gwk::Input::Allegro GworkInput;
-    GworkInput.Initialize(canvas);
-    
+    Gwk::Input::Allegro input;
+    input.Initialize(canvas);
+
     ALLEGRO_EVENT ev;
     bool haveQuit = false;
     while (!haveQuit)
@@ -86,14 +88,21 @@ int main(int argc, char** argv)
             if (ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE)
                 haveQuit = true;
 
-            GworkInput.ProcessMessage(ev);
+            input.ProcessMessage(ev);
         }
 
+        renderer->BeginContext(nullptr);
         canvas->RenderCanvas();
-        al_flip_display();
-        
+        renderer->PresentContext(nullptr);
+        renderer->EndContext(nullptr);
+
         al_rest(0.001);
     }
+
+    delete unit;
+    delete canvas;
+    delete skin;
+    delete renderer;
 
     al_destroy_display(display);
     al_destroy_event_queue(event_queue);
