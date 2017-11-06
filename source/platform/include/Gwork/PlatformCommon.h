@@ -1,9 +1,10 @@
-/*
- *  Gwork
+/*  Gwork
  *  Copyright (c) 2010 Facepunch Studios
  *  Copyright (c) 2013-17 Nick Trout
  *  See license in Gwork.h
  */
+/*! \file PlatformCommon.h */
+
 
 #pragma once
 #ifndef GWK_PLATFORM_COMMON_H
@@ -19,14 +20,20 @@ namespace Gwk
         // Cross-platform, low level functionality shared by all of the platforms.
 
         //! Calculate resource paths relative to the executable.
+        //! I.e. path = exe_dir + resource_dir + relative_path.
         class RelativeToExecutablePaths : public ResourcePaths
         {
             String m_resDir;
         public:
             //! Constructor
-            //! \param resourceDir : optional directory, relative to the executable.
+            //! \param resourceDir : Optional directory, relative to the executable.
             RelativeToExecutablePaths(String const& resourceDir = String());
-            String GetPath(Type type, String const& name) final;
+            
+            //! Get full path to file.
+            //! \param type : File resource type.
+            //! \param name : Relative path to file.
+            //! \return Path relative to the resource directory.
+            String GetPath(Type type, String const& relPath) final;
         };
 
 #if GWK_ALLOC_STATS
@@ -51,12 +58,12 @@ namespace Gwk
 
     namespace Log
     {
-        enum class Level
+        enum class Level    //!< Logging classification.
         {
-            Info,
-            Warning,
-            Error,
-            Fatal
+            Info,       //!< Informational.
+            Warning,    //!< A warning.
+            Error,      //!< An error.
+            Fatal       //!< Whoa! Fatal error!
         };
 
         //! Write a message to the platform log.
@@ -74,18 +81,21 @@ namespace Gwk
 
     namespace Debug
     {
+        //! \def GWK_ASSERT(TEST)
         //! Assertion check.
         //! If fails, application aborts.
         //! \param TEST : The Boolean assertion check.
-#define GWK_ASSERT(TEST) if (!(TEST)) Gwk::Debug::AssertFail(#TEST)
+#define GWK_ASSERT(TEST) if (!(TEST)) Gwk::Debug::AssertFail(#TEST);
         
+        //! \def GWK_ASSERT_MSG(TEST, MESSAGE)
         //! Assertion check.
         //! If fails, application logs message and aborts.
         //! \param TEST : The Boolean assertion check.
         //! \param MESSAGE : The message to output on failure.
 #define GWK_ASSERT_MSG(TEST, MESSAGE) if (!(TEST)) Gwk::Debug::AssertFail(MESSAGE)        
 
-        GWK_EXPORT void AssertFail(const char* strMsg);
+        //! Called when an assertion fails.
+        GWK_EXPORT void AssertFail(const char* message);
     }
     
     // Do not use this! Use Gwk::Log::Write()
