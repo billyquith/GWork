@@ -12,8 +12,8 @@
 #include <Gwork/Controls/Layout/Position.h>
 #include <Gwork/Platform.h>
 
-using namespace Gwk;
-
+namespace Gwk {
+namespace Test {
 
 GWK_CONTROL_CONSTRUCTOR(TestAPI)
 {
@@ -107,3 +107,5 @@ void TestAPI::OnCategorySelect(Gwk::Event::Info info)
     info.Packet->Control->Show();
     m_lastControl = info.Packet->Control;
 }
+
+}}

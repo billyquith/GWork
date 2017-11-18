@@ -7,7 +7,8 @@
 
 #include <Gwork/Test/TestAPI.h>
 
-using namespace Gwk;
+namespace Gwk {
+namespace Test {
 
 class Button : public TestUnit
 {
@@ -82,5 +83,8 @@ public:
 
 };
 
+GWK_DECLARE_TEST(Button);
 
-DECLARE_TEST(Button);
+}}
+
+

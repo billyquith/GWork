@@ -8,7 +8,8 @@
 #include <Gwork/Test/TestAPI.h>
 #include <Gwork/Controls/ComboBox.h>
 
-using namespace Gwk;
+namespace Gwk {
+namespace Test {
 
 class ComboBox : public TestUnit
 {
@@ -55,5 +56,7 @@ public:
 
 };
 
+GWK_DECLARE_TEST(ComboBox);
 
-DECLARE_TEST(ComboBox);
+}}
+

@@ -9,7 +9,8 @@
 #include <Gwork/Controls/TabControl.h>
 #include <Gwork/Controls/RadioButtonController.h>
 
-using namespace Gwk;
+namespace Gwk {
+namespace Test {
 
 class TabControl : public TestUnit
 {
@@ -72,5 +73,7 @@ public:
     Gwk::Font m_font;
 };
 
+GWK_DECLARE_TEST(TabControl);
 
-DECLARE_TEST(TabControl);
+}}
+

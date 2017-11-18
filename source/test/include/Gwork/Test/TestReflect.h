@@ -12,22 +12,26 @@
 
 #include <Gwork/Test/Test.h>
 
-//
-/// Here we test Ponder reflection
-///  - We use the runtime API of Ponder to create controls.
-//
-class TestReflect : public TestCategory
-{
-public:
-    GWK_CONTROL(TestReflect, TestCategory);
+namespace Gwk {
+    namespace Test {
+
+        //
+        /// Here we test Ponder reflection
+        ///  - We use the runtime API of Ponder to create controls.
+        //
+        class TestReflect : public TestCategory
+        {
+        public:
+            GWK_CONTROL(TestReflect, TestCategory);
     
-private:
+        private:
 
-    void OnCategorySelect(Gwk::Event::Info info);
+            void OnCategorySelect(Gwk::Event::Info info);
 
-    Gwk::Controls::Base *m_lastControl;
-    
-};
+            Gwk::Controls::Base *m_lastControl;    
+        };
 
+    }
+}
 
 #endif // ifndef GWK_TEST_TESTREFLECT_H

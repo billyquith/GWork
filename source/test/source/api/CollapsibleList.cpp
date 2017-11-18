@@ -1,4 +1,4 @@
-﻿/*
+/*
  *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
  *  Copyright (c) 2013-17 Nick Trout
@@ -8,7 +8,8 @@
 #include <Gwork/Test/TestAPI.h>
 #include <Gwork/Controls/CollapsibleList.h>
 
-using namespace Gwk;
+namespace Gwk {
+namespace Test {
 
 class CollapsibleList : public TestUnit
 {
@@ -54,5 +55,7 @@ public:
     }
 };
 
+GWK_DECLARE_TEST(CollapsibleList);
 
-DECLARE_TEST(CollapsibleList);
+}}
+

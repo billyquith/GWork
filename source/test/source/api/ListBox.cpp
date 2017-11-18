@@ -8,7 +8,8 @@
 #include <Gwork/Test/TestAPI.h>
 #include <Gwork/Controls/ListBox.h>
 
-using namespace Gwk;
+namespace Gwk {
+namespace Test {
 
 class ListBox : public TestUnit
 {
@@ -72,5 +73,7 @@ public:
     Gwk::Font m_font;
 };
 
+GWK_DECLARE_TEST(ListBox);
 
-DECLARE_TEST(ListBox);
+}}
+

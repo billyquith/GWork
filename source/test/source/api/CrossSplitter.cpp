@@ -10,7 +10,8 @@
 #include <Gwork/Controls/StatusBar.h>
 #include <Gwork/Controls/Button.h>
 
-using namespace Gwk;
+namespace Gwk {
+namespace Test {
 
 class CrossSplitter : public TestUnit
 {
@@ -95,5 +96,7 @@ public:
 
 };
 
+GWK_DECLARE_TEST(CrossSplitter);
 
-DECLARE_TEST(CrossSplitter);
+}}
+

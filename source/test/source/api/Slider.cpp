@@ -10,7 +10,8 @@
 #include <Gwork/Controls/VerticalSlider.h>
 #include <Gwork/Controls/HorizontalSlider.h>
 
-using namespace Gwk;
+namespace Gwk {
+namespace Test {
 
 class Slider : public TestUnit
 {
@@ -64,5 +65,7 @@ public:
 
 };
 
+GWK_DECLARE_TEST(Slider);
 
-DECLARE_TEST(Slider);
+}}
+

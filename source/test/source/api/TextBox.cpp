@@ -8,7 +8,8 @@
 #include <Gwork/Test/TestAPI.h>
 #include <Gwork/Controls/TextBox.h>
 
-using namespace Gwk;
+namespace Gwk {
+namespace Test {
 
 class TextBox : public TestUnit
 {
@@ -108,5 +109,7 @@ public:
     Gwk::Font m_font;
 };
 
+GWK_DECLARE_TEST(TextBox);
 
-DECLARE_TEST(TextBox);
+}}
+

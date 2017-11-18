@@ -10,7 +10,8 @@
 #include <Gwork/Controls/WindowControl.h>
 #include <Gwork/Controls/Button.h>
 
-using namespace Gwk;
+namespace Gwk {
+namespace Test {
 
 class Window : public TestUnit
 {
@@ -84,5 +85,7 @@ public:
 
 };
 
+GWK_DECLARE_TEST(Window);
 
-DECLARE_TEST(Window);
+}}
+

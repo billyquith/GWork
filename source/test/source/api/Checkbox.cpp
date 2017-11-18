@@ -8,7 +8,8 @@
 #include <Gwork/Test/TestAPI.h>
 #include <Gwork/Controls/CheckBox.h>
 
-using namespace Gwk;
+namespace Gwk {
+namespace Test {
 
 class Checkbox : public TestUnit
 {
@@ -51,5 +52,7 @@ public:
 
 };
 
+GWK_DECLARE_TEST(Checkbox);
 
-DECLARE_TEST(Checkbox);
+}}
+

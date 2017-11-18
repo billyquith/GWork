@@ -12,7 +12,8 @@
 #include <Gwork/Controls/Property/Checkbox.h>
 #include <Gwork/Controls/Property/ComboBox.h>
 
-using namespace Gwk;
+namespace Gwk {
+namespace Test {
 
 class Properties : public TestUnit
 {
@@ -75,5 +76,7 @@ public:
 
 };
 
+GWK_DECLARE_TEST(Properties);
 
-DECLARE_TEST(Properties);
+}}
+

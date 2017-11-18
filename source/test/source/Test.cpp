@@ -9,16 +9,22 @@
 #include <Gwork/Test/TestReflect.h>
 #include <Gwork/Platform.h>
 
-using namespace Gwk;
+namespace Gwk {
+namespace Test {
+    
+TestFrame* CreateTests(Gwk::Controls::Base *parent)
+{
+    return new TestFrame(parent);
+}
 
 GWK_CONTROL_CONSTRUCTOR(TestFrame)
 {
     Dock(Position::Fill);
-
+    
     // tabs to hold categories
     m_testTabs = new Controls::TabControl(this);
     m_testTabs->Dock(Position::Fill);
-
+    
     // status bar
     m_statusBar = new Controls::StatusBar(this);
     m_statusBar->Dock(Position::Bottom);
@@ -32,14 +38,14 @@ GWK_CONTROL_CONSTRUCTOR(TestFrame)
 void TestFrame::Render(Skin::Base* skin)
 {
     m_frames++;
-
+    
     if (m_fLastSecond < Platform::GetTimeInSeconds())
     {
         m_statusBar->SetText(Utility::Format("Gwork Unit Test - %i fps", m_frames*2));
         m_fLastSecond = Platform::GetTimeInSeconds() + 0.5f;
         m_frames = 0;
     }
-
+    
     ParentClass::Render(skin);
 }
 
@@ -62,3 +68,8 @@ void TestUnit::OutputToLog(String str)
 {
     m_testCategory->OutputToLog(str);
 }
+    
+} // namespace Test
+} // namespace Gwk
+
+

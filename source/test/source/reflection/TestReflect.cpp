@@ -13,7 +13,8 @@
 #include <Gwork/Platform.h>
 #include <Gwork/Reflection.h>
 
-using namespace Gwk;
+namespace Gwk {
+namespace Test {
 
 GWK_CONTROL_CONSTRUCTOR(TestReflect)
 {
@@ -106,3 +107,5 @@ void TestReflect::OnCategorySelect(Gwk::Event::Info info)
     info.Packet->Control->Show();
     m_lastControl = info.Packet->Control;
 }
+
+}}

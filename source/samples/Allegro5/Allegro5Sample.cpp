@@ -7,7 +7,7 @@
 
 #define GWK_SAMPLE
 #include <Gwork/Skins/TexturedBase.h>
-#include <Gwork/Test/TestAPI.h>
+#include <Gwork/Test/Test.h>
 #include <Gwork/Input/Allegro5.h>
 #include <Gwork/Renderers/Allegro5.h>
 #include <Gwork/Platform.h>
@@ -71,7 +71,7 @@ int main(int argc, char** argv)
     canvas->SetBackgroundColor(Gwk::Color(150, 170, 170, 255));
 
     // Create our unittest control (which is a Window with controls in it)
-    auto unit = new TestFrame(canvas);
+    auto unit = Gwk::Test::CreateTests(canvas);
     unit->SetPos(10, 10);
 
     // Create a Windows Control helper

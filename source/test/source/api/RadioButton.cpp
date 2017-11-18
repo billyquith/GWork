@@ -8,7 +8,8 @@
 #include <Gwork/Test/TestAPI.h>
 #include <Gwork/Controls/RadioButtonController.h>
 
-using namespace Gwk;
+namespace Gwk {
+namespace Test {
 
 class RadioButton : public TestUnit
 {
@@ -37,5 +38,7 @@ public:
 
 };
 
+GWK_DECLARE_TEST(RadioButton);
 
-DECLARE_TEST(RadioButton);
+}}
+

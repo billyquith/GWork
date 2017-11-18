@@ -8,7 +8,8 @@
 #include <Gwork/Test/TestAPI.h>
 #include <Gwork/Controls/NumericUpDown.h>
 
-using namespace Gwk;
+namespace Gwk {
+namespace Test {
 
 class Numeric : public TestUnit
 {
@@ -33,5 +34,7 @@ public:
 
 };
 
+GWK_DECLARE_TEST(Numeric);
 
-DECLARE_TEST(Numeric);
+}}
+

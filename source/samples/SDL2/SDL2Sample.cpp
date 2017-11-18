@@ -9,7 +9,7 @@
 #include <Gwork/Gwork.h>
 #include <Gwork/Skins/Simple.h>
 #include <Gwork/Skins/TexturedBase.h>
-#include <Gwork/Test/TestAPI.h>
+#include <Gwork/Test/Test.h>
 #include <Gwork/Input/SDL2.h>
 #include <Gwork/Renderers/SDL2.h>
 #include <SDL.h>

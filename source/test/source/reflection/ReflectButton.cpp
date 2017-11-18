@@ -15,7 +15,8 @@
 #include <lauxlib.h>
 #include <ponder/uses/lua.hpp>
 
-using namespace Gwk;
+namespace Gwk {
+namespace Test {
 
 static lua_State *g_L = NULL;
 
@@ -74,11 +75,13 @@ static void declare()
     ponder::lua::expose<ReflectButton>(g_L, "ReflectButton");
 }
 
-PONDER_AUTO_TYPE(ReflectButton, &declare);
-
 ReflectButton::~ReflectButton()
 {
-    ponder::runtime::destroy(m_buttonA);
+    // Lua will clean this up for us.
+    if (m_buttonA.pointer() != nullptr)
+    {
+        ponder::runtime::destroy(m_buttonA);
+    }
 }
 
 GWK_CONTROL_CONSTRUCTOR(ReflectAPIButton)
@@ -127,6 +130,11 @@ GWK_CONTROL_CONSTRUCTOR(ReflectLuaButton)
     ponder::lua::runString(g_L, str);
 }
 
-DECLARE_TEST(ReflectAPIButton);
-DECLARE_TEST(ReflectLuaButton);
+GWK_DECLARE_TEST(ReflectAPIButton);
+GWK_DECLARE_TEST(ReflectLuaButton);
+
+}}
+
+PONDER_AUTO_TYPE(Gwk::Test::ReflectButton, &Gwk::Test::declare);
+
 

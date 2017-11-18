@@ -8,7 +8,8 @@
 #include <Gwork/Test/TestAPI.h>
 #include <Gwork/Controls/Label.h>
 
-using namespace Gwk;
+namespace Gwk {
+namespace Test {
 
 class Label : public TestUnit
 {
@@ -93,5 +94,7 @@ public:
     Gwk::Font m_font;
 };
 
+GWK_DECLARE_TEST(Label);
 
-DECLARE_TEST(Label);
+}}
+

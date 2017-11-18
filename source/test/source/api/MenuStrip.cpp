@@ -8,7 +8,8 @@
 #include <Gwork/Test/TestAPI.h>
 #include <Gwork/Controls/MenuStrip.h>
 
-using namespace Gwk;
+namespace Gwk {
+namespace Test {
 
 class MenuStrip : public TestUnit
 {
@@ -110,5 +111,7 @@ public:
 
 };
 
+GWK_DECLARE_TEST(MenuStrip);
 
-DECLARE_TEST(MenuStrip);
+}}
+

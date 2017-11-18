@@ -12,7 +12,6 @@ namespace Gwk {
 namespace Reflect {
     
 void Declare()
-
 {
     ponder::Class::declare<Gwk::Color>()
         .property("r", &Gwk::Color::r)
