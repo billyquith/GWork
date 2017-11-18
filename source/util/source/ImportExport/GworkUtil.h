@@ -2,7 +2,7 @@
  *  GworkUtil.h - Utilites for Gwork ImportExport.
  *
  *  Copyright (c) 2010 Facepunch Studios
- *  Copyright (c) 2013-17 Nick Trout
+ *  Copyright (c) 2013-17 Billy Quith
  *  See license in Gwork.h
  *
  *  Note: This is done to remove the dependency on Bootil and keep the Gwork and the editor self

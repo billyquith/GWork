@@ -5,7 +5,7 @@
  *    cross-platform APIs are treated as platforms and their APIs used instead.
  *
  *  Copyright (c) 2012 Facepunch Studios
- *  Copyright (c) 2013-2017 Nick Trout
+ *  Copyright (c) 2013-2017 Billy Quith
  *  See license in Gwork.h
  */
 
