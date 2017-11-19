@@ -14,6 +14,10 @@ language: cpp
 #
 # currently issue for adding the Trusty LLVM ppa to Travis’ whitelist, previous, 12.04
 # issue: https://github.com/travis-ci/apt-source-whitelist/pull/205
+
+# Linux packages are got using apt on Travis.
+# See: https://docs.travis-ci.com/user/installing-dependencies/
+#
 matrix:
   include:
     - os: linux
@@ -24,7 +28,7 @@ matrix:
             - ubuntu-toolchain-r-test
           packages:
             - g++-4.9
-      env: COMPILER=g++-4.9 BUILD_CONFIG=Release
+      env: COMPILER=g++-4.9
       
     - os: linux
       compiler: gcc
@@ -34,8 +38,7 @@ matrix:
             - ubuntu-toolchain-r-test
           packages:
             - g++-5
-            - doxygen
-      env: COMPILER=g++-5 BUILD_CONFIG=Release
+      env: COMPILER=g++-5
       
     - os: linux
       compiler: gcc
@@ -45,8 +48,7 @@ matrix:
             - ubuntu-toolchain-r-test
           packages:
             - g++-6
-            - doxygen
-      env: COMPILER=g++-6 BUILD_CONFIG=Release
+      env: COMPILER=g++-6
       
     - os: linux
       compiler: gcc
@@ -56,8 +58,7 @@ matrix:
             - ubuntu-toolchain-r-test
           packages:
             - g++-7
-            - doxygen
-      env: COMPILER=g++-7 BUILD_CONFIG=Release
+      env: COMPILER=g++-7
       
     - os: linux
       compiler: clang
@@ -68,7 +69,7 @@ matrix:
             - llvm-toolchain-precise-3.6
           packages:
             - clang-3.6
-      env: COMPILER=clang++-3.6 BUILD_CONFIG=Release
+      env: COMPILER=clang++-3.6
       
     - os: linux
       compiler: clang
@@ -79,7 +80,7 @@ matrix:
             - llvm-toolchain-precise-3.7
           packages:
             - clang-3.7
-      env: COMPILER=clang++-3.7 BUILD_CONFIG=Release
+      env: COMPILER=clang++-3.7
       
     - os: linux
       compiler: clang
@@ -90,10 +91,9 @@ matrix:
             - llvm-toolchain-precise-3.8
           packages:
             - clang-3.8
-            - doxygen
-      env: COMPILER=clang++-3.8 BUILD_CONFIG=Release
+      env: COMPILER=clang++-3.8
 
-    - os: linux                                     # clang (previous)
+    - os: linux
       compiler: clang
       addons:
         apt:
@@ -102,10 +102,9 @@ matrix:
             - llvm-toolchain-precise-3.8
           packages:
             - clang-4.0
-            - doxygen
-      env: COMPILER=clang++-4.0 BUILD_CONFIG=Release
+      env: COMPILER=clang++-4.0
 
-    - os: linux                                     # clang (latest) off
+    - os: linux
       compiler: clang
       addons:
         apt:
@@ -114,44 +113,23 @@ matrix:
             - llvm-toolchain-precise-3.8
           packages:
             - clang-5.0
-      env: COMPILER=clang++-5.0 BUILD_CONFIG=Debug
-
-    - os: linux                                     # clang (latest) on
-      compiler: clang
-      addons:
-        apt:
-          sources:
-            - ubuntu-toolchain-r-test
-            - llvm-toolchain-precise-3.8
-          packages:
-            - clang-5.0
-            - doxygen
-      env: COMPILER=clang++-5.0 BUILD_CONFIG=Release
+      env: COMPILER=clang++-5.0
       
-    - os: osx                                         # Xcode (previous)
+    - os: osx               # Xcode (previous)
       osx_image: xcode8.2
       compiler: clang
-      env: COMPILER=clang++ BUILD_CONFIG=Release
-      install: ./ci/travis/install.sh
-      
-    - os: osx                                         # Xcode (latest) off
+      env: COMPILER=clang++
+      install: ./ci/travis/install.sh "+ponder +lua"
+            
+    - os: osx               # Xcode (latest)
       osx_image: xcode9.1
       compiler: clang
-      env: COMPILER=clang++ BUILD_CONFIG=Debug WANTS="-DWANT_REFLECTION=OFF"
-      install: ./ci/travis/install.sh
-      
-    - os: osx                                         # Xcode (latest) on
-      osx_image: xcode9.1
-      compiler: clang
-      env: COMPILER=clang++ BUILD_CONFIG=Release WANTS="-DWANT_REFLECTION=ON"
-      install: ./ci/travis/install.sh reflect XCode
+      env: COMPILER=clang++
+      install: ./ci/travis/install.sh "+ponder +lua"
       
         
-before_script: ./ci/travis/make_build.sh $COMPILER "$WANTS"
+script: ./ci/travis/build.sh $COMPILER "$WANTS"
     
-script:
-  - cd build && cmake --build . --target GworkNullSample --config $BUILD_CONFIG
-
 notifications:
   email:
     on_failure: change
