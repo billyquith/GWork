@@ -6,7 +6,7 @@ set -ev
 cmake --version
 mkdir build && cd build
 
-WANT_OPTS="-DWANT_TESTS=ON -DWANT_SAMPLE=ON -DWANT_RENDERER_NULL=ON" # common
+WANT_OPTS="-DWANT_TESTS=ON -DWANT_SAMPLE=ON -DRENDER_NULL=ON" # common
 
 function cpp2c {
     local comp=$1
