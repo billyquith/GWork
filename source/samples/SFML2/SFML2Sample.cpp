@@ -41,7 +41,7 @@ int main()
     canvas.SetBackgroundColor(Gwk::Color(150, 170, 170, 255));
 
     // Create our unittest control (which is a Window with controls in it)
-    TestFrame unit(&canvas);
+    std::unique_ptr<Gwk::Controls::Base> unit(Gwk::Test::CreateTests(&canvas));
 
     // Create an input processor
     Gwk::Input::SFML input;
