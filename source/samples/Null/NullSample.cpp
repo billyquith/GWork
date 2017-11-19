@@ -13,6 +13,7 @@
 #include <Gwork/Input/Null.h>
 #include <Gwork/Renderers/Null.h>
 #include <Gwork/Platform.h>
+#include <memory>
 
 int main(int argc, char** argv)
 {

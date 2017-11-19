@@ -12,6 +12,7 @@
 #include <Gwork/Test/TestAPI.h>
 #define STB_IMAGE_WRITE_IMPLEMENTATION
 #include <Gwork/External/stb_image_write.h>
+#include <memory>
 
 #define VIEWER 1    // turn on for interactive viewer
 
