@@ -22,9 +22,10 @@ function install_osx {
     if [[ -z `brew list | grep cmake` ]]; then brew install cmake; fi
     brew outdated cmake || brew upgrade cmake
 
+    # ("reflect", Generator)
     if [[ "$1" == "reflect" ]]; then
         brew install lua  # currently Lua 5.2
-        get_ponder Xcode
+        get_ponder $2
     fi
 }
 
