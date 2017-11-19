@@ -117,7 +117,7 @@ set(GWK_SOURCES
     source/Hook.cpp
     source/InputHandler.cpp
     source/Skin.cpp
-    source/ToolTip.cpp
+    source/Tooltip.cpp
     source/Controls/Base.cpp
     source/Controls/Button.cpp
     source/Controls/Canvas.cpp
