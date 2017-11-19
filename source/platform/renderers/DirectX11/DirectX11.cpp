@@ -6,6 +6,7 @@
  */
 
 #include <Gwork/Renderers/DirectX11.h>
+#include <Gwork/PlatformCommon.h>
 #include <Gwork/Utility.h>
 
 #include <DirectXMath.h>
@@ -194,7 +195,7 @@ Font::Status DirectX11ResourceLoader::LoadFont(Font& font)
 
     if (!hFont)
     {
-        Gwk::Log::Write(Log::Level::Error, "Font file not found: %s", filename.c_str());
+        Gwk::Log::Write(Log::Level::Error, "Font file not found: %s", font.facename.c_str());
         return font.status = Font::Status::ErrorFileNotFound;
     }
 

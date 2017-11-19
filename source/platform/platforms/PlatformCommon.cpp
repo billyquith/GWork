@@ -74,9 +74,6 @@ void Gwk::Debug::AssertFail(const char* strMsg)
 {
     Log::Write(Log::Level::Fatal, "Assert: %s\n", strMsg);
     
-#if defined(WIN32)
-    MessageBoxA(nullptr, strMsg, "Assert", MB_ICONEXCLAMATION | MB_OK);
-#endif
     debug_break();  // break into debugger
 }
 

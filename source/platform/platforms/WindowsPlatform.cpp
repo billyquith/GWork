@@ -28,8 +28,104 @@ using namespace Gwk::Platform;
 static const size_t FILESTRING_SIZE = 256;
 static const size_t FILTERBUFFER_SIZE = 512;
 
-//static Gwk::Input::Windows g_input;
 
+
+Gwk::String Gwk::Platform::GetExecutableDir()
+{
+#if defined(__APPLE__)
+
+    // OSX: Use process information.
+
+    const pid_t pid = getpid();
+    char pathbuf[PROC_PIDPATHINFO_MAXSIZE];
+    const int ret = proc_pidpath(pid, pathbuf, sizeof(pathbuf));
+    if (ret > 0)
+    {
+        return String(dirname(pathbuf)) + "/";
+    }
+
+    // fprintf(stderr, "PID %d: %s\n", pid, strerror(errno));
+    return "";
+
+#elif defined(WIN32)
+
+    // Windows: Use the module information.
+
+    char path[MAX_PATH] = { '\0' };
+    HMODULE hModule = GetModuleHandle(NULL);
+    if (hModule != NULL)
+    {
+        GetModuleFileName(hModule, path, sizeof(path));
+
+        if (path)
+        {
+            // get directory name
+            char *dir = strrchr(path, '\\');
+            if (dir)
+                dir[1] = '\0';
+        }
+    }
+    return String(path);
+
+#else
+
+    return String();
+
+#endif
+}
+
+void Gwk::Platform::Sleep(unsigned int ms)
+{
+    // Only MSVC different.
+#ifdef _MSC_VER
+    ::Sleep(ms);
+#else
+    ::sleep(ms);
+#endif
+}
+
+#ifdef WIN32
+
+static double GetPerformanceFrequency()
+{
+    static double Frequency = 0.0f;
+
+    if (Frequency == 0.0f)
+    {
+        __int64 perfFreq;
+        QueryPerformanceFrequency((LARGE_INTEGER*)&perfFreq);
+        Frequency = 1.0 / perfFreq;
+    }
+
+    return Frequency;
+}
+
+float Gwk::Platform::GetTimeInSeconds()
+{
+    static float fCurrentTime = 0.0f;
+    static __int64 iLastTime = 0;
+    __int64 thistime;
+
+    QueryPerformanceCounter((LARGE_INTEGER*)&thistime);
+    double fSecondsDifference = (thistime - iLastTime)*GetPerformanceFrequency();
+
+    if (fSecondsDifference > 0.1)
+        fSecondsDifference = 0.1;
+
+    fCurrentTime += fSecondsDifference;
+    iLastTime = thistime;
+    return fCurrentTime;
+}
+
+#else
+
+float Gwk::Platform::GetTimeInSeconds()
+{
+    const float seconds = static_cast<float>(clock()) / CLOCKS_PER_SEC;
+    return seconds;
+}
+
+#endif
 static LPCTSTR iCursorConversion[] =
 {
     IDC_ARROW,
