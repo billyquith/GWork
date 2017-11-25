@@ -56,6 +56,13 @@ function apply_projects
     $1 SW sw
 }
 
+function build_docs
+{
+    pushd docs
+    ./mkdocs.sh
+    popd
+}
+
 function build_all
 {
     echo "Maintain build log:" > $BUILD_LOG
