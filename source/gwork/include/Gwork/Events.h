@@ -15,7 +15,7 @@
 #include <functional>
 
 #if GWK_REFLECT
-#   include <ponder/pondertype.hpp>
+#   include <ponder/value.hpp>
 #endif
 
 namespace Gwk
