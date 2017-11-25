@@ -36,21 +36,22 @@ function setup_osx
 {
     echo "Requested: $1"
     
-    if [[ -z `brew list --versions cmake` ]]; then
-        brew install cmake
-    else
-        # Update cmake to latest version (will also update brew)
-        brew outdated cmake || brew upgrade cmake
-    fi
-
-    if [[ -z `echo $1 | grep "+doxygen"` ]]; then
-        if [[ -z `brew list --versions doxygen` ]]; then
-            brew install doxygen
-        fi
-    fi
+    # if [[ -z `brew list --versions cmake` ]]; then
+    #     brew install cmake
+    # else
+    #     # Update cmake to latest version (will also update brew)
+    #     brew outdated cmake || brew upgrade cmake
+    # fi
+    #
+    # if [[ -z `echo $1 | grep "+doxygen"` ]]; then
+    #     if [[ -z `brew list --versions doxygen` ]]; then
+    #         brew install doxygen
+    #     fi
+    # fi
 
     if [[ -z `echo $1 | grep "+lua"` ]]; then
-        brew install lua@5.3
+        #brew install lua@5.3
+        install_lua53 macosx
     fi
 
     if [[ -z `echo $1 | grep "+ponder"` ]]; then
@@ -63,8 +64,10 @@ function setup_linux
     # sudo apt-get -qq update
     # sudo apt-get install -y cmake doxygen
     echo "See .travis.yml for packages/addons install/update"
-    
-    install_lua53 linux
+
+    if [[ -z `echo $1 | grep "+lua"` ]]; then
+        install_lua53 linux
+    fi    
 }
 
 setup_$TRAVIS_OS_NAME "$@"
