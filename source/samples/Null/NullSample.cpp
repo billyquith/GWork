@@ -17,7 +17,7 @@
 
 int main(int argc, char** argv)
 {
-    // Create a Gwork Allegro Renderer
+    // Create a Null renderer
     std::unique_ptr<Gwk::Renderer::Null> renderer(new Gwk::Renderer::Null());
 
     // Create a Gwork skin
@@ -33,12 +33,12 @@ int main(int argc, char** argv)
     canvas->SetDrawBackground(true);
     canvas->SetBackgroundColor(Gwk::Color(150, 170, 170, 255));
 
-    // Create our unittest control (which is a Window with controls in it)
+    // Create our test control (which is a Window with controls in it)
     std::unique_ptr<Gwk::Controls::Base> unit(Gwk::Test::CreateTests(canvas.get()));
     unit->SetPos(10, 10);
 
-    Gwk::Input::Null GworkInput;
-    GworkInput.Initialize(canvas.get());
+    Gwk::Input::Null input;
+    input.Initialize(canvas.get());
 
     canvas->RenderCanvas();
     
