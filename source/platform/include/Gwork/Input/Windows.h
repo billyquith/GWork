@@ -18,6 +18,7 @@ namespace Gwk
 {
     namespace Input
     {
+        //! Translate Windows system messages into Gwork events.
         class Windows
         {
         public:

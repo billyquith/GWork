@@ -56,11 +56,9 @@ namespace Gwk
             void FreeTexture(Texture& texture) override;
         };
 
-        //
         //! \brief Renders to a buffer without needing external dependencies.
         //!
         //! This can be used for screenshots and testing.
-        //
         class GWK_EXPORT Software : public Gwk::Renderer::Base
         {
         public:
