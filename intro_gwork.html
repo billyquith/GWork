@@ -84,7 +84,7 @@ $(document).ready(function(){initNavTree('intro_gwork.html','');});
 <div class="contents">
 <div class="textblock"><h1><a class="anchor" id="Overview"></a>
 Overview</h1>
-<p>Gwork is a GUI library that can be embedded into existing projects. It has a platform abstraction which can be implemented by the user to provide the features necessary for drawing and input. A number of back ends are provided, and samples to show how they might be used.</p>
+<p>Gwork is a GUI library that can be embedded into existing projects. It has a platform abstraction which can be implemented by the user to provide the features necessary for drawing and input. A number of backends are provided, and samples to show how they might be used.</p>
 <p>Gwork is skinnable, so its appearance can be changed by modifying the skin bitmap, and/or implementing a new skin. New controls can be added by specialising an existing control, or by starting afresh.</p>
 <h1><a class="anchor" id="Backend"></a>
 Backend</h1>
@@ -96,7 +96,7 @@ Input</h2>
 <h2><a class="anchor" id="Renderer"></a>
 Renderer</h2>
 <p>The renderer, as you might expect, draws the GUI. Of the backends provided, some are OS specific, like DirectX, some are cross plaform APIs like, Allegro5, and SDL2, and there is a software renderer: <a class="el" href="class_gwk_1_1_renderer_1_1_software.html" title="Renders to a buffer without needing external dependencies. ">Gwk::Renderer::Software</a>.</p>
-<p>The render must supply certain functionality like drawing text, textured rectangles, clipping, and texture colour sampling. It does this by deriving from <a class="el" href="class_gwk_1_1_renderer_1_1_base.html" title="Base class for all renderer implementations. ">Gwk::Renderer::Base</a>.</p>
+<p>The render must supply certain functionality like drawing text, textured rectangles, clipping, and texture color sampling. It does this by deriving from <a class="el" href="class_gwk_1_1_renderer_1_1_base.html" title="Base class for all renderer implementations. ">Gwk::Renderer::Base</a>.</p>
 <p>The renderer requires resources, like textures, and font files. These are read via <a class="el" href="class_gwk_1_1_resource_loader.html">Gwk::ResourceLoader</a>. This might be implemented to load from disk files, or read from your own resource system. Depending on the implmentation <a class="el" href="class_gwk_1_1_resource_paths.html">Gwk::ResourcePaths</a> might be supplied. This gets a full path for a resource, depending on its type. You might want to organise your directories differently to the default in Gwork. One such implementation is <a class="el" href="class_gwk_1_1_platform_1_1_relative_to_executable_paths.html">Gwk::Platform::RelativeToExecutablePaths</a>.</p>
 <h2><a class="anchor" id="Platform"></a>
 Platform</h2>
