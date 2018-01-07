@@ -44,11 +44,13 @@ or targets this way (e.g. "build_sdl2", "build_allegro5", etc).
 
 \subsection win_build Windows
 
+You can see all of the project generators that cmake provides by typing:
+
 \code{.sh}
 cmake --help    # show cmake options
 \endcode
 
-To generate project files:
+To generate project files for Visual Studio 2015, 64-bit, with an Allegro5 renderer use:
 
 \code{.sh}
 mkdir build
@@ -56,6 +58,10 @@ cd build
 cmake -G "Visual Studio 14 2015 Win64" -DRENDER_ALLEGRO5=ON ..
 start gwork.sln
 \endcode
+
+You'll then have some project files (i.e. a solution and vcproj files). You can use these how
+you'd use a normal setup for Visual Studio. Or, just change the generator (-G) and the renderer
+(-DRENDER_*) to whatever you need.
 
 Windows has no standard installation locations, or they keep moving (e.g. DirectX).
 The cmake "package finders" don't always find what they are looking for. You may have to run

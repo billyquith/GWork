@@ -6,7 +6,7 @@
 
 Gwork is a GUI library that can be embedded into existing projects. It has a platform abstraction
 which can be implemented by the user to provide the features necessary for drawing and input.
-A number of back ends are provided, and samples to show how they might be used.
+A number of backends are provided, and samples to show how they might be used.
 
 Gwork is skinnable, so its appearance can be changed by modifying the skin bitmap, and/or implementing a new skin. New controls can be added by specialising an existing control, or by
 starting afresh.
@@ -30,7 +30,7 @@ like DirectX, some are cross plaform APIs like, Allegro5, and SDL2, and there is
 renderer: Gwk::Renderer::Software.
 
 The render must supply certain functionality like drawing text, textured rectangles, clipping,
-and texture colour sampling. It does this by deriving from Gwk::Renderer::Base.
+and texture color sampling. It does this by deriving from Gwk::Renderer::Base.
 
 The renderer requires resources, like textures, and font files. These are read via
 Gwk::ResourceLoader. This might be implemented to load from disk files, or read from your own
