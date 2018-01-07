@@ -123,9 +123,7 @@ var annotated_dup =
         [ "SFML", "class_gwk_1_1_input_1_1_s_f_m_l.html", "class_gwk_1_1_input_1_1_s_f_m_l" ],
         [ "Windows", "class_gwk_1_1_input_1_1_windows.html", "class_gwk_1_1_input_1_1_windows" ]
       ] ],
-      [ "Platform", null, [
-        [ "RelativeToExecutablePaths", "class_gwk_1_1_platform_1_1_relative_to_executable_paths.html", "class_gwk_1_1_platform_1_1_relative_to_executable_paths" ]
-      ] ],
+      [ "Platform", "namespace_gwk_1_1_platform.html", "namespace_gwk_1_1_platform" ],
       [ "Renderer", null, [
         [ "Allegro", "class_gwk_1_1_renderer_1_1_allegro.html", "class_gwk_1_1_renderer_1_1_allegro" ],
         [ "AllegroResourceLoader", "class_gwk_1_1_renderer_1_1_allegro_resource_loader.html", "class_gwk_1_1_renderer_1_1_allegro_resource_loader" ],

@@ -86,9 +86,6 @@ $(document).ready(function(){initNavTree('class_gwk_1_1_platform_1_1_relative_to
 </div><!--header-->
 <div class="contents">
 
-<p>Calculate resource paths relative to the executable.  
- <a href="class_gwk_1_1_platform_1_1_relative_to_executable_paths.html#details">More...</a></p>
-
 <p><code>#include &lt;<a class="el" href="_platform_common_8h_source.html">PlatformCommon.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for Gwk::Platform::RelativeToExecutablePaths:</div>
@@ -104,9 +101,8 @@ Inheritance diagram for Gwk::Platform::RelativeToExecutablePaths:</div>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ac5ad8671ff57a5de45832c24dca2d190"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_gwk_1_1_platform_1_1_relative_to_executable_paths.html#ac5ad8671ff57a5de45832c24dca2d190">RelativeToExecutablePaths</a> (String const &amp;resourceDir=String())</td></tr>
 <tr class="separator:ac5ad8671ff57a5de45832c24dca2d190"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a24cc4dc5c4bc56380bf99d4cdcbe9c20"><td class="memItemLeft" align="right" valign="top"><a id="a24cc4dc5c4bc56380bf99d4cdcbe9c20"></a>
-String&#160;</td><td class="memItemRight" valign="bottom"><b>GetPath</b> (<a class="el" href="class_gwk_1_1_resource_paths.html#a6b782f20bdfc1552a3b1c2a21659384e">Type</a> type, String const &amp;name) final</td></tr>
-<tr class="separator:a24cc4dc5c4bc56380bf99d4cdcbe9c20"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a608a6f1befb6e3e6214bb1d65f523016"><td class="memItemLeft" align="right" valign="top">String&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_gwk_1_1_platform_1_1_relative_to_executable_paths.html#a608a6f1befb6e3e6214bb1d65f523016">GetPath</a> (<a class="el" href="class_gwk_1_1_resource_paths.html#a6b782f20bdfc1552a3b1c2a21659384e">Type</a> type, String const &amp;relPath) final</td></tr>
+<tr class="separator:a608a6f1befb6e3e6214bb1d65f523016"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
@@ -120,7 +116,7 @@ Additional Inherited Members</h2></td></tr>
 <tr class="separator:a6b782f20bdfc1552a3b1c2a21659384e inherit pub_types_class_gwk_1_1_resource_paths"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Calculate resource paths relative to the executable. </p>
+<div class="textblock"><p>Calculate resource paths relative to the executable. I.e. path = exe_dir + resource_dir + relative_path. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="ac5ad8671ff57a5de45832c24dca2d190"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ac5ad8671ff57a5de45832c24dca2d190">&#9670;&nbsp;</a></span>RelativeToExecutablePaths()</h2>
@@ -139,10 +135,57 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 <p>Constructor </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">resourceDir</td><td>: optional directory, relative to the executable. </td></tr>
+    <tr><td class="paramname">resourceDir</td><td>: Optional directory, relative to the executable. </td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a608a6f1befb6e3e6214bb1d65f523016"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a608a6f1befb6e3e6214bb1d65f523016">&#9670;&nbsp;</a></span>GetPath()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">String Gwk::Platform::RelativeToExecutablePaths::GetPath </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_gwk_1_1_resource_paths.html#a6b782f20bdfc1552a3b1c2a21659384e">Type</a>&#160;</td>
+          <td class="paramname"><em>type</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">String const &amp;&#160;</td>
+          <td class="paramname"><em>relPath</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">final</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Get full path to file. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">type</td><td>: File resource type. </td></tr>
+    <tr><td class="paramname">relPath</td><td>: Relative path to file. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Path relative to the resource directory. </dd></dl>
+
+<p>Implements <a class="el" href="class_gwk_1_1_resource_paths.html">Gwk::ResourcePaths</a>.</p>
 
 </div>
 </div>
@@ -154,7 +197,7 @@ Additional Inherited Members</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><b>Gwk</b></li><li class="navelem"><b>Platform</b></li><li class="navelem"><a class="el" href="class_gwk_1_1_platform_1_1_relative_to_executable_paths.html">RelativeToExecutablePaths</a></li>
+    <li class="navelem"><b>Gwk</b></li><li class="navelem"><a class="el" href="namespace_gwk_1_1_platform.html">Platform</a></li><li class="navelem"><a class="el" href="class_gwk_1_1_platform_1_1_relative_to_executable_paths.html">RelativeToExecutablePaths</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>

@@ -14,6 +14,23 @@ var NAVTREE =
       [ "Using Gwork in your project", "build_gwork.html#gwork_cmake_embed", null ]
     ] ],
     [ "Docking", "docking_notes.html", null ],
+    [ "Introduction to Gwork", "intro_gwork.html", [
+      [ "Overview", "intro_gwork.html#Overview", null ],
+      [ "Backend", "intro_gwork.html#Backend", [
+        [ "Input", "intro_gwork.html#Input", null ],
+        [ "Renderer", "intro_gwork.html#Renderer", null ],
+        [ "Platform", "intro_gwork.html#Platform", null ]
+      ] ],
+      [ "Gwork", "intro_gwork.html#Configuring", null ],
+      [ "Gwork", "intro_gwork.html#Using", null ]
+    ] ],
+    [ "Namespaces", null, [
+      [ "Namespace List", "namespaces.html", "namespaces" ],
+      [ "Namespace Members", "namespacemembers.html", [
+        [ "All", "namespacemembers.html", null ],
+        [ "Functions", "namespacemembers_func.html", null ]
+      ] ]
+    ] ],
     [ "Classes", "annotated.html", [
       [ "Class List", "annotated.html", "annotated_dup" ],
       [ "Class Index", "classes.html", null ],
