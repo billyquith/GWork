@@ -36,6 +36,7 @@ option(WANT_ALLOC_STATS     "Track memory allocations" OFF)
 #-----------------------------------------------------------
 # Configure once options known
 
+option(WANT_REFLECTION_LOCAL "Dev Ponder" OFF)
 set(GWK_TARGET_ARCH "Unknown")      # default architecture e.g. x86, x64
 
 # Set the default build type to release with debug info

@@ -8,6 +8,20 @@ CM_PROJ=gwork.xcodeproj
 BUILD_LOG_NAME=maintain_build.txt
 BUILD_LOG=../$BUILD_LOG_NAME
 
+
+# Get dependencies
+function get_deps
+{    
+    pushd "source"
+    [ ! -d deps ] || mkdir deps
+    cd deps
+    git clone --depth=3 https://github.com/billyquith/ponder.git ponder
+    pushd ponder
+    git checkout -b dev/gwork
+    popd
+    popd
+}
+
 function ensure_project #(renderer, build_dir)
 {
     local BDIR=build_$2
@@ -76,11 +90,13 @@ function build_all
 
 function show_help
 {
-    echo "Usage: maintain.sh -p(roject) -o(pen) -b(uild) -r(un) -d(ocs)"
+    echo "Usage: maintain.sh --deps -p(roject) -o(pen) -b(uild) -r(un) --docs"
 }
 
 while getopts "pobrdh" OPT; do
     case $OPT in
+    --deps) get_deps
+        ;;
     p)  apply_projects ensure_project
         ;;
     o)  apply_projects open_project
@@ -89,7 +105,7 @@ while getopts "pobrdh" OPT; do
         ;;
     r)  apply_projects run_project
         ;;
-    d)  build_docs
+    --docs)  build_docs
         ;;
     h)  show_help
         ;;
