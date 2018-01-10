@@ -91,11 +91,9 @@ int main()
     // Create a GWEN Irrlicht Renderer
     //
     Gwk::Platform::RelativeToExecutablePaths paths(GWORK_RESOURCE_DIR);
-    Gwk::Renderer::IrrlichtResourceLoader loader(paths);
-    loader.SetIRRDevice(device);
+    Gwk::Renderer::IrrlichtResourceLoader loader(driver, paths);
 
-    Gwk::Renderer::Irrlicht* pRenderer = new Gwk::Renderer::Irrlicht(loader);
-    pRenderer->SetIrrlichtDevice(device);
+    Gwk::Renderer::Irrlicht* pRenderer = new Gwk::Renderer::Irrlicht(device, loader);
     //
     // Create a GWEN skin
     //
@@ -113,7 +111,7 @@ int main()
     pCanvas->SetBackgroundColor(Gwk::Color(150, 0, 0, 255));
     //  Texture caching doesn't seem to work properly.
     //  Cached textures never get updated.
-    pCanvas->EnableCacheToTexture();
+    //pCanvas->EnableCacheToTexture();
     //
     // Create our unittest control (which is a Window with controls in it)
     //

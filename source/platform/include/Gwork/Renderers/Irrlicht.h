@@ -26,15 +26,13 @@ namespace Gwk
             ResourcePaths& m_paths;
             irr::video::IVideoDriver* Driver;
         public:
-            IrrlichtResourceLoader(ResourcePaths& paths) : m_paths(paths) {}
+            IrrlichtResourceLoader(irr::video::IVideoDriver* VideoDriver, ResourcePaths& paths) : Driver(VideoDriver), m_paths(paths) {}
 
             Font::Status LoadFont(Font& font) override;
             void FreeFont(Font& font) override;
 
             Texture::Status LoadTexture(Texture& texture) override;
             void FreeTexture(Texture& texture) override;
-
-            void SetIRRDevice(irr::IrrlichtDevice* Device);
         };
 
         //
@@ -48,21 +46,17 @@ namespace Gwk
             irr::gui::IGUIFont* Text;
 
         public:
-            Irrlicht(Gwk::ResourceLoader& loader);
+            Irrlicht(irr::IrrlichtDevice* Device, IrrlichtResourceLoader& loader);
             ~Irrlicht();
 
-            void SetIrrlichtDevice(irr::IrrlichtDevice* Device);
-
-
             void SetDrawColor(Gwk::Color color);
-
 
             void StartClip();
             void EndClip();
 
-            Gwk::Color PixelColour(Gwk::Texture* pTexture, unsigned int x, unsigned int y, const Gwk::Color & col_default = Gwk::Color(255, 255, 255, 255));
+            Gwk::Color PixelColor(Gwk::Texture* pTexture, unsigned int x, unsigned int y, const Gwk::Color & col_default = Gwk::Color(255, 255, 255, 255));
 
-            ICacheToTexture* GetCTT() { return m_CTT; }
+            ICacheToTexture* GetCTT();
 
             void RenderText(Gwk::Font* pFont, Gwk::Point pos, const Gwk::String & text);
             Gwk::Point MeasureText(Gwk::Font* pFont, const Gwk::String & text);

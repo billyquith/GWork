@@ -11,11 +11,6 @@ namespace Gwk
     {
         //
         //  Resource Loader
-        void IrrlichtResourceLoader::SetIRRDevice(irr::IrrlichtDevice* Device)
-        {
-            Driver = Device->getVideoDriver();
-        }
-
         Font::Status IrrlichtResourceLoader::LoadFont(Font& font)
         {
             printf("Load Font\n");
@@ -69,7 +64,7 @@ namespace Gwk
             std::map<CacheHandle, irr::video::ITexture*> m_TextureCache;
 
         public:
-            IrrlichtCTT() {}
+            IrrlichtCTT(irr::video::IVideoDriver* VideoDriver) : m_Driver(VideoDriver) {}
 
             ~IrrlichtCTT()
             {
@@ -82,11 +77,6 @@ namespace Gwk
             }
 
             void SetRenderer(Gwk::Renderer::Base* renderer) { m_renderer = renderer; }
-
-            void SetVideoDriver(irr::video::IVideoDriver* Dvr)
-            {
-                m_Driver = Dvr;
-            }
 
             void Initialize() {}
             void ShutDown() {}
@@ -144,22 +134,14 @@ namespace Gwk
 
         //
         //  Irrlicht Renderer
-        void Irrlicht::SetIrrlichtDevice(irr::IrrlichtDevice* Device)
-        {
-            Driver = Device->getVideoDriver();
-            m_CTT->SetVideoDriver(Device->getVideoDriver());
-            Text = Device->getGUIEnvironment()->getBuiltInFont();
-        }
-
-        //
-        //  Irrlicht Renderer
-        Irrlicht::Irrlicht(ResourceLoader& loader) : Base(loader),
-            m_CTT(new IrrlichtCTT())
+        Irrlicht::Irrlicht(irr::IrrlichtDevice* Device, IrrlichtResourceLoader& loader) : Base(loader),
+            m_CTT(new IrrlichtCTT(Device->getVideoDriver())), Driver(Device->getVideoDriver())
         {
             m_CTT->SetRenderer(this);
             m_CTT->Initialize();
             DrawColor.set(255, 255, 255, 255);
             ClipRect = irr::core::rect<irr::s32>();
+            Text = Device->getGUIEnvironment()->getBuiltInFont();
         }
 
         Irrlicht::~Irrlicht()
@@ -187,7 +169,7 @@ namespace Gwk
 
         //void Irrlicht::DrawMissingImage(Gwen::Rect pTargetRect) {}
 
-        Gwk::Color Irrlicht::PixelColour(Gwk::Texture* pTexture, unsigned int x, unsigned int y, const Gwk::Color & col_default)
+        Gwk::Color Irrlicht::PixelColor(Gwk::Texture* pTexture, unsigned int x, unsigned int y, const Gwk::Color & col_default)
         {
             if (pTexture->IsLoaded())
             {
@@ -250,7 +232,7 @@ namespace Gwk
         {
             Translate(rect);
             Driver->draw2DRectangle(DrawColor,
-                irr::core::rect<irr::s32>(rect.x, rect.y, rect.x + rect.w, rect.y + rect.h));
+                irr::core::rect<irr::s32>(rect.x, rect.y, rect.x + rect.w, rect.y + rect.h), &ClipRect);
         }
 
         void Irrlicht::DrawLinedRect(Gwk::Rect rect)
@@ -264,6 +246,8 @@ namespace Gwk
             Translate(x, y);
             Driver->drawPixel(x, y, DrawColor);
         }
+
+        ICacheToTexture* Irrlicht::GetCTT() { return m_CTT; }
 
     }
 }
