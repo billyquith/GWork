@@ -6,6 +6,7 @@
 
 This is the documentation for [Gwork][gwork], which a GUI library. Gwork is a fork of GWEN.
 
+- \ref intro_gwork
 - \ref build_gwork
 
 \image html screen_buttons.png "Screenshot" height=600px

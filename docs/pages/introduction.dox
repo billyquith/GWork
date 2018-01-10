@@ -1,0 +1,64 @@
+/*!
+
+\page intro_gwork Introduction to Gwork
+
+\section Overview
+
+Gwork is a GUI library that can be embedded into existing projects. It has a platform abstraction
+which can be implemented by the user to provide the features necessary for drawing and input.
+A number of backends are provided, and samples to show how they might be used.
+
+Gwork is skinnable, so its appearance can be changed by modifying the skin bitmap, and/or implementing a new skin. New controls can be added by specialising an existing control, or by
+starting afresh.
+
+
+\section Backend
+
+The backend supplies functionality necessary for Gwork to work, like:
+
+\subsection Input
+
+This translates input, e.g. mouse clicks, and keyboard input, into events that can be handled
+by Gwork, via Gwk::IInputEventListener. Each backend implements this in a way that is appropriate.
+
+Some of the more generic input implementations are reuseable, e.g. Gwk::Input::Windows.
+
+\subsection Renderer
+
+The renderer, as you might expect, draws the GUI. Of the backends provided, some are OS specific,
+like DirectX, some are cross plaform APIs like, Allegro5, and SDL2, and there is a software
+renderer: Gwk::Renderer::Software.
+
+The render must supply certain functionality like drawing text, textured rectangles, clipping,
+and texture color sampling. It does this by deriving from Gwk::Renderer::Base.
+
+The renderer requires resources, like textures, and font files. These are read via
+Gwk::ResourceLoader. This might be implemented to load from disk files, or read from your own
+resource system. Depending on the implmentation Gwk::ResourcePaths might be supplied. This
+gets a full path for a resource, depending on its type. You might want to organise your
+directories differently to the default in Gwork. One such implementation is
+Gwk::Platform::RelativeToExecutablePaths.
+
+\subsection Platform
+
+The platform implements Gwk::Platform for each backend. Like input, some of these are reusable,
+like WindowsPlatform. This supplies minimal functionality for the OS or platform you are on, like
+Gwk::Platform::Sleep, and Gwk::Platform::GetClipboardText.
+
+
+\section Configuring Gwork
+
+Gwork uses cmake to generate project build files in your chosen format. By default, if you choose
+a given renderer then sensible input and platform will be chosen to build the samples. However,
+you can choose other combinations. The configs supplied are really just to build the samples,
+and the whole system can be configured for your particular requirements.
+
+See notes on \ref build_gwork
+
+\section Using Gwork
+
+Have a look at the samples for how to use Gwork's API. You basically need to initialise Gwork,
+create renderer and input, and then in your main loop you update the input, and then render
+Gwork. It doesn't take over your system, it is just another sub-system to update.
+
+*/
