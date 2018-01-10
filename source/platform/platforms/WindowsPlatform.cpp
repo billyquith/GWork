@@ -2,7 +2,7 @@
  *  Gwork
  *  Copyright (c) 2011 Facepunch Studios
  *  Copyright (c) 2013-17 Nick Trout
-*  See license in Gwork.h
+ *  See license in Gwork.h
  */
 
 #include <windows.h>

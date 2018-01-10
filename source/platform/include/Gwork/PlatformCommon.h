@@ -31,7 +31,7 @@ namespace Gwk
             
             //! Get full path to file.
             //! \param type : File resource type.
-            //! \param name : Relative path to file.
+            //! \param relPath : Relative path to file.
             //! \return Path relative to the resource directory.
             String GetPath(Type type, String const& relPath) final;
         };
