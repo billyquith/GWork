@@ -13,13 +13,11 @@ namespace Gwk
         //  Resource Loader
         Font::Status IrrlichtResourceLoader::LoadFont(Font& font)
         {
-            printf("Load Font\n");
             return Font::Status::Loaded;
         }
 
         void IrrlichtResourceLoader::FreeFont(Gwk::Font& font)
         {
-            printf("Free Font\n");
         }
 
         Texture::Status IrrlichtResourceLoader::LoadTexture(Texture& texture)
@@ -128,7 +126,7 @@ namespace Gwk
                 }
             }
 
-            void UpdateControlCacheTexture(CacheHandle control) { printf("Update"); }
+            void UpdateControlCacheTexture(CacheHandle control) {}
         };
         //===================================//
 

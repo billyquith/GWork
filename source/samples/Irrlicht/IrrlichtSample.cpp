@@ -50,7 +50,7 @@ int main()
     - deviceType: Type of the device. This can currently be the Null-device,
     one of the two software renderers, D3D8, D3D9, or OpenGL.
     - windowSize: Size of the Window or screen in FullScreenMode to be
-    created. In this example we use 640x480.
+    created. In this example we use 1004x650.
     - bits: Amount of color bits per pixel. This should be 16 or 32. The
     parameter is often ignored when running in windowed mode.
     - fullscreen: Specifies if we want the device to run in fullscreen mode
@@ -64,7 +64,7 @@ int main()
     dimensions, etc.
     */
     IrrlichtDevice *device =
-        createDevice(video::EDT_DIRECT3D9, dimension2d<u32>(1004, 650), 32,
+        createDevice(video::EDT_OPENGL, dimension2d<u32>(1004, 650), 32,
             false, false, false, NULL);
 
     if (!device)
@@ -75,7 +75,7 @@ int main()
     'L' in front of the string. The Irrlicht Engine uses wide character
     strings when displaying text.
     */
-    device->setWindowCaption(L"GWEN - Irrlicht Sample");
+    device->setWindowCaption(L"Gwork - Irrlicht Sample");
 
     /*
     Get a pointer to the VideoDriver, the SceneManager and the graphical
@@ -88,22 +88,20 @@ int main()
     IGUIEnvironment* guienv = device->getGUIEnvironment();
 
     //
-    // Create a GWEN Irrlicht Renderer
+    // Create a Gwork Irrlicht Renderer
     //
     Gwk::Platform::RelativeToExecutablePaths paths(GWORK_RESOURCE_DIR);
     Gwk::Renderer::IrrlichtResourceLoader loader(driver, paths);
 
     Gwk::Renderer::Irrlicht* pRenderer = new Gwk::Renderer::Irrlicht(device, loader);
     //
-    // Create a GWEN skin
+    // Create a Gwork skin
     //
     Gwk::Skin::TexturedBase* pSkin = new Gwk::Skin::TexturedBase(pRenderer);
     pSkin->Init("DefaultSkin.png");
-    // The fonts work differently in Allegro - it can't use
-    // system fonts. So force the skin to use a local one.
     pSkin->SetDefaultFont("OpenSans.ttf", 11);
     //
-    // Create a Canvas (it's root, on which all other GWEN panels are created)
+    // Create a Canvas (it's root, on which all other Gwork panels are created)
     //
     Gwk::Controls::Canvas* pCanvas = new Gwk::Controls::Canvas(pSkin);
     pCanvas->SetSize(998, 650 - 24);

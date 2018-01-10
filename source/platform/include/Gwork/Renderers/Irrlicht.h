@@ -49,24 +49,24 @@ namespace Gwk
             Irrlicht(irr::IrrlichtDevice* Device, IrrlichtResourceLoader& loader);
             ~Irrlicht();
 
-            void SetDrawColor(Gwk::Color color);
+            void SetDrawColor(Gwk::Color color) override;
 
-            void StartClip();
-            void EndClip();
+            void StartClip() override;
+            void EndClip() override;
 
-            Gwk::Color PixelColor(Gwk::Texture* pTexture, unsigned int x, unsigned int y, const Gwk::Color & col_default = Gwk::Color(255, 255, 255, 255));
+            Gwk::Color PixelColor(Gwk::Texture* pTexture, unsigned int x, unsigned int y, const Gwk::Color & col_default = Gwk::Color(255, 255, 255, 255)) override;
 
-            ICacheToTexture* GetCTT();
+            ICacheToTexture* GetCTT() override;
 
-            void RenderText(Gwk::Font* pFont, Gwk::Point pos, const Gwk::String & text);
-            Gwk::Point MeasureText(Gwk::Font* pFont, const Gwk::String & text);
+            void RenderText(Gwk::Font* pFont, Gwk::Point pos, const Gwk::String & text) override;
+            Gwk::Point MeasureText(Gwk::Font* pFont, const Gwk::String & text) override;
 
-            void DrawTexturedRect(Gwk::Texture* pTexture, Gwk::Rect pTargetRect, float u1 = 0.0f, float v1 = 0.0f, float u2 = 1.0f, float v2 = 1.0f);
+            void DrawTexturedRect(Gwk::Texture* pTexture, Gwk::Rect pTargetRect, float u1 = 0.0f, float v1 = 0.0f, float u2 = 1.0f, float v2 = 1.0f) override;
             //void DrawMissingImage(Gwen::Rect pTargetRect);
 
-            void DrawFilledRect(Gwk::Rect rect);
-            void DrawLinedRect(Gwk::Rect rect);
-            void DrawPixel(int x, int y);
+            void DrawFilledRect(Gwk::Rect rect) override;
+            void DrawLinedRect(Gwk::Rect rect) override;
+            void DrawPixel(int x, int y) override;
 
         };
     }
