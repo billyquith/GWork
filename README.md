@@ -15,6 +15,7 @@ A number of rendering backends are provided for use, or as an example for your o
  * OpenGL (cross-platform. Uses GLFW).
  * [SDL2][sdl2] (cross-platform).
  * [SFML2][sfml2] (cross-platform).
+ * [Irrlicht3D][irr3d] (cross-platform).
  * Software (cross-platform). Render to texture.
 
 ## Documentation
@@ -66,6 +67,7 @@ bin/GworkAllegro5Sample     # run sample
 [sdl2]: https://www.libsdl.org/
 [sfml2]: http://www.sfml-dev.org
 [al5]: http://alleg.sourceforge.net
+[irr3d]: http://irrlicht.sourceforge.net/
 [docs]: https://billyquith.github.io/GWork/
 [changes]: https://github.com/billyquith/GWork/blob/gwork/CHANGELOG.md
 [issues]: https://github.com/billyquith/GWork/issues "Bugs/Issues"
