@@ -1,11 +1,11 @@
 #include <irrlicht.h>
 
-#include "gwork/gwork.h"
-#include "gwork/Skins/Simple.h"
-#include "gwork/Skins/TexturedBase.h"
-#include "gwork/Test/Test.h"
-#include "gwork/Input/Irrlicht.h"
-#include "gwork/Renderers/Irrlicht.h"
+#include <Gwork/Gwork.h>
+#include <Gwork/Skins/Simple.h>
+#include <Gwork/Skins/TexturedBase.h>
+#include <Gwork/Test/Test.h>
+#include <Gwork/Input/Irrlicht.h>
+#include <Gwork/Renderers/Irrlicht.h>
 #include <Gwork/Platform.h>
 
 using namespace irr;
@@ -17,7 +17,7 @@ using namespace io;
 using namespace gui;
 
 #ifdef _IRR_WINDOWS_
-#pragma comment(lib, "Irrlicht.lib")
+#   pragma comment(lib, "Irrlicht.lib")
 #endif
 
 class MyEventReceiver : public IEventReceiver
@@ -85,7 +85,7 @@ int main()
     */
     IVideoDriver* driver = device->getVideoDriver();
     ISceneManager* smgr = device->getSceneManager();
-    IGUIEnvironment* guienv = device->getGUIEnvironment();
+    //IGUIEnvironment* guienv = device->getGUIEnvironment();
 
     //
     // Create a Gwork Irrlicht Renderer
