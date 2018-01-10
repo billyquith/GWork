@@ -7,8 +7,8 @@
 
 #pragma once
 
-#ifndef GWEN_RENDERERS_IRRLICHT_H
-#define GWEN_RENDERERS_IRRLICHT_H
+#ifndef GWK_RENDERERS_IRRLICHT_H
+#define GWK_RENDERERS_IRRLICHT_H
 
 #include "gwork\BaseRender.h"
 #include <Irrlicht.h>
@@ -62,7 +62,7 @@ namespace Gwk
             Gwk::Point MeasureText(Gwk::Font* pFont, const Gwk::String & text) override;
 
             void DrawTexturedRect(Gwk::Texture* pTexture, Gwk::Rect pTargetRect, float u1 = 0.0f, float v1 = 0.0f, float u2 = 1.0f, float v2 = 1.0f) override;
-            //void DrawMissingImage(Gwen::Rect pTargetRect);
+            //void DrawMissingImage(Gwk::Rect pTargetRect);
 
             void DrawFilledRect(Gwk::Rect rect) override;
             void DrawLinedRect(Gwk::Rect rect) override;
