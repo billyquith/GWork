@@ -17,6 +17,9 @@ A number of rendering backends are provided for use, or as an example for your o
  * [SDL2][sdl2] (cross-platform).
  * [SFML2][sfml2] (cross-platform).
  * Software (cross-platform). Render to texture.
+ 
+Note that the software renderer can be used on any platform, but, obviously, with the penalty of 
+not having hardware acceleration.
 
 ## Documentation
 

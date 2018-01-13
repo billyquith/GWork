@@ -6,9 +6,12 @@
 
 Gwork is a GUI library that can be embedded into existing projects. It has a platform abstraction
 which can be implemented by the user to provide the features necessary for drawing and input.
-A number of backends are provided, and samples to show how they might be used.
+A number of backends are provided, and samples to show how they might be used. Applications can
+use an existing backend, or implement their own. Additionally, there is a software renderer,
+which will work on any platform.
 
-Gwork is skinnable, so its appearance can be changed by modifying the skin bitmap, and/or implementing a new skin. New controls can be added by specialising an existing control, or by
+Gwork is skinnable, so its appearance can be changed by modifying the skin bitmap, and/or 
+implementing a new skin. New controls can be added by specialising an existing control, or by
 starting afresh.
 
 
@@ -34,7 +37,7 @@ and texture color sampling. It does this by deriving from Gwk::Renderer::Base.
 
 The renderer requires resources, like textures, and font files. These are read via
 Gwk::ResourceLoader. This might be implemented to load from disk files, or read from your own
-resource system. Depending on the implmentation Gwk::ResourcePaths might be supplied. This
+resource system. Depending on the implementation Gwk::ResourcePaths might be supplied. This
 gets a full path for a resource, depending on its type. You might want to organise your
 directories differently to the default in Gwork. One such implementation is
 Gwk::Platform::RelativeToExecutablePaths.
