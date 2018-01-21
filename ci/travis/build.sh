@@ -8,8 +8,8 @@ uname -a
 env
 
 BUILD_OS=$TRAVIS_OS_NAME
-#CPP_COMPILER=$1
 WANT_OPTS="-DWANT_TESTS=ON -DWANT_SAMPLE=ON -DRENDER_NULL=ON $FEATURES"
+RENDER_SAMPLE=GworkNullSample
 
 cmake --version
 echo "Using C++ compiler: CXX=$CXX, CC=$CC"
@@ -38,24 +38,27 @@ function prepare_linux
 
 function build # (config)
 {
+    echo "==== Building config $1 ===="
     pushd build
-    cmake --build . --target GworkNullSample --config $1
+    cmake --build . --target $RENDER_SAMPLE --config $1
     popd
 }
 
 function test_osx # (config)
 {
+    # OSX outputs to bin/CONFIG
     pushd bin/$1
-    ./GworkNullSample.app/Contents/MacOS/GworkNullSample
+    ./$RENDER_SAMPLE.app/Contents/MacOS/$RENDER_SAMPLE
     popd
 }
 
 function test_linux # (config)
 {    
+    # All Linux configs output to bin/
     pwd
     ls
     pushd bin
-    ./GworkNullSample
+    ./$RENDER_SAMPLE
     popd
 }
 
@@ -64,7 +67,6 @@ function build_and_test # (config)
     build $1
     test_$BUILD_OS $1
 }
-
 
 prepare_$BUILD_OS "$@"
 
