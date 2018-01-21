@@ -83,7 +83,7 @@ public:
 
 };
 
-GWK_DECLARE_TEST(Button);
+GWK_REGISTER_TEST(Button);
 
 }}
 

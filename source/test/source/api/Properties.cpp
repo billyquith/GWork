@@ -76,7 +76,7 @@ public:
 
 };
 
-GWK_DECLARE_TEST(Properties);
+GWK_REGISTER_TEST(Properties);
 
 }}
 

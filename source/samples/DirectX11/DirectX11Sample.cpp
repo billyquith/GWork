@@ -178,7 +178,7 @@ int main( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nC
     pCanvas->SetBackgroundColor( Gwk::Color( 150, 170, 170, 255 ) );
 
     // Create our unittest control (which is a Window with controls in it)
-    auto pUnit = Gwk::Test::CreateTests(canvas);
+    auto pUnit = Gwk::Test::CreateTests(pCanvas);
     pUnit->SetPos(10, 10);
 
     // Create a Windows Control helper

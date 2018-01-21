@@ -28,7 +28,7 @@ public:
     void Layout(Gwk::Skin::Base* skin) override {}
 };
 
-GWK_DECLARE_TEST(StatusBar);
+GWK_REGISTER_TEST(StatusBar);
 
 }}
 

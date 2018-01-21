@@ -96,7 +96,7 @@ public:
 
 };
 
-GWK_DECLARE_TEST(CrossSplitter);
+GWK_REGISTER_TEST(CrossSplitter);
 
 }}
 

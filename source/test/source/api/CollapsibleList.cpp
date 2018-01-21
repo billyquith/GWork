@@ -55,7 +55,7 @@ public:
     }
 };
 
-GWK_DECLARE_TEST(CollapsibleList);
+GWK_REGISTER_TEST(CollapsibleList);
 
 }}
 

@@ -109,7 +109,7 @@ public:
     Gwk::Font m_font;
 };
 
-GWK_DECLARE_TEST(TextBox);
+GWK_REGISTER_TEST(TextBox);
 
 }}
 

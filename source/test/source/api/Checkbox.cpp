@@ -52,7 +52,7 @@ public:
 
 };
 
-GWK_DECLARE_TEST(Checkbox);
+GWK_REGISTER_TEST(Checkbox);
 
 }}
 

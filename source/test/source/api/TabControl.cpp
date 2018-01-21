@@ -73,7 +73,7 @@ public:
     Gwk::Font m_font;
 };
 
-GWK_DECLARE_TEST(TabControl);
+GWK_REGISTER_TEST(TabControl);
 
 }}
 

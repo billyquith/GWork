@@ -34,7 +34,7 @@ public:
 
 };
 
-GWK_DECLARE_TEST(Numeric);
+GWK_REGISTER_TEST(Numeric);
 
 }}
 

@@ -85,7 +85,7 @@ public:
 
 };
 
-GWK_DECLARE_TEST(ProgressBar);
+GWK_REGISTER_TEST(ProgressBar);
 
 }}
 

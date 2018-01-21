@@ -33,7 +33,7 @@ public:
 
 };
 
-GWK_DECLARE_TEST(ImagePanel);
+GWK_REGISTER_TEST(ImagePanel);
 
 }}
 

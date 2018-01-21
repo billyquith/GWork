@@ -111,7 +111,7 @@ public:
 
 };
 
-GWK_DECLARE_TEST(MenuStrip);
+GWK_REGISTER_TEST(MenuStrip);
 
 }}
 

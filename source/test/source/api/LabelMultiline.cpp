@@ -55,7 +55,7 @@ public:
     Gwk::Font m_font;
 };
 
-GWK_DECLARE_TEST(LabelMultiline);
+GWK_REGISTER_TEST(LabelMultiline);
 
 }}
 

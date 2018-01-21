@@ -85,7 +85,7 @@ public:
 
 };
 
-GWK_DECLARE_TEST(Window);
+GWK_REGISTER_TEST(Window);
 
 }}
 

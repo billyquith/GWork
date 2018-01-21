@@ -94,7 +94,7 @@ public:
     Gwk::Font m_font;
 };
 
-GWK_DECLARE_TEST(Label);
+GWK_REGISTER_TEST(Label);
 
 }}
 
