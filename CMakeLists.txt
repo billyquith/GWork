@@ -35,4 +35,5 @@ configure_file(
 
 # add our projects
 add_subdirectory(source)
+add_subdirectory(deps)
 add_subdirectory(docs)

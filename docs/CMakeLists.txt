@@ -95,7 +95,7 @@ if(DOXYGEN_FOUND)
     configure_file(Doxyfile.in ${DOXYGEN_CONFIG_FILE} @ONLY)
 
     # target setup
-    add_custom_target(doc
+    add_custom_target(gwork_docs
         COMMAND ${CMAKE_COMMAND} -E echo_append "Building API Documentation..."
         COMMAND ${DOXYGEN_EXECUTABLE} ${DOXYGEN_CONFIG_FILE}
         COMMAND ${CMAKE_COMMAND} -E echo "Done."

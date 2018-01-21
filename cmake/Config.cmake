@@ -37,7 +37,12 @@ option(WANT_ALLOC_STATS     "Track memory allocations" OFF)
 #-----------------------------------------------------------
 # Configure once options known
 
-option(WANT_REFLECTION_LOCAL "Dev Ponder" OFF)
+option(WANT_REFLECTION_LOCAL "Dev Ponder" ON)
+set(GWK_PONDER_INCLUDE "${GWK_SOURCE_DIR}/deps/ponder/include"
+    CACHE STRING "Ponder includes directory")
+set(GWK_LUA_INCLUDE "${GWK_SOURCE_DIR}/deps/lua-5.3/src"
+    CACHE STRING "Lua include directory")
+
 set(GWK_TARGET_ARCH "Unknown")      # default architecture e.g. x86, x64
 
 # Set the default build type to release with debug info
