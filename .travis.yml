@@ -38,23 +38,33 @@ matrix:
   include:
     - os: linux
       compiler: gcc
-      install: ./ci/travis/install.sh "+ponder +lua"
+      env: FEATURES="-DWANT_REFLECTION=OFF"
+    - os: linux
+      compiler: gcc
+      env: FEATURES="-DWANT_REFLECTION=ON"
       
     - os: linux
       compiler: clang
-      install: ./ci/travis/install.sh "+ponder +lua"
+      env: FEATURES="-DWANT_REFLECTION=OFF"
+    - os: linux
+      compiler: clang
+      env: FEATURES="-DWANT_REFLECTION=ON"
 
     - os: osx               # Xcode (previous)
       osx_image: xcode8.3
-      compiler: clang
-      install: ./ci/travis/install.sh "+ponder +lua"
+      env: FEATURES="-DWANT_REFLECTION=OFF"
+    - os: osx
+      osx_image: xcode8.3
+      env: FEATURES="-DWANT_REFLECTION=ON"
 
     - os: osx               # Xcode (latest)
       osx_image: xcode9.2
-      compiler: clang
-      install: ./ci/travis/install.sh "+ponder +lua"
+      env: FEATURES="-DWANT_REFLECTION=OFF"
+    - os: osx
+      osx_image: xcode9.2
+      env: FEATURES="-DWANT_REFLECTION=ON"
 
-script: ./ci/travis/build.sh $COMPILER "$FEATURES"
+script: ./ci/travis/build.sh
     
 notifications:
   email:
