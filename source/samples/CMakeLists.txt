@@ -36,7 +36,7 @@ if(WANT_SAMPLE)
         set(APP_RUNTIME_RESOURCE_DIR "")
     endif()
 
-    add_definitions("-DGWORK_RESOURCE_DIR=\"${APP_RUNTIME_RESOURCE_DIR}\"")
+    add_definitions("-DGWK_SAMPLE -DGWORK_RESOURCE_DIR=\"${APP_RUNTIME_RESOURCE_DIR}\"")
 
     add_executable(${SAMPLE_NAME} ${APP_BUILD_TYPE} ${SAMPLE_SOURCES} ${SAMPLE_RESOURCES})
 
