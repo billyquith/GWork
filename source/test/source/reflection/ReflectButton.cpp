@@ -130,8 +130,8 @@ GWK_CONTROL_CONSTRUCTOR(ReflectLuaButton)
     ponder::lua::runString(g_L, str);
 }
 
-GWK_DECLARE_TEST(ReflectAPIButton);
-GWK_DECLARE_TEST(ReflectLuaButton);
+GWK_REGISTER_TEST(ReflectAPIButton);
+GWK_REGISTER_TEST(ReflectLuaButton);
 
 }}
 

@@ -29,6 +29,7 @@ option(RENDER_NULL          "Renderer: Null" OFF)       # Used for testing
 
 option(WANT_TESTS           "Include unittests" ON)
 option(WANT_SAMPLE          "Include sample" ON)
+
 option(WANT_REFLECTION      "Use reflection (requires external dependencies)" OFF)
 
 # This is for development but can be used by the user.
@@ -37,7 +38,9 @@ option(WANT_ALLOC_STATS     "Track memory allocations" OFF)
 #-----------------------------------------------------------
 # Configure once options known
 
-option(WANT_REFLECTION_LOCAL "Dev Ponder" ON)
+option(WANT_SHARED_LIBS OFF) # TODO: Shared libs not implemented yet.
+
+option(WANT_REFLECTION_LOCAL "Use local libaries" ON) # TODO: OFF not tested.
 set(GWK_PONDER_INCLUDE "${GWK_SOURCE_DIR}/deps/ponder/include"
     CACHE STRING "Ponder includes directory")
 set(GWK_LUA_INCLUDE "${GWK_SOURCE_DIR}/deps/lua-5.3/src"

@@ -67,7 +67,6 @@ GWK_CONTROL_CONSTRUCTOR(TestAPI)
         Controls::Button *button = cat->Add(#NAME); \
         button->SetName(#NAME); \
         GWK_IF_ALLOC_STATS( Platform::AllocStatsAddMark(#NAME); ) \
-        extern TestUnit* RegisterTest_##NAME(Controls::Base*); \
         TestUnit *test = RegisterTest_##NAME(center); \
         GWK_IF_ALLOC_STATS( Platform::AllocStatsAddMark(#NAME); ) \
         test->SetTestCategory(this); \
