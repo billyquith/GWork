@@ -6,6 +6,7 @@ This is a changelog for Gwork. There are also notes [on my blog][blog]
 
 ### 0.3
 
+- Irrlicht renderer added. Thanks kklouzalk@github
 - ResourceLoader and ResourcePaths abstract file locations and sources. #66.
 - Retired Direct2D and GDI+ renderers.
 - Added CrossPlatform platform. Null should do nothing!
@@ -15,7 +16,7 @@ This is a changelog for Gwork. There are also notes [on my blog][blog]
 ### 0.2
 
 - Online [documentation][docs] added.
-- DirectX 11 renderer and sample added. Thanks to @topblast. #13
+- DirectX 11 renderer and sample added. Thanks to topblast@github. #13
 - Fix Windows platform. #13
 - C++11 `override` used everywhere applicable to marked overridden virtual functions.
 
@@ -51,7 +52,7 @@ This is a changelog for Gwork. There are also notes [on my blog][blog]
 
 ### Source code formatting
 
-* The source code has been reformated to be more consistent with other C++
+* The source code has been reformatted to be more consistent with other C++
   projects and [how I like it][1].
 * Indentation: [Spaces instead of tabs](http://www.jwz.org/doc/tabs-vs-spaces.html).
   Github, Google Code, etc use 8 space tabs. GWEN uses 4 space tabs. This
