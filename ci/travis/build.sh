@@ -51,11 +51,10 @@ function test_osx # (config)
 }
 
 function test_linux # (config)
-{
+{    
     pwd
     ls
-    ls bin
-    pushd bin/$1
+    pushd bin
     ./GworkNullSample
     popd
 }
