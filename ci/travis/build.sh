@@ -4,6 +4,7 @@
 
 set -ev
 
+uname -a
 env
 
 BUILD_OS=$TRAVIS_OS_NAME
@@ -51,6 +52,9 @@ function test_osx # (config)
 
 function test_linux # (config)
 {
+    pwd
+    ls
+    ls bin
     pushd bin/$1
     ./GworkNullSample
     popd
