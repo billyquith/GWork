@@ -1,0 +1,200 @@
+
+#titlearea {
+  background-color: grey;
+  font-family: Roboto, sans-serif;
+  color: #ccc;
+  padding: 0em 0.1em 0.1em 1em;
+}
+
+
+/* DOXYGEN Code Styles
+----------------------------------- */
+
+
+a.qindex {
+    font-weight: bold;
+}
+
+a.qindexHL {
+    font-weight: bold;
+    background-color: #9CAFD4;
+    color: #ffffff;
+    border: 1px double #869DCA;
+}
+
+.contents a.qindexHL:visited {
+    color: #ffffff;
+}
+
+a.code, a.code:visited, a.line, a.line:visited {
+    color: #e08000;
+    font-weight: bold;
+}
+
+a.codeRef, a.codeRef:visited, a.lineRef, a.lineRef:visited {
+    color: #4665A2;
+}
+
+/* @end */
+
+dl.el {
+    margin-left: -1cm;
+}
+
+pre.fragment {
+    border: 1px solid #C4CFE5;
+    background-color: #FBFCFD;
+    padding: 4px 6px;
+    margin: 4px 8px 4px 2px;
+    overflow: auto;
+    word-wrap: break-word;
+    font-size:  9pt;
+    line-height: 125%;
+    font-family: monospace, fixed;
+    font-size: 105%;
+}
+
+div.fragment {
+    padding: 6px 10px 6px 10px;
+    margin: 8px;
+    border: 1px solid #C4CFE5;
+    border-radius: 6px;
+}
+
+div.line {
+    font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+    font-size: 12px;
+    min-height: 13px;
+    line-height: 1.0;
+    text-wrap: unrestricted;
+    white-space: -moz-pre-wrap; /* Moz */
+    white-space: -pre-wrap;     /* Opera 4-6 */
+    white-space: -o-pre-wrap;   /* Opera 7 */
+    white-space: pre-wrap;      /* CSS3  */
+    word-wrap: normal;      /* IE 5.5+ */
+    text-indent: -53px;
+    padding-left: 53px;
+    padding-bottom: 0px;
+    margin: 0px;
+/*    -webkit-transition-property: background-color, box-shadow;
+    -webkit-transition-duration: 0.5s;
+    -moz-transition-property: background-color, box-shadow;
+    -moz-transition-duration: 0.5s;
+    -ms-transition-property: background-color, box-shadow;
+    -ms-transition-duration: 0.5s;
+    -o-transition-property: background-color, box-shadow;
+    -o-transition-duration: 0.5s;
+    transition-property: background-color, box-shadow;
+    transition-duration: 0.5s;
+*/}
+div.line:hover{
+/*    background-color: #FBFF00;*/
+}
+
+div.line.glow {
+    background-color: cyan;
+    box-shadow: 0 0 10px cyan;
+}
+
+
+span.lineno {
+    padding-right: 4px;
+    text-align: right;
+    color:rgba(0,0,0,0.3);
+    border-right: 1px solid #EEE;
+    border-left: 1px solid #EEE;
+    background-color: #FFF;
+    white-space: pre;
+    font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace ;
+}
+span.lineno a {
+    background-color: #FAFAFA;
+    cursor:pointer;
+}
+
+span.lineno a:hover {
+    background-color: #EFE200;
+    color: #1e1e1e;
+}
+
+div.groupHeader {
+    margin-left: 16px;
+    margin-top: 12px;
+    font-weight: bold;
+}
+
+div.groupText {
+    margin-left: 16px;
+    font-style: italic;
+}
+
+/* @group Code Colorization */
+
+span.keyword {
+    color: #e12d47;
+}
+
+span.keywordtype {
+    color: #604020;
+}
+
+span.keywordflow {
+    color: #141bc6;
+}
+
+span.comment {
+    color: #008000;
+}
+
+span.preprocessor {
+    color: #806020
+}
+
+span.stringliteral {
+    color: #002080
+}
+
+span.charliteral {
+    color: #008080
+}
+
+span.vhdldigit {
+    color: #ff00ff
+}
+
+span.vhdlchar {
+    color: #000000
+}
+
+span.vhdlkeyword {
+    color: #700070
+}
+
+span.vhdllogic {
+    color: #ff0000
+}
+
+blockquote {
+    background-color: #F7F8FB;
+    border-left: 2px solid #9CAFD4;
+    margin: 0 24px 0 4px;
+    padding: 0 12px 0 16px;
+}
+
+/*-- notes --*/
+dl.note {
+    margin: 1em 1.5em 1em 1.5em;
+    padding: 0 0.8em 0 0.8em;
+    border: 2px dashed;
+    border-color: #75d266;
+    border-radius: 5px;
+    color: rgb(114, 178, 131);
+}
+dt.note {
+    font-family: monospace;
+    font-style: italic;
+}
+
+div.ui-resizable-handle {
+    background-repeat: repeat-y;
+}
