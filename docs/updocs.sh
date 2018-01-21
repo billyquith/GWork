@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 # Update online documentation
 
+set -e
+
 PROJDIR=tmp-proj
 DOCDIR=tmp-docs
 DOCOUT=$PROJDIR/build/doc/html
@@ -14,16 +16,17 @@ git clone https://github.com/billyquith/gwork.git $DOCDIR -b gh-pages --depth=1
 pushd $PROJDIR
 mkdir build && cd build
 cmake .. -G Ninja -DRENDER_NULL=ON
-ninja doc
+cmake --build . --target doc
 cd ..
 popd
 
-rm -r $DOCDIR/*
+[ -d $DOCDIR] && rm -r $DOCDIR/*
 cp -r $DOCOUT/* $DOCDIR
 
 pushd $DOCDIR
 git add --all --verbose .
 git status
+if [[ "$1" == "-d" ]]; then exit 0; fi
 read -p "Commit message: " MESSAGE
 git commit -m "${MESSAGE:-"Update docs"}"
 git push
