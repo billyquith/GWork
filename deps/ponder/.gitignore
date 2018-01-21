@@ -1,0 +1,22 @@
+
+build*/
+
+# Text editors temporary files
+*~
+.~*
+~*
+*.swp
+Thumbs.db
+
+# End products
+*.lib
+*.dll
+*.dylib
+include/ponder/version.hpp
+test/Debug
+test/Release
+
+# Auto-generated documentation files
+doc/egs
+doc/api/pages/_*
+*.doxy
