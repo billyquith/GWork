@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Maintenance script
+# Maintenance script to compile Gwork on all UNIX support platforms (OSX, Linux)
 
 CM_GEN="-GXcode"
 CM_OPTS="-DWANT_TESTS=ON -DWANT_SAMPLES=ON"

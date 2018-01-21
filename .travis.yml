@@ -153,12 +153,12 @@ compiler:
   - clang
   
 env:
-  - INSTALL="+lua" WANTS="-DWANT_REFLECTION=ON"
-  - INSTALL="" WANTS="-DWANT_REFLECTION=OFF"
+  - INSTALL="+lua" FEATURES="-DWANT_REFLECTION=ON" COMPILER=clang
+  - INSTALL="" FEATURES="-DWANT_REFLECTION=OFF" COMPILER=clang
     
 before_install: ./ci/travis/install.sh "$INSTALL"
         
-script: ./ci/travis/build.sh $COMPILER "$WANTS"
+script: ./ci/travis/build.sh $COMPILER "$FEATURES"
     
 notifications:
   email:
