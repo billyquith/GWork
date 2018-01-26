@@ -55,14 +55,6 @@ if(NOT CMAKE_BUILD_TYPE)
     )
 endif()
 
-# TODO: Add an option for choosing the build type (shared or static)
-# if(NOT BUILD_SHARED_LIBS)
-#     set(BUILD_SHARED_LIBS TRUE
-#         CACHE BOOL "TRUE to build Gwork as a shared library, FALSE to build it as a static library."
-#     )
-# endif()
-set(BUILD_SHARED_LIBS FALSE)
-
 # define install directory for miscelleneous files
 if(WIN32 AND NOT UNIX)
     set(INSTALL_MISC_DIR .)
@@ -202,6 +194,10 @@ endif(RENDER_SW)
 
 #-----------------------------------------------------------
 # Sanity checks
+
+if(WANT_SHARED_LIBS)
+    message(FATAL_ERROR "Shared libraries not currently tested/supported")
+endif()
 
 if(NOT GWK_RENDER_NAME)
     message(FATAL_ERROR "No renderer was specified. See RENDER_<name> options.")
