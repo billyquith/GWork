@@ -27,7 +27,7 @@ namespace Gwk
         public:
             //! Constructor
             //! \param resourceDir : Optional directory, relative to the executable.
-            RelativeToExecutablePaths(String const& resourceDir = String());
+            explicit RelativeToExecutablePaths(String const& resourceDir = String());
             
             //! Get full path to file.
             //! \param type : File resource type.

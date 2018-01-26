@@ -6,10 +6,8 @@
  */
 
 #define WIN32_LEAN_AND_MEAN // Exclude rarely-used stuff from Windows headers
-// Windows Header Files:
 #include <windows.h>
 
-// C RunTime Header Files
 #include <stdlib.h>
 #include <memory.h>
 #include <tchar.h>
@@ -20,11 +18,11 @@
 #include <Gwork/Renderers/DirectX11.h>
 #include <Gwork/Platform.h>
 
-HWND                    g_pHWND = NULL;
-ID3D11Device*           g_pd3dDevice = NULL;
-ID3D11DeviceContext*    g_pImmediateContext = NULL;
-IDXGISwapChain*         g_pSwapChain = NULL;
-ID3D11RenderTargetView* g_pRenderTargetView = NULL;
+static HWND                    g_pHWND = NULL;
+static ID3D11Device*           g_pd3dDevice = NULL;
+static ID3D11DeviceContext*    g_pImmediateContext = NULL;
+static IDXGISwapChain*         g_pSwapChain = NULL;
+static ID3D11RenderTargetView* g_pRenderTargetView = NULL;
 
 //
 // Create a Window to render to.
@@ -161,7 +159,7 @@ int main( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nC
     GetClientRect( g_pHWND, &FrameBounds );
 
     // Create resource path calculator and loader.
-    Gwk::Platform::RelativeToExecutablePaths paths(GWORK_RESOURCE_DIR);
+    Gwk::Platform::RelativeToExecutablePaths paths{ GWORK_RESOURCE_DIR };
     Gwk::Renderer::DirectX11ResourceLoader loader(paths, g_pd3dDevice);
 
     // Create a GWork DirectX renderer
