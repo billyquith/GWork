@@ -58,12 +58,12 @@ namespace ClassTest
     struct Base
     {
         virtual ~Base() {}
-        PONDER_POLYMORPHIC();
+        PONDER_POLYMORPHIC;
     };
     
     struct Derived : Base
     {
-        PONDER_POLYMORPHIC();
+        PONDER_POLYMORPHIC;
     };
     
     struct DerivedNoRtti : Base

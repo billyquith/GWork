@@ -84,7 +84,7 @@ namespace Gwk
          */
         class GWK_EXPORT Handler
         {
-            GWK_IF_REFLECT( PONDER_POLYMORPHIC() )
+            GWK_IF_REFLECT( PONDER_POLYMORPHIC )
         public:
 
             virtual ~Handler();
