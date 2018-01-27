@@ -12,14 +12,14 @@ BUILD_LOG=../$BUILD_LOG_NAME
 # Get dependencies
 function get_deps
 {    
-    pushd "source"
-    [ ! -d deps ] || mkdir deps
-    cd deps
-    git clone --depth=3 https://github.com/billyquith/ponder.git ponder
-    pushd ponder
-    git checkout -b dev/gwork
-    popd
-    popd
+    # pushd "source"
+    # [ ! -d deps ] || mkdir deps
+    # cd deps
+    # git clone --depth=3 https://github.com/billyquith/ponder.git ponder
+    # pushd ponder
+    # git checkout -b dev/gwork
+    # popd
+    # popd
 }
 
 function ensure_project #(renderer, build_dir)
@@ -79,9 +79,11 @@ function build_docs
 
 function build_all
 {
+    local BERR=maintain_build_errors.txt
+    echo "Build errors:" > $BERR
     echo "Maintain build log:" > $BUILD_LOG
     apply_projects build_project
-    grep "error:" $BUILD_LOG_NAME > maintain_build_errors.txt
+    grep "error:" $BUILD_LOG_NAME >> $BERR
     echo
     echo "ERRORS:"
     echo

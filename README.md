@@ -51,7 +51,7 @@ For example to build Allegro 5 renderer using Ninja:
 ```bash
 cd gwork
 mkdir build && cd build                 # put build files in subdirectory
-cmake -GNinja -DWANT_RENDERER_ALLEGRO5=ON ..   # create Ninja project files
+cmake -GNinja -DRENDER_ALLEGRO5=ON ..   # create Ninja project files
 ```
 
 Providing the dependencies are present, this will create a sample executable. When run it will
