@@ -116,7 +116,7 @@ public:
 
 };
 
-GWK_DECLARE_TEST(ScrollControl);
+GWK_REGISTER_TEST(ScrollControl);
 
 }}
 

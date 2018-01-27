@@ -16,6 +16,9 @@
 namespace Gwk {
 namespace Test {
 
+GWK_DECLARE_TEST(ReflectAPIButton);
+GWK_DECLARE_TEST(ReflectLuaButton);
+
 GWK_CONTROL_CONSTRUCTOR(TestReflect)
 {
     m_lastControl = nullptr;
@@ -38,11 +41,10 @@ GWK_CONTROL_CONSTRUCTOR(TestReflect)
 
 
 #define ADD_TEST(NAME) \
-    TestUnit* RegisterTest_##NAME(Gwk::Controls::Base *tab); \
     { \
         Controls::Button *button = cat->Add(#NAME); \
         button->SetName(#NAME); \
-        TestUnit *test = RegisterTest_##NAME(center); \
+        TestUnit *test = Gwk::Test::RegisterTest_##NAME(center); \
         test->SetTestCategory(this); \
         test->Hide(); \
         button->onPress.Add( this, &TestReflect::OnCategorySelect, test );\

@@ -1,0 +1,11 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
+;
+[subrepo]
+	remote = https://github.com/billyquith/ponder.git
+	branch = dev/gwork
+	commit = 2441ba7acc64116933fdf1804fb9a847bdf29543
+	parent = af24f10b249629fcc6ac36f71a3a635378b7584a
+	cmdver = 0.3.0

@@ -65,7 +65,7 @@ public:
 
 };
 
-GWK_DECLARE_TEST(Slider);
+GWK_REGISTER_TEST(Slider);
 
 }}
 

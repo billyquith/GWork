@@ -95,9 +95,11 @@ namespace Gwk {
     }
 }
 
-
 #define GWK_DECLARE_TEST(NAME) \
-    TestUnit* RegisterTest_##NAME(Gwk::Controls::Base *parent) { return new NAME(parent); }
+    Gwk::Test::TestUnit* RegisterTest_##NAME(Gwk::Controls::Base*);
+
+#define GWK_REGISTER_TEST(NAME) \
+    extern Gwk::Test::TestUnit* RegisterTest_##NAME(Gwk::Controls::Base *parent) { return new Gwk::Test::NAME(parent); }
 
 #if GWK_REFLECT && defined(GWK_SAMPLE)
     // Include the implementation of Ponder dependencies so we can link successfully

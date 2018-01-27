@@ -25,7 +25,7 @@ public:
     }
 };
 
-GWK_DECLARE_TEST(ColorPicker);
+GWK_REGISTER_TEST(ColorPicker);
 
 }}
 

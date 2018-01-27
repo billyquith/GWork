@@ -38,7 +38,7 @@ public:
 
 };
 
-GWK_DECLARE_TEST(RadioButton);
+GWK_REGISTER_TEST(RadioButton);
 
 }}
 

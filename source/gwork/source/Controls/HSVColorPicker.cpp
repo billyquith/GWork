@@ -44,7 +44,7 @@ GWK_CONTROL_CONSTRUCTOR(HSVColorPicker)
     int y = m_before->Y()+30;
     {
         Label* label = new Label(this);
-        label->SetText("R:");
+        label->SetText("r:");
         label->SizeToContents();
         label->SetPos(x, y);
 
@@ -116,18 +116,21 @@ void HSVColorPicker::UpdateControls(Gwk::Color color)
     // What in the FUCK
     TextBoxNumeric* redBox = gwk_cast<TextBoxNumeric>(FindChildByName("RedBox", false));
 
+    // if you need to deal with pesky __int8 or char displaying as character instead of value, see:
+    // https://stackoverflow.com/questions/19562103/uint8-t-cant-be-printed-with-cout/#21389821
+
     if (redBox)
-        redBox->SetText(Gwk::Utility::ToString(color.r), false);
+        redBox->SetText(Gwk::Utility::ToString(+color.r), false);
 
     TextBoxNumeric* greenBox = gwk_cast<TextBoxNumeric>(FindChildByName("GreenBox", false));
 
     if (greenBox)
-        greenBox->SetText(Gwk::Utility::ToString(color.g), false);
+        greenBox->SetText(Gwk::Utility::ToString(+color.g), false);
 
     TextBoxNumeric* blueBox = gwk_cast<TextBoxNumeric>(FindChildByName("BlueBox", false));
 
     if (blueBox)
-        blueBox->SetText(Gwk::Utility::ToString(color.b), false);
+        blueBox->SetText(Gwk::Utility::ToString(+color.b), false);
 
     m_after->SetColor(color);
 }

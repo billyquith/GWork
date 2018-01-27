@@ -20,6 +20,7 @@ endif()
 
 # Cross-platform
 option(RENDER_ALLEGRO5      "Renderer: Allegro5" OFF)
+option(RENDER_IRRLICHT      "Renderer: Irrlicht" OFF)
 option(RENDER_OPENGL        "Renderer: OPENGL" OFF)
 option(RENDER_SDL2          "Renderer: SDL2" OFF)
 option(RENDER_SFML2         "Renderer: SFML2" OFF)
@@ -28,6 +29,7 @@ option(RENDER_NULL          "Renderer: Null" OFF)       # Used for testing
 
 option(WANT_TESTS           "Include unittests" ON)
 option(WANT_SAMPLE          "Include sample" ON)
+
 option(WANT_REFLECTION      "Use reflection (requires external dependencies)" OFF)
 
 # This is for development but can be used by the user.
@@ -36,7 +38,14 @@ option(WANT_ALLOC_STATS     "Track memory allocations" OFF)
 #-----------------------------------------------------------
 # Configure once options known
 
-option(WANT_REFLECTION_LOCAL "Dev Ponder" OFF)
+option(WANT_SHARED_LIBS OFF) # TODO: Shared libs not implemented yet.
+
+option(WANT_REFLECTION_LOCAL "Use local libaries" ON) # TODO: OFF not tested.
+set(GWK_PONDER_INCLUDE "${GWK_SOURCE_DIR}/deps/ponder/include"
+    CACHE STRING "Ponder includes directory")
+set(GWK_LUA_INCLUDE "${GWK_SOURCE_DIR}/deps/lua-5.3/src"
+    CACHE STRING "Lua include directory")
+
 set(GWK_TARGET_ARCH "Unknown")      # default architecture e.g. x86, x64
 
 # Set the default build type to release with debug info
@@ -45,14 +54,6 @@ if(NOT CMAKE_BUILD_TYPE)
         CACHE STRING "Type of build, options are: None Debug Release RelWithDebInfo MinSizeRel."
     )
 endif()
-
-# TODO: Add an option for choosing the build type (shared or static)
-# if(NOT BUILD_SHARED_LIBS)
-#     set(BUILD_SHARED_LIBS TRUE
-#         CACHE BOOL "TRUE to build Gwork as a shared library, FALSE to build it as a static library."
-#     )
-# endif()
-set(BUILD_SHARED_LIBS FALSE)
 
 # define install directory for miscelleneous files
 if(WIN32 AND NOT UNIX)
@@ -89,9 +90,9 @@ if(RENDER_ALLEGRO5)
     set(GWK_RENDER_NAME "Allegro5")
     set(GWK_INPUT_NAME "Allegro5")
     set(GWK_PLATFORM_NAME "Allegro5")
-    find_package(Allegro5 REQUIRED)
-    set(GWK_RENDER_INCLUDES "${ALLEGRO5_INCLUDE_DIRS}")
-    set(GWK_RENDER_LIBRARIES "${ALLEGRO5_LIBRARIES}")
+	find_package(Allegro5 REQUIRED)
+	set(GWK_RENDER_INCLUDES "${ALLEGRO5_INCLUDE_DIRS}")
+	set(GWK_RENDER_LIBRARIES "${ALLEGRO5_LIBRARIES}")
 endif(RENDER_ALLEGRO5)
 
 if(RENDER_DIRECTX9)
@@ -111,6 +112,20 @@ if(RENDER_DIRECTX11)
     set(GWK_RENDER_INCLUDES "${DIRECTX_INCLUDE_DIRS}")
     set(GWK_RENDER_LIBRARIES "${DIRECTX_LIBRARIES}")
 endif(RENDER_DIRECTX11)
+
+if(RENDER_IRRLICHT)
+    set(GWK_RENDER_NAME "Irrlicht")
+    set(GWK_INPUT_NAME "Irrlicht")
+    set(GWK_PLATFORM_NAME "Cross")
+    find_package(Irrlicht REQUIRED)
+    if (APPLE)
+        set(IRR_DEPENDENCIES "-framework OpenGL")
+    elseif(UNIX)
+        set(IRR_DEPENDENCIES "-lGL")
+    endif()
+    set(GWK_RENDER_INCLUDES "${IRRLICHT_INCLUDE_DIR}")
+    set(GWK_RENDER_LIBRARIES "${IRRLICHT_LIBRARY} ${IRR_DEPENDENCIES}")
+endif(RENDER_IRRLICHT)
 
 if(RENDER_NULL)
     set(GWK_RENDER_NAME "Null")
@@ -179,6 +194,10 @@ endif(RENDER_SW)
 
 #-----------------------------------------------------------
 # Sanity checks
+
+if(WANT_SHARED_LIBS)
+    message(FATAL_ERROR "Shared libraries not currently tested/supported")
+endif()
 
 if(NOT GWK_RENDER_NAME)
     message(FATAL_ERROR "No renderer was specified. See RENDER_<name> options.")

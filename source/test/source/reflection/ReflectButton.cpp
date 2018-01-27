@@ -121,17 +121,19 @@ GWK_CONTROL_CONSTRUCTOR(ReflectLuaButton)
     // Tell Lua about the parent control, into which we'll create our controls.
     ponder::lua::pushUserObject(g_L,
         ponder::UserObject::makeRef(*static_cast<Gwk::Controls::Base*>(this)));
-    lua_setglobal(g_L, "parent");
+    lua_setglobal(g_L, "test_parent");
 
     const char* str = R"lua(
-        buttA = Button(parent)
-        buttA.text = 'Hello from Lua!'
+
+    buttA = Button(test_parent)
+    buttA.text = 'Hello from Lua!'
+
     )lua";
     ponder::lua::runString(g_L, str);
 }
 
-GWK_DECLARE_TEST(ReflectAPIButton);
-GWK_DECLARE_TEST(ReflectLuaButton);
+GWK_REGISTER_TEST(ReflectAPIButton);
+GWK_REGISTER_TEST(ReflectLuaButton);
 
 }}
 

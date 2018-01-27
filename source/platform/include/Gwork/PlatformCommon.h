@@ -27,11 +27,11 @@ namespace Gwk
         public:
             //! Constructor
             //! \param resourceDir : Optional directory, relative to the executable.
-            RelativeToExecutablePaths(String const& resourceDir = String());
+            explicit RelativeToExecutablePaths(String const& resourceDir = String());
             
             //! Get full path to file.
             //! \param type : File resource type.
-            //! \param name : Relative path to file.
+            //! \param relPath : Relative path to file.
             //! \return Path relative to the resource directory.
             String GetPath(Type type, String const& relPath) final;
         };

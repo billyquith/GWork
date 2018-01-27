@@ -55,7 +55,7 @@ public:
 
 };
 
-GWK_DECLARE_TEST(PageControl);
+GWK_REGISTER_TEST(PageControl);
 
 }}
 

@@ -19,7 +19,7 @@ public:
     {
         {
             Gwk::Controls::Label* label = new Gwk::Controls::Label(this);
-            label->SetText("Garry's Normal Label");
+            label->SetText("Gworks's Normal Label");
             label->SizeToContents();
             label->SetPos(10, 10);
         }
@@ -94,7 +94,7 @@ public:
     Gwk::Font m_font;
 };
 
-GWK_DECLARE_TEST(Label);
+GWK_REGISTER_TEST(Label);
 
 }}
 

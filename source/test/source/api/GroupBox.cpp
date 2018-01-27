@@ -49,7 +49,7 @@ public:
     }
 };
 
-GWK_DECLARE_TEST(GroupBox);
+GWK_REGISTER_TEST(GroupBox);
 
 }}
 

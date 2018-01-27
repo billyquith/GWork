@@ -4,7 +4,7 @@
 cmake_minimum_required(VERSION 3.1)
 
 # we require C++11 - this set appropriate flags for compilers, which may not be portable
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 14)
 
 project(gwork)
 
@@ -35,4 +35,5 @@ configure_file(
 
 # add our projects
 add_subdirectory(source)
+add_subdirectory(deps)
 add_subdirectory(docs)

@@ -33,132 +33,38 @@ language: cpp
 
 # Linux packages are got using apt on Travis.
 # See: https://docs.travis-ci.com/user/installing-dependencies/
-#
-# matrix:
-#   include:
-#     - os: linux
-#       compiler: gcc
-#       addons:
-#         apt:
-#           sources:
-#             - ubuntu-toolchain-r-test
-#           packages:
-#             - g++-4.9
-#       env: COMPILER=g++-4.9
-#
-#     - os: linux
-#       compiler: gcc
-#       addons:
-#         apt:
-#           sources:
-#             - ubuntu-toolchain-r-test
-#           packages:
-#             - g++-5
-#       env: COMPILER=g++-5
-#
-#     - os: linux
-#       compiler: gcc
-#       addons:
-#         apt:
-#           sources:
-#             - ubuntu-toolchain-r-test
-#           packages:
-#             - g++-6
-#       env: COMPILER=g++-6
-#
-#     - os: linux
-#       compiler: gcc
-#       addons:
-#         apt:
-#           sources:
-#             - ubuntu-toolchain-r-test
-#           packages:
-#             - g++-7
-#       env: COMPILER=g++-7
-#
-#     - os: linux
-#       compiler: clang
-#       addons:
-#         apt:
-#           sources:
-#             - ubuntu-toolchain-r-test
-#             - llvm-toolchain-trusty-3.6
-#           packages:
-#             - clang-3.6
-#       env: COMPILER=clang++-3.6
-#
-#     - os: linux
-#       compiler: clang
-#       addons:
-#         apt:
-#           sources:
-#             - ubuntu-toolchain-r-test
-#             - llvm-toolchain-trusty-3.7
-#           packages:
-#             - clang-3.7
-#       env: COMPILER=clang++-3.7
-#
-#     - os: linux
-#       compiler: clang
-#       addons:
-#         apt:
-#           sources:
-#             - ubuntu-toolchain-r-test
-#             - llvm-toolchain-trusty-3.8
-#           packages:
-#             - clang-3.8
-#       env: COMPILER=clang++-3.8
-#
-#     - os: linux
-#       compiler: clang
-#       addons:
-#         apt:
-#           sources:
-#             - ubuntu-toolchain-r-test
-#             - llvm-toolchain-trusty-4.0
-#           packages:
-#             - clang-4.0
-#       env: COMPILER=clang++-4.0
-#
-#     - os: linux
-#       compiler: clang
-#       addons:
-#         apt:
-#           sources:
-#             - ubuntu-toolchain-r-test
-#             - llvm-toolchain-precise-5.0
-#           packages:
-#             - clang-5.0
-#       env: COMPILER=clang++-5.0
-#
-#     - os: osx               # Xcode (previous)
-#       osx_image: xcode8.2
-#       compiler: clang
-#       env: COMPILER=clang++
-#       install: ./ci/travis/install.sh "+ponder +lua"
-#
-#     - os: osx               # Xcode (latest)
-#       osx_image: xcode9.1
-#       compiler: clang
-#       env: COMPILER=clang++
-#       install: ./ci/travis/install.sh "+ponder +lua"
 
-os:
-  - linux
-  - osx
+matrix:
+  include:
+    - os: linux
+      compiler: gcc
+      env: FEATURES="-DWANT_REFLECTION=OFF"
+    - os: linux
+      compiler: gcc
+      env: FEATURES="-DWANT_REFLECTION=ON"
+      
+    - os: linux
+      compiler: clang
+      env: FEATURES="-DWANT_REFLECTION=OFF"
+    - os: linux
+      compiler: clang
+      env: FEATURES="-DWANT_REFLECTION=ON"
 
-# On OSX, the version of clang is controlled by the choice of osx_image.
-compiler:
-  - gcc
-  - clang
-  
-env:
-  - INSTALL="+lua" WANTS="-DWANT_REFLECTION=ON"
-  - INSTALL="" WANTS="-DWANT_REFLECTION=OFF"
-    
-before_install: ./ci/travis/install.sh "$INSTALL"
-        
-script: ./ci/travis/build.sh $COMPILER "$WANTS"
+    - os: osx               # Xcode (previous)
+      osx_image: xcode8.3
+      env: FEATURES="-DWANT_REFLECTION=OFF"
+    - os: osx
+      osx_image: xcode8.3
+      env: FEATURES="-DWANT_REFLECTION=ON"
+
+    - os: osx               # Xcode (latest)
+      osx_image: xcode9.2
+      env: FEATURES="-DWANT_REFLECTION=OFF"
+    - os: osx
+      osx_image: xcode9.2
+      env: FEATURES="-DWANT_REFLECTION=ON"
+
+script: ./ci/travis/build.sh
     
 notifications:
   email:

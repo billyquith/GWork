@@ -58,7 +58,7 @@ public:
 
 };
 
-GWK_DECLARE_TEST(TreeControl);
+GWK_REGISTER_TEST(TreeControl);
 
 }}
 

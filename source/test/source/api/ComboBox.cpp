@@ -56,7 +56,7 @@ public:
 
 };
 
-GWK_DECLARE_TEST(ComboBox);
+GWK_REGISTER_TEST(ComboBox);
 
 }}
 

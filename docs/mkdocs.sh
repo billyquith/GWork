@@ -10,7 +10,7 @@ if [ ! -d $DOCDIR ]; then
 fi
 
 pushd $DOCDIR
-cmake --build . --target doc
+cmake --build . --target gwork_docs
 
 DOC=doc/html/index.html
 case "$(uname -s)" in
