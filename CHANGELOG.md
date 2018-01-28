@@ -6,17 +6,17 @@ This is a changelog for Gwork. There are also notes [on my blog][blog]
 
 ### 0.3
 
-- Irrlicht renderer added. Thanks kklouzalk@github
+- **Irrlicht renderer** added. Thanks kklouzalk@github
 - ResourceLoader and ResourcePaths abstract file locations and sources. #66.
 - Retired Direct2D and GDI+ renderers.
 - Added CrossPlatform platform. Null should do nothing!
-- Added Software renderer. Draws to a texture/pixel buffer.
-- Added Gwk::Log::Write() so that error messages can be logged.
+- Added **Software renderer**. Draws to a texture.
+- Added `Gwk::Log::Write()` so that error messages can be logged.
 
 ### 0.2
 
 - Online [documentation][docs] added.
-- DirectX 11 renderer and sample added. Thanks to topblast@github. #13
+- **DirectX 11 renderer** and sample added. Thanks to topblast@github. #13
 - Fix Windows platform. #13
 - C++11 `override` used everywhere applicable to marked overridden virtual functions.
 
