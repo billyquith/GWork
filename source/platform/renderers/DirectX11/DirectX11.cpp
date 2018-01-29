@@ -100,9 +100,9 @@ static HRESULT CompileShaderFromMemory(const char* szdata, SIZE_T len, LPCSTR sz
     //);
     ID3DBlob* pErrorBlob = nullptr;
     hr = D3DCompile(szdata, len,        // source/len
-                    nullptr,               // source name
-                    nullptr,               // defines
-                    nullptr,               // include
+                    nullptr,            // source name
+                    nullptr,            // defines
+                    nullptr,            // include
                     szEntryPoint,       // entry
                     szShaderModel,      // target
                     dwShaderFlags, 0,   // flags
@@ -121,10 +121,6 @@ static HRESULT CompileShaderFromMemory(const char* szdata, SIZE_T len, LPCSTR sz
     return S_OK;
 }
 #pragma endregion
-
-const wchar_t BeginCharacter = L' ';
-const wchar_t LastCharacter = 0x2FFF;
-const wchar_t NewLineCharacter = L'\n';
 
 class FontData
 {
@@ -150,6 +146,14 @@ public:
     ID3D11ShaderResourceView* m_Texture;
 };
 
+DirectX11ResourceLoader::~DirectX11ResourceLoader()
+{
+    for each (auto& font in m_FontDataList)
+    {
+        FontData* pFontData = static_cast<FontData*>(font);
+        delete pFontData;
+    }
+}
 
 Font::Status DirectX11ResourceLoader::LoadFont(Font& font)
 {
@@ -735,8 +739,7 @@ void DirectX11::SetDrawColor(Gwk::Color color)
     m_Color = D3DCOLOR_ARGB(color.a, color.r, color.g, color.b);
 }
 
-
-inline wchar_t utf8_to_wchart(char*& in)// Gwk::Utility::Widen too low
+static inline wchar_t utf8_to_wchart(char*& in)// Gwk::Utility::Widen too slow
 {
 
     unsigned int codepoint;
@@ -775,6 +778,9 @@ void DirectX11::RenderText(Gwk::Font* pFont, Gwk::Point pos, const Gwk::String &
     Flush();
 
     FontData* pFontData = (FontData*)pFont->data;
+
+    if (pFontData == nullptr)
+        return;
 
     Translate(pos.x, pos.y);
     XMFLOAT4A loc(pos.x, pos.y, 0, 0);
@@ -840,6 +846,8 @@ Gwk::Point DirectX11::MeasureText(Gwk::Font* pFont, const Gwk::String& text)
         return Gwk::Point(0, 0);
 
     FontData* font = (FontData*)pFont->data;
+    if (font == nullptr)
+        return Gwk::Point(0, 0);
 
     float fRowWidth = 0.0f;
     float fRowHeight = (font->m_TexCoords[0].w - font->m_TexCoords[0].y) * font->m_TexHeight;

@@ -16,22 +16,26 @@ namespace Gwk
 {
     namespace Renderer
     {
-        const wchar_t BeginCharacter = L' ';    // First Character of Wide Character Table
-        const wchar_t LastCharacter = 0x2FFF;   // Last Character of Wide Character Table
-        const wchar_t NewLineCharacter = L'\n'; // New Line Character
+        static const wchar_t BeginCharacter = L' ';    // First Character of Wide Character Table
+        static const wchar_t LastCharacter = 0x2FFF;   // Last Character of Wide Character Table
+        static const wchar_t NewLineCharacter = L'\n'; // New Line Character
 
         //! Default resource loader for DirectX 11.
+        class FontData;
         class DirectX11ResourceLoader : public ResourceLoader
         {
-            ResourcePaths&      m_paths;
-            ID3D11Device*       m_pDevice;
-            Gwk::Font::List     m_FontList;
+            ResourcePaths&          m_paths;
+            ID3D11Device*           m_pDevice;
+            Gwk::Font::List         m_FontList;
+            std::list<FontData*>    m_FontDataList;
 
         public:
             DirectX11ResourceLoader(ResourcePaths& paths, ID3D11Device* pDevice)
                 :   m_paths(paths)
                 ,   m_pDevice(pDevice)
             {}
+
+            ~DirectX11ResourceLoader();
 
             Font::Status LoadFont(Font& font) override;
             void FreeFont(Font& font) override;
