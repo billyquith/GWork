@@ -123,7 +123,7 @@ static HRESULT CompileShaderFromMemory(const char* szdata, SIZE_T len, LPCSTR sz
 #pragma endregion
 
 const wchar_t BeginCharacter = L' ';
-const wchar_t LastCharacter = 0x7FF;
+const wchar_t LastCharacter = 0x2FFF;
 const wchar_t NewLineCharacter = L'\n';
 
 class FontData
@@ -154,7 +154,7 @@ public:
 Font::Status DirectX11ResourceLoader::LoadFont(Font& font)
 {
     DWORD texWidth, texHeight;
-    texWidth = 1024;
+    texWidth = 2048;
     HDC hDC = CreateCompatibleDC(nullptr);
     SetMapMode(hDC, MM_TEXT);
 
@@ -187,7 +187,7 @@ Font::Status DirectX11ResourceLoader::LoadFont(Font& font)
     SetTextAlign(hDC, TA_TOP);
 
     wchar_t str[2] = L"x";
-    std::vector<XMFLOAT4> sizes;
+    std::vector<XMFLOAT4> sizes(LastCharacter - BeginCharacter + 1);
     float spacing;
     {
         float x = 0, y = 0;
@@ -197,7 +197,7 @@ Font::Status DirectX11ResourceLoader::LoadFont(Font& font)
 
         spacing = sz.cx;
 
-        for (wchar_t c = BeginCharacter; c <= LastCharacter; c++)
+        for (int c = BeginCharacter; c >= BeginCharacter && c <= LastCharacter; c++)
         {
             str[0] = c;
             GetTextExtentPoint32W(hDC, str, 1, &sz);
@@ -211,7 +211,7 @@ Font::Status DirectX11ResourceLoader::LoadFont(Font& font)
             x = ceilf(x);
             y = ceilf(y);
 
-            sizes.push_back(XMFLOAT4(x, y, x + sz.cx, y + sz.cy));
+            sizes[c - BeginCharacter] = (XMFLOAT4(x, y, x + sz.cx, y + sz.cy));
 
             x += sz.cx + spacing / 2;
         }
@@ -288,8 +288,9 @@ Font::Status DirectX11ResourceLoader::LoadFont(Font& font)
         DeleteObject(hFont);
         DeleteDC(hDC);
         GwkDxSafeRelease(buftex);
+        GwkDxSafeRelease(pContext);
 
-        return font.status = Font::Status::ErrorBadData;;
+        return font.status = Font::Status::ErrorBadData;
     }
 
     //BYTE bAlpha;
@@ -579,6 +580,8 @@ void DirectX11::Init()
 
     width = vp.Width;
     height = vp.Height;
+    scalex = 1 / width * 2.f;
+    scaley = 1 / height * 2.f;
 
     region.left = 0.f;
     region.right = width;
@@ -632,6 +635,7 @@ void DirectX11::Begin()
     m_pContext->RSSetState(m_pRastState);
     m_pContext->IASetInputLayout(m_pInputLayout);
     m_pContext->OMSetBlendState(m_pBlendState, nullptr, 0xFFFFFFFF);
+
 }
 
 void DirectX11::End()
@@ -705,9 +709,6 @@ void DirectX11::DrawFilledRect(Gwk::Rect rec)
     }
 
     Translate(rec);
-
-    const float scalex = 1.f / width * 2.f;
-    const float scaley = 1.f / height * 2.f;
 
     XMFLOAT4A rect(rec.x, rec.y, rec.w, rec.h);
 
@@ -794,7 +795,7 @@ void DirectX11::RenderText(Gwk::Font* pFont, Gwk::Point pos, const Gwk::String &
         if (wide_char == NewLineCharacter)
         {
             loc.x = fStartX;
-            loc.y += (data->m_TexCoords[BeginCharacter].w - data->m_TexCoords[BeginCharacter].y) * data->m_TexHeight;
+            loc.y += (data->m_TexCoords[0].w - data->m_TexCoords[0].y) * data->m_TexHeight;
             continue;
         }
         else if (wide_char < BeginCharacter || wide_char > LastCharacter)
@@ -807,8 +808,6 @@ void DirectX11::RenderText(Gwk::Font* pFont, Gwk::Point pos, const Gwk::String &
 
         if (c != 0)
         {
-            const float scalex = 1.f / (float)width * 2.f;
-            const float scaley = 1.f / (float)height * 2.f;
 
             XMFLOAT4A rect(loc);
             rect.z = rect.z * scalex - 1.f;
@@ -860,8 +859,10 @@ Gwk::Point DirectX11::MeasureText(Gwk::Font* pFont, const Gwk::String& text)
         else if (wide_char < BeginCharacter || wide_char > LastCharacter)
             continue;
 
-        const float tx1 = font->m_TexCoords[c].x;
-        const float tx2 = font->m_TexCoords[c].z;
+        const auto& texCoord = font->m_TexCoords[c];
+
+        const float tx1 = texCoord.x;
+        const float tx2 = texCoord.z;
 
         fRowWidth += (tx2 - tx1)* font->m_TexWidth;
 
@@ -908,10 +909,7 @@ void DirectX11::DrawTexturedRect(Gwk::Texture* pTexture, Gwk::Rect rec, float u1
         Flush();
         m_pCurrentTexture = pImage;
     }
-
-    float scalex = 1 / width * 2.f;
-    float scaley = 1 / height * 2.f;
-
+    
     Translate(rec);
 
     XMFLOAT4A rect(rec.x, rec.y, rec.w, rec.h);

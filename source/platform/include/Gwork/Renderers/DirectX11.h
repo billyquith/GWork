@@ -16,6 +16,10 @@ namespace Gwk
 {
     namespace Renderer
     {
+        const wchar_t BeginCharacter = L' ';    // First Character of Wide Character Table
+        const wchar_t LastCharacter = 0x2FFF;   // Last Character of Wide Character Table
+        const wchar_t NewLineCharacter = L'\n'; // New Line Character
+
         //! Default resource loader for DirectX 11.
         class DirectX11ResourceLoader : public ResourceLoader
         {
@@ -80,6 +84,7 @@ namespace Gwk
             //virtual void FillPresentParameters(Gwk::WindowProvider* pWindow, DXGI_SWAP_CHAIN_DESC & Params);
 
             FLOAT                   width, height;
+            FLOAT                   scalex, scaley;
             DWORD                   m_Color;
             bool                    m_Valid;
 
