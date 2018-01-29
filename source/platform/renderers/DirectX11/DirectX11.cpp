@@ -122,7 +122,7 @@ static HRESULT CompileShaderFromMemory(const char* szdata, SIZE_T len, LPCSTR sz
 }
 #pragma endregion
 
-const wchar_t BeginCharacter = 0x32;
+const wchar_t BeginCharacter = L' ';
 const wchar_t LastCharacter = 0x7FF;
 const wchar_t NewLineCharacter = L'\n';
 
@@ -794,7 +794,8 @@ void DirectX11::RenderText(Gwk::Font* pFont, Gwk::Point pos, const Gwk::String &
         if (wide_char == NewLineCharacter)
         {
             loc.x = fStartX;
-            loc.y += (data->m_TexCoords[c].w - data->m_TexCoords[c].y) * data->m_TexHeight;
+            loc.y += (data->m_TexCoords[BeginCharacter].w - data->m_TexCoords[BeginCharacter].y) * data->m_TexHeight;
+            continue;
         }
         else if (wide_char < BeginCharacter || wide_char > LastCharacter)
             continue;
@@ -854,6 +855,7 @@ Gwk::Point DirectX11::MeasureText(Gwk::Font* pFont, const Gwk::String& text)
         {
             fRowWidth = 0.0f;
             fHeight += fRowHeight;
+            continue;
         }
         else if (wide_char < BeginCharacter || wide_char > LastCharacter)
             continue;
