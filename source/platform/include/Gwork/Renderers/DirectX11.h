@@ -16,18 +16,26 @@ namespace Gwk
 {
     namespace Renderer
     {
+        static const wchar_t BeginCharacter = L' ';    // First Character of Wide Character Table
+        static const wchar_t LastCharacter = 0x2FFF;   // Last Character of Wide Character Table
+        static const wchar_t NewLineCharacter = L'\n'; // New Line Character
+
         //! Default resource loader for DirectX 11.
+        class FontData;
         class DirectX11ResourceLoader : public ResourceLoader
         {
-            ResourcePaths&      m_paths;
-            ID3D11Device*       m_pDevice;
-            Gwk::Font::List     m_FontList;
+            ResourcePaths&          m_paths;
+            ID3D11Device*           m_pDevice;
+            Gwk::Font::List         m_FontList;
+            std::list<FontData*>    m_FontDataList;
 
         public:
             DirectX11ResourceLoader(ResourcePaths& paths, ID3D11Device* pDevice)
                 :   m_paths(paths)
                 ,   m_pDevice(pDevice)
             {}
+
+            ~DirectX11ResourceLoader();
 
             Font::Status LoadFont(Font& font) override;
             void FreeFont(Font& font) override;
@@ -36,7 +44,7 @@ namespace Gwk
             void FreeTexture(Texture& texture) override;
         };
 
-#define GwkDxSafeRelease(var) if(var) {var->Release(); var = NULL;}
+#define GwkDxSafeRelease(var) if(var != nullptr) {var->Release(); var = nullptr;}
 
         //
         //! Renderer for [DirectX11](https://en.wikipedia.org/wiki/DirectX#DirectX_11).
@@ -45,7 +53,7 @@ namespace Gwk
         {
         public:
 
-            DirectX11(ResourceLoader& loader, ID3D11Device* pDevice = NULL);
+            DirectX11(ResourceLoader& loader, ID3D11Device* pDevice = nullptr);
             virtual ~DirectX11();
 
             virtual void Init();
@@ -80,6 +88,7 @@ namespace Gwk
             //virtual void FillPresentParameters(Gwk::WindowProvider* pWindow, DXGI_SWAP_CHAIN_DESC & Params);
 
             FLOAT                   width, height;
+            FLOAT                   scalex, scaley;
             DWORD                   m_Color;
             bool                    m_Valid;
 
@@ -114,8 +123,6 @@ namespace Gwk
 
             void Flush();
             void Present();
-            void AddVert(int x, int y);
-            void AddVert(int x, int y, float u, float v);
 
             struct VertexFormat
             {
@@ -151,6 +158,7 @@ namespace Gwk
                     if (open)
                         End();
                     GwkDxSafeRelease(m_vbuffer);
+                    GwkDxSafeRelease(m_pContext);
                 }
 
                 inline DWORD GetMaxVertices() const { return maxVertices; }
@@ -172,7 +180,7 @@ namespace Gwk
 
                         D3D11_BUFFER_DESC bufdesc = CD3D11_BUFFER_DESC(maxVertices * sizeof(T), D3D11_BIND_VERTEX_BUFFER, D3D11_USAGE_DYNAMIC, D3D11_CPU_ACCESS_WRITE);
 
-                        if (FAILED(hr = pDevice->CreateBuffer(&bufdesc, NULL, &m_vbuffer)))
+                        if (FAILED(hr = pDevice->CreateBuffer(&bufdesc, nullptr, &m_vbuffer)))
                             return hr;
 
                         bufferResize = false;
@@ -232,6 +240,7 @@ namespace Gwk
                         maxVertices = numVertices;
                     }
 
+                    GwkDxSafeRelease(m_pContext);
                     return S_OK;
                 }
 
