@@ -13,13 +13,20 @@ A number of rendering backends are provided for use, or as an example for your o
  * [Allegro5][al5] (cross-platform).
  * DirectX 11 (Windows 7+).
  * [Irrlicht3D][irr3d] (cross-platform).
- * OpenGL (cross-platform. Uses GLFW).
+ * OpenGL (cross-platform. Uses GLFW (Required for sample)).
+ * OpenGL Core Profile (corss-platform. Uses GLM, GLFW (Required for sample)).
  * [SDL2][sdl2] (cross-platform).
  * [SFML2][sfml2] (cross-platform).
  * Software (cross-platform). Render to texture.
  
 Note that the software renderer can be used on any platform, but, obviously, with the penalty of 
 not having hardware acceleration.
+
+## GLFW
+
+GWork supports GLFW input subsystem, but if library must be used without GLFW, support
+can be disabled with key `-DUSE_GLFW=Off`. But GLFW is required for sample. After that
+you will have to write your own input controller, check `Gwk::Input::GLFW` for example.
 
 ## Documentation
 
@@ -47,6 +54,7 @@ your platform. Only have one renderer per build directory. Choose renderer:
 * `-DRENDER_DIRECTX11=ON`
 * `-DRENDER_IRRLICHT=ON`
 * `-DRENDER_OPENGL=ON`
+* `-DRENDER_OPENGL_CORE=ON`
 * `-DRENDER_SDL2=ON`
 * `-DRENDER_SFML2=ON`
 * `-DRENDER_SW=ON`
