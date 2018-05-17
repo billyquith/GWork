@@ -14,7 +14,7 @@ A number of rendering backends are provided for use, or as an example for your o
  * DirectX 11 (Windows 7+).
  * [Irrlicht3D][irr3d] (cross-platform).
  * OpenGL (cross-platform. Uses GLFW (Required for sample)).
- * OpenGL Core Profile (corss-platform. Uses GLM, GLFW (Required for sample)).
+ * OpenGL Core Profile (corss-platform. Uses GLM, GLEW, GLFW (Required for sample)).
  * [SDL2][sdl2] (cross-platform).
  * [SFML2][sfml2] (cross-platform).
  * Software (cross-platform). Render to texture.

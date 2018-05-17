@@ -3,6 +3,7 @@
 
 
 #include <Gwork/BaseRender.h>
+#include <vector>
 #include <glm/glm.hpp>
 
 namespace Gwk
@@ -66,15 +67,43 @@ namespace Gwk
 
             void*   m_context;
 
-        protected:
+        private:
+
+            /**
+             * @brief Perform actual rendering.
+             */
+            void Flush();
+
+            /**
+             * @brief Add vertex to buffer.
+             * @param x
+             * @param y
+             * @param u
+             * @param v
+             */
+            void AddVert(int x, int y, float u = 0.0f, float v = 0.0f);
 
             Rect m_viewRect;
             Color m_color;
 
-        private:
+            struct Vertex
+            {
+                glm::vec3 pos;
+                glm::vec2 uv;
+                glm::vec4 color;
+            };
+
+            std::vector<Vertex> m_vertices;
+
             glm::mat4 m_projectionMatrix;
             glm::mat4 m_viewMatrix;
             glm::mat4 m_modelMatrix;
+
+            uint32_t m_program;
+            uint32_t m_vbo;
+            uint32_t m_vao;
+            uint32_t m_currentTexture;
+            bool m_isFontRendering;
         };
 
 

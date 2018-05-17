@@ -7,7 +7,10 @@
  *  See license in Gwork.h
  */
 
-#include <GWork/Renderers/OpenGLCore.h>
+
+#include <GL/glew.h>
+#include <GL/gl.h>
+#include <Gwork/Renderers/OpenGLCore.h>
 #include <Gwork/PlatformTypes.h>
 #include <Gwork/WindowProvider.h>
 #include <Gwork/PlatformCommon.h>
@@ -22,7 +25,6 @@
 #   define CREATE_NATIVE_CONTEXT 0
 #endif
 
-#include <GLFW/glfw3.h>
 #include <math.h>
 #include <sys/stat.h>
 #include <stdio.h>
@@ -38,6 +40,11 @@
 #include <iostream>
 #include <glm/gtx/matrix_decompose.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+
+// todo: remove lib if not GLFW driven
+//#include <GLFW/glfw3.h>
+//#include <GL/glew.h>
 
 namespace Gwk
 {
@@ -67,11 +74,11 @@ namespace Gwk
             const size_t fsz = rc == 0 ? stat_buf.st_size : -1;
             assert(fsz > 0);
 
-            unsigned char* ttfdata = new unsigned char[fsz];
+            auto* ttfdata = new unsigned char[fsz];
             fread(ttfdata, 1, fsz, f);
             fclose(f);
 
-            unsigned char *font_bmp = new unsigned char[c_texsz * c_texsz];
+            auto*font_bmp = new unsigned char[c_texsz * c_texsz];
 
             font.render_data = new stbtt_bakedchar[96];
 
@@ -88,12 +95,13 @@ namespace Gwk
             glBindTexture(GL_TEXTURE_2D, *static_cast<GLuint*>(font.data));
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-            glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA,
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RED,
                          c_texsz,c_texsz, 0,
-                         GL_ALPHA, GL_UNSIGNED_BYTE,
+                         GL_RED, GL_UNSIGNED_BYTE,
                          font_bmp);
             delete [] font_bmp;
 
+            glBindTexture(GL_TEXTURE_2D, 0);
             font.status = Font::Status::Loaded;
 
             return font.status;
@@ -130,7 +138,7 @@ namespace Gwk
             }
 
             // Create a little texture pointer..
-            GLuint* pglTexture = new GLuint;
+            auto* pglTexture = new GLuint;
 
             texture.data = pglTexture;
             texture.width = x;
@@ -146,6 +154,8 @@ namespace Gwk
                          GL_UNSIGNED_BYTE, (const GLvoid*)data);
 
             stbi_image_free(data);
+
+            glBindTexture(GL_TEXTURE_2D, *pglTexture);
 
             return texture.status = Texture::Status::Loaded;
         }
@@ -170,6 +180,7 @@ namespace Gwk
             :   Base(loader)
             ,   m_context(nullptr)
             ,   m_viewRect(viewRect)
+            ,   m_currentTexture(0)
         {
 
         }
@@ -177,6 +188,30 @@ namespace Gwk
         OpenGLCore::~OpenGLCore()
         {
 
+        }
+
+        void checkErrors(unsigned int shader, std::string type)
+        {
+            int success;
+            char infoLog[1024];
+            if (type != "PROGRAM")
+            {
+                glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
+                if (!success)
+                {
+                    glGetShaderInfoLog(shader, 1024, NULL, infoLog);
+                    std::cout << "ERROR::SHADER_COMPILATION_ERROR of type: " << type << "\n" << infoLog << "\n -- --------------------------------------------------- -- " << std::endl;
+                }
+            }
+            else
+            {
+                glGetProgramiv(shader, GL_LINK_STATUS, &success);
+                if (!success)
+                {
+                    glGetProgramInfoLog(shader, 1024, NULL, infoLog);
+                    std::cout << "ERROR::PROGRAM_LINKING_ERROR of type: " << type << "\n" << infoLog << "\n -- --------------------------------------------------- -- " << std::endl;
+                }
+            }
         }
 
         void OpenGLCore::Init()
@@ -189,184 +224,325 @@ namespace Gwk
 
             m_projectionMatrix = glm::ortho(
                 static_cast<float>(m_viewRect.x),
+                static_cast<float>(m_viewRect.x + m_viewRect.w),
                 static_cast<float>(m_viewRect.y),
-                static_cast<float>(m_viewRect.w),
-                static_cast<float>(m_viewRect.h)
+                static_cast<float>(m_viewRect.y + m_viewRect.h),
+                -1.0f,
+                1.0f
             );
 
-//            glMatrixMode(GL_PROJECTION);
-//            glLoadIdentity();
-//            glOrtho(m_viewRect.x, m_viewRect.x + m_viewRect.w,
-//                    m_viewRect.y, m_viewRect.y + m_viewRect.h,
-//                    -1.0, 1.0);
-//            glMatrixMode(GL_MODELVIEW);
-//            glViewport(m_viewRect.x, m_viewRect.y, m_viewRect.w, m_viewRect.h);
+            // Creating buffers
+            glCreateVertexArrays(1, &m_vao);
+            glCreateBuffers(1, &m_vbo);
+
+            // Loading shaders
+
+            auto vertexShader = glCreateShader(GL_VERTEX_SHADER);
+            auto fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+
+            auto vertexSource = R"(
+#version 330 core
+layout (location = 0) in vec3 inPosition;
+layout (location = 1) in vec2 inTexCoords;
+layout (location = 2) in vec4 inColor;
+
+out vec2 TexCoords;
+out vec4 VertexColor;
+
+uniform mat4 projection;
+
+void main()
+{
+    gl_Position = projection * vec4(inPosition, 1.0f);
+    TexCoords = inTexCoords;
+    VertexColor = inColor;
+})";
+            auto fragmentSource = R"(
+#version 420 core
+out vec4 FragColor;
+
+in vec2 TexCoords;
+in vec4 VertexColor;
+
+uniform sampler2D texture1;
+uniform bool font;
+
+void main()
+{
+    if (!font)
+    {
+        FragColor = texture(texture1, TexCoords) * VertexColor;
+    }
+    else
+    {
+        float color = texture(texture1, TexCoords).r;
+
+        FragColor = vec4(VertexColor.rgb, color);
+    }
+})";
+
+            // Binding shaders with sources
+            glShaderSource(
+                vertexShader,
+                1,
+                reinterpret_cast<const GLchar* const*>(&vertexSource),
+                nullptr
+            );
+            glShaderSource(
+                fragmentShader,
+                1,
+                reinterpret_cast<const GLchar* const*>(&fragmentSource),
+                nullptr
+            );
+
+            // Compiling shaders
+            glCompileShader(vertexShader);
+
+            checkErrors(vertexShader, "VERTEX_SHADER");
+
+            glCompileShader(fragmentShader);
+
+            checkErrors(fragmentShader, "FRAGMENT_SHADER");
+
+            m_program = glCreateProgram();
+            glAttachShader(m_program, vertexShader);
+            glAttachShader(m_program, fragmentShader);
+
+            glLinkProgram(m_program);
+
+            checkErrors(m_program, "PROGRAM");
+
+            glDeleteShader(vertexShader);
+            glDeleteShader(fragmentShader);
+
+            glViewport(m_viewRect.x, m_viewRect.y, m_viewRect.w, m_viewRect.h);
         }
 
         void OpenGLCore::Begin()
         {
-            std::cout << "Begin" << std::endl;
-//            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-//            glAlphaFunc(GL_GREATER, 1.0f);
-//            glEnable(GL_BLEND);
+            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+            glEnable(GL_BLEND);
         }
 
         void OpenGLCore::End()
         {
-            std::cout << "End" << std::endl;
-//            Flush();
+            Flush();
         }
 
-//        void OpenGLCore::Flush()
-//        {
-//            if (m_vertNum == 0)
-//                return;
-//
-//            glVertexPointer(3, GL_FLOAT,  sizeof(Vertex), (void*)&m_vertices[0].x);
-//            glEnableClientState(GL_VERTEX_ARRAY);
-//            glColorPointer(4, GL_UNSIGNED_BYTE, sizeof(Vertex), (void*)&m_vertices[0].r);
-//            glEnableClientState(GL_COLOR_ARRAY);
-//            glTexCoordPointer(2, GL_FLOAT, sizeof(Vertex), (void*)&m_vertices[0].u);
-//            glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-//            glDrawArrays(GL_TRIANGLES, 0, (GLsizei)m_vertNum);
-//
-//            m_vertNum = 0;
-//            glFlush();
-//        }
+        void OpenGLCore::Flush()
+        {
+            if (m_vertices.empty())
+            {
+                return;
+            }
 
-//        void OpenGLCore::AddVert(int x, int y, float u, float v)
-//        {
-//            if (m_vertNum >= MaxVerts-1)
-//                Flush();
-//
-//            // OpenGL origin is bottom-left. Gwork origin is top-left.
-//            m_vertices[ m_vertNum ].x = float(x);
-//            m_vertices[ m_vertNum ].y = float(m_viewRect.h - y);
-//            m_vertices[ m_vertNum ].u = u;
-//            m_vertices[ m_vertNum ].v = v;
-//            m_vertices[ m_vertNum ].r = m_color.r;
-//            m_vertices[ m_vertNum ].g = m_color.g;
-//            m_vertices[ m_vertNum ].b = m_color.b;
-//            m_vertices[ m_vertNum ].a = m_color.a;
-//            m_vertNum++;
-//        }
+            // Binding VAO
+            glBindVertexArray(m_vao);
+
+            // Binding VBO
+            glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
+
+            // Loading data into VBO
+            glNamedBufferData(
+                m_vbo,
+                m_vertices.size() * sizeof(Vertex),
+                m_vertices.data(),
+                GL_DYNAMIC_DRAW
+            );
+
+            // Binding VBO to VAO
+            glVertexArrayVertexBuffer(
+                m_vao,
+                0,
+                m_vbo,
+                0,
+                sizeof(Vertex)
+            );
+
+            // Enabling attributes
+            glEnableVertexArrayAttrib(m_vao, 0); // Position
+            glEnableVertexArrayAttrib(m_vao, 1); // UV
+            glEnableVertexArrayAttrib(m_vao, 2); // Color
+
+            // Setting format
+            glVertexArrayAttribFormat(m_vao, 0, 3, GL_FLOAT, GL_FALSE, static_cast<GLuint>(offsetof(Vertex, pos)));
+            glVertexArrayAttribFormat(m_vao, 1, 2, GL_FLOAT, GL_FALSE, static_cast<GLuint>(offsetof(Vertex, uv)));
+            glVertexArrayAttribFormat(m_vao, 2, 4, GL_FLOAT, GL_FALSE, static_cast<GLuint>(offsetof(Vertex, color)));
+
+            // Binding vertex array to buffer
+            glVertexArrayAttribBinding(m_vao, 0, 0);
+            glVertexArrayAttribBinding(m_vao, 1, 0);
+            glVertexArrayAttribBinding(m_vao, 2, 0);
+
+            // Program
+            glUseProgram(m_program);
+
+            // Loading matricies
+            glProgramUniformMatrix4fv(
+                m_program,
+                glGetUniformLocation(m_program, "projection"),
+                1,
+                GL_FALSE,
+                glm::value_ptr(m_projectionMatrix)
+            );
+
+            glProgramUniform1i(
+                m_program,
+                glGetUniformLocation(m_program, "font"),
+                m_isFontRendering
+            );
+
+            // Drawing
+            glDrawArrays(
+                GL_TRIANGLES,
+                0,
+                static_cast<GLsizei>(m_vertices.size())
+            );
+
+            if (m_isFontRendering)
+            {
+                m_isFontRendering = false;
+            }
+
+            // Unbinding
+            glBindVertexArray(0);
+            glUseProgram(0);
+
+            // Clearing
+            m_vertices.clear();
+            glFlush();
+        }
+
+        void OpenGLCore::AddVert(int x, int y, float u, float v)
+        {
+            // OpenGL origin is bottom-left. Gwork origin is top-left.
+
+            Vertex vertex;
+            vertex.pos.x = x;
+            vertex.pos.y = m_viewRect.h - y;
+            vertex.pos.z = 0;
+
+            vertex.uv.x = u;
+            vertex.uv.y = v;
+
+            vertex.color = glm::vec4(
+                m_color.r / 255.0f,
+                m_color.g / 255.0f,
+                m_color.b / 255.0f,
+                m_color.a / 255.0f
+            );
+
+            m_vertices.push_back(vertex);
+//            m_vertices.push_back(
+//                {{float(x), float(m_viewRect.h - y), 0}, {u, v}, m_color}
+//            );
+        }
 
         void OpenGLCore::DrawFilledRect(Gwk::Rect rect)
         {
-            std::cout << "DrawFilledRect Rect(x=" << rect.x << " y=" << rect.y << " " << rect.w << 'x' << rect.h << ")" << std::endl;
-//            GLboolean texturesOn;
-//            glGetBooleanv(GL_TEXTURE_2D, &texturesOn);
-//
-//            if (texturesOn)
-//            {
-//                Flush();
-//                glDisable(GL_TEXTURE_2D);
-//            }
-//
-//            Translate(rect);
-//            AddVert(rect.x, rect.y);
-//            AddVert(rect.x+rect.w, rect.y);
-//            AddVert(rect.x, rect.y+rect.h);
-//            AddVert(rect.x+rect.w, rect.y);
-//            AddVert(rect.x+rect.w, rect.y+rect.h);
-//            AddVert(rect.x, rect.y+rect.h);
+//            std::cout << "DrawFilledRect Rect(x=" << rect.x << " y=" << rect.y << " " << rect.w << 'x' << rect.h << ")" << std::endl;
+
+            if (m_currentTexture != 0)
+            {
+                Flush();
+                m_currentTexture = 0;
+                glBindTexture(GL_TEXTURE_2D, 0);
+            }
+
+            Translate(rect);
+            AddVert(rect.x, rect.y);
+            AddVert(rect.x+rect.w, rect.y);
+            AddVert(rect.x, rect.y+rect.h);
+            AddVert(rect.x+rect.w, rect.y);
+            AddVert(rect.x+rect.w, rect.y+rect.h);
+            AddVert(rect.x, rect.y+rect.h);
         }
 
         void OpenGLCore::SetDrawColor(Gwk::Color color)
         {
-            std::cout
-                << "SetDrawColor Color("
-                << (int) color.r << ", "
-                << (int) color.g << ", "
-                << (int) color.b << ", "
-                << (int) color.a << std::endl;
 //            glColor4ubv((GLubyte*)&color);
             m_color = color;
         }
 
         void OpenGLCore::StartClip()
         {
-            std::cout << "StartClip" << std::endl;
-//            Flush();
-//            Gwk::Rect rect = ClipRegion();
-//
-//            // OpenGL's coords are from the bottom left
-//            rect.y = m_viewRect.h - (rect.y + rect.h);
-//
-//            glScissor(rect.x * Scale(), rect.y * Scale(),
-//                      rect.w * Scale(), rect.h * Scale());
-//            glEnable(GL_SCISSOR_TEST);
+            Flush();
+            Gwk::Rect rect = ClipRegion();
+
+            rect.y = m_viewRect.h - (rect.y + rect.h);
+
+            glScissor(rect.x * Scale(), rect.y * Scale(),
+                      rect.w * Scale(), rect.h * Scale());
+            glEnable(GL_SCISSOR_TEST);
         }
 
         void OpenGLCore::EndClip()
         {
-            std::cout << "EndClip" << std::endl;
-//            Flush();
-//            glDisable(GL_SCISSOR_TEST);
+            Flush();
+            glDisable(GL_SCISSOR_TEST);
         }
 
         void OpenGLCore::DrawTexturedRect(Gwk::Texture* texture, Gwk::Rect rect,
                                       float u1, float v1, float u2, float v2)
         {
-            std::cout << "DrawTexturedRect Rect(x=" << rect.x << " y=" << rect.y << " " << rect.w << 'x' << rect.h << ")" << std::endl;
-//            GLuint* tex = (GLuint*)texture->data;
-//
-//            // Missing image, not loaded properly?
-//            if (!tex)
-//                return DrawMissingImage(rect);
-//
-//            Translate(rect);
+            auto* tex = (GLuint*)texture->data;
+
+            // Missing image, not loaded properly?
+            if (!tex)
+                return DrawMissingImage(rect);
+
+            Translate(rect);
 //            GLuint boundtex;
 //            GLboolean texturesOn;
 //            glGetBooleanv(GL_TEXTURE_2D, &texturesOn);
 //            glGetIntegerv(GL_TEXTURE_BINDING_2D, (GLint*)&boundtex);
-//
-//            if (!texturesOn || *tex != boundtex)
-//            {
-//                Flush();
-//                glBindTexture(GL_TEXTURE_2D, *tex);
-//                glEnable(GL_TEXTURE_2D);
-//            }
-//
-//            AddVert(rect.x, rect.y,             u1, v1);
-//            AddVert(rect.x+rect.w, rect.y,      u2, v1);
-//            AddVert(rect.x, rect.y+rect.h,      u1, v2);
-//            AddVert(rect.x+rect.w, rect.y,      u2, v1);
-//            AddVert(rect.x+rect.w, rect.y+rect.h, u2, v2);
-//            AddVert(rect.x, rect.y+rect.h,      u1, v2);
+
+            if (m_currentTexture != *tex)
+            {
+                Flush();
+                glActiveTexture(GL_TEXTURE0);
+                glBindTexture(GL_TEXTURE_2D, *tex);
+                m_currentTexture = *tex;
+            }
+
+            AddVert(rect.x,        rect.y,        u1, v1);
+            AddVert(rect.x+rect.w, rect.y,        u2, v1);
+            AddVert(rect.x,        rect.y+rect.h, u1, v2);
+            AddVert(rect.x+rect.w, rect.y,        u2, v1);
+            AddVert(rect.x+rect.w, rect.y+rect.h, u2, v2);
+            AddVert(rect.x,        rect.y+rect.h, u1, v2);
         }
 
         Gwk::Color OpenGLCore::PixelColor(Gwk::Texture* texture, unsigned int x, unsigned int y,
                                       const Gwk::Color& col_default)
         {
-            std::cout << "PixelColor x=" << x << ", y=" << y << std::endl;
-//            GLuint* tex = (GLuint*)texture->data;
-//
-//            if (!tex)
-//                return col_default;
-//
-//            unsigned int iPixelSize = sizeof(unsigned char)*4;
-//            glBindTexture(GL_TEXTURE_2D, *tex);
-//            unsigned char* data =
-//                (unsigned char*)malloc(iPixelSize * texture->width * texture->height);
-//            glGetTexImage(GL_TEXTURE_2D, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
-//            unsigned int iOffset = (y*texture->width+x)*4;
-//
-//            Color c(data[0+iOffset], data[1+iOffset], data[2+iOffset], data[3+iOffset]);
-//
-//            // Retrieving the entire texture for a single pixel read
-//            // is kind of a waste - maybe cache this pointer in the texture
-//            // data and then release later on? It's never called during runtime
-//            // - only during initialization.
-//            free(data);
+            auto* tex = (GLuint*)texture->data;
 
-            return Color(0, 0, 0);
+            if (!tex)
+                return col_default;
+
+            unsigned int iPixelSize = sizeof(unsigned char)*4;
+            glBindTexture(GL_TEXTURE_2D, *tex);
+            auto* data = new unsigned char[iPixelSize * texture->width * texture->height];
+            glGetTexImage(GL_TEXTURE_2D, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+            unsigned int iOffset = (y*texture->width+x)*4;
+
+            Color c(data[0+iOffset], data[1+iOffset], data[2+iOffset], data[3+iOffset]);
+
+            // Retrieving the entire texture for a single pixel read
+            // is kind of a waste - maybe cache this pointer in the texture
+            // data and then release later on? It's never called during runtime
+            // - only during initialization.
+            delete[] data;
+            glBindTexture(GL_TEXTURE_2D, 0);
+
+            return c;
         }
 
         void OpenGLCore::RenderText(Gwk::Font* font, Gwk::Point pos,
                                 const Gwk::String& text)
         {
-            std::cout << "RenderText " << text << std::endl;
+
             Texture tex;
             tex.data = font->data;
 
@@ -387,20 +563,33 @@ namespace Gwk
                                        *pc - 32,
                                        &x, &y, &q, 1); // 1=opengl & d3d10+,0=d3d9
 
-                    Rect r(q.x0, q.y0 + height, q.x1 - q.x0, q.y1 - q.y0);
-                    DrawTexturedRect(&tex, r, q.s0,q.t0, q.s1,q.t1);
+                    m_isFontRendering = true;
+                    DrawTexturedRect(
+                        &tex,
+                        Rect(
+                            static_cast<int>(q.x0),
+                            static_cast<int>(q.y0 + height),
+                            static_cast<int>(q.x1 - q.x0),
+                            static_cast<int>(q.y1 - q.y0)
+                        ),
+                        q.s0,
+                        q.t0,
+                        q.s1,
+                        q.t1
+                    );
                 }
-                ++pc, --slen;
+                ++pc;
+                --slen;
             }
         }
 
         Gwk::Point OpenGLCore::MeasureText(Gwk::Font* font, const Gwk::String& text)
         {
-            std::cout << "MeasureText " << text << std::endl;
-            if (!EnsureFont(*font))
-                return Gwk::Point(0, 0);
 
-            Point sz(0, font->realsize * c_pointsToPixels);
+            if (!EnsureFont(*font))
+                return {0, 0};
+
+            Point sz(0, static_cast<int>(font->realsize * c_pointsToPixels));
 
             float x = 0.f, y = 0.f;
             const char *pc = text.c_str();
@@ -416,7 +605,7 @@ namespace Gwk
                                        *pc - 32,
                                        &x, &y, &q, 1); // 1=opengl & d3d10+,0=d3d9
 
-                    sz.x = q.x1;
+                    sz.x = static_cast<int>(q.x1);
                     sz.y = std::max(sz.y, int((q.y1 - q.y0) * c_pointsToPixels));
                 }
                 ++pc, --slen;
@@ -427,7 +616,7 @@ namespace Gwk
 
         bool OpenGLCore::InitializeContext(Gwk::WindowProvider* window)
         {
-            std::cout << "InitializeContext" << std::endl;
+
 #if CREATE_NATIVE_CONTEXT
             HWND hwnd = (HWND)window->GetWindow();
 
@@ -471,7 +660,7 @@ namespace Gwk
 
         bool OpenGLCore::ShutdownContext(Gwk::WindowProvider* window)
         {
-            std::cout << "ShutdownContext" << std::endl;
+
 #if CREATE_NATIVE_CONTEXT
             wglDeleteContext((HGLRC)m_context);
             return true;
@@ -481,7 +670,6 @@ namespace Gwk
 
         bool OpenGLCore::PresentContext(Gwk::WindowProvider* window)
         {
-            std::cout << "PresentContext" << std::endl;
 #if CREATE_NATIVE_CONTEXT
             HWND hwnd = (HWND)window->GetWindow();
 
