@@ -5,6 +5,7 @@
 #include <Gwork/BaseRender.h>
 #include <vector>
 #include <glm/glm.hpp>
+#include <map>
 
 namespace Gwk
 {
@@ -32,42 +33,56 @@ namespace Gwk
         public:
 
             OpenGLCore(ResourceLoader& loader, const Gwk::Rect& viewRect);
+
             virtual ~OpenGLCore();
 
             void Init() override;
 
             void Begin() override;
+
             void End() override;
 
             void SetDrawColor(Gwk::Color color) override;
+
             void DrawFilledRect(Gwk::Rect rect) override;
 
             void StartClip() override;
+
             void EndClip() override;
 
-            void DrawTexturedRect(Gwk::Texture* texture, Gwk::Rect targetRect, float u1 = 0.0f,
+            void DrawTexturedRect(Gwk::Texture *texture, Gwk::Rect targetRect, float u1 = 0.0f,
                                   float v1 = 0.0f, float u2 = 1.0f, float v2 = 1.0f) override;
 
-            Gwk::Color PixelColor(Gwk::Texture* texture,
+            void DrawTexturedFontRect(Gwk::Texture *texture, Gwk::Rect targetRect, float u1 = 0.0f,
+                                      float v1 = 0.0f, float u2 = 1.0f, float v2 = 1.0f);
+
+            Gwk::Color PixelColor(Gwk::Texture *texture,
                                   unsigned int x, unsigned int y,
                                   const Gwk::Color& col_default) override;
 
-            void RenderText(Gwk::Font* font,
+            void RenderText(Gwk::Font *font,
                             Gwk::Point pos,
                             const Gwk::String& text) override;
 
-            Gwk::Point MeasureText(Gwk::Font* font, const Gwk::String& text) override;
+            Gwk::Point MeasureText(Gwk::Font *font, const Gwk::String& text) override;
 
-            bool InitializeContext(Gwk::WindowProvider* window) override;
-            bool ShutdownContext(Gwk::WindowProvider* window) override;
-            bool PresentContext(Gwk::WindowProvider* window) override;
-            bool ResizedContext(Gwk::WindowProvider* window, int w, int h) override;
-            bool BeginContext(Gwk::WindowProvider* window) override;
-            bool EndContext(Gwk::WindowProvider* window) override;
+            bool InitializeContext(Gwk::WindowProvider *window) override;
 
-            void*   m_context;
+            bool ShutdownContext(Gwk::WindowProvider *window) override;
+
+            bool PresentContext(Gwk::WindowProvider *window) override;
+
+            bool ResizedContext(Gwk::WindowProvider *window, int w, int h) override;
+
+            bool BeginContext(Gwk::WindowProvider *window) override;
+
+            bool EndContext(Gwk::WindowProvider *window) override;
+
+            void *m_context;
 
         private:
+
+            uint32_t loadShaders(const char *vertex, const char *fragment);
 
             /**
              * @brief Perform actual rendering.
@@ -81,7 +96,8 @@ namespace Gwk
              * @param u
              * @param v
              */
-            void AddVert(int x, int y, float u = 0.0f, float v = 0.0f);
+            void
+            AddVert(uint32_t program, int x, int y, float u = 0.0f, float v = 0.0f, GLuint texture = 0);
 
             Rect m_viewRect;
             Color m_color;
@@ -93,17 +109,26 @@ namespace Gwk
                 glm::vec4 color;
             };
 
-            std::vector<Vertex> m_vertices;
+            std::map<
+                std::pair<
+                    uint32_t, // Texture
+                    uint32_t  // Program
+                >,
+                std::vector<Vertex>
+            > m_vertices;
 
             glm::mat4 m_projectionMatrix;
-            glm::mat4 m_viewMatrix;
-            glm::mat4 m_modelMatrix;
 
-            uint32_t m_program;
+            uint32_t m_texturedProgram;
+            uint32_t m_fontProgram;
+            uint32_t m_solidProgram;
+
             uint32_t m_vbo;
             uint32_t m_vao;
             uint32_t m_currentTexture;
             bool m_isFontRendering;
+
+            float m_zPos;
         };
 
 
