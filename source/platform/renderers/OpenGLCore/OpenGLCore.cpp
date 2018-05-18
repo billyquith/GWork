@@ -216,12 +216,6 @@ namespace Gwk
 
         void OpenGLCore::Init()
         {
-            std::cout
-                << "Init Rect(x=" << m_viewRect.x
-                         << " y=" << m_viewRect.y << " "
-                         << m_viewRect.w << 'x'
-                         << m_viewRect.h << ")" << std::endl;
-
             m_projectionMatrix = glm::ortho(
                 static_cast<float>(m_viewRect.x),
                 static_cast<float>(m_viewRect.x + m_viewRect.w),

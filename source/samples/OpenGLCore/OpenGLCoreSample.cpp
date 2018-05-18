@@ -42,83 +42,6 @@ static void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
     GworkInput.ProcessScroll(xoffset, yoffset);
 }
 
-void glDebugOutput(GLenum source,
-                   GLenum type,
-                   GLuint id,
-                   GLenum severity,
-                   GLsizei,
-                   const GLchar *message,
-                   const void *)
-{
-    // ignore non-significant error/warning codes
-//    if(id == 131169 ||
-//       id == 131185 ||
-//       id == 131218 ||
-//       id == 131204 ||
-//       id == 8 ||
-//       id == 22 || /* CPU mapping a bisy "streamed data" BO stalled */
-//       id == 20 || /* GTT mapping a busy "miptree" BO stalled */
-//       id == 14 || /* CPU mapping a busy "miptree" BO stalled */
-//       id == 18    /* CPU mapping a busy "streamed data" BO stalled */)
-//    {
-//        return;
-//    }
-
-    if (severity == GL_DEBUG_SEVERITY_NOTIFICATION)
-    {
-        return;
-    }
-
-    std::stringstream ss;
-    ss << "Debug message (" << id << "): " <<  message << std::endl;
-
-    ss << "Source: ";
-    switch (source)
-    {
-    case GL_DEBUG_SOURCE_API:             ss << "API"; break;
-    case GL_DEBUG_SOURCE_WINDOW_SYSTEM:   ss << "Window System"; break;
-    case GL_DEBUG_SOURCE_SHADER_COMPILER: ss << "Shader Compiler"; break;
-    case GL_DEBUG_SOURCE_THIRD_PARTY:     ss << "Third Party"; break;
-    case GL_DEBUG_SOURCE_APPLICATION:     ss << "Application"; break;
-    case GL_DEBUG_SOURCE_OTHER:           ss << "Other"; break;
-    default:                              ss << "Unexpected"; break;;
-    } ss << std::endl;
-
-    ss << "Type: ";
-    switch (type)
-    {
-    case GL_DEBUG_TYPE_ERROR:               ss << "Error"; break;
-    case GL_DEBUG_TYPE_DEPRECATED_BEHAVIOR: ss << "Deprecated Behaviour"; break;
-    case GL_DEBUG_TYPE_UNDEFINED_BEHAVIOR:  ss << "Undefined Behaviour"; break;
-    case GL_DEBUG_TYPE_PORTABILITY:         ss << "Portability"; break;
-    case GL_DEBUG_TYPE_PERFORMANCE:         ss << "Performance"; break;
-    case GL_DEBUG_TYPE_MARKER:              ss << "Marker"; break;
-    case GL_DEBUG_TYPE_PUSH_GROUP:          ss << "Push Group"; break;
-    case GL_DEBUG_TYPE_POP_GROUP:           ss << "Pop Group"; break;
-    case GL_DEBUG_TYPE_OTHER:               ss << "Other"; break;
-    default:                                ss << "Unexpected"; break;
-    } ss << std::endl;
-
-    ss << "Severity: ";
-    switch (severity)
-    {
-    case GL_DEBUG_SEVERITY_HIGH:         ss << "high"; break;
-    case GL_DEBUG_SEVERITY_MEDIUM:       ss << "medium"; break;
-    case GL_DEBUG_SEVERITY_LOW:          ss << "low"; break;
-    default:                             ss << "unexpected"; break;
-    } ss << std::endl;
-    ss << std::endl;
-
-    if (type == GL_DEBUG_TYPE_ERROR)
-    {
-        std::cout << "Error: " << ss.str();
-    }
-    else
-    {
-        std::cout << "Warning: " << ss.str();
-    }
-}
-
 int main()
 {
     const Gwk::Point screenSize(1024,768);
@@ -151,17 +74,6 @@ int main()
         return -1;
     }
 
-    GLint flags;
-    glGetIntegerv(GL_CONTEXT_FLAGS, &flags);
-    if (flags & GL_CONTEXT_FLAG_DEBUG_BIT)
-    {
-        glEnable(GL_DEBUG_OUTPUT);
-        glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
-
-        glDebugMessageCallback(&glDebugOutput, nullptr);
-        glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, nullptr, GL_TRUE);
-    }
-
     Gwk::Platform::RelativeToExecutablePaths paths(GWORK_RESOURCE_DIR);
     Gwk::Renderer::OpenGLResourceLoader loader(paths);
 
@@ -187,8 +99,6 @@ int main()
 
     // Create our unittest control (which is a Window with controls in it)
     auto unit = new TestFrame(canvas);
-//    auto unit = new Gwk::Controls::Button(canvas);
-//    unit->SetText("SampleText");
     GworkInput.Initialize(canvas);
 
     glfwSetKeyCallback(window, key_callback);
@@ -198,7 +108,6 @@ int main()
 
     // Begin the main game loop
     while (!glfwWindowShouldClose(window))
-//    for (int i =0 ; i < 2; ++i)
     {
         glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
         canvas->RenderCanvas();
