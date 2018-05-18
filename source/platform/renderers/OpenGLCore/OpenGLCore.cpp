@@ -237,83 +237,59 @@ namespace Gwk
 
             // Loading shaders
 
-            auto vertexShader = glCreateShader(GL_VERTEX_SHADER);
-            auto fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+            // Loading shaders
 
             auto vertexSource = R"(
 #version 330 core
 layout (location = 0) in vec3 inPosition;
 layout (location = 1) in vec2 inTexCoords;
 layout (location = 2) in vec4 inColor;
-
 out vec2 TexCoords;
 out vec4 VertexColor;
-
 uniform mat4 projection;
-
 void main()
 {
     gl_Position = projection * vec4(inPosition, 1.0f);
     TexCoords = inTexCoords;
     VertexColor = inColor;
 })";
-            auto fragmentSource = R"(
-#version 420 core
+            auto fragmentTexturedSource = R"(
+#version 330 core
 out vec4 FragColor;
-
 in vec2 TexCoords;
 in vec4 VertexColor;
-
 uniform sampler2D texture1;
-uniform bool font;
-
 void main()
 {
-    if (!font)
-    {
-        FragColor = texture(texture1, TexCoords) * VertexColor;
-    }
-    else
-    {
-        float color = texture(texture1, TexCoords).r;
-
-        FragColor = vec4(VertexColor.rgb, color);
-    }
+    FragColor = texture(texture1, TexCoords) * VertexColor;
 })";
 
-            // Binding shaders with sources
-            glShaderSource(
-                vertexShader,
-                1,
-                reinterpret_cast<const GLchar* const*>(&vertexSource),
-                nullptr
-            );
-            glShaderSource(
-                fragmentShader,
-                1,
-                reinterpret_cast<const GLchar* const*>(&fragmentSource),
-                nullptr
-            );
+            auto fragmentFontSource = R"(
+#version 330 core
+out vec4 FragColor;
+in vec2 TexCoords;
+in vec4 VertexColor;
+uniform sampler2D texture1;
+void main()
+{
+    float color = texture(texture1, TexCoords).r;
+    FragColor = vec4(VertexColor.rgb, color);
+})";
 
-            // Compiling shaders
-            glCompileShader(vertexShader);
+            auto fragmentSolidSource = R"(
+#version 330 core
+out vec4 FragColor;
+in vec2 TexCoords;
+in vec4 VertexColor;
+uniform sampler2D texture1;
+void main()
+{
+    FragColor = VertexColor;
+})";
 
-            checkErrors(vertexShader, "VERTEX_SHADER");
-
-            glCompileShader(fragmentShader);
-
-            checkErrors(fragmentShader, "FRAGMENT_SHADER");
-
-            m_program = glCreateProgram();
-            glAttachShader(m_program, vertexShader);
-            glAttachShader(m_program, fragmentShader);
-
-            glLinkProgram(m_program);
-
-            checkErrors(m_program, "PROGRAM");
-
-            glDeleteShader(vertexShader);
-            glDeleteShader(fragmentShader);
+            m_texturedProgram = loadShaders(vertexSource, fragmentTexturedSource);
+            m_fontProgram =     loadShaders(vertexSource, fragmentFontSource);
+            m_solidProgram =    loadShaders(vertexSource, fragmentSolidSource);
 
             glViewport(m_viewRect.x, m_viewRect.y, m_viewRect.w, m_viewRect.h);
         }
@@ -375,21 +351,15 @@ void main()
             glVertexArrayAttribBinding(m_vao, 2, 0);
 
             // Program
-            glUseProgram(m_program);
+            glUseProgram(m_activeProgram);
 
             // Loading matricies
             glProgramUniformMatrix4fv(
-                m_program,
-                glGetUniformLocation(m_program, "projection"),
+                m_activeProgram,
+                glGetUniformLocation(m_activeProgram, "projection"),
                 1,
                 GL_FALSE,
                 glm::value_ptr(m_projectionMatrix)
-            );
-
-            glProgramUniform1i(
-                m_program,
-                glGetUniformLocation(m_program, "font"),
-                m_isFontRendering
             );
 
             // Drawing
@@ -399,16 +369,12 @@ void main()
                 static_cast<GLsizei>(m_vertices.size())
             );
 
-            if (m_isFontRendering)
-            {
-                m_isFontRendering = false;
-            }
-
             // Unbinding
             glBindVertexArray(0);
             glUseProgram(0);
 
             // Clearing
+            m_activeProgram = 0;
             m_vertices.clear();
             glFlush();
         }
@@ -433,19 +399,15 @@ void main()
             );
 
             m_vertices.push_back(vertex);
-//            m_vertices.push_back(
-//                {{float(x), float(m_viewRect.h - y), 0}, {u, v}, m_color}
-//            );
         }
 
         void OpenGLCore::DrawFilledRect(Gwk::Rect rect)
         {
-//            std::cout << "DrawFilledRect Rect(x=" << rect.x << " y=" << rect.y << " " << rect.w << 'x' << rect.h << ")" << std::endl;
-
-            if (m_currentTexture != 0)
+            if (m_currentTexture != 0 || m_activeProgram != m_solidProgram)
             {
                 Flush();
                 m_currentTexture = 0;
+                m_activeProgram = m_solidProgram;
                 glBindTexture(GL_TEXTURE_2D, 0);
             }
 
@@ -482,8 +444,8 @@ void main()
             glDisable(GL_SCISSOR_TEST);
         }
 
-        void OpenGLCore::DrawTexturedRect(Gwk::Texture* texture, Gwk::Rect rect,
-                                      float u1, float v1, float u2, float v2)
+        void OpenGLCore::DrawTexturedFontRect(Gwk::Texture* texture, Gwk::Rect rect,
+                                              float u1, float v1, float u2, float v2)
         {
             auto* tex = (GLuint*)texture->data;
 
@@ -492,17 +454,42 @@ void main()
                 return DrawMissingImage(rect);
 
             Translate(rect);
-//            GLuint boundtex;
-//            GLboolean texturesOn;
-//            glGetBooleanv(GL_TEXTURE_2D, &texturesOn);
-//            glGetIntegerv(GL_TEXTURE_BINDING_2D, (GLint*)&boundtex);
 
-            if (m_currentTexture != *tex)
+            if (m_currentTexture != *tex || m_activeProgram != m_fontProgram)
             {
                 Flush();
                 glActiveTexture(GL_TEXTURE0);
                 glBindTexture(GL_TEXTURE_2D, *tex);
                 m_currentTexture = *tex;
+                m_activeProgram = m_fontProgram;
+            }
+
+            AddVert(rect.x,        rect.y,        u1, v1);
+            AddVert(rect.x+rect.w, rect.y,        u2, v1);
+            AddVert(rect.x,        rect.y+rect.h, u1, v2);
+            AddVert(rect.x+rect.w, rect.y,        u2, v1);
+            AddVert(rect.x+rect.w, rect.y+rect.h, u2, v2);
+            AddVert(rect.x,        rect.y+rect.h, u1, v2);
+        }
+
+        void OpenGLCore::DrawTexturedRect(Gwk::Texture* texture, Gwk::Rect rect,
+                                          float u1, float v1, float u2, float v2)
+        {
+            auto* tex = (GLuint*)texture->data;
+
+            // Missing image, not loaded properly?
+            if (!tex)
+                return DrawMissingImage(rect);
+
+            Translate(rect);
+
+            if (m_currentTexture != *tex || m_activeProgram != m_texturedProgram)
+            {
+                Flush();
+                glActiveTexture(GL_TEXTURE0);
+                glBindTexture(GL_TEXTURE_2D, *tex);
+                m_currentTexture = *tex;
+                m_activeProgram = m_texturedProgram;
             }
 
             AddVert(rect.x,        rect.y,        u1, v1);
@@ -563,8 +550,7 @@ void main()
                                        *pc - 32,
                                        &x, &y, &q, 1); // 1=opengl & d3d10+,0=d3d9
 
-                    m_isFontRendering = true;
-                    DrawTexturedRect(
+                    DrawTexturedFontRect(
                         &tex,
                         Rect(
                             static_cast<int>(q.x0),
@@ -717,5 +703,47 @@ void main()
             return true;
         }
 
+    }
+
+    uint32_t Renderer::OpenGLCore::loadShaders(const char *vertex, const char *fragment)
+    {
+        auto vertexShader = glCreateShader(GL_VERTEX_SHADER);
+        auto fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+
+        // Binding shaders with sources
+        glShaderSource(
+            vertexShader,
+            1,
+            reinterpret_cast<const GLchar* const*>(&vertex),
+            nullptr
+        );
+        glShaderSource(
+            fragmentShader,
+            1,
+            reinterpret_cast<const GLchar* const*>(&fragment),
+            nullptr
+        );
+
+        // Compiling shaders
+        glCompileShader(vertexShader);
+
+        checkErrors(vertexShader, "VERTEX_SHADER");
+
+        glCompileShader(fragmentShader);
+
+        checkErrors(fragmentShader, "FRAGMENT_SHADER");
+
+        GLuint program = glCreateProgram();
+        glAttachShader(program, vertexShader);
+        glAttachShader(program, fragmentShader);
+
+        glLinkProgram(program);
+
+        checkErrors(program, "PROGRAM");
+
+        glDeleteShader(vertexShader);
+        glDeleteShader(fragmentShader);
+
+        return program;
     }
 }

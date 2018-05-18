@@ -48,6 +48,9 @@ namespace Gwk
             void DrawTexturedRect(Gwk::Texture* texture, Gwk::Rect targetRect, float u1 = 0.0f,
                                   float v1 = 0.0f, float u2 = 1.0f, float v2 = 1.0f) override;
 
+            void DrawTexturedFontRect(Gwk::Texture* texture, Gwk::Rect targetRect, float u1 = 0.0f,
+                                      float v1 = 0.0f, float u2 = 1.0f, float v2 = 1.0f);
+
             Gwk::Color PixelColor(Gwk::Texture* texture,
                                   unsigned int x, unsigned int y,
                                   const Gwk::Color& col_default) override;
@@ -68,6 +71,8 @@ namespace Gwk
             void*   m_context;
 
         private:
+
+            uint32_t loadShaders(const char *vertex, const char *fragment);
 
             /**
              * @brief Perform actual rendering.
@@ -96,14 +101,16 @@ namespace Gwk
             std::vector<Vertex> m_vertices;
 
             glm::mat4 m_projectionMatrix;
-            glm::mat4 m_viewMatrix;
-            glm::mat4 m_modelMatrix;
 
-            uint32_t m_program;
+            uint32_t m_texturedProgram;
+            uint32_t m_fontProgram;
+            uint32_t m_solidProgram;
+
+            uint32_t m_activeProgram;
+
             uint32_t m_vbo;
             uint32_t m_vao;
             uint32_t m_currentTexture;
-            bool m_isFontRendering;
         };
 
 

@@ -198,6 +198,7 @@ int main()
 
     // Begin the main game loop
     while (!glfwWindowShouldClose(window))
+//    for (int i =0 ; i < 2; ++i)
     {
         glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
         canvas->RenderCanvas();
