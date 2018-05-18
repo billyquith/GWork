@@ -199,6 +199,7 @@ int main()
     // Begin the main game loop
     while (!glfwWindowShouldClose(window))
     {
+//        std::cout << "    Frame clear" << std::endl;
         glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
         canvas->RenderCanvas();
         glfwSwapBuffers(window);

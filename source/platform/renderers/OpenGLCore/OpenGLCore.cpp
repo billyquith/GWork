@@ -309,6 +309,8 @@ void main()
         {
             glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
             glEnable(GL_BLEND);
+            glEnable(GL_DEPTH_TEST);
+            glDepthFunc(GL_LESS);
             m_zPos = 0;
         }
 
@@ -435,13 +437,6 @@ void main()
         {
 //            std::cout << "DrawFilledRect Rect(x=" << rect.x << " y=" << rect.y << " " << rect.w << 'x' << rect.h << ")" << std::endl;
 
-//            if (m_currentTexture != 0)
-//            {
-//                Flush();
-//                m_currentTexture = 0;
-//                glBindTexture(GL_TEXTURE_2D, 0);
-//            }
-
             Translate(rect);
             AddVert(m_solidProgram, rect.x, rect.y);
             AddVert(m_solidProgram, rect.x+rect.w, rect.y);
@@ -513,14 +508,6 @@ void main()
                 return DrawMissingImage(rect);
 
             Translate(rect);
-
-//            if (m_currentTexture != *tex)
-//            {
-//                Flush();
-//                glActiveTexture(GL_TEXTURE0);
-//                glBindTexture(GL_TEXTURE_2D, *tex);
-//                m_currentTexture = *tex;
-//            }
 
             AddVert(m_fontProgram, rect.x,        rect.y,        u1, v1, *tex);
             AddVert(m_fontProgram, rect.x+rect.w, rect.y,        u2, v1, *tex);
