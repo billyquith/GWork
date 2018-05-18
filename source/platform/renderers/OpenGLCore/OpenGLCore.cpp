@@ -216,12 +216,6 @@ namespace Gwk
 
         void OpenGLCore::Init()
         {
-            std::cout
-                << "Init Rect(x=" << m_viewRect.x
-                         << " y=" << m_viewRect.y << " "
-                         << m_viewRect.w << 'x'
-                         << m_viewRect.h << ")" << std::endl;
-
             m_projectionMatrix = glm::ortho(
                 static_cast<float>(m_viewRect.x),
                 static_cast<float>(m_viewRect.x + m_viewRect.w),
@@ -237,17 +231,16 @@ namespace Gwk
 
             // Loading shaders
 
+            // Loading shaders
+
             auto vertexSource = R"(
 #version 330 core
 layout (location = 0) in vec3 inPosition;
 layout (location = 1) in vec2 inTexCoords;
 layout (location = 2) in vec4 inColor;
-
 out vec2 TexCoords;
 out vec4 VertexColor;
-
 uniform mat4 projection;
-
 void main()
 {
     gl_Position = projection * vec4(inPosition, 1.0f);
@@ -257,12 +250,9 @@ void main()
             auto fragmentTexturedSource = R"(
 #version 330 core
 out vec4 FragColor;
-
 in vec2 TexCoords;
 in vec4 VertexColor;
-
 uniform sampler2D texture1;
-
 void main()
 {
     FragColor = texture(texture1, TexCoords) * VertexColor;
@@ -271,28 +261,21 @@ void main()
             auto fragmentFontSource = R"(
 #version 330 core
 out vec4 FragColor;
-
 in vec2 TexCoords;
 in vec4 VertexColor;
-
 uniform sampler2D texture1;
-
 void main()
 {
     float color = texture(texture1, TexCoords).r;
-
     FragColor = vec4(VertexColor.rgb, color);
 })";
 
             auto fragmentSolidSource = R"(
 #version 330 core
 out vec4 FragColor;
-
 in vec2 TexCoords;
 in vec4 VertexColor;
-
 uniform sampler2D texture1;
-
 void main()
 {
     FragColor = VertexColor;
@@ -309,9 +292,6 @@ void main()
         {
             glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
             glEnable(GL_BLEND);
-            glEnable(GL_DEPTH_TEST);
-            glDepthFunc(GL_LESS);
-            m_zPos = 0;
         }
 
         void OpenGLCore::End()
@@ -321,96 +301,86 @@ void main()
 
         void OpenGLCore::Flush()
         {
-            for (auto&& element : m_vertices)
+            if (m_vertices.empty())
             {
-                if (element.second.empty())
-                {
-                    return;
-                }
-
-                // Binding VAO
-                glBindVertexArray(m_vao);
-
-                // Binding VBO
-                glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
-
-                // Loading data into VBO
-                glNamedBufferData(
-                    m_vbo,
-                    element.second.size() * sizeof(Vertex),
-                    element.second.data(),
-                    GL_DYNAMIC_DRAW
-                );
-
-                // Binding VBO to VAO
-                glVertexArrayVertexBuffer(
-                    m_vao,
-                    0,
-                    m_vbo,
-                    0,
-                    sizeof(Vertex)
-                );
-
-                // Enabling attributes
-                glEnableVertexArrayAttrib(m_vao, 0); // Position
-                glEnableVertexArrayAttrib(m_vao, 1); // UV
-                glEnableVertexArrayAttrib(m_vao, 2); // Color
-
-                // Setting format
-                glVertexArrayAttribFormat(m_vao, 0, 3, GL_FLOAT, GL_FALSE, static_cast<GLuint>(offsetof(Vertex, pos)));
-                glVertexArrayAttribFormat(m_vao, 1, 2, GL_FLOAT, GL_FALSE, static_cast<GLuint>(offsetof(Vertex, uv)));
-                glVertexArrayAttribFormat(m_vao, 2, 4, GL_FLOAT, GL_FALSE, static_cast<GLuint>(offsetof(Vertex, color)));
-
-                // Binding vertex array to buffer
-                glVertexArrayAttribBinding(m_vao, 0, 0);
-                glVertexArrayAttribBinding(m_vao, 1, 0);
-                glVertexArrayAttribBinding(m_vao, 2, 0);
-
-                // Program
-                glUseProgram(element.first.second);
-
-                // Loading matricies
-                glProgramUniformMatrix4fv(
-                    element.first.second,
-                    glGetUniformLocation(element.first.second, "projection"),
-                    1,
-                    GL_FALSE,
-                    glm::value_ptr(m_projectionMatrix)
-                );
-
-                if (element.first.first)
-                {
-                    glBindTexture(GL_TEXTURE_2D, element.first.first);
-                }
-
-                // Drawing
-                glDrawArrays(
-                    GL_TRIANGLES,
-                    0,
-                    static_cast<GLsizei>(element.second.size())
-                );
-
-                glBindTexture(GL_TEXTURE_2D, 0);
-
-                // Unbinding
-                glBindVertexArray(0);
-                glUseProgram(0);
-
-                // Clearing
-                element.second.clear();
+                return;
             }
+
+            // Binding VAO
+            glBindVertexArray(m_vao);
+
+            // Binding VBO
+            glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
+
+            // Loading data into VBO
+            glNamedBufferData(
+                m_vbo,
+                m_vertices.size() * sizeof(Vertex),
+                m_vertices.data(),
+                GL_DYNAMIC_DRAW
+            );
+
+            // Binding VBO to VAO
+            glVertexArrayVertexBuffer(
+                m_vao,
+                0,
+                m_vbo,
+                0,
+                sizeof(Vertex)
+            );
+
+            // Enabling attributes
+            glEnableVertexArrayAttrib(m_vao, 0); // Position
+            glEnableVertexArrayAttrib(m_vao, 1); // UV
+            glEnableVertexArrayAttrib(m_vao, 2); // Color
+
+            // Setting format
+            glVertexArrayAttribFormat(m_vao, 0, 3, GL_FLOAT, GL_FALSE, static_cast<GLuint>(offsetof(Vertex, pos)));
+            glVertexArrayAttribFormat(m_vao, 1, 2, GL_FLOAT, GL_FALSE, static_cast<GLuint>(offsetof(Vertex, uv)));
+            glVertexArrayAttribFormat(m_vao, 2, 4, GL_FLOAT, GL_FALSE, static_cast<GLuint>(offsetof(Vertex, color)));
+
+            // Binding vertex array to buffer
+            glVertexArrayAttribBinding(m_vao, 0, 0);
+            glVertexArrayAttribBinding(m_vao, 1, 0);
+            glVertexArrayAttribBinding(m_vao, 2, 0);
+
+            // Program
+            glUseProgram(m_activeProgram);
+
+            // Loading matricies
+            glProgramUniformMatrix4fv(
+                m_activeProgram,
+                glGetUniformLocation(m_activeProgram, "projection"),
+                1,
+                GL_FALSE,
+                glm::value_ptr(m_projectionMatrix)
+            );
+
+            // Drawing
+            glDrawArrays(
+                GL_TRIANGLES,
+                0,
+                static_cast<GLsizei>(m_vertices.size())
+            );
+
+            // Unbinding
+            glBindVertexArray(0);
+            glUseProgram(0);
+
+            // Clearing
+            m_activeProgram = 0;
+            m_vertices.clear();
+            glFlush();
         }
 
-        void OpenGLCore::AddVert(GLuint program, int x, int y, float u, float v, GLuint texture)
+        void OpenGLCore::AddVert(int x, int y, float u, float v)
         {
             // OpenGL origin is bottom-left. Gwork origin is top-left.
 
             Vertex vertex;
             vertex.pos.x = x;
             vertex.pos.y = m_viewRect.h - y;
-            vertex.pos.z = m_zPos;
-
-            m_zPos += 0.0001;
+            vertex.pos.z = 0;
 
             vertex.uv.x = u;
             vertex.uv.y = v;
@@ -422,28 +392,26 @@ void main()
                 m_color.a / 255.0f
             );
 
-            auto iter = m_vertices.find({texture, program});
-            if (iter == m_vertices.end())
-            {
-                m_vertices[{texture, program}] = std::vector<Vertex>();
-                iter = m_vertices.find({texture, program});
-            }
-
-            iter->second.push_back(vertex);
-//            m_vertices.push_back(vertex);
+            m_vertices.push_back(vertex);
         }
 
         void OpenGLCore::DrawFilledRect(Gwk::Rect rect)
         {
-//            std::cout << "DrawFilledRect Rect(x=" << rect.x << " y=" << rect.y << " " << rect.w << 'x' << rect.h << ")" << std::endl;
+            if (m_currentTexture != 0 || m_activeProgram != m_solidProgram)
+            {
+                Flush();
+                m_currentTexture = 0;
+                m_activeProgram = m_solidProgram;
+                glBindTexture(GL_TEXTURE_2D, 0);
+            }
 
             Translate(rect);
-            AddVert(m_solidProgram, rect.x, rect.y);
-            AddVert(m_solidProgram, rect.x+rect.w, rect.y);
-            AddVert(m_solidProgram, rect.x, rect.y+rect.h);
-            AddVert(m_solidProgram, rect.x+rect.w, rect.y);
-            AddVert(m_solidProgram, rect.x+rect.w, rect.y+rect.h);
-            AddVert(m_solidProgram, rect.x, rect.y+rect.h);
+            AddVert(rect.x, rect.y);
+            AddVert(rect.x+rect.w, rect.y);
+            AddVert(rect.x, rect.y+rect.h);
+            AddVert(rect.x+rect.w, rect.y);
+            AddVert(rect.x+rect.w, rect.y+rect.h);
+            AddVert(rect.x, rect.y+rect.h);
         }
 
         void OpenGLCore::SetDrawColor(Gwk::Color color)
@@ -454,7 +422,7 @@ void main()
 
         void OpenGLCore::StartClip()
         {
-//            Flush();
+            Flush();
             Gwk::Rect rect = ClipRegion();
 
             rect.y = m_viewRect.h - (rect.y + rect.h);
@@ -466,8 +434,36 @@ void main()
 
         void OpenGLCore::EndClip()
         {
-//            Flush();
+            Flush();
             glDisable(GL_SCISSOR_TEST);
+        }
+
+        void OpenGLCore::DrawTexturedFontRect(Gwk::Texture* texture, Gwk::Rect rect,
+                                              float u1, float v1, float u2, float v2)
+        {
+            auto* tex = (GLuint*)texture->data;
+
+            // Missing image, not loaded properly?
+            if (!tex)
+                return DrawMissingImage(rect);
+
+            Translate(rect);
+
+            if (m_currentTexture != *tex || m_activeProgram != m_fontProgram)
+            {
+                Flush();
+                glActiveTexture(GL_TEXTURE0);
+                glBindTexture(GL_TEXTURE_2D, *tex);
+                m_currentTexture = *tex;
+                m_activeProgram = m_fontProgram;
+            }
+
+            AddVert(rect.x,        rect.y,        u1, v1);
+            AddVert(rect.x+rect.w, rect.y,        u2, v1);
+            AddVert(rect.x,        rect.y+rect.h, u1, v2);
+            AddVert(rect.x+rect.w, rect.y,        u2, v1);
+            AddVert(rect.x+rect.w, rect.y+rect.h, u2, v2);
+            AddVert(rect.x,        rect.y+rect.h, u1, v2);
         }
 
         void OpenGLCore::DrawTexturedRect(Gwk::Texture* texture, Gwk::Rect rect,
@@ -481,40 +477,21 @@ void main()
 
             Translate(rect);
 
-//            if (m_currentTexture != *tex)
-//            {
-//                Flush();
-//                glActiveTexture(GL_TEXTURE0);
-//                glBindTexture(GL_TEXTURE_2D, *tex);
-//                m_currentTexture = *tex;
-//            }
+            if (m_currentTexture != *tex || m_activeProgram != m_texturedProgram)
+            {
+                Flush();
+                glActiveTexture(GL_TEXTURE0);
+                glBindTexture(GL_TEXTURE_2D, *tex);
+                m_currentTexture = *tex;
+                m_activeProgram = m_texturedProgram;
+            }
 
-            AddVert(m_texturedProgram, rect.x,        rect.y,        u1, v1, *tex);
-            AddVert(m_texturedProgram, rect.x+rect.w, rect.y,        u2, v1, *tex);
-            AddVert(m_texturedProgram, rect.x,        rect.y+rect.h, u1, v2, *tex);
-            AddVert(m_texturedProgram, rect.x+rect.w, rect.y,        u2, v1, *tex);
-            AddVert(m_texturedProgram, rect.x+rect.w, rect.y+rect.h, u2, v2, *tex);
-            AddVert(m_texturedProgram, rect.x,        rect.y+rect.h, u1, v2, *tex);
-        }
-
-
-        void OpenGLCore::DrawTexturedFontRect(Gwk::Texture* texture, Gwk::Rect rect,
-                                              float u1, float v1, float u2, float v2)
-        {
-            auto* tex = (GLuint*)texture->data;
-
-            // Missing image, not loaded properly?
-            if (!tex)
-                return DrawMissingImage(rect);
-
-            Translate(rect);
-
-            AddVert(m_fontProgram, rect.x,        rect.y,        u1, v1, *tex);
-            AddVert(m_fontProgram, rect.x+rect.w, rect.y,        u2, v1, *tex);
-            AddVert(m_fontProgram, rect.x,        rect.y+rect.h, u1, v2, *tex);
-            AddVert(m_fontProgram, rect.x+rect.w, rect.y,        u2, v1, *tex);
-            AddVert(m_fontProgram, rect.x+rect.w, rect.y+rect.h, u2, v2, *tex);
-            AddVert(m_fontProgram, rect.x,        rect.y+rect.h, u1, v2, *tex);
+            AddVert(rect.x,        rect.y,        u1, v1);
+            AddVert(rect.x+rect.w, rect.y,        u2, v1);
+            AddVert(rect.x,        rect.y+rect.h, u1, v2);
+            AddVert(rect.x+rect.w, rect.y,        u2, v1);
+            AddVert(rect.x+rect.w, rect.y+rect.h, u2, v2);
+            AddVert(rect.x,        rect.y+rect.h, u1, v2);
         }
 
         Gwk::Color OpenGLCore::PixelColor(Gwk::Texture* texture, unsigned int x, unsigned int y,
@@ -567,7 +544,6 @@ void main()
                                        *pc - 32,
                                        &x, &y, &q, 1); // 1=opengl & d3d10+,0=d3d9
 
-                    m_isFontRendering = true;
                     DrawTexturedFontRect(
                         &tex,
                         Rect(
