@@ -11,7 +11,7 @@
 
 #include <Gwork/Platform.h>
 
-#ifdef _MSC_VER
+#ifdef _WIN32
 #   define WIN32_LEAN_AND_MEAN
 #   include <Windows.h>
 #   include <WinBase.h>     // sleep
@@ -78,7 +78,7 @@ Gwk::String Gwk::Platform::GetExecutableDir()
 void Gwk::Platform::Sleep(unsigned int ms)
 {
     // Only MSVC different.
-#ifdef _MSC_VER
+#ifdef _WIN32
     ::Sleep(ms);
 #else
     ::sleep(ms);

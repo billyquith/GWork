@@ -1,11 +1,5 @@
 # Gwork library
 
-include_directories(
-    ${GWK_SOURCE_DIR}/source/platform/include
-    ${GWK_SOURCE_DIR}/source/gwork/include
-    ${GWK_RENDER_INCLUDES}
-)
-
 set(GWK_HEADERS
     include/Gwork/Align.h
     include/Gwork/Anim.h
@@ -209,6 +203,12 @@ source_group("${GWK_SOURCE_FOLDER}\\Controls\\Dialog"
 # Gwork library
 add_library(Gwork STATIC ${GWK_HEADERS} ${GWK_SOURCES})
 target_link_libraries(Gwork Gwork${GWK_RENDER_NAME})
+
+target_include_directories(Gwork PUBLIC
+        ${GWK_SOURCE_DIR}/source/platform/include
+        ${GWK_SOURCE_DIR}/source/gwork/include
+        ${GWK_RENDER_INCLUDES}
+)
 
 install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/Gwork
         DESTINATION include)

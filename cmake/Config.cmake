@@ -19,16 +19,19 @@ if(WIN32)
 endif()
 
 # Cross-platform
-option(RENDER_ALLEGRO5      "Renderer: Allegro5" OFF)
-option(RENDER_IRRLICHT      "Renderer: Irrlicht" OFF)
-option(RENDER_OPENGL        "Renderer: OPENGL" OFF)
-option(RENDER_SDL2          "Renderer: SDL2" OFF)
-option(RENDER_SFML2         "Renderer: SFML2" OFF)
-option(RENDER_SW            "Renderer: Software" OFF)   # Used for testing
-option(RENDER_NULL          "Renderer: Null" OFF)       # Used for testing
+option(RENDER_ALLEGRO5      "Renderer: Allegro5"            OFF)
+option(RENDER_IRRLICHT      "Renderer: Irrlicht"            OFF)
+option(RENDER_OPENGL        "Renderer: OPENGL"              OFF)
+option(RENDER_OPENGL_CORE   "Renderer: OPENGL Core Profile" OFF)
+option(RENDER_SDL2          "Renderer: SDL2"                OFF)
+option(RENDER_SFML2         "Renderer: SFML2"               OFF)
+option(RENDER_SW            "Renderer: Software"            OFF) # Used for testing
+option(RENDER_NULL          "Renderer: Null"                OFF) # Used for testing
+
+option(USE_GLFW             "Use GLFW for OpenGL renderer." ON)
 
 option(BUILD_TEST           "Include unittests" ON)
-option(BUILD_SAMPLE         "Include sample" ON)
+option(BUILD_SAMPLE         "Include sample"    ON)
 
 # This is for development but can be used by the user.
 option(ALLOC_STATS "Track memory allocations" OFF)
@@ -69,11 +72,15 @@ elseif(UNIX)
 endif()
 
 if(BUILD_TEST)
-    message("Including tests")
+    message(STATUS "Including Gwk tests")
 endif(BUILD_TEST)
 
 if(BUILD_SAMPLE)
-    message("Including sample")
+    message(STATUS "Including Gwk sample")
+
+    if (NOT USE_GLFW AND (RENDER_OPENGL OR RENDER_OPENGL_CORE))
+        message(FATAL_ERROR "Samples with OpenGL or OpenGLCore require GLFW")
+    endif()
 endif(BUILD_SAMPLE)
 
 #-----------------------------------------------------------
@@ -133,18 +140,46 @@ if(RENDER_OPENGL)
     set(GWK_RENDER_NAME "OpenGL")
     set(GWK_INPUT_NAME "OpenGL")
     set(GWK_PLATFORM_NAME "Cross")
-    find_package(GLFW REQUIRED)
-    if (APPLE)
-        set(GLFW_DEPENDENCIES "-framework OpenGL")
-    elseif(UNIX)
-        set(GLFW_DEPENDENCIES "-lGL")
-    elseif(WIN32)
-        find_package(OpenGL)
-        set(GLFW_DEPENDENCIES ${OPENGL_gl_LIBRARY})
+
+    if (USE_GLFW)
+        find_package(GLFW REQUIRED)
+        if (APPLE)
+            set(GLFW_DEPENDENCIES "-framework OpenGL")
+        elseif(UNIX)
+            set(GLFW_DEPENDENCIES "-lGL")
+        elseif(WIN32)
+            find_package(OpenGL)
+            set(GLFW_DEPENDENCIES ${OPENGL_gl_LIBRARY})
+        endif()
+
+        set(GWK_RENDER_INCLUDES "${GLFW_INCLUDE_DIR}")
+        set(GWK_RENDER_LIBRARIES ${GLFW_LIBRARIES} ${GLFW_DEPENDENCIES})
     endif()
-    set(GWK_RENDER_INCLUDES "${GLFW_INCLUDE_DIR}")
-    set(GWK_RENDER_LIBRARIES ${GLFW_LIBRARIES} ${GLFW_DEPENDENCIES})
 endif(RENDER_OPENGL)
+
+if (RENDER_OPENGL_CORE)
+    set(GWK_RENDER_NAME "OpenGLCore")
+    set(GWK_PLATFORM_NAME "Cross")
+    set(GWK_INPUT_NAME "OpenGL")
+
+    find_package(glm REQUIRED)
+    find_package(GLEW REQUIRED)
+
+    if (USE_GLFW)
+        find_package(GLFW REQUIRED)
+        if (APPLE)
+            set(GLFW_DEPENDENCIES "-framework OpenGL")
+        elseif(UNIX)
+            set(GLFW_DEPENDENCIES "-lGL")
+        elseif(WIN32)
+            find_package(OpenGL)
+            set(GLFW_DEPENDENCIES ${OPENGL_gl_LIBRARY})
+        endif()
+
+        set(GWK_RENDER_INCLUDES "${GLFW_INCLUDE_DIR} ${GLM_INCLUDE_DIR} ${GLEW_INCLUDE_DIR}")
+        set(GWK_RENDER_LIBRARIES ${GLFW_LIBRARIES} ${GLFW_DEPENDENCIES} ${GLEW_LIBRARIES})
+    endif()
+endif()
 
 if(RENDER_SDL2)
     set(GWK_RENDER_NAME "SDL2")
@@ -202,6 +237,13 @@ if(NOT GWK_PLATFORM_NAME)
 endif()
 
 #-----------------------------------------------------------
+
+# MinGW problems
+if (WIN32)
+    set(GWK_RENDER_LIBRARIES
+            ${GWK_RENDER_LIBRARIES}
+            -liconv)
+endif()
 
 set(GWK_LIB_DEFINES "-DGWK_PLATFORM_${GWK_PLATFORM_NAME}=1 -DGWK_RENDER_${GWK_RENDER_NAME}=1")
 
