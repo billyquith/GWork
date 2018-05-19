@@ -1,3 +1,26 @@
+/*
+@ @licstart  The following is the entire license notice for the
+JavaScript code in this file.
+
+Copyright (C) 1997-2017 by Dimitri van Heesch
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along
+with this program; if not, write to the Free Software Foundation, Inc.,
+51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+
+@licend  The above is the entire license notice
+for the JavaScript code in this file
+*/
 var NAVTREE =
 [
   [ "Gwork", "index.html", [
@@ -9,23 +32,27 @@ var NAVTREE =
         [ "Linux", "build_gwork.html#linux_build", null ]
       ] ],
       [ "Targets", "build_gwork.html#gwork_targets", [
-        [ "Notes on the Targets", "build_gwork.html#target_notes", null ]
+        [ "Notes on the Targets and Configuration", "build_gwork.html#target_notes", null ]
       ] ],
       [ "Using Gwork in your project", "build_gwork.html#gwork_cmake_embed", null ]
     ] ],
     [ "Docking", "docking_notes.html", null ],
     [ "Introduction to Gwork", "intro_gwork.html", [
-      [ "Overview", "intro_gwork.html#Overview", null ],
-      [ "Backend", "intro_gwork.html#Backend", [
-        [ "Input", "intro_gwork.html#Input", null ],
-        [ "Renderer", "intro_gwork.html#Renderer", null ],
-        [ "Platform", "intro_gwork.html#Platform", null ]
+      [ "Overview", "intro_gwork.html#overview", null ],
+      [ "Backend", "intro_gwork.html#backend", [
+        [ "Input", "intro_gwork.html#input", null ],
+        [ "Renderer", "intro_gwork.html#renderer", null ],
+        [ "Platform", "intro_gwork.html#platform", null ]
       ] ],
-      [ "Gwork", "intro_gwork.html#Configuring", null ],
-      [ "Gwork", "intro_gwork.html#Using", null ]
+      [ "Configuring Gwork", "intro_gwork.html#config", null ],
+      [ "Using Gwork", "intro_gwork.html#using", null ]
     ] ],
-    [ "Namespaces", null, [
-      [ "Namespace List", "namespaces.html", "namespaces" ],
+    [ "Platform Detection", "platform_details.html", [
+      [ "Platform Defines", "platform_details.html#platform_platform", null ],
+      [ "Compiler Defines", "platform_details.html#platform_compiler", null ]
+    ] ],
+    [ "Namespaces", "namespaces.html", [
+      [ "Namespace List", "namespaces.html", "namespaces_dup" ],
       [ "Namespace Members", "namespacemembers.html", [
         [ "All", "namespacemembers.html", null ],
         [ "Functions", "namespacemembers_func.html", null ]
@@ -53,9 +80,9 @@ var NAVTREEINDEX =
 "class_gwk_1_1_controls_1_1_page_control.html#af48e5ec9428a84c9bfe9fd90e1dd1964",
 "class_gwk_1_1_controls_1_1_tool_bar_button.html",
 "class_gwk_1_1_input_1_1_g_l_f_w.html#a0c688e76c61cd1262bd957f91963cc53",
-"class_gwk_1_1_renderer_1_1_i_cache_to_texture.html#add16c7c98e21161f8340258a6b4912dc",
-"class_gwk_1_1_skin_1_1_simple.html#a173b899bf90b6fba97163a496f9b4c7c",
-"class_gwk_1_1_skin_1_1_textured_base.html#struct_gwk_1_1_skin_1_1_textured_base_1_1_textures__t_1_1_input__t_1_1_slider__t"
+"class_gwk_1_1_renderer_1_1_i_cache_to_texture.html#acc2f534ac77d34e7465dba03e7c83e3c",
+"class_gwk_1_1_skin_1_1_base.html#aa4815c985a99e7ce5d79c317ed181535",
+"class_gwk_1_1_skin_1_1_textured_base.html#ae1a368f1330f1670eba937427645c7f6"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

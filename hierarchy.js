@@ -13,6 +13,7 @@ var hierarchy =
       [ "Gwk::Renderer::OpenGL", "class_gwk_1_1_renderer_1_1_open_g_l.html", [
         [ "Gwk::Renderer::OpenGL_DebugFont", "class_gwk_1_1_renderer_1_1_open_g_l___debug_font.html", null ]
       ] ],
+      [ "Gwk::Renderer::OpenGLCore", "class_gwk_1_1_renderer_1_1_open_g_l_core.html", null ],
       [ "Gwk::Renderer::SDL2", "class_gwk_1_1_renderer_1_1_s_d_l2.html", null ],
       [ "Gwk::Renderer::SFML2", "class_gwk_1_1_renderer_1_1_s_f_m_l2.html", null ],
       [ "Gwk::Renderer::Software", "class_gwk_1_1_renderer_1_1_software.html", null ]
@@ -199,6 +200,7 @@ var hierarchy =
       [ "Gwk::Renderer::DirectX11ResourceLoader", "class_gwk_1_1_renderer_1_1_direct_x11_resource_loader.html", null ],
       [ "Gwk::Renderer::IrrlichtResourceLoader", "class_gwk_1_1_renderer_1_1_irrlicht_resource_loader.html", null ],
       [ "Gwk::Renderer::OpenGLResourceLoader", "class_gwk_1_1_renderer_1_1_open_g_l_resource_loader.html", null ],
+      [ "Gwk::Renderer::OpenGLResourceLoader", "class_gwk_1_1_renderer_1_1_open_g_l_resource_loader.html", null ],
       [ "Gwk::Renderer::SDL2ResourceLoader", "class_gwk_1_1_renderer_1_1_s_d_l2_resource_loader.html", null ],
       [ "Gwk::Renderer::SFML2ResourceLoader", "class_gwk_1_1_renderer_1_1_s_f_m_l2_resource_loader.html", null ],
       [ "Gwk::Renderer::SoftwareResourceLoader", "class_gwk_1_1_renderer_1_1_software_resource_loader.html", null ]
@@ -232,8 +234,8 @@ var hierarchy =
     [ "Gwk::Renderer::OpenGL::Vertex", "class_gwk_1_1_renderer_1_1_open_g_l.html#struct_gwk_1_1_renderer_1_1_open_g_l_1_1_vertex", null ],
     [ "Gwk::Renderer::DirectX11::VertexBuffer< T >", "class_gwk_1_1_renderer_1_1_direct_x11_1_1_vertex_buffer.html", null ],
     [ "Gwk::Renderer::DirectX11::VertexBuffer< Gwk::Renderer::DirectX11::VertexFormat >", "class_gwk_1_1_renderer_1_1_direct_x11_1_1_vertex_buffer.html", null ],
-    [ "Gwk::Renderer::DirectX9::VertexFormat", "class_gwk_1_1_renderer_1_1_direct_x9.html#struct_gwk_1_1_renderer_1_1_direct_x9_1_1_vertex_format", null ],
     [ "Gwk::Renderer::DirectX11::VertexFormat", "class_gwk_1_1_renderer_1_1_direct_x11.html#struct_gwk_1_1_renderer_1_1_direct_x11_1_1_vertex_format", null ],
+    [ "Gwk::Renderer::DirectX9::VertexFormat", "class_gwk_1_1_renderer_1_1_direct_x9.html#struct_gwk_1_1_renderer_1_1_direct_x9_1_1_vertex_format", null ],
     [ "Gwk::Skin::TexturedBase::Textures_t::Window_t", "class_gwk_1_1_skin_1_1_textured_base.html#struct_gwk_1_1_skin_1_1_textured_base_1_1_textures__t_1_1_window__t", null ],
     [ "Gwk::Skin::Window_t.Colors.Window", "struct_gwk_1_1_skin_1_1_base_1_1_window__t_8_colors_8_window.html", null ],
     [ "Gwk::WindowProvider", "class_gwk_1_1_window_provider.html", [

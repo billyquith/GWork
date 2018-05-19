@@ -138,6 +138,7 @@ var annotated_dup =
         [ "Null", "class_gwk_1_1_renderer_1_1_null.html", "class_gwk_1_1_renderer_1_1_null" ],
         [ "OpenGL", "class_gwk_1_1_renderer_1_1_open_g_l.html", "class_gwk_1_1_renderer_1_1_open_g_l" ],
         [ "OpenGL_DebugFont", "class_gwk_1_1_renderer_1_1_open_g_l___debug_font.html", "class_gwk_1_1_renderer_1_1_open_g_l___debug_font" ],
+        [ "OpenGLCore", "class_gwk_1_1_renderer_1_1_open_g_l_core.html", "class_gwk_1_1_renderer_1_1_open_g_l_core" ],
         [ "OpenGLResourceLoader", "class_gwk_1_1_renderer_1_1_open_g_l_resource_loader.html", "class_gwk_1_1_renderer_1_1_open_g_l_resource_loader" ],
         [ "PixelBuffer", "class_gwk_1_1_renderer_1_1_pixel_buffer.html", "class_gwk_1_1_renderer_1_1_pixel_buffer" ],
         [ "SDL2", "class_gwk_1_1_renderer_1_1_s_d_l2.html", "class_gwk_1_1_renderer_1_1_s_d_l2" ],

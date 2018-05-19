@@ -11,7 +11,7 @@ var searchData=
   ['inputmodifierkey',['InputModifierKey',['../class_gwk_1_1_controls_1_1_canvas.html#adf8dee325f9e5ceac302862635c70cc5',1,'Gwk::Controls::Canvas']]],
   ['inputmousemoved',['InputMouseMoved',['../class_gwk_1_1_controls_1_1_canvas.html#a65d1b1a53fb44a473e5bb78faf9b971d',1,'Gwk::Controls::Canvas']]],
   ['introduction_20to_20gwork',['Introduction to Gwork',['../intro_gwork.html',1,'']]],
-  ['irrlicht',['Irrlicht',['../class_gwk_1_1_input_1_1_irrlicht.html',1,'Gwk::Input::Irrlicht'],['../class_gwk_1_1_renderer_1_1_irrlicht.html',1,'Gwk::Renderer::Irrlicht']]],
+  ['irrlicht',['Irrlicht',['../class_gwk_1_1_renderer_1_1_irrlicht.html',1,'Gwk::Renderer::Irrlicht'],['../class_gwk_1_1_input_1_1_irrlicht.html',1,'Gwk::Input::Irrlicht']]],
   ['irrlichtresourceloader',['IrrlichtResourceLoader',['../class_gwk_1_1_renderer_1_1_irrlicht_resource_loader.html',1,'Gwk::Renderer']]],
   ['iscachedtotexture',['IsCachedToTexture',['../class_gwk_1_1_controls_1_1_base.html#a53560f62422e3b434179f1f4431053a5',1,'Gwk::Controls::Base']]],
   ['isdepressed',['IsDepressed',['../class_gwk_1_1_controls_1_1_button.html#add45f2fa343ba29126fcee92454a9b6c',1,'Gwk::Controls::Button']]],

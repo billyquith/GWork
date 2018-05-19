@@ -4,7 +4,7 @@ var searchData=
   ['scrollbarbutton',['ScrollBarButton',['../class_gwk_1_1_controls_internal_1_1_scroll_bar_button.html',1,'Gwk::ControlsInternal']]],
   ['scrollcontrol',['ScrollControl',['../class_gwk_1_1_controls_1_1_scroll_control.html',1,'Gwk::Controls']]],
   ['scroller_5ft',['Scroller_t',['../class_gwk_1_1_skin_1_1_textured_base.html#struct_gwk_1_1_skin_1_1_textured_base_1_1_textures__t_1_1_scroller__t',1,'Gwk::Skin::TexturedBase::Textures_t']]],
-  ['sdl2',['SDL2',['../class_gwk_1_1_renderer_1_1_s_d_l2.html',1,'Gwk::Renderer::SDL2'],['../class_gwk_1_1_input_1_1_s_d_l2.html',1,'Gwk::Input::SDL2']]],
+  ['sdl2',['SDL2',['../class_gwk_1_1_input_1_1_s_d_l2.html',1,'Gwk::Input::SDL2'],['../class_gwk_1_1_renderer_1_1_s_d_l2.html',1,'Gwk::Renderer::SDL2']]],
   ['sdl2resourceloader',['SDL2ResourceLoader',['../class_gwk_1_1_renderer_1_1_s_d_l2_resource_loader.html',1,'Gwk::Renderer']]],
   ['sfml',['SFML',['../class_gwk_1_1_input_1_1_s_f_m_l.html',1,'Gwk::Input']]],
   ['sfml2',['SFML2',['../class_gwk_1_1_renderer_1_1_s_f_m_l2.html',1,'Gwk::Renderer']]],

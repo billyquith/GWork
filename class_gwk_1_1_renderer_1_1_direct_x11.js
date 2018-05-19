@@ -9,10 +9,8 @@ var class_gwk_1_1_renderer_1_1_direct_x11 =
       [ "y", "class_gwk_1_1_renderer_1_1_direct_x11.html#a9da68e4cb7e798ade39ee6ca91e44bb5", null ],
       [ "z", "class_gwk_1_1_renderer_1_1_direct_x11.html#a78e30cf169fd780427fe3f9ca6ae5f40", null ]
     ] ],
-    [ "DirectX11", "class_gwk_1_1_renderer_1_1_direct_x11.html#a66a7cb9c2a271e3e85fa752ca7292101", null ],
+    [ "DirectX11", "class_gwk_1_1_renderer_1_1_direct_x11.html#a60462181e87ab8ec4d0b10ccaabd7ca5", null ],
     [ "~DirectX11", "class_gwk_1_1_renderer_1_1_direct_x11.html#a2719347b9c4381f39ab183722a1f90e1", null ],
-    [ "AddVert", "class_gwk_1_1_renderer_1_1_direct_x11.html#abafab774bced1f42a2cc238a40dc9bd8", null ],
-    [ "AddVert", "class_gwk_1_1_renderer_1_1_direct_x11.html#a4ae32e7f69ff478cc425beb492f9ddc5", null ],
     [ "Begin", "class_gwk_1_1_renderer_1_1_direct_x11.html#a9634a20816fadd23c67ed79cdd49e16b", null ],
     [ "DrawFilledRect", "class_gwk_1_1_renderer_1_1_direct_x11.html#a8d6ac806e8562ed1784345faa9284136", null ],
     [ "DrawTexturedRect", "class_gwk_1_1_renderer_1_1_direct_x11.html#a63f3ebea10626173e832867da5892b24", null ],
@@ -57,5 +55,7 @@ var class_gwk_1_1_renderer_1_1_direct_x11 =
     [ "m_pVertShader", "class_gwk_1_1_renderer_1_1_direct_x11.html#a7ffbe868829ec7003c61cdac6eeb9ac1", null ],
     [ "m_Valid", "class_gwk_1_1_renderer_1_1_direct_x11.html#a4509676fbff5de85c66cd67017f38dc4", null ],
     [ "region", "class_gwk_1_1_renderer_1_1_direct_x11.html#aa6076930b53a94876c18bb02726c6f60", null ],
+    [ "scalex", "class_gwk_1_1_renderer_1_1_direct_x11.html#af1dcb01e569fa3ae0c0aeb158a5b921d", null ],
+    [ "scaley", "class_gwk_1_1_renderer_1_1_direct_x11.html#a0f6366c6d98d29417742b3407a148fad", null ],
     [ "width", "class_gwk_1_1_renderer_1_1_direct_x11.html#a3126aa83e081df286d970cf4dc9aabc0", null ]
 ];

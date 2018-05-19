@@ -7,7 +7,7 @@ var indexSectionsWithContent =
   4: "cmp",
   5: "nst",
   6: "deflortu",
-  7: "bdgi"
+  7: "bdgip"
 };
 
 var indexSectionNames =
