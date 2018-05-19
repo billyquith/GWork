@@ -1,7 +1,6 @@
 /*
  *  Gwork
- *  Copyright (c) 2012 Facepunch Studios
- *  Copyright (c) 2013-2017 Nick Trout
+ *  Copyright (c) 2013-2018 Nick Trout
  *  See license in Gwork.h
  */
 
@@ -47,8 +46,7 @@ int main()
     const Gwk::Point screenSize(1024,768);
 
     if (!glfwInit())
-        return -1;
-
+        return EXIT_FAILURE;
 
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
@@ -61,7 +59,7 @@ int main()
     if (!window)
     {
         glfwTerminate();
-        return -1;
+        return EXIT_FAILURE;
     }
 
     glfwMakeContextCurrent(window);
@@ -71,7 +69,7 @@ int main()
     {
         std::cout << "Glew init error: " << glewGetErrorString(error) << std::endl;
         glfwTerminate();
-        return -1;
+        return EXIT_FAILURE;
     }
 
     Gwk::Platform::RelativeToExecutablePaths paths(GWORK_RESOURCE_DIR);
@@ -109,7 +107,6 @@ int main()
     // Begin the main game loop
     while (!glfwWindowShouldClose(window))
     {
-//        std::cout << "    Frame clear" << std::endl;
         glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
         canvas->RenderCanvas();
         glfwSwapBuffers(window);
