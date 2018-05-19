@@ -142,6 +142,7 @@ if(RENDER_OPENGL)
     set(GWK_PLATFORM_NAME "Cross")
 
     if (USE_GLFW)
+        message(STATUS "Configuring GLFW...")
         find_package(GLFW REQUIRED)
         if (APPLE)
             set(GLFW_DEPENDENCIES "-framework OpenGL")
@@ -157,7 +158,7 @@ if(RENDER_OPENGL)
     endif()
 endif(RENDER_OPENGL)
 
-if (RENDER_OPENGL_CORE)
+if(RENDER_OPENGL_CORE)
     set(GWK_RENDER_NAME "OpenGLCore")
     set(GWK_PLATFORM_NAME "Cross")
     set(GWK_INPUT_NAME "OpenGL")
@@ -165,7 +166,10 @@ if (RENDER_OPENGL_CORE)
     find_package(glm REQUIRED)
     find_package(GLEW REQUIRED)
 
-    if (USE_GLFW)
+    set(GWK_RENDER_INCLUDES "${GLM_INCLUDE_DIR}" "${GLEW_INCLUDE_DIR}")
+    set(GWK_RENDER_LIBRARIES ${GLM_LIBRARIES} ${GLEW_LIBRARIES})
+
+    if(USE_GLFW)
         find_package(GLFW REQUIRED)
         if (APPLE)
             set(GLFW_DEPENDENCIES "-framework OpenGL")
@@ -176,8 +180,8 @@ if (RENDER_OPENGL_CORE)
             set(GLFW_DEPENDENCIES ${OPENGL_gl_LIBRARY})
         endif()
 
-        set(GWK_RENDER_INCLUDES "${GLFW_INCLUDE_DIR} ${GLM_INCLUDE_DIR} ${GLEW_INCLUDE_DIR}")
-        set(GWK_RENDER_LIBRARIES ${GLFW_LIBRARIES} ${GLFW_DEPENDENCIES} ${GLEW_LIBRARIES})
+        set(GWK_RENDER_INCLUDES "${GWK_RENDER_INCLUDES}" "${GLFW_INCLUDE_DIR}")
+        set(GWK_RENDER_LIBRARIES ${GWK_RENDER_LIBRARIES} ${GLFW_LIBRARIES} ${GLFW_DEPENDENCIES})
     endif()
 endif()
 
@@ -240,9 +244,7 @@ endif()
 
 # MinGW problems
 if (WIN32)
-    set(GWK_RENDER_LIBRARIES
-            ${GWK_RENDER_LIBRARIES}
-            -liconv)
+    set(GWK_RENDER_LIBRARIES ${GWK_RENDER_LIBRARIES} -liconv)
 endif()
 
 set(GWK_LIB_DEFINES "-DGWK_PLATFORM_${GWK_PLATFORM_NAME}=1 -DGWK_RENDER_${GWK_RENDER_NAME}=1")

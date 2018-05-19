@@ -1,21 +1,22 @@
-
-
 /*
- *  Gwork
- *  Copyright (c) 2010 Facepunch Studios
- *  Copyright (c) 2013-17 Nick Trout
+ *  Gwork - OpenGL Core renderer.
+ *  Copyright (c) 2013-18 Nick Trout
  *  See license in Gwork.h
  */
 
-
-#include <GL/glew.h>
-#include <GL/gl.h>
 #include <Gwork/Renderers/OpenGLCore.h>
+#if defined(__APPLE__)
+#   include <GL/glew.h>
+#   include <OpenGL/gl.h>
+#else
+#   include <GL/glew.h>
+#   include <GL/gl.h>
+#endif
 #include <Gwork/PlatformTypes.h>
 #include <Gwork/WindowProvider.h>
 #include <Gwork/PlatformCommon.h>
 
-#ifdef _WIN32
+#if defined(_WIN32)
 #   define WIN32_LEAN_AND_MEAN
 #   include <windows.h>
 #   undef min
@@ -42,18 +43,14 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-// todo: remove lib if not GLFW driven
-//#include <GLFW/glfw3.h>
-//#include <GL/glew.h>
-
 namespace Gwk
 {
     namespace Renderer
     {
 
-// See "Font Size in Pixels or Points" in "stb_truetype.h"
+        // See "Font Size in Pixels or Points" in "stb_truetype.h"
         static constexpr float c_pointsToPixels = 1.333f;
-// Arbitrary size chosen for texture cache target.
+        // Arbitrary size chosen for texture cache target.
         static constexpr int c_texsz = 256;
 
         Font::Status OpenGLResourceLoader::LoadFont(Font& font)
