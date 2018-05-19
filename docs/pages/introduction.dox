@@ -2,7 +2,7 @@
 
 \page intro_gwork Introduction to Gwork
 
-\section Overview
+\section overview Overview
 
 Gwork is a GUI library that can be embedded into existing projects. It has a platform abstraction
 which can be implemented by the user to provide the features necessary for drawing and input.
@@ -15,18 +15,18 @@ implementing a new skin. New controls can be added by specialising an existing c
 starting afresh.
 
 
-\section Backend
+\section backend Backend
 
 The backend supplies functionality necessary for Gwork to work, like:
 
-\subsection Input
+\subsection input Input
 
 This translates input, e.g. mouse clicks, and keyboard input, into events that can be handled
 by Gwork, via Gwk::IInputEventListener. Each backend implements this in a way that is appropriate.
 
 Some of the more generic input implementations are reuseable, e.g. Gwk::Input::Windows.
 
-\subsection Renderer
+\subsection renderer Renderer
 
 The renderer, as you might expect, draws the GUI. Of the backends provided, some are OS specific,
 like DirectX, some are cross plaform APIs like, Allegro5, and SDL2, and there is a software
@@ -42,14 +42,14 @@ gets a full path for a resource, depending on its type. You might want to organi
 directories differently to the default in Gwork. One such implementation is
 Gwk::Platform::RelativeToExecutablePaths.
 
-\subsection Platform
+\subsection platform Platform
 
 The platform implements Gwk::Platform for each backend. Like input, some of these are reusable,
 like WindowsPlatform. This supplies minimal functionality for the OS or platform you are on, like
 Gwk::Platform::Sleep, and Gwk::Platform::GetClipboardText.
 
 
-\section Configuring Gwork
+\section config Configuring Gwork
 
 Gwork uses cmake to generate project build files in your chosen format. By default, if you choose
 a given renderer then sensible input and platform will be chosen to build the samples. However,
@@ -58,7 +58,7 @@ and the whole system can be configured for your particular requirements.
 
 See notes on \ref build_gwork
 
-\section Using Gwork
+\section using Using Gwork
 
 Have a look at the samples for how to use Gwork's API. You basically need to initialise Gwork,
 create renderer and input, and then in your main loop you update the input, and then render
