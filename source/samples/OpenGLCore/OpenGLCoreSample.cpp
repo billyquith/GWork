@@ -15,14 +15,14 @@
 #include <Gwork/Skins/Simple.h>
 #include <Gwork/Skins/TexturedBase.h>
 #include <Gwork/Test/Test.h>
-#include <Gwork/Input/OpenGL.h>
+#include <Gwork/Input/GLFW3.h>
 #include <iostream>
 
-static Gwk::Input::GLFW GworkInput;
+static Gwk::Input::GLFW3 GworkInput;
 
 static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
-    const Gwk::Input::GLFW::KeyEvent evt = { key, scancode, action, mods };
+    const Gwk::Input::GLFW3::KeyEvent evt = { key, scancode, action, mods };
     GworkInput.ProcessKeyEvent(evt);
 }
 

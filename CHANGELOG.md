@@ -13,6 +13,7 @@ This is a changelog for Gwork. There are also notes [on my blog][blog]
 - Retired Direct2D and GDI+ renderers.
 - Added CrossPlatform platform. Null should do nothing!
 - Added `Gwk::Log::Write()` so that error messages can be logged.
+- Renamed `Gwk::Input::OpenGL` to `Gwk::Input::GLFW3`.
 
 ### 0.2
 

@@ -138,11 +138,11 @@ endif(RENDER_NULL)
 
 if(RENDER_OPENGL)
     set(GWK_RENDER_NAME "OpenGL")
-    set(GWK_INPUT_NAME "OpenGL")
+    set(GWK_INPUT_NAME "GLFW3")
     set(GWK_PLATFORM_NAME "Cross")
 
     if (USE_GLFW)
-        message(STATUS "Configuring GLFW...")
+        message(STATUS "Configuring GLFW3...")
         find_package(GLFW REQUIRED)
         if (APPLE)
             set(GLFW_DEPENDENCIES "-framework OpenGL")
@@ -160,8 +160,8 @@ endif(RENDER_OPENGL)
 
 if(RENDER_OPENGL_CORE)
     set(GWK_RENDER_NAME "OpenGLCore")
+    set(GWK_INPUT_NAME "GLFW3")
     set(GWK_PLATFORM_NAME "Cross")
-    set(GWK_INPUT_NAME "OpenGL")
 
     find_package(glm REQUIRED)
     find_package(GLEW REQUIRED)
