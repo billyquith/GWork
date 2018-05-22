@@ -10,7 +10,7 @@ var searchData=
   ['getmargin',['GetMargin',['../class_gwk_1_1_controls_1_1_base.html#ab20b10840dacf712b1bf0152da114941',1,'Gwk::Controls::Base']]],
   ['getpadding',['GetPadding',['../class_gwk_1_1_controls_1_1_base.html#a4eab0e6c1e35d0396ec75e1e06a92913',1,'Gwk::Controls::Base']]],
   ['getpath',['GetPath',['../class_gwk_1_1_platform_1_1_relative_to_executable_paths.html#a608a6f1befb6e3e6214bb1d65f523016',1,'Gwk::Platform::RelativeToExecutablePaths']]],
-  ['glfw',['GLFW',['../class_gwk_1_1_input_1_1_g_l_f_w.html',1,'Gwk::Input']]],
+  ['glfw3',['GLFW3',['../class_gwk_1_1_input_1_1_g_l_f_w3.html',1,'Gwk::Input']]],
   ['groupbox',['GroupBox',['../class_gwk_1_1_controls_1_1_group_box.html',1,'Gwk::Controls::GroupBox'],['../class_gwk_1_1_controls_1_1_group_box.html#aba09a3e4927def44d723304551abf35a',1,'Gwk::Controls::GroupBox::GroupBox()']]],
   ['gwork',['Gwork',['../index.html',1,'']]],
   ['platform',['Platform',['../namespace_gwk_1_1_platform.html',1,'Gwk']]]

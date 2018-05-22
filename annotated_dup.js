@@ -117,7 +117,7 @@ var annotated_dup =
       ] ],
       [ "Input", null, [
         [ "Allegro", "class_gwk_1_1_input_1_1_allegro.html", "class_gwk_1_1_input_1_1_allegro" ],
-        [ "GLFW", "class_gwk_1_1_input_1_1_g_l_f_w.html", "class_gwk_1_1_input_1_1_g_l_f_w" ],
+        [ "GLFW3", "class_gwk_1_1_input_1_1_g_l_f_w3.html", "class_gwk_1_1_input_1_1_g_l_f_w3" ],
         [ "Irrlicht", "class_gwk_1_1_input_1_1_irrlicht.html", "class_gwk_1_1_input_1_1_irrlicht" ],
         [ "Null", "class_gwk_1_1_input_1_1_null.html", "class_gwk_1_1_input_1_1_null" ],
         [ "SDL2", "class_gwk_1_1_input_1_1_s_d_l2.html", "class_gwk_1_1_input_1_1_s_d_l2" ],

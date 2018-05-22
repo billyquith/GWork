@@ -43,7 +43,7 @@ var hierarchy =
     [ "Gwk::Controls::RichLabel::DividedText", "struct_gwk_1_1_controls_1_1_rich_label_1_1_divided_text.html", null ],
     [ "Gwk::Skin::TexturedBase::Textures_t::Input_t::UpDown_t::Down_t", "class_gwk_1_1_skin_1_1_textured_base.html#struct_gwk_1_1_skin_1_1_textured_base_1_1_textures__t_1_1_input__t_1_1_up_down__t_1_1_down__t", null ],
     [ "Gwk::Font", "struct_gwk_1_1_font.html", null ],
-    [ "Gwk::Input::GLFW", "class_gwk_1_1_input_1_1_g_l_f_w.html", null ],
+    [ "Gwk::Input::GLFW3", "class_gwk_1_1_input_1_1_g_l_f_w3.html", null ],
     [ "Gwk::Skin::TexturedBase::Textures_t::Input_t::Slider_t::H_t", "class_gwk_1_1_skin_1_1_textured_base.html#struct_gwk_1_1_skin_1_1_textured_base_1_1_textures__t_1_1_input__t_1_1_slider__t_1_1_h__t", null ],
     [ "Gwk::Event::Handler", "class_gwk_1_1_event_1_1_handler.html", [
       [ "Gwk::Controls::Base", "class_gwk_1_1_controls_1_1_base.html", [
@@ -176,7 +176,7 @@ var hierarchy =
     [ "Gwk::Event::Information", "struct_gwk_1_1_event_1_1_information.html", null ],
     [ "Gwk::Skin::TexturedBase::Textures_t::Input_t", "class_gwk_1_1_skin_1_1_textured_base.html#struct_gwk_1_1_skin_1_1_textured_base_1_1_textures__t_1_1_input__t", null ],
     [ "Gwk::Input::Irrlicht", "class_gwk_1_1_input_1_1_irrlicht.html", null ],
-    [ "Gwk::Input::GLFW::KeyEvent", "class_gwk_1_1_input_1_1_g_l_f_w.html#struct_gwk_1_1_input_1_1_g_l_f_w_1_1_key_event", null ],
+    [ "Gwk::Input::GLFW3::KeyEvent", "class_gwk_1_1_input_1_1_g_l_f_w3.html#struct_gwk_1_1_input_1_1_g_l_f_w3_1_1_key_event", null ],
     [ "Gwk::Skin::Label_t.Colors.Label", "struct_gwk_1_1_skin_1_1_base_1_1_label__t_8_colors_8_label.html", null ],
     [ "Gwk::Skin::TexturedBase::Textures_t::Tab_t::Left_t", "class_gwk_1_1_skin_1_1_textured_base.html#struct_gwk_1_1_skin_1_1_textured_base_1_1_textures__t_1_1_tab__t_1_1_left__t", null ],
     [ "Gwk::Skin::Line_t.Colors.Category.Line", "struct_gwk_1_1_skin_1_1_base_1_1_category__t_1_1_line__t_8_colors_8_category_8_line.html", null ],
@@ -184,7 +184,7 @@ var hierarchy =
     [ "Gwk::Skin::TexturedBase::Textures_t::Input_t::ListBox_t", "class_gwk_1_1_skin_1_1_textured_base.html#struct_gwk_1_1_skin_1_1_textured_base_1_1_textures__t_1_1_input__t_1_1_list_box__t", null ],
     [ "Gwk::Margin", "struct_gwk_1_1_margin.html", null ],
     [ "Gwk::Skin::TexturedBase::Textures_t::Menu_t", "class_gwk_1_1_skin_1_1_textured_base.html#struct_gwk_1_1_skin_1_1_textured_base_1_1_textures__t_1_1_menu__t", null ],
-    [ "Gwk::Input::GLFW::MouseEvent", "class_gwk_1_1_input_1_1_g_l_f_w.html#struct_gwk_1_1_input_1_1_g_l_f_w_1_1_mouse_event", null ],
+    [ "Gwk::Input::GLFW3::MouseEvent", "class_gwk_1_1_input_1_1_g_l_f_w3.html#struct_gwk_1_1_input_1_1_g_l_f_w3_1_1_mouse_event", null ],
     [ "Gwk::Input::Null", "class_gwk_1_1_input_1_1_null.html", null ],
     [ "Gwk::DragAndDrop::Package", "struct_gwk_1_1_drag_and_drop_1_1_package.html", null ],
     [ "Gwk::Event::Packet", "struct_gwk_1_1_event_1_1_packet.html", null ],
@@ -234,8 +234,8 @@ var hierarchy =
     [ "Gwk::Renderer::OpenGL::Vertex", "class_gwk_1_1_renderer_1_1_open_g_l.html#struct_gwk_1_1_renderer_1_1_open_g_l_1_1_vertex", null ],
     [ "Gwk::Renderer::DirectX11::VertexBuffer< T >", "class_gwk_1_1_renderer_1_1_direct_x11_1_1_vertex_buffer.html", null ],
     [ "Gwk::Renderer::DirectX11::VertexBuffer< Gwk::Renderer::DirectX11::VertexFormat >", "class_gwk_1_1_renderer_1_1_direct_x11_1_1_vertex_buffer.html", null ],
-    [ "Gwk::Renderer::DirectX11::VertexFormat", "class_gwk_1_1_renderer_1_1_direct_x11.html#struct_gwk_1_1_renderer_1_1_direct_x11_1_1_vertex_format", null ],
     [ "Gwk::Renderer::DirectX9::VertexFormat", "class_gwk_1_1_renderer_1_1_direct_x9.html#struct_gwk_1_1_renderer_1_1_direct_x9_1_1_vertex_format", null ],
+    [ "Gwk::Renderer::DirectX11::VertexFormat", "class_gwk_1_1_renderer_1_1_direct_x11.html#struct_gwk_1_1_renderer_1_1_direct_x11_1_1_vertex_format", null ],
     [ "Gwk::Skin::TexturedBase::Textures_t::Window_t", "class_gwk_1_1_skin_1_1_textured_base.html#struct_gwk_1_1_skin_1_1_textured_base_1_1_textures__t_1_1_window__t", null ],
     [ "Gwk::Skin::Window_t.Colors.Window", "struct_gwk_1_1_skin_1_1_base_1_1_window__t_8_colors_8_window.html", null ],
     [ "Gwk::WindowProvider", "class_gwk_1_1_window_provider.html", [

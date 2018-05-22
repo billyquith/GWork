@@ -7,5 +7,5 @@ var searchData=
   ['menuitem',['MenuItem',['../class_gwk_1_1_controls_1_1_menu_item.html',1,'Gwk::Controls']]],
   ['menustrip',['MenuStrip',['../class_gwk_1_1_controls_1_1_menu_strip.html',1,'Gwk::Controls']]],
   ['modal',['Modal',['../class_gwk_1_1_controls_internal_1_1_modal.html',1,'Gwk::ControlsInternal']]],
-  ['mouseevent',['MouseEvent',['../class_gwk_1_1_input_1_1_g_l_f_w.html#struct_gwk_1_1_input_1_1_g_l_f_w_1_1_mouse_event',1,'Gwk::Input::GLFW']]]
+  ['mouseevent',['MouseEvent',['../class_gwk_1_1_input_1_1_g_l_f_w3.html#struct_gwk_1_1_input_1_1_g_l_f_w3_1_1_mouse_event',1,'Gwk::Input::GLFW3']]]
 ];

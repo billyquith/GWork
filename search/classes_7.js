@@ -6,6 +6,6 @@ var searchData=
   ['inactive_5ft_2ecolors_2etab_2einactive',['Inactive_t.Colors.Tab.Inactive',['../struct_gwk_1_1_skin_1_1_base_1_1_tab__t_1_1_inactive__t_8_colors_8_tab_8_inactive.html',1,'Gwk::Skin']]],
   ['information',['Information',['../struct_gwk_1_1_event_1_1_information.html',1,'Gwk::Event']]],
   ['input_5ft',['Input_t',['../class_gwk_1_1_skin_1_1_textured_base.html#struct_gwk_1_1_skin_1_1_textured_base_1_1_textures__t_1_1_input__t',1,'Gwk::Skin::TexturedBase::Textures_t']]],
-  ['irrlicht',['Irrlicht',['../class_gwk_1_1_renderer_1_1_irrlicht.html',1,'Gwk::Renderer::Irrlicht'],['../class_gwk_1_1_input_1_1_irrlicht.html',1,'Gwk::Input::Irrlicht']]],
+  ['irrlicht',['Irrlicht',['../class_gwk_1_1_input_1_1_irrlicht.html',1,'Gwk::Input::Irrlicht'],['../class_gwk_1_1_renderer_1_1_irrlicht.html',1,'Gwk::Renderer::Irrlicht']]],
   ['irrlichtresourceloader',['IrrlichtResourceLoader',['../class_gwk_1_1_renderer_1_1_irrlicht_resource_loader.html',1,'Gwk::Renderer']]]
 ];
