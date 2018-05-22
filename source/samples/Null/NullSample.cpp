@@ -3,7 +3,7 @@
  *
  *  /// NOTE: This is a null application just used to make sure that Gwork compiles. ///
  *
- *  Copyright (c) 2013-2017 Nick Trout
+ *  Copyright (c) 2013-2018 Billy Quith
  *  See license in Gwork.h
  */
 

@@ -1,12 +1,12 @@
 # Gwork docs
-# Copyright (c) 2013-2017 Nick Trout
+# Copyright (c) 2013-2018 Billy Quith
 #
 # Portions of this file come from Ponder:
 #
 ## The MIT License (MIT)
 ##
 ## Copyright (c) 2009-2014 TEGESO/TEGESOFT
-## Copyright (c) 2013-2017 Nick Trout
+## Copyright (c) 2013-2018 Billy Quith
 ##
 ## Permission is hereby granted, free of charge, to any person obtaining a copy
 ## of this software and associated documentation files (the "Software"), to deal
