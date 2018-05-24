@@ -1,7 +1,7 @@
 /*
  *  Gwork
  *  Copyright (c) 2011 Facepunch Studios
- *  Copyright (c) 2013-17 Billy Quith
+ *  Copyright (c) 2013-2018 Billy Quith
  *  See license in Gwork.h
  */
 

@@ -1,7 +1,7 @@
 /*
  *  Gwork
  *  Copyright (c) 2012 Facepunch Studios
- *  Copyright (c) 2013-2017 Billy Quith
+ *  Copyright (c) 2013-2018 Billy Quith
  *  See license in Gwork.h
  */
 
@@ -36,7 +36,7 @@ int main(int argc, char** argv)
     SDL_Renderer *sdlRenderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 
     {
-        Gwk::Platform::RelativeToExecutablePaths paths(GWORK_RESOURCE_DIR);
+        Gwk::Platform::RelativeToExecutablePaths paths(GWK_SAMPLE_RESOURCE_DIR);
         Gwk::Renderer::SDL2ResourceLoader loader(paths, sdlRenderer);
         
         std::unique_ptr<Gwk::Renderer::SDL2> renderer(new Gwk::Renderer::SDL2(loader, window));

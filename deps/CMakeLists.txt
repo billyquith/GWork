@@ -1,7 +1,7 @@
 # Gwork dependencies
 
-if(WANT_REFLECTION)
-    if (WANT_REFLECTION_LOCAL)
+if(WITH_REFLECTION)
+    if (WITH_REFLECTION_LOCAL)
         message(STATUS "Using project local Ponder")
         
         set(BUILD_SHARED_LIBS OFF)

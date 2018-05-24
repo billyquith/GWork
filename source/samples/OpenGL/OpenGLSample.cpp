@@ -1,7 +1,7 @@
 /*
  *  Gwork
  *  Copyright (c) 2012 Facepunch Studios
- *  Copyright (c) 2013-2017 Billy Quith
+ *  Copyright (c) 2013-2018 Billy Quith
  *  See license in Gwork.h
  */
 
@@ -11,7 +11,7 @@
 #include <Gwork/Skins/Simple.h>
 #include <Gwork/Skins/TexturedBase.h>
 #include <Gwork/Test/Test.h>
-#include <Gwork/Input/OpenGL.h>
+#include <Gwork/Input/GLFW3.h>
 #ifdef USE_DEBUG_FONT
 #   include <Gwork/Renderers/OpenGL_DebugFont.h>
 #else
@@ -19,11 +19,11 @@
 #endif
 #include <GLFW/glfw3.h>
 
-static Gwk::Input::GLFW GworkInput;
+static Gwk::Input::GLFW3 GworkInput;
 
 static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
-    const Gwk::Input::GLFW::KeyEvent evt = { key, scancode, action, mods };
+    const Gwk::Input::GLFW3::KeyEvent evt = { key, scancode, action, mods };
     GworkInput.ProcessKeyEvent(evt);
 }
 
@@ -60,7 +60,7 @@ int main()
     }
     glfwMakeContextCurrent(window);
 
-    Gwk::Platform::RelativeToExecutablePaths paths(GWORK_RESOURCE_DIR);
+    Gwk::Platform::RelativeToExecutablePaths paths(GWK_SAMPLE_RESOURCE_DIR);
     Gwk::Renderer::OpenGLResourceLoader loader(paths);
 
     // Create a Gwork OpenGL Renderer

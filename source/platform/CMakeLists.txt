@@ -1,10 +1,5 @@
 # Gwork platform
 
-include_directories(
-    ${GWK_SOURCE_DIR}/source/platform/include
-    ${GWK_RENDER_INCLUDES}
-)
-
 set(GWK_RENDERER_HEADERS
     include/Gwork/Renderers/${GWK_RENDER_NAME}.h
 )
@@ -53,6 +48,11 @@ add_definitions(${GWK_LIB_DEFINES})
 add_library(Gwork${GWK_RENDER_NAME} STATIC
             ${GWK_PLATFORM_HEADERS} ${GWK_RENDERER_HEADERS} ${GWK_INPUT_HEADERS}
             ${GWK_PLATFORM_SOURCES})
+
+target_include_directories(Gwork${GWK_RENDER_NAME} PUBLIC
+        ${GWK_SOURCE_DIR}/source/platform/include
+        ${GWK_RENDER_INCLUDES}
+)
 
 install(FILES ${GWK_PLATFORM_HEADERS}
         DESTINATION include/Gwork)

@@ -1,0 +1,44 @@
+/*!
+
+\page platform_details Platform Detection
+
+Gwork has platform specific and cross-platform code. The following are macros used to detect these.
+
+- Source: [Predef](https://sourceforge.net/p/predef/wiki/OperatingSystems/)
+
+\section platform_platform Platform Defines
+
+The defines are used to detect the following platforms.
+
+Define          | Platform
+------          | --------
+`__APPLE__`     | Darwin/OSX
+`_WIN32`        | Windows 32 and 64 bit
+`_WIN64`        | Windows 64 bit
+`__CYGWIN__`    | Cygwin environment
+`__MINGW32__`   | MinGW 32 bit
+`__MINGW64__`   | MinGW 64 bit
+`__linux__`     | Linux
+`__unix__`      | Other Unices
+
+Note:
+
+- `_WIN32` includes Windows, Cygwin, MinGW.
+
+
+\section platform_compiler Compiler Defines
+
+The defines are used to detect the following compilers.
+
+- Source: [Predef](https://sourceforge.net/p/predef/wiki/Compilers/)
+
+Define          | Compiler
+------          | --------
+`__clang__`     | Clang
+`__GNUC__`      | GCC
+`_MSC_VER`      | Microsoft MSVC
+
+
+[predef]: https://sourceforge.net/p/predef/wiki/Home/
+
+*/

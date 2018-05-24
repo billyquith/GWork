@@ -13,13 +13,14 @@ A number of rendering backends are provided for use, or as an example for your o
  * [Allegro5][al5] (cross-platform).
  * DirectX 11 (Windows 7+).
  * [Irrlicht3D][irr3d] (cross-platform).
- * OpenGL (cross-platform. Uses GLFW).
+ * OpenGL2 (cross-platform. Uses GLFW).
+ * OpenGL Core Profile (cross-platform. Uses GLM, GLEW, GLFW).
  * [SDL2][sdl2] (cross-platform).
  * [SFML2][sfml2] (cross-platform).
  * Software (cross-platform). Render to texture.
  
 Note that the software renderer can be used on any platform, but, obviously, with the penalty of 
-not having hardware acceleration.
+not having hardware acceleration. For more information see the documentation.
 
 ## Documentation
 
@@ -47,6 +48,7 @@ your platform. Only have one renderer per build directory. Choose renderer:
 * `-DRENDER_DIRECTX11=ON`
 * `-DRENDER_IRRLICHT=ON`
 * `-DRENDER_OPENGL=ON`
+* `-DRENDER_OPENGL_CORE=ON`
 * `-DRENDER_SDL2=ON`
 * `-DRENDER_SFML2=ON`
 * `-DRENDER_SW=ON`

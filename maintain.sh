@@ -2,8 +2,8 @@
 # Maintenance script to compile Gwork on all UNIX support platforms (OSX, Linux)
 
 CM_GEN="-GXcode"
-CM_OPTS="-DWANT_TESTS=ON -DWANT_SAMPLES=ON"
-CM_REFLECT="-DWANT_REFLECTION=ON"
+CM_OPTS="-DWITH_TESTS=ON -DWITH_SAMPLES=ON"
+CM_REFLECT="-DWITH_REFLECTION=ON"
 CM_PROJ=gwork.xcodeproj
 BUILD_LOG_NAME=maintain_build.txt
 BUILD_LOG=../$BUILD_LOG_NAME
