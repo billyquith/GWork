@@ -8,19 +8,19 @@ uname -a
 env
 
 BUILD_OS=$TRAVIS_OS_NAME
-WANT_OPTS="-DWANT_TESTS=ON -DWANT_SAMPLE=ON -DRENDER_NULL=ON $FEATURES"
+WITH_OPTS="-DWITH_TESTS=ON -DWITH_SAMPLE=ON -DRENDER_NULL=ON $FEATURES"
 RENDER_SAMPLE=GworkNullSample
 
 cmake --version
 echo "Using C++ compiler: CXX=$CXX, CC=$CC"
-echo "Options for cmake generation: $WANT_OPTS"
+echo "Options for cmake generation: $WITH_OPTS"
 
 
 function prepare_osx
 {
     mkdir build
     pushd build
-    cmake .. -GXcode $WANT_OPTS
+    cmake .. -GXcode $WITH_OPTS
     popd
 }
 
@@ -29,7 +29,7 @@ function prepare_linux
     mkdir build
     pushd build
     # Travis doesn't pass on the COMPILER version so we'll use env CXX variable
-    local ccmd="cmake .. -G \"Unix Makefiles\" $WANT_OPTS"
+    local ccmd="cmake .. -G \"Unix Makefiles\" $WITH_OPTS"
     echo "$ccmd"
     eval "$ccmd"
     popd

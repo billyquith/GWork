@@ -19,18 +19,21 @@ if(WIN32)
 endif()
 
 # Cross-platform
-option(RENDER_ALLEGRO5      "Renderer: Allegro5" OFF)
-option(RENDER_IRRLICHT      "Renderer: Irrlicht" OFF)
-option(RENDER_OPENGL        "Renderer: OPENGL" OFF)
-option(RENDER_SDL2          "Renderer: SDL2" OFF)
-option(RENDER_SFML2         "Renderer: SFML2" OFF)
-option(RENDER_SW            "Renderer: Software" OFF)   # Used for testing
-option(RENDER_NULL          "Renderer: Null" OFF)       # Used for testing
+option(RENDER_ALLEGRO5      "Renderer: Allegro5"            OFF)
+option(RENDER_IRRLICHT      "Renderer: Irrlicht"            OFF)
+option(RENDER_OPENGL        "Renderer: OPENGL"              OFF)
+option(RENDER_OPENGL_CORE   "Renderer: OPENGL Core Profile" OFF)
+option(RENDER_SDL2          "Renderer: SDL2"                OFF)
+option(RENDER_SFML2         "Renderer: SFML2"               OFF)
+option(RENDER_SW            "Renderer: Software"            OFF) # Used for testing
+option(RENDER_NULL          "Renderer: Null"                OFF) # Used for testing
 
-option(WANT_TESTS           "Include unittests" ON)
-option(WANT_SAMPLE          "Include sample" ON)
+option(USE_GLFW             "Use GLFW for OpenGL renderer." ON)
 
-option(WANT_REFLECTION      "Use reflection (requires external dependencies)" OFF)
+option(WITH_TESTS           "Include unittests" ON)
+option(WITH_SAMPLE          "Include sample" ON)
+
+option(WITH_REFLECTION      "Use reflection (requires external dependencies)" OFF)
 
 # This is for development but can be used by the user.
 option(WANT_ALLOC_STATS     "Track memory allocations" OFF)
@@ -40,7 +43,7 @@ option(WANT_ALLOC_STATS     "Track memory allocations" OFF)
 
 option(WANT_SHARED_LIBS OFF) # TODO: Shared libs not implemented yet.
 
-option(WANT_REFLECTION_LOCAL "Use local libaries" ON) # TODO: OFF not tested.
+option(WITH_REFLECTION_LOCAL "Use local libaries" ON) # TODO: OFF not tested.
 set(GWK_PONDER_INCLUDE "${GWK_SOURCE_DIR}/deps/ponder/include"
     CACHE STRING "Ponder includes directory")
 set(GWK_LUA_INCLUDE "${GWK_SOURCE_DIR}/deps/lua-5.3/src"
@@ -70,17 +73,21 @@ elseif(UNIX)
     set(INSTALL_MISC_DIR share/gwork)
 endif()
 
-if(WANT_TESTS)
+if(WITH_TESTS)
     message("Including tests")
-endif(WANT_TESTS)
+endif(WITH_TESTS)
 
-if(BUILD_SAMPLE)
-    message("Including sample")
-endif(BUILD_SAMPLE)
+if(WITH_SAMPLE)
+    message(STATUS "Including Gwk sample")
 
-if(WANT_REFLECTION)
+    if (NOT USE_GLFW AND (RENDER_OPENGL OR RENDER_OPENGL_CORE))
+        message(FATAL_ERROR "Samples with OpenGL or OpenGLCore require GLFW")
+    endif()
+endif(WITH_SAMPLE)
+
+if(WITH_REFLECTION)
     message("Using reflection")
-endif(WANT_REFLECTION)
+endif(WITH_REFLECTION)
 
 #-----------------------------------------------------------
 # Renderer config
@@ -137,20 +144,52 @@ endif(RENDER_NULL)
 
 if(RENDER_OPENGL)
     set(GWK_RENDER_NAME "OpenGL")
-    set(GWK_INPUT_NAME "OpenGL")
+    set(GWK_INPUT_NAME "GLFW3")
     set(GWK_PLATFORM_NAME "Cross")
-    find_package(GLFW REQUIRED)
-    if (APPLE)
-        set(GLFW_DEPENDENCIES "-framework OpenGL")
-    elseif(UNIX)
-        set(GLFW_DEPENDENCIES "-lGL")
-    elseif(WIN32)
-        find_package(OpenGL)
-        set(GLFW_DEPENDENCIES ${OPENGL_gl_LIBRARY})
+
+    if (USE_GLFW)
+        message(STATUS "Configuring GLFW3...")
+        find_package(GLFW REQUIRED)
+        if (APPLE)
+            set(GLFW_DEPENDENCIES "-framework OpenGL")
+        elseif(UNIX)
+            set(GLFW_DEPENDENCIES "-lGL")
+        elseif(WIN32)
+            find_package(OpenGL)
+            set(GLFW_DEPENDENCIES ${OPENGL_gl_LIBRARY})
+        endif()
+
+        set(GWK_RENDER_INCLUDES "${GLFW_INCLUDE_DIR}")
+        set(GWK_RENDER_LIBRARIES ${GLFW_LIBRARIES} ${GLFW_DEPENDENCIES})
     endif()
-    set(GWK_RENDER_INCLUDES "${GLFW_INCLUDE_DIR}")
-    set(GWK_RENDER_LIBRARIES ${GLFW_LIBRARIES} ${GLFW_DEPENDENCIES})
 endif(RENDER_OPENGL)
+
+if(RENDER_OPENGL_CORE)
+    set(GWK_RENDER_NAME "OpenGLCore")
+    set(GWK_INPUT_NAME "GLFW3")
+    set(GWK_PLATFORM_NAME "Cross")
+
+    find_package(glm REQUIRED)
+    find_package(GLEW REQUIRED)
+
+    set(GWK_RENDER_INCLUDES "${GLM_INCLUDE_DIR}" "${GLEW_INCLUDE_DIR}")
+    set(GWK_RENDER_LIBRARIES ${GLM_LIBRARIES} ${GLEW_LIBRARIES})
+
+    if(USE_GLFW)
+        find_package(GLFW REQUIRED)
+        if (APPLE)
+            set(GLFW_DEPENDENCIES "-framework OpenGL")
+        elseif(UNIX)
+            set(GLFW_DEPENDENCIES "-lGL")
+        elseif(WIN32)
+            find_package(OpenGL)
+            set(GLFW_DEPENDENCIES ${OPENGL_gl_LIBRARY})
+        endif()
+
+        set(GWK_RENDER_INCLUDES "${GWK_RENDER_INCLUDES}" "${GLFW_INCLUDE_DIR}")
+        set(GWK_RENDER_LIBRARIES ${GWK_RENDER_LIBRARIES} ${GLFW_LIBRARIES} ${GLFW_DEPENDENCIES})
+    endif()
+endif()
 
 if(RENDER_SDL2)
     set(GWK_RENDER_NAME "SDL2")
@@ -213,9 +252,12 @@ endif()
 
 #-----------------------------------------------------------
 
-set(GWK_LIB_DEFINES "\
-    -DGWK_PLATFORM_${GWK_PLATFORM_NAME}=1 \
-    -DGWK_RENDER_${GWK_RENDER_NAME}=1")
+# MinGW problems
+if (WIN32)
+    set(GWK_RENDER_LIBRARIES ${GWK_RENDER_LIBRARIES} -liconv)
+endif()
+
+set(GWK_LIB_DEFINES "-DGWK_PLATFORM_${GWK_PLATFORM_NAME}=1 -DGWK_RENDER_${GWK_RENDER_NAME}=1")
 
 if(GWK_RENDER_INCLUDES)
     list(REMOVE_DUPLICATES GWK_RENDER_INCLUDES)

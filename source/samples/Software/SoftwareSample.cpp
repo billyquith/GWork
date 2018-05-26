@@ -1,10 +1,9 @@
 /*
  *  Gwork
- *  Copyright (c) 2013-2017 Billy Quith
+ *  Copyright (c) 2013-2018 Billy Quith
  *  See license in Gwork.h
  */
 
-#define GWK_SAMPLE
 #include <Gwork/Skins/Simple.h>
 #include <Gwork/Skins/TexturedBase.h>
 #include <Gwork/Renderers/Software.h>
@@ -38,7 +37,7 @@ int main(int argc, char** argv)
 #endif
 
     {
-        Gwk::Platform::RelativeToExecutablePaths paths(GWORK_RESOURCE_DIR);
+        Gwk::Platform::RelativeToExecutablePaths paths(GWK_SAMPLE_RESOURCE_DIR);
         Gwk::Renderer::SoftwareResourceLoader loader(paths);
         
         // Create pixel buffer to draw into and attach renderer.

@@ -1,7 +1,7 @@
 /*
  *  Gwork
  *  Copyright (c) 2012 Facepunch Studios
- *  Copyright (c) 2013-2017 Billy Quith
+ *  Copyright (c) 2013-2018 Billy Quith
  *  See license in Gwork.h
  */
 
@@ -20,7 +20,7 @@ int main()
     // Create the window of the application
     sf::RenderWindow app(sf::VideoMode(1004, 650, 32), "Gwork SFML2 Sample");
 
-    Gwk::Platform::RelativeToExecutablePaths paths(GWORK_RESOURCE_DIR);
+    Gwk::Platform::RelativeToExecutablePaths paths(GWK_SAMPLE_RESOURCE_DIR);
     Gwk::Renderer::SFML2ResourceLoader loader(paths);
 
     // Create renderer

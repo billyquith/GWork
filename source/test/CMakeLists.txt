@@ -41,7 +41,7 @@ set(GWK_TEST_API
     source/api/Window.cpp
 )
 
-if(WANT_REFLECTION)
+if(WITH_REFLECTION)
 set(GWK_TEST_REFLECT
     include/Gwork/Test/TestReflect.h
     # Ponder tests
@@ -61,7 +61,7 @@ source_group("${GWK_SOURCE_FOLDER}"
              REGULAR_EXPRESSION "source/[^/]+\\.cpp")
 
 # Test library
-if(WANT_TESTS)
+if(WITH_TESTS)
     add_library(GworkTest STATIC ${GWK_TEST_API} ${GWK_TEST_REFLECT})
 
     target_link_libraries(GworkTest Gwork Gwork${GWK_RENDERER_NAME} ${LUA_LIBRARIES})
@@ -79,4 +79,4 @@ if(WANT_TESTS)
             RUNTIME DESTINATION bin
             LIBRARY DESTINATION lib
             ARCHIVE DESTINATION lib)
-endif(WANT_TESTS)
+endif(WITH_TESTS)

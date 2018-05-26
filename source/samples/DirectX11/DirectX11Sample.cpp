@@ -159,7 +159,7 @@ int main( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nC
     GetClientRect( g_pHWND, &FrameBounds );
 
     // Create resource path calculator and loader.
-    Gwk::Platform::RelativeToExecutablePaths paths{ GWORK_RESOURCE_DIR };
+    Gwk::Platform::RelativeToExecutablePaths paths{ GWK_SAMPLE_RESOURCE_DIR };
     Gwk::Renderer::DirectX11ResourceLoader loader(paths, g_pd3dDevice);
 
     // Create a GWork DirectX renderer

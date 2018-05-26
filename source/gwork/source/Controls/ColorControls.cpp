@@ -1,7 +1,7 @@
 /*
  *  Gwork
  *  Copyright (c) 2010 Facepunch Studios
- *  Copyright (c) 2013-17 Billy Quith
+ *  Copyright (c) 2013-2018 Billy Quith
  *  See license in Gwork.h
  *
  *  The colourspace conversion functions al_color_hsv_to_rgb & al_color_rgb_to_hsv are

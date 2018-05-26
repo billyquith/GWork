@@ -1,12 +1,12 @@
 /*
  *  Gwork
- *  Copyright (c) 2013-17 Billy Quith
+ *  Copyright (c) 2013-2018 Billy Quith
  *  See license in Gwork.h
  */
 
 #pragma once
-#ifndef GWK_INPUT_OPENGL_GLFW_H
-#define GWK_INPUT_OPENGL_GLFW_H
+#ifndef GWK_INPUT_OPENGL_GLFW3_H
+#define GWK_INPUT_OPENGL_GLFW3_H
 
 #include <Gwork/InputEventListener.h>
 #include <GLFW/glfw3.h>
@@ -15,7 +15,7 @@ namespace Gwk
 {
     namespace Input
     {
-        class GLFW
+        class GLFW3
         {
         public:
 
@@ -27,7 +27,7 @@ namespace Gwk
                 double x, y;
             };
 
-            GLFW()
+            GLFW3()
             :   m_eventListener(nullptr)
             ,   m_mouse(-1, -1)
             {}
@@ -150,4 +150,4 @@ namespace Gwk
     } // Input
 } // Gwk
 
-#endif // ifndef GWK_INPUT_OPENGL_GLFW_H
+#endif // ifndef GWK_INPUT_OPENGL_GLFW3_H

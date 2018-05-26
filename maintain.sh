@@ -24,11 +24,11 @@ function ensure_project #(renderer, build_dir)
 {
     local BDIR=build_$2
     echo "Project: Renderer $1 in $BDIR"
-    
+
     if [ ! -d $BDIR ]; then
         mkdir $BDIR
     fi
-    
+
     pushd $BDIR
     cmake .. $CM_GEN -DRENDER_$1=ON $CM_OPTS $CM_REFLECT
     popd
@@ -62,7 +62,7 @@ function clean_project #(renderer, build_dir)
 function run_project #(renderer, build_dir)
 {
     pushd build_$2
-    cmake 
+    cmake
     popd
 }
 
@@ -88,10 +88,10 @@ function build_all
 {
     local BERR=maintain_build_errors.txt
     echo "Build errors:" > $BERR
-    
+
     echo "Maintain build log:" > $BUILD_LOG
     apply_projects build_project
-    
+
     echo "===================================================================" >> $BERR
     grep "error:" $BUILD_LOG_NAME >> $BERR
     echo
@@ -117,7 +117,7 @@ Usage: maintain.sh -hpobr [--deps] [--docs]
     -b(uild)        Build all
     -r(un)          Run all
     -c(lean)        Clean all build artifacts
-    
+
 EOM
 }
 
@@ -139,7 +139,7 @@ while getopts "pobcrdgh" OPT; do
         ;;
     h)  show_help
         ;;
-    *)  echo "Unknown argument"    
+    *)  echo "Unknown argument"
         show_help
         ;;
     esac
