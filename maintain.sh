@@ -1,8 +1,13 @@
 #!/usr/bin/env bash
 # Maintenance script to compile Gwork on all UNIX support platforms (OSX, Linux)
 
-CM_GEN="-GXcode"
-CM_OPTS="-DWANT_TESTS=ON -DWANT_SAMPLES=ON"
+set -e
+
+case $(uname -s) in
+Darwin) CM_GEN="-GXcode" ;;
+*) echo "Unsupported OS"; exit 1 ;;
+esac
+CM_OPTS="-DWANT_TESTS=ON -DWANT_SAMPLE=ON"
 CM_REFLECT="-DWANT_REFLECTION=ON"
 CM_PROJ=gwork.xcodeproj
 BUILD_LOG_NAME=maintain_build.txt
@@ -11,15 +16,8 @@ BUILD_LOG=../$BUILD_LOG_NAME
 
 # Get dependencies
 function get_deps
-{    
-    # pushd "source"
-    # [ ! -d deps ] || mkdir deps
-    # cd deps
-    # git clone --depth=3 https://github.com/billyquith/ponder.git ponder
-    # pushd ponder
-    # git checkout -b dev/gwork
-    # popd
-    # popd
+{
+    echo "Nothing to get"
 }
 
 function ensure_project #(renderer, build_dir)
@@ -53,6 +51,14 @@ function build_project #(renderer, build_dir)
     popd
 }
 
+function clean_project #(renderer, build_dir)
+{
+    pushd build_$2
+    echo "Cleaning $1"
+    cmake --build . --target clean
+    popd
+}
+
 function run_project #(renderer, build_dir)
 {
     pushd build_$2
@@ -63,6 +69,7 @@ function run_project #(renderer, build_dir)
 function apply_projects
 {
     $1 ALLEGRO5 al
+    $1 IRRLICHT irr
     $1 OPENGL gl
     $1 NULL null
     $1 SDL2 sdl
@@ -81,8 +88,11 @@ function build_all
 {
     local BERR=maintain_build_errors.txt
     echo "Build errors:" > $BERR
+    
     echo "Maintain build log:" > $BUILD_LOG
     apply_projects build_project
+    
+    echo "===================================================================" >> $BERR
     grep "error:" $BUILD_LOG_NAME >> $BERR
     echo
     echo "ERRORS:"
@@ -90,24 +100,42 @@ function build_all
     cat maintain_build_errors.txt
 }
 
-function show_help
+function clean_all
 {
-    echo "Usage: maintain.sh --deps -p(roject) -o(pen) -b(uild) -r(un) --docs"
+    apply_projects clean_project
 }
 
-while getopts "pobrdh" OPT; do
+function show_help
+{
+    cat <<EOM
+Usage: maintain.sh -hpobr [--deps] [--docs]
+    -d(ocs)         Generate docs
+    -g(get)         Get/build up project dependecies
+    -h(elp)
+    -p(roject)      Create projects
+    -o(pen)         Open projects in editor
+    -b(uild)        Build all
+    -r(un)          Run all
+    -c(lean)        Clean all build artifacts
+    
+EOM
+}
+
+while getopts "pobcrdgh" OPT; do
     case $OPT in
-    --deps) get_deps
-        ;;
     p)  apply_projects ensure_project
         ;;
     o)  apply_projects open_project
         ;;
     b)  build_all
         ;;
+    c)  clean_all
+        ;;
     r)  apply_projects run_project
         ;;
-    --docs)  build_docs
+    d)  build_docs
+        ;;
+    g)  get_deps
         ;;
     h)  show_help
         ;;
