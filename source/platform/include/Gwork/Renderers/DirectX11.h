@@ -202,7 +202,7 @@ namespace Gwk
 
                 inline void Add(const std::vector<T>& vertices)
                 {
-                    auto size = vertices.size();
+                    size_t size = vertices.size();
                     if (open && GetMaxVertices() >= GetNumVertices() + size)
                     {
                         memcpy(data, vertices.data(), sizeof(T) * size);
@@ -217,14 +217,14 @@ namespace Gwk
                         *data++ = vertex;
                 }
 
-                inline void Add(const T* vertices, int len)
+                inline void Add(const T* vertices, size_t len)
                 {
                     if (open && GetMaxVertices() >= GetNumVertices() + len)
                     {
                         memcpy(data, vertices, len * sizeof(T));
                         data += len;
                     }
-                    numVertices += len;
+                    numVertices += static_cast<DWORD>(len);
                 }
 
                 inline HRESULT End()

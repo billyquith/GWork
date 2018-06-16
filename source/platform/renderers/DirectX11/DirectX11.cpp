@@ -15,6 +15,11 @@
 
 #define STB_IMAGE_IMPLEMENTATION
 #include <Gwork\External\stb_image.h>
+#define STB_TRUETYPE_IMPLEMENTATION
+#define STBTT_STATIC
+#include <Gwork/External/stb_truetype.h>
+
+#include <array>
 
 namespace Gwk
 {
@@ -534,15 +539,15 @@ void DirectX11::Init()
     GwkDxSafeRelease(pPSBlob);
     GwkDxSafeRelease(pTexPSBlob);
 
-    D3D11_INPUT_ELEMENT_DESC layout[] =
+    std::array<D3D11_INPUT_ELEMENT_DESC, 3> layout =
     {
-        { "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+        D3D11_INPUT_ELEMENT_DESC{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
         { "COLOR", 0, DXGI_FORMAT_B8G8R8A8_UNORM, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 },
         { "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 16, D3D11_INPUT_PER_VERTEX_DATA, 0 },
     };
-    UINT numElements = ARRAYSIZE(layout);
+    UINT numElements = static_cast<UINT>(layout.size());
 
-    if (FAILED(m_pDevice->CreateInputLayout(layout, numElements, pVSBlob->GetBufferPointer(), pVSBlob->GetBufferSize(), &m_pInputLayout)))
+    if (FAILED(m_pDevice->CreateInputLayout(layout.data(), numElements, pVSBlob->GetBufferPointer(), pVSBlob->GetBufferSize(), &m_pInputLayout)))
     {
         GwkDxSafeRelease(pVSBlob);
 
@@ -721,17 +726,17 @@ void DirectX11::DrawFilledRect(Gwk::Rect rec)
     rect.x = rect.x * scalex - 1.f;
     rect.y = 1.f - rect.y * scaley;
 
-    VertexFormat verts[6] =
+    std::array<VertexFormat, 6> verts =
     {
-        { rect.x, rect.w, 0.5f, m_Color, 0.f, 0.f },
-        { rect.x, rect.y, 0.5f, m_Color, 0.f, 0.f },
-        { rect.z, rect.w, 0.5f, m_Color, 0.f, 0.f },
-        { rect.z, rect.y, 0.5f, m_Color, 0.f, 0.f },
-        { rect.z, rect.w, 0.5f, m_Color, 0.f, 0.f },
-        { rect.x, rect.y, 0.5f, m_Color, 0.f, 0.f }
+        VertexFormat{ rect.x, rect.w, 0.5f, m_Color, 0.f, 0.f },
+        VertexFormat{ rect.x, rect.y, 0.5f, m_Color, 0.f, 0.f },
+        VertexFormat{ rect.z, rect.w, 0.5f, m_Color, 0.f, 0.f },
+        VertexFormat{ rect.z, rect.y, 0.5f, m_Color, 0.f, 0.f },
+        VertexFormat{ rect.z, rect.w, 0.5f, m_Color, 0.f, 0.f },
+        VertexFormat{ rect.x, rect.y, 0.5f, m_Color, 0.f, 0.f }
     };
 
-    m_Buffer.Add(verts, ARRAYSIZE(verts));
+    m_Buffer.Add(verts.data(), verts.size());
 }
 
 void DirectX11::SetDrawColor(Gwk::Color color)
@@ -821,7 +826,7 @@ void DirectX11::RenderText(Gwk::Font* pFont, Gwk::Point pos, const Gwk::String &
             rect.x = rect.x * scalex - 1.f;
             rect.y = 1.f - rect.y * scaley;
 
-            VertexFormat v[6];
+            std::array<VertexFormat, 6> v;
             v[0] = { rect.x, rect.w, 0.5f, m_Color, texCoord.x, texCoord.w };
             v[1] = { rect.x, rect.y, 0.5f, m_Color, texCoord.x, texCoord.y };
             v[2] = { rect.z, rect.w, 0.5f, m_Color, texCoord.z, texCoord.w };
@@ -829,7 +834,7 @@ void DirectX11::RenderText(Gwk::Font* pFont, Gwk::Point pos, const Gwk::String &
             v[4] = v[2];
             v[5] = v[1];
 
-            m_Buffer.Add(v, ARRAYSIZE(v));
+            m_Buffer.Add(v.data(), v.size());
         }
         loc.x += (loc.z - loc.x);
     }
@@ -927,17 +932,17 @@ void DirectX11::DrawTexturedRect(Gwk::Texture* pTexture, Gwk::Rect rec, float u1
     rect.x = rect.x * scalex - 1.f;
     rect.y = 1.f - rect.y * scaley;
 
-    VertexFormat verts[6] =
+    std::array<VertexFormat, 6> verts =
     {
-        { rect.x, rect.w, 0.5f, m_Color, u1, v2 },
-        { rect.x, rect.y, 0.5f, m_Color, u1, v1 },
-        { rect.z, rect.w, 0.5f, m_Color, u2, v2 },
-        { rect.z, rect.y, 0.5f, m_Color, u2, v1 },
-        { rect.z, rect.w, 0.5f, m_Color, u2, v2 },
-        { rect.x, rect.y, 0.5f, m_Color, u1, v1 }
+        VertexFormat{ rect.x, rect.w, 0.5f, m_Color, u1, v2 },
+        VertexFormat{ rect.x, rect.y, 0.5f, m_Color, u1, v1 },
+        VertexFormat{ rect.z, rect.w, 0.5f, m_Color, u2, v2 },
+        VertexFormat{ rect.z, rect.y, 0.5f, m_Color, u2, v1 },
+        VertexFormat{ rect.z, rect.w, 0.5f, m_Color, u2, v2 },
+        VertexFormat{ rect.x, rect.y, 0.5f, m_Color, u1, v1 }
     };
 
-    m_Buffer.Add(verts, ARRAYSIZE(verts));
+    m_Buffer.Add(verts.data(), verts.size());
 }
 
 Gwk::Color DirectX11::PixelColor(Gwk::Texture* pTexture, unsigned int x, unsigned int y, const Gwk::Color& col_default)
