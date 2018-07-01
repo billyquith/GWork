@@ -127,7 +127,7 @@ static HRESULT CompileShaderFromMemory(const char* szdata, SIZE_T len, LPCSTR sz
 }
 #pragma endregion
 
-class FontData
+class FontData : public Font::IData
 {
 public:
     FontData()
@@ -153,11 +153,6 @@ public:
 
 DirectX11ResourceLoader::~DirectX11ResourceLoader()
 {
-    for each (auto& font in m_FontDataList)
-    {
-        FontData* pFontData = static_cast<FontData*>(font);
-        delete pFontData;
-    }
 }
 
 Font::Status DirectX11ResourceLoader::LoadFont(Font& font)
@@ -246,7 +241,7 @@ Font::Status DirectX11ResourceLoader::LoadFont(Font& font)
     SetTextColor(hDC, RGB(0xFF, 0xFF, 0xFF));
     SetBkColor(hDC, 0x00000000);
 
-    FontData* fontData = new FontData();
+    std::shared_ptr<FontData> fontData = std::make_shared<FontData>();
 
     int c = 0;
     fontData->m_TexCoords.resize(sizes.size());
@@ -274,9 +269,6 @@ Font::Status DirectX11ResourceLoader::LoadFont(Font& font)
 
     if (FAILED(m_pDevice->CreateTexture2D(&texdesc, nullptr, &buftex)))
     {
-        delete fontData;
-        fontData = nullptr;
-
         DeleteObject(hBitmap);
         DeleteObject(hFont);
         DeleteDC(hDC);
@@ -290,9 +282,6 @@ Font::Status DirectX11ResourceLoader::LoadFont(Font& font)
     D3D11_MAPPED_SUBRESOURCE texmap;
     if (pContext == nullptr || FAILED(pContext->Map(buftex, 0, D3D11_MAP_WRITE_DISCARD, 0, &texmap)))
     {
-        delete fontData;
-        fontData = nullptr;
-
         DeleteObject(hBitmap);
         DeleteObject(hFont);
         DeleteDC(hDC);
@@ -333,9 +322,6 @@ Font::Status DirectX11ResourceLoader::LoadFont(Font& font)
 
     if (FAILED(m_pDevice->CreateShaderResourceView(buftex, nullptr, &fontData->m_Texture)))
     {
-        delete fontData;
-        fontData = nullptr;
-
         GwkDxSafeRelease(buftex);
         GwkDxSafeRelease(pContext);
         return font.status = Font::Status::ErrorBadData;
@@ -344,7 +330,7 @@ Font::Status DirectX11ResourceLoader::LoadFont(Font& font)
     GwkDxSafeRelease(buftex);
     GwkDxSafeRelease(pContext);
 
-    font.data = fontData;
+    font.data = Utility::dynamic_pointer_cast<Font::IData, FontData>(fontData);
     font.status = Font::Status::Loaded;
 
     m_FontList.push_back(&font); // Pointer to a reference, who owns this pointer?
@@ -360,9 +346,7 @@ void DirectX11ResourceLoader::FreeFont(Font& font)
     {
         if (font.data)
         {
-            FontData* pFontData = static_cast<FontData*>(font.data);
-            delete pFontData;
-            font.data = nullptr;
+            font.data.reset();
         }
 
         m_FontList.remove(&font);  // Pointer to a reference, who owns this pointer?
@@ -604,12 +588,7 @@ void DirectX11::Init()
 void DirectX11::Release()
 {
     m_Valid = false;
-
-    //while (!m_FontList.empty())
-    //{
-    //    FreeFont(m_FontList.back());
-    //}
-
+    
     GwkDxSafeRelease(m_pRastState);
     GwkDxSafeRelease(m_pPixShader);
     GwkDxSafeRelease(m_pBlendState);
@@ -782,15 +761,13 @@ void DirectX11::RenderText(Gwk::Font* pFont, Gwk::Point pos, const Gwk::String &
 {
     Flush();
 
-    FontData* pFontData = (FontData*)pFont->data;
+    FontData* data = dynamic_cast<FontData*>(pFont->data.get());
 
-    if (pFontData == nullptr)
+    if (data == nullptr)
         return;
 
     Translate(pos.x, pos.y);
     XMFLOAT4A loc(pos.x, pos.y, 0, 0);
-
-    FontData* data = (FontData*)pFont->data;
 
     if (m_pCurrentTexture != data->m_Texture)
     {
@@ -850,7 +827,7 @@ Gwk::Point DirectX11::MeasureText(Gwk::Font* pFont, const Gwk::String& text)
     if (!EnsureFont(*pFont))
         return Gwk::Point(0, 0);
 
-    FontData* font = (FontData*)pFont->data;
+    FontData* font = dynamic_cast<FontData*>(pFont->data.get());
     if (font == nullptr)
         return Gwk::Point(0, 0);
 

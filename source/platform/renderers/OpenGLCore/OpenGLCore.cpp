@@ -51,6 +51,16 @@ static constexpr float c_pointsToPixels = 1.333f;
 // Arbitrary size chosen for texture cache target.
 static constexpr int c_texsz = 256;
 
+class FontData : public Font::IData
+{
+public:
+    ~FontData()
+    {
+        glDeleteTextures(1, &textureId);
+    }
+    GLuint textureId;
+};
+
 Font::Status OpenGLResourceLoader::LoadFont(Font& font)
 {
     const String filename = m_paths.GetPath(ResourcePaths::Type::Font, font.facename);
@@ -59,7 +69,7 @@ Font::Status OpenGLResourceLoader::LoadFont(Font& font)
     if (!f)
     {
         Gwk::Log::Write(Log::Level::Error, "Font file not found: %s", filename.c_str());
-        font.data = nullptr;
+        font.data.reset();
         font.status = Font::Status::ErrorFileNotFound;
         return font.status;
     }
@@ -85,9 +95,9 @@ Font::Status OpenGLResourceLoader::LoadFont(Font& font)
                          static_cast<stbtt_bakedchar*>(font.render_data));
     delete [] ttfdata;
 
-    font.data = new GLuint;
-    glGenTextures(1, static_cast<GLuint*>(font.data));
-    glBindTexture(GL_TEXTURE_2D, *static_cast<GLuint*>(font.data));
+    std::shared_ptr<FontData> fontData = std::make_shared<FontData>();
+    glGenTextures(1, &fontData->textureId);
+    glBindTexture(GL_TEXTURE_2D, fontData->textureId);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RED,
@@ -97,6 +107,7 @@ Font::Status OpenGLResourceLoader::LoadFont(Font& font)
     delete [] font_bmp;
 
     glBindTexture(GL_TEXTURE_2D, 0);
+    font.data = Utility::dynamic_pointer_cast<Font::IData, FontData>(fontData);
     font.status = Font::Status::Loaded;
 
     return font.status;
@@ -107,7 +118,7 @@ void OpenGLResourceLoader::FreeFont(Gwk::Font& font)
     if (font.IsLoaded())
     {
         // TODO - unbind texture
-        delete [] static_cast<GLuint*>(font.data);
+        font.data.reset();
         delete [] static_cast<stbtt_bakedchar*>(font.render_data);
 
         font.status = Font::Status::Unloaded;
@@ -516,9 +527,13 @@ Gwk::Color OpenGLCore::PixelColor(Gwk::Texture* texture, unsigned int x, unsigne
 void OpenGLCore::RenderText(Gwk::Font* font, Gwk::Point pos,
                         const Gwk::String& text)
 {
+    FontData* fontdata = dynamic_cast<FontData*>(font->data.get());
+
+    if (fontdata == nullptr)
+        return;
 
     Texture tex;
-    tex.data = font->data;
+    tex.data = &fontdata.textureId;
 
     float x = pos.x, y = pos.y;
     const char *pc = text.c_str();

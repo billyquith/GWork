@@ -98,6 +98,21 @@ namespace Drawing
 static constexpr float c_pointsToPixels = 1.333f;
 static constexpr int c_texsz = 256; // arbitrary font cache texture size
 
+class FontData : public Font::IData
+{
+public:
+    FontData(size_t size)
+    {
+        font_bmp = std::unique_ptr<unsigned char[]>(new unsigned char[size]);
+    }
+
+    ~FontData()
+    {
+    }
+
+    std::unique_ptr<unsigned char[]> font_bmp;
+};
+
 Font::Status SoftwareResourceLoader::LoadFont(Font& font)
 {
     const String filename = m_paths.GetPath(ResourcePaths::Type::Font, font.facename);
@@ -120,19 +135,19 @@ Font::Status SoftwareResourceLoader::LoadFont(Font& font)
     fread(ttfdata, 1, fsz, f);
     fclose(f);
 
-    unsigned char *font_bmp = new unsigned char[c_texsz * c_texsz];
+    std::shared_ptr<FontData> fontData = std::make_shared<FontData>(c_texsz * c_texsz);
 
     font.render_data = new stbtt_bakedchar[96];
 
     stbtt_BakeFontBitmap(ttfdata, 0,
                          font.realsize * c_pointsToPixels, // height
-                         font_bmp,
+                         fontData->font_bmp.get(),
                          c_texsz, c_texsz,
                          32,96,             // range to bake
                          static_cast<stbtt_bakedchar*>(font.render_data));
     delete [] ttfdata;
 
-    font.data = font_bmp;
+    font.data = Utility::dynamic_pointer_cast<Font::IData, FontData>(fontData);
     font.status = Font::Status::Loaded;
 
     return font.status;
@@ -142,7 +157,7 @@ void SoftwareResourceLoader::FreeFont(Gwk::Font& font)
 {
     if (font.IsLoaded())
     {
-        delete [] static_cast<unsigned char*>(font.data);
+        font.data.reset();
         delete [] static_cast<stbtt_bakedchar*>(font.render_data);
         font.status = Font::Status::Unloaded;
     }
@@ -241,6 +256,11 @@ void Software::RenderText(Gwk::Font* font, Gwk::Point pos, const Gwk::String& te
     if (!EnsureFont(*font))
         return;
 
+    FontData* data = dynamic_cast<FontData*>(font->data.get());
+
+    if (data == nullptr)
+        return;
+
     int ix = pos.x, iy = pos.y;
     Translate(ix, iy);
 
@@ -251,7 +271,7 @@ void Software::RenderText(Gwk::Font* font, Gwk::Point pos, const Gwk::String& te
     const char *pc = text.c_str();
     size_t slen = text.length();
     const float offset = font->realsize * c_pointsToPixels * 0.8f;
-    const unsigned char * const fontBmp = static_cast<const unsigned char*>(font->data);
+    const unsigned char * const fontBmp = static_cast<const unsigned char*>(data->font_bmp.get());
 
     while (slen > 0)
     {

@@ -21,14 +21,11 @@ namespace Gwk
         static const wchar_t NewLineCharacter = L'\n'; // New Line Character
 
         //! Default resource loader for DirectX 11.
-        class FontData;
         class DirectX11ResourceLoader : public ResourceLoader
         {
             ResourcePaths&          m_paths;
             ID3D11Device*           m_pDevice;
             Gwk::Font::List         m_FontList;
-            std::list<FontData*>    m_FontDataList;
-
         public:
             DirectX11ResourceLoader(ResourcePaths& paths, ID3D11Device* pDevice)
                 :   m_paths(paths)

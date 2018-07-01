@@ -55,6 +55,16 @@ namespace Gwk
 
         GWK_EXPORT void Replace(String& str, const String& strFind, const String& strReplace);
 
+
+        template<class T, class U>
+        static inline std::shared_ptr<T> dynamic_pointer_cast(const std::shared_ptr<U>& r) noexcept
+        {
+            if (auto p = dynamic_cast<typename std::shared_ptr<T>::element_type*>(r.get())) 
+                return std::shared_ptr<T>(r, p);
+            else
+                return std::shared_ptr<T>();
+        }
+        
         namespace Strings
         {
             typedef std::vector<Gwk::String> List;
