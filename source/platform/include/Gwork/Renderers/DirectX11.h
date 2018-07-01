@@ -73,16 +73,7 @@ namespace Gwk
                                   float u1 = 0.0f, float v1 = 0.0f, float u2 = 1.0f, float v2 = 1.0f) final;
             Gwk::Color PixelColor(Gwk::Texture* pTexture, unsigned int x, unsigned int y, const Gwk::Color& col_default) final;
 
-            //virtual bool InitializeContext(Gwk::WindowProvider* pWindow) final;
-            //virtual bool ShutdownContext(Gwk::WindowProvider* pWindow) final;
-            //virtual bool PresentContext(Gwk::WindowProvider* pWindow) final;
-            //virtual bool ResizedContext(Gwk::WindowProvider* pWindow, int w, int h) final;
-            //virtual bool BeginContext(Gwk::WindowProvider* pWindow) final;
-            //virtual bool EndContext(Gwk::WindowProvider* pWindow) final;
-
         protected:
-
-            //virtual void FillPresentParameters(Gwk::WindowProvider* pWindow, DXGI_SWAP_CHAIN_DESC & Params);
 
             FLOAT                   width, height;
             FLOAT                   scalex, scaley;
