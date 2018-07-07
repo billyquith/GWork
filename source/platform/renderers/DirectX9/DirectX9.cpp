@@ -7,8 +7,13 @@
 
 #define D3DFVF_VERTEXFORMAT2D (D3DFVF_XYZRHW|D3DFVF_DIFFUSE|D3DFVF_TEX1)
 
-struct FontData
+class FontData : public Font::IData
 {
+public:
+    ~FontData()
+    {
+        GwkDxSafeRelease(font);
+    }
     ID3DXFont*  font;
     int iSpaceWidth;
 };
@@ -142,7 +147,7 @@ void DirectX9::LoadFont(Gwk::Font* font)
     fd.PitchAndFamily = DEFAULT_PITCH|FF_DONTCARE;
     LPD3DXFONT d3DXFont;
     HRESULT hr = D3DXCreateFontIndirect(m_device, &fd, &d3DXFont);
-    FontData*   fontData = new FontData();
+    std::shared_ptr<FontData> fontData = std::make_shared<FontData>();
     fontData->font = d3DXFont;
     // ID3DXFont doesn't measure trailing spaces, so we measure the
     // width of a space here and store it
@@ -157,7 +162,7 @@ void DirectX9::LoadFont(Gwk::Font* font)
                                     DT_CALCRECT|DT_LEFT|DT_TOP|DT_SINGLELINE, 0);
         fontData->iSpaceWidth = rctSpc.right-rctA.right*2;
     }
-    font->data = fontData;
+    font->data = Utility::dynamic_pointer_cast<Font::IData>(fontData);
 }
 
 void DirectX9::FreeFont(Gwk::Font* font)
@@ -167,6 +172,7 @@ void DirectX9::FreeFont(Gwk::Font* font)
     if (!font->data)
         return;
 
+    /*
     FontData* fontData = (FontData*)font->data;
 
     if (fontData->font)
@@ -175,8 +181,8 @@ void DirectX9::FreeFont(Gwk::Font* font)
         fontData->font = nullptr;
     }
 
-    delete fontData;
-    font->data = nullptr;
+    delete fontData;*/
+    font->data.reset();
 }
 
 void DirectX9::RenderText(Gwk::Font* font, Gwk::Point pos,

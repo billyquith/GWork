@@ -18,6 +18,7 @@
 #include <Gwork/Config.h>
 #include <string>
 #include <list>
+#include <memory>
 
 namespace Gwk
 {
@@ -226,9 +227,16 @@ namespace Gwk
         static const Color GworkPink(255, 65, 199, 255);
     }
 
+
     struct Font
     {
         typedef std::list<Font*> List;
+
+        class IData
+        {
+        public:
+            virtual ~IData() {}
+        };
 
         enum class Status
         {
@@ -260,7 +268,7 @@ namespace Gwk
         // This is the real font size, after it's been scaled by Render->Scale()
         float realsize;
 
-        void *data;             // Font data, set by renderer
+        std::shared_ptr<IData> data;             // Font data, set by renderer
         void *render_data;      // optional renderer data
     };
 

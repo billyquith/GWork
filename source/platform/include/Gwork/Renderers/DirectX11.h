@@ -21,14 +21,11 @@ namespace Gwk
         static const wchar_t NewLineCharacter = L'\n'; // New Line Character
 
         //! Default resource loader for DirectX 11.
-        class FontData;
         class DirectX11ResourceLoader : public ResourceLoader
         {
             ResourcePaths&          m_paths;
             ID3D11Device*           m_pDevice;
             Gwk::Font::List         m_FontList;
-            std::list<FontData*>    m_FontDataList;
-
         public:
             DirectX11ResourceLoader(ResourcePaths& paths, ID3D11Device* pDevice)
                 :   m_paths(paths)
@@ -76,16 +73,7 @@ namespace Gwk
                                   float u1 = 0.0f, float v1 = 0.0f, float u2 = 1.0f, float v2 = 1.0f) final;
             Gwk::Color PixelColor(Gwk::Texture* pTexture, unsigned int x, unsigned int y, const Gwk::Color& col_default) final;
 
-            //virtual bool InitializeContext(Gwk::WindowProvider* pWindow) final;
-            //virtual bool ShutdownContext(Gwk::WindowProvider* pWindow) final;
-            //virtual bool PresentContext(Gwk::WindowProvider* pWindow) final;
-            //virtual bool ResizedContext(Gwk::WindowProvider* pWindow, int w, int h) final;
-            //virtual bool BeginContext(Gwk::WindowProvider* pWindow) final;
-            //virtual bool EndContext(Gwk::WindowProvider* pWindow) final;
-
         protected:
-
-            //virtual void FillPresentParameters(Gwk::WindowProvider* pWindow, DXGI_SWAP_CHAIN_DESC & Params);
 
             FLOAT                   width, height;
             FLOAT                   scalex, scaley;
@@ -202,7 +190,7 @@ namespace Gwk
 
                 inline void Add(const std::vector<T>& vertices)
                 {
-                    auto size = vertices.size();
+                    size_t size = vertices.size();
                     if (open && GetMaxVertices() >= GetNumVertices() + size)
                     {
                         memcpy(data, vertices.data(), sizeof(T) * size);
@@ -217,14 +205,14 @@ namespace Gwk
                         *data++ = vertex;
                 }
 
-                inline void Add(const T* vertices, int len)
+                inline void Add(const T* vertices, size_t len)
                 {
                     if (open && GetMaxVertices() >= GetNumVertices() + len)
                     {
                         memcpy(data, vertices, len * sizeof(T));
                         data += len;
                     }
-                    numVertices += len;
+                    numVertices += static_cast<DWORD>(len);
                 }
 
                 inline HRESULT End()

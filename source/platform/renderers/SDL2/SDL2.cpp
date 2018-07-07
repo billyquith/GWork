@@ -13,6 +13,24 @@ namespace Renderer
 {
 
 //-------------------------------------------------------------------------------
+class FontData : public Font::IData
+{
+public:
+    FontData(TTF_Font *pfont)
+        :tfont(pfont)
+    {
+    }
+
+    ~FontData()
+    {
+        if (tfont != nullptr)
+        {
+            TTF_CloseFont(tfont);
+            tfont = nullptr;
+        }
+    }
+    TTF_Font *tfont;
+};
 
 Font::Status SDL2ResourceLoader::LoadFont(Font& font)
 {
@@ -22,7 +40,8 @@ Font::Status SDL2ResourceLoader::LoadFont(Font& font)
 
     if (tfont)
     {
-        font.data = tfont;
+        std::shared_ptr<FontData> fontData = std::make_shared<FontData>(tfont);
+        font.data = Utility::dynamic_pointer_cast<Font::IData, FontData>(fontData);
         font.status = Font::Status::Loaded;
     }
     else
@@ -38,7 +57,7 @@ void SDL2ResourceLoader::FreeFont(Gwk::Font& font)
 {
     if (font.status == Font::Status::Loaded)
     {
-        TTF_CloseFont(static_cast<TTF_Font*>(font.data));
+        font.data.reset();
         font.status = Font::Status::Unloaded;
     }
 }
@@ -143,7 +162,13 @@ void SDL2::RenderText(Gwk::Font* font, Gwk::Point pos, const Gwk::String& text)
     if (!EnsureFont(*font))
         return;
 
-    TTF_Font *tfont = static_cast<TTF_Font*>(font->data);
+    
+    FontData* fontData = dynamic_cast<FontData*>(font->data.get());
+
+    if (fontData == nullptr)
+        return;
+
+    TTF_Font *tfont = fontData->tfont;
     Translate(pos.x, pos.y);
 
     SDL_Surface *surf = TTF_RenderUTF8_Blended(tfont, text.c_str(), m_color);
@@ -163,8 +188,13 @@ Gwk::Point SDL2::MeasureText(Gwk::Font* font, const Gwk::String& text)
 {
     if (!EnsureFont(*font))
         return Gwk::Point(0, 0);
+    
+    FontData* fontData = dynamic_cast<FontData*>(font->data.get());
 
-    TTF_Font *tfont = static_cast<TTF_Font*>(font->data);
+    if (fontData == nullptr)
+        return;
+
+    TTF_Font *tfont = fontData->tfont;
 
     int w,h;
     TTF_SizeUTF8(tfont, text.c_str(), &w,&h);

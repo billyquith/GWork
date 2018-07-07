@@ -24,6 +24,20 @@
 
 using namespace Gwk;
 
+class FontData : public Font::IData
+{
+public:
+    FontData(std::unique_ptr<sf::Font>&& pFont)
+        :font(std::move(pFont))
+    {
+    }
+
+    ~FontData()
+    {
+    }
+    std::unique_ptr<sf::Font> font;
+};
+
 struct TextureData
 {
     TextureData(sf::Image* img) : texture(nullptr), image(img) {}
@@ -44,11 +58,12 @@ Font::Status Gwk::Renderer::SFML2ResourceLoader::LoadFont(Font& font)
 {
     const String filename = m_paths.GetPath(ResourcePaths::Type::Font, font.facename);
 
-    sf::Font* sfFont = new sf::Font();
+    std::unique_ptr<sf::Font> sfFont{new sf::Font()};
 
     if (sfFont->loadFromFile(filename))
     {
-        font.data = sfFont;
+        std::shared_ptr<FontData> fontData = std::make_shared<FontData>(std::move(sfFont));
+        font.data = Utility::dynamic_pointer_cast<Font::IData, FontData>(fontData);
         font.status = Font::Status::Loaded;
     }
     else
@@ -65,9 +80,7 @@ void Gwk::Renderer::SFML2ResourceLoader::FreeFont(Gwk::Font& font)
 {
     if (font.IsLoaded())
     {
-        sf::Font* sfFont = static_cast<sf::Font*>(font.data);
-        delete sfFont;
-        font.data = nullptr;
+        font.data.reset();
         font.status = Font::Status::Unloaded;
     }
 }
@@ -264,8 +277,12 @@ void Gwk::Renderer::SFML2::RenderText(Gwk::Font* font, Gwk::Point pos,
     Flush();
 
     Translate(pos.x, pos.y);
+    FontData* fontdata = dynamic_cast<FontData*>(font->data.get());
 
-    const sf::Font* sFFont = reinterpret_cast<sf::Font*>(font->data);
+    if (fontdata == nullptr)
+        return;
+
+    const sf::Font* sFFont = fontdata->font;
 
     sf::Text sfStr;
     sfStr.setString(text);
@@ -281,7 +298,12 @@ Gwk::Point Gwk::Renderer::SFML2::MeasureText(Gwk::Font* font, const Gwk::String&
     if (!EnsureFont(*font))
         return Gwk::Point(0, 0);
 
-    const sf::Font* sFFont = reinterpret_cast<sf::Font*>(font->data);
+    FontData* fontdata = dynamic_cast<FontData*>(font->data.get());
+
+    if (fontdata == nullptr)
+        return;
+
+    const sf::Font* sFFont = fontdata->font;
 
     sf::Text sfStr;
     sfStr.setString(text);

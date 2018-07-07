@@ -114,6 +114,21 @@ void AllegroCTT::DrawCachedControlTexture(CacheHandle control)
 
 //-------------------------------------------------------------------------------
 
+class FontData : public Font::IData
+{
+public:
+    FontData(ALLEGRO_FONT* afont)
+        :font(afont)
+    {
+    }
+
+    ~FontData()
+    {
+        al_destroy_font(font);
+    }
+    ALLEGRO_FONT* font;
+};
+
 Font::Status AllegroResourceLoader::LoadFont(Font& font)
 {
     const String filename = m_paths.GetPath(ResourcePaths::Type::Font, font.facename);
@@ -124,7 +139,8 @@ Font::Status AllegroResourceLoader::LoadFont(Font& font)
 
     if (afont)
     {
-        font.data = afont;
+        std::shared_ptr<FontData> fontData = std::make_shared<FontData>(afont);
+        font.data = Utility::dynamic_pointer_cast<Font::IData, FontData>(fontData);
         font.status = Font::Status::Loaded;
     }
     else
@@ -140,7 +156,7 @@ void AllegroResourceLoader::FreeFont(Gwk::Font& font)
 {
     if (font.status == Font::Status::Loaded)
     {
-        al_destroy_font((ALLEGRO_FONT*)font.data);
+        font.data.reset();
         font.status = Font::Status::Unloaded;
     }
 }
@@ -202,7 +218,12 @@ void Allegro::SetDrawColor(Gwk::Color color)
 void Allegro::RenderText(Gwk::Font* font, Gwk::Point pos,
                          const Gwk::String& text)
 {
-    ALLEGRO_FONT *afont = (ALLEGRO_FONT*)font->data;
+    FontData* fontData = dynamic_cast<FontData*>(font->data.get());
+
+    if (fontData == nullptr)
+        return;
+
+    ALLEGRO_FONT *afont = fontData.font;
     Translate(pos.x, pos.y);
     al_draw_text(afont, m_color, pos.x, pos.y, ALLEGRO_ALIGN_LEFT, text.c_str());
 }
@@ -212,7 +233,12 @@ Gwk::Point Allegro::MeasureText(Gwk::Font* font, const Gwk::String& text)
     if (!EnsureFont(*font))
         return Gwk::Point(0, 0);
 
-    ALLEGRO_FONT* afont = static_cast<ALLEGRO_FONT*>(font->data);
+    FontData* fontData = dynamic_cast<FontData*>(font->data.get());
+
+    if (fontData == nullptr)
+        return;
+
+    ALLEGRO_FONT *afont = fontData.font;
 
     return Point(al_get_text_width(afont, text.c_str()), al_get_font_line_height(afont));
 }

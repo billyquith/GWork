@@ -15,6 +15,11 @@
 
 #define STB_IMAGE_IMPLEMENTATION
 #include <Gwork\External\stb_image.h>
+#define STB_TRUETYPE_IMPLEMENTATION
+#define STBTT_STATIC
+#include <Gwork/External/stb_truetype.h>
+
+#include <array>
 
 namespace Gwk
 {
@@ -122,7 +127,7 @@ static HRESULT CompileShaderFromMemory(const char* szdata, SIZE_T len, LPCSTR sz
 }
 #pragma endregion
 
-class FontData
+class FontData : public Font::IData
 {
 public:
     FontData()
@@ -148,11 +153,6 @@ public:
 
 DirectX11ResourceLoader::~DirectX11ResourceLoader()
 {
-    for each (auto& font in m_FontDataList)
-    {
-        FontData* pFontData = static_cast<FontData*>(font);
-        delete pFontData;
-    }
 }
 
 Font::Status DirectX11ResourceLoader::LoadFont(Font& font)
@@ -241,7 +241,7 @@ Font::Status DirectX11ResourceLoader::LoadFont(Font& font)
     SetTextColor(hDC, RGB(0xFF, 0xFF, 0xFF));
     SetBkColor(hDC, 0x00000000);
 
-    FontData* fontData = new FontData();
+    std::shared_ptr<FontData> fontData = std::make_shared<FontData>();
 
     int c = 0;
     fontData->m_TexCoords.resize(sizes.size());
@@ -269,9 +269,6 @@ Font::Status DirectX11ResourceLoader::LoadFont(Font& font)
 
     if (FAILED(m_pDevice->CreateTexture2D(&texdesc, nullptr, &buftex)))
     {
-        delete fontData;
-        fontData = nullptr;
-
         DeleteObject(hBitmap);
         DeleteObject(hFont);
         DeleteDC(hDC);
@@ -285,9 +282,6 @@ Font::Status DirectX11ResourceLoader::LoadFont(Font& font)
     D3D11_MAPPED_SUBRESOURCE texmap;
     if (pContext == nullptr || FAILED(pContext->Map(buftex, 0, D3D11_MAP_WRITE_DISCARD, 0, &texmap)))
     {
-        delete fontData;
-        fontData = nullptr;
-
         DeleteObject(hBitmap);
         DeleteObject(hFont);
         DeleteDC(hDC);
@@ -328,9 +322,6 @@ Font::Status DirectX11ResourceLoader::LoadFont(Font& font)
 
     if (FAILED(m_pDevice->CreateShaderResourceView(buftex, nullptr, &fontData->m_Texture)))
     {
-        delete fontData;
-        fontData = nullptr;
-
         GwkDxSafeRelease(buftex);
         GwkDxSafeRelease(pContext);
         return font.status = Font::Status::ErrorBadData;
@@ -339,7 +330,7 @@ Font::Status DirectX11ResourceLoader::LoadFont(Font& font)
     GwkDxSafeRelease(buftex);
     GwkDxSafeRelease(pContext);
 
-    font.data = fontData;
+    font.data = Utility::dynamic_pointer_cast<Font::IData, FontData>(fontData);
     font.status = Font::Status::Loaded;
 
     m_FontList.push_back(&font); // Pointer to a reference, who owns this pointer?
@@ -355,9 +346,7 @@ void DirectX11ResourceLoader::FreeFont(Font& font)
     {
         if (font.data)
         {
-            FontData* pFontData = static_cast<FontData*>(font.data);
-            delete pFontData;
-            font.data = nullptr;
+            font.data.reset();
         }
 
         m_FontList.remove(&font);  // Pointer to a reference, who owns this pointer?
@@ -534,15 +523,15 @@ void DirectX11::Init()
     GwkDxSafeRelease(pPSBlob);
     GwkDxSafeRelease(pTexPSBlob);
 
-    D3D11_INPUT_ELEMENT_DESC layout[] =
+    std::array<D3D11_INPUT_ELEMENT_DESC, 3> layout =
     {
-        { "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+        D3D11_INPUT_ELEMENT_DESC{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
         { "COLOR", 0, DXGI_FORMAT_B8G8R8A8_UNORM, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 },
         { "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 16, D3D11_INPUT_PER_VERTEX_DATA, 0 },
     };
-    UINT numElements = ARRAYSIZE(layout);
+    UINT numElements = static_cast<UINT>(layout.size());
 
-    if (FAILED(m_pDevice->CreateInputLayout(layout, numElements, pVSBlob->GetBufferPointer(), pVSBlob->GetBufferSize(), &m_pInputLayout)))
+    if (FAILED(m_pDevice->CreateInputLayout(layout.data(), numElements, pVSBlob->GetBufferPointer(), pVSBlob->GetBufferSize(), &m_pInputLayout)))
     {
         GwkDxSafeRelease(pVSBlob);
 
@@ -599,12 +588,7 @@ void DirectX11::Init()
 void DirectX11::Release()
 {
     m_Valid = false;
-
-    //while (!m_FontList.empty())
-    //{
-    //    FreeFont(m_FontList.back());
-    //}
-
+    
     GwkDxSafeRelease(m_pRastState);
     GwkDxSafeRelease(m_pPixShader);
     GwkDxSafeRelease(m_pBlendState);
@@ -721,17 +705,17 @@ void DirectX11::DrawFilledRect(Gwk::Rect rec)
     rect.x = rect.x * scalex - 1.f;
     rect.y = 1.f - rect.y * scaley;
 
-    VertexFormat verts[6] =
+    std::array<VertexFormat, 6> verts =
     {
-        { rect.x, rect.w, 0.5f, m_Color, 0.f, 0.f },
-        { rect.x, rect.y, 0.5f, m_Color, 0.f, 0.f },
-        { rect.z, rect.w, 0.5f, m_Color, 0.f, 0.f },
-        { rect.z, rect.y, 0.5f, m_Color, 0.f, 0.f },
-        { rect.z, rect.w, 0.5f, m_Color, 0.f, 0.f },
-        { rect.x, rect.y, 0.5f, m_Color, 0.f, 0.f }
+        VertexFormat{ rect.x, rect.w, 0.5f, m_Color, 0.f, 0.f },
+        VertexFormat{ rect.x, rect.y, 0.5f, m_Color, 0.f, 0.f },
+        VertexFormat{ rect.z, rect.w, 0.5f, m_Color, 0.f, 0.f },
+        VertexFormat{ rect.z, rect.y, 0.5f, m_Color, 0.f, 0.f },
+        VertexFormat{ rect.z, rect.w, 0.5f, m_Color, 0.f, 0.f },
+        VertexFormat{ rect.x, rect.y, 0.5f, m_Color, 0.f, 0.f }
     };
 
-    m_Buffer.Add(verts, ARRAYSIZE(verts));
+    m_Buffer.Add(verts.data(), verts.size());
 }
 
 void DirectX11::SetDrawColor(Gwk::Color color)
@@ -777,15 +761,13 @@ void DirectX11::RenderText(Gwk::Font* pFont, Gwk::Point pos, const Gwk::String &
 {
     Flush();
 
-    FontData* pFontData = (FontData*)pFont->data;
+    FontData* data = dynamic_cast<FontData*>(pFont->data.get());
 
-    if (pFontData == nullptr)
+    if (data == nullptr)
         return;
 
     Translate(pos.x, pos.y);
     XMFLOAT4A loc(pos.x, pos.y, 0, 0);
-
-    FontData* data = (FontData*)pFont->data;
 
     if (m_pCurrentTexture != data->m_Texture)
     {
@@ -821,7 +803,7 @@ void DirectX11::RenderText(Gwk::Font* pFont, Gwk::Point pos, const Gwk::String &
             rect.x = rect.x * scalex - 1.f;
             rect.y = 1.f - rect.y * scaley;
 
-            VertexFormat v[6];
+            std::array<VertexFormat, 6> v;
             v[0] = { rect.x, rect.w, 0.5f, m_Color, texCoord.x, texCoord.w };
             v[1] = { rect.x, rect.y, 0.5f, m_Color, texCoord.x, texCoord.y };
             v[2] = { rect.z, rect.w, 0.5f, m_Color, texCoord.z, texCoord.w };
@@ -829,7 +811,7 @@ void DirectX11::RenderText(Gwk::Font* pFont, Gwk::Point pos, const Gwk::String &
             v[4] = v[2];
             v[5] = v[1];
 
-            m_Buffer.Add(v, ARRAYSIZE(v));
+            m_Buffer.Add(v.data(), v.size());
         }
         loc.x += (loc.z - loc.x);
     }
@@ -845,7 +827,7 @@ Gwk::Point DirectX11::MeasureText(Gwk::Font* pFont, const Gwk::String& text)
     if (!EnsureFont(*pFont))
         return Gwk::Point(0, 0);
 
-    FontData* font = (FontData*)pFont->data;
+    FontData* font = dynamic_cast<FontData*>(pFont->data.get());
     if (font == nullptr)
         return Gwk::Point(0, 0);
 
@@ -927,17 +909,17 @@ void DirectX11::DrawTexturedRect(Gwk::Texture* pTexture, Gwk::Rect rec, float u1
     rect.x = rect.x * scalex - 1.f;
     rect.y = 1.f - rect.y * scaley;
 
-    VertexFormat verts[6] =
+    std::array<VertexFormat, 6> verts =
     {
-        { rect.x, rect.w, 0.5f, m_Color, u1, v2 },
-        { rect.x, rect.y, 0.5f, m_Color, u1, v1 },
-        { rect.z, rect.w, 0.5f, m_Color, u2, v2 },
-        { rect.z, rect.y, 0.5f, m_Color, u2, v1 },
-        { rect.z, rect.w, 0.5f, m_Color, u2, v2 },
-        { rect.x, rect.y, 0.5f, m_Color, u1, v1 }
+        VertexFormat{ rect.x, rect.w, 0.5f, m_Color, u1, v2 },
+        VertexFormat{ rect.x, rect.y, 0.5f, m_Color, u1, v1 },
+        VertexFormat{ rect.z, rect.w, 0.5f, m_Color, u2, v2 },
+        VertexFormat{ rect.z, rect.y, 0.5f, m_Color, u2, v1 },
+        VertexFormat{ rect.z, rect.w, 0.5f, m_Color, u2, v2 },
+        VertexFormat{ rect.x, rect.y, 0.5f, m_Color, u1, v1 }
     };
 
-    m_Buffer.Add(verts, ARRAYSIZE(verts));
+    m_Buffer.Add(verts.data(), verts.size());
 }
 
 Gwk::Color DirectX11::PixelColor(Gwk::Texture* pTexture, unsigned int x, unsigned int y, const Gwk::Color& col_default)
@@ -1007,182 +989,5 @@ Gwk::Color DirectX11::PixelColor(Gwk::Texture* pTexture, unsigned int x, unsigne
 
     return Gwk::Color(r, g, b, a);
 }
-
-#pragma region Experimental
-//void DirectX11::FillPresentParameters(Gwk::WindowProvider* pWindow, DXGI_SWAP_CHAIN_DESC & Params)
-//{
-//    HWND pHWND = (HWND)pWindow->GetWindow();
-//    RECT ClientRect;
-//    GetClientRect(pHWND, &ClientRect);
-//    ZeroMemory(&Params, sizeof(Params));
-//
-//
-//    UINT WIDTH = ClientRect.right - ClientRect.left;
-//    UINT HEIGHT = ClientRect.bottom - ClientRect.top;
-//
-//    Params.BufferCount = 1;
-//    Params.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
-//    Params.OutputWindow = pHWND;
-//    Params.SampleDesc.Count = 1;
-//    Params.SampleDesc.Quality = 0;
-//    Params.Windowed = TRUE;
-//
-//    Params.BufferDesc.RefreshRate = { 1, 60 };
-//    Params.BufferDesc.Width = WIDTH;
-//    Params.BufferDesc.Height = HEIGHT;
-//    Params.BufferDesc.Format = DXGI_FORMAT_B8G8R8X8_UNORM;
-//    Params.BufferDesc.Scaling = DXGI_MODE_SCALING_UNSPECIFIED;
-//}
-//
-//bool DirectX11::InitializeContext(Gwk::WindowProvider* pWindow)
-//{
-//    HWND pHWND = (HWND)pWindow->GetWindow();
-//    RECT ClientRect;
-//    GetClientRect(pHWND, &ClientRect);
-//
-//    UINT WIDTH = ClientRect.right - ClientRect.left;
-//    UINT HEIGHT = ClientRect.bottom - ClientRect.top;
-//
-//    D3D_DRIVER_TYPE driverTypes[] =
-//    {
-//        D3D_DRIVER_TYPE_HARDWARE,
-//        D3D_DRIVER_TYPE_WARP,
-//        D3D_DRIVER_TYPE_REFERENCE,
-//    };
-//    UINT numDriverTypes = ARRAYSIZE(driverTypes);
-//
-//    D3D_FEATURE_LEVEL featureLevels[] =
-//    {
-//        D3D_FEATURE_LEVEL_11_0,
-//        D3D_FEATURE_LEVEL_10_1,
-//        D3D_FEATURE_LEVEL_10_0,
-//        D3D_FEATURE_LEVEL_9_3,
-//        D3D_FEATURE_LEVEL_9_2,
-//        D3D_FEATURE_LEVEL_9_1
-//    };
-//    UINT numFeatureLevels = ARRAYSIZE(featureLevels);
-//
-//
-//    DXGI_SWAP_CHAIN_DESC Params;
-//    FillPresentParameters(pWindow, Params);
-//    HRESULT hr = S_OK;
-//    for (UINT driverTypeIndex = 0; driverTypeIndex < numDriverTypes; driverTypeIndex++)
-//    {
-//        D3D_DRIVER_TYPE driverType = driverTypes[driverTypeIndex];
-//        hr = D3D11CreateDeviceAndSwapChain(nullptr, driverType, nullptr, D3D11_CREATE_DEVICE_SINGLETHREADED, featureLevels, numFeatureLevels,
-//            D3D11_SDK_VERSION, &Params, &m_pSwapChain, &m_pDevice, nullptr, &m_pContext);
-//        if (SUCCEEDED(hr))
-//            break;
-//    }
-//    if (FAILED(hr))
-//        return false;
-//
-//    ID3D11Texture2D* pBackBuffer = nullptr;
-//    hr = m_pSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&pBackBuffer);
-//    if (FAILED(hr))
-//    {
-//        ShutdownContext(pWindow);
-//        return false;
-//    }
-//
-//    ID3D11RenderTargetView* pRenderTargetView;
-//    hr = m_pDevice->CreateRenderTargetView(pBackBuffer, nullptr, &pRenderTargetView);
-//    pBackBuffer->Release();
-//    if (FAILED(hr))
-//    {
-//        ShutdownContext(pWindow);
-//        return false;
-//    }
-//
-//    m_pContext->OMSetRenderTargets(1, &pRenderTargetView, nullptr);
-//    GwkDxSafeRelease(pRenderTargetView);
-//
-//    D3D11_VIEWPORT vp;
-//    width = vp.Width = (FLOAT)WIDTH;
-//    height = vp.Height = (FLOAT)HEIGHT;
-//    vp.MinDepth = 0.0f;
-//    vp.MaxDepth = 1.0f;
-//    vp.TopLeftX = 0;
-//    vp.TopLeftY = 0;
-//
-//    m_pContext->RSSetViewports(1, &vp);
-//
-//    return true;
-//}
-//
-//bool DirectX11::ShutdownContext(Gwk::WindowProvider* pWindow)
-//{
-//    ID3D11RenderTargetView* pRenderTargetView;
-//    m_pContext->OMGetRenderTargets(1, &pRenderTargetView, 0);
-//    GwkDxSafeRelease(pRenderTargetView);
-//    GwkDxSafeRelease(m_pSwapChain);
-//    GwkDxSafeRelease(m_pContext);
-//    GwkDxSafeRelease(m_pDevice);
-//    return true;
-//}
-//
-//bool DirectX11::PresentContext(Gwk::WindowProvider* pWindow)
-//{
-//    m_pSwapChain->Present(1, 0);
-//    return true;
-//}
-//
-//bool DirectX11::ResizedContext(Gwk::WindowProvider* pWindow, int w, int h)
-//{
-//    HWND pHWND = (HWND)pWindow->GetWindow();
-//    RECT ClientRect;
-//    GetClientRect(pHWND, &ClientRect);
-//
-//    ID3D11RenderTargetView* pRenderTargetView;
-//    m_pContext->OMGetRenderTargets(1, &pRenderTargetView, 0);
-//    GwkDxSafeRelease(pRenderTargetView);
-//
-//    m_pSwapChain->ResizeBuffers(0, 0, 0, DXGI_FORMAT_UNKNOWN, 0);
-//
-//    ID3D11Texture2D* pBuffer;
-//    m_pSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D),
-//        (void**)&pBuffer);
-//
-//    m_pDevice->CreateRenderTargetView(pBuffer, nullptr,
-//        &pRenderTargetView);
-//    // Perform error handling here!
-//    GwkDxSafeRelease(pBuffer);
-//
-//    m_pContext->OMSetRenderTargets(1, &pRenderTargetView, nullptr);
-//    GwkDxSafeRelease(pRenderTargetView);
-//
-//    UINT WIDTH = ClientRect.right - ClientRect.left;
-//    UINT HEIGHT = ClientRect.bottom - ClientRect.top;
-//
-//    D3D11_VIEWPORT vp;
-//    width = vp.Width = (FLOAT)WIDTH;
-//    height = vp.Height = (FLOAT)HEIGHT;
-//    vp.MinDepth = 0.0f;
-//    vp.MaxDepth = 1.0f;
-//    vp.TopLeftX = 0;
-//    vp.TopLeftY = 0;
-//
-//    m_pContext->RSSetViewports(1, &vp);
-//    return true;
-//}
-//
-//bool DirectX11::BeginContext(Gwk::WindowProvider* pWindow)
-//{
-//    float ClearColor[4] = { 0.128f, 0.128f, 0.128, 1.0f }; // red,green,blue,alpha
-//
-//
-//    ID3D11RenderTargetView* pRenderTargetView;
-//    m_pContext->OMGetRenderTargets(1, &pRenderTargetView, 0);
-//    m_pContext->ClearRenderTargetView(pRenderTargetView, ClearColor);
-//    pRenderTargetView->Release();
-//    return true;
-//}
-//
-//bool DirectX11::EndContext(Gwk::WindowProvider* pWindow)
-//{
-//    return true;
-//}
-
-#pragma endregion
 }
 }
