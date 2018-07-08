@@ -14,6 +14,8 @@
 #include <Gwork/External/stb_truetype.h>
 #include <sys/stat.h>
 
+#include <fstream>
+
 namespace Gwk
 {
 namespace Renderer
@@ -38,7 +40,8 @@ namespace Drawing
     }
 
     //! Draw filled rectangle.
-    void RectFill(PixelBuffer& pb, Rect const& r, Color const& c)
+    template <typename T>
+    void RectFill(T& pb, Rect const& r, Color const& c)
     {
         for (int y = 0; y < r.h; ++y)
         {
@@ -51,7 +54,8 @@ namespace Drawing
     }
 
     //! Draw rectangle outline.
-    void RectOutline(PixelBuffer& pb, Rect const& r, Color const& c)
+    template <typename T>
+    void RectOutline(T& pb, Rect const& r, Color const& c)
     {
         for (int x = 0; x < r.w; ++x)
         {
@@ -68,7 +72,8 @@ namespace Drawing
     }
 
     //! Draw textured rectangle.
-    void RectTextured(PixelBuffer& pb, const PixelBuffer& pbsrc,
+    template <typename T, typename U>
+    void RectTextured(T& pb, const U& pbsrc,
                       const Gwk::Rect& rect, float u1, float v1, float u2, float v2)
     {
         const Point srcsz(pbsrc.GetSize());
@@ -96,117 +101,115 @@ namespace Drawing
 
 // See "Font Size in Pixels or Points" in "stb_truetype.h"
 static constexpr float c_pointsToPixels = 1.333f;
-static constexpr int c_texsz = 256; // arbitrary font cache texture size
+static constexpr int c_texsz = 512; // arbitrary font cache texture size
 
-class FontData : public Font::IData
+Font::Status Software::LoadFont(const Font& font)
 {
-public:
-    FontData(size_t size)
-    {
-        font_bmp = std::unique_ptr<unsigned char[]>(new unsigned char[size]);
-    }
+    const String filename = GetResourcePaths().GetPath(ResourcePaths::Type::Font, font.facename);
 
-    ~FontData()
-    {
-    }
+    std::ifstream inFile(filename, std::ifstream::in | std::ifstream::binary);
 
-    std::unique_ptr<unsigned char[]> font_bmp;
-};
-
-Font::Status SoftwareResourceLoader::LoadFont(Font& font)
-{
-    const String filename = m_paths.GetPath(ResourcePaths::Type::Font, font.facename);
-
-    FILE* f = fopen(filename.c_str(), "rb");
-    if (!f)
+    if (!inFile.good())
     {
         Gwk::Log::Write(Log::Level::Error, "Font file not found: %s", filename.c_str());
-        font.data = nullptr;
-        font.status = Font::Status::ErrorFileNotFound;
-        return font.status;
+        return Font::Status::ErrorFileNotFound;
     }
 
-    struct stat finfo;
-    const int rc = stat(filename.c_str(), &finfo);
-    const size_t fsz = rc == 0 ? finfo.st_size : -1;
+    std::streampos begin = inFile.tellg();
+    inFile.seekg(0, std::ios::end);
+    const size_t fsz = inFile.tellg() - begin;
+    inFile.seekg(0, std::ios::beg);
     assert(fsz > 0);
 
-    unsigned char* ttfdata = new unsigned char[fsz];
-    fread(ttfdata, 1, fsz, f);
-    fclose(f);
+    std::unique_ptr<unsigned char[]> ttfdata = std::unique_ptr<unsigned char[]>(new unsigned char[fsz]);
+    inFile.read(reinterpret_cast<char*>(ttfdata.get()), fsz);
+    inFile.close();
 
-    std::shared_ptr<FontData> fontData = std::make_shared<FontData>(c_texsz * c_texsz);
+    SWFontData fontData;
+    fontData.m_ReadData = deleted_unique_ptr<unsigned char>(new unsigned char[c_texsz * c_texsz], [](unsigned char* mem) { if (mem) delete [] mem; });
+    fontData.width = c_texsz;
+    fontData.height = c_texsz;
 
-    font.render_data = new stbtt_bakedchar[96];
+    const float realsize = font.size * Scale();
+    fontData.baked_chars.resize(LastCharacter - BeginCharacter + 1);
 
-    stbtt_BakeFontBitmap(ttfdata, 0,
-                         font.realsize * c_pointsToPixels, // height
-                         fontData->font_bmp.get(),
-                         c_texsz, c_texsz,
-                         32,96,             // range to bake
-                         static_cast<stbtt_bakedchar*>(font.render_data));
-    delete [] ttfdata;
+    stbtt_BakeFontBitmap(ttfdata.get(), 0,
+        realsize * c_pointsToPixels, // height
+        fontData.m_ReadData.get(),
+        c_texsz, c_texsz,
+        BeginCharacter, LastCharacter,             // range to bake
+        reinterpret_cast<stbtt_bakedchar*>(fontData.baked_chars.data()));
 
-    font.data = Utility::dynamic_pointer_cast<Font::IData, FontData>(fontData);
-    font.status = Font::Status::Loaded;
 
-    return font.status;
+    m_fonts.insert(std::make_pair(font, std::move(fontData)));
+    return Font::Status::Loaded;
 }
 
-void SoftwareResourceLoader::FreeFont(Gwk::Font& font)
+void Software::FreeFont(const Gwk::Font& font)
 {
-    if (font.IsLoaded())
+    m_fonts.erase(font); // calls GLFontData destructor
+}
+
+bool Software::EnsureFont(const Font& font)
+{
+    auto& it = m_fonts.find(font);
+    if (it != m_fonts.cend())
     {
-        font.data.reset();
-        delete [] static_cast<stbtt_bakedchar*>(font.render_data);
-        font.status = Font::Status::Unloaded;
+        return true;
     }
+    return LoadFont(font) == Font::Status::Loaded;
 }
 
-Texture::Status SoftwareResourceLoader::LoadTexture(Texture& texture)
+Texture::Status Software::LoadTexture(const Texture& texture)
 {
-    if (texture.IsLoaded())
-        FreeTexture(texture);
+    FreeTexture(texture);
 
-    const String filename = m_paths.GetPath(ResourcePaths::Type::Texture, texture.name);
+    const String filename = GetResourcePaths().GetPath(ResourcePaths::Type::Texture, texture.name);
 
-    int x,y,n;
-    unsigned char *data = stbi_load(filename.c_str(), &x, &y, &n, 4);
+    SWTextureData texData;
 
-    if (!data)
+    int width, height, n;
+    {
+        unsigned char *image = stbi_load(filename.c_str(), &width, &height, &n, 4);
+        texData.m_ReadData = deleted_unique_ptr<unsigned char>(image, [](unsigned char* mem) { if (mem) stbi_image_free(mem); });
+    }
+
+    // Image failed to load..
+    if (!texData.m_ReadData)
     {
         Gwk::Log::Write(Log::Level::Error, "Texture file not found: %s", filename.c_str());
-        texture.status = Texture::Status::ErrorFileNotFound;
-        return texture.status;
+        return Texture::Status::ErrorFileNotFound;
     }
 
-    auto pbuff = new PixelBuffer();
-    pbuff->Init(Point(x,y));
-    memcpy(&pbuff->At(0,0), data, x*y*4);
-    stbi_image_free(data);
+    texData.readable = true;
 
-    texture.width = x;
-    texture.height = y;
-    texture.data = pbuff;
-    texture.status = Texture::Status::Loaded;
+    texData.width = width;
+    texData.height = height;
 
-    return texture.status;
+    m_textures.insert(std::make_pair(texture, std::move(texData)));
+    return Texture::Status::Loaded;
 }
 
-void SoftwareResourceLoader::FreeTexture(Texture& texture)
+void Software::FreeTexture(const Texture& texture)
 {
-    if (texture.IsLoaded())
+    m_textures.erase(texture); // calls GLTextureData destructor
+}
+
+TextureData Software::GetTextureData(const Texture& texture) const
+{
+    auto& it = m_textures.find(texture);
+    if (it != m_textures.cend())
     {
-        delete static_cast<PixelBuffer*>(texture.data);
-        texture.data = nullptr;
-        texture.status = Texture::Status::Unloaded;
+        return it->second;
     }
+    // Texture not loaded :(
+    return TextureData();
 }
 
 //-------------------------------------------------------------------------------
 
-Software::Software(ResourceLoader& loader, PixelBuffer& pbuff)
-    :   Base(loader)
+Software::Software(ResourcePaths& paths, PixelBuffer& pbuff)
+    :   Base(paths)
     ,   m_isClipping(false)
     ,   m_pixbuf(&pbuff)
 {
@@ -221,99 +224,110 @@ void Software::SetDrawColor(Gwk::Color color)
     m_color = color;
 }
 
-Gwk::Point Software::MeasureText(Gwk::Font* font, const Gwk::String& text)
+Gwk::Point Software::MeasureText(const Gwk::Font& font, const Gwk::String& text)
 {
-    if (!EnsureFont(*font))
+    if (!EnsureFont(font))
         return Gwk::Point(0, 0);
 
-    Point sz(0, font->realsize * c_pointsToPixels);
+    // at this point, the font is garented created
+    auto& it = m_fonts.find(font);
+    // but double check :)
+    if (it == m_fonts.cend())
+        return Gwk::Point(0, 0);
+
+    SWFontData& fontData = it->second;
+
+    Point sz(0, font.size * Scale() * c_pointsToPixels);
 
     float x = 0.f, y = 0.f;
-    const char *pc = text.c_str();
-    size_t slen = text.length();
+    char* text_ptr = const_cast<char*>(text.c_str());
 
-    while (slen > 0)
+    while (const auto wide_char = Utility::Strings::utf8_to_wchart(text_ptr))
     {
-        if (*pc >= 32 && *pc <= 127)
-        {
-            stbtt_aligned_quad q;
-            stbtt_GetBakedQuad(static_cast<stbtt_bakedchar*>(font->render_data),
-                               c_texsz,c_texsz,
-                               *pc - 32,
-                               &x, &y, &q, 1); // 1=opengl & d3d10+,0=d3d9
+        const auto c = wide_char - BeginCharacter;
 
-            sz.x = q.x1;
-            sz.y = std::max(sz.y, int((q.y1 - q.y0) * c_pointsToPixels));
-        }
-        ++pc, --slen;
+        if (wide_char < BeginCharacter || wide_char > LastCharacter)
+            continue;
+
+
+        stbtt_aligned_quad q;
+        stbtt_GetBakedQuad(reinterpret_cast<stbtt_bakedchar*>(fontData.baked_chars.data()),
+            c_texsz, c_texsz,
+            c,
+            &x, &y, &q, 1); // 1=opengl & d3d10+,0=d3d9
+
+        sz.x = q.x1;
+        sz.y = std::max(sz.y, int((q.y1 - q.y0) * c_pointsToPixels));
     }
 
     return sz;
 }
 
-void Software::RenderText(Gwk::Font* font, Gwk::Point pos, const Gwk::String& text)
+void Software::RenderText(const Gwk::Font& font, Gwk::Point pos,
+    const Gwk::String& text)
 {
-    if (!EnsureFont(*font))
+    if (!EnsureFont(font))
         return;
 
-    FontData* data = dynamic_cast<FontData*>(font->data.get());
-
-    if (data == nullptr)
+    // at this point, the font is garented created
+    auto& it = m_fonts.find(font);
+    // but double check :)
+    if (it == m_fonts.cend())
         return;
 
-    int ix = pos.x, iy = pos.y;
-    Translate(ix, iy);
+    SWFontData& fontData = it->second;
 
-    float x = ix, y = iy;
-    auto clipRect = ClipRegion();
-    const Point srcSize(c_texsz, c_texsz);
+    float x = pos.x, y = pos.y;
+    char* text_ptr = const_cast<char*>(text.c_str());
+    const auto clipRect = ClipRegion();
+    const Point srcSize(fontData.width, fontData.height);
+    const unsigned char * const fontBmp =fontData.m_ReadData.get();
 
-    const char *pc = text.c_str();
-    size_t slen = text.length();
-    const float offset = font->realsize * c_pointsToPixels * 0.8f;
-    const unsigned char * const fontBmp = static_cast<const unsigned char*>(data->font_bmp.get());
+    // Height of font, allowing for descenders, because baseline is bottom of capitals.
+    const float offset = font.size * Scale() * c_pointsToPixels * 0.8f;
 
-    while (slen > 0)
+    Color col(m_color);
+    while (const auto wide_char = Utility::Strings::utf8_to_wchart(text_ptr))
     {
-        if (*pc >= 32 && *pc <= 127)
+        const auto c = wide_char - BeginCharacter;
+
+        if (wide_char < BeginCharacter || wide_char > LastCharacter)
+            continue;
+
+        stbtt_aligned_quad q;
+        stbtt_GetBakedQuad(reinterpret_cast<stbtt_bakedchar*>(fontData.baked_chars.data()),
+            c_texsz, c_texsz,
+            c,
+            &x, &y, &q, 1); // 1=opengl & d3d10+,0=d3d9
+
+        Rect srcCharRect(q.x0, q.y0, q.x1 - q.x0, q.y1 - q.y0);
+        Translate(srcCharRect);
+        Point fpos(0, srcCharRect.y + offset);
+        for (int fy = 0; fy < srcCharRect.h; ++fy, ++fpos.y)
         {
-            stbtt_aligned_quad q;
-            stbtt_GetBakedQuad(static_cast<stbtt_bakedchar*>(font->render_data),
-                               c_texsz, c_texsz,
-                               *pc - 32,
-                               &x, &y, &q, 1); // 1=opengl & d3d10+,0=d3d9
+            if (fpos.y < clipRect.Top())
+                continue;
 
-            const Rect srcCharRect(q.x0, q.y0, q.x1 - q.x0, q.y1 - q.y0);
+            if (fpos.y > clipRect.Bottom())
+                return;
 
-            Color col(m_color);
-            Point fpos(0, srcCharRect.y + offset);
-            for (int fy = 0; fy < srcCharRect.h; ++fy, ++fpos.y)
+            fpos.x = srcCharRect.x;
+            for (int fx = 0; fx < srcCharRect.w; ++fx, ++fpos.x)
             {
-                if (fpos.y < clipRect.Top())
+                if (fpos.x < clipRect.Left())
                     continue;
 
-                if (fpos.y > clipRect.Bottom())
+                if (fpos.x > clipRect.Right())
                     return;
 
-                fpos.x = srcCharRect.x;
-                for (int fx = 0; fx < srcCharRect.w; ++fx, ++fpos.x)
-                {
-                    if (fpos.x < clipRect.Left())
-                        continue;
+                const Point srcPix(q.s0*srcSize.x + fx, q.t0*srcSize.y + fy);
+                const unsigned char fi = fontBmp[srcPix.y * srcSize.x + srcPix.x];
+                col.a = fi;
 
-                    if (fpos.x > clipRect.Right())
-                        return;
-
-                    const Point srcPix(q.s0*srcSize.x + fx, q.t0*srcSize.y + fy);
-                    const unsigned char fi = fontBmp[srcPix.y * srcSize.x + srcPix.x];
-                    col.a = fi;
-
-                    Color& dst = m_pixbuf->At(fpos);
-                    dst = Drawing::BlendAlpha(col, dst);
-                }
+                Color& dst = m_pixbuf->At(fpos);
+                dst = Drawing::BlendAlpha(col, dst);
             }
         }
-        ++pc, --slen;
     }
 }
 
@@ -394,30 +408,41 @@ void Software::DrawLinedRect(Gwk::Rect rect)
         Drawing::RectOutline(*m_pixbuf, rect, m_color);
 }
 
-void Software::DrawTexturedRect(Gwk::Texture* texture, Gwk::Rect rect,
+void Software::DrawTexturedRect(const Gwk::Texture& texture, Gwk::Rect rect,
                                 float u1, float v1, float u2, float v2)
 {
     Translate(rect);
-    if (Clip(rect))
+    if (!Clip(rect))
+        return;
+
+    auto& it = m_textures.find(texture);
+    if (it == m_textures.cend())
     {
-        const PixelBuffer *srcbuf = static_cast<const PixelBuffer*>(texture->data);
-        if (srcbuf != nullptr)
-        {
-            Drawing::RectTextured(*m_pixbuf, *srcbuf, rect, u1,v1, u2,v2);
-        }
-        else
-        {
-            DrawMissingImage(rect);
-        }
+        if (LoadTexture(texture) != Texture::Status::Loaded)
+            return DrawMissingImage(rect);
+
+        it = m_textures.find(texture);
     }
+
+    SWTextureData& texData = it->second;
+    Drawing::RectTextured<PixelBuffer, SWTextureData>(*m_pixbuf, texData, rect, u1,v1, u2,v2);
 }
 
-Gwk::Color Software::PixelColor(Gwk::Texture* texture, unsigned int x, unsigned int y,
+Gwk::Color Software::PixelColor(const Gwk::Texture& texture, unsigned int x, unsigned int y,
                                 const Gwk::Color& col_default)
 {
-    auto pbuff = static_cast<PixelBuffer*>(texture->data);
-    const Gwk::Color col = pbuff->At(x, y);
-    return col;
+    auto& it = m_textures.find(texture);
+    if (it == m_textures.cend())
+    {
+        if (LoadTexture(texture) != Texture::Status::Loaded)
+            return col_default;
+
+        it = m_textures.find(texture);
+    }
+
+    SWTextureData& texData = it->second;
+
+    return texData.At(x, y);
 }
 
 
