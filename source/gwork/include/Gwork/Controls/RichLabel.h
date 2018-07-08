@@ -48,7 +48,7 @@ namespace Gwk
 
 
             void Layout(Gwk::Skin::Base* skin) override;
-            void SplitLabel(const Gwk::String& text, Gwk::Font* font,
+            void SplitLabel(const Gwk::String& text, const Gwk::Font& font,
                             const DividedText& txt, int& x, int& y, int& lineheight);
             void CreateNewline(int& x, int& y, int& lineheight);
             void CreateLabel(const Gwk::String& text, const DividedText& txt, int& x,

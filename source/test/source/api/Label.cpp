@@ -84,7 +84,7 @@ public:
             m_font.size = 25;
             Gwk::Controls::Label* label = new Gwk::Controls::Label(this);
             label->SetText("Custom Font (Comic Sans 25)");
-            label->SetFont(&m_font);
+            label->SetFont(m_font);
             label->SizeToContents();
             label->SetPos(10, 170);
         }

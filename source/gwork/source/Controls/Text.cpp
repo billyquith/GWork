@@ -16,7 +16,7 @@ using namespace Gwk::ControlsInternal;
 
 GWK_CONTROL_CONSTRUCTOR(Text)
 {
-    m_font = nullptr;
+    m_font = &GetSkin()->GetDefaultFont();
     m_colorOverride = Color(255, 255, 255, 0);
     m_color = GetSkin()->Colors.Label.Default;
     SetMouseInputEnabled(false);
@@ -38,23 +38,23 @@ void Text::Layout(Skin::Base* skin)
     }
 }
 
-Gwk::Font* Text::GetFont()
+const Gwk::Font& Text::GetFont() const
 {
-    return m_font;
+    return *m_font;
 }
 
-void Text::SetFont(Gwk::Font* font)
+void Text::SetFont(const Gwk::Font& font)
 {
-    if (m_font == font)
+    if (m_font == &font)
         return;
 
-    m_font = font;
+    m_font = &font;
     m_bTextChanged = true;
     // Change the font of multilines too!
     {
         for (auto&& line : m_lines)
         {
-            line->SetFont(m_font);
+            line->SetFont(*m_font);
         }
     }
 
@@ -76,7 +76,7 @@ void Text::Render(Skin::Base* skin)
     if (m_bWrap)
         return;
 
-    if (Length() == 0 || !GetFont())
+    if (Length() == 0)
         return;
 
     if (m_colorOverride.a == 0)
@@ -95,7 +95,7 @@ Gwk::Rect Text::GetCharacterPosition(unsigned int iChar)
     {
         TextLines::iterator it = m_lines.begin();
         TextLines::iterator itEnd = m_lines.end();
-        int iChars = 0;
+        unsigned int iChars = 0;
 
         Text* line = nullptr;
         while (it != itEnd)
@@ -203,13 +203,13 @@ void Text::RefreshSize()
     if (m_bWrap)
         return RefreshSizeWrap();
 
-    if (!GetFont())
+    if (!m_font)
     {
         GWK_ASSERT_MSG(false, "Text::RefreshSize() - No Font!");
         return;
     }
 
-    Gwk::Point p(1, GetFont()->size);
+    Gwk::Point p(1, GetFont().size);
 
     if (Length() > 0)
         p = GetSkin()->GetRender()->MeasureText(GetFont(), m_string);
@@ -220,8 +220,8 @@ void Text::RefreshSize()
     if (p.x == Width() && p.y == Height())
         return;
 
-    if (p.y < GetFont()->size)
-        p.y = GetFont()->size;
+    if (p.y < GetFont().size)
+        p.y = GetFont().size;
 
     SetSize(p.x, p.y);
     InvalidateParent();
@@ -291,7 +291,7 @@ void Text::RefreshSizeWrap()
     // which is anything but simple.
     words.push_back("");
 
-    if (!GetFont())
+    if (!m_font)
     {
         GWK_ASSERT_MSG(false, "Text::RefreshSize() - No Font!");
         return;

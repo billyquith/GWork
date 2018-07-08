@@ -412,7 +412,7 @@ void TextBox::MakeCaretVisible()
     {
         int iCaretPos = m_text->GetCharacterPosition(m_cursorPos).x;
         int iRealCaretPos = iCaretPos+m_text->X();
-        int iSlidingZone = m_text->GetFont()->size+1;   // Width()*0.1f
+        int iSlidingZone = m_text->GetFont().size + 1;   // Width()*0.1f
 
         // If the carat is already in a semi-good position, leave it.
         if (iRealCaretPos >= iSlidingZone && iRealCaretPos <= Width()-iSlidingZone)
@@ -513,8 +513,8 @@ void TextBoxMultiline::Render(Skin::Base* skin)
 
     if (m_cursorPos != m_cursorEnd)
     {
-        int iCursorStartLine = m_text->GetLineFromChar(m_cursorPos);
-        int iCursorEndLine = m_text->GetLineFromChar(m_cursorEnd);
+        unsigned int iCursorStartLine = m_text->GetLineFromChar(m_cursorPos);
+        unsigned int iCursorEndLine = m_text->GetLineFromChar(m_cursorEnd);
 
         if (iCursorStartLine > m_text->NumLines()-1)
             iCursorStartLine =  m_text->NumLines()-1;
@@ -528,7 +528,7 @@ void TextBoxMultiline::Render(Skin::Base* skin)
         int iSelectionEndPos =    (m_cursorPos < m_cursorEnd) ? m_cursorEnd : m_cursorPos;
 
         skin->GetRender()->SetDrawColor(Gwk::Color(50, 170, 255, 200));
-        m_rectSelectionBounds.h = m_text->GetFont()->size+2;
+        m_rectSelectionBounds.h = m_text->GetFont().size + 2;
 
         for (int iLine = iSelectionStartLine; iLine <= iSelectionEndLine; ++iLine)
         {

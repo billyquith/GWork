@@ -23,7 +23,7 @@ namespace Gwk
             GWK_CONTROL(Text, Controls::Base);
 
             virtual ~Text();
-            Gwk::Font* GetFont();
+            const Gwk::Font& GetFont() const;
 
             void SetString(const String& str);
 
@@ -32,7 +32,7 @@ namespace Gwk
 
             void RefreshSize();
 
-            void SetFont(Gwk::Font* font);
+            void SetFont(const Gwk::Font& font);
 
             const String& GetText() const
             {
@@ -102,7 +102,7 @@ namespace Gwk
             virtual void RefreshSizeWrap();
 
             Gwk::String m_string;
-            Gwk::Font   *m_font;
+            const Gwk::Font*   m_font;
             Gwk::Color  m_color;
             Gwk::Color  m_colorOverride;
 

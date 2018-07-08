@@ -65,7 +65,7 @@ public:
             Gwk::Controls::TextBox* label = new Gwk::Controls::TextBox(this);
             label->SetText("Different Font");
             label->SetPos(10, 10+25*7);
-            label->SetFont(&m_font);
+            label->SetFont(m_font);
             label->SetSize(200, 55);
         }
         {
