@@ -19,9 +19,6 @@ namespace Gwk
 {
     namespace Renderer
     {
-        static const wchar_t BeginCharacter = L' ';    // First Character of Wide Character Table
-        static const wchar_t LastCharacter = 0x2FFF;   // Last Character of Wide Character Table
-        static const wchar_t NewLineCharacter = L'\n'; // New Line Character
 
 #define GwkDxSafeRelease(var) if(var != nullptr) {var->Release(); var = nullptr;}
 
@@ -33,6 +30,9 @@ namespace Gwk
             template<typename T>
             using deleted_unique_ptr = std::unique_ptr<T, std::function<void(T*)>>;
 
+            static const wchar_t BeginCharacter = L' ';    // First Character of Wide Character Table
+            static const wchar_t LastCharacter = 0x2FFF;   // Last Character of Wide Character Table
+            static const wchar_t NewLineCharacter = L'\n'; // New Line Character
         public:
 
             DirectX11(ResourcePaths& loader, ID3D11Device* pDevice = nullptr);
@@ -64,7 +64,7 @@ namespace Gwk
 
             Texture::Status LoadTexture(const Gwk::Texture& texture) override;
             void FreeTexture(const Gwk::Texture& texture) override;
-            const TextureData& GetTextureData(const Gwk::Texture& texture) const override;
+            TextureData GetTextureData(const Gwk::Texture& texture) const override;
 
         protected:
 

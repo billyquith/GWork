@@ -336,7 +336,7 @@ namespace Gwk
 
         virtual Gwk::Texture::Status LoadTexture(const Gwk::Texture& texture) = 0;
         virtual void FreeTexture(const Gwk::Texture& texture) = 0;
-        virtual const Gwk::TextureData& GetTextureData(const Gwk::Texture& texture) const = 0;
+        virtual Gwk::TextureData GetTextureData(const Gwk::Texture& texture) const = 0;
 
         //! Notification of certain events. May be platform specific.
         //! Loader can deal with the events accordingly.

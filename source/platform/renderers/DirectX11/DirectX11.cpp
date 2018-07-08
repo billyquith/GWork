@@ -133,10 +133,6 @@ static HRESULT CompileShaderFromMemory(const char* szdata, SIZE_T len, LPCSTR sz
 
 Font::Status DirectX11::LoadFont(const Font& font)
 {
-    static const wchar_t BeginCharacter = L' ';    // First Character of Wide Character Table
-    static const wchar_t LastCharacter = 0x2FFF;   // Last Character of Wide Character Table
-    static const wchar_t NewLineCharacter = L'\n'; // New Line Character
-
     const float realsize = font.size * Scale();
     HDC hDC = CreateCompatibleDC(nullptr);
     DWORD texWidth = 2048, texHeight;
@@ -392,7 +388,7 @@ void DirectX11::FreeTexture(const Texture& texture)
     m_textures.erase(texture); // calls DxTextureData destructor
 }
 
-const TextureData& DirectX11::GetTextureData(const Texture& texture) const
+TextureData DirectX11::GetTextureData(const Texture& texture) const
 {
     auto& it = m_textures.find(texture);
     if (it != m_textures.cend())
@@ -652,40 +648,6 @@ void DirectX11::SetDrawColor(Gwk::Color color)
     m_Color = D3DCOLOR_ARGB(color.a, color.r, color.g, color.b);
 }
 
-static inline wchar_t utf8_to_wchart(char*& in)// Gwk::Utility::Widen too slow
-{
-
-    unsigned int codepoint;
-    while (*in != 0)
-    {
-        unsigned char ch = static_cast<unsigned char>(*in);
-        if (ch <= 0x7f)
-            codepoint = ch;
-        else if (ch <= 0xbf)
-            codepoint = (codepoint << 6) | (ch & 0x3f);
-        else if (ch <= 0xdf)
-            codepoint = ch & 0x1f;
-        else if (ch <= 0xef)
-            codepoint = ch & 0x0f;
-        else
-            codepoint = ch & 0x07;
-        ++in;
-        if (((*in & 0xc0) != 0x80) && (codepoint <= 0x10ffff))
-        {
-            if (sizeof(wchar_t) > 2)
-                return static_cast<wchar_t>(codepoint);
-            else if (codepoint > 0xffff)
-            {
-                return static_cast<wchar_t>(0xd800 + (codepoint >> 10));
-                return static_cast<wchar_t>(0xdc00 + (codepoint & 0x03ff));
-            }
-            else if (codepoint < 0xd800 || codepoint >= 0xe000)
-                return 1, static_cast<wchar_t>(codepoint);
-        }
-    }
-    return 0;
-}
-
 void DirectX11::RenderText(const Gwk::Font& font, Gwk::Point pos, const Gwk::String & text)
 {
     if (!EnsureFont(font))
@@ -711,7 +673,7 @@ void DirectX11::RenderText(const Gwk::Font& font, Gwk::Point pos, const Gwk::Str
     float fStartX = loc.x;
 
     char* text_ptr = const_cast<char*>(text.c_str());
-    while (const auto wide_char = utf8_to_wchart(text_ptr))
+    while (const auto wide_char = Utility::Strings::utf8_to_wchart(text_ptr))
     {
         const auto c = wide_char - BeginCharacter;
         if (wide_char == NewLineCharacter)
@@ -770,7 +732,7 @@ Gwk::Point DirectX11::MeasureText(const Gwk::Font& font, const Gwk::String& text
     float fHeight = fRowHeight;
 
     char* text_ptr = const_cast<char*>(text.c_str());
-    while (const auto wide_char = utf8_to_wchart(text_ptr))
+    while (const auto wide_char = Utility::Strings::utf8_to_wchart(text_ptr))
     {
         const auto c = wide_char - BeginCharacter;
         if (wide_char == NewLineCharacter)
