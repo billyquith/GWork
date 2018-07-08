@@ -114,92 +114,89 @@ void AllegroCTT::DrawCachedControlTexture(CacheHandle control)
 
 //-------------------------------------------------------------------------------
 
-class FontData : public Font::IData
+Font::Status Allegro::LoadFont(const Font& font)
 {
-public:
-    FontData(ALLEGRO_FONT* afont)
-        :font(afont)
-    {
-    }
-
-    ~FontData()
-    {
-        al_destroy_font(font);
-    }
-    ALLEGRO_FONT* font;
-};
-
-Font::Status AllegroResourceLoader::LoadFont(Font& font)
-{
-    const String filename = m_paths.GetPath(ResourcePaths::Type::Font, font.facename);
+    const String filename = GetResourcePaths().GetPath(ResourcePaths::Type::Font, font.facename);
 
     ALLEGRO_FONT* afont = al_load_font(filename.c_str(),
-                                       font.realsize,
+                                       font.size * Scale(),
                                        ALLEGRO_TTF_NO_KERNING);
 
     if (afont)
     {
-        std::shared_ptr<FontData> fontData = std::make_shared<FontData>(afont);
-        font.data = Utility::dynamic_pointer_cast<Font::IData, FontData>(fontData);
-        font.status = Font::Status::Loaded;
+        ALFontData fontData;
+        fontData.font = deleted_unique_ptr<ALLEGRO_FONT>(afont, [](ALLEGRO_FONT* mem) { if (mem) al_destroy_font(mem); });
+        m_fonts.insert(std::make_pair(font, std::move(fontData)));
+        return Font::Status::Loaded;
     }
     else
     {
         Gwk::Log::Write(Log::Level::Error, "Font file not found: %s", filename.c_str());
-        font.status = Font::Status::ErrorFileNotFound;
+        return Font::Status::ErrorFileNotFound;
     }
-
-    return font.status;
 }
 
-void AllegroResourceLoader::FreeFont(Gwk::Font& font)
+void Allegro::FreeFont(const Gwk::Font& font)
 {
-    if (font.status == Font::Status::Loaded)
+    m_fonts.erase(font); // calls ALFontData destructor
+}
+
+bool Allegro::EnsureFont(const Font& font)
+{
+    auto& it = m_fonts.find(font);
+    if (it != m_fonts.cend())
     {
-        font.data.reset();
-        font.status = Font::Status::Unloaded;
+        return true;
     }
+    return LoadFont(font) == Font::Status::Loaded;
 }
 
-Texture::Status AllegroResourceLoader::LoadTexture(Texture& texture)
+Texture::Status Allegro::LoadTexture(const Texture& texture)
 {
-    if (texture.IsLoaded())
-        FreeTexture(texture);
+    FreeTexture(texture);
 
-    const String filename = m_paths.GetPath(ResourcePaths::Type::Texture, texture.name);
+    const String filename = GetResourcePaths().GetPath(ResourcePaths::Type::Texture, texture.name);
 
     ALLEGRO_BITMAP* bmp = al_load_bitmap(filename.c_str());
 
     if (bmp)
     {
-        texture.data = bmp;
-        texture.width = al_get_bitmap_width(bmp);
-        texture.height = al_get_bitmap_height(bmp);
-        texture.status = Texture::Status::Loaded;
+        ALTextureData texData;
+        texData.texture = deleted_unique_ptr<ALLEGRO_BITMAP>(bmp, [](ALLEGRO_BITMAP* mem) { if (mem) al_destroy_bitmap(mem); });
+        texData.width = al_get_bitmap_width(bmp);
+        texData.height = al_get_bitmap_height(bmp);
+        texData.readable = false;
+        m_textures.insert(std::make_pair(texture, std::move(texData)));
+
+        return Texture::Status::Loaded;
     }
     else
     {
         Gwk::Log::Write(Log::Level::Error, "Texture file not found: %s", filename.c_str());
-        texture.status = Texture::Status::ErrorFileNotFound;
-        texture.data = nullptr;
+        return Texture::Status::ErrorFileNotFound;
     }
-
-    return texture.status;
 }
 
-void AllegroResourceLoader::FreeTexture(Texture& texture)
+void Allegro::FreeTexture(const Texture& texture)
 {
-    if (texture.IsLoaded())
+    m_textures.erase(texture); // calls GLTextureData destructor
+}
+
+TextureData Allegro::GetTextureData(const Texture& texture) const
+{
+    auto& it = m_textures.find(texture);
+    if (it != m_textures.cend())
     {
-        al_destroy_bitmap((ALLEGRO_BITMAP*)texture.data);
-        texture.status = Texture::Status::Unloaded;
+        return it->second;
     }
+    // Texture not loaded :(
+    return TextureData();
 }
 
 //-------------------------------------------------------------------------------
 
-Allegro::Allegro(ResourceLoader& loader)
-:   Base(loader)
+Allegro::Allegro(ResourcePaths& paths)
+:   Base(paths)
 ,   m_ctt(new AllegroCTT)
 {
     m_ctt->SetRenderer(this);
@@ -215,32 +212,37 @@ void Allegro::SetDrawColor(Gwk::Color color)
     m_color = al_map_rgba(color.r, color.g, color.b, color.a);
 }
 
-void Allegro::RenderText(Gwk::Font* font, Gwk::Point pos,
+void Allegro::RenderText(const Gwk::Font& font, Gwk::Point pos,
                          const Gwk::String& text)
 {
-    FontData* fontData = dynamic_cast<FontData*>(font->data.get());
-
-    if (fontData == nullptr)
+    if (!EnsureFont(font))
         return;
 
-    ALLEGRO_FONT *afont = fontData.font;
+    // at this point, the font is garented created
+    auto& it = m_fonts.find(font);
+    // but double check :)
+    if (it == m_fonts.cend())
+        return;
+
+    ALFontData& fontData = it->second;
     Translate(pos.x, pos.y);
-    al_draw_text(afont, m_color, pos.x, pos.y, ALLEGRO_ALIGN_LEFT, text.c_str());
+    al_draw_text(fontData.font.get(), m_color, pos.x, pos.y, ALLEGRO_ALIGN_LEFT, text.c_str());
 }
 
-Gwk::Point Allegro::MeasureText(Gwk::Font* font, const Gwk::String& text)
+Gwk::Point Allegro::MeasureText(const Gwk::Font& font, const Gwk::String& text)
 {
-    if (!EnsureFont(*font))
+    if (!EnsureFont(font))
         return Gwk::Point(0, 0);
 
-    FontData* fontData = dynamic_cast<FontData*>(font->data.get());
+    // at this point, the font is garented created
+    auto& it = m_fonts.find(font);
+    // but double check :)
+    if (it == m_fonts.cend())
+        return Gwk::Point(0, 0);
 
-    if (fontData == nullptr)
-        return;
+    ALFontData& fontData = it->second;
 
-    ALLEGRO_FONT *afont = fontData.font;
-
-    return Point(al_get_text_width(afont, text.c_str()), al_get_font_line_height(afont));
+    return Point(al_get_text_width(fontData.font.get(), text.c_str()), al_get_font_line_height(fontData.font.get()));
 }
 
 void Allegro::StartClip()
@@ -256,33 +258,45 @@ void Allegro::EndClip()
                               al_get_bitmap_width(targ), al_get_bitmap_height(targ));
 }
 
-void Allegro::DrawTexturedRect(Gwk::Texture* texture, Gwk::Rect rect,
+void Allegro::DrawTexturedRect(const Texture& texture, Gwk::Rect rect,
                                float u1, float v1,
                                float u2, float v2)
 {
-    ALLEGRO_BITMAP* bmp = (ALLEGRO_BITMAP*)texture->data;
-
-    if (!bmp)
-        return DrawMissingImage(rect);
-
     Translate(rect);
-    const unsigned int w = texture->width;
-    const unsigned int h = texture->height;
-    al_draw_scaled_bitmap(bmp,
+    auto& it = m_textures.find(texture);
+    if (it == m_textures.cend())
+    {
+        if (LoadTexture(texture) != Texture::Status::Loaded)
+            return DrawMissingImage(rect);
+
+        it = m_textures.find(texture);
+    }
+
+    ALTextureData& texData = it->second;
+
+    const unsigned int w = texData.width;
+    const unsigned int h = texData.height;
+    al_draw_scaled_bitmap(texData.texture.get(),
                           u1*w, v1*h, (u2-u1)*w, (v2-v1)*h,  // source
                           rect.x, rect.y, rect.w, rect.h,    // destination
                           0);
 }
 
-Gwk::Color Allegro::PixelColor(Gwk::Texture* texture, unsigned int x, unsigned int y,
+Gwk::Color Allegro::PixelColor(const Texture& texture, unsigned int x, unsigned int y,
                                  const Gwk::Color& col_default)
 {
-    ALLEGRO_BITMAP* bmp = (ALLEGRO_BITMAP*)texture->data;
+    auto& it = m_textures.find(texture);
+    if (it == m_textures.cend())
+    {
+        if (LoadTexture(texture) != Texture::Status::Loaded)
+            return col_default;
 
-    if (!bmp)
-        return col_default;
+        it = m_textures.find(texture);
+    }
 
-    ALLEGRO_COLOR col = al_get_pixel(bmp, x, y);
+    ALTextureData& texData = it->second;
+
+    ALLEGRO_COLOR col = al_get_pixel(texData.texture.get(), x, y);
     Gwk::Color gcol;
     al_unmap_rgba(col, &gcol.r, &gcol.g, &gcol.b, &gcol.a);
     return gcol;
