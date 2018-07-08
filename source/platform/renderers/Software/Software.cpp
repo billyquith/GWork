@@ -147,7 +147,7 @@ Font::Status Software::LoadFont(const Font& font)
 
 void Software::FreeFont(const Gwk::Font& font)
 {
-    m_fonts.erase(font); // calls GLFontData destructor
+    m_fonts.erase(font); // calls SWFontData destructor
 }
 
 bool Software::EnsureFont(const Font& font)
@@ -192,7 +192,7 @@ Texture::Status Software::LoadTexture(const Texture& texture)
 
 void Software::FreeTexture(const Texture& texture)
 {
-    m_textures.erase(texture); // calls GLTextureData destructor
+    m_textures.erase(texture); // calls SWTextureData destructor
 }
 
 TextureData Software::GetTextureData(const Texture& texture) const
