@@ -77,6 +77,8 @@ Font::Status OpenGL::LoadFont(const Font& font)
     std::unique_ptr<unsigned char[]> font_bmp = std::unique_ptr<unsigned char[]>(new unsigned char[c_texsz * c_texsz]);
 
     GLFontData fontData;
+    fontData.width = c_texsz;
+    fontData.height = c_texsz;
     const float realsize = font.size * Scale();
     fontData.baked_chars.resize(LastCharacter - BeginCharacter + 1);
 
