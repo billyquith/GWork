@@ -106,6 +106,7 @@ namespace Gwk
                 {
                     std::swap(width, other.width);
                     std::swap(height, other.height);
+                    std::swap(readable, other.readable);
 
                     m_ReadData.swap(other.m_ReadData);
                 }

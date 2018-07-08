@@ -115,6 +115,7 @@ namespace Gwk
                 {
                     std::swap(width, other.width);
                     std::swap(height, other.height);
+                    std::swap(readable, other.readable);
                     std::swap(m_Texture, other.m_Texture);
                     std::swap(m_TextureResource, other.m_TextureResource);
 

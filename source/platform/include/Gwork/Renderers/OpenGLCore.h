@@ -76,6 +76,7 @@ namespace Gwk
                 {
                     std::swap(width, other.width);
                     std::swap(height, other.height);
+                    std::swap(readable, other.readable);
                     std::swap(texture_id, other.texture_id);
 
                     m_ReadData.swap(other.m_ReadData);
