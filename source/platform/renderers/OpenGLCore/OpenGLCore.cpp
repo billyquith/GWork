@@ -15,6 +15,7 @@
 #include <Gwork/PlatformTypes.h>
 #include <Gwork/WindowProvider.h>
 #include <Gwork/PlatformCommon.h>
+#include <Gwork/Utility.h>
 
 #if defined(_WIN32)
 #   define WIN32_LEAN_AND_MEAN
@@ -30,6 +31,7 @@
 #include <sys/stat.h>
 #include <stdio.h>
 #include <algorithm>
+#include <fstream>
 
 //#define STBI_ASSERT(x)  // comment in for no asserts
 #define STB_IMAGE_IMPLEMENTATION
@@ -49,144 +51,146 @@ namespace Renderer {
 // See "Font Size in Pixels or Points" in "stb_truetype.h"
 static constexpr float c_pointsToPixels = 1.333f;
 // Arbitrary size chosen for texture cache target.
-static constexpr int c_texsz = 256;
+static constexpr int c_texsz = 512;
 
-class FontData : public Font::IData
+
+OpenGLCore::GLTextureData::~GLTextureData()
 {
-public:
-    ~FontData()
-    {
-        glDeleteTextures(1, &textureId);
-    }
-    GLuint textureId;
-};
+    glBindTexture(GL_TEXTURE_2D, 0);
+    glDeleteTextures(1, reinterpret_cast<GLuint*>(&texture_id));
+}
 
-Font::Status OpenGLResourceLoader::LoadFont(Font& font)
+Font::Status OpenGLCore::LoadFont(const Font& font)
 {
-    const String filename = m_paths.GetPath(ResourcePaths::Type::Font, font.facename);
+    const String filename = GetResourcePaths().GetPath(ResourcePaths::Type::Font, font.facename);
 
-    FILE* f = fopen(filename.c_str(), "rb");
-    if (!f)
+    std::ifstream inFile(filename, std::ifstream::in | std::ifstream::binary);
+
+    if (!inFile.good())
     {
         Gwk::Log::Write(Log::Level::Error, "Font file not found: %s", filename.c_str());
-        font.data.reset();
-        font.status = Font::Status::ErrorFileNotFound;
-        return font.status;
+        return Font::Status::ErrorFileNotFound;
     }
 
-    struct stat stat_buf;
-    const int rc = stat(filename.c_str(), &stat_buf);
-    const size_t fsz = rc == 0 ? stat_buf.st_size : -1;
+    std::streampos begin = inFile.tellg();
+    inFile.seekg(0, std::ios::end);
+    const size_t fsz = inFile.tellg() - begin;
+    inFile.seekg(0, std::ios::beg);
     assert(fsz > 0);
 
-    auto* ttfdata = new unsigned char[fsz];
-    fread(ttfdata, 1, fsz, f);
-    fclose(f);
+    std::unique_ptr<unsigned char[]> ttfdata = std::unique_ptr<unsigned char[]>(new unsigned char[fsz]);
+    inFile.read(reinterpret_cast<char*>(ttfdata.get()), fsz);
+    inFile.close();
 
-    auto*font_bmp = new unsigned char[c_texsz * c_texsz];
+    std::unique_ptr<unsigned char[]> font_bmp = std::unique_ptr<unsigned char[]>(new unsigned char[c_texsz * c_texsz]);
 
-    font.render_data = new stbtt_bakedchar[96];
+    GLFontData fontData;
+    const float realsize = font.size * Scale();
+    fontData.baked_chars.resize(LastCharacter - BeginCharacter + 1);
 
-    stbtt_BakeFontBitmap(ttfdata, 0,
-                         font.realsize * c_pointsToPixels, // height
-                         font_bmp,
-                         c_texsz, c_texsz,
-                         32,96,             // range to bake
-                         static_cast<stbtt_bakedchar*>(font.render_data));
-    delete [] ttfdata;
+    stbtt_BakeFontBitmap(ttfdata.get(), 0,
+        realsize * c_pointsToPixels, // height
+        font_bmp.get(),
+        c_texsz, c_texsz,
+        BeginCharacter, LastCharacter,             // range to bake
+        reinterpret_cast<stbtt_bakedchar*>(fontData.baked_chars.data()));
 
-    std::shared_ptr<FontData> fontData = std::make_shared<FontData>();
-    glGenTextures(1, &fontData->textureId);
-    glBindTexture(GL_TEXTURE_2D, fontData->textureId);
+    glGenTextures(1, &fontData.texture_id);
+    SetTexture(fontData.texture_id);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RED,
-                 c_texsz,c_texsz, 0,
-                 GL_RED, GL_UNSIGNED_BYTE,
-                 font_bmp);
-    delete [] font_bmp;
+        c_texsz, c_texsz, 0,
+        GL_RED, GL_UNSIGNED_BYTE,
+        font_bmp.get());
 
-    glBindTexture(GL_TEXTURE_2D, 0);
-    font.data = Utility::dynamic_pointer_cast<Font::IData, FontData>(fontData);
-    font.status = Font::Status::Loaded;
-
-    return font.status;
+    m_fonts.insert(std::make_pair(font, std::move(fontData)));
+    return Font::Status::Loaded;
 }
 
-void OpenGLResourceLoader::FreeFont(Gwk::Font& font)
+void OpenGLCore::FreeFont(const Gwk::Font& font)
 {
-    if (font.IsLoaded())
+    m_fonts.erase(font); // calls GLFontData destructor
+}
+
+bool OpenGLCore::EnsureFont(const Font& font)
+{
+    auto& it = m_fonts.find(font);
+    if (it != m_fonts.cend())
     {
-        // TODO - unbind texture
-        font.data.reset();
-        delete [] static_cast<stbtt_bakedchar*>(font.render_data);
-
-        font.status = Font::Status::Unloaded;
+        return true;
     }
+    return LoadFont(font) == Font::Status::Loaded;
 }
 
-Texture::Status OpenGLResourceLoader::LoadTexture(Texture& texture)
+Texture::Status OpenGLCore::LoadTexture(const Texture& texture)
 {
-    if (texture.IsLoaded())
-        FreeTexture(texture);
+    FreeTexture(texture);
 
-    const String filename = m_paths.GetPath(ResourcePaths::Type::Texture, texture.name);
+    const String filename = GetResourcePaths().GetPath(ResourcePaths::Type::Texture, texture.name);
 
-    int x,y,n;
-    unsigned char *data = stbi_load(filename.c_str(), &x, &y, &n, 4);
+    GLTextureData texData;
+
+    int width, height, n;
+    {
+        unsigned char *image = stbi_load(filename.c_str(), &width, &height, &n, 4);
+        texData.m_ReadData = deleted_unique_ptr<unsigned char>(image, [](unsigned char* mem) { if (mem) stbi_image_free(mem); });
+    }
 
     // Image failed to load..
-    if (!data)
+    if (!texData.m_ReadData)
     {
         Gwk::Log::Write(Log::Level::Error, "Texture file not found: %s", filename.c_str());
-        texture.status = Texture::Status::ErrorFileNotFound;
-        return texture.status;
+        return Texture::Status::ErrorFileNotFound;
     }
 
-    // Create a little texture pointer..
-    auto* pglTexture = new GLuint;
-
-    texture.data = pglTexture;
-    texture.width = x;
-    texture.height = y;
 
     // Create the opengl texture
-    glGenTextures(1, pglTexture);
-    glBindTexture(GL_TEXTURE_2D, *pglTexture);
+    glGenTextures(1, &texData.texture_id);
+    SetTexture(texData.texture_id);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     GLenum format = GL_RGBA;
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, texture.width, texture.height, 0, format,
-                 GL_UNSIGNED_BYTE, (const GLvoid*)data);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, format,
+        GL_UNSIGNED_BYTE, (const GLvoid*)texData.m_ReadData.get());
 
-    stbi_image_free(data);
+    texData.readable = texture.readable;
+    if (!texture.readable)
+    {
+        texData.m_ReadData.reset();
+    }
 
-    glBindTexture(GL_TEXTURE_2D, *pglTexture);
+    texData.width = width;
+    texData.height = height;
 
-    return texture.status = Texture::Status::Loaded;
+    m_textures.insert(std::make_pair(texture, std::move(texData)));
+    return Texture::Status::Loaded;
 }
 
-void OpenGLResourceLoader::FreeTexture(Texture& texture)
+void OpenGLCore::FreeTexture(const Texture& texture)
 {
-    if (texture.IsLoaded())
+    m_textures.erase(texture); // calls GLTextureData destructor
+}
+
+TextureData OpenGLCore::GetTextureData(const Texture& texture) const
+{
+    auto& it = m_textures.find(texture);
+    if (it != m_textures.cend())
     {
-        GLuint* tex = static_cast<GLuint*>(texture.data);
-
-        glDeleteTextures(1, tex);
-        delete tex;
-        texture.data = nullptr;
-
-        texture.status = Texture::Status::Unloaded;
+        return it->second;
     }
+    // Texture not loaded :(
+    return TextureData();
 }
 
 //-------------------------------------------------------------------------------
 
-OpenGLCore::OpenGLCore(ResourceLoader& loader, const Rect& viewRect)
-    :   Base(loader)
+OpenGLCore::OpenGLCore(ResourcePaths& paths, const Rect& viewRect)
+    :   Base(paths)
     ,   m_context(nullptr)
     ,   m_viewRect(viewRect)
-    ,   m_currentTexture(0)
+    ,   m_current_texture(0)
+    ,   m_vertices(1024)
 {
 }
 
@@ -239,55 +243,47 @@ void OpenGLCore::Init()
 
     auto vertexSource = R"(
 #version 330 core
+
 layout (location = 0) in vec3 inPosition;
 layout (location = 1) in vec2 inTexCoords;
 layout (location = 2) in vec4 inColor;
+
 out vec2 TexCoords;
 out vec4 VertexColor;
+flat out int ShaderType;
+
 uniform mat4 projection;
 void main()
 {
-gl_Position = projection * vec4(inPosition, 1.0f);
-TexCoords = inTexCoords;
-VertexColor = inColor;
+    ShaderType = int(inPosition.z);
+    gl_Position = projection * vec4(inPosition.xy, 0.0f, 1.0f);
+    TexCoords = inTexCoords;
+    VertexColor = inColor;
 })";
     auto fragmentTexturedSource = R"(
 #version 330 core
+
 out vec4 FragColor;
+
 in vec2 TexCoords;
 in vec4 VertexColor;
+flat in int ShaderType;
+
 uniform sampler2D texture1;
 void main()
 {
-FragColor = texture(texture1, TexCoords) * VertexColor;
+    if (ShaderType == 0)
+        FragColor = VertexColor;
+    else if (ShaderType == 1)
+        FragColor = texture(texture1, TexCoords) * VertexColor;
+    else if (ShaderType == 2)
+    {
+        float color = texture(texture1, TexCoords).r;
+        FragColor = vec4(VertexColor.rgb, color);
+    }
 })";
 
-    auto fragmentFontSource = R"(
-#version 330 core
-out vec4 FragColor;
-in vec2 TexCoords;
-in vec4 VertexColor;
-uniform sampler2D texture1;
-void main()
-{
-float color = texture(texture1, TexCoords).r;
-FragColor = vec4(VertexColor.rgb, color);
-})";
-
-    auto fragmentSolidSource = R"(
-#version 330 core
-out vec4 FragColor;
-in vec2 TexCoords;
-in vec4 VertexColor;
-uniform sampler2D texture1;
-void main()
-{
-FragColor = VertexColor;
-})";
-
-    m_texturedProgram = loadShaders(vertexSource, fragmentTexturedSource);
-    m_fontProgram =     loadShaders(vertexSource, fragmentFontSource);
-    m_solidProgram =    loadShaders(vertexSource, fragmentSolidSource);
+    m_program = loadShaders(vertexSource, fragmentTexturedSource);
 
     glViewport(m_viewRect.x, m_viewRect.y, m_viewRect.w, m_viewRect.h);
 }
@@ -349,12 +345,12 @@ void OpenGLCore::Flush()
     glVertexArrayAttribBinding(m_vao, 2, 0);
 
     // Program
-    glUseProgram(m_activeProgram);
+    glUseProgram(m_program);
 
     // Loading matricies
     glProgramUniformMatrix4fv(
-        m_activeProgram,
-        glGetUniformLocation(m_activeProgram, "projection"),
+        m_program,
+        glGetUniformLocation(m_program, "projection"),
         1,
         GL_FALSE,
         glm::value_ptr(m_projectionMatrix)
@@ -384,7 +380,7 @@ void OpenGLCore::AddVert(int x, int y, float u, float v)
     Vertex vertex;
     vertex.pos.x = x;
     vertex.pos.y = m_viewRect.h - y;
-    vertex.pos.z = 0;
+    vertex.pos.z = m_activeProgram;
 
     vertex.uv.x = u;
     vertex.uv.y = v;
@@ -396,18 +392,31 @@ void OpenGLCore::AddVert(int x, int y, float u, float v)
         m_color.a / 255.0f
     );
 
-    m_vertices.push_back(vertex);
+    m_vertices.emplace_back(vertex);
+}
+
+void OpenGLCore::SetTexture(unsigned int texture)
+{
+    if (texture == 0 && !m_textures_on)
+        return;
+
+    if (texture == 0)
+    {
+        m_textures_on = false;
+    }
+    else
+    {
+        m_textures_on = true;
+    }
+
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, texture);
+    m_current_texture = texture;
 }
 
 void OpenGLCore::DrawFilledRect(Gwk::Rect rect)
 {
-    if (m_currentTexture != 0 || m_activeProgram != m_solidProgram)
-    {
-        Flush();
-        m_currentTexture = 0;
-        m_activeProgram = m_solidProgram;
-        glBindTexture(GL_TEXTURE_2D, 0);
-    }
+    m_activeProgram = 0;
 
     Translate(rect);
     AddVert(rect.x, rect.y);
@@ -442,161 +451,154 @@ void OpenGLCore::EndClip()
     glDisable(GL_SCISSOR_TEST);
 }
 
-void OpenGLCore::DrawTexturedFontRect(Gwk::Texture* texture, Gwk::Rect rect,
-                                      float u1, float v1, float u2, float v2)
+void OpenGLCore::DrawTexturedRect(const Gwk::Texture& texture, Gwk::Rect rect,
+    float u1, float v1, float u2, float v2)
 {
-    auto* tex = (GLuint*)texture->data;
+    auto& it = m_textures.find(texture);
+    if (it == m_textures.cend())
+    {
+        if (LoadTexture(texture) != Texture::Status::Loaded)
+            return DrawMissingImage(rect);
 
-    // Missing image, not loaded properly?
-    if (!tex)
-        return DrawMissingImage(rect);
+        it = m_textures.find(texture);
+    }
+
+    GLTextureData& texData = it->second;
 
     Translate(rect);
 
-    if (m_currentTexture != *tex || m_activeProgram != m_fontProgram)
+    if (!m_current_texture || texData.texture_id != m_current_texture)
     {
         Flush();
-        glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, *tex);
-        m_currentTexture = *tex;
-        m_activeProgram = m_fontProgram;
+        SetTexture(texData.texture_id);
     }
 
-    AddVert(rect.x,        rect.y,        u1, v1);
-    AddVert(rect.x+rect.w, rect.y,        u2, v1);
-    AddVert(rect.x,        rect.y+rect.h, u1, v2);
-    AddVert(rect.x+rect.w, rect.y,        u2, v1);
-    AddVert(rect.x+rect.w, rect.y+rect.h, u2, v2);
-    AddVert(rect.x,        rect.y+rect.h, u1, v2);
+    m_activeProgram = 1;
+    AddVert(rect.x, rect.y, u1, v1);
+    AddVert(rect.x + rect.w, rect.y, u2, v1);
+    AddVert(rect.x, rect.y + rect.h, u1, v2);
+    AddVert(rect.x + rect.w, rect.y, u2, v1);
+    AddVert(rect.x + rect.w, rect.y + rect.h, u2, v2);
+    AddVert(rect.x, rect.y + rect.h, u1, v2);
 }
 
-void OpenGLCore::DrawTexturedRect(Gwk::Texture* texture, Gwk::Rect rect,
-                                  float u1, float v1, float u2, float v2)
+Gwk::Color OpenGLCore::PixelColor(const Gwk::Texture& texture, unsigned int x, unsigned int y,
+    const Gwk::Color& col_default)
 {
-    auto* tex = (GLuint*)texture->data;
-
-    // Missing image, not loaded properly?
-    if (!tex)
-        return DrawMissingImage(rect);
-
-    Translate(rect);
-
-    if (m_currentTexture != *tex || m_activeProgram != m_texturedProgram)
+    auto& it = m_textures.find(texture);
+    if (it == m_textures.cend())
     {
-        Flush();
-        glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, *tex);
-        m_currentTexture = *tex;
-        m_activeProgram = m_texturedProgram;
+        if (LoadTexture(texture) != Texture::Status::Loaded)
+            return col_default;
+
+        it = m_textures.find(texture);
     }
 
-    AddVert(rect.x,        rect.y,        u1, v1);
-    AddVert(rect.x+rect.w, rect.y,        u2, v1);
-    AddVert(rect.x,        rect.y+rect.h, u1, v2);
-    AddVert(rect.x+rect.w, rect.y,        u2, v1);
-    AddVert(rect.x+rect.w, rect.y+rect.h, u2, v2);
-    AddVert(rect.x,        rect.y+rect.h, u1, v2);
+    GLTextureData& texData = it->second;
+
+    static const unsigned int iPixelSize = sizeof(unsigned char) * 4;
+
+    if (texData.readable)
+    {
+        unsigned char *pPixel = texData.m_ReadData.get() + (x + (y * static_cast<unsigned int>(texData.width))) * iPixelSize;
+        return Gwk::Color(pPixel[0], pPixel[1], pPixel[2], pPixel[3]);
+    }
+
+    SetTexture(texData.texture_id);
+    texData.m_ReadData = deleted_unique_ptr<unsigned char>(new unsigned char[texData.width * texData.height * iPixelSize], [](unsigned char* mem) { if (mem) delete[](mem); });
+    texData.readable = true;
+
+    glGetTexImage(GL_TEXTURE_2D, 0, GL_RGBA, GL_UNSIGNED_BYTE, texData.m_ReadData.get());
+
+    unsigned char *pPixel = texData.m_ReadData.get() + (x + (y * static_cast<unsigned int>(texData.width))) * iPixelSize;
+    return Gwk::Color(pPixel[0], pPixel[1], pPixel[2], pPixel[3]);
 }
 
-Gwk::Color OpenGLCore::PixelColor(Gwk::Texture* texture, unsigned int x, unsigned int y,
-                              const Gwk::Color& col_default)
+void OpenGLCore::RenderText(const Gwk::Font& font, Gwk::Point pos,
+    const Gwk::String& text)
 {
-    auto* tex = (GLuint*)texture->data;
-
-    if (!tex)
-        return col_default;
-
-    unsigned int iPixelSize = sizeof(unsigned char)*4;
-    glBindTexture(GL_TEXTURE_2D, *tex);
-    auto* data = new unsigned char[iPixelSize * texture->width * texture->height];
-    glGetTexImage(GL_TEXTURE_2D, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
-    unsigned int iOffset = (y*texture->width+x)*4;
-
-    Color c(data[0+iOffset], data[1+iOffset], data[2+iOffset], data[3+iOffset]);
-
-    // Retrieving the entire texture for a single pixel read
-    // is kind of a waste - maybe cache this pointer in the texture
-    // data and then release later on? It's never called during runtime
-    // - only during initialization.
-    delete[] data;
-    glBindTexture(GL_TEXTURE_2D, 0);
-
-    return c;
-}
-
-void OpenGLCore::RenderText(Gwk::Font* font, Gwk::Point pos,
-                        const Gwk::String& text)
-{
-    FontData* fontdata = dynamic_cast<FontData*>(font->data.get());
-
-    if (fontdata == nullptr)
+    if (!EnsureFont(font))
         return;
 
-    Texture tex;
-    tex.data = &fontdata.textureId;
+    // at this point, the font is garented created
+    auto& it = m_fonts.find(font);
+    // but double check :)
+    if (it == m_fonts.cend())
+        return;
 
-    float x = pos.x, y = pos.y;
-    const char *pc = text.c_str();
-    size_t slen = text.length();
+    GLFontData& fontData = it->second;
 
-    // Height of font, allowing for descenders, because baseline is bottom of capitals.
-    const float height = font->realsize * c_pointsToPixels * 0.8f;
-
-    while (slen > 0)
+    if (m_current_texture != fontData.texture_id)
     {
-        if (*pc >= 32 && *pc <= 127)
-        {
-            stbtt_aligned_quad q;
-            stbtt_GetBakedQuad(static_cast<stbtt_bakedchar*>(font->render_data),
-                               c_texsz,c_texsz,
-                               *pc - 32,
-                               &x, &y, &q, 1); // 1=opengl & d3d10+,0=d3d9
+        Flush();
+        SetTexture(fontData.texture_id);
+    }
+    m_activeProgram = 2;
+    float x = pos.x, y = pos.y;
+    char* text_ptr = const_cast<char*>(text.c_str());
+    // Height of font, allowing for descenders, because baseline is bottom of capitals.
+    const float height = font.size * Scale() * c_pointsToPixels * 0.8f;
 
-            DrawTexturedFontRect(
-                &tex,
-                Rect(
-                    static_cast<int>(q.x0),
-                    static_cast<int>(q.y0 + height),
-                    static_cast<int>(q.x1 - q.x0),
-                    static_cast<int>(q.y1 - q.y0)
-                ),
-                q.s0,
-                q.t0,
-                q.s1,
-                q.t1
-            );
-        }
-        ++pc;
-        --slen;
+    while (const auto wide_char = Utility::Strings::utf8_to_wchart(text_ptr))
+    {
+        const auto c = wide_char - BeginCharacter;
+
+        if (wide_char < BeginCharacter || wide_char > LastCharacter)
+            continue;
+
+        stbtt_aligned_quad q;
+        stbtt_GetBakedQuad(reinterpret_cast<stbtt_bakedchar*>(fontData.baked_chars.data()),
+            c_texsz, c_texsz,
+            c,
+            &x, &y, &q, 1); // 1=opengl & d3d10+,0=d3d9
+
+        Rect rect(q.x0, q.y0 + height, q.x1 - q.x0, q.y1 - q.y0);
+
+        Translate(rect);
+
+        AddVert(rect.x, rect.y, q.s0, q.t0);
+        AddVert(rect.x + rect.w, rect.y, q.s1, q.t0);
+        AddVert(rect.x, rect.y + rect.h, q.s0, q.t1);
+        AddVert(rect.x + rect.w, rect.y, q.s1, q.t0);
+        AddVert(rect.x + rect.w, rect.y + rect.h, q.s1, q.t1);
+        AddVert(rect.x, rect.y + rect.h, q.s0, q.t1);
     }
 }
 
-Gwk::Point OpenGLCore::MeasureText(Gwk::Font* font, const Gwk::String& text)
+Gwk::Point OpenGLCore::MeasureText(const Gwk::Font& font, const Gwk::String& text)
 {
+    if (!EnsureFont(font))
+        return Gwk::Point(0, 0);
 
-    if (!EnsureFont(*font))
-        return {0, 0};
+    // at this point, the font is garented created
+    auto& it = m_fonts.find(font);
+    // but double check :)
+    if (it == m_fonts.cend())
+        return Gwk::Point(0, 0);
 
-    Point sz(0, static_cast<int>(font->realsize * c_pointsToPixels));
+    GLFontData& fontData = it->second;
+
+    Point sz(0, font.size * Scale() * c_pointsToPixels);
 
     float x = 0.f, y = 0.f;
-    const char *pc = text.c_str();
-    size_t slen = text.length();
+    char* text_ptr = const_cast<char*>(text.c_str());
 
-    while (slen > 0)
+    while (const auto wide_char = Utility::Strings::utf8_to_wchart(text_ptr))
     {
-        if (*pc >= 32 && *pc <= 127)
-        {
-            stbtt_aligned_quad q;
-            stbtt_GetBakedQuad(static_cast<stbtt_bakedchar*>(font->render_data),
-                               c_texsz,c_texsz,
-                               *pc - 32,
-                               &x, &y, &q, 1); // 1=opengl & d3d10+,0=d3d9
+        const auto c = wide_char - BeginCharacter;
 
-            sz.x = static_cast<int>(q.x1);
-            sz.y = std::max(sz.y, int((q.y1 - q.y0) * c_pointsToPixels));
-        }
-        ++pc, --slen;
+        if (wide_char < BeginCharacter || wide_char > LastCharacter)
+            continue;
+
+
+        stbtt_aligned_quad q;
+        stbtt_GetBakedQuad(reinterpret_cast<stbtt_bakedchar*>(fontData.baked_chars.data()),
+            c_texsz, c_texsz,
+            c,
+            &x, &y, &q, 1); // 1=opengl & d3d10+,0=d3d9
+
+        sz.x = q.x1;
+        sz.y = std::max(sz.y, int((q.y1 - q.y0) * c_pointsToPixels));
     }
 
     return sz;
