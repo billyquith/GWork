@@ -15,45 +15,59 @@ namespace Gwk {
 namespace Renderer {
 
 // Resource Loader
-Font::Status IrrlichtResourceLoader::LoadFont(Font& font)
+Font::Status Irrlicht::LoadFont(const Gwk::Font& font)
 {
     return Font::Status::Loaded;
 }
 
-void IrrlichtResourceLoader::FreeFont(Gwk::Font& font)
+void Irrlicht::FreeFont(const Gwk::Font& font)
 {
 }
 
-Texture::Status IrrlichtResourceLoader::LoadTexture(Texture& texture)
+bool Irrlicht::EnsureFont(const Gwk::Font& font)
 {
-    if (texture.IsLoaded())
-        FreeTexture(texture);
+    return LoadFont(font) == Font::Status::Loaded;
+}
 
-    const String filename = m_paths.GetPath(ResourcePaths::Type::Texture, texture.name);
+Texture::Status Irrlicht::LoadTexture(const Gwk::Texture& texture)
+{
+    FreeTexture(texture);
 
-    irr::video::ITexture* NewTex = m_driver->getTexture(filename.c_str());
+    const String filename = GetResourcePaths().GetPath(ResourcePaths::Type::Texture, texture.name);
+
+    irr::video::ITexture* NewTex = Driver->getTexture(filename.c_str());
     if (!NewTex)
     {
-        texture.status = Texture::Status::ErrorFileNotFound;
+        return Texture::Status::ErrorFileNotFound;
     }
     else
     {
-        const irr::core::dimension2d<irr::u32> TexSize = NewTex->getSize();
-        texture.width = TexSize.Width;
-        texture.height = TexSize.Height;
-        texture.data = NewTex;
-        texture.status = Texture::Status::Loaded;
-    }
+        IRTextureData texData;
 
-    return texture.status;
+        const irr::core::dimension2d<irr::u32> TexSize = NewTex->getSize();
+        texData.texture = deleted_unique_ptr<irr::video::ITexture>(NewTex, [this](irr::video::ITexture* mem) { if (mem) Driver->removeTexture(mem); });
+        texData.readable = false;
+        texData.width = TexSize.Width;
+        texData.height = TexSize.Height;
+        m_textures.insert(std::make_pair(texture, std::move(texData)));
+        return Texture::Status::Loaded;
+    }
 }
 
-void IrrlichtResourceLoader::FreeTexture(Texture& texture)
+void Irrlicht::FreeTexture(const Gwk::Texture& texture)
 {
-    if (texture.IsLoaded())
+    m_textures.erase(texture); // calls IRTextureData destructor
+}
+
+TextureData Irrlicht::GetTextureData(const Texture& texture) const
+{
+    auto& it = m_textures.find(texture);
+    if (it != m_textures.cend())
     {
-        m_driver->removeTexture((irr::video::ITexture*)texture.data);
+        return it->second;
     }
+    // Texture not loaded :(
+    return TextureData();
 }
 
 //
@@ -137,8 +151,8 @@ public:
 //
 //  Irrlicht Renderer
 //
-Irrlicht::Irrlicht(irr::IrrlichtDevice* Device, IrrlichtResourceLoader& loader)
-    :   Base(loader)
+Irrlicht::Irrlicht(ResourcePaths& paths, irr::IrrlichtDevice* Device)
+    :   Base(paths)
     ,   m_CTT(new IrrlichtCTT(Device->getVideoDriver()))
     ,   Driver(Device->getVideoDriver())
 {
@@ -173,22 +187,36 @@ void Irrlicht::EndClip()
 }
 
 
-Gwk::Color Irrlicht::PixelColor(Gwk::Texture* pTexture,
+Gwk::Color Irrlicht::PixelColor(const Gwk::Texture& texture,
                                 unsigned int x, unsigned int y, const Gwk::Color& col_default)
 {
-    if (pTexture->IsLoaded())
+    auto& it = m_textures.find(texture);
+    if (it == m_textures.cend())
     {
-        irr::video::ITexture* Texture = (irr::video::ITexture*)pTexture->data;
+        if (LoadTexture(texture) != Texture::Status::Loaded)
+            return col_default;
 
-        const irr::u32 pitch = Texture->getPitch();
-        const irr::video::ECOLOR_FORMAT format = Texture->getColorFormat();
-        const irr::u32 bytes = irr::video::IImage::getBitsPerPixelFromFormat(format) / 8;
+        it = m_textures.find(texture);
+    }
+
+    IRTextureData& texData = it->second;
+
+    irr::video::ITexture* Texture = texData.texture.get();
+
+    const irr::u32 pitch = Texture->getPitch();
+    const irr::video::ECOLOR_FORMAT format = Texture->getColorFormat();
+    const irr::u32 bytes = irr::video::IImage::getBitsPerPixelFromFormat(format) / 8;
+
+    if (!texData.readable)
+    {
 
         unsigned char* buffer = (unsigned char*)Texture->lock();
         if (buffer)
         {
-            const irr::video::SColor pixelColor =
-                irr::video::SColor(*(unsigned int*)(buffer + (y * pitch) + (x*bytes)));
+            texData.m_ReadData = deleted_unique_ptr<unsigned char>(new unsigned char[texData.width * texData.height * bytes], [](unsigned char* mem) { if (mem) delete[](mem); });
+            memcpy(texData.m_ReadData.get(), buffer, texData.width * texData.height * bytes);
+            texData.readable = true;
+            const irr::video::SColor pixelColor = irr::video::SColor(*(unsigned int*)(buffer + (y * pitch) + (x*bytes)));
             Texture->unlock();
             return Gwk::Color(pixelColor.getRed(),
                               pixelColor.getGreen(),
@@ -196,10 +224,19 @@ Gwk::Color Irrlicht::PixelColor(Gwk::Texture* pTexture,
                               pixelColor.getAlpha());
         }
     }
+    else
+    {
+
+        const irr::video::SColor pixelColor = irr::video::SColor(*(unsigned int*)(texData.m_ReadData.get() + (y * pitch) + (x*bytes)));
+        return Gwk::Color(pixelColor.getRed(),
+            pixelColor.getGreen(),
+            pixelColor.getBlue(),
+            pixelColor.getAlpha());
+    }
     return col_default;
 }
 
-void Irrlicht::RenderText(Gwk::Font* pFont, Gwk::Point pos, const Gwk::String & text)
+void Irrlicht::RenderText(const Gwk::Font& font, Gwk::Point pos, const Gwk::String & text)
 {
     Translate(pos.x, pos.y);
     Text->draw(text.c_str(),
@@ -210,7 +247,7 @@ void Irrlicht::RenderText(Gwk::Font* pFont, Gwk::Point pos, const Gwk::String & 
         &ClipRect);
 }
 
-Gwk::Point Irrlicht::MeasureText(Gwk::Font* pFont, const Gwk::String & text)
+Gwk::Point Irrlicht::MeasureText(const Gwk::Font& font, const Gwk::String & text)
 {
     // Get size of string from Irrlicht (hopefully correct for TTF stuff)
     const std::wstring wText(text.begin(), text.end());
@@ -219,27 +256,36 @@ Gwk::Point Irrlicht::MeasureText(Gwk::Font* pFont, const Gwk::String & text)
     return Gwk::Point(irrDimension.Width, irrDimension.Height);;
 }
 
-void Irrlicht::DrawTexturedRect(Gwk::Texture* pTexture,
-                                Gwk::Rect pTargetRect,
-                                float u1, float v1, float u2, float v2)
+void Irrlicht::DrawTexturedRect(const Gwk::Texture& texture,
+    Gwk::Rect pTargetRect,
+    float u1, float v1, float u2, float v2)
 {
-    if (pTexture->IsLoaded())
+    Translate(pTargetRect);
+
+    auto& it = m_textures.find(texture);
+    if (it == m_textures.cend())
     {
-        const unsigned int w = pTexture->width;
-        const unsigned int h = pTexture->height;
+        if (LoadTexture(texture) != Texture::Status::Loaded)
+            return DrawMissingImage(pTargetRect);
 
-        Translate(pTargetRect);
-
-        Driver->draw2DImage((irr::video::ITexture*)pTexture->data,
-            irr::core::rect<irr::s32>(pTargetRect.x,
-                                      pTargetRect.y,
-                                      pTargetRect.x + pTargetRect.w,
-                                      pTargetRect.y + pTargetRect.h),
-            irr::core::rect<irr::s32>(u1*w, v1*h, u2*w, v2*h),
-            &ClipRect,
-            0,
-            true);
+        it = m_textures.find(texture);
     }
+
+    IRTextureData& texData = it->second;
+
+    const unsigned int w = texData.width;
+    const unsigned int h = texData.height;
+
+    Driver->draw2DImage(texData.texture.get(),
+        irr::core::rect<irr::s32>(pTargetRect.x,
+            pTargetRect.y,
+            pTargetRect.x + pTargetRect.w,
+            pTargetRect.y + pTargetRect.h),
+        irr::core::rect<irr::s32>(u1*w, v1*h, u2*w, v2*h),
+        &ClipRect,
+        0,
+        true);
+
 }
 
 void Irrlicht::DrawFilledRect(Gwk::Rect rect)
