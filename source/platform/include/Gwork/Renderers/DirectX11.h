@@ -11,6 +11,9 @@
 #include <Gwork/BaseRender.h>
 #include <d3d11.h>
 #include <vector>
+#include <unordered_map>
+#include <memory>
+#include <functional>
 
 namespace Gwk
 {
@@ -20,27 +23,6 @@ namespace Gwk
         static const wchar_t LastCharacter = 0x2FFF;   // Last Character of Wide Character Table
         static const wchar_t NewLineCharacter = L'\n'; // New Line Character
 
-        //! Default resource loader for DirectX 11.
-        class DirectX11ResourceLoader : public ResourceLoader
-        {
-            ResourcePaths&          m_paths;
-            ID3D11Device*           m_pDevice;
-            Gwk::Font::List         m_FontList;
-        public:
-            DirectX11ResourceLoader(ResourcePaths& paths, ID3D11Device* pDevice)
-                :   m_paths(paths)
-                ,   m_pDevice(pDevice)
-            {}
-
-            ~DirectX11ResourceLoader();
-
-            Font::Status LoadFont(Font& font) override;
-            void FreeFont(Font& font) override;
-
-            Texture::Status LoadTexture(Texture& texture) override;
-            void FreeTexture(Texture& texture) override;
-        };
-
 #define GwkDxSafeRelease(var) if(var != nullptr) {var->Release(); var = nullptr;}
 
         //
@@ -48,9 +30,12 @@ namespace Gwk
         //
         class GWK_EXPORT DirectX11 : public Gwk::Renderer::Base
         {
+            template<typename T>
+            using deleted_unique_ptr = std::unique_ptr<T, std::function<void(T*)>>;
+
         public:
 
-            DirectX11(ResourceLoader& loader, ID3D11Device* pDevice = nullptr);
+            DirectX11(ResourcePaths& loader, ID3D11Device* pDevice = nullptr);
             virtual ~DirectX11();
 
             virtual void Init();
@@ -63,15 +48,23 @@ namespace Gwk
 
             void DrawFilledRect(Gwk::Rect rect) final;
 
-            void RenderText(Gwk::Font* pFont, Gwk::Point pos, const Gwk::String& text) final;
-            Gwk::Point MeasureText(Gwk::Font* pFont, const Gwk::String& text) final;
+            void RenderText(const Gwk::Font& font, Gwk::Point pos, const Gwk::String& text) final;
+            Gwk::Point MeasureText(const Gwk::Font& font, const Gwk::String& text) final;
 
             void StartClip();
             void EndClip();
 
-            void DrawTexturedRect(Gwk::Texture* pTexture, Gwk::Rect pTargetRect,
+            void DrawTexturedRect(const Gwk::Texture& texture, Gwk::Rect pTargetRect,
                                   float u1 = 0.0f, float v1 = 0.0f, float u2 = 1.0f, float v2 = 1.0f) final;
-            Gwk::Color PixelColor(Gwk::Texture* pTexture, unsigned int x, unsigned int y, const Gwk::Color& col_default) final;
+            Gwk::Color PixelColor(const Gwk::Texture& texture, unsigned int x, unsigned int y, const Gwk::Color& col_default) final;
+            // Resource Loader
+            Gwk::Font::Status LoadFont(const Gwk::Font& font) override;
+            void FreeFont(const Gwk::Font& font) override;
+            bool EnsureFont(const Gwk::Font& font) override;
+
+            Texture::Status LoadTexture(const Gwk::Texture& texture) override;
+            void FreeTexture(const Gwk::Texture& texture) override;
+            const TextureData& GetTextureData(const Gwk::Texture& texture) const override;
 
         protected:
 
@@ -84,7 +77,6 @@ namespace Gwk
             ID3D11Device*           m_pDevice;
             IDXGISwapChain*         m_pSwapChain;
             ID3D11PixelShader*      m_pPixShader;
-            ID3D11PixelShader*      m_pTexPixShader;
             ID3D11VertexShader*     m_pVertShader;
             ID3D11DeviceContext*    m_pContext;
             ID3D11BlendState*       m_pBlendState;
@@ -108,6 +100,84 @@ namespace Gwk
             ID3D11DepthStencilState* m_LastDepthState;
             ID3D11RasterizerState*  m_pUILastRasterizerState;
             D3D11_RECT              region;
+        protected:// Resourses
+
+            struct DxTextureData : public Gwk::TextureData
+            {
+                DxTextureData()
+                    : m_Texture(nullptr)
+                    , m_TextureResource(nullptr)
+                {
+                }
+                DxTextureData(const DxTextureData&) = delete;
+                DxTextureData(DxTextureData&& other)
+                    : DxTextureData()
+                {
+                    std::swap(width, other.width);
+                    std::swap(height, other.height);
+                    std::swap(m_Texture, other.m_Texture);
+                    std::swap(m_TextureResource, other.m_TextureResource);
+
+                    m_ReadData.swap(other.m_ReadData);
+                }
+
+                ~DxTextureData()
+                {
+                    GwkDxSafeRelease(m_TextureResource);
+                    GwkDxSafeRelease(m_Texture);
+                }
+
+                ID3D11Texture2D* m_Texture;
+                ID3D11ShaderResourceView* m_TextureResource;
+                deleted_unique_ptr<unsigned char> m_ReadData;
+            };
+
+            struct DxFontData
+            {
+                DxFontData()
+                    : m_Spacing(0.f)
+                    , m_Texture(nullptr)
+                    , m_TextureResource(nullptr)
+                {
+                }
+
+                DxFontData(const DxFontData&) = delete;
+                DxFontData(DxFontData&& other)
+                    : DxFontData()
+                {
+                    std::swap(width, other.width);
+                    std::swap(height, other.height);
+                    std::swap(m_Texture, other.m_Texture);
+                    std::swap(m_TextureResource, other.m_TextureResource);
+                    std::swap(m_TexCoords, other.m_TexCoords);
+                }
+
+                ~DxFontData()
+                {
+                    GwkDxSafeRelease(m_TextureResource);
+                    GwkDxSafeRelease(m_Texture);
+                }
+
+                __declspec(align(16)) struct FLOAT4
+                {
+                    float x, y, z, w;
+                    FLOAT4(float _x, float _y, float _z, float _w) : x(_x), y(_y), z(_z), w(_w) {}
+                    FLOAT4() : FLOAT4(0, 0, 0, 0) {}
+                    FLOAT4& operator= (const FLOAT4& rhs) { x = rhs.x; y = rhs.y; z = rhs.z; w = rhs.w; return *this; }
+                };
+
+                std::vector<FLOAT4> m_TexCoords;
+
+                float   m_Spacing;
+
+                float width;
+                float height;
+                ID3D11Texture2D* m_Texture;
+                ID3D11ShaderResourceView* m_TextureResource;
+            };
+
+            std::unordered_map<Font, DxFontData> m_fonts;
+            std::unordered_map<Texture, DxTextureData> m_textures;
 
             void Flush();
             void Present();
