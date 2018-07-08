@@ -15,8 +15,10 @@
 
 int main(int argc, char** argv)
 {
+    // Create resource path calculator.
+    Gwk::Platform::RelativeToExecutablePaths paths(GWORK_RESOURCE_DIR);
     // Create a Gwork Allegro Renderer
-    Gwk::Renderer::Null* renderer = new Gwk::Renderer::Null();
+    Gwk::Renderer::Null* renderer = new Gwk::Renderer::Null(paths);
 
     // Create a Gwork skin
     Gwk::Skin::TexturedBase skin(renderer);
