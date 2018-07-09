@@ -19,6 +19,7 @@
 #include <string>
 #include <list>
 #include <memory>
+#include <functional>
 
 namespace Gwk
 {
