@@ -16,10 +16,10 @@
 #endif
 
 #include <Gwork/Config.h>
+#include <functional>
 #include <string>
 #include <list>
 #include <memory>
-#include <functional>
 
 namespace Gwk
 {
@@ -345,10 +345,9 @@ namespace Gwk
     };
 
     template <class T>
-    inline void hash_combine(size_t& seed, const T& v)
+    static inline void hash_combine(size_t& seed, const T& v)
     {
-        std::hash<T> hasher;
-        seed ^= hasher(v) + 0x9e3779b9 + (seed << 6) + (seed >> 2);
+        seed ^= std::hash<T>{}(v) + 0x9e3779b9 + (seed << 6) + (seed >> 2);
     }
 } // namespace Gwk
 
@@ -365,8 +364,8 @@ namespace std
         {
             result_type res = std::hash<Gwk::String>{}(f.facename);
 
-            Gwk::hash_combine<float>(res, f.size);
-            Gwk::hash_combine<bool>(res, f.bold);
+            Gwk::hash_combine<decltype(f.size)>(res, f.size);
+            Gwk::hash_combine<decltype(f.bold)>(res, f.bold);
 
             return res;
         }
@@ -379,7 +378,7 @@ namespace std
 
         result_type operator()(argument_type const& f) const noexcept
         {
-            return std::hash<Gwk::String>{}(f.name);
+            return std::hash<decltype(f.name)>{}(f.name);
         }
     };
 } // namespace std
