@@ -93,14 +93,15 @@ namespace Gwk
             Texture::Status LoadTexture(const Gwk::Texture& texture) override;
             void FreeTexture(const Gwk::Texture& texture) override;
             TextureData GetTextureData(const Gwk::Texture& texture) const override;
+            
         protected:// Resourses
 
             struct SWTextureData : public Gwk::TextureData
             {
-                SWTextureData()
-                {
-                }
+                SWTextureData() {}
+
                 SWTextureData(const SWTextureData&) = delete;
+                
                 SWTextureData(SWTextureData&& other)
                     : SWTextureData()
                 {
@@ -111,15 +112,23 @@ namespace Gwk
                     m_ReadData.swap(other.m_ReadData);
                 }
 
-                ~SWTextureData()
-                {}
+                ~SWTextureData() {}
 
-                Point GetSize() const { return Point(static_cast<int>(width), static_cast<int>(height)); }
+                Point GetSize() const
+                {
+                    return Point(static_cast<int>(width), static_cast<int>(height));
+                }
 
-                Color& At(int x, int y) { return (reinterpret_cast<Color*>(m_ReadData.get()))[y * static_cast<int>(width) + x]; }
+                Color& At(int x, int y)
+                {
+                    return (reinterpret_cast<Color*>(m_ReadData.get()))[y * static_cast<int>(width) + x];
+                }
                 Color& At(Point const& pt) { return At(pt.x, pt.y); }
 
-                const Color& At(int x, int y) const { return (reinterpret_cast<Color*>(m_ReadData.get()))[y * static_cast<int>(width) + x]; }
+                const Color& At(int x, int y) const
+                {
+                    return (reinterpret_cast<Color*>(m_ReadData.get()))[y * static_cast<int>(width) + x];
+                }
                 const Color& At(Point const& pt) const { return At(pt.x, pt.y); }
 
                 deleted_unique_ptr<unsigned char> m_ReadData;
@@ -129,8 +138,7 @@ namespace Gwk
             {
                 SWFontData()
                     : m_Spacing(0.f)
-                {
-                }
+                {}
 
                 SWFontData(const SWFontData&) = delete;
                 SWFontData(SWFontData&& other)
@@ -164,6 +172,7 @@ namespace Gwk
 
             std::unordered_map<Font, SWFontData> m_fonts;
             std::unordered_map<Texture, SWTextureData> m_textures;
+            
         public:
 
             bool BeginContext(Gwk::WindowProvider* window) override

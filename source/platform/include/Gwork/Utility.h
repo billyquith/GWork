@@ -87,7 +87,6 @@ namespace Gwk
 
             static inline wchar_t utf8_to_wchart(char*& in)// Gwk::Utility::Widen too slow
             {
-
                 unsigned int codepoint;
                 while (*in != 0)
                 {

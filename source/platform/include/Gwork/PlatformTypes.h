@@ -57,7 +57,7 @@ namespace Gwk
     struct GWK_EXPORT Point
     {
         Point(int x_=0, int y_=0)
-        :   x(x_), y(y_)
+        :   x(x_) , y(y_)
         {}
 
         void set(int x_, int y_)
@@ -127,10 +127,7 @@ namespace Gwk
               unsigned char g_=255,
               unsigned char b_=255,
               unsigned char a_=255)
-        :   r(r_)
-        ,   g(g_)
-        ,   b(b_)
-        ,   a(a_)
+        :   r(r_), g(g_), b(b_), a(a_)
         {}
 
         Color(const Color& c)
@@ -250,7 +247,10 @@ namespace Gwk
         Font(const Font&) = default;
         Font& operator=(const Font&) = default;
 
-        inline bool operator==(const Font& rhs) const { return facename == rhs.facename && size == rhs.size && bold == rhs.bold; }
+        inline bool operator==(const Font& rhs) const
+        {
+            return facename == rhs.facename && size == rhs.size && bold == rhs.bold;
+        }
 
         String facename;
         float size;
@@ -287,7 +287,8 @@ namespace Gwk
     struct TextureData
     {
         TextureData()
-            : width(0.f), height(0.f){}
+            :   width(0.f), height(0.f)
+        {}
 
         float width;
         float height;

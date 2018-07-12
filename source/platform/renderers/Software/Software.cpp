@@ -121,12 +121,14 @@ Font::Status Software::LoadFont(const Font& font)
     inFile.seekg(0, std::ios::beg);
     assert(fsz > 0);
 
-    std::unique_ptr<unsigned char[]> ttfdata = std::unique_ptr<unsigned char[]>(new unsigned char[fsz]);
+    auto ttfdata = std::unique_ptr<unsigned char[]>(new unsigned char[fsz]);
     inFile.read(reinterpret_cast<char*>(ttfdata.get()), fsz);
     inFile.close();
 
     SWFontData fontData;
-    fontData.m_ReadData = deleted_unique_ptr<unsigned char>(new unsigned char[c_texsz * c_texsz], [](unsigned char* mem) { if (mem) delete [] mem; });
+    fontData.m_ReadData =
+        deleted_unique_ptr<unsigned char>(new unsigned char[c_texsz * c_texsz],
+                                          [](unsigned char* mem) { delete [] mem; });
     fontData.width = c_texsz;
     fontData.height = c_texsz;
 
@@ -139,7 +141,6 @@ Font::Status Software::LoadFont(const Font& font)
         c_texsz, c_texsz,
         BeginCharacter, LastCharacter,             // range to bake
         reinterpret_cast<stbtt_bakedchar*>(fontData.baked_chars.data()));
-
 
     m_fonts.insert(std::make_pair(font, std::move(fontData)));
     return Font::Status::Loaded;
@@ -171,7 +172,11 @@ Texture::Status Software::LoadTexture(const Texture& texture)
     int width, height, n;
     {
         unsigned char *image = stbi_load(filename.c_str(), &width, &height, &n, 4);
-        texData.m_ReadData = deleted_unique_ptr<unsigned char>(image, [](unsigned char* mem) { if (mem) stbi_image_free(mem); });
+        texData.m_ReadData =
+            deleted_unique_ptr<unsigned char>(image,
+                                              [](unsigned char* mem) {
+                                                  if (mem) stbi_image_free(mem);
+                                              });
     }
 
     // Image failed to load..
@@ -249,12 +254,11 @@ Gwk::Point Software::MeasureText(const Gwk::Font& font, const Gwk::String& text)
         if (wide_char < BeginCharacter || wide_char > LastCharacter)
             continue;
 
-
         stbtt_aligned_quad q;
         stbtt_GetBakedQuad(reinterpret_cast<stbtt_bakedchar*>(fontData.baked_chars.data()),
-            c_texsz, c_texsz,
-            c,
-            &x, &y, &q, 1); // 1=opengl & d3d10+,0=d3d9
+                           c_texsz, c_texsz,
+                           c,
+                           &x, &y, &q, 1); // 1=opengl & d3d10+,0=d3d9
 
         sz.x = q.x1;
         sz.y = std::max(sz.y, int((q.y1 - q.y0) * c_pointsToPixels));

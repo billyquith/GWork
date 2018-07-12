@@ -13,10 +13,9 @@
 #include <Gwork/Controls/Base.h>
 #include <Gwork/BaseRender.h>
 
-namespace Gwk
-{
-    namespace Controls
-    {
+namespace Gwk {
+    namespace Controls {
+        
         class GWK_EXPORT ImagePanel : public Controls::Base
         {
         public:
@@ -51,13 +50,15 @@ namespace Gwk
                 Texture::Status m_status = loader.LoadTexture(m_texture);
                 switch (m_status)
                 {
-                case Texture::Status::Loaded:
-                {
-                    TextureData texData = loader.GetTextureData(m_texture);
-                    m_texWidth = texData.width;
-                    m_texHeight = texData.height;
-                    break;
-                }
+                    case Texture::Status::Loaded:
+                    {
+                        TextureData texData = loader.GetTextureData(m_texture);
+                        m_texWidth = texData.width;
+                        m_texHeight = texData.height;
+                        break;
+                    }
+                    default:
+                        ;
                 }
             }
 
@@ -90,15 +91,14 @@ namespace Gwk
                 if (m_bStretch)
                 {
                     render->DrawTexturedRect(m_texture,
-                                                        GetRenderBounds(),
-                                                        m_uv[0], m_uv[1], m_uv[2], m_uv[3]);
+                                             GetRenderBounds(),
+                                             m_uv[0], m_uv[1], m_uv[2], m_uv[3]);
                 }
                 else
                 {
                     render->DrawTexturedRect(m_texture,
-                                                        Gwk::Rect(0, 0,
-                                                            m_texWidth, m_texHeight),
-                                                        m_uv[0], m_uv[1], m_uv[2], m_uv[3]);
+                                             Gwk::Rect(0, 0, m_texWidth, m_texHeight),
+                                             m_uv[0], m_uv[1], m_uv[2], m_uv[3]);
                 }
             }
 
@@ -138,7 +138,6 @@ namespace Gwk
             Texture::Status m_status;
 
         };
-
 
     }
 }
