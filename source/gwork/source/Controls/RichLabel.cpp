@@ -59,7 +59,7 @@ bool RichLabel::SizeToChildren(bool w, bool h)
     return ParentClass::SizeToChildren(w, h);
 }
 
-void RichLabel::SplitLabel(const Gwk::String& text, Gwk::Font* font,
+void RichLabel::SplitLabel(const Gwk::String& text, const Gwk::Font& font,
                            const DividedText& txt, int& x, int& y, int& lineheight)
 {
     Gwk::Utility::Strings::List lst;
@@ -118,7 +118,7 @@ void RichLabel::CreateLabel(const Gwk::String& text, const DividedText& txt, int
     //
     // Use default font or is one set?
     //
-    Gwk::Font* font = GetSkin()->GetDefaultFont();
+    const Gwk::Font* font = &GetSkin()->GetDefaultFont();
 
     if (txt.font)
         font = txt.font;
@@ -126,7 +126,7 @@ void RichLabel::CreateLabel(const Gwk::String& text, const DividedText& txt, int
     //
     // This string is too long for us, split it up.
     //
-    Gwk::Point p = GetSkin()->GetRender()->MeasureText(font, text);
+    Gwk::Point p = GetSkin()->GetRender()->MeasureText(*font, text);
 
     if (lineheight == -1)
         lineheight = p.y;
@@ -134,7 +134,7 @@ void RichLabel::CreateLabel(const Gwk::String& text, const DividedText& txt, int
     if (!NoSplit)
     {
         if (x+p.x > Width())
-            return SplitLabel(text, font, txt, x, y, lineheight);
+            return SplitLabel(text, *font, txt, x, y, lineheight);
     }
 
     //
@@ -147,7 +147,7 @@ void RichLabel::CreateLabel(const Gwk::String& text, const DividedText& txt, int
     label->SetText(x == 0 ? Gwk::Utility::Strings::TrimLeft<Gwk::String>(text,
                                                                                    " ") : text);
     label->SetTextColor(txt.color);
-    label->SetFont(font);
+    label->SetFont(*font);
     label->SizeToContents();
     label->SetPos(x, y);
     // lineheight = (lineheight + label->Height()) / 2;

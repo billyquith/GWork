@@ -73,14 +73,13 @@ int main()
     }
 
     Gwk::Platform::RelativeToExecutablePaths paths(GWORK_RESOURCE_DIR);
-    Gwk::Renderer::OpenGLResourceLoader loader(paths);
 
     // Create a Gwork OpenGL Renderer
 #ifdef USE_DEBUG_FONT
     Gwk::Renderer::OpenGL* renderer = new Gwk::Renderer::OpenGL_DebugFont();
 #else
     Gwk::Renderer::OpenGLCore* renderer =
-        new Gwk::Renderer::OpenGLCore(loader, Gwk::Rect(Gwk::Point(0,0), screenSize));
+        new Gwk::Renderer::OpenGLCore(paths, Gwk::Rect(Gwk::Point(0,0), screenSize));
 #endif
     renderer->Init();
 

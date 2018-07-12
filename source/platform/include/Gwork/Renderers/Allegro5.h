@@ -12,54 +12,106 @@
 
 #include <Gwork/BaseRender.h>
 #include <allegro5/allegro5.h>
+#include <unordered_map>
+#include <memory>
+#include <vector>
+#include <functional>
 
+typedef struct ALLEGRO_FONT ALLEGRO_FONT;
 namespace Gwk
 {
     namespace Renderer
     {
         class AllegroCTT;
-
-        //! Default resource loader for Allegro5.
-        class AllegroResourceLoader : public ResourceLoader
-        {
-            ResourcePaths& m_paths;
-        public:
-            AllegroResourceLoader(ResourcePaths& paths) : m_paths(paths) {}
-
-            Font::Status LoadFont(Font& font) override;
-            void FreeFont(Font& font) override;
-
-            Texture::Status LoadTexture(Texture& texture) override;
-            void FreeTexture(Texture& texture) override;
-        };
-
+        
         //
         //! Renderer for [Allegro5](http://liballeg.org/).
         //
         class GWK_EXPORT Allegro : public Gwk::Renderer::Base
         {
+            template<typename T>
+            using deleted_unique_ptr = std::unique_ptr<T, std::function<void(T*)>>;
         public:
 
-            Allegro(ResourceLoader& loader);
+            Allegro(ResourcePaths& paths);
             virtual ~Allegro();
 
             void SetDrawColor(Gwk::Color color) override;
 
             void DrawFilledRect(Gwk::Rect rect) override;
 
-            void RenderText(Gwk::Font* font, Gwk::Point pos,
-                                    const Gwk::String& text) override;
-            Gwk::Point MeasureText(Gwk::Font* font, const Gwk::String& text) override;
 
             void StartClip() override;
             void EndClip() override;
 
-            void DrawTexturedRect(Gwk::Texture* texture, Gwk::Rect targetRect,
-                                  float u1 = 0.0f, float v1 = 0.0f,
-                                  float u2 = 1.0f, float v2 = 1.0f) override;
-            Gwk::Color  PixelColor(Gwk::Texture* texture, unsigned int x, unsigned int y,
-                                   const Gwk::Color& col_default) override;
+            void DrawTexturedRect(const Gwk::Texture& texture, Gwk::Rect targetRect, float u1 = 0.0f,
+                float v1 = 0.0f, float u2 = 1.0f, float v2 = 1.0f) override;
 
+            Gwk::Color PixelColor(const Gwk::Texture& texture,
+                unsigned int x, unsigned int y,
+                const Gwk::Color& col_default) override;
+
+            void RenderText(const Gwk::Font& font,
+                Gwk::Point pos,
+                const Gwk::String& text) override;
+
+            Gwk::Point MeasureText(const Gwk::Font& font, const Gwk::String& text) override;
+
+            // Resource Loader
+            Gwk::Font::Status LoadFont(const Gwk::Font& font) override;
+            void FreeFont(const Gwk::Font& font) override;
+            bool EnsureFont(const Gwk::Font& font) override;
+
+            Texture::Status LoadTexture(const Gwk::Texture& texture) override;
+            void FreeTexture(const Gwk::Texture& texture) override;
+            TextureData GetTextureData(const Gwk::Texture& texture) const override;
+        protected:// Resourses
+
+            struct ALTextureData : public Gwk::TextureData
+            {
+                ALTextureData()
+                {
+                }
+                ALTextureData(const ALTextureData&) = delete;
+                ALTextureData(ALTextureData&& other)
+                    : ALTextureData()
+                {
+                    std::swap(width, other.width);
+                    std::swap(height, other.height);
+                    std::swap(readable, other.readable);
+                    texture.swap(other.texture);
+                }
+
+                ~ALTextureData()
+                {
+
+                }
+
+                deleted_unique_ptr<ALLEGRO_BITMAP> texture;
+            };
+
+            struct ALFontData
+            {
+                ALFontData()
+                {
+                }
+
+                ALFontData(const ALFontData&) = delete;
+                ALFontData(ALFontData&& other)
+                    : ALFontData()
+                {
+                    font.swap(other.font);
+                }
+
+                ~ALFontData()
+                {
+                }
+                deleted_unique_ptr<ALLEGRO_FONT> font;
+            };
+
+            std::unordered_map<Font, ALFontData> m_fonts;
+            std::unordered_map<Texture, ALTextureData> m_textures;
+        public:
             void DrawLinedRect(Gwk::Rect rect) override;
             void DrawShavedCornerRect(Gwk::Rect rect, bool bSlight = false) override;
             // void DrawPixel(int x, int y);

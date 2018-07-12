@@ -36,9 +36,8 @@ int main(int argc, char** argv)
     SDL_Renderer *sdlRenderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 
     Gwk::Platform::RelativeToExecutablePaths paths(GWORK_RESOURCE_DIR);
-    Gwk::Renderer::SDL2ResourceLoader loader(paths, sdlRenderer);
 
-    Gwk::Renderer::SDL2 *renderer = new Gwk::Renderer::SDL2(loader, window);
+    Gwk::Renderer::SDL2 *renderer = new Gwk::Renderer::SDL2(paths, window);
 
     // Create a Gwork skin
     auto skin = new Gwk::Skin::TexturedBase(renderer);

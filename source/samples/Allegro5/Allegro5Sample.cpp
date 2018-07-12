@@ -47,10 +47,9 @@ int main(int argc, char** argv)
     al_register_event_source(event_queue, al_get_keyboard_event_source());
 
     Gwk::Platform::RelativeToExecutablePaths paths(GWORK_RESOURCE_DIR);
-    Gwk::Renderer::AllegroResourceLoader loader(paths);
 
     // Create a Gwork Allegro Renderer
-    Gwk::Renderer::Allegro* renderer = new Gwk::Renderer::Allegro(loader);
+    Gwk::Renderer::Allegro* renderer = new Gwk::Renderer::Allegro(paths);
 
     // Create a Gwork skin
     auto skin = new Gwk::Skin::TexturedBase(renderer);

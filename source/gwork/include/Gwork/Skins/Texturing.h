@@ -25,11 +25,11 @@ namespace Gwk
                 :   m_texture(nullptr)
                 {}
 
-                void Init( Texture* texture, float x, float y, float w, float h )
+                void Init( Texture* texture, const TextureData& texData, float x, float y, float w, float h )
                 {
                     m_texture = texture;
-                    float const texw = texture->width;
-                    float const texh = texture->height;
+                    float const texw = texData.width;
+                    float const texh = texData.height;
                     m_uv[0] = x / texw;
                     m_uv[1] = y / texh;
                     m_uv[2] = ( x + w ) / texw;
@@ -44,7 +44,7 @@ namespace Gwk
                         return;
 
                     render->SetDrawColor( col );
-                    render->DrawTexturedRect( m_texture, r, m_uv[0], m_uv[1], m_uv[2], m_uv[3] );
+                    render->DrawTexturedRect( *m_texture, r, m_uv[0], m_uv[1], m_uv[2], m_uv[3] );
                 }
 
                 void DrawCenter( Gwk::Renderer::Base* render, Gwk::Rect r, const Gwk::Color & col = Gwk::Colors::White )
@@ -78,12 +78,13 @@ namespace Gwk
             struct Bordered
             {
                 Bordered()
-                :   m_texture(nullptr)
+                    : m_texture(nullptr)
                 {}
 
-                void Init( Texture* texture, float x, float y, float w, float h, Margin in_margin, float DrawMarginScale = 1.0f )
+                void Init(Texture* texture, const TextureData& texData, float x, float y, float w, float h, Margin in_margin, float DrawMarginScale = 1.0f )
                 {
                     m_texture = texture;
+                    m_texData = texData;
                     m_margin = in_margin;
                     SetRect( 0, x, y, m_margin.left, m_margin.top );
                     SetRect( 1, x + m_margin.left, y, w - m_margin.left - m_margin.right, m_margin.top );
@@ -104,8 +105,8 @@ namespace Gwk
 
                 void SetRect( int iNum, float x, float y, float w, float h )
                 {
-                    float const texw = m_texture->width;
-                    float const texh = m_texture->height;
+                    float const texw = m_texData.width;
+                    float const texh = m_texData.height;
                     m_rects[iNum].m_uv[0] = x / texw;
                     m_rects[iNum].m_uv[1] = y / texh;
                     m_rects[iNum].m_uv[2] = ( x + w ) / texw;
@@ -130,7 +131,7 @@ namespace Gwk
 
                     if (r.w < m_width && r.h < m_height)
                     {
-                        render->DrawTexturedRect(m_texture, r,
+                        render->DrawTexturedRect(*m_texture, r,
                                                  m_rects[0].m_uv[0], m_rects[0].m_uv[1], m_rects[8].m_uv[2], m_rects[8].m_uv[3]);
                         return;
                     }
@@ -166,12 +167,13 @@ namespace Gwk
 
                 void DrawRect( Gwk::Renderer::Base* render, int i, int x, int y, int w, int h )
                 {
-                    render->DrawTexturedRect( m_texture,
+                    render->DrawTexturedRect( *m_texture,
                                               Gwk::Rect( x, y, w, h ),
                                               m_rects[i].m_uv[0], m_rects[i].m_uv[1], m_rects[i].m_uv[2], m_rects[i].m_uv[3] );
                 }
 
-                Texture *m_texture;
+                Texture* m_texture;
+                TextureData m_texData;
 
                 struct SubRect
                 {

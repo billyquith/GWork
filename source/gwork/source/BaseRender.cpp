@@ -18,9 +18,9 @@ namespace Gwk
 namespace Renderer
 {
 
-Base::Base(ResourceLoader& loader)
+Base::Base(ResourcePaths& paths)
 :   m_fScale(1.0f)
-,   m_loader(loader)
+,   m_paths(paths)
 ,   m_renderOffset(Gwk::Point(0, 0))
 ,   m_RTT(nullptr)
 {
@@ -137,28 +137,12 @@ void Base::DrawMissingImage(Gwk::Rect targetRect)
     DrawFilledRect(targetRect);
 }
 
-bool Base::EnsureFont(Font& font)
-{
-    // If the font doesn't exist, or the font size should be changed
-    if (font.status == Font::Status::Unloaded
-        || (font.status == Font::Status::Loaded && font.realsize != font.size*Scale()))
-    {
-        GetLoader().FreeFont(font);
-
-        font.realsize = font.size * Scale();
-
-        GetLoader().LoadFont(font);
-    }
-
-    return font.status == Font::Status::Loaded;
-}
-
 ///  If they haven't defined these font functions in their renderer code
 ///  we just draw some rects where the letters would be to give them an
 ///  idea.
-void Base::RenderText(Gwk::Font* font, Gwk::Point pos, const Gwk::String& text)
+void Base::RenderText(const Gwk::Font& font, Gwk::Point pos, const Gwk::String& text)
 {
-    float fSize = font->size*Scale();
+    const float fSize = font.size * Scale();
 
     for (unsigned int i = 0; i < text.length(); i++)
     {
@@ -201,11 +185,11 @@ void Base::RenderText(Gwk::Font* font, Gwk::Point pos, const Gwk::String& text)
     }
 }
 
-Gwk::Point Base::MeasureText(Gwk::Font* font, const Gwk::String& text)
+Gwk::Point Base::MeasureText(const Gwk::Font& font, const Gwk::String& text)
 {
     Gwk::Point p;
-    p.x = font->size*Scale() * text.length() * 0.4f;
-    p.y = font->size*Scale();
+    p.x = font.size * Scale() * text.length() * 0.4f;
+    p.y = font.size * Scale();
     return p;
 }
 

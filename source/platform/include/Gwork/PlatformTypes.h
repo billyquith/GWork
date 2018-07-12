@@ -16,6 +16,7 @@
 #endif
 
 #include <Gwork/Config.h>
+#include <functional>
 #include <string>
 #include <list>
 #include <memory>
@@ -227,16 +228,9 @@ namespace Gwk
         static const Color GworkPink(255, 65, 199, 255);
     }
 
-
     struct Font
     {
         typedef std::list<Font*> List;
-
-        class IData
-        {
-        public:
-            virtual ~IData() {}
-        };
 
         enum class Status
         {
@@ -248,28 +242,19 @@ namespace Gwk
         };
 
         Font()
-        :   status(Status::Unloaded)
-        ,   facename("?")
+        :   facename("?")
         ,   size(10)
         ,   bold(false)
-        ,   realsize(0)
-        ,   data(nullptr)
-        ,   render_data(nullptr)
         {}
 
-        bool IsLoaded() const { return status == Status::Loaded; }
+        Font(const Font&) = default;
+        Font& operator=(const Font&) = default;
 
-        Status status;
+        inline bool operator==(const Font& rhs) const { return facename == rhs.facename && size == rhs.size && bold == rhs.bold; }
 
         String facename;
         float size;
         bool bold;
-
-        // This is the real font size, after it's been scaled by Render->Scale()
-        float realsize;
-
-        std::shared_ptr<IData> data;             // Font data, set by renderer
-        void *render_data;      // optional renderer data
     };
 
     struct Texture
@@ -286,26 +271,27 @@ namespace Gwk
             MaxStatus
         };
 
-        bool IsLoaded() const { return status == Status::Loaded; }
+        Texture()
+            : readable(false)
+        {}
 
-        Status  status;
+        Texture(const Texture&) = default;
+        Texture& operator=(const Texture&) = default;
+
+        inline bool operator==(const Texture& rhs) const { return name == rhs.name; }
 
         String  name;
-        int     width;
-        int     height;
-        bool    readable;
+        bool readable;
+    };
 
-        void*   data;
-        void*   surface;
+    struct TextureData
+    {
+        TextureData()
+            : width(0.f), height(0.f){}
 
-        Texture()
-        :   status(Status::Unloaded)
-        ,   width(4)
-        ,   height(4)
-        ,   readable(false)
-        ,   data(nullptr)
-        ,   surface(nullptr)
-        {}
+        float width;
+        float height;
+        bool readable;
     };
 
 
@@ -329,10 +315,10 @@ namespace Gwk
     };
 
 
-    //! Base class for resource loaders.
+    //! Interface for resource loaders.
     //!
     //! These are used to load, create and destroy resource needed for Gwork.
-    class ResourceLoader
+    class IResourceLoader
     {
     public:
 
@@ -346,19 +332,55 @@ namespace Gwk
             UserMessageStart = 100
         };
 
-        virtual ~ResourceLoader() {}
+        virtual Gwk::Font::Status LoadFont(const Gwk::Font& font) = 0;
+        virtual void FreeFont(const Gwk::Font& font) = 0;
 
-        virtual Font::Status LoadFont(Font& font) = 0;
-        virtual void FreeFont(Font& font) = 0;
-
-        virtual Texture::Status LoadTexture(Texture& texture) = 0;
-        virtual void FreeTexture(Texture& texture) = 0;
+        virtual Gwk::Texture::Status LoadTexture(const Gwk::Texture& texture) = 0;
+        virtual void FreeTexture(const Gwk::Texture& texture) = 0;
+        virtual Gwk::TextureData GetTextureData(const Gwk::Texture& texture) const = 0;
 
         //! Notification of certain events. May be platform specific.
         //! Loader can deal with the events accordingly.
         virtual void Notify(NotificationType msg) {}
     };
 
+    template <class T>
+    static inline void hash_combine(size_t& seed, const T& v)
+    {
+        seed ^= std::hash<T>{}(v) + 0x9e3779b9 + (seed << 6) + (seed >> 2);
+    }
 } // namespace Gwk
+
+// Hashers
+namespace std
+{
+    template<> struct hash<Gwk::Font>
+    {
+        typedef Gwk::Font argument_type;
+        typedef std::size_t result_type;
+
+
+        result_type operator()(argument_type const& f) const noexcept
+        {
+            result_type res = std::hash<Gwk::String>{}(f.facename);
+
+            Gwk::hash_combine<decltype(f.size)>(res, f.size);
+            Gwk::hash_combine<decltype(f.bold)>(res, f.bold);
+
+            return res;
+        }
+    };
+    template<> struct hash<Gwk::Texture>
+    {
+        typedef Gwk::Texture argument_type;
+        typedef std::size_t result_type;
+
+
+        result_type operator()(argument_type const& f) const noexcept
+        {
+            return std::hash<decltype(f.name)>{}(f.name);
+        }
+    };
+} // namespace std
 
 #endif // ifndef GWK_PLATFORMTYPES_H
