@@ -310,7 +310,7 @@ void DirectX11::FreeFont(const Font& font)
 
 bool DirectX11::EnsureFont(const Font& font)
 {
-    auto& it = m_fonts.find(font);
+    auto it = m_fonts.find(font);
     if (it != m_fonts.cend())
     {
         return true;
@@ -390,7 +390,7 @@ void DirectX11::FreeTexture(const Texture& texture)
 
 TextureData DirectX11::GetTextureData(const Texture& texture) const
 {
-    auto& it = m_textures.find(texture);
+    auto it = m_textures.find(texture);
     if (it != m_textures.cend())
     {
         return it->second;
@@ -654,7 +654,7 @@ void DirectX11::RenderText(const Gwk::Font& font, Gwk::Point pos, const Gwk::Str
         return;
 
     // at this point, the font is garented created
-    auto& it = m_fonts.find(font);
+    auto it = m_fonts.find(font);
     // but double check :)
     if (it == m_fonts.cend())
         return;
@@ -719,7 +719,7 @@ Gwk::Point DirectX11::MeasureText(const Gwk::Font& font, const Gwk::String& text
         return Gwk::Point(0, 0);
 
     // at this point, the font is garented created
-    auto& it = m_fonts.find(font);
+    auto it = m_fonts.find(font);
     // but double check :)
     if (it == m_fonts.cend())
         return Gwk::Point(0, 0);
@@ -784,7 +784,7 @@ void DirectX11::EndClip()
 
 void DirectX11::DrawTexturedRect(const Gwk::Texture& texture, Gwk::Rect rec, float u1, float v1, float u2, float v2)
 {
-    auto& it = m_textures.find(texture);
+    auto it = m_textures.find(texture);
     if (it == m_textures.cend())
     {
         if (LoadTexture(texture) != Texture::Status::Loaded)
@@ -830,7 +830,7 @@ void DirectX11::DrawTexturedRect(const Gwk::Texture& texture, Gwk::Rect rec, flo
 
 Gwk::Color DirectX11::PixelColor(const Gwk::Texture& texture, unsigned int x, unsigned int y, const Gwk::Color& col_default)
 {
-    auto& it = m_textures.find(texture);
+    auto it = m_textures.find(texture);
     if (it == m_textures.cend())
     {
         if (LoadTexture(texture) != Texture::Status::Loaded)

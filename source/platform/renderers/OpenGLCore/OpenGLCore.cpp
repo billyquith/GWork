@@ -117,7 +117,7 @@ void OpenGLCore::FreeFont(const Gwk::Font& font)
 
 bool OpenGLCore::EnsureFont(const Font& font)
 {
-    auto& it = m_fonts.find(font);
+    auto it = m_fonts.find(font);
     if (it != m_fonts.cend())
     {
         return true;
@@ -176,7 +176,7 @@ void OpenGLCore::FreeTexture(const Texture& texture)
 
 TextureData OpenGLCore::GetTextureData(const Texture& texture) const
 {
-    auto& it = m_textures.find(texture);
+    auto it = m_textures.find(texture);
     if (it != m_textures.cend())
     {
         return it->second;
@@ -456,7 +456,7 @@ void OpenGLCore::EndClip()
 void OpenGLCore::DrawTexturedRect(const Gwk::Texture& texture, Gwk::Rect rect,
     float u1, float v1, float u2, float v2)
 {
-    auto& it = m_textures.find(texture);
+    auto it = m_textures.find(texture);
     if (it == m_textures.cend())
     {
         if (LoadTexture(texture) != Texture::Status::Loaded)
@@ -487,7 +487,7 @@ void OpenGLCore::DrawTexturedRect(const Gwk::Texture& texture, Gwk::Rect rect,
 Gwk::Color OpenGLCore::PixelColor(const Gwk::Texture& texture, unsigned int x, unsigned int y,
     const Gwk::Color& col_default)
 {
-    auto& it = m_textures.find(texture);
+    auto it = m_textures.find(texture);
     if (it == m_textures.cend())
     {
         if (LoadTexture(texture) != Texture::Status::Loaded)
@@ -523,7 +523,7 @@ void OpenGLCore::RenderText(const Gwk::Font& font, Gwk::Point pos,
         return;
 
     // at this point, the font is garented created
-    auto& it = m_fonts.find(font);
+    auto it = m_fonts.find(font);
     // but double check :)
     if (it == m_fonts.cend())
         return;
@@ -573,7 +573,7 @@ Gwk::Point OpenGLCore::MeasureText(const Gwk::Font& font, const Gwk::String& tex
         return Gwk::Point(0, 0);
 
     // at this point, the font is garented created
-    auto& it = m_fonts.find(font);
+    auto it = m_fonts.find(font);
     // but double check :)
     if (it == m_fonts.cend())
         return Gwk::Point(0, 0);

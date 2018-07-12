@@ -61,7 +61,7 @@ void Irrlicht::FreeTexture(const Gwk::Texture& texture)
 
 TextureData Irrlicht::GetTextureData(const Texture& texture) const
 {
-    auto& it = m_textures.find(texture);
+    auto it = m_textures.find(texture);
     if (it != m_textures.cend())
     {
         return it->second;
@@ -190,7 +190,7 @@ void Irrlicht::EndClip()
 Gwk::Color Irrlicht::PixelColor(const Gwk::Texture& texture,
                                 unsigned int x, unsigned int y, const Gwk::Color& col_default)
 {
-    auto& it = m_textures.find(texture);
+    auto it = m_textures.find(texture);
     if (it == m_textures.cend())
     {
         if (LoadTexture(texture) != Texture::Status::Loaded)
@@ -262,7 +262,7 @@ void Irrlicht::DrawTexturedRect(const Gwk::Texture& texture,
 {
     Translate(pTargetRect);
 
-    auto& it = m_textures.find(texture);
+    auto it = m_textures.find(texture);
     if (it == m_textures.cend())
     {
         if (LoadTexture(texture) != Texture::Status::Loaded)

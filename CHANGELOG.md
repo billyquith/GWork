@@ -10,6 +10,7 @@ This is a changelog for Gwork. There are also notes [on my blog][blog]
 - **OpenGL Core renderer** added. Thanks Megaxela@github
 - **Software renderer** added. Draws to a texture.
 - ResourceLoader and ResourcePaths abstract file locations and sources. #66.
+- Resource loading and ownership refactored. Thanks TopBlast@github. #83 & #84.
 - Retired Direct2D and GDI+ renderers.
 - Added CrossPlatform platform. Null should do nothing!
 - Added `Gwk::Log::Write()` so that error messages can be logged.

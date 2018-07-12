@@ -40,7 +40,7 @@ void SDL2::FreeFont(const Font& font)
 
 bool SDL2::EnsureFont(const Font& font)
 {
-    auto& it = m_fonts.find(font);
+    auto it = m_fonts.find(font);
     if (it != m_fonts.cend())
     {
         return true;
@@ -110,7 +110,7 @@ void SDL2::FreeTexture(const Texture& texture)
 
 TextureData SDL2::GetTextureData(const Texture& texture) const
 {
-    auto& it = m_textures.find(texture);
+    auto it = m_textures.find(texture);
     if (it != m_textures.cend())
     {
         return it->second;
@@ -149,7 +149,7 @@ void SDL2::RenderText(const Gwk::Font& font, Gwk::Point pos, const Gwk::String& 
         return;
 
     // at this point, the font is garented created
-    auto& it = m_fonts.find(font);
+    auto it = m_fonts.find(font);
     // but double check :)
     if (it == m_fonts.cend())
         return;
@@ -177,7 +177,7 @@ Gwk::Point SDL2::MeasureText(const Gwk::Font& font, const Gwk::String& text)
         return Gwk::Point(0, 0);
 
     // at this point, the font is garented created
-    auto& it = m_fonts.find(font);
+    auto it = m_fonts.find(font);
     // but double check :)
     if (it == m_fonts.cend())
         return Gwk::Point(0, 0);
@@ -220,7 +220,7 @@ void SDL2::EndClip()
 void SDL2::DrawTexturedRect(const Gwk::Texture& texture, Gwk::Rect rect,
                             float u1, float v1, float u2, float v2)
 {
-    auto& it = m_textures.find(texture);
+    auto it = m_textures.find(texture);
     if (it == m_textures.cend())
     {
         if (LoadTexture(texture) != Texture::Status::Loaded)
@@ -245,7 +245,7 @@ void SDL2::DrawTexturedRect(const Gwk::Texture& texture, Gwk::Rect rect,
 Gwk::Color SDL2::PixelColor(const Gwk::Texture& texture, unsigned int x, unsigned int y,
                               const Gwk::Color& col_default)
 {
-    auto& it = m_textures.find(texture);
+    auto it = m_textures.find(texture);
     if (it == m_textures.cend())
     {
         if (LoadTexture(texture) != Texture::Status::Loaded)
