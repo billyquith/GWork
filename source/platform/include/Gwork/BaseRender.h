@@ -176,6 +176,7 @@ namespace Gwk
         protected:
 
             virtual bool EnsureFont(const Gwk::Font& font) { return false; }
+            virtual bool EnsureTexture(const Gwk::Texture& texture) { return false; }
 
             float m_fScale;
 

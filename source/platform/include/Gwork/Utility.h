@@ -87,7 +87,15 @@ namespace Gwk
 
             static inline wchar_t utf8_to_wchart(char*& in)// Gwk::Utility::Widen too slow
             {
+                thread_local static unsigned int next = 0x10000;
+                if (next != 0x10000)
+                {
+                    wchar_t ret = static_cast<wchar_t>(next);
+                    next = 0x10000;
+                    return ret;
+                }
                 unsigned int codepoint;
+
                 while (*in != 0)
                 {
                     unsigned char ch = static_cast<unsigned char>(*in);
@@ -108,11 +116,11 @@ namespace Gwk
                             return static_cast<wchar_t>(codepoint);
                         else if (codepoint > 0xffff)
                         {
+                            next = static_cast<wchar_t>(0xdc00 + (codepoint & 0x03ff));
                             return static_cast<wchar_t>(0xd800 + (codepoint >> 10));
-                            return static_cast<wchar_t>(0xdc00 + (codepoint & 0x03ff));
                         }
                         else if (codepoint < 0xd800 || codepoint >= 0xe000)
-                            return 1, static_cast<wchar_t>(codepoint);
+                            return static_cast<wchar_t>(codepoint);
                     }
                 }
                 return 0;

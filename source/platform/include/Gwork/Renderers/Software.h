@@ -93,6 +93,7 @@ namespace Gwk
             Texture::Status LoadTexture(const Gwk::Texture& texture) override;
             void FreeTexture(const Gwk::Texture& texture) override;
             TextureData GetTextureData(const Gwk::Texture& texture) const override;
+            bool EnsureTexture(const Gwk::Texture& texture) override;
             
         protected:// Resourses
 
@@ -121,13 +122,15 @@ namespace Gwk
 
                 Color& At(int x, int y)
                 {
-                    return (reinterpret_cast<Color*>(m_ReadData.get()))[y * static_cast<int>(width) + x];
+                    unsigned char* color_ptr = m_ReadData.get() + (y * 4 * static_cast<int>(width) + x * 4);
+                    return *reinterpret_cast<Color*>(color_ptr);
                 }
                 Color& At(Point const& pt) { return At(pt.x, pt.y); }
 
                 const Color& At(int x, int y) const
                 {
-                    return (reinterpret_cast<Color*>(m_ReadData.get()))[y * static_cast<int>(width) + x];
+                    unsigned char* color_ptr = m_ReadData.get() + (y * 4 * static_cast<int>(width) + x * 4);
+                    return *reinterpret_cast<Color*>(color_ptr);
                 }
                 const Color& At(Point const& pt) const { return At(pt.x, pt.y); }
 
@@ -172,6 +175,8 @@ namespace Gwk
 
             std::unordered_map<Font, SWFontData> m_fonts;
             std::unordered_map<Texture, SWTextureData> m_textures;
+            std::pair<const Font, SWFontData>* m_lastFont;
+            std::pair<const Texture, SWTextureData>* m_lastTexture;
             
         public:
 

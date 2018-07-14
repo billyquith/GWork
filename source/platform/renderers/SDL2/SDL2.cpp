@@ -16,6 +16,9 @@ namespace Renderer
 
 Font::Status SDL2::LoadFont(const Font& font)
 {
+    FreeFont(font);
+    m_lastFont = nullptr;
+
     const String filename = GetResourcePaths().GetPath(ResourcePaths::Type::Font, font.facename);
 
     TTF_Font *tfont = TTF_OpenFont(filename.c_str(), font.size * Scale());
@@ -23,7 +26,7 @@ Font::Status SDL2::LoadFont(const Font& font)
     {
         SDL2FontData fontData;
         fontData.tFont = deleted_unique_ptr<TTF_Font>(tfont, [](TTF_Font* mem) { if (mem) TTF_CloseFont(mem); });
-        m_fonts.insert(std::make_pair(font, std::move(fontData)));
+        m_lastFont = &(*m_fonts.insert(std::make_pair(font, std::move(fontData))).first);
         return Font::Status::Loaded;
     }
     else
@@ -35,22 +38,38 @@ Font::Status SDL2::LoadFont(const Font& font)
 
 void SDL2::FreeFont(const Font& font)
 {
+    if (m_lastFont != nullptr && m_lastFont->first == font)
+        m_lastFont = nullptr;
+
     m_fonts.erase(font); // calls SDL2FontData destructor
 }
 
 bool SDL2::EnsureFont(const Font& font)
 {
-    auto it = m_fonts.find(font);
-    if (it != m_fonts.cend())
+    if (m_lastFont != nullptr)
     {
+        if (m_lastFont->first == font)
+            return true;
+    }
+
+    // Was it loaded before?
+    auto it = m_fonts.find(font);
+    if (it != m_fonts.end())
+    {
+        m_lastFont = &(*it);
         return true;
     }
+
+    // No, try load to it
+
+    // LoadFont sets m_lastFont, if loaded
     return LoadFont(font) == Font::Status::Loaded;
 }
 
 Texture::Status SDL2::LoadTexture(const Texture& texture)
 {
     FreeTexture(texture);
+    m_lastTexture = nullptr;
 
     const String filename = GetResourcePaths().GetPath(ResourcePaths::Type::Texture, texture.name);
 
@@ -94,7 +113,7 @@ Texture::Status SDL2::LoadTexture(const Texture& texture)
         texData.texture = deleted_unique_ptr<SDL_Texture>(tex, [](SDL_Texture* mem) { if (mem) SDL_DestroyTexture(mem); });
         texData.width = w;
         texData.height = h;
-        m_textures.insert(std::make_pair(texture, std::move(texData)));
+        m_lastTexture = &(*m_textures.insert(std::make_pair(texture, std::move(texData))).first);
         return Texture::Status::Loaded;
     }
     else
@@ -105,11 +124,17 @@ Texture::Status SDL2::LoadTexture(const Texture& texture)
 
 void SDL2::FreeTexture(const Texture& texture)
 {
+    if (m_lastTexture != nullptr && m_lastTexture->first == texture)
+        m_lastTexture = nullptr;
+
     m_textures.erase(texture); // calls SDLTextureData destructor
 }
 
 TextureData SDL2::GetTextureData(const Texture& texture) const
 {
+    if (m_lastTexture != nullptr && m_lastTexture->first == texture)
+        return m_lastTexture->second;
+
     auto it = m_textures.find(texture);
     if (it != m_textures.cend())
     {
@@ -119,12 +144,36 @@ TextureData SDL2::GetTextureData(const Texture& texture) const
     return TextureData();
 }
 
+bool SDL2::EnsureTexture(const Gwk::Texture& texture)
+{
+    if (m_lastTexture != nullptr)
+    {
+        if (m_lastTexture->first == texture)
+            return true;
+    }
+
+    // Was it loaded before?
+    auto it = m_textures.find(texture);
+    if (it != m_textures.end())
+    {
+        m_lastTexture = &(*it);
+        return true;
+    }
+
+    // No, try load to it
+
+    // LoadTexture sets m_lastTexture, if exist
+    return LoadTexture(texture) == Texture::Status::Loaded;
+}
+
 //-------------------------------------------------------------------------------
 
 SDL2::SDL2(ResourcePaths& paths, SDL_Window *window)
     :   Base(paths)
     ,   m_window(window)
     ,   m_renderer(nullptr)
+    ,   m_lastFont(nullptr)
+    ,   m_lastTexture(nullptr)
 {
   m_renderer = SDL_GetRenderer( m_window );
 }
@@ -148,13 +197,7 @@ void SDL2::RenderText(const Gwk::Font& font, Gwk::Point pos, const Gwk::String& 
     if (!EnsureFont(font))
         return;
 
-    // at this point, the font is garented created
-    auto it = m_fonts.find(font);
-    // but double check :)
-    if (it == m_fonts.cend())
-        return;
-
-    SDL2FontData& fontData = it->second;
+    SDL2FontData& fontData = m_lastFont->second;
 
     Translate(pos.x, pos.y);
 
@@ -176,13 +219,7 @@ Gwk::Point SDL2::MeasureText(const Gwk::Font& font, const Gwk::String& text)
     if (!EnsureFont(font))
         return Gwk::Point(0, 0);
 
-    // at this point, the font is garented created
-    auto it = m_fonts.find(font);
-    // but double check :)
-    if (it == m_fonts.cend())
-        return Gwk::Point(0, 0);
-
-    SDL2FontData& fontData = it->second;
+    SDL2FontData& fontData = m_lastFont->second;
     
     int w,h;
     TTF_SizeUTF8(fontData.tFont.get(), text.c_str(), &w,&h);
@@ -220,18 +257,12 @@ void SDL2::EndClip()
 void SDL2::DrawTexturedRect(const Gwk::Texture& texture, Gwk::Rect rect,
                             float u1, float v1, float u2, float v2)
 {
-    auto it = m_textures.find(texture);
-    if (it == m_textures.cend())
-    {
-        if (LoadTexture(texture) != Texture::Status::Loaded)
-            return DrawMissingImage(rect);
-
-        it = m_textures.find(texture);
-    }
-
-    SDL2TextureData& texData = it->second;
+    if (!EnsureTexture(texture))
+        return DrawMissingImage(rect);
 
     Translate(rect);
+
+    SDL2TextureData& texData = m_lastTexture->second;
 
     const unsigned int w = texData.width;
     const unsigned int h = texData.height;
@@ -245,16 +276,10 @@ void SDL2::DrawTexturedRect(const Gwk::Texture& texture, Gwk::Rect rect,
 Gwk::Color SDL2::PixelColor(const Gwk::Texture& texture, unsigned int x, unsigned int y,
                               const Gwk::Color& col_default)
 {
-    auto it = m_textures.find(texture);
-    if (it == m_textures.cend())
-    {
-        if (LoadTexture(texture) != Texture::Status::Loaded)
-            return col_default;
+    if (!EnsureTexture(texture))
+        return col_default;
 
-        it = m_textures.find(texture);
-    }
-
-    SDL2TextureData& texData = it->second;
+    SDL2TextureData& texData = m_lastTexture->second;
 
     if (!texData.readable || !texData.surface)
         return col_default;

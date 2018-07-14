@@ -48,7 +48,7 @@ namespace Drawing
             Color *px = &pb.At(r.x, r.y + y);
             for (int x = r.w; x > 0; --x)
             {
-                *px++ = c;
+                *px++ = BlendAlpha(c, *px);
             }
         }
     }
@@ -59,15 +59,15 @@ namespace Drawing
     {
         for (int x = 0; x < r.w; ++x)
         {
-            pb.At(r.x + x, r.y) = c;  // top
+            pb.At(r.x + x, r.y) = BlendAlpha(c, pb.At(r.x + x, r.y));  // top
             if (r.h > 1)
-                pb.At(r.x + x, r.y + r.h - 1) = c;  // bottom
+                pb.At(r.x + x, r.y + r.h - 1) = BlendAlpha(c, pb.At(r.x + x, r.y + r.h - 1));  // bottom
         }
         for (int y = 0; y < r.h; ++y)
         {
-            pb.At(r.x, r.y + y) = c;  // left
+            pb.At(r.x, r.y + y) = BlendAlpha(c, pb.At(r.x, r.y + y));  // left
             if (r.w > 1)
-                pb.At(r.x + r.w - 1, r.y + y) = c;  // right
+                pb.At(r.x + r.w - 1, r.y + y) = BlendAlpha(c, pb.At(r.x + r.w - 1, r.y + y));  // right
         }
     }
 
@@ -101,10 +101,14 @@ namespace Drawing
 
 // See "Font Size in Pixels or Points" in "stb_truetype.h"
 static constexpr float c_pointsToPixels = 1.333f;
-static constexpr int c_texsz = 512; // arbitrary font cache texture size
+// arbitrary font cache texture size
+static constexpr int c_texsz = 800; // Texture size too small for wchar_t characters but stbtt_BakeFontBitmap crashes on larger sizes
 
 Font::Status Software::LoadFont(const Font& font)
 {
+    FreeFont(font);
+    m_lastFont = nullptr;
+
     const String filename = GetResourcePaths().GetPath(ResourcePaths::Type::Font, font.facename);
 
     std::ifstream inFile(filename, std::ifstream::in | std::ifstream::binary);
@@ -142,28 +146,44 @@ Font::Status Software::LoadFont(const Font& font)
         BeginCharacter, LastCharacter,             // range to bake
         reinterpret_cast<stbtt_bakedchar*>(fontData.baked_chars.data()));
 
-    m_fonts.insert(std::make_pair(font, std::move(fontData)));
+    m_lastFont = &(*m_fonts.insert(std::make_pair(font, std::move(fontData))).first);
     return Font::Status::Loaded;
 }
 
 void Software::FreeFont(const Gwk::Font& font)
 {
+    if (m_lastFont != nullptr && m_lastFont->first == font)
+        m_lastFont = nullptr;
+
     m_fonts.erase(font); // calls SWFontData destructor
 }
 
 bool Software::EnsureFont(const Font& font)
 {
-    auto it = m_fonts.find(font);
-    if (it != m_fonts.cend())
+    if (m_lastFont != nullptr)
     {
+        if (m_lastFont->first == font)
+            return true;
+    }
+
+    // Was it loaded before?
+    auto it = m_fonts.find(font);
+    if (it != m_fonts.end())
+    {
+        m_lastFont = &(*it);
         return true;
     }
+
+    // No, try load to it
+
+    // LoadFont sets m_lastFont, if loaded
     return LoadFont(font) == Font::Status::Loaded;
 }
 
 Texture::Status Software::LoadTexture(const Texture& texture)
 {
     FreeTexture(texture);
+    m_lastTexture = nullptr;
 
     const String filename = GetResourcePaths().GetPath(ResourcePaths::Type::Texture, texture.name);
 
@@ -191,17 +211,23 @@ Texture::Status Software::LoadTexture(const Texture& texture)
     texData.width = width;
     texData.height = height;
 
-    m_textures.insert(std::make_pair(texture, std::move(texData)));
+    m_lastTexture = &(*m_textures.insert(std::make_pair(texture, std::move(texData))).first);
     return Texture::Status::Loaded;
 }
 
-void Software::FreeTexture(const Texture& texture)
+void Software::FreeTexture(const Gwk::Texture& texture)
 {
+    if (m_lastTexture != nullptr && m_lastTexture->first == texture)
+        m_lastTexture = nullptr;
+
     m_textures.erase(texture); // calls SWTextureData destructor
 }
 
 TextureData Software::GetTextureData(const Texture& texture) const
 {
+    if (m_lastTexture != nullptr && m_lastTexture->first == texture)
+        return m_lastTexture->second;
+
     auto it = m_textures.find(texture);
     if (it != m_textures.cend())
     {
@@ -211,12 +237,35 @@ TextureData Software::GetTextureData(const Texture& texture) const
     return TextureData();
 }
 
+bool Software::EnsureTexture(const Gwk::Texture& texture)
+{
+    if (m_lastTexture != nullptr)
+    {
+        if (m_lastTexture->first == texture)
+            return true;
+    }
+
+    // Was it loaded before?
+    auto it = m_textures.find(texture);
+    if (it != m_textures.end())
+    {
+        m_lastTexture = &(*it);
+        return true;
+    }
+
+    // No, try load to it
+
+    // LoadTexture sets m_lastTexture, if exist
+    return LoadTexture(texture) == Texture::Status::Loaded;
+}
 //-------------------------------------------------------------------------------
 
 Software::Software(ResourcePaths& paths, PixelBuffer& pbuff)
     :   Base(paths)
     ,   m_isClipping(false)
     ,   m_pixbuf(&pbuff)
+    ,   m_lastFont(nullptr)
+    ,   m_lastTexture(nullptr)
 {
 }
 
@@ -234,13 +283,7 @@ Gwk::Point Software::MeasureText(const Gwk::Font& font, const Gwk::String& text)
     if (!EnsureFont(font))
         return Gwk::Point(0, 0);
 
-    // at this point, the font is garented created
-    auto it = m_fonts.find(font);
-    // but double check :)
-    if (it == m_fonts.cend())
-        return Gwk::Point(0, 0);
-
-    SWFontData& fontData = it->second;
+    SWFontData& fontData = m_lastFont->second;
 
     Point sz(0, font.size * Scale() * c_pointsToPixels);
 
@@ -272,14 +315,8 @@ void Software::RenderText(const Gwk::Font& font, Gwk::Point pos,
 {
     if (!EnsureFont(font))
         return;
-
-    // at this point, the font is garented created
-    auto it = m_fonts.find(font);
-    // but double check :)
-    if (it == m_fonts.cend())
-        return;
-
-    SWFontData& fontData = it->second;
+    
+    SWFontData& fontData = m_lastFont->second;
 
     float x = pos.x, y = pos.y;
     char* text_ptr = const_cast<char*>(text.c_str());
@@ -415,36 +452,25 @@ void Software::DrawLinedRect(Gwk::Rect rect)
 void Software::DrawTexturedRect(const Gwk::Texture& texture, Gwk::Rect rect,
                                 float u1, float v1, float u2, float v2)
 {
+    if (!EnsureTexture(texture))
+        return DrawMissingImage(rect);
+
+    const SWTextureData& texData = m_lastTexture->second;
+
     Translate(rect);
     if (!Clip(rect))
         return;
 
-    auto it = m_textures.find(texture);
-    if (it == m_textures.cend())
-    {
-        if (LoadTexture(texture) != Texture::Status::Loaded)
-            return DrawMissingImage(rect);
-
-        it = m_textures.find(texture);
-    }
-
-    SWTextureData& texData = it->second;
     Drawing::RectTextured<PixelBuffer, SWTextureData>(*m_pixbuf, texData, rect, u1,v1, u2,v2);
 }
 
 Gwk::Color Software::PixelColor(const Gwk::Texture& texture, unsigned int x, unsigned int y,
                                 const Gwk::Color& col_default)
 {
-    auto it = m_textures.find(texture);
-    if (it == m_textures.cend())
-    {
-        if (LoadTexture(texture) != Texture::Status::Loaded)
-            return col_default;
+    if (!EnsureTexture(texture))
+        return col_default;
 
-        it = m_textures.find(texture);
-    }
-
-    SWTextureData& texData = it->second;
+    const SWTextureData& texData = m_lastTexture->second;
 
     return texData.At(x, y);
 }

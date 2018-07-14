@@ -44,7 +44,7 @@ namespace Renderer
 // See "Font Size in Pixels or Points" in "stb_truetype.h"
 static constexpr float c_pointsToPixels = 1.333f;
 // Arbitrary size chosen for texture cache target.
-static constexpr int c_texsz = 512;
+static constexpr int c_texsz = 800; // Texture size too small for wchar_t characters but stbtt_BakeFontBitmap crashes on larger sizes
 
 OpenGL::GLTextureData::~GLTextureData()
 {
@@ -54,6 +54,9 @@ OpenGL::GLTextureData::~GLTextureData()
 
 Font::Status OpenGL::LoadFont(const Font& font)
 {
+    FreeFont(font);
+    m_lastFont = nullptr;
+
     const String filename = GetResourcePaths().GetPath(ResourcePaths::Type::Font, font.facename);
 
     std::ifstream inFile(filename, std::ifstream::in | std::ifstream::binary);
@@ -77,8 +80,6 @@ Font::Status OpenGL::LoadFont(const Font& font)
     std::unique_ptr<unsigned char[]> font_bmp = std::unique_ptr<unsigned char[]>(new unsigned char[c_texsz * c_texsz]);
 
     GLFontData fontData;
-    fontData.width = c_texsz;
-    fontData.height = c_texsz;
     const float realsize = font.size * Scale();
     fontData.baked_chars.resize(LastCharacter - BeginCharacter + 1);
 
@@ -98,28 +99,47 @@ Font::Status OpenGL::LoadFont(const Font& font)
                  GL_ALPHA, GL_UNSIGNED_BYTE,
                  font_bmp.get());
 
-    m_fonts.insert(std::make_pair(font, std::move(fontData)));
+    fontData.width = c_texsz;
+    fontData.height = c_texsz;
+
+    m_lastFont = &(*m_fonts.insert(std::make_pair(font, std::move(fontData))).first);
     return Font::Status::Loaded;
 }
 
 void OpenGL::FreeFont(const Gwk::Font& font)
 {
+    if (m_lastFont != nullptr && m_lastFont->first == font)
+        m_lastFont = nullptr;
+
     m_fonts.erase(font); // calls GLFontData destructor
 }
 
 bool OpenGL::EnsureFont(const Font& font)
 {
-    auto it = m_fonts.find(font);
-    if (it != m_fonts.cend())
+    if (m_lastFont != nullptr)
     {
+        if (m_lastFont->first == font)
+            return true;
+    }
+
+    // Was it loaded before?
+    auto it = m_fonts.find(font);
+    if (it != m_fonts.end())
+    {
+        m_lastFont = &(*it);
         return true;
     }
+
+    // No, try load to it
+
+    // LoadFont sets m_lastFont, if loaded
     return LoadFont(font) == Font::Status::Loaded;
 }
 
 Texture::Status OpenGL::LoadTexture(const Texture& texture)
 {
     FreeTexture(texture);
+    m_lastTexture = nullptr;
 
     const String filename = GetResourcePaths().GetPath(ResourcePaths::Type::Texture, texture.name);
 
@@ -157,17 +177,23 @@ Texture::Status OpenGL::LoadTexture(const Texture& texture)
     texData.width = width;
     texData.height = height;
 
-    m_textures.insert(std::make_pair(texture, std::move(texData)));
+    m_lastTexture = &(*m_textures.insert(std::make_pair(texture, std::move(texData))).first);
     return Texture::Status::Loaded;
 }
 
-void OpenGL::FreeTexture(const Texture& texture)
+void OpenGL::FreeTexture(const Gwk::Texture& texture)
 {
+    if (m_lastTexture != nullptr && m_lastTexture->first == texture)
+        m_lastTexture = nullptr;
+
     m_textures.erase(texture); // calls GLTextureData destructor
 }
 
 TextureData OpenGL::GetTextureData(const Texture& texture) const
 {
+    if (m_lastTexture != nullptr && m_lastTexture->first == texture)
+        return m_lastTexture->second;
+
     auto it = m_textures.find(texture);
     if (it != m_textures.cend())
     {
@@ -177,6 +203,28 @@ TextureData OpenGL::GetTextureData(const Texture& texture) const
     return TextureData();
 }
 
+bool OpenGL::EnsureTexture(const Gwk::Texture& texture)
+{
+    if (m_lastTexture != nullptr)
+    {
+        if (m_lastTexture->first == texture)
+            return true;
+    }
+
+    // Was it loaded before?
+    auto it = m_textures.find(texture);
+    if (it != m_textures.end())
+    {
+        m_lastTexture = &(*it);
+        return true;
+    }
+
+    // No, try load to it
+
+    // LoadTexture sets m_lastTexture, if exist
+    return LoadTexture(texture) == Texture::Status::Loaded;
+}
+
 //-------------------------------------------------------------------------------
 
 OpenGL::OpenGL(ResourcePaths& paths, const Rect& viewRect)
@@ -184,6 +232,8 @@ OpenGL::OpenGL(ResourcePaths& paths, const Rect& viewRect)
 ,   m_viewRect(viewRect)
 ,   m_vertNum(0)
 ,   m_context(nullptr)
+,   m_lastFont(nullptr)
+,   m_lastTexture(nullptr)
 {
     for (int i = 0; i < MaxVerts; i++)
     {
@@ -319,16 +369,10 @@ void OpenGL::EndClip()
 void OpenGL::DrawTexturedRect(const Gwk::Texture& texture, Gwk::Rect rect,
                               float u1, float v1, float u2, float v2)
 {
-    auto it = m_textures.find(texture);
-    if (it == m_textures.cend())
-    {
-        if (LoadTexture(texture) != Texture::Status::Loaded)
-            return DrawMissingImage(rect);
+    if (!EnsureTexture(texture))
+        return DrawMissingImage(rect);
 
-        it = m_textures.find(texture);
-    }
-
-    GLTextureData& texData = it->second;
+    const GLTextureData& texData = m_lastTexture->second;
 
     Translate(rect);
 
@@ -349,16 +393,10 @@ void OpenGL::DrawTexturedRect(const Gwk::Texture& texture, Gwk::Rect rect,
 Gwk::Color OpenGL::PixelColor(const Gwk::Texture& texture, unsigned int x, unsigned int y,
                                const Gwk::Color& col_default)
 {
-    auto it = m_textures.find(texture);
-    if (it == m_textures.cend())
-    {
-        if (LoadTexture(texture) != Texture::Status::Loaded)
-            return col_default;
+    if (!EnsureTexture(texture))
+        return col_default;
 
-        it = m_textures.find(texture);
-    }
-
-    GLTextureData& texData = it->second;
+    GLTextureData& texData = m_lastTexture->second;
 
     static const unsigned int iPixelSize = sizeof(unsigned char) * 4;
 
@@ -384,13 +422,7 @@ void OpenGL::RenderText(const Gwk::Font& font, Gwk::Point pos,
     if (!EnsureFont(font))
         return;
 
-    // at this point, the font is garented created
-    auto it = m_fonts.find(font);
-    // but double check :)
-    if (it == m_fonts.cend())
-        return;
-
-    GLFontData& fontData = it->second;
+    GLFontData& fontData = m_lastFont->second;
 
     if (m_current_texture != fontData.texture_id)
     {
@@ -434,13 +466,7 @@ Gwk::Point OpenGL::MeasureText(const Gwk::Font& font, const Gwk::String& text)
     if (!EnsureFont(font))
         return Gwk::Point(0, 0);
 
-    // at this point, the font is garented created
-    auto it = m_fonts.find(font);
-    // but double check :)
-    if (it == m_fonts.cend())
-        return Gwk::Point(0, 0);
-
-    GLFontData& fontData = it->second;
+    GLFontData& fontData = m_lastFont->second;
 
     Point sz(0, font.size * Scale() * c_pointsToPixels);
 

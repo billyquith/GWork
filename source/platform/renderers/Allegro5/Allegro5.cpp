@@ -116,6 +116,9 @@ void AllegroCTT::DrawCachedControlTexture(CacheHandle control)
 
 Font::Status Allegro::LoadFont(const Font& font)
 {
+    FreeFont(font);
+    m_lastFont = nullptr;
+
     const String filename = GetResourcePaths().GetPath(ResourcePaths::Type::Font, font.facename);
 
     ALLEGRO_FONT* afont = al_load_font(filename.c_str(),
@@ -126,7 +129,7 @@ Font::Status Allegro::LoadFont(const Font& font)
     {
         ALFontData fontData;
         fontData.font = deleted_unique_ptr<ALLEGRO_FONT>(afont, [](ALLEGRO_FONT* mem) { if (mem) al_destroy_font(mem); });
-        m_fonts.insert(std::make_pair(font, std::move(fontData)));
+        m_lastFont = &(*m_fonts.insert(std::make_pair(font, std::move(fontData))).first);
         return Font::Status::Loaded;
     }
     else
@@ -138,23 +141,38 @@ Font::Status Allegro::LoadFont(const Font& font)
 
 void Allegro::FreeFont(const Gwk::Font& font)
 {
+    if (m_lastFont != nullptr && m_lastFont->first == font)
+        m_lastFont = nullptr;
+
     m_fonts.erase(font); // calls ALFontData destructor
 }
 
 bool Allegro::EnsureFont(const Font& font)
 {
-    auto it = m_fonts.find(font);
-    if (it != m_fonts.cend())
+    if (m_lastFont != nullptr)
     {
+        if (m_lastFont->first == font)
+            return true;
+    }
+
+    // Was it loaded before?
+    auto it = m_fonts.find(font);
+    if (it != m_fonts.end())
+    {
+        m_lastFont = &(*it);
         return true;
     }
+
+    // No, try load to it
+
+    // LoadFont sets m_lastFont, if loaded
     return LoadFont(font) == Font::Status::Loaded;
 }
 
 Texture::Status Allegro::LoadTexture(const Texture& texture)
 {
     FreeTexture(texture);
-
+    m_lastTexture = nullptr;
     const String filename = GetResourcePaths().GetPath(ResourcePaths::Type::Texture, texture.name);
 
     ALLEGRO_BITMAP* bmp = al_load_bitmap(filename.c_str());
@@ -166,7 +184,7 @@ Texture::Status Allegro::LoadTexture(const Texture& texture)
         texData.width = al_get_bitmap_width(bmp);
         texData.height = al_get_bitmap_height(bmp);
         texData.readable = false;
-        m_textures.insert(std::make_pair(texture, std::move(texData)));
+        m_lastTexture = &(*m_textures.insert(std::make_pair(texture, std::move(texData))).first);
 
         return Texture::Status::Loaded;
     }
@@ -177,13 +195,19 @@ Texture::Status Allegro::LoadTexture(const Texture& texture)
     }
 }
 
-void Allegro::FreeTexture(const Texture& texture)
+void Allegro::FreeTexture(const Gwk::Texture& texture)
 {
-    m_textures.erase(texture); // calls GLTextureData destructor
+    if (m_lastTexture != nullptr && m_lastTexture->first == texture)
+        m_lastTexture = nullptr;
+
+    m_textures.erase(texture); // calls ALTextureData destructor
 }
 
 TextureData Allegro::GetTextureData(const Texture& texture) const
 {
+    if (m_lastTexture != nullptr && m_lastTexture->first == texture)
+        return m_lastTexture->second;
+
     auto it = m_textures.find(texture);
     if (it != m_textures.cend())
     {
@@ -193,11 +217,35 @@ TextureData Allegro::GetTextureData(const Texture& texture) const
     return TextureData();
 }
 
+bool Allegro::EnsureTexture(const Gwk::Texture& texture)
+{
+    if (m_lastTexture != nullptr)
+    {
+        if (m_lastTexture->first == texture)
+            return true;
+    }
+
+    // Was it loaded before?
+    auto it = m_textures.find(texture);
+    if (it != m_textures.end())
+    {
+        m_lastTexture = &(*it);
+        return true;
+    }
+
+    // No, try load to it
+
+    // LoadTexture sets m_lastTexture, if exist
+    return LoadTexture(texture) == Texture::Status::Loaded;
+}
+
 //-------------------------------------------------------------------------------
 
 Allegro::Allegro(ResourcePaths& paths)
 :   Base(paths)
 ,   m_ctt(new AllegroCTT)
+,   m_lastFont(nullptr)
+,   m_lastTexture(nullptr)
 {
     m_ctt->SetRenderer(this);
     m_ctt->Initialize();
@@ -262,17 +310,12 @@ void Allegro::DrawTexturedRect(const Texture& texture, Gwk::Rect rect,
                                float u1, float v1,
                                float u2, float v2)
 {
+    if (!EnsureTexture(texture))
+        DrawMissingImage(rect);
+
     Translate(rect);
-    auto it = m_textures.find(texture);
-    if (it == m_textures.cend())
-    {
-        if (LoadTexture(texture) != Texture::Status::Loaded)
-            return DrawMissingImage(rect);
 
-        it = m_textures.find(texture);
-    }
-
-    ALTextureData& texData = it->second;
+    ALTextureData& texData = m_lastTexture->second;
 
     const unsigned int w = texData.width;
     const unsigned int h = texData.height;
@@ -285,16 +328,10 @@ void Allegro::DrawTexturedRect(const Texture& texture, Gwk::Rect rect,
 Gwk::Color Allegro::PixelColor(const Texture& texture, unsigned int x, unsigned int y,
                                  const Gwk::Color& col_default)
 {
-    auto it = m_textures.find(texture);
-    if (it == m_textures.cend())
-    {
-        if (LoadTexture(texture) != Texture::Status::Loaded)
-            return col_default;
+    if (!EnsureTexture(texture))
+        return col_default;
 
-        it = m_textures.find(texture);
-    }
-
-    ALTextureData& texData = it->second;
+    ALTextureData& texData = m_lastTexture->second;
 
     ALLEGRO_COLOR col = al_get_pixel(texData.texture.get(), x, y);
     Gwk::Color gcol;
