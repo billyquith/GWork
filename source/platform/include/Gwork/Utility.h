@@ -85,7 +85,11 @@ namespace Gwk
                 return outstr;
             }
 
-            static inline wchar_t utf8_to_wchart(char*& in)// Gwk::Utility::Widen too slow
+            //! \brief Widen a UTF8 code to a wide encoding.
+            //!
+            //! Source: https://stackoverflow.com/a/148766/3233
+            //
+            static inline wchar_t utf8_to_wchart(char*& in)
             {
 #if defined(__clang__) && defined(__apple_build_version__) && __apple_build_version__ >= 8
                 // thread_local not supported on Xcode versions below 8
