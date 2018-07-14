@@ -122,15 +122,13 @@ namespace Gwk
 
                 Color& At(int x, int y)
                 {
-                    unsigned char* color_ptr = m_ReadData.get() + (y * 4 * static_cast<int>(width) + x * 4);
-                    return *reinterpret_cast<Color*>(color_ptr);
+                    return reinterpret_cast<Color*>(m_ReadData.get())[y * static_cast<int>(width) + x];
                 }
                 Color& At(Point const& pt) { return At(pt.x, pt.y); }
 
                 const Color& At(int x, int y) const
                 {
-                    unsigned char* color_ptr = m_ReadData.get() + (y * 4 * static_cast<int>(width) + x * 4);
-                    return *reinterpret_cast<Color*>(color_ptr);
+                    return reinterpret_cast<Color*>(m_ReadData.get())[y * static_cast<int>(width) + x];
                 }
                 const Color& At(Point const& pt) const { return At(pt.x, pt.y); }
 
