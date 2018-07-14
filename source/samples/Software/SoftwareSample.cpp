@@ -38,12 +38,12 @@ int main(int argc, char** argv)
 
     {
         Gwk::Platform::RelativeToExecutablePaths paths(GWK_SAMPLE_RESOURCE_DIR);
-        Gwk::Renderer::SoftwareResourceLoader loader(paths);
         
         // Create pixel buffer to draw into and attach renderer.
         Gwk::Renderer::PixelBuffer pixbuff;
         pixbuff.Init(screenSize);
-        std::unique_ptr<Gwk::Renderer::Software> renderer(new Gwk::Renderer::Software(loader, pixbuff));
+        std::unique_ptr<Gwk::Renderer::Software>
+            renderer(new Gwk::Renderer::Software(paths, pixbuff));
         
         // Create a Gwork skin
         std::unique_ptr<Gwk::Skin::TexturedBase> skin(new Gwk::Skin::TexturedBase(renderer.get()));

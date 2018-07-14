@@ -55,6 +55,16 @@ namespace Gwk
 
         GWK_EXPORT void Replace(String& str, const String& strFind, const String& strReplace);
 
+
+        template<class T, class U>
+        static inline std::shared_ptr<T> dynamic_pointer_cast(const std::shared_ptr<U>& r) noexcept
+        {
+            if (auto p = dynamic_cast<typename std::shared_ptr<T>::element_type*>(r.get())) 
+                return std::shared_ptr<T>(r, p);
+            else
+                return std::shared_ptr<T>();
+        }
+        
         namespace Strings
         {
             typedef std::vector<Gwk::String> List;
@@ -73,6 +83,56 @@ namespace Gwk
                 T outstr = str;
                 outstr.erase(0, outstr.find_first_not_of(strChars));
                 return outstr;
+            }
+
+            //! \brief Widen a UTF8 code to a wide encoding.
+            //!
+            //! Source: https://stackoverflow.com/a/148766/3233
+            //
+            static inline wchar_t utf8_to_wchart(char*& in)
+            {
+#if defined(__clang__) && defined(__apple_build_version__) && __apple_build_version__ >= 8
+                // thread_local not supported on Xcode versions below 8
+                static unsigned int next = 0x10000;
+#else
+                thread_local static unsigned int next = 0x10000;
+#endif
+                if (next != 0x10000)
+                {
+                    wchar_t ret = static_cast<wchar_t>(next);
+                    next = 0x10000;
+                    return ret;
+                }
+                unsigned int codepoint;
+
+                while (*in != 0)
+                {
+                    unsigned char ch = static_cast<unsigned char>(*in);
+                    if (ch <= 0x7f)
+                        codepoint = ch;
+                    else if (ch <= 0xbf)
+                        codepoint = (codepoint << 6) | (ch & 0x3f);
+                    else if (ch <= 0xdf)
+                        codepoint = ch & 0x1f;
+                    else if (ch <= 0xef)
+                        codepoint = ch & 0x0f;
+                    else
+                        codepoint = ch & 0x07;
+                    ++in;
+                    if (((*in & 0xc0) != 0x80) && (codepoint <= 0x10ffff))
+                    {
+                        if (sizeof(wchar_t) > 2)
+                            return static_cast<wchar_t>(codepoint);
+                        else if (codepoint > 0xffff)
+                        {
+                            next = static_cast<wchar_t>(0xdc00 + (codepoint & 0x03ff));
+                            return static_cast<wchar_t>(0xd800 + (codepoint >> 10));
+                        }
+                        else if (codepoint < 0xd800 || codepoint >= 0xe000)
+                            return static_cast<wchar_t>(codepoint);
+                    }
+                }
+                return 0;
             }
 
             namespace To

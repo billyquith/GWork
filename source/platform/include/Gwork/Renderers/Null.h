@@ -23,8 +23,17 @@ namespace Gwk
         class GWK_EXPORT Null : public Gwk::Renderer::Base
         {
         public:
-            Null();
+            Null(ResourcePaths& paths);
             virtual ~Null();
+
+            
+            Font::Status LoadFont(const Gwk::Font& font) final { return Font::Status::Loaded; }
+            void FreeFont(const Gwk::Font& font) final {}
+            bool EnsureFont(const Gwk::Font& font) final { return true; }
+
+            Texture::Status LoadTexture(const Gwk::Texture& texture) final {  return Texture::Status::Loaded; }
+            void FreeTexture(const Gwk::Texture& texture) final {}
+            TextureData GetTextureData(const Gwk::Texture& texture) const final { return TextureData(); }
         };
     }
 }

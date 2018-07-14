@@ -269,9 +269,9 @@ namespace Gwk
 
         public:
 
-            virtual Gwk::Font* GetDefaultFont()
+            virtual const Gwk::Font& GetDefaultFont()
             {
-                return &m_defaultFont;
+                return m_defaultFont;
             }
 
             virtual void SetDefaultFont(const Gwk::String& strFacename, float fSize = 10.0f)

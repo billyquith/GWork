@@ -91,9 +91,8 @@ int main()
     // Create a Gwork Irrlicht Renderer
     //
     Gwk::Platform::RelativeToExecutablePaths paths(GWK_SAMPLE_RESOURCE_DIR);
-    Gwk::Renderer::IrrlichtResourceLoader loader(driver, paths);
 
-    Gwk::Renderer::Irrlicht* pRenderer = new Gwk::Renderer::Irrlicht(device, loader);
+    Gwk::Renderer::Irrlicht* pRenderer = new Gwk::Renderer::Irrlicht(paths, device);
     //
     // Create a Gwork skin
     //

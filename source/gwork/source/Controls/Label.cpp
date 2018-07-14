@@ -30,7 +30,7 @@ void Label::PreDelete(Gwk::Skin::Base* skin)
         skin->ReleaseFont(m_createdFont);
         delete m_createdFont;
         m_createdFont = nullptr;
-        SetFont(nullptr);
+        SetFont(skin->GetDefaultFont());
     }
 }
 
@@ -99,7 +99,7 @@ void Label::SetFont(Gwk::String strFacename, int iSize, bool bBold)
         GetSkin()->ReleaseFont(m_createdFont);
         delete m_createdFont;
         m_createdFont = nullptr;
-        SetFont(nullptr);
+        SetFont(GetSkin()->GetDefaultFont());
     }
 
     m_createdFont = new Gwk::Font();
@@ -107,6 +107,6 @@ void Label::SetFont(Gwk::String strFacename, int iSize, bool bBold)
     m_createdFont->bold = bBold;
     m_createdFont->facename = strFacename;
     m_createdFont->size = iSize;
-    SetFont(m_createdFont);
+    SetFont(*m_createdFont);
     m_text->RefreshSize();
 }

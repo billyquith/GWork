@@ -14,43 +14,67 @@ namespace Renderer
 
 //-------------------------------------------------------------------------------
 
-Font::Status SDL2ResourceLoader::LoadFont(Font& font)
+Font::Status SDL2::LoadFont(const Font& font)
 {
-    const String filename = m_paths.GetPath(ResourcePaths::Type::Font, font.facename);
+    FreeFont(font);
+    m_lastFont = nullptr;
 
-    TTF_Font *tfont = TTF_OpenFont(filename.c_str(), font.realsize);
+    const String filename = GetResourcePaths().GetPath(ResourcePaths::Type::Font, font.facename);
 
+    TTF_Font *tfont = TTF_OpenFont(filename.c_str(), font.size * Scale());
     if (tfont)
     {
-        font.data = tfont;
-        font.status = Font::Status::Loaded;
+        SDL2FontData fontData;
+        fontData.tFont = deleted_unique_ptr<TTF_Font>(tfont, [](TTF_Font* mem) { if (mem) TTF_CloseFont(mem); });
+        m_lastFont = &(*m_fonts.insert(std::make_pair(font, std::move(fontData))).first);
+        return Font::Status::Loaded;
     }
     else
     {
         Gwk::Log::Write(Log::Level::Error, "Font file not found: %s", filename.c_str());
-        font.status = Font::Status::ErrorFileNotFound;
+        return Font::Status::ErrorFileNotFound;
     }
-
-    return font.status;
 }
 
-void SDL2ResourceLoader::FreeFont(Gwk::Font& font)
+void SDL2::FreeFont(const Font& font)
 {
-    if (font.status == Font::Status::Loaded)
+    if (m_lastFont != nullptr && m_lastFont->first == font)
+        m_lastFont = nullptr;
+
+    m_fonts.erase(font); // calls SDL2FontData destructor
+}
+
+bool SDL2::EnsureFont(const Font& font)
+{
+    if (m_lastFont != nullptr)
     {
-        TTF_CloseFont(static_cast<TTF_Font*>(font.data));
-        font.status = Font::Status::Unloaded;
+        if (m_lastFont->first == font)
+            return true;
     }
+
+    // Was it loaded before?
+    auto it = m_fonts.find(font);
+    if (it != m_fonts.end())
+    {
+        m_lastFont = &(*it);
+        return true;
+    }
+
+    // No, try load to it
+
+    // LoadFont sets m_lastFont, if loaded
+    return LoadFont(font) == Font::Status::Loaded;
 }
 
-Texture::Status SDL2ResourceLoader::LoadTexture(Texture& texture)
+Texture::Status SDL2::LoadTexture(const Texture& texture)
 {
-    if (texture.IsLoaded())
-        FreeTexture(texture);
+    FreeTexture(texture);
+    m_lastTexture = nullptr;
 
-    const String filename = m_paths.GetPath(ResourcePaths::Type::Texture, texture.name);
+    const String filename = GetResourcePaths().GetPath(ResourcePaths::Type::Texture, texture.name);
 
     SDL_Texture *tex = nullptr;
+    SDL2TextureData texData;
     if (texture.readable)
     {
         // You cannot find the format of a texture once loaded to read from it
@@ -63,17 +87,22 @@ Texture::Status SDL2ResourceLoader::LoadTexture(Texture& texture)
         }
         else
         {
-            tex = SDL_CreateTextureFromSurface(m_sdlRenderer, surf);
-            texture.surface = surf;
+            tex = SDL_CreateTextureFromSurface(m_renderer, surf);
+            texData.surface = deleted_unique_ptr<SDL_Surface>(surf, [](SDL_Surface* mem) { if (mem) SDL_FreeSurface(mem); });
+            texData.readable = true;
         }
     }
     else
     {
         // Don't need to read. Just load straight into render format.
-        tex = IMG_LoadTexture(m_sdlRenderer, filename.c_str());
+        tex = IMG_LoadTexture(m_renderer, filename.c_str());
         if (!tex)
         {
             Gwk::Log::Write(Log::Level::Error, "Texture file not found: %s", filename.c_str());
+        }
+        else
+        {
+            texData.readable = false;
         }
     }
 
@@ -81,45 +110,70 @@ Texture::Status SDL2ResourceLoader::LoadTexture(Texture& texture)
     {
         int w, h;
         SDL_QueryTexture(tex, NULL, NULL, &w, &h);
-
-        texture.data = tex;
-        texture.width = w;
-        texture.height = h;
-        texture.status = Texture::Status::Loaded;
+        texData.texture = deleted_unique_ptr<SDL_Texture>(tex, [](SDL_Texture* mem) { if (mem) SDL_DestroyTexture(mem); });
+        texData.width = w;
+        texData.height = h;
+        m_lastTexture = &(*m_textures.insert(std::make_pair(texture, std::move(texData))).first);
+        return Texture::Status::Loaded;
     }
     else
     {
-        texture.data = nullptr;
-        texture.status = Texture::Status::ErrorFileNotFound;
+        return Texture::Status::ErrorFileNotFound;
     }
-
-    return texture.status;
 }
 
-void SDL2ResourceLoader::FreeTexture(Texture& texture)
+void SDL2::FreeTexture(const Texture& texture)
 {
-    if (texture.IsLoaded())
+    if (m_lastTexture != nullptr && m_lastTexture->first == texture)
+        m_lastTexture = nullptr;
+
+    m_textures.erase(texture); // calls SDLTextureData destructor
+}
+
+TextureData SDL2::GetTextureData(const Texture& texture) const
+{
+    if (m_lastTexture != nullptr && m_lastTexture->first == texture)
+        return m_lastTexture->second;
+
+    auto it = m_textures.find(texture);
+    if (it != m_textures.cend())
     {
-        SDL_DestroyTexture(static_cast<SDL_Texture*>(texture.data));
-        texture.data = nullptr;
-
-        if (texture.surface)
-        {
-            SDL_FreeSurface(static_cast<SDL_Surface*>(texture.surface));
-            texture.surface = nullptr;
-            texture.readable = false;
-        }
-
-        texture.status = Texture::Status::Unloaded;
+        return it->second;
     }
+    // Texture not loaded :(
+    return TextureData();
+}
+
+bool SDL2::EnsureTexture(const Gwk::Texture& texture)
+{
+    if (m_lastTexture != nullptr)
+    {
+        if (m_lastTexture->first == texture)
+            return true;
+    }
+
+    // Was it loaded before?
+    auto it = m_textures.find(texture);
+    if (it != m_textures.end())
+    {
+        m_lastTexture = &(*it);
+        return true;
+    }
+
+    // No, try load to it
+
+    // LoadTexture sets m_lastTexture, if exist
+    return LoadTexture(texture) == Texture::Status::Loaded;
 }
 
 //-------------------------------------------------------------------------------
 
-SDL2::SDL2(ResourceLoader& loader, SDL_Window *window)
-    :   Base(loader)
+SDL2::SDL2(ResourcePaths& paths, SDL_Window *window)
+    :   Base(paths)
     ,   m_window(window)
     ,   m_renderer(nullptr)
+    ,   m_lastFont(nullptr)
+    ,   m_lastTexture(nullptr)
 {
   m_renderer = SDL_GetRenderer( m_window );
 }
@@ -138,15 +192,16 @@ void SDL2::SetDrawColor(Gwk::Color color)
     SDL_SetRenderDrawColor(m_renderer, color.r, color.g, color.b, color.a);
 }
 
-void SDL2::RenderText(Gwk::Font* font, Gwk::Point pos, const Gwk::String& text)
+void SDL2::RenderText(const Gwk::Font& font, Gwk::Point pos, const Gwk::String& text)
 {
-    if (!EnsureFont(*font))
+    if (!EnsureFont(font))
         return;
 
-    TTF_Font *tfont = static_cast<TTF_Font*>(font->data);
+    SDL2FontData& fontData = m_lastFont->second;
+
     Translate(pos.x, pos.y);
 
-    SDL_Surface *surf = TTF_RenderUTF8_Blended(tfont, text.c_str(), m_color);
+    SDL_Surface *surf = TTF_RenderUTF8_Blended(fontData.tFont.get(), text.c_str(), m_color);
     SDL_Texture *texture = SDL_CreateTextureFromSurface(m_renderer, surf);
     SDL_FreeSurface(surf);
 
@@ -159,15 +214,15 @@ void SDL2::RenderText(Gwk::Font* font, Gwk::Point pos, const Gwk::String& text)
     SDL_DestroyTexture(texture);
 }
 
-Gwk::Point SDL2::MeasureText(Gwk::Font* font, const Gwk::String& text)
+Gwk::Point SDL2::MeasureText(const Gwk::Font& font, const Gwk::String& text)
 {
-    if (!EnsureFont(*font))
+    if (!EnsureFont(font))
         return Gwk::Point(0, 0);
 
-    TTF_Font *tfont = static_cast<TTF_Font*>(font->data);
-
+    SDL2FontData& fontData = m_lastFont->second;
+    
     int w,h;
-    TTF_SizeUTF8(tfont, text.c_str(), &w,&h);
+    TTF_SizeUTF8(fontData.tFont.get(), text.c_str(), &w,&h);
 
     return Point(w,h);
 }
@@ -199,44 +254,47 @@ void SDL2::EndClip()
     SDL_RenderSetClipRect(m_renderer, 0);
 }
 
-void SDL2::DrawTexturedRect(Gwk::Texture* texture, Gwk::Rect rect,
+void SDL2::DrawTexturedRect(const Gwk::Texture& texture, Gwk::Rect rect,
                             float u1, float v1, float u2, float v2)
 {
-    SDL_Texture *tex = static_cast<SDL_Texture*>(texture->data);
-
-    if (!tex)
+    if (!EnsureTexture(texture))
         return DrawMissingImage(rect);
 
     Translate(rect);
 
-    const unsigned int w = texture->width;
-    const unsigned int h = texture->height;
+    SDL2TextureData& texData = m_lastTexture->second;
+
+    const unsigned int w = texData.width;
+    const unsigned int h = texData.height;
 
     const SDL_Rect source = { int(u1*w), int(v1*h), int((u2-u1)*w), int((v2-v1)*h) },
                      dest = { rect.x, rect.y, rect.w, rect.h };
 
-    SDL_RenderCopy(m_renderer, tex, &source, &dest);
+    SDL_RenderCopy(m_renderer, texData.texture.get(), &source, &dest);
 }
 
-Gwk::Color SDL2::PixelColor(Gwk::Texture* texture, unsigned int x, unsigned int y,
+Gwk::Color SDL2::PixelColor(const Gwk::Texture& texture, unsigned int x, unsigned int y,
                               const Gwk::Color& col_default)
 {
-    SDL_Surface *surf = static_cast<SDL_Surface*>(texture->surface);
-
-    if (!texture->readable || !surf)
+    if (!EnsureTexture(texture))
         return col_default;
 
-    if (SDL_MUSTLOCK(surf) != 0)
-        SDL_LockSurface(surf);
+    SDL2TextureData& texData = m_lastTexture->second;
 
-    const char *mem = static_cast<char*>(surf->pixels) + y*surf->pitch + x*sizeof(Uint32);
+    if (!texData.readable || !texData.surface)
+        return col_default;
+
+    if (SDL_MUSTLOCK(texData.surface.get()) != 0)
+        SDL_LockSurface(texData.surface.get());
+
+    const char *mem = static_cast<char*>(texData.surface->pixels) + y* texData.surface->pitch + x*sizeof(Uint32);
     const Uint32 pix = *reinterpret_cast<const Uint32*>(mem);
 
     Gwk::Color col;
-    SDL_GetRGBA(pix, surf->format, &col.r, &col.g, &col.b, &col.a);
+    SDL_GetRGBA(pix, texData.surface->format, &col.r, &col.g, &col.b, &col.a);
 
-    if (SDL_MUSTLOCK(surf) != 0)
-        SDL_UnlockSurface(surf);
+    if (SDL_MUSTLOCK(texData.surface.get()) != 0)
+        SDL_UnlockSurface(texData.surface.get());
 
     return col;
 }

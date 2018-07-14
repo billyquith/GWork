@@ -13,60 +13,119 @@
 #include <Gwork/BaseRender.h>
 #include <Gwork/Platform.h>
 #include <SDL.h>
+#include <unordered_map>
+#include <memory>
+#include <vector>
+#include <functional>
 
 
+typedef struct _TTF_Font TTF_Font;
 namespace Gwk
 {
     namespace Renderer
     {
         class SDL2CTT;
 
-        //! Default resource loader for SDL2.
-        class SDL2ResourceLoader : public ResourceLoader
-        {
-            ResourcePaths& m_paths;
-            SDL_Renderer *m_sdlRenderer;
-        public:
-            SDL2ResourceLoader(ResourcePaths& paths, SDL_Renderer *rdr)
-                :   m_paths(paths)
-                ,   m_sdlRenderer(rdr)
-            {}
-
-            Font::Status LoadFont(Font& font) override;
-            void FreeFont(Font& font) override;
-
-            Texture::Status LoadTexture(Texture& texture) override;
-            void FreeTexture(Texture& texture) override;
-        };
-
         //
         //! Renderer for [SDL2](https://www.libsdl.org).
         //
         class GWK_EXPORT SDL2 : public Gwk::Renderer::Base
         {
+            template<typename T>
+            using deleted_unique_ptr = std::unique_ptr<T, std::function<void(T*)>>;
+
+            static const wchar_t BeginCharacter = L' ';    // First Character of Wide Character Table
+            static const wchar_t LastCharacter = 0x2FFF;   // Last Character of Wide Character Table
+            static const wchar_t NewLineCharacter = L'\n'; // New Line Character
+
         public:
 
-            SDL2(ResourceLoader& loader, SDL_Window *window);
+            SDL2(ResourcePaths& paths, SDL_Window *window);
             virtual ~SDL2();
 
             void SetDrawColor(Gwk::Color color) override;
 
             void DrawFilledRect(Gwk::Rect rect) override;
 
-            void RenderText(Gwk::Font* font, Gwk::Point pos, const Gwk::String& text) override;
-            Gwk::Point MeasureText(Gwk::Font* font, const Gwk::String& text) override;
+            void DrawLinedRect(Gwk::Rect rect) override;
 
             void StartClip() override;
             void EndClip() override;
 
-            void DrawTexturedRect(Gwk::Texture* texture, Gwk::Rect targetRect,
-                                  float u1 = 0.0f, float v1 = 0.0f,
-                                  float u2 = 1.0f, float v2 = 1.0f) override;
+            void DrawTexturedRect(const Gwk::Texture& texture, Gwk::Rect targetRect, float u1 = 0.0f,
+                                  float v1 = 0.0f, float u2 = 1.0f, float v2 = 1.0f) override;
 
-            Gwk::Color  PixelColor(Gwk::Texture* texture, unsigned int x, unsigned int y,
-                                   const Gwk::Color& col_default) override;
+            Gwk::Color PixelColor(const Gwk::Texture& texture,
+                                  unsigned int x, unsigned int y,
+                                  const Gwk::Color& col_default) override;
 
-            void DrawLinedRect(Gwk::Rect rect) override;
+            void RenderText(const Gwk::Font& font,
+                            Gwk::Point pos,
+                            const Gwk::String& text) override;
+
+            Gwk::Point MeasureText(const Gwk::Font& font, const Gwk::String& text) override;
+
+            // Resource Loader
+            Gwk::Font::Status LoadFont(const Gwk::Font& font) override;
+            void FreeFont(const Gwk::Font& font) override;
+            bool EnsureFont(const Gwk::Font& font) override;
+
+            Texture::Status LoadTexture(const Gwk::Texture& texture) override;
+            void FreeTexture(const Gwk::Texture& texture) override;
+            TextureData GetTextureData(const Gwk::Texture& texture) const override;
+            bool EnsureTexture(const Gwk::Texture& texture) override;
+
+        protected:// Resourses
+
+            struct SDL2TextureData : public Gwk::TextureData
+            {
+                SDL2TextureData()
+                {
+                }
+                SDL2TextureData(const SDL2TextureData&) = delete;
+                SDL2TextureData(SDL2TextureData&& other)
+                    : SDL2TextureData()
+                {
+                    std::swap(width, other.width);
+                    std::swap(height, other.height);
+                    std::swap(readable, other.readable);
+                    texture.swap(other.texture);
+                    surface.swap(other.surface);
+                }
+
+                ~SDL2TextureData()
+                {
+
+                }
+
+                deleted_unique_ptr<SDL_Texture> texture;
+                deleted_unique_ptr<SDL_Surface> surface;
+            };
+
+            struct SDL2FontData
+            {
+                SDL2FontData()
+                {
+                }
+
+                SDL2FontData(const SDL2FontData&) = delete;
+                SDL2FontData(SDL2FontData&& other)
+                    : SDL2FontData()
+                {
+                    tFont.swap(other.tFont);
+                }
+
+                ~SDL2FontData()
+                {
+                }
+                deleted_unique_ptr<TTF_Font> tFont;
+            };
+
+            std::unordered_map<Font, SDL2FontData> m_fonts;
+            std::unordered_map<Texture, SDL2TextureData> m_textures;
+            std::pair<const Font, SDL2FontData>* m_lastFont;
+            std::pair<const Texture, SDL2TextureData>* m_lastTexture;
+        public:
 
             bool BeginContext(Gwk::WindowProvider* window) override;
             bool EndContext(Gwk::WindowProvider* window) override;

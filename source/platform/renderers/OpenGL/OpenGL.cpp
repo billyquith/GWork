@@ -9,6 +9,7 @@
 #include <Gwork/PlatformTypes.h>
 #include <Gwork/WindowProvider.h>
 #include <Gwork/PlatformCommon.h>
+#include <Gwork/Utility.h>
 
 #ifdef _WIN32
 #   define WIN32_LEAN_AND_MEAN
@@ -25,6 +26,7 @@
 #include <sys/stat.h>
 #include <stdio.h>
 #include <algorithm>
+#include <fstream>
 
 //#define STBI_ASSERT(x)  // comment in for no asserts
 #define STB_IMAGE_IMPLEMENTATION
@@ -42,130 +44,196 @@ namespace Renderer
 // See "Font Size in Pixels or Points" in "stb_truetype.h"
 static constexpr float c_pointsToPixels = 1.333f;
 // Arbitrary size chosen for texture cache target.
-static constexpr int c_texsz = 256;
+static constexpr int c_texsz = 800; // Texture size too small for wchar_t characters but stbtt_BakeFontBitmap crashes on larger sizes
 
-Font::Status OpenGLResourceLoader::LoadFont(Font& font)
+OpenGL::GLTextureData::~GLTextureData()
 {
-    const String filename = m_paths.GetPath(ResourcePaths::Type::Font, font.facename);
+    glBindTexture(GL_TEXTURE_2D, 0);
+    glDeleteTextures(1, reinterpret_cast<GLuint*>(&texture_id));
+}
 
-    FILE* f = fopen(filename.c_str(), "rb");
-    if (!f)
+Font::Status OpenGL::LoadFont(const Font& font)
+{
+    FreeFont(font);
+    m_lastFont = nullptr;
+
+    const String filename = GetResourcePaths().GetPath(ResourcePaths::Type::Font, font.facename);
+
+    std::ifstream inFile(filename, std::ifstream::in | std::ifstream::binary);
+
+    if (!inFile.good())
     {
         Gwk::Log::Write(Log::Level::Error, "Font file not found: %s", filename.c_str());
-        font.data = nullptr;
-        font.status = Font::Status::ErrorFileNotFound;
-        return font.status;
+        return Font::Status::ErrorFileNotFound;
     }
 
-    struct stat stat_buf;
-    const int rc = stat(filename.c_str(), &stat_buf);
-    const size_t fsz = rc == 0 ? stat_buf.st_size : -1;
+    std::streampos begin = inFile.tellg();
+    inFile.seekg(0, std::ios::end);
+    const size_t fsz = inFile.tellg() - begin;
+    inFile.seekg(0, std::ios::beg);
     assert(fsz > 0);
 
-    unsigned char* ttfdata = new unsigned char[fsz];
-    fread(ttfdata, 1, fsz, f);
-    fclose(f);
+    std::unique_ptr<unsigned char[]> ttfdata = std::unique_ptr<unsigned char[]>(new unsigned char[fsz]);
+    inFile.read(reinterpret_cast<char*>(ttfdata.get()), fsz);
+    inFile.close();
 
-    unsigned char *font_bmp = new unsigned char[c_texsz * c_texsz];
+    std::unique_ptr<unsigned char[]> font_bmp = std::unique_ptr<unsigned char[]>(new unsigned char[c_texsz * c_texsz]);
 
-    font.render_data = new stbtt_bakedchar[96];
+    GLFontData fontData;
+    const float realsize = font.size * Scale();
+    fontData.baked_chars.resize(LastCharacter - BeginCharacter + 1);
 
-    stbtt_BakeFontBitmap(ttfdata, 0,
-                         font.realsize * c_pointsToPixels, // height
-                         font_bmp,
+    stbtt_BakeFontBitmap(ttfdata.get(), 0,
+                         realsize * c_pointsToPixels, // height
+                         font_bmp.get(),
                          c_texsz, c_texsz,
-                         32,96,             // range to bake
-                         static_cast<stbtt_bakedchar*>(font.render_data));
-    delete [] ttfdata;
-
-    font.data = new GLuint;
-    glGenTextures(1, static_cast<GLuint*>(font.data));
-    glBindTexture(GL_TEXTURE_2D, *static_cast<GLuint*>(font.data));
+                         BeginCharacter, LastCharacter,             // range to bake
+                         reinterpret_cast<stbtt_bakedchar*>(fontData.baked_chars.data()));
+    
+    glGenTextures(1, &fontData.texture_id);
+    SetTexture(fontData.texture_id);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA,
                  c_texsz,c_texsz, 0,
                  GL_ALPHA, GL_UNSIGNED_BYTE,
-                 font_bmp);
-    delete [] font_bmp;
+                 font_bmp.get());
 
-    font.status = Font::Status::Loaded;
+    fontData.width = c_texsz;
+    fontData.height = c_texsz;
 
-    return font.status;
+    m_lastFont = &(*m_fonts.insert(std::make_pair(font, std::move(fontData))).first);
+    return Font::Status::Loaded;
 }
 
-void OpenGLResourceLoader::FreeFont(Gwk::Font& font)
+void OpenGL::FreeFont(const Gwk::Font& font)
 {
-    if (font.IsLoaded())
+    if (m_lastFont != nullptr && m_lastFont->first == font)
+        m_lastFont = nullptr;
+
+    m_fonts.erase(font); // calls GLFontData destructor
+}
+
+bool OpenGL::EnsureFont(const Font& font)
+{
+    if (m_lastFont != nullptr)
     {
-        // TODO - unbind texture
-        delete [] static_cast<GLuint*>(font.data);
-        delete [] static_cast<stbtt_bakedchar*>(font.render_data);
-
-        font.status = Font::Status::Unloaded;
+        if (m_lastFont->first == font)
+            return true;
     }
+
+    // Was it loaded before?
+    auto it = m_fonts.find(font);
+    if (it != m_fonts.end())
+    {
+        m_lastFont = &(*it);
+        return true;
+    }
+
+    // No, try load to it
+
+    // LoadFont sets m_lastFont, if loaded
+    return LoadFont(font) == Font::Status::Loaded;
 }
 
-Texture::Status OpenGLResourceLoader::LoadTexture(Texture& texture)
+Texture::Status OpenGL::LoadTexture(const Texture& texture)
 {
-    if (texture.IsLoaded())
-        FreeTexture(texture);
+    FreeTexture(texture);
+    m_lastTexture = nullptr;
 
-    const String filename = m_paths.GetPath(ResourcePaths::Type::Texture, texture.name);
+    const String filename = GetResourcePaths().GetPath(ResourcePaths::Type::Texture, texture.name);
 
-    int x,y,n;
-    unsigned char *data = stbi_load(filename.c_str(), &x, &y, &n, 4);
+    GLTextureData texData;
+
+    int width, height, n;
+    {
+        unsigned char *image = stbi_load(filename.c_str(), &width, &height, &n, 4);
+        texData.m_ReadData = deleted_unique_ptr<unsigned char>(image, [](unsigned char* mem) { if (mem) stbi_image_free(mem); });
+    }
 
     // Image failed to load..
-    if (!data)
+    if (!texData.m_ReadData)
     {
         Gwk::Log::Write(Log::Level::Error, "Texture file not found: %s", filename.c_str());
-        texture.status = Texture::Status::ErrorFileNotFound;
-        return texture.status;
+        return Texture::Status::ErrorFileNotFound;
     }
-
-    // Create a little texture pointer..
-    GLuint* pglTexture = new GLuint;
-
-    texture.data = pglTexture;
-    texture.width = x;
-    texture.height = y;
+    
 
     // Create the opengl texture
-    glGenTextures(1, pglTexture);
-    glBindTexture(GL_TEXTURE_2D, *pglTexture);
+    glGenTextures(1, &texData.texture_id);
+    SetTexture(texData.texture_id);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     GLenum format = GL_RGBA;
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, texture.width, texture.height, 0, format,
-                 GL_UNSIGNED_BYTE, (const GLvoid*)data);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, format,
+                 GL_UNSIGNED_BYTE, (const GLvoid*)texData.m_ReadData.get());
 
-    stbi_image_free(data);
+    texData.readable = texture.readable;
+    if (!texture.readable)
+    {
+        texData.m_ReadData.reset();
+    }
 
-    return texture.status = Texture::Status::Loaded;
+    texData.width = width;
+    texData.height = height;
+
+    m_lastTexture = &(*m_textures.insert(std::make_pair(texture, std::move(texData))).first);
+    return Texture::Status::Loaded;
 }
 
-void OpenGLResourceLoader::FreeTexture(Texture& texture)
+void OpenGL::FreeTexture(const Gwk::Texture& texture)
 {
-    if (texture.IsLoaded())
+    if (m_lastTexture != nullptr && m_lastTexture->first == texture)
+        m_lastTexture = nullptr;
+
+    m_textures.erase(texture); // calls GLTextureData destructor
+}
+
+TextureData OpenGL::GetTextureData(const Texture& texture) const
+{
+    if (m_lastTexture != nullptr && m_lastTexture->first == texture)
+        return m_lastTexture->second;
+
+    auto it = m_textures.find(texture);
+    if (it != m_textures.cend())
     {
-        GLuint* tex = static_cast<GLuint*>(texture.data);
-
-        glDeleteTextures(1, tex);
-        delete tex;
-        texture.data = nullptr;
-
-        texture.status = Texture::Status::Unloaded;
+        return it->second;
     }
+    // Texture not loaded :(
+    return TextureData();
+}
+
+bool OpenGL::EnsureTexture(const Gwk::Texture& texture)
+{
+    if (m_lastTexture != nullptr)
+    {
+        if (m_lastTexture->first == texture)
+            return true;
+    }
+
+    // Was it loaded before?
+    auto it = m_textures.find(texture);
+    if (it != m_textures.end())
+    {
+        m_lastTexture = &(*it);
+        return true;
+    }
+
+    // No, try load to it
+
+    // LoadTexture sets m_lastTexture, if exist
+    return LoadTexture(texture) == Texture::Status::Loaded;
 }
 
 //-------------------------------------------------------------------------------
 
-OpenGL::OpenGL(ResourceLoader& loader, const Rect& viewRect)
-:   Base(loader)
+OpenGL::OpenGL(ResourcePaths& paths, const Rect& viewRect)
+:   Base(paths)
 ,   m_viewRect(viewRect)
 ,   m_vertNum(0)
 ,   m_context(nullptr)
+,   m_lastFont(nullptr)
+,   m_lastTexture(nullptr)
 {
     for (int i = 0; i < MaxVerts; i++)
     {
@@ -193,6 +261,9 @@ void OpenGL::Begin()
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glAlphaFunc(GL_GREATER, 1.0f);
     glEnable(GL_BLEND);
+
+    glGetBooleanv(GL_TEXTURE_2D, &m_textures_on);
+    glGetIntegerv(GL_TEXTURE_BINDING_2D, reinterpret_cast<GLint*>(&m_current_texture));
 }
 
 void OpenGL::End()
@@ -234,15 +305,31 @@ void OpenGL::AddVert(int x, int y, float u, float v)
     m_vertNum++;
 }
 
+void OpenGL::SetTexture(unsigned int texture)
+{
+    if (texture == 0 && !m_textures_on)
+        return;
+
+    if (texture == 0)
+    {
+        glDisable(GL_TEXTURE_2D);
+        m_textures_on = false;
+    }
+    else
+    {
+        glEnable(GL_TEXTURE_2D);
+        m_textures_on = true;
+    }
+    glBindTexture(GL_TEXTURE_2D, texture);
+    m_current_texture = texture;
+}
+
 void OpenGL::DrawFilledRect(Gwk::Rect rect)
 {
-    GLboolean texturesOn;
-    glGetBooleanv(GL_TEXTURE_2D, &texturesOn);
-
-    if (texturesOn)
+    if (m_textures_on)
     {
         Flush();
-        glDisable(GL_TEXTURE_2D);
+        SetTexture(0);
     }
 
     Translate(rect);
@@ -279,26 +366,20 @@ void OpenGL::EndClip()
     glDisable(GL_SCISSOR_TEST);
 }
 
-void OpenGL::DrawTexturedRect(Gwk::Texture* texture, Gwk::Rect rect,
+void OpenGL::DrawTexturedRect(const Gwk::Texture& texture, Gwk::Rect rect,
                               float u1, float v1, float u2, float v2)
 {
-    GLuint* tex = (GLuint*)texture->data;
-
-    // Missing image, not loaded properly?
-    if (!tex)
+    if (!EnsureTexture(texture))
         return DrawMissingImage(rect);
 
-    Translate(rect);
-    GLuint boundtex;
-    GLboolean texturesOn;
-    glGetBooleanv(GL_TEXTURE_2D, &texturesOn);
-    glGetIntegerv(GL_TEXTURE_BINDING_2D, (GLint*)&boundtex);
+    const GLTextureData& texData = m_lastTexture->second;
 
-    if (!texturesOn || *tex != boundtex)
+    Translate(rect);
+
+    if (!m_current_texture || texData.texture_id != m_current_texture)
     {
         Flush();
-        glBindTexture(GL_TEXTURE_2D, *tex);
-        glEnable(GL_TEXTURE_2D);
+        SetTexture(texData.texture_id);
     }
 
     AddVert(rect.x, rect.y,             u1, v1);
@@ -309,87 +390,105 @@ void OpenGL::DrawTexturedRect(Gwk::Texture* texture, Gwk::Rect rect,
     AddVert(rect.x, rect.y+rect.h,      u1, v2);
 }
 
-Gwk::Color OpenGL::PixelColor(Gwk::Texture* texture, unsigned int x, unsigned int y,
+Gwk::Color OpenGL::PixelColor(const Gwk::Texture& texture, unsigned int x, unsigned int y,
                                const Gwk::Color& col_default)
 {
-    GLuint* tex = (GLuint*)texture->data;
-
-    if (!tex)
+    if (!EnsureTexture(texture))
         return col_default;
 
-    unsigned int iPixelSize = sizeof(unsigned char)*4;
-    glBindTexture(GL_TEXTURE_2D, *tex);
-    unsigned char* data =
-        (unsigned char*)malloc(iPixelSize * texture->width * texture->height);
-    glGetTexImage(GL_TEXTURE_2D, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
-    unsigned int iOffset = (y*texture->width+x)*4;
+    GLTextureData& texData = m_lastTexture->second;
 
-    Color c(data[0+iOffset], data[1+iOffset], data[2+iOffset], data[3+iOffset]);
+    static const unsigned int iPixelSize = sizeof(unsigned char) * 4;
 
-    // Retrieving the entire texture for a single pixel read
-    // is kind of a waste - maybe cache this pointer in the texture
-    // data and then release later on? It's never called during runtime
-    // - only during initialization.
-    free(data);
+    if (texData.readable)
+    {
+        unsigned char *pPixel = texData.m_ReadData.get() + (x + (y * static_cast<unsigned int>(texData.width))) * iPixelSize;
+        return Gwk::Color(pPixel[0], pPixel[1], pPixel[2], pPixel[3]);
+    }
 
-    return c;
+    SetTexture(texData.texture_id);
+    texData.m_ReadData = deleted_unique_ptr<unsigned char>(new unsigned char[texData.width * texData.height * iPixelSize], [](unsigned char* mem) { if (mem) delete[](mem); });
+    texData.readable = true;
+
+    glGetTexImage(GL_TEXTURE_2D, 0, GL_RGBA, GL_UNSIGNED_BYTE, texData.m_ReadData.get());
+
+    unsigned char *pPixel = texData.m_ReadData.get() + (x + (y * static_cast<unsigned int>(texData.width))) * iPixelSize;
+    return Gwk::Color(pPixel[0], pPixel[1], pPixel[2], pPixel[3]);
 }
 
-void OpenGL::RenderText(Gwk::Font* font, Gwk::Point pos,
+void OpenGL::RenderText(const Gwk::Font& font, Gwk::Point pos,
                         const Gwk::String& text)
 {
-    Texture tex;
-    tex.data = font->data;
+    if (!EnsureFont(font))
+        return;
 
+    GLFontData& fontData = m_lastFont->second;
+
+    if (m_current_texture != fontData.texture_id)
+    {
+        Flush();
+        SetTexture(fontData.texture_id);
+    }
     float x = pos.x, y = pos.y;
-    const char *pc = text.c_str();
-    size_t slen = text.length();
+    char* text_ptr = const_cast<char*>(text.c_str());
 
     // Height of font, allowing for descenders, because baseline is bottom of capitals.
-    const float height = font->realsize * c_pointsToPixels * 0.8f;
+    const float height = font.size * Scale() * c_pointsToPixels * 0.8f;
 
-    while (slen > 0)
+    while (const auto wide_char = Utility::Strings::utf8_to_wchart(text_ptr))
     {
-        if (*pc >= 32 && *pc <= 127)
-        {
-            stbtt_aligned_quad q;
-            stbtt_GetBakedQuad(static_cast<stbtt_bakedchar*>(font->render_data),
-                               c_texsz,c_texsz,
-                               *pc - 32,
-                               &x, &y, &q, 1); // 1=opengl & d3d10+,0=d3d9
+        const auto c = wide_char - BeginCharacter;
 
-            Rect r(q.x0, q.y0 + height, q.x1 - q.x0, q.y1 - q.y0);
-            DrawTexturedRect(&tex, r, q.s0,q.t0, q.s1,q.t1);
-        }
-        ++pc, --slen;
+        if (wide_char < BeginCharacter || wide_char > LastCharacter)
+            continue;
+
+        stbtt_aligned_quad q;
+        stbtt_GetBakedQuad(reinterpret_cast<stbtt_bakedchar*>(fontData.baked_chars.data()),
+            c_texsz, c_texsz,
+            c,
+            &x, &y, &q, 1); // 1=opengl & d3d10+,0=d3d9
+
+        Rect rect(q.x0, q.y0 + height, q.x1 - q.x0, q.y1 - q.y0);
+
+        Translate(rect);
+
+        AddVert(rect.x, rect.y, q.s0, q.t0);
+        AddVert(rect.x + rect.w, rect.y, q.s1, q.t0);
+        AddVert(rect.x, rect.y + rect.h, q.s0, q.t1);
+        AddVert(rect.x + rect.w, rect.y, q.s1, q.t0);
+        AddVert(rect.x + rect.w, rect.y + rect.h, q.s1, q.t1);
+        AddVert(rect.x, rect.y + rect.h, q.s0, q.t1);
     }
 }
 
-Gwk::Point OpenGL::MeasureText(Gwk::Font* font, const Gwk::String& text)
+Gwk::Point OpenGL::MeasureText(const Gwk::Font& font, const Gwk::String& text)
 {
-    if (!EnsureFont(*font))
+    if (!EnsureFont(font))
         return Gwk::Point(0, 0);
 
-    Point sz(0, font->realsize * c_pointsToPixels);
+    GLFontData& fontData = m_lastFont->second;
+
+    Point sz(0, font.size * Scale() * c_pointsToPixels);
 
     float x = 0.f, y = 0.f;
-    const char *pc = text.c_str();
-    size_t slen = text.length();
+    char* text_ptr = const_cast<char*>(text.c_str());
 
-    while (slen > 0)
+    while (const auto wide_char = Utility::Strings::utf8_to_wchart(text_ptr))
     {
-        if (*pc >= 32 && *pc <= 127)
-        {
-            stbtt_aligned_quad q;
-            stbtt_GetBakedQuad(static_cast<stbtt_bakedchar*>(font->render_data),
-                               c_texsz,c_texsz,
-                               *pc - 32,
-                               &x, &y, &q, 1); // 1=opengl & d3d10+,0=d3d9
+        const auto c = wide_char - BeginCharacter;
 
-            sz.x = q.x1;
-            sz.y = std::max(sz.y, int((q.y1 - q.y0) * c_pointsToPixels));
-        }
-        ++pc, --slen;
+        if (wide_char < BeginCharacter || wide_char > LastCharacter)
+            continue;
+
+
+        stbtt_aligned_quad q;
+        stbtt_GetBakedQuad(reinterpret_cast<stbtt_bakedchar*>(fontData.baked_chars.data()),
+            c_texsz, c_texsz,
+            c,
+            &x, &y, &q, 1); // 1=opengl & d3d10+,0=d3d9
+
+        sz.x = q.x1;
+        sz.y = std::max(sz.y, int((q.y1 - q.y0) * c_pointsToPixels));
     }
 
     return sz;

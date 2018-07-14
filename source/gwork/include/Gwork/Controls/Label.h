@@ -45,12 +45,12 @@ namespace Gwk
 
             virtual void SetFont(Gwk::String strFacename, int iSize, bool bBold);
 
-            virtual void SetFont(Gwk::Font* font)
+            virtual void SetFont(const Gwk::Font& font)
             {
                 m_text->SetFont(font);
             }
 
-            virtual Gwk::Font* GetFont()
+            virtual const Gwk::Font& GetFont() const
             {
                 return m_text->GetFont();
             }

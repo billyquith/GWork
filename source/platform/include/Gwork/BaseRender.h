@@ -44,12 +44,12 @@ namespace Gwk
         //! Each renderer implements this functionality so that the skin can draw the GUI.
         //! \note We never instance this directly, only the derived implementations.
         //
-        class GWK_EXPORT Base
+        class GWK_EXPORT Base : public IResourceLoader
         {
         protected:
 
             //! Constructor. Not public as we only instance derived implementations.
-            Base(ResourceLoader& loader);
+            Base(ResourcePaths& paths);
 
         public:
 
@@ -60,7 +60,8 @@ namespace Gwk
             virtual void End() {}
 
             //! Get ResourceLoader we are using for the renderer.
-            ResourceLoader& GetLoader() { return m_loader; }
+            IResourceLoader& GetLoader() { return *reinterpret_cast<IResourceLoader*>(this); }
+            ResourcePaths& GetResourcePaths() { return m_paths; }
 
             //! Set the current drawing color.
             virtual void SetDrawColor(Color color) {}
@@ -76,14 +77,14 @@ namespace Gwk
             //! Draw a filled rectangle using the current color.
             virtual void DrawFilledRect(Gwk::Rect rect) {}
 
-            virtual void DrawTexturedRect(Gwk::Texture* texture, Gwk::Rect targetRect,
+            virtual void DrawTexturedRect(const Gwk::Texture& texture, Gwk::Rect targetRect,
                                           float u1 = 0.0f, float v1 = 0.0f,
                                           float u2 = 1.0f, float v2 = 1.0f)
             {}
 
             virtual void DrawMissingImage(Gwk::Rect targetRect);
 
-            virtual Gwk::Color PixelColor(Gwk::Texture* texture,
+            virtual Gwk::Color PixelColor(const Gwk::Texture& texture,
                                           unsigned int x, unsigned int y,
                                           const Gwk::Color& col_default = Gwk::Colors::White)
             {
@@ -95,11 +96,11 @@ namespace Gwk
                 return m_RTT;
             }
 
-            virtual void RenderText(Gwk::Font* font,
+            virtual void RenderText(const Gwk::Font& font,
                                     Gwk::Point pos,
                                     const Gwk::String& text);
 
-            virtual Gwk::Point MeasureText(Gwk::Font* font,
+            virtual Gwk::Point MeasureText(const Gwk::Font& font,
                                            const Gwk::String& text);
 
             //! \sect{Render Specialisation}
@@ -174,13 +175,14 @@ namespace Gwk
 
         protected:
 
-            bool EnsureFont(Font& font);
+            virtual bool EnsureFont(const Gwk::Font& font) { return false; }
+            virtual bool EnsureTexture(const Gwk::Texture& texture) { return false; }
 
             float m_fScale;
 
         private:
 
-            ResourceLoader& m_loader;
+            ResourcePaths & m_paths;
             Gwk::Point m_renderOffset;
             Gwk::Rect m_rectClipRegion;
             ICacheToTexture* m_RTT;
