@@ -252,6 +252,11 @@ namespace Gwk
             return facename == rhs.facename && size == rhs.size && bold == rhs.bold;
         }
 
+        inline bool operator!=(const Font& rhs) const
+        {
+            return  bold != rhs.bold || size != rhs.size || facename != rhs.facename;
+        }
+
         String facename;
         float size;
         bool bold;
@@ -279,6 +284,7 @@ namespace Gwk
         Texture& operator=(const Texture&) = default;
 
         inline bool operator==(const Texture& rhs) const { return name == rhs.name; }
+        inline bool operator!=(const Texture& rhs) const { return name != rhs.name; }
 
         String  name;
         bool readable;

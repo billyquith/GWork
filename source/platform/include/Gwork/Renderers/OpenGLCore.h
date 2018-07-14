@@ -42,15 +42,15 @@ namespace Gwk
             void EndClip() override;
 
             void DrawTexturedRect(const Gwk::Texture& texture, Gwk::Rect targetRect, float u1 = 0.0f,
-                float v1 = 0.0f, float u2 = 1.0f, float v2 = 1.0f) override;
+                                  float v1 = 0.0f, float u2 = 1.0f, float v2 = 1.0f) override;
 
             Gwk::Color PixelColor(const Gwk::Texture& texture,
-                unsigned int x, unsigned int y,
-                const Gwk::Color& col_default) override;
+                                  unsigned int x, unsigned int y,
+                                  const Gwk::Color& col_default) override;
 
             void RenderText(const Gwk::Font& font,
-                Gwk::Point pos,
-                const Gwk::String& text) override;
+                            Gwk::Point pos,
+                            const Gwk::String& text) override;
 
             Gwk::Point MeasureText(const Gwk::Font& font, const Gwk::String& text) override;
 
@@ -62,6 +62,7 @@ namespace Gwk
             Texture::Status LoadTexture(const Gwk::Texture& texture) override;
             void FreeTexture(const Gwk::Texture& texture) override;
             TextureData GetTextureData(const Gwk::Texture& texture) const override;
+            bool EnsureTexture(const Gwk::Texture& texture) override;
 
         protected:// Resourses
 
@@ -119,13 +120,15 @@ namespace Gwk
 
                 float   m_Spacing;
 
-                float width;
-                float height;
+                int width;
+                int height;
                 unsigned int texture_id;
             };
 
             std::unordered_map<Font, GLFontData> m_fonts;
             std::unordered_map<Texture, GLTextureData> m_textures;
+            std::pair<const Font, GLFontData>* m_lastFont;
+            std::pair<const Texture, GLTextureData>* m_lastTexture;
         public:
 
             bool InitializeContext(Gwk::WindowProvider* window) override;

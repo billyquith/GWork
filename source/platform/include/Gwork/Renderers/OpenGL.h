@@ -67,6 +67,7 @@ namespace Gwk
             Texture::Status LoadTexture(const Gwk::Texture& texture) override;
             void FreeTexture(const Gwk::Texture& texture) override;
             TextureData GetTextureData(const Gwk::Texture& texture) const override;
+            bool EnsureTexture(const Gwk::Texture& texture) override;
         protected:// Resourses
 
             struct GLTextureData : public Gwk::TextureData
@@ -130,6 +131,8 @@ namespace Gwk
 
             std::unordered_map<Font, GLFontData> m_fonts;
             std::unordered_map<Texture, GLTextureData> m_textures;
+            std::pair<const Font, GLFontData>* m_lastFont;
+            std::pair<const Texture, GLTextureData>* m_lastTexture;
         protected:
 
             Rect m_viewRect;

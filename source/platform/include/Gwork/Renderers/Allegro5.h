@@ -48,12 +48,12 @@ namespace Gwk
                 float v1 = 0.0f, float u2 = 1.0f, float v2 = 1.0f) override;
 
             Gwk::Color PixelColor(const Gwk::Texture& texture,
-                unsigned int x, unsigned int y,
-                const Gwk::Color& col_default) override;
+                                  unsigned int x, unsigned int y,
+                                  const Gwk::Color& col_default) override;
 
             void RenderText(const Gwk::Font& font,
-                Gwk::Point pos,
-                const Gwk::String& text) override;
+                            Gwk::Point pos,
+                            const Gwk::String& text) override;
 
             Gwk::Point MeasureText(const Gwk::Font& font, const Gwk::String& text) override;
 
@@ -65,6 +65,7 @@ namespace Gwk
             Texture::Status LoadTexture(const Gwk::Texture& texture) override;
             void FreeTexture(const Gwk::Texture& texture) override;
             TextureData GetTextureData(const Gwk::Texture& texture) const override;
+            bool EnsureTexture(const Gwk::Texture& texture) override;
         protected:// Resourses
 
             struct ALTextureData : public Gwk::TextureData
@@ -111,6 +112,8 @@ namespace Gwk
 
             std::unordered_map<Font, ALFontData> m_fonts;
             std::unordered_map<Texture, ALTextureData> m_textures;
+            std::pair<const Font, ALFontData>* m_lastFont;
+            std::pair<const Texture, ALTextureData>* m_lastTexture;
         public:
             void DrawLinedRect(Gwk::Rect rect) override;
             void DrawShavedCornerRect(Gwk::Rect rect, bool bSlight = false) override;

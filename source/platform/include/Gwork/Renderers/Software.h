@@ -73,15 +73,15 @@ namespace Gwk
             void DrawPixel(int x, int y) override;
 
             void DrawTexturedRect(const Gwk::Texture& texture, Gwk::Rect targetRect, float u1 = 0.0f,
-                float v1 = 0.0f, float u2 = 1.0f, float v2 = 1.0f) override;
+                                  float v1 = 0.0f, float u2 = 1.0f, float v2 = 1.0f) override;
 
             Gwk::Color PixelColor(const Gwk::Texture& texture,
-                unsigned int x, unsigned int y,
-                const Gwk::Color& col_default) override;
+                                  unsigned int x, unsigned int y,
+                                  const Gwk::Color& col_default) override;
 
             void RenderText(const Gwk::Font& font,
-                Gwk::Point pos,
-                const Gwk::String& text) override;
+                            Gwk::Point pos,
+                            const Gwk::String& text) override;
 
             Gwk::Point MeasureText(const Gwk::Font& font, const Gwk::String& text) override;
 
@@ -93,6 +93,7 @@ namespace Gwk
             Texture::Status LoadTexture(const Gwk::Texture& texture) override;
             void FreeTexture(const Gwk::Texture& texture) override;
             TextureData GetTextureData(const Gwk::Texture& texture) const override;
+            bool EnsureTexture(const Gwk::Texture& texture) override;
             
         protected:// Resourses
 
@@ -121,13 +122,13 @@ namespace Gwk
 
                 Color& At(int x, int y)
                 {
-                    return (reinterpret_cast<Color*>(m_ReadData.get()))[y * static_cast<int>(width) + x];
+                    return reinterpret_cast<Color*>(m_ReadData.get())[y * static_cast<int>(width) + x];
                 }
                 Color& At(Point const& pt) { return At(pt.x, pt.y); }
 
                 const Color& At(int x, int y) const
                 {
-                    return (reinterpret_cast<Color*>(m_ReadData.get()))[y * static_cast<int>(width) + x];
+                    return reinterpret_cast<Color*>(m_ReadData.get())[y * static_cast<int>(width) + x];
                 }
                 const Color& At(Point const& pt) const { return At(pt.x, pt.y); }
 
@@ -172,6 +173,8 @@ namespace Gwk
 
             std::unordered_map<Font, SWFontData> m_fonts;
             std::unordered_map<Texture, SWTextureData> m_textures;
+            std::pair<const Font, SWFontData>* m_lastFont;
+            std::pair<const Texture, SWTextureData>* m_lastTexture;
             
         public:
 

@@ -133,6 +133,9 @@ static HRESULT CompileShaderFromMemory(const char* szdata, SIZE_T len, LPCSTR sz
 
 Font::Status DirectX11::LoadFont(const Font& font)
 {
+    FreeFont(font);
+    m_lastFont = nullptr;
+
     const float realsize = font.size * Scale();
     HDC hDC = CreateCompatibleDC(nullptr);
     DWORD texWidth = 2048, texHeight;
@@ -298,29 +301,45 @@ Font::Status DirectX11::LoadFont(const Font& font)
         return Font::Status::ErrorBadData;
     }
     
-    m_fonts.insert(std::make_pair(font, std::move(fontData)));
+    m_lastFont = &(*m_fonts.insert(std::make_pair(font, std::move(fontData))).first);
 
     return Font::Status::Loaded;
 }
 
 void DirectX11::FreeFont(const Font& font)
 {
+    if (m_lastFont != nullptr && m_lastFont->first == font)
+        m_lastFont = nullptr;
+
     m_fonts.erase(font); // calls DxFontData destructor
 }
 
 bool DirectX11::EnsureFont(const Font& font)
 {
-    auto it = m_fonts.find(font);
-    if (it != m_fonts.cend())
+    if (m_lastFont != nullptr)
     {
+        if (m_lastFont->first == font)
+            return true;
+    }
+
+    // Was it loaded before?
+    auto it = m_fonts.find(font);
+    if (it != m_fonts.end())
+    {
+        m_lastFont = &(*it);
         return true;
     }
+
+    // No, try load to it
+
+    // LoadFont sets m_lastFont, if loaded
     return LoadFont(font) == Font::Status::Loaded;
 }
 
 Texture::Status DirectX11::LoadTexture(const Texture& texture)
 {
     FreeTexture(texture);
+    m_lastTexture = nullptr;
 
     const String filename = GetResourcePaths().GetPath(ResourcePaths::Type::Texture, texture.name);
 
@@ -379,17 +398,23 @@ Texture::Status DirectX11::LoadTexture(const Texture& texture)
 
     texData.width = width;
     texData.height = height;
-    m_textures.insert(std::make_pair(texture, std::move(texData)));
+    m_lastTexture = &(*m_textures.insert(std::make_pair(texture, std::move(texData))).first);
     return Texture::Status::Loaded;
 }
 
-void DirectX11::FreeTexture(const Texture& texture)
+void DirectX11::FreeTexture(const Gwk::Texture& texture)
 {
+    if (m_lastTexture != nullptr && m_lastTexture->first == texture)
+        m_lastTexture = nullptr;
+
     m_textures.erase(texture); // calls DxTextureData destructor
 }
 
 TextureData DirectX11::GetTextureData(const Texture& texture) const
 {
+    if (m_lastTexture != nullptr && m_lastTexture->first == texture)
+        return m_lastTexture->second;
+
     auto it = m_textures.find(texture);
     if (it != m_textures.cend())
     {
@@ -399,10 +424,34 @@ TextureData DirectX11::GetTextureData(const Texture& texture) const
     return TextureData();
 }
 
+bool DirectX11::EnsureTexture(const Gwk::Texture& texture)
+{
+    if (m_lastTexture != nullptr)
+    {
+        if (m_lastTexture->first == texture)
+            return true;
+    }
+
+    // Was it loaded before?
+    auto it = m_textures.find(texture);
+    if (it != m_textures.end())
+    {
+        m_lastTexture = &(*it);
+        return true;
+    }
+
+    // No, try load to it
+
+    // LoadTexture sets m_lastTexture, if exist
+    return LoadTexture(texture) == Texture::Status::Loaded;
+}
+
 DirectX11::DirectX11(ResourcePaths& paths, ID3D11Device* pDevice)
     :   Base(paths)
     ,   m_pDevice(pDevice)
     ,   m_Buffer(256)
+    ,   m_lastFont(nullptr)
+    ,   m_lastTexture(nullptr)
 {
     m_Valid = false;
 
@@ -653,13 +702,7 @@ void DirectX11::RenderText(const Gwk::Font& font, Gwk::Point pos, const Gwk::Str
     if (!EnsureFont(font))
         return;
 
-    // at this point, the font is garented created
-    auto it = m_fonts.find(font);
-    // but double check :)
-    if (it == m_fonts.cend())
-        return;
-
-    DxFontData& fontData = it->second;
+    DxFontData& fontData = m_lastFont->second;
 
     if (m_pCurrentTexture != fontData.m_TextureResource)
     {
@@ -718,13 +761,7 @@ Gwk::Point DirectX11::MeasureText(const Gwk::Font& font, const Gwk::String& text
     if (!EnsureFont(font))
         return Gwk::Point(0, 0);
 
-    // at this point, the font is garented created
-    auto it = m_fonts.find(font);
-    // but double check :)
-    if (it == m_fonts.cend())
-        return Gwk::Point(0, 0);
-
-    DxFontData& fontData = it->second;
+    DxFontData& fontData = m_lastFont->second;
 
     float fRowWidth = 0.0f;
     float fRowHeight = (fontData.m_TexCoords[0].w - fontData.m_TexCoords[0].y) * fontData.height;
@@ -784,16 +821,10 @@ void DirectX11::EndClip()
 
 void DirectX11::DrawTexturedRect(const Gwk::Texture& texture, Gwk::Rect rec, float u1, float v1, float u2, float v2)
 {
-    auto it = m_textures.find(texture);
-    if (it == m_textures.cend())
-    {
-        if (LoadTexture(texture) != Texture::Status::Loaded)
-            return DrawMissingImage(rec);
+    if (!EnsureTexture(texture))
+        return DrawMissingImage(rec);
 
-        it = m_textures.find(texture);
-    }
-
-    DxTextureData& texData = it->second;
+    DxTextureData& texData = m_lastTexture->second;
 
     ID3D11ShaderResourceView* pImage = texData.m_TextureResource;
 
@@ -830,16 +861,10 @@ void DirectX11::DrawTexturedRect(const Gwk::Texture& texture, Gwk::Rect rec, flo
 
 Gwk::Color DirectX11::PixelColor(const Gwk::Texture& texture, unsigned int x, unsigned int y, const Gwk::Color& col_default)
 {
-    auto it = m_textures.find(texture);
-    if (it == m_textures.cend())
-    {
-        if (LoadTexture(texture) != Texture::Status::Loaded)
-            return col_default;
-
-        it = m_textures.find(texture);
-    }
+    if (!EnsureTexture(texture))
+        return col_default;
     
-    DxTextureData& texData = it->second;
+    DxTextureData& texData = m_lastTexture->second;
 
     if (texData.readable)
     {
