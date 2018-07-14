@@ -16,119 +16,155 @@
 #ifdef __APPLE__
 # include <OpenGL/gl.h>
 #else
+#ifdef _WIN32
+#include <Windows.h>
+#endif
 # include <GL/gl.h>
 #endif
 
 #include <cmath>
-#include <unistd.h>
 
 using namespace Gwk;
 
-class FontData : public Font::IData
+Font::Status Gwk::Renderer::SFML2::LoadFont(const Gwk::Font& font)
 {
-public:
-    FontData(std::unique_ptr<sf::Font>&& pFont)
-        :font(std::move(pFont))
-    {
-    }
+    FreeFont(font);
+    m_lastFont = nullptr;
 
-    ~FontData()
-    {
-    }
-    std::unique_ptr<sf::Font> font;
-};
-
-struct TextureData
-{
-    TextureData(sf::Image* img) : texture(nullptr), image(img) {}
-
-    TextureData(sf::Texture* text) : texture(text), image(nullptr) {}
-
-    ~TextureData()
-    {
-        delete texture;
-        delete image;
-    }
-
-    sf::Texture *texture;
-    sf::Image *image;
-};
-
-Font::Status Gwk::Renderer::SFML2ResourceLoader::LoadFont(Font& font)
-{
-    const String filename = m_paths.GetPath(ResourcePaths::Type::Font, font.facename);
+    const String filename = GetResourcePaths().GetPath(ResourcePaths::Type::Font, font.facename);
 
     std::unique_ptr<sf::Font> sfFont{new sf::Font()};
 
     if (sfFont->loadFromFile(filename))
     {
-        std::shared_ptr<FontData> fontData = std::make_shared<FontData>(std::move(sfFont));
-        font.data = Utility::dynamic_pointer_cast<Font::IData, FontData>(fontData);
-        font.status = Font::Status::Loaded;
+        SFMLFontData fontData;
+        fontData.font = std::move(sfFont);
+
+        m_lastFont = &(*m_fonts.insert(std::make_pair(font, std::move(fontData))).first);
+        return Font::Status::Loaded;
     }
     else
     {
         Gwk::Log::Write(Log::Level::Error, "Font file not found: %s", filename.c_str());
-        delete sfFont;
-        font.status = Font::Status::ErrorFileNotFound;
+        return Font::Status::ErrorFileNotFound;
     }
-
-    return font.status;
 }
 
-void Gwk::Renderer::SFML2ResourceLoader::FreeFont(Gwk::Font& font)
+void Gwk::Renderer::SFML2::FreeFont(const Gwk::Font& font)
 {
-    if (font.IsLoaded())
+    if (m_lastFont != nullptr && m_lastFont->first == font)
+        m_lastFont = nullptr;
+
+    m_fonts.erase(font); // calls SFMLFontData destructor
+}
+
+bool Gwk::Renderer::SFML2::EnsureFont(const Font& font)
+{
+    if (m_lastFont != nullptr)
     {
-        font.data.reset();
-        font.status = Font::Status::Unloaded;
+        if (m_lastFont->first == font)
+            return true;
     }
+
+    // Was it loaded before?
+    auto it = m_fonts.find(font);
+    if (it != m_fonts.end())
+    {
+        m_lastFont = &(*it);
+        return true;
+    }
+
+    // No, try load to it
+
+    // LoadFont sets m_lastFont, if loaded
+    return LoadFont(font) == Font::Status::Loaded;
 }
 
-Texture::Status Gwk::Renderer::SFML2ResourceLoader::LoadTexture(Texture& texture)
+Texture::Status Gwk::Renderer::SFML2::LoadTexture(const Gwk::Texture& texture)
 {
-    if (texture.IsLoaded())
-        FreeTexture(texture);
+    FreeTexture(texture);
+    m_lastTexture = nullptr;
 
     sf::Texture* tex = new sf::Texture();
     tex->setSmooth(true);
 
-    const String filename = m_paths.GetPath(ResourcePaths::Type::Texture, texture.name);
+    const String filename = GetResourcePaths().GetPath(ResourcePaths::Type::Texture, texture.name);
 
     if (tex->loadFromFile(filename))
     {
-        texture.height = tex->getSize().x;
-        texture.width = tex->getSize().y;
-        texture.data = new TextureData(tex);
-        texture.status = Texture::Status::Loaded;
+        SFMLTextureData texData;
+        texData.height = tex->getSize().x;
+        texData.width = tex->getSize().y;
+        texData.texture = std::unique_ptr<sf::Texture>(tex);
+        if (texture.readable)
+        {
+            texData.image = std::unique_ptr<sf::Image>(new sf::Image(texData.texture->copyToImage()));
+            texData.readable = true;
+        }
+
+        m_lastTexture = &(*m_textures.insert(std::make_pair(texture, std::move(texData))).first);
+        return Texture::Status::Loaded;
     }
     else
     {
         Gwk::Log::Write(Log::Level::Error, "Texture file not found: %s", filename.c_str());
         delete tex;
-        texture.status = Texture::Status::ErrorFileNotFound;
+        return Texture::Status::ErrorFileNotFound;
     }
-
-    return texture.status;
 }
 
-void Gwk::Renderer::SFML2ResourceLoader::FreeTexture(Texture& texture)
+void Gwk::Renderer::SFML2::FreeTexture(const Gwk::Texture& texture)
 {
-    if (texture.IsLoaded())
+    if (m_lastTexture != nullptr && m_lastTexture->first == texture)
+        m_lastTexture = nullptr;
+
+    m_textures.erase(texture); // calls SFMLTextureData destructor
+}
+
+TextureData Gwk::Renderer::SFML2::GetTextureData(const Texture& texture) const
+{
+    if (m_lastTexture != nullptr && m_lastTexture->first == texture)
+        return m_lastTexture->second;
+
+    auto it = m_textures.find(texture);
+    if (it != m_textures.cend())
     {
-        TextureData* data = static_cast<TextureData*>(texture.data);
-        delete data;
-        texture.data = nullptr;
-        texture.status = Texture::Status::Unloaded;
+        return it->second;
     }
+    // Texture not loaded :(
+    return TextureData();
+}
+
+bool Gwk::Renderer::SFML2::EnsureTexture(const Gwk::Texture& texture)
+{
+    if (m_lastTexture != nullptr)
+    {
+        if (m_lastTexture->first == texture)
+            return true;
+    }
+
+    // Was it loaded before?
+    auto it = m_textures.find(texture);
+    if (it != m_textures.end())
+    {
+        m_lastTexture = &(*it);
+        return true;
+    }
+
+    // No, try load to it
+
+    // LoadTexture sets m_lastTexture, if exist
+    return LoadTexture(texture) == Texture::Status::Loaded;
 }
 
 
-Gwk::Renderer::SFML2::SFML2(ResourceLoader& loader, sf::RenderTarget& target)
-    :   Base(loader)
+Gwk::Renderer::SFML2::SFML2(ResourcePaths& paths, sf::RenderTarget& target)
+    :   Base(paths)
     ,   m_target(target)
     ,   m_renderStates(sf::RenderStates::Default)
     ,   m_height(m_target.getSize().y)
+    ,   m_lastFont(nullptr)
+    ,   m_lastTexture(nullptr)
 {
     m_buffer.setPrimitiveType(sf::Triangles);
     m_renderStates.blendMode = sf::BlendAlpha;
@@ -194,16 +230,16 @@ void Gwk::Renderer::SFML2::SetDrawColor(Gwk::Color color)
 
 void Gwk::Renderer::SFML2::DrawPixel(int x, int y)
 {
-    EnsurePrimitiveType(sf::Points);
-    EnsureTexture(nullptr);
+    SetPrimitiveType(sf::Points);
+    SetTexture(nullptr);
     Translate(x, y);
     AddVert(x, y+1);
 }
 
 void Gwk::Renderer::SFML2::DrawLinedRect(Gwk::Rect rect)
 {
-    EnsurePrimitiveType(sf::Lines);
-    EnsureTexture(nullptr);
+    SetPrimitiveType(sf::Lines);
+    SetTexture(nullptr);
 
     Translate(rect);
 
@@ -226,8 +262,8 @@ void Gwk::Renderer::SFML2::DrawLinedRect(Gwk::Rect rect)
 
 void Gwk::Renderer::SFML2::DrawFilledRect(Gwk::Rect rect)
 {
-    EnsurePrimitiveType(sf::Triangles);
-    EnsureTexture(nullptr);
+    SetPrimitiveType(sf::Triangles);
+    SetTexture(nullptr);
 
     Translate(rect);
 
@@ -246,19 +282,16 @@ void Gwk::Renderer::SFML2::DrawShavedCornerRect(Gwk::Rect rect, bool bSlight)
     Base::DrawShavedCornerRect(rect, bSlight);
 }
 
-void Gwk::Renderer::SFML2::DrawTexturedRect(Gwk::Texture* texture, Gwk::Rect rect, float u1,
+void Gwk::Renderer::SFML2::DrawTexturedRect(const Gwk::Texture& texture, Gwk::Rect rect, float u1,
                                             float v1, float u2, float v2)
 {
-    TextureData* data = reinterpret_cast<TextureData*>(texture->data);
-
-    // Missing image, not loaded properly?
-    if (!data)
+    if (!EnsureTexture(texture))
         return DrawMissingImage(rect);
 
-    const sf::Texture* tex = data->texture;
+    const SFMLTextureData& texData = m_lastTexture->second;
 
-    EnsurePrimitiveType(sf::Triangles);
-    EnsureTexture(tex);
+    SetPrimitiveType(sf::Triangles);
+    SetTexture(texData.texture.get());
 
     Translate(rect);
 
@@ -271,63 +304,61 @@ void Gwk::Renderer::SFML2::DrawTexturedRect(Gwk::Texture* texture, Gwk::Rect rec
     AddVert(rect.x, rect.y+rect.h, u1, v2);
 }
 
-void Gwk::Renderer::SFML2::RenderText(Gwk::Font* font, Gwk::Point pos,
+void Gwk::Renderer::SFML2::RenderText(const Gwk::Font& font, Gwk::Point pos,
                                       const Gwk::String& text)
 {
     Flush();
 
-    Translate(pos.x, pos.y);
-    FontData* fontdata = dynamic_cast<FontData*>(font->data.get());
-
-    if (fontdata == nullptr)
+    if (!EnsureFont(font))
         return;
 
-    const sf::Font* sFFont = fontdata->font;
+    SFMLFontData& fontData = m_lastFont->second;
+
+    Translate(pos.x, pos.y);
 
     sf::Text sfStr;
     sfStr.setString(text);
-    sfStr.setFont(*sFFont);
+    sfStr.setFont(*fontData.font);
     sfStr.move(pos.x, pos.y);
-    sfStr.setCharacterSize(font->realsize);
-    sfStr.setFillColor(m_color);
+    sfStr.setCharacterSize(font.size * Scale());
+    sfStr.setColor(m_color);
     m_target.draw(sfStr);
 }
 
-Gwk::Point Gwk::Renderer::SFML2::MeasureText(Gwk::Font* font, const Gwk::String& text)
+Gwk::Point Gwk::Renderer::SFML2::MeasureText(const Gwk::Font& font, const Gwk::String& text)
 {
-    if (!EnsureFont(*font))
+    if (!EnsureFont(font))
         return Gwk::Point(0, 0);
 
-    FontData* fontdata = dynamic_cast<FontData*>(font->data.get());
-
-    if (fontdata == nullptr)
-        return;
-
-    const sf::Font* sFFont = fontdata->font;
+    SFMLFontData& fontData = m_lastFont->second;
 
     sf::Text sfStr;
     sfStr.setString(text);
-    sfStr.setFont(*sFFont);
+    sfStr.setFont(*fontData.font);
     sfStr.setScale(Scale(), Scale());
-    sfStr.setCharacterSize(font->realsize);
+    sfStr.setCharacterSize(font.size * Scale());
     sf::FloatRect sz = sfStr.getLocalBounds();
     return Gwk::Point(sz.left+sz.width, sz.top+sz.height);
 }
 
-Gwk::Color Gwk::Renderer::SFML2::PixelColor(Gwk::Texture* texture, unsigned int x,
+Gwk::Color Gwk::Renderer::SFML2::PixelColor(const Gwk::Texture& texture, unsigned int x,
                                              unsigned int y, const Gwk::Color& col_default)
 {
-    TextureData* data = static_cast<TextureData*>(texture->data);
 
-    if (!data->texture && !data->image)
+    if (!EnsureTexture(texture))
         return col_default;
 
-    if (!data->image)
+    SFMLTextureData& texData = m_lastTexture->second;
+
+    if (!texData.texture)
+        return col_default;
+
+    if (!texData.readable)
     {
-        sf::Image copy = data->texture->copyToImage();
-        data->image = new sf::Image(copy);
+        texData.image = std::unique_ptr<sf::Image>(new sf::Image(texData.texture->copyToImage()));
+        texData.readable = true;
     }
 
-    const sf::Color col = data->image->getPixel(x, y);
+    const sf::Color col = texData.image->getPixel(x, y);
     return Gwk::Color(col.r, col.g, col.b, col.a);
 }
