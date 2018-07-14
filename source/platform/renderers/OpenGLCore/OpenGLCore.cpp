@@ -529,7 +529,7 @@ void OpenGLCore::DrawTexturedRect(const Gwk::Texture& texture, Gwk::Rect rect,
 }
 
 Gwk::Color OpenGLCore::PixelColor(const Gwk::Texture& texture, unsigned int x, unsigned int y,
-    const Gwk::Color& col_default)
+                                    const Gwk::Color& col_default)
 {
     if (!EnsureTexture(texture))
         return col_default;
@@ -555,7 +555,7 @@ Gwk::Color OpenGLCore::PixelColor(const Gwk::Texture& texture, unsigned int x, u
 }
 
 void OpenGLCore::RenderText(const Gwk::Font& font, Gwk::Point pos,
-    const Gwk::String& text)
+                            const Gwk::String& text)
 {
     if (!EnsureFont(font))
         return;

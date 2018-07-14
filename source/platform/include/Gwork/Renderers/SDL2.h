@@ -53,15 +53,15 @@ namespace Gwk
             void EndClip() override;
 
             void DrawTexturedRect(const Gwk::Texture& texture, Gwk::Rect targetRect, float u1 = 0.0f,
-                float v1 = 0.0f, float u2 = 1.0f, float v2 = 1.0f) override;
+                                  float v1 = 0.0f, float u2 = 1.0f, float v2 = 1.0f) override;
 
             Gwk::Color PixelColor(const Gwk::Texture& texture,
-                unsigned int x, unsigned int y,
-                const Gwk::Color& col_default) override;
+                                  unsigned int x, unsigned int y,
+                                  const Gwk::Color& col_default) override;
 
             void RenderText(const Gwk::Font& font,
-                Gwk::Point pos,
-                const Gwk::String& text) override;
+                            Gwk::Point pos,
+                            const Gwk::String& text) override;
 
             Gwk::Point MeasureText(const Gwk::Font& font, const Gwk::String& text) override;
 
