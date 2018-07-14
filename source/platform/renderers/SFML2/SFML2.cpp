@@ -23,6 +23,11 @@
 #endif
 
 #include <cmath>
+#if defined(__unix__) || \\
+     defined(__linux__) || defined(__gnu__linux__) || \
+    (defined (__APPLE__) && defined(__MACH__))
+#include <unistd.h>
+#endif
 
 using namespace Gwk;
 
