@@ -87,7 +87,12 @@ namespace Gwk
 
             static inline wchar_t utf8_to_wchart(char*& in)// Gwk::Utility::Widen too slow
             {
+#if defined(__clang__) && defined(__apple_build_version__) && __apple_build_version__ < 8
+                // thread_local not supported on Xcode versions below 8
+                static unsigned int next = 0x10000;
+#else
                 thread_local static unsigned int next = 0x10000;
+#endif
                 if (next != 0x10000)
                 {
                     wchar_t ret = static_cast<wchar_t>(next);
