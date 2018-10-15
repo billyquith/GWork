@@ -7,7 +7,6 @@
  *  See license in Gwork.h
  */
 
-#define GWK_SAMPLE
 #include <Gwork/Skins/TexturedBase.h>
 #include <Gwork/Test/Test.h>
 #include <Gwork/Input/Null.h>
@@ -18,7 +17,8 @@
 int main(int argc, char** argv)
 {
     // Create a Null renderer
-    std::unique_ptr<Gwk::Renderer::Null> renderer(new Gwk::Renderer::Null());
+    Gwk::Platform::RelativeToExecutablePaths paths(".");
+    std::unique_ptr<Gwk::Renderer::Null> renderer(new Gwk::Renderer::Null(paths));
 
     // Create a Gwork skin
     std::unique_ptr<Gwk::Skin::TexturedBase> skin(new Gwk::Skin::TexturedBase(renderer.get()));
