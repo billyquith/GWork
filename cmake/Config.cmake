@@ -1,9 +1,9 @@
 
-#### Project Configuration
+#### Gwork Project Configuration
 
 # Version
-set(GWK_VERSION_MAJOR 0)
-set(GWK_VERSION_MINOR 3)
+set(GWK_VERSION_MAJOR 1)
+set(GWK_VERSION_MINOR 0)
 set(GWK_VERSION_PATCH 0)
 set(GWK_BRANCH "Dev")       # Dev or Release
 set(GWK_VERSION_STR "${GWK_VERSION_MAJOR}.${GWK_VERSION_MINOR}.${GWK_VERSION_PATCH} ${GWK_BRANCH}")
@@ -25,7 +25,7 @@ option(RENDER_OPENGL        "Renderer: OPENGL"              OFF)
 option(RENDER_OPENGL_CORE   "Renderer: OPENGL Core Profile" OFF)
 option(RENDER_SDL2          "Renderer: SDL2"                OFF)
 option(RENDER_SFML2         "Renderer: SFML2"               OFF)
-option(RENDER_SW            "Renderer: Software"            OFF) # Used for testing
+option(RENDER_SW            "Renderer: Software"            OFF)
 option(RENDER_NULL          "Renderer: Null"                OFF) # Used for testing
 
 option(USE_GLFW             "Use GLFW for OpenGL renderer." ON)
