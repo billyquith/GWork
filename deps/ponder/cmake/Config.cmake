@@ -1,14 +1,19 @@
 
-# setup version numbers
-set(VERSION_MAJOR 2)
-set(VERSION_MINOR 2)
-set(VERSION_PATCH 0)
-set(VERSION_STR "${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}")
-message("Project version: ${VERSION_STR}")
-
 if(NOT USES_LUA)
     set(USES_LUA FALSE
         CACHE BOOL "TRUE to include Lua support (requires Lua), FALSE otherwise."
+    )
+endif()
+
+if(NOT USES_RAPIDJSON)
+    set(USES_RAPIDJSON TRUE
+        CACHE BOOL "TRUE to include RapidJSON support, FALSE otherwise."
+    )
+endif()
+
+if(NOT USES_RAPIDXML)
+    set(USES_RAPIDXML TRUE
+        CACHE BOOL "TRUE to include RapidXML support, FALSE otherwise."
     )
 endif()
 

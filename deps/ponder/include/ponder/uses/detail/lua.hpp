@@ -4,7 +4,7 @@
 **
 ** The MIT License (MIT)
 **
-** Copyright (C) 2016-17 Nick Trout.
+** Copyright (C) 2015-2018 Nick Trout.
 **
 ** Permission is hereby granted, free of charge, to any person obtaining a copy
 ** of this software and associated documentation files (the "Software"), to deal
@@ -26,6 +26,7 @@
 **
 ****************************************************************************/
 
+#pragma once
 #ifndef PONDER_USES_LUA_IMPL_HPP
 #define PONDER_USES_LUA_IMPL_HPP
 
@@ -238,7 +239,7 @@ struct LuaValueWriter<const std::tuple<R...>>
     template <size_t... Is>
     static inline void pushElements(lua_State *L,
                                     std::tuple<R...> const& value,
-                                    _PONDER_SEQNS::index_sequence<Is...>)
+                                    PONDER__SEQNS::index_sequence<Is...>)
     {
         const int r[sizeof...(R)] = { LuaValueWriter<R>::push(L, std::get<Is>(value))... };
         (void)r;
@@ -246,7 +247,7 @@ struct LuaValueWriter<const std::tuple<R...>>
     
     static inline int push(lua_State *L, std::tuple<R...> const& value)
     {
-        typedef _PONDER_SEQNS::make_index_sequence<sizeof...(R)> Enumerator;
+        typedef PONDER__SEQNS::make_index_sequence<sizeof...(R)> Enumerator;
         pushElements(L, value, Enumerator());
         return sizeof...(R);
     }
@@ -378,7 +379,7 @@ class CallHelper
 public:
     
     template<typename F, typename... A, size_t... Is>
-    static int call(F func, lua_State* L, _PONDER_SEQNS::index_sequence<Is...>)
+    static int call(F func, lua_State* L, PONDER__SEQNS::index_sequence<Is...>)
     {
         typedef typename ChooseCallReturner<FPolicies, R>::type CallReturner;
         return CallReturner::value(L, func(ConvertArgs<A>::convert(L, Is)...));
@@ -392,7 +393,7 @@ class CallHelper<void, FTraits, FPolicies>
 public:
     
     template<typename F, typename... A, size_t... Is>
-    static int call(F func, lua_State* L, _PONDER_SEQNS::index_sequence<Is...>)
+    static int call(F func, lua_State* L, PONDER__SEQNS::index_sequence<Is...>)
     {
         func(ConvertArgs<A>::convert(L, Is)...);
         return 0; // return nil
@@ -411,7 +412,7 @@ template <typename R, typename... P> struct FunctionWrapper<R, std::tuple<P...>>
     template <typename F, typename FTraits, typename FPolicies>
     static int call(F func, lua_State* L)
     {
-        typedef _PONDER_SEQNS::make_index_sequence<sizeof...(P)> ArgEnumerator;
+        typedef PONDER__SEQNS::make_index_sequence<sizeof...(P)> ArgEnumerator;
         
         return CallHelper<R, FTraits, FPolicies>::template call<F, P...>(func, L, ArgEnumerator());
     }
@@ -461,9 +462,9 @@ private:
     typedef FunctionCallerImpl<F, FTraits, FPolicies> ThisType;
     
     typedef typename FTraits::Details::FunctionCallTypes CallTypes;
-    typedef FunctionWrapper<typename FTraits::ReturnType, CallTypes> FunctionType;
+    typedef FunctionWrapper<typename FTraits::ReturnType, CallTypes> DispatchType;
     
-    typename FunctionType::Type m_function; // Object containing the actual function to call
+    typename DispatchType::Type m_function; // Object containing the actual function to call
     
     static int call(lua_State *L)
     {
@@ -471,7 +472,7 @@ private:
         ThisType *self = reinterpret_cast<ThisType*>(lua_touserdata(L, -1));
         lua_pop(L, 1);
 
-        return FunctionType::template
+        return DispatchType::template
             call<decltype(m_function), FTraits, FPolicies>(self->m_function, L);
     }
 };

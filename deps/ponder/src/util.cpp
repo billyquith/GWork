@@ -5,8 +5,8 @@
  ** The MIT License (MIT)
  **
  ** Copyright (C) 2009-2014 TEGESO/TEGESOFT and/or its subsidiary(-ies) and mother company.
-** Copyright (C) 2015-2017 Nick Trout.
-  **
+ ** Copyright (C) 2015-2018 Nick Trout.
+ **
  ** Permission is hereby granted, free of charge, to any person obtaining a copy
  ** of this software and associated documentation files (the "Software"), to deal
  ** in the Software without restriction, including without limitation the rights
@@ -26,7 +26,6 @@
  ** THE SOFTWARE.
  **
  ****************************************************************************/
-
 
 #include <ponder/detail/util.hpp>
 
@@ -185,7 +184,7 @@ static const char* c_typeNames[] =
     "array",    // ValueKind::Array,
     "user",     // ValueKind::User
 };
-
+    
 const char* valueTypeAsString(ValueKind t)
 {
     const unsigned int i = static_cast<unsigned int>(t);

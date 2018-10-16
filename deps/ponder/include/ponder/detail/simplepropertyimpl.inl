@@ -5,7 +5,7 @@
 ** The MIT License (MIT)
 **
 ** Copyright (C) 2009-2014 TEGESO/TEGESOFT and/or its subsidiary(-ies) and mother company.
-** Copyright (C) 2015-2017 Nick Trout.
+** Copyright (C) 2015-2018 Nick Trout.
 **
 ** Permission is hereby granted, free of charge, to any person obtaining a copy
 ** of this software and associated documentation files (the "Software"), to deal
@@ -28,12 +28,11 @@
 ****************************************************************************/
 
 
-namespace ponder
-{
-namespace detail
-{
+namespace ponder {
+namespace detail {
+    
 template <typename A>
-SimplePropertyImpl<A>::SimplePropertyImpl(IdRef name, const A& accessor)
+SimplePropertyImpl<A>::SimplePropertyImpl(IdRef name, A accessor)
     : SimpleProperty(name, mapType<typename A::DataType>())
     , m_accessor(accessor)
 {
@@ -42,13 +41,16 @@ SimplePropertyImpl<A>::SimplePropertyImpl(IdRef name, const A& accessor)
 template <typename A>
 Value SimplePropertyImpl<A>::getValue(const UserObject& object) const
 {
-    return m_accessor.get(object.get<typename A::ClassType>());
+    return Value{m_accessor.m_interface.getter(object.get<typename A::ClassType>())};
 }
 
 template <typename A>
 void SimplePropertyImpl<A>::setValue(const UserObject& object, const Value& value) const
 {
-    if (!m_accessor.set(object.get<typename A::ClassType>(), value))
+//    static_assert(!std::is_const<typename A::ClassType>::value, "Const class");
+//    static_assert(!std::is_reference<typename A::AccessType>::value, "Refs not allowed");
+    
+    if (!m_accessor.m_interface.setter(object.ref<typename A::ClassType>(), value.to<typename A::DataType>()))
         PONDER_ERROR(ForbiddenWrite(name()));
 }
 
@@ -65,5 +67,4 @@ bool SimplePropertyImpl<A>::isWritable() const
 }
 
 } // namespace detail
-
 } // namespace ponder

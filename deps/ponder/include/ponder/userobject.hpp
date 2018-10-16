@@ -5,7 +5,7 @@
 ** The MIT License (MIT)
 **
 ** Copyright (C) 2009-2014 TEGESO/TEGESOFT and/or its subsidiary(-ies) and mother company.
-** Copyright (C) 2015-2017 Nick Trout.
+** Copyright (C) 2015-2018 Nick Trout.
 **
 ** Permission is hereby granted, free of charge, to any person obtaining a copy
 ** of this software and associated documentation files (the "Software"), to deal
@@ -27,7 +27,7 @@
 **
 ****************************************************************************/
 
-
+#pragma once
 #ifndef PONDER_USEROBJECT_HPP
 #define PONDER_USEROBJECT_HPP
 
@@ -37,7 +37,6 @@
 #include <ponder/detail/objecttraits.hpp>
 #include <ponder/detail/objectholder.hpp>
 #include <ponder/detail/util.hpp>
-
 
 namespace ponder {
     
@@ -71,39 +70,47 @@ public:
     UserObject();
 
     /**
-     * \brief Construct the user object from an instance
-     *
-     * User objects. Also see UserObject::makeRef() and UserObject::makeCopy().
+     * \brief Construct the user object from an instance copy
      *
      * \param object Instance to store in the user object
+     *
+     * \sa makeRef(), makeCopy()
      */
     template <typename T>
     UserObject(const T& object);
-    
+
+    /**
+     * \brief Construct the user object from an instance reference
+     *
+     * \param object Pointer to the object to reference in the user object
+     *
+     * \sa makeRef(), makeCopy()
+     */
+    template <typename T>
+    UserObject(T* object);
+
     /**
      * \brief Construct a user object from a reference to an object
      *
-     * This functions is equivalent to calling UserObject(object).
+     * This functions is equivalent to calling `UserObject(&object)`.
      *
      * \param object Instance to store in the user object
-     *
-     * \return UserObject containing a reference to \a  object
+     * \return UserObject containing a reference to \a object
      */
     template <typename T>
     static UserObject makeRef(T& object);
-    
+
     /**
      * \brief Construct a user object from a const reference to an object
      *
-     * This functions is *not* equivalent to calling UserObject(object).
+     * This functions is equivalent to calling `UserObject(&object)`.
      *
      * \param object Instance to store in the user object
-     *
      * \return UserObject containing a const reference to \a object
      */
     template <typename T>
-    static UserObject makeRef(const T& object);
-    
+    static UserObject makeRef(T* object);
+
     /**
      * \brief Construct a user object with a copy of an object
      *
@@ -161,7 +168,7 @@ public:
      * \throw ClassUnrelated the type of the object is not compatible with T
      */
     template <typename T>
-    typename detail::ObjectTraits<T>::RefReturnType get() const;
+    typename detail::ReferenceTraits<T>::ReferenceType get() const;
 
     /**
      * \brief Retrieve the address of the stored object
@@ -193,7 +200,7 @@ public:
     * \return A reference to the contained object.
     */
     template <typename T>
-    T& ref();
+    T& ref() const;
 
     /**
      * \brief Retrieve the metaclass of the stored instance
@@ -308,8 +315,11 @@ private:
      * \param value New value to assign
      */
     void set(const Property& property, const Value& value) const;
-
-private:
+    
+    UserObject(const Class* cls, detail::AbstractObjectHolder* h)
+        :   m_class(cls)
+        ,   m_holder(h)
+    {}
 
     /// Metaclass of the stored object
     const Class* m_class;
@@ -318,10 +328,8 @@ private:
     std::shared_ptr<detail::AbstractObjectHolder> m_holder;
 };
 
-
 } // namespace ponder
 
 #include <ponder/userobject.inl>
-
 
 #endif // PONDER_USEROBJECT_HPP

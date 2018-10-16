@@ -5,7 +5,7 @@
 ** The MIT License (MIT)
 **
 ** Copyright (C) 2009-2014 TEGESO/TEGESOFT and/or its subsidiary(-ies) and mother company.
-** Copyright (C) 2015-2017 Nick Trout.
+** Copyright (C) 2015-2018 Nick Trout.
 **
 ** Permission is hereby granted, free of charge, to any person obtaining a copy
 ** of this software and associated documentation files (the "Software"), to deal
@@ -27,10 +27,8 @@
 **
 ****************************************************************************/
 
-
 #include <ponder/detail/classmanager.hpp>
 #include <ponder/class.hpp>
-
 
 namespace ponder {
 namespace detail {
@@ -84,16 +82,14 @@ std::size_t ClassManager::count() const
     return m_classes.size();
 }
 
-const Class& ClassManager::getByIndex(std::size_t index) const
+ClassManager::ClassTable::const_iterator ClassManager::begin() const
 {
-    // Make sure that the index is not out of range
-    if (index >= m_classes.size())
-        PONDER_ERROR(OutOfRange(index, m_classes.size()));
-
-    ClassTable::const_iterator it = m_classes.begin();
-    std::advance(it, index);
-
-    return *it->second;
+    return m_classes.begin();
+}
+    
+ClassManager::ClassTable::const_iterator ClassManager::end() const
+{
+    return m_classes.end();
 }
 
 const Class& ClassManager::getById(IdRef id) const

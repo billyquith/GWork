@@ -5,7 +5,7 @@
 ** The MIT License (MIT)
 **
 ** Copyright (C) 2009-2014 TEGESO/TEGESOFT and/or its subsidiary(-ies) and mother company.
-** Copyright (C) 2015-2017 Nick Trout.
+** Copyright (C) 2015-2018 Nick Trout.
 **
 ** Permission is hereby granted, free of charge, to any person obtaining a copy
 ** of this software and associated documentation files (the "Software"), to deal
@@ -32,9 +32,7 @@ namespace ponder {
 template <typename T>
 ClassBuilder<T>::ClassBuilder(Class& target)
     : m_target(&target)
-    , m_currentTagHolder(m_target)
-    , m_currentProperty(nullptr)
-    , m_currentFunction(nullptr)
+    , m_currentType(&target)
 {
 }
 
@@ -47,9 +45,10 @@ ClassBuilder<T>& ClassBuilder<T>::base()
     IdReturn baseName = baseClass.name();
 
     // First make sure that the base class is not already a base of the current class
-    for (Class::BaseInfo& bi : m_target->m_bases)
+    for (Class::BaseInfo const& bi : m_target->m_bases)
     {
-        assert(bi.base->name() != baseName);
+        if (bi.base->name() == baseName)
+            PONDER_ERROR(TypeAmbiguity(bi.base->name()));
     }
 
     // Compute the offset to apply for pointer conversions
@@ -58,7 +57,7 @@ ClassBuilder<T>& ClassBuilder<T>::base()
     // - Use pointer dummy buffer here as some platforms seem to trap bad memory access even
     //   though not dereferencing the pointer.
     // - U : Base, T : Derived.
-    char dummy[16];
+    char dummy[8];
     T* asDerived = reinterpret_cast<T*>(dummy);
     U* asBase = static_cast<U*>(asDerived);
     const int offset = static_cast<int>(reinterpret_cast<char*>(asBase) -
@@ -87,26 +86,24 @@ ClassBuilder<T>& ClassBuilder<T>::base()
 
 template <typename T>
 template <typename F>
-ClassBuilder<T>& ClassBuilder<T>::property(IdRef name,
-                                           F accessor)
+ClassBuilder<T>& ClassBuilder<T>::property(IdRef name, F accessor)
 {
     // Find factory able to construct a Property from an accessor of type F
     typedef detail::PropertyFactory1<T, F> Factory;
 
     // Construct and add the metaproperty
-    return addProperty(Factory::get(name, accessor));
+    return addProperty(Factory::create(name, accessor));
 }
 
 template <typename T>
 template <typename F1, typename F2>
-ClassBuilder<T>& ClassBuilder<T>::property(IdRef name,
-                                           F1 accessor1, F2 accessor2)
+ClassBuilder<T>& ClassBuilder<T>::property(IdRef name, F1 accessor1, F2 accessor2)
 {
     // Find factory able to construct a Property from accessors of type F1 and F2
     typedef detail::PropertyFactory2<T, F1, F2> Factory;
 
     // Construct and add the metaproperty
-    return addProperty(Factory::get(name, accessor1, accessor2));
+    return addProperty(Factory::create(name, accessor1, accessor2));
 }
 
 template <typename T>
@@ -115,76 +112,6 @@ ClassBuilder<T>& ClassBuilder<T>::function(IdRef name, F function, P... policies
 {
     // Construct and add the metafunction
     return addFunction(detail::newFunction(name, function, policies...));
-}
-
-template <typename T>
-ClassBuilder<T>& ClassBuilder<T>::tag(const Value& id)
-{
-    return tag(id, Value::nothing);
-}
-
-template <typename T>
-template <typename U>
-ClassBuilder<T>& ClassBuilder<T>::tag(const Value& id, const U& value)
-{
-    // Make sure we have a valid tag holder, and the tag doesn't already exists
-    assert(m_currentTagHolder && !m_currentTagHolder->hasTag(id));
-
-    // For the special case of Getter<Value>, the ambiguity between both constructors
-    // cannot be automatically solved, so let's do it manually
-    typedef typename detail::if_c<detail::FunctionTraits<U>::kind != FunctionKind::None,
-                                  std::function<Value (T&)>, Value>::type Type;
-
-    // Add the new tag (override if already exists)
-    m_currentTagHolder->m_tags[id] = detail::Getter<Value>(Type(value));
-
-    return *this;
-}
-
-template <typename T>
-ClassBuilder<T>& ClassBuilder<T>::readable(bool value)
-{
-    // Make sure we have a valid property
-    assert(m_currentProperty != nullptr);
-
-    m_currentProperty->m_readable = detail::Getter<bool>(value);
-
-    return *this;
-}
-
-template <typename T>
-template <typename F>
-ClassBuilder<T>& ClassBuilder<T>::readable(F function)
-{
-    // Make sure we have a valid property
-    assert(m_currentProperty != nullptr);
-
-    m_currentProperty->m_readable = detail::Getter<bool>(std::function<bool (T&)>(function));
-
-    return *this;
-}
-
-template <typename T>
-ClassBuilder<T>& ClassBuilder<T>::writable(bool value)
-{
-    // Make sure we have a valid property
-    assert(m_currentProperty != nullptr);
-
-    m_currentProperty->m_writable = detail::Getter<bool>(value);
-
-    return *this;
-}
-
-template <typename T>
-template <typename F>
-ClassBuilder<T>& ClassBuilder<T>::writable(F function)
-{
-    // Make sure we have a valid property
-    assert(m_currentProperty != nullptr);
-
-    m_currentProperty->m_writable = detail::Getter<bool>(std::function<bool (T&)>(function));
-
-    return *this;
 }
 
 template <typename T>
@@ -210,9 +137,9 @@ ClassBuilder<T>& ClassBuilder<T>::external()
         addProperty(mapper.property(i));
 
     // Retrieve the functions
-//    std::size_t functionCount = mapper.functionCount();
-//    for (std::size_t i = 0; i < functionCount; ++i)
-//        addFunction(mapper.function(i));
+    std::size_t functionCount = mapper.functionCount();
+    for (std::size_t i = 0; i < functionCount; ++i)
+        addFunction(mapper.function(i));
 
     return *this;
 }
@@ -229,8 +156,7 @@ ClassBuilder<T>& ClassBuilder<T>::addProperty(Property* property)
     // Insert the new property
     properties.insert(property->name(), Class::PropertyPtr(property));
 
-    m_currentTagHolder = m_currentProperty = property;
-    m_currentFunction = nullptr;
+    m_currentType = property;
 
     return *this;
 }
@@ -247,8 +173,7 @@ ClassBuilder<T>& ClassBuilder<T>::addFunction(Function* function)
     // Insert the new function
     functions.insert(function->name(), Class::FunctionPtr(function));
 
-    m_currentTagHolder = m_currentFunction = function;
-    m_currentProperty = nullptr;
+    m_currentType = function;
 
     return *this;
 }

@@ -5,7 +5,7 @@
 ** The MIT License (MIT)
 **
 ** Copyright (C) 2009-2014 TEGESO/TEGESOFT and/or its subsidiary(-ies) and mother company.
-** Copyright (C) 2015-2017 Nick Trout.
+** Copyright (C) 2015-2018 Nick Trout.
 **
 ** Permission is hereby granted, free of charge, to any person obtaining a copy
 ** of this software and associated documentation files (the "Software"), to deal
@@ -84,8 +84,8 @@ TEST_CASE("Ponder has user properties")
     {
         UserPropertyTest::MyClass object1(1);
         UserPropertyTest::MyClass object2(10);
-        property->set(object1, UserPropertyTest::MyType(2));
-        property->set(object2, UserPropertyTest::MyType(20));
+        property->set(&object1, UserPropertyTest::MyType(2));
+        property->set(&object2, UserPropertyTest::MyType(20));
         
         // reverse order on purpose (to exhibit memory corruptions)
         REQUIRE(property->get(object2).to<UserPropertyTest::MyType>().x == 20);
@@ -95,7 +95,7 @@ TEST_CASE("Ponder has user properties")
     SECTION("user properties wrap user objects")
     {
         UserPropertyTest::MyClass object1(11);
-        property->set(object1, UserPropertyTest::MyType(22));
+        property->set(&object1, UserPropertyTest::MyType(22));
 
         auto uobj = static_cast<const ponder::UserProperty*>(property)->getObject(object1);
         

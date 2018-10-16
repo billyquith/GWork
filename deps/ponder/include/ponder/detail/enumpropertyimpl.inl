@@ -5,7 +5,7 @@
 ** The MIT License (MIT)
 **
 ** Copyright (C) 2009-2014 TEGESO/TEGESOFT and/or its subsidiary(-ies) and mother company.
-** Copyright (C) 2015-2017 Nick Trout.
+** Copyright (C) 2015-2018 Nick Trout.
 **
 ** Permission is hereby granted, free of charge, to any person obtaining a copy
 ** of this software and associated documentation files (the "Software"), to deal
@@ -28,12 +28,11 @@
 ****************************************************************************/
 
 
-namespace ponder
-{
-namespace detail
-{
+namespace ponder {
+namespace detail {
+    
 template <typename A>
-EnumPropertyImpl<A>::EnumPropertyImpl(IdRef name, const A& accessor)
+EnumPropertyImpl<A>::EnumPropertyImpl(IdRef name, A&& accessor)
     : EnumProperty(name, enumByType<typename A::DataType>())
     , m_accessor(accessor)
 {
@@ -42,13 +41,13 @@ EnumPropertyImpl<A>::EnumPropertyImpl(IdRef name, const A& accessor)
 template <typename A>
 Value EnumPropertyImpl<A>::getValue(const UserObject& object) const
 {
-    return m_accessor.get(object.get<typename A::ClassType>());
+    return m_accessor.m_interface.getter(object.get<typename A::ClassType>());
 }
 
 template <typename A>
 void EnumPropertyImpl<A>::setValue(const UserObject& object, const Value& value) const
 {
-    if (!m_accessor.set(object.get<typename A::ClassType>(), value))
+    if (!m_accessor.m_interface.setter(object.get<typename A::ClassType>(), value.to<typename A::DataType>()))
         PONDER_ERROR(ForbiddenWrite(name()));
 }
 
@@ -65,5 +64,4 @@ bool EnumPropertyImpl<A>::isWritable() const
 }
 
 } // namespace detail
-
 } // namespace ponder

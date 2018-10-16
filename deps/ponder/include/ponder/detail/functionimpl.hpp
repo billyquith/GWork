@@ -5,7 +5,7 @@
 ** The MIT License (MIT)
 **
 ** Copyright (C) 2009-2014 TEGESO/TEGESOFT and/or its subsidiary(-ies) and mother company.
-** Copyright (C) 2015-2017 Nick Trout.
+** Copyright (C) 2015-2018 Nick Trout.
 **
 ** Permission is hereby granted, free of charge, to any person obtaining a copy
 ** of this software and associated documentation files (the "Software"), to deal
@@ -27,7 +27,7 @@
 **
 ****************************************************************************/
 
-
+#pragma once
 #ifndef PONDER_DETAIL_FUNCTIONIMPL_HPP
 #define PONDER_DETAIL_FUNCTIONIMPL_HPP
 
@@ -121,8 +121,8 @@ public:
     {
         m_name = name;
         m_funcType = FuncTraits::kind;
-        m_returnType = mapType<typename FuncTraits::ReturnType>();
-        m_returnPolicy = ReturnPolicy<typename FuncTraits::ReturnType, P...>::kind;
+        m_returnType = mapType<typename FuncTraits::AccessType>();
+        m_returnPolicy = ReturnPolicy<typename FuncTraits::AccessType, P...>::kind;
         m_paramInfo = FunctionApplyToParams<typename FuncTraits::Details::ParamTypes,
                                             FunctionMapParamsToValueKind<c_nParams>>::foreach();
         Function::m_usesData = &m_userData;
@@ -145,7 +145,6 @@ private:
         std::get<M>(m_userData) =
             Processor::template perFunction<F, T, FuncPolicies>(name, function);
     }
-    
     
     std::size_t paramCount() const override { return c_nParams; }
 

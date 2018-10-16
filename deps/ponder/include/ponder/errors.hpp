@@ -5,7 +5,7 @@
 ** The MIT License (MIT)
 **
 ** Copyright (C) 2009-2014 TEGESO/TEGESOFT and/or its subsidiary(-ies) and mother company.
-** Copyright (C) 2015-2017 Nick Trout.
+** Copyright (C) 2015-2018 Nick Trout.
 **
 ** Permission is hereby granted, free of charge, to any person obtaining a copy
 ** of this software and associated documentation files (the "Software"), to deal
@@ -27,17 +27,14 @@
 **
 ****************************************************************************/
 
-
+#pragma once
 #ifndef PONDER_ERRORS_HPP
 #define PONDER_ERRORS_HPP
-
 
 #include <ponder/error.hpp>
 #include <ponder/type.hpp>
 
-
-namespace ponder
-{
+namespace ponder {
     
 class Class;
 
@@ -264,7 +261,7 @@ public:
      */
     FunctionNotFound(IdRef name, IdRef className);
 };
-
+    
 /**
  * \brief Error thrown when a declaring a metaclass that already exists
  */
@@ -331,7 +328,21 @@ public:
     PropertyNotFound(IdRef name, IdRef className);
 };
 
-} // namespace ponder
+/**
+ * \brief Error thrown when cannot distinguish between multiple type instance
+ */
+class PONDER_API TypeAmbiguity : public Error
+{
+public:
+    
+    /**
+     * \brief Constructor
+     *
+     * \param typeName Name of the type causing problems
+     */
+    TypeAmbiguity(IdRef typeName);
+};
 
+} // namespace ponder
 
 #endif // PONDER_ERRORS_HPP

@@ -5,7 +5,7 @@
 ** The MIT License (MIT)
 **
 ** Copyright (C) 2009-2014 TEGESO/TEGESOFT and/or its subsidiary(-ies) and mother company.
-** Copyright (C) 2015-2017 Nick Trout.
+** Copyright (C) 2015-2018 Nick Trout.
 **
 ** Permission is hereby granted, free of charge, to any person obtaining a copy
 ** of this software and associated documentation files (the "Software"), to deal
@@ -27,18 +27,15 @@
 **
 ****************************************************************************/
 
-
+#pragma once
 #ifndef PONDER_DETAIL_SIMPLEPROPERTYIMPL_HPP
 #define PONDER_DETAIL_SIMPLEPROPERTYIMPL_HPP
 
-
 #include <ponder/simpleproperty.hpp>
 
-
-namespace ponder
-{
-namespace detail
-{
+namespace ponder {
+namespace detail {
+    
 /**
  * \brief Typed implementation of SimpleProperty
  *
@@ -60,40 +57,38 @@ public:
      * \param name Name of the property
      * \param accessor Object used to access the actual C++ property
      */
-    SimplePropertyImpl(IdRef name, const A& accessor);
+    SimplePropertyImpl(IdRef name, A accessor);
 
 protected:
 
     /**
      * \see Property::isReadable
      */
-    bool isReadable() const override;
+    bool isReadable() const final;
 
     /**
      * \see Property::isWritable
      */
-    bool isWritable() const override;
+    bool isWritable() const final;
 
     /**
      * \see Property::getValue
      */
-    Value getValue(const UserObject& object) const override;
+    Value getValue(const UserObject& object) const final;
 
     /**
      * \see Property::setValue
      */
-    void setValue(const UserObject& object, const Value& value) const override;
+    void setValue(const UserObject& object, const Value& value) const final;
 
 private:
 
-    A m_accessor; ///< Object used to access the actual C++ property
+    A m_accessor; // Accessor used to access the actual C++ property
 };
 
 } // namespace detail
-
 } // namespace ponder
 
 #include <ponder/detail/simplepropertyimpl.inl>
-
 
 #endif // PONDER_DETAIL_SIMPLEPROPERTYIMPL_HPP

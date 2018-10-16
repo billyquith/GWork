@@ -5,7 +5,7 @@
 ** The MIT License (MIT)
 **
 ** Copyright (C) 2009-2014 TEGESO/TEGESOFT and/or its subsidiary(-ies) and mother company.
-** Copyright (C) 2015-2017 Nick Trout.
+** Copyright (C) 2015-2018 Nick Trout.
 **
 ** Permission is hereby granted, free of charge, to any person obtaining a copy
 ** of this software and associated documentation files (the "Software"), to deal
@@ -27,7 +27,7 @@
 **
 ****************************************************************************/
 
-
+#pragma once
 #ifndef PONDER_VALUEMAPPER_HPP
 #define PONDER_VALUEMAPPER_HPP
 
@@ -54,9 +54,7 @@ namespace ponder_ext
     template <typename T, typename C = void> struct ValueMapper;
 }
 
-
-namespace ponder
-{
+namespace ponder {
 
 /**
  * \brief Map a C++ type to a Ponder type
@@ -66,7 +64,7 @@ namespace ponder
  * \return Ponder type which T maps to
  */
 template <typename T>
-ValueKind mapType()
+inline ValueKind mapType()
 {
     return ponder_ext::ValueMapper<typename detail::RawType<T>::Type>::kind;
 }
@@ -189,7 +187,6 @@ struct ValueMapper<T,
     typename std::enable_if<
                  std::is_integral<T>::value
                  && !std::is_const<T>::value     // to avoid conflict with ValueMapper<const T>
-                 && !std::is_reference<T>::value // to avoid conflict with ValueMapper<T&>
              >::type >
 {
     static const ponder::ValueKind kind = ponder::ValueKind::Integer;
@@ -213,7 +210,6 @@ struct ValueMapper<T,
     typename std::enable_if<
                  std::is_floating_point<T>::value
                  && !std::is_const<T>::value // to avoid conflict with ValueMapper<const T>
-                 && !std::is_reference<T>::value // to avoid conflict with ValueMapper<T&>
              >::type >
 {
     static const ponder::ValueKind kind = ponder::ValueKind::Real;
@@ -252,6 +248,25 @@ struct ValueMapper<ponder::String>
 };
 
 /**
+ * Specialization of ValueMapper for const char*.
+ * Conversions to const char* are disabled (can't return a pointer to a temporary)
+ */
+template <>
+struct ValueMapper<const char*>
+{
+    static const ponder::ValueKind kind = ponder::ValueKind::String;
+    static ponder::String to(const char* source) {return ponder::String(source);}
+    
+    template <typename T>
+    static const char* from(const T&)
+    {
+        // If you get this error, it means you're trying to cast
+        // a ponder::Value to a const char*, which is not allowed
+        return T::CONVERSION_TO_CONST_CHAR_PTR_IS_NOT_ALLOWED();
+    }
+};
+
+/**
  * Specialization of ValueMapper for arrays.
  * No conversion allowed, only type mapping is provided.
  *
@@ -272,29 +287,32 @@ struct ValueMapper<T,
  * Specializations of ValueMapper for char arrays.
  * Conversion to char[N] is disabled (can't return an array).
  */
-template <int N>
+template <std::size_t N>
 struct ValueMapper<char[N]>
 {
     static const ponder::ValueKind kind = ponder::ValueKind::String;
-    static ponder::String to(const char source[N]) {return ponder::String(source);}
+    static ponder::String to(const char (&source)[N]) {return ponder::String(source);}
 };
-template <int N>
+template <std::size_t N>
 struct ValueMapper<const char[N]>
 {
     static const ponder::ValueKind kind = ponder::ValueKind::String;
-    static ponder::String to(const char source[N]) {return ponder::String(source);}
+    static ponder::String to(const char (&source)[N]) {return ponder::String(source);}
+};
+
+template <>
+struct ValueMapper<ponder::detail::string_view>
+{
+    static const ponder::ValueKind kind = ponder::ValueKind::String;
+    static ponder::String to(const ponder::detail::string_view& sv)
+        {return ponder::String(sv.data(), sv.length());}
 };
 
 /**
  * Specialization of ValueMapper for enum types
  */
 template <typename T>
-struct ValueMapper<T,
-    typename std::enable_if<
-                std::is_enum<T>::value
-                && !std::is_const<T>::value // to avoid conflict with ValueMapper<const T>
-                && !std::is_reference<T>::value // to avoid conflict with ValueMapper<T&>
-            >::type>
+struct ValueMapper<T, typename std::enable_if<std::is_enum<T>::value>::type>
 {
     static const ponder::ValueKind kind = ponder::ValueKind::Enum;
     static ponder::EnumObject to(T source) {return ponder::EnumObject(source);}
@@ -384,33 +402,6 @@ struct ValueMapper<ponder::UserObject>
 };
 
 /**
- * Specialization of ValueMapper for smart pointers. Forward the pointer type.
- */
-template <template <typename> class T, typename U>
-struct ValueMapper<T<U>,
-    typename std::enable_if< ponder::detail::IsSmartPointer<T<U>,U>::value
-        >::type> : public ValueMapper<U>
-{
-};
-
-/**
- * Specialization of ValueMapper for const T& -- just forward to ValueMapper<T>
- */
-template <typename T>
-struct ValueMapper<const T&> : public ValueMapper<T>
-{
-    static const T& from(const ponder::UserObject& obj) {return obj.get<const T&>();}
-};
-
-/**
- * Specialization of ValueMapper for const T -- just forward to ValueMapper<T>
- */
-template <typename T>
-struct ValueMapper<const T> : public ValueMapper<T>
-{
-};
-
-/**
  * Specialization of ValueMapper for void.
  * Conversion to void should never happen, the only aim of this
  * specialization is to define the proper type mapping.
@@ -431,40 +422,30 @@ struct ValueMapper<ponder::NoType>
 {
     static const ponder::ValueKind kind = ponder::ValueKind::None;
 };
+    
+/**
+ * Specialization of ValueMapper for const T -- just forward to ValueMapper<T>
+ */
+template <typename T>
+struct ValueMapper<const T> : public ValueMapper<T> {};
 
 /**
- * Specialization of ValueMapper for non-const references.
- * Conversions to non-const references are disabled (can't return a temporary by reference)
+ * Show error for references. Not allowed.
  */
-//template <typename T>
-//struct ValueMapper<T&> : public ValueMapper<T>
-//{
-//    template <typename U>
-//    static T& from(const U&)
-//    {
-//        // If you get this error, it means you're trying to cast
-//        // a ponder::Value to a non-const reference type, which is not allowed
-//        return U::CONVERSION_TO_NON_CONST_REFERENCE_IS_NOT_ALLOWED();
-//    }
-//};
-
-/**
- * Specialization of ValueMapper for const char*.
- * Conversions to const char* are disabled (can't return a pointer to a temporary)
- */
-template <>
-struct ValueMapper<const char*>
+template <typename T>
+struct ValueMapper<const T&>
 {
-    static const ponder::ValueKind kind = ponder::ValueKind::String;
-    static ponder::String to(const char* source) {return ponder::String(source);}
+    typedef int ReferencesNotAllowed[-(int)sizeof(T)];
+};
 
-    template <typename T>
-    static const char* from(const T&)
-    {
-        // If you get this error, it means you're trying to cast
-        // a ponder::Value to a const char*, which is not allowed
-        return T::CONVERSION_TO_CONST_CHAR_PTR_IS_NOT_ALLOWED();
-    }
+/**
+ * Show error for references using smart pointers.
+ */
+template <template <typename> class T, typename U>
+struct ValueMapper<T<U>,
+    typename std::enable_if< ponder::detail::IsSmartPointer<T<U>,U>::value>::type>
+{
+    typedef int ReferencesNotAllowed[-(int)sizeof(U)];
 };
 
 /** \endcond NoDocumentation */

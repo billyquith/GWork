@@ -5,7 +5,7 @@
 ** The MIT License (MIT)
 **
 ** Copyright (C) 2009-2014 TEGESO/TEGESOFT and/or its subsidiary(-ies) and mother company.
-** Copyright (C) 2015-2017 Nick Trout.
+** Copyright (C) 2015-2018 Nick Trout.
 **
 ** Permission is hereby granted, free of charge, to any person obtaining a copy
 ** of this software and associated documentation files (the "Software"), to deal
@@ -27,18 +27,16 @@
 **
 ****************************************************************************/
 
-
+#pragma once
 #ifndef PONDER_DETAIL_GETTER_HPP
 #define PONDER_DETAIL_GETTER_HPP
-
 
 #include <ponder/userobject.hpp>
 #include <functional>
 
-namespace ponder
-{
-namespace detail
-{
+namespace ponder {
+namespace detail {
+    
 /**
  * \brief Represents an abstract getter
  *
@@ -147,10 +145,8 @@ private:
 };
 
 } // namespace detail
-
 } // namespace ponder
 
 #include <ponder/detail/getter.inl>
-
 
 #endif // PONDER_DETAIL_GETTER_HPP

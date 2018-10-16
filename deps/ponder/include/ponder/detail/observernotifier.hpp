@@ -5,7 +5,7 @@
 ** The MIT License (MIT)
 **
 ** Copyright (C) 2009-2014 TEGESO/TEGESOFT and/or its subsidiary(-ies) and mother company.
-** Copyright (C) 2015-2017 Nick Trout.
+** Copyright (C) 2015-2018 Nick Trout.
 **
 ** Permission is hereby granted, free of charge, to any person obtaining a copy
 ** of this software and associated documentation files (the "Software"), to deal
@@ -27,23 +27,21 @@
 **
 ****************************************************************************/
 
-
+#pragma once
 #ifndef PONDER_DETAIL_OBSERVERNOTIFIER_HPP
 #define PONDER_DETAIL_OBSERVERNOTIFIER_HPP
-
 
 #include <ponder/config.hpp>
 #include <set>
 
-
-namespace ponder
-{
+namespace ponder {
+    
 class Observer;
 class Class;
 class Enum;
 
-namespace detail
-{
+namespace detail {
+    
 /**
  * \brief Base class for classes that can notify global observers
  */
@@ -115,8 +113,6 @@ private:
 };
 
 } // namespace detail
-
 } // namespace ponder
-
 
 #endif // PONDER_DETAIL_OBSERVERNOTIFIER_HPP

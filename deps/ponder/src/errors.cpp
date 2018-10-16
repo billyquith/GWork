@@ -5,7 +5,7 @@
 ** The MIT License (MIT)
 **
 ** Copyright (C) 2009-2014 TEGESO/TEGESOFT and/or its subsidiary(-ies) and mother company.
-** Copyright (C) 2015-2017 Nick Trout.
+** Copyright (C) 2015-2018 Nick Trout.
 **
 ** Permission is hereby granted, free of charge, to any person obtaining a copy
 ** of this software and associated documentation files (the "Software"), to deal
@@ -27,11 +27,9 @@
 **
 ****************************************************************************/
 
-
 #include <ponder/errors.hpp>
 #include <ponder/class.hpp>
 #include <ponder/detail/util.hpp>
-
 
 namespace ponder {
     
@@ -140,6 +138,11 @@ OutOfRange::OutOfRange(std::size_t index, std::size_t size)
 
 PropertyNotFound::PropertyNotFound(IdRef name, IdRef className)
     : Error("the property " + String(name) + " couldn't be found in metaclass " + String(className))
+{
+}
+
+TypeAmbiguity::TypeAmbiguity(IdRef typeName)
+: Error("type " + String(typeName) + " ambiguity")
 {
 }
 

@@ -5,7 +5,7 @@
 ** The MIT License (MIT)
 **
 ** Copyright (C) 2009-2014 TEGESO/TEGESOFT and/or its subsidiary(-ies) and mother company.
-** Copyright (C) 2015-2017 Nick Trout.
+** Copyright (C) 2015-2018 Nick Trout.
 **
 ** Permission is hereby granted, free of charge, to any person obtaining a copy
 ** of this software and associated documentation files (the "Software"), to deal
@@ -27,16 +27,14 @@
 **
 ****************************************************************************/
 
-
+#pragma once
 #ifndef PONDER_DETAIL_VALUEPROVIDER_HPP
 #define PONDER_DETAIL_VALUEPROVIDER_HPP
-
 
 #include <ponder/args.hpp>
 #include <ponder/class.hpp>
 #include <ponder/classget.hpp>
 #include <ponder/valuemapper.hpp>
-
 
 namespace ponder {
 namespace detail {
@@ -52,7 +50,7 @@ struct ValueProviderImpl
 };
 
 /*
- * Specialization for user types: use metaclass to instanciate
+ * Specialization for user types: use metaclass to instantiate
  * so that we get an exception rather than a compile error
  * if the type has no default constructor
  */
@@ -88,7 +86,7 @@ struct ValueProviderImpl<T*, ValueKind::User>
 };
 
 /*
- * Helper structure to instanciate new values based on their type
+ * Helper structure to instantiate new values based on their type
  */
 template <typename T>
 struct ValueProvider : ValueProviderImpl<T, ponder_ext::ValueMapper<T>::kind>
@@ -97,6 +95,5 @@ struct ValueProvider : ValueProviderImpl<T, ponder_ext::ValueMapper<T>::kind>
 
 } // namespace detail
 } // namespace ponder
-
 
 #endif // PONDER_DETAIL_VALUEPROVIDER_HPP

@@ -5,7 +5,7 @@
 ** The MIT License (MIT)
 **
 ** Copyright (C) 2009-2014 TEGESO/TEGESOFT and/or its subsidiary(-ies) and mother company.
-** Copyright (C) 2015-2017 Nick Trout.
+** Copyright (C) 2015-2018 Nick Trout.
 **
 ** Permission is hereby granted, free of charge, to any person obtaining a copy
 ** of this software and associated documentation files (the "Software"), to deal
@@ -27,7 +27,7 @@
 **
 ****************************************************************************/
 
-
+#pragma once
 #ifndef PONDER_DETAIL_CONSTRUCTORIMPL_HPP
 #define PONDER_DETAIL_CONSTRUCTORIMPL_HPP
 
@@ -89,18 +89,18 @@ template <typename T, typename... A>
 class ConstructorImpl : public Constructor
 {
     template <typename... As, std::size_t... Is>
-    static inline bool checkArgs(const Args& args, _PONDER_SEQNS::index_sequence<Is...>)
+    static inline bool checkArgs(const Args& args, PONDER__SEQNS::index_sequence<Is...>)
     {
         return allTrue(checkArg<As>(args[Is])...);
     }
 
     template <typename... As, std::size_t... Is>
-    static inline UserObject createWithArgs(void* ptr, const Args& args, _PONDER_SEQNS::index_sequence<Is...>)
+    static inline UserObject createWithArgs(void* ptr, const Args& args, PONDER__SEQNS::index_sequence<Is...>)
     {
         if (ptr)
-            return UserObject(*new(ptr) T(convertArg<As>(args, Is)...)); // placement new
+            return UserObject::makeRef(new(ptr) T(convertArg<As>(args, Is)...)); // placement new
         else
-            return UserObject(*new T(convertArg<As>(args, Is)...));
+            return UserObject::makeRef(new T(convertArg<As>(args, Is)...));
     }
 
 public:
@@ -110,7 +110,7 @@ public:
      */
     bool matches(const Args& args) const override
     {
-        return args.count() == sizeof...(A) && checkArgs<A...>(args, _PONDER_SEQNS::make_index_sequence<sizeof...(A)>());
+        return args.count() == sizeof...(A) && checkArgs<A...>(args, PONDER__SEQNS::make_index_sequence<sizeof...(A)>());
     }
 
     /**
@@ -118,7 +118,7 @@ public:
      */
     UserObject create(void* ptr, const Args& args) const override
     {
-        return createWithArgs<A...>(ptr, args, _PONDER_SEQNS::make_index_sequence<sizeof...(A)>());
+        return createWithArgs<A...>(ptr, args, PONDER__SEQNS::make_index_sequence<sizeof...(A)>());
     }
 };
 

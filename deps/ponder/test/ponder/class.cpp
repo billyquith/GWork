@@ -5,7 +5,7 @@
 ** The MIT License (MIT)
 **
 ** Copyright (C) 2009-2014 TEGESO/TEGESOFT and/or its subsidiary(-ies) and mother company.
-** Copyright (C) 2015-2017 Nick Trout.
+** Copyright (C) 2015-2018 Nick Trout.
 **
 ** Permission is hereby granted, free of charge, to any person obtaining a copy
 ** of this software and associated documentation files (the "Software"), to deal
@@ -145,7 +145,7 @@ namespace ClassTest
         ponder::Class::declare< DataTemplate<float,5,5> >()
             .function("get", &DataTemplate<float,5,5>::get)
             .function("set", &DataTemplate<float,5,5>::set);
-
+        
 #if TEST_VIRTUAL
         ponder::Class::declare< VirtualBase >()
             ;
@@ -285,6 +285,17 @@ TEST_CASE("Class metadata can be retrieved")
         REQUIRE_THROWS_AS(ponder::classByObject(object2), ponder::ClassNotFound);
         REQUIRE_THROWS_AS(ponder::classByObject(&object2), ponder::ClassNotFound);
     }
+    
+    SECTION("iteration")
+    {
+        size_t count = 0;
+        for (auto&& cls : ponder::classIterator())
+        {
+            (void) cls.second->name();
+            ++count;
+        }
+        REQUIRE(count == ponder::classCount());
+    }
 }
 
 
@@ -331,7 +342,8 @@ TEST_CASE("Class members can be inspected")
                 case 0:
                     REQUIRE(prop.name() == ponder::String("prop"));
                     break;
-                default: ;
+                default:
+                    ;
             }
         }
     }
@@ -345,7 +357,8 @@ TEST_CASE("Class members can be inspected")
                 case 0:
                     REQUIRE(func.name() == ponder::String("func"));
                     break;
-                default: ;
+                default:
+                    ;
             }
         }
     }
@@ -369,27 +382,23 @@ TEST_CASE("Classes can have hierarchies")
     Base* nortti  = new DerivedNoRtti;
     Base* nortti2 = new Derived2NoRtti;
 
-    REQUIRE(ponder::classByObject(base).name() == "ClassTest::Base");    // base is really a base
     REQUIRE(ponder::classByObject(*base).name() == "ClassTest::Base");
     
     SECTION("with rtti")
     {
         // Ponder finds its real type thanks to PONDER_POLYMORPHIC
-        REQUIRE(ponder::classByObject(derived).name() == "ClassTest::Derived");
-        REQUIRE(ponder::classByObject(*derived).name() == "ClassTest::Derived");        
+        REQUIRE(ponder::classByObject(*derived).name() == "ClassTest::Derived");
     }
     
     SECTION("without rtti")
     {
         // Ponder fails to find its derived type without PONDER_POLYMORPHIC
-        REQUIRE(ponder::classByObject(nortti).name() == "ClassTest::Base");
         REQUIRE(ponder::classByObject(*nortti).name() == "ClassTest::Base");
     }
 
    SECTION("allows polymorphism")
    {
        Base* genericBase = derived;
-       REQUIRE(ponder::classByObject(genericBase).name() == "ClassTest::Derived");
        REQUIRE(ponder::classByObject(*genericBase).name() == "ClassTest::Derived");
    }
     
@@ -397,7 +406,6 @@ TEST_CASE("Classes can have hierarchies")
     {
         Base* nonGenericBase = nortti;
         // Ponder fails to find its derived type without PONDER_POLYMORPHIC
-        REQUIRE(ponder::classByObject(nonGenericBase).name() == "ClassTest::Base");
         REQUIRE(ponder::classByObject(*nonGenericBase).name() == "ClassTest::Base");
     }
 

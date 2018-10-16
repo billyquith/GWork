@@ -5,7 +5,7 @@
 ** The MIT License (MIT)
 **
 ** Copyright (C) 2009-2014 TEGESO/TEGESOFT and/or its subsidiary(-ies) and mother company.
-** Copyright (C) 2015-2017 Nick Trout.
+** Copyright (C) 2015-2018 Nick Trout.
 **
 ** Permission is hereby granted, free of charge, to any person obtaining a copy
 ** of this software and associated documentation files (the "Software"), to deal
@@ -28,16 +28,14 @@
 ****************************************************************************/
 
 
-namespace ponder
-{
-namespace detail
-{
+namespace ponder {
+namespace detail {
+    
 template <typename A>
-ArrayPropertyImpl<A>::ArrayPropertyImpl(IdRef name, const A& accessor)
+ArrayPropertyImpl<A>::ArrayPropertyImpl(IdRef name, A&& accessor)
     : ArrayProperty(name, mapType<ElementType>(), Mapper::dynamic())
     , m_accessor(accessor)
-{
-}
+{}
 
 template <typename A>
 std::size_t ArrayPropertyImpl<A>::getSize(const UserObject& object) const
@@ -89,9 +87,8 @@ void ArrayPropertyImpl<A>::removeElement(const UserObject& object, std::size_t i
 template <typename A>
 typename ArrayPropertyImpl<A>::ArrayType& ArrayPropertyImpl<A>::array(const UserObject& object) const
 {
-    return m_accessor.get(object.get<typename A::ClassType>());
+    return m_accessor.m_interface.array(object.get<typename A::ClassType>());
 }
 
 } // namespace detail
-
 } // namespace ponder

@@ -5,7 +5,7 @@
 ** The MIT License (MIT)
 **
 ** Copyright (C) 2009-2014 TEGESO/TEGESOFT and/or its subsidiary(-ies) and mother company.
-** Copyright (C) 2015-2017 Nick Trout.
+** Copyright (C) 2015-2018 Nick Trout.
 **
 ** Permission is hereby granted, free of charge, to any person obtaining a copy
 ** of this software and associated documentation files (the "Software"), to deal
@@ -13,10 +13,10 @@
 ** to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 ** copies of the Software, and to permit persons to whom the Software is
 ** furnished to do so, subject to the following conditions:
-** 
+**
 ** The above copyright notice and this permission notice shall be included in
 ** all copies or substantial portions of the Software.
-** 
+**
 ** THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 ** IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 ** FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -27,14 +27,16 @@
 **
 ****************************************************************************/
 
-
+#pragma once
+/** \cond NoDocumentation */
 #ifndef PONDER_PONDERTYPE_HPP
 #define PONDER_PONDERTYPE_HPP
+/** \endcond NoDocumentation */
 
 #include <ponder/config.hpp>
 
 namespace ponder {
-    
+
 namespace detail
 {
     template <typename T> struct StaticTypeId;
@@ -76,7 +78,7 @@ namespace detail
             template <> struct StaticTypeId<__VA_ARGS__> \
             { \
                 static const char* get(bool = true) {return #__VA_ARGS__;} \
-                enum {defined = true, copyable = true}; \
+                static constexpr bool defined = true, copyable = true; \
             }; \
         } \
     }
@@ -113,7 +115,7 @@ namespace detail
  * }
  * \endcode
  *
- * \sa PONDER_TYPE()
+ * \sa PONDER_TYPE(), \ref eg_page_shapes
  */
 #define PONDER_AUTO_TYPE(TYPE, REGISTER_FN) \
     namespace ponder { \
@@ -124,7 +126,7 @@ namespace detail
                         detail::ensureTypeRegistered(#TYPE, REGISTER_FN); \
                     return #TYPE; \
                 } \
-                enum {defined = true, copyable = true}; \
+                static constexpr bool defined = true, copyable = true; \
             }; \
         } \
     }
@@ -133,18 +135,18 @@ namespace detail
 /**
  * \brief Macro used to register a non-copyable C++ type to Ponder
  *
- * Disabled copy and assignment cannot be detected at compile-time, thus users have to 
- * explicitly tell Ponder when a type is not copyable/assignable. Objects of a non-copyable 
- * class can be modified through their metaproperties, but they can't be written with a 
+ * Disabled copy and assignment cannot be detected at compile-time, thus users have to
+ * explicitly tell Ponder when a type is not copyable/assignable. Objects of a non-copyable
+ * class can be modified through their metaproperties, but they can't be written with a
  * single call to replace to whole object.
  *
- * Every type manipulated by Ponder must be registered with PONDER_TYPE(), PONDER_AUTO_TYPE() 
+ * Every type manipulated by Ponder must be registered with PONDER_TYPE(), PONDER_AUTO_TYPE()
  * or their NONCOPYABLE versions.
  *
  * Example:
  *
  * \code
- * class NonCopyable : util::noncopyable
+ * class NonCopyable : util::NonCopyable
  * {
  *     int x;
  * };
@@ -172,13 +174,13 @@ namespace detail
         namespace detail { \
             template <> struct StaticTypeId<TYPE> { \
                 static const char* get(bool = true) {return #TYPE;} \
-                enum {defined = true, copyable = false}; \
+                static constexpr bool defined = true, copyable = true; \
             }; \
         } \
     }
 
 /**
- * \brief Macro used to register a non-copyable C++ type to Ponder with automatic 
+ * \brief Macro used to register a non-copyable C++ type to Ponder with automatic
  *        metaclass creation
  *
  * Using this macro rather than PONDER_TYPE_NONCOPYABLE will make Ponder automatically call
@@ -186,7 +188,7 @@ namespace detail
  * This is useful when you don't want to have to manually call an "init" function to
  * create your metaclass.
  *
- * Every type manipulated by Ponder must be registered with PONDER_TYPE(), PONDER_AUTO_TYPE() 
+ * Every type manipulated by Ponder must be registered with PONDER_TYPE(), PONDER_AUTO_TYPE()
  * or their NONCOPYABLE versions.
  *
  * \sa PONDER_AUTO_TYPE(), PONDER_TYPE_NONCOPYABLE()
@@ -200,7 +202,7 @@ namespace detail
                         detail::ensureTypeRegistered(#TYPE, REGISTER_FN); \
                     return #TYPE; \
                 } \
-                enum {defined = true, copyable = false}; \
+                static constexpr bool defined = true, copyable = true; \
             }; \
         } \
     }
@@ -239,5 +241,6 @@ namespace detail
 
 } // namespace ponder
 
-
+/** \cond NoDocumentation */
 #endif // PONDER_PONDERTYPE_HPP
+/** \endcond NoDocumentation */

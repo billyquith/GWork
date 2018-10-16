@@ -5,7 +5,7 @@
 ** The MIT License (MIT)
 **
 ** Copyright (C) 2009-2014 TEGESO/TEGESOFT and/or its subsidiary(-ies) and mother company.
-** Copyright (C) 2015-2017 Nick Trout.
+** Copyright (C) 2015-2018 Nick Trout.
 **
 ** Permission is hereby granted, free of charge, to any person obtaining a copy
 ** of this software and associated documentation files (the "Software"), to deal
@@ -88,8 +88,10 @@ namespace UserObjectTest
         return stream << m.x;
     }
     
-    struct MyNonCopyableClass : ponder::detail::noncopyable
+    struct MyNonCopyableClass
     {
+        MyNonCopyableClass() {}
+        PONDER__NON_COPYABLE(MyNonCopyableClass);
     };
     
     struct MyAbstractClass
@@ -247,7 +249,7 @@ using namespace UserObjectTest;
 //                         Tests for ponder::UserObject
 //-----------------------------------------------------------------------------
 
-TEST_CASE("Ponder supports user objects")
+TEST_CASE("User objects reference or contain user data")
 {
     SECTION("empty objects are nothing")
     {
@@ -271,88 +273,70 @@ TEST_CASE("Ponder supports user objects")
         IS_TRUE(obj == ponder::UserObject::nothing);
     }
 
-    SECTION("user objects reference other objects")
+    SECTION("user objects reference objects")
     {
         MyClass object(1);
-        ponder::UserObject userObject(object); //reference
+        ponder::UserObject userObject(&object);
 
-        REQUIRE(userObject.get<MyClass>() ==         object);
-        REQUIRE(&userObject.get<MyClass>() ==        &object);
-        REQUIRE(userObject.get<MyClass&>() ==        object);
-        REQUIRE(&userObject.get<MyClass&>() ==       &object);
-        REQUIRE(userObject.get<const MyClass&>() ==  object);
-        REQUIRE(&userObject.get<const MyClass&>() == &object);
-        REQUIRE(userObject.get<MyClass*>() ==        &object);
-        REQUIRE(userObject.get<const MyClass*>() ==  &object);
+        REQUIRE(userObject.ref<MyClass>() == object);
+        REQUIRE(&userObject.ref<MyClass>() == &object);
+        
+        REQUIRE(userObject.cref<MyClass>() == object);
+        REQUIRE(&userObject.cref<MyClass>() == &object);
     }
 
-    SECTION("user objects can reference other objects using pointers")
+    SECTION("we can get the value of the user object")
     {
         MyClass object(3);
-        ponder::UserObject userObject(&object); // pointer
+        ponder::UserObject userObject(&object);
 
-        REQUIRE(userObject.get<MyClass>() ==         object);
-        REQUIRE(&userObject.get<MyClass>() ==        &object);
-        REQUIRE(userObject.get<MyClass&>() ==        object);
-        REQUIRE(&userObject.get<MyClass&>() ==       &object);
-        REQUIRE(userObject.get<const MyClass&>() ==  object);
-        REQUIRE(&userObject.get<const MyClass&>() == &object);
-        REQUIRE(userObject.get<MyClass*>() ==        &object);
-        REQUIRE(userObject.get<const MyClass*>() ==  &object);
+        REQUIRE(userObject.get<MyClass>() == object);
+        REQUIRE(userObject.get<MyClass>().x == 3);
     }
 
     SECTION("user object references should handle inheritance")
     {
         MyClass object(2);
-        ponder::UserObject userObject(object);
+        ponder::UserObject userObject(&object);
         MyBase& base = object;
 
-        REQUIRE(userObject.get<MyBase>() ==         base);
-        REQUIRE(&userObject.get<MyBase>() ==        &base);
-        REQUIRE(userObject.get<MyBase&>() ==        base);
-        REQUIRE(&userObject.get<MyBase&>() ==       &base);
-        REQUIRE(userObject.get<const MyBase&>() ==  base);
-        REQUIRE(&userObject.get<const MyBase&>() == &base);
-        REQUIRE(userObject.get<MyBase*>() ==        &base);
-        REQUIRE(userObject.get<const MyBase*>() ==  &base);
+        REQUIRE(userObject.get<MyBase>() == base);
+        REQUIRE(&userObject.get<MyBase>() == &base);
     }
     
     SECTION("user objects can be assigned to")
     {
         MyClass object1(10);
-        ponder::UserObject userObject1(object1);
+        ponder::UserObject userObject1(&object1);
         ponder::UserObject userObject2;
-        
+
+        REQUIRE(userObject2 != userObject1);
+
         userObject2 = userObject1;
 
-        REQUIRE(userObject1.get<MyClass*>() == userObject2.get<MyClass*>());
+        REQUIRE(userObject2 == userObject1);
+        REQUIRE(userObject2.get<MyClass>() == userObject1.get<MyClass>());
     }
 
-    SECTION("objects can be tested for equality")
+    SECTION("user objects referencing the same object are equal")
     {
         // Note: UserObject equality is related to the object referenced.
         
         MyClass object1(11);    // note, same values here
         MyClass object2(11);
 
-        IS_TRUE(ponder::UserObject(object1)  == ponder::UserObject(object1));
-        IS_TRUE(ponder::UserObject(object1)  == ponder::UserObject(&object1));
+        IS_TRUE(ponder::UserObject(object1) != ponder::UserObject(object1)); // copy
         IS_TRUE(ponder::UserObject(&object1) == ponder::UserObject(&object1));
-        IS_TRUE(ponder::UserObject(object1)  != ponder::UserObject(object2));
-
-        IS_TRUE(ponder::UserObject(object1) == ponder::UserObject::makeRef(object1));
-        IS_TRUE(ponder::UserObject(object1) == ponder::UserObject::makeRef(&object1));
-        IS_TRUE(ponder::UserObject(object1) != ponder::UserObject::makeCopy(object1));
-        IS_TRUE(ponder::UserObject(object1) != ponder::UserObject::makeCopy(&object1));
+        IS_TRUE(ponder::UserObject(&object1) != ponder::UserObject(&object2));
     }
 
     SECTION("check we can reference non-copyable objects")
     {
         // This is a compile check
         MyNonCopyableClass object;
-        ponder::UserObject userObject(object);
-        MyNonCopyableClass& ref = userObject.get<MyNonCopyableClass>();
-        (void)ref;
+        ponder::UserObject userObject(&object);
+        const MyNonCopyableClass& ref = userObject.get<MyNonCopyableClass>();
+        (void)&ref;
     }
 
     SECTION("we can refer to concrete objects using abstract base references")
@@ -360,49 +344,51 @@ TEST_CASE("Ponder supports user objects")
         // This is a compile check
         MyConcreteClass object;
 
-        ponder::UserObject userObject1(object);
+        ponder::UserObject userObject1(&object);
         userObject1.get<MyAbstractClass>();
 
-        ponder::UserObject userObject2(static_cast<MyAbstractClass&>(object));
+        ponder::UserObject userObject2(static_cast<MyAbstractClass*>(&object));
         userObject2.get<MyConcreteClass>();
     }    
 
     SECTION("objects can be cloned/deep copied")
     {
         MyClass object(4);
-        ponder::UserObject uobj1(object);
+        ponder::UserObject uobj1(&object);
         ponder::UserObject uobj2(ponder::UserObject::makeCopy(object));
         
         IS_TRUE(uobj1 != uobj2);
 
         REQUIRE(uobj1.get<MyClass>() == object);   // same value
-        REQUIRE(uobj1.get<MyClass*>() == &object); // same address as ref
-        REQUIRE(uobj2.get<MyClass*>() != &object); // same address as copy
         
         REQUIRE(object.x == 4);
-        REQUIRE(uobj1.get<MyClass*>()->x == 4);
-        REQUIRE(uobj2.get<MyClass*>()->x == 4);
+        CHECK(uobj1.get<MyClass>().x == 4);
+        CHECK(uobj2.get<MyClass>().x == 4);
         
         object.x = 7;
         REQUIRE(object.x == 7);
-        REQUIRE(uobj1.get<MyClass*>()->x == 7);
-        REQUIRE(uobj2.get<MyClass*>()->x == 4); // copy hasn't changed
+        CHECK(uobj1.get<MyClass>().x == 7);
+        CHECK(uobj2.get<MyClass>().x == 4); // copy hasn't changed
     }
 
     SECTION("objects can referenced/shallow copied")
     {
         MyClass object(5);
-        ponder::UserObject userObject = ponder::UserObject::makeRef(object);
-
-        REQUIRE(userObject.get<MyClass>() == object);  // same value
-        REQUIRE(userObject.get<MyClass*>() == &object); // same address
+        ponder::UserObject uobj1(&object);
+        ponder::UserObject uobj2(ponder::UserObject::makeRef(object));
+        
+        IS_TRUE(uobj1 == uobj2);
+        
+        REQUIRE(uobj1.get<MyClass>() == object);   // same value
         
         REQUIRE(object.x == 5);
-        REQUIRE(userObject.get<MyClass*>()->x == 5);
+        CHECK(uobj1.get<MyClass>().x == 5);
+        CHECK(uobj2.get<MyClass>().x == 5);
         
         object.x = 7;
         REQUIRE(object.x == 7);
-        REQUIRE(userObject.get<MyClass*>()->x == 7); // points to same object
+        CHECK(uobj1.get<MyClass>().x == 7);
+        CHECK(uobj2.get<MyClass>().x == 7); // copy has changed
     }
 
     SECTION("object type information can be inspected")
@@ -413,7 +399,7 @@ TEST_CASE("Ponder supports user objects")
 
         IS_TRUE(ponder::UserObject(base).getClass() == ponder::classByType<MyBase>());
         IS_TRUE(ponder::UserObject(object).getClass() == ponder::classByType<MyClass>());
-        IS_TRUE(ponder::UserObject(objectAsBase).getClass() == ponder::classByType<MyClass>());
+        IS_TRUE(ponder::UserObject(objectAsBase).getClass() == ponder::classByType<MyBase>());
     }
 
     SECTION("we can get property values by name")
@@ -439,7 +425,7 @@ TEST_CASE("Ponder supports user objects")
     SECTION("we can set property values by name")
     {
         MyClass object(0);
-        ponder::UserObject userObject(object);
+        ponder::UserObject userObject(&object);
         REQUIRE(userObject.get("p") == ponder::Value(0));        
         userObject.set("p", 8);
         REQUIRE(object.x == 8);
@@ -450,7 +436,7 @@ TEST_CASE("Ponder supports user objects")
     SECTION("we can set property values by index")
     {
         MyClass object(4);
-        ponder::UserObject userObject(object);
+        ponder::UserObject userObject(&object);
         REQUIRE(userObject.get(0) == ponder::Value(4));
         userObject.set(0, 8);
         REQUIRE(object.x == 8);
@@ -462,7 +448,7 @@ TEST_CASE("Ponder supports user objects")
     SECTION("we can iterate over properties")
     {
         MyClass object(3);
-        ponder::UserObject userObject(object);
+        ponder::UserObject userObject(&object);
         
         int index = 0;
         for (auto&& prop : ponder::classByType<MyClass>().propertyIterator())

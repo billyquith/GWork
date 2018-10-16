@@ -5,7 +5,7 @@
 ** The MIT License (MIT)
 **
 ** Copyright (C) 2009-2014 TEGESO/TEGESOFT and/or its subsidiary(-ies) and mother company.
-** Copyright (C) 2015-2017 Nick Trout.
+** Copyright (C) 2015-2018 Nick Trout.
 **
 ** Permission is hereby granted, free of charge, to any person obtaining a copy
 ** of this software and associated documentation files (the "Software"), to deal
@@ -27,7 +27,7 @@
 **
 ****************************************************************************/
 
-
+#pragma once
 #ifndef PONDER_DETAIL_RAWTYPE_HPP
 #define PONDER_DETAIL_RAWTYPE_HPP
 
@@ -44,20 +44,19 @@ namespace detail {
 template <typename T, typename U>
 struct IsSmartPointer
 {
-    // enum { value = (!std::is_pointer<T>::value && !std::is_same<T, U>::value) };
-    enum {value = false};
+    static constexpr bool value = false;
 };
 
 template <typename T, typename U>
 struct IsSmartPointer<std::unique_ptr<T>, U>
 {
-    enum {value = true};
+    static constexpr bool value = true;
 };
 
 template <typename T, typename U>
 struct IsSmartPointer<std::shared_ptr<T>, U>
 {
-    enum {value = true};
+    static constexpr bool value = true;
 };
         
 /**
@@ -91,28 +90,22 @@ struct RawType
  * Specialized version for const modifier
  */
 template <typename T>
-struct RawType<const T>
-{
-    typedef typename RawType<T>::Type Type;
-};
+struct RawType<const T> : public RawType<T> {};
 
 /*
  * Specialized version for reference modifier
  */
 template <typename T>
-struct RawType<T&>
-{
-    typedef typename RawType<T>::Type Type;
-};
+struct RawType<T&> : public RawType<T> {};
 
 /*
  * Specialized version for raw pointers
  */
 template <typename T>
-struct RawType<T*>
-{
-    typedef typename RawType<T>::Type Type;
-};
+struct RawType<T*> : public RawType<T> {};
+    
+template <typename T, size_t N>
+struct RawType<T[N]> : public RawType<T> {};
 
 /*
  * Specialized version for smart pointers
@@ -145,6 +138,5 @@ T* get_pointer(std::shared_ptr<T> const& p)
 }
 
 } // namespace ponder
-
 
 #endif // PONDER_DETAIL_RAWTYPE_HPP

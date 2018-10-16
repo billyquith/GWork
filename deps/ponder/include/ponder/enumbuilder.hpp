@@ -5,7 +5,7 @@
 ** The MIT License (MIT)
 **
 ** Copyright (C) 2009-2014 TEGESO/TEGESOFT and/or its subsidiary(-ies) and mother company.
-** Copyright (C) 2015-2017 Nick Trout.
+** Copyright (C) 2015-2018 Nick Trout.
 **
 ** Permission is hereby granted, free of charge, to any person obtaining a copy
 ** of this software and associated documentation files (the "Software"), to deal
@@ -27,16 +27,14 @@
 **
 ****************************************************************************/
 
-
+#pragma once
 #ifndef PONDER_ENUMBUILDER_HPP
 #define PONDER_ENUMBUILDER_HPP
 
 #include <ponder/config.hpp>
 #include <string>
 
-
-namespace ponder
-{
+namespace ponder {
     
 class Enum;
 
@@ -47,7 +45,7 @@ class Enum;
  * new metaenum. It contains functions to declare <name, value> pairs to
  * fill the metaenum.
  *
- * This class should never be explicitely instanciated, unless you
+ * This class should never be explicitely instantiated, unless you
  * need to split the metaenum creation in multiple parts.
  */
 class PONDER_API EnumBuilder
@@ -85,10 +83,9 @@ public:
 
 private:
 
-    Enum* m_target; ///< Target metaenum to construct
+    Enum* m_target; // Target metaenum to construct
 };
 
 } // namespace ponder
-
 
 #endif // PONDER_ENUMBUILDER_HPP

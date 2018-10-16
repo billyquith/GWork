@@ -5,7 +5,7 @@
 ** The MIT License (MIT)
 **
 ** Copyright (C) 2009-2014 TEGESO/TEGESOFT and/or its subsidiary(-ies) and mother company.
-** Copyright (C) 2015-2017 Nick Trout.
+** Copyright (C) 2015-2018 Nick Trout.
 **
 ** Permission is hereby granted, free of charge, to any person obtaining a copy
 ** of this software and associated documentation files (the "Software"), to deal
@@ -27,13 +27,10 @@
 **
 ****************************************************************************/
 
-
 #include <ponder/property.hpp>
 #include <ponder/classvisitor.hpp>
 
-
-namespace ponder
-{
+namespace ponder {
     
 Property::~Property()
 {
@@ -49,20 +46,20 @@ ValueKind Property::kind() const
     return m_type;
 }
 
-bool Property::readable(const UserObject& object) const
+bool Property::isReadable() const
 {
-    return isReadable() && m_readable.get(object);
+    return true;
 }
 
-bool Property::writable(const UserObject& object) const
+bool Property::isWritable() const
 {
-    return isWritable() && m_writable.get(object);
-}
+    return true;
+}    
 
 Value Property::get(const UserObject& object) const
 {
     // Check if the property is readable
-    if (!readable(object))
+    if (!isReadable())
         PONDER_ERROR(ForbiddenRead(name()));
 
     return getValue(object);
@@ -71,7 +68,7 @@ Value Property::get(const UserObject& object) const
 void Property::set(const UserObject& object, const Value& value) const
 {
     // Check if the property is writable
-    if (!writable(object))
+    if (!isWritable())
         PONDER_ERROR(ForbiddenWrite(name()));
 
     // Here we don't call setValue directly, we rather let the user object do it
@@ -84,21 +81,9 @@ void Property::accept(ClassVisitor& visitor) const
     visitor.visit(*this);
 }
 
-bool Property::isReadable() const
-{
-    return true;
-}
-
-bool Property::isWritable() const
-{
-    return true;
-}
-
 Property::Property(IdRef name, ValueKind type)
     : m_name(name)
     , m_type(type)
-    , m_readable(true)
-    , m_writable(true)
 {
 }
 

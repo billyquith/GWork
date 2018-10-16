@@ -5,7 +5,7 @@
 ** The MIT License (MIT)
 **
 ** Copyright (C) 2009-2014 TEGESO/TEGESOFT and/or its subsidiary(-ies) and mother company.
-** Copyright (C) 2015-2017 Nick Trout.
+** Copyright (C) 2015-2018 Nick Trout.
 **
 ** Permission is hereby granted, free of charge, to any person obtaining a copy
 ** of this software and associated documentation files (the "Software"), to deal
@@ -27,16 +27,16 @@
 **
 ****************************************************************************/
 
-
+#pragma once
 #ifndef PONDER_PROPERTY_HPP
 #define PONDER_PROPERTY_HPP
 
 
-#include <ponder/tagholder.hpp>
-#include <ponder/type.hpp>
+#include <ponder/value.hpp>
 
 namespace ponder
 {
+
 class ClassVisitor;
 
 /**
@@ -47,8 +47,9 @@ class ClassVisitor;
  *
  * \sa SimpleProperty, ArrayProperty, EnumProperty, ObjectProperty
  */
-class PONDER_API Property : public TagHolder
+class PONDER_API Property : public Type
 {
+    PONDER__NON_COPYABLE(Property);
 public:
 
     /**
@@ -71,26 +72,18 @@ public:
     ValueKind kind() const;
 
     /**
-     * \brief Check if the property is currently readable for a given object
-     *
-     * \param object Object
+     * \brief Check if the property can be read
      *
      * \return True if the property can be read, false otherwise
-     *
-     * \throw NullObject object is invalid
      */
-    bool readable(const UserObject& object) const;
-
+    virtual bool isReadable() const;
+    
     /**
-     * \brief Check if the property is currently writable for a given object
-     *
-     * \param object Object
+     * \brief Check if the property can be written
      *
      * \return True if the property can be written, false otherwise
-     *
-     * \throw NullObject object is invalid
      */
-    bool writable(const UserObject& object) const;
+    virtual bool isWritable() const;
 
     /**
      * \brief Get the current value of the property for a given object
@@ -157,26 +150,10 @@ protected:
      */
     virtual void setValue(const UserObject& object, const Value& value) const = 0;
 
-    /**
-     * \brief Check if the property can be read
-     *
-     * \return True if the property can be read, false otherwise
-     */
-    virtual bool isReadable() const;
-
-    /**
-     * \brief Check if the property can be written
-     *
-     * \return True if the property can be written, false otherwise
-     */
-    virtual bool isWritable() const;
-
 private:
 
-    Id m_name; ///< Name of the property
-    ValueKind m_type; ///< Type of the property
-    detail::Getter<bool> m_readable; ///< Accessor to get the readable state of the property
-    detail::Getter<bool> m_writable; ///< Accessor to get the writable state of the property
+    Id m_name; // Name of the property
+    ValueKind m_type; // Type of the property
 };
 
 } // namespace ponder

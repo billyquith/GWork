@@ -5,7 +5,7 @@
 ** The MIT License (MIT)
 **
 ** Copyright (C) 2009-2014 TEGESO/TEGESOFT and/or its subsidiary(-ies) and mother company.
-** Copyright (C) 2015-2017 Nick Trout.
+** Copyright (C) 2015-2018 Nick Trout.
 **
 ** Permission is hereby granted, free of charge, to any person obtaining a copy
 ** of this software and associated documentation files (the "Software"), to deal
@@ -27,7 +27,7 @@
 **
 ****************************************************************************/
 
-
+#pragma once
 #ifndef PONDER_DETAIL_CLASSMANAGER_HPP
 #define PONDER_DETAIL_CLASSMANAGER_HPP
 
@@ -50,6 +50,9 @@ namespace detail {
  */
 class PONDER_API ClassManager : public ObserverNotifier
 {
+    // No need for shared pointers in here, we're the one and only instance holder
+    typedef std::map<Id, Class*> ClassTable;
+
 public:
 
     /**
@@ -91,20 +94,24 @@ public:
      * \return Number of metaclasses that have been registered
      */
     std::size_t count() const;
-
+    
     /**
-     * \brief Get a metaclass from its global index
+     * \brief Begin iterator for iterating over contained classes
      *
-     * This function, together with ClassManager::count, provides a way to iterate through
-     * all the metaclasses that have been declared.
+     * \return An iterator
      *
-     * \param index Global index of the metaclass to get
-     *
-     * \return Reference to the index-th metaclass
-     *
-     * \throw OutOfRange index is out of range
+     * \see classIterator()
      */
-    const Class& getByIndex(std::size_t index) const;
+    ClassTable::const_iterator begin() const;
+    
+    /**
+     * \brief End iterator for iterating over contained classes
+     *
+     * \return An iterator
+     *
+     * \see classIterator()
+     */
+    ClassTable::const_iterator end() const;
 
     /**
      * \brief Get a metaclass from a C++ type
@@ -152,7 +159,6 @@ public:
 
 private:
 
-    typedef std::map<Id, Class*> ClassTable; ///< No need for shared pointers in here, we're the one and only instance holder
     ClassTable m_classes; ///< Table storing classes indexed by their ID
 };
 

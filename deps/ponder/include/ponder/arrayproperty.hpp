@@ -5,7 +5,7 @@
 ** The MIT License (MIT)
 **
 ** Copyright (C) 2009-2014 TEGESO/TEGESOFT and/or its subsidiary(-ies) and mother company.
-** Copyright (C) 2015-2017 Nick Trout.
+** Copyright (C) 2015-2018 Nick Trout.
 **
 ** Permission is hereby granted, free of charge, to any person obtaining a copy
 ** of this software and associated documentation files (the "Software"), to deal
@@ -27,7 +27,7 @@
 **
 ****************************************************************************/
 
-
+#pragma once
 #ifndef PONDER_ARRAYPROPERTY_HPP
 #define PONDER_ARRAYPROPERTY_HPP
 
@@ -39,7 +39,6 @@ namespace ponder
 {
 /**
  * \brief Specialized type of property for arrays
- *
  */
 class PONDER_API ArrayProperty : public Property
 {
@@ -80,7 +79,6 @@ public:
      * \brief Get the current size of the array
      *
      * \param object Object
-     *
      * \return Number of elements in the array
      *
      * \throw NullObject object is invalid
@@ -112,7 +110,6 @@ public:
      *
      * \param object Object
      * \param index Index of the element to get
-     *
      * \return Value of the index-th element
      *
      * \throw NullObject object is invalid
@@ -188,7 +185,6 @@ protected:
      * \brief Do the actual retrieval of the size
      *
      * \param object Object
-     *
      * \return Size of the array
      */
     virtual std::size_t getSize(const UserObject& object) const = 0;
@@ -208,7 +204,6 @@ protected:
      *
      * \param object Object
      * \param index Index of the element to get
-     *
      * \return Value of the index-th element
      */
     virtual Value getElement(const UserObject& object, std::size_t index) const = 0;
@@ -251,8 +246,8 @@ protected:
 
 private:
 
-    ValueKind m_elementType; ///< Type of the individual elements of the array
-    bool m_dynamic; ///< Is the array dynamic?
+    ValueKind m_elementType; // Type of the individual elements of the array
+    bool m_dynamic; // Is the array dynamic?
 };
 
 } // namespace ponder

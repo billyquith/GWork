@@ -5,7 +5,7 @@
 ** The MIT License (MIT)
 **
 ** Copyright (C) 2009-2014 TEGESO/TEGESOFT and/or its subsidiary(-ies) and mother company.
-** Copyright (C) 2015-2017 Nick Trout.
+** Copyright (C) 2015-2018 Nick Trout.
 **
 ** Permission is hereby granted, free of charge, to any person obtaining a copy
 ** of this software and associated documentation files (the "Software"), to deal
@@ -143,8 +143,10 @@ TEST_CASE("Enum class objects")
     SECTION("must be declared")
     {
         // The meta-enum of MyUndeclaredEnum is *not* declared
-        REQUIRE_THROWS_AS(ponder::EnumObject obj(MyUndeclaredEnum::Undeclared),
-                          ponder::EnumNotFound);
+        // Note: use lambda here as Catch2 test needs to be an expression.
+        REQUIRE_THROWS_AS([](){
+            ponder::EnumObject obj(MyUndeclaredEnum::Undeclared);
+        }(), ponder::EnumNotFound);
     }    
 }
     

@@ -4,7 +4,7 @@
  **
  ** The MIT License (MIT)
  **
- ** Copyright (C) 2016-17 Nick Trout.
+ ** Copyright (C) 2015-2018 Nick Trout.
  **
  ** Permission is hereby granted, free of charge, to any person obtaining a copy
  ** of this software and associated documentation files (the "Software"), to deal
@@ -39,7 +39,7 @@ extern "C" {
 #include <lualib.h>
 }
 
-static_assert(LUA_VERSION_NUM>=503, "Expecting Lua 5.3");
+static_assert(LUA_VERSION_NUM==503, "Expecting Lua 5.3");
 
 #define PLDB(X) X
 #define PASSERT(X) if(!(X)) __builtin_trap()
@@ -167,7 +167,7 @@ namespace lib
             .function("get", &Vec::get, policy::ReturnMultiple()) // tuple
             .function("set", &Vec::set)
             .function("add", &Vec::operator+=)
-            .function("add2", &Vec::operator+).tag("+")
+            .function("add2", &Vec::operator+) //.tag("+")
             .function("length", &Vec::length)
             .function("dot", &Vec::dot)
         
@@ -288,8 +288,12 @@ int main()
 
     // method call with object arg
     LUA_PASS("a,b = Vec2(2,3), Vec2(3,4); c = a:dot(b); print(c); assert(c == 2*3+3*4)");
-    
-    // method call (:) with return object
+
+    // method call (:) with return object (immutable)
+    LUA_PASS("c = a:add2(b); assert(c ~= nil); print(c.x, c.y);");
+    LUA_PASS("assert(c.x == 5); assert(c.y == 7);");
+
+    // method call (:) with return object (mutable)
     LUA_PASS("c = a:add(b); assert(c ~= nil); print(c.x, c.y);");
     LUA_PASS("assert(c.x == 5); assert(c.y == 7);");
 

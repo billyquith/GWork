@@ -6,6 +6,6 @@
 [subrepo]
 	remote = https://github.com/billyquith/ponder.git
 	branch = dev/gwork
-	commit = 3f581ad182bad8f2a2e328bcfa9da687f071828e
-	parent = 4f9b84c8a587a70b73b108c117b7e660ed94cbc3
+	commit = 66aa93e36356c49df95235f6ffa16c5149e6f100
+	parent = f3692f893e9e9585c8b0ef4cb7c1dda4378057b8
 	cmdver = 0.3.0

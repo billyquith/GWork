@@ -5,7 +5,7 @@
 ** The MIT License (MIT)
 **
 ** Copyright (C) 2009-2014 TEGESO/TEGESOFT and/or its subsidiary(-ies) and mother company.
-** Copyright (C) 2015-2017 Nick Trout.
+** Copyright (C) 2015-2018 Nick Trout.
 **
 ** Permission is hereby granted, free of charge, to any person obtaining a copy
 ** of this software and associated documentation files (the "Software"), to deal
@@ -104,15 +104,13 @@ namespace ClassVisitorTest
     
     void declare()
     {
-        ponder::Enum::declare<MyEnum>("ClassVisitorTest::MyEnum");
+        ponder::Enum::declare<MyEnum>();
         
-        ponder::Class::declare<MyType>("ClassVisitorTest::MyType");
+        ponder::Class::declare<MyType>();
         
-        ponder::Class::declare<MyClass>("ClassVisitorTest::MyClass")
+        ponder::Class::declare<MyClass>()
             .property("simple", &MyClass::simpleProp)
-#if !defined(_MSC_VER) // TODO - This causes a compiler crash on MSVC 2015
-            .property("array", &MyClass::arrayProp) 
-#endif
+            .property("array", &MyClass::arrayProp)
             .property("enum", &MyClass::enumProp)
             .property("user", &MyClass::userProp)
             .function("function", &MyClass::function)
@@ -137,9 +135,7 @@ TEST_CASE("Classes can have visitors")
     ponder::classByType<MyClass>().visit(visitor);
 
     REQUIRE(visitor.simpleVisited);
-#if !defined(_MSC_VER) // TODO - This causes a compiler crash on MSVC 2015
     REQUIRE(visitor.arrayVisited);
-#endif
     REQUIRE(visitor.enumVisited);
     REQUIRE(visitor.userVisited);
     REQUIRE(visitor.functionVisited);

@@ -5,7 +5,7 @@
 ** The MIT License (MIT)
 **
 ** Copyright (C) 2009-2014 TEGESO/TEGESOFT and/or its subsidiary(-ies) and mother company.
-** Copyright (C) 2015-2017 Nick Trout.
+** Copyright (C) 2015-2018 Nick Trout.
 **
 ** Permission is hereby granted, free of charge, to any person obtaining a copy
 ** of this software and associated documentation files (the "Software"), to deal
@@ -28,10 +28,8 @@
 ****************************************************************************/
 
 
-namespace ponder
-{
-namespace detail
-{
+namespace ponder {
+namespace detail {
     
 inline AbstractObjectHolder::~AbstractObjectHolder()
 {
@@ -57,6 +55,7 @@ void* ObjectHolderByConstRef<T>::object()
 template <typename T>
 AbstractObjectHolder* ObjectHolderByConstRef<T>::getWritable()
 {
+    // TODO: Dangerous?
     // We hold a read-only object: return a holder which stores a copy of it
     return nullptr; //new ObjectHolderByCopy<T>(m_object); XXXX const ref?!
 }
@@ -90,7 +89,7 @@ ObjectHolderByCopy<T>::ObjectHolderByCopy(const T* object)
 template <typename T>
 void* ObjectHolderByCopy<T>::object()
 {
-    return &m_object;
+    return reinterpret_cast<void*>(&m_object);
 }
 
 template <typename T>
@@ -101,5 +100,4 @@ AbstractObjectHolder* ObjectHolderByCopy<T>::getWritable()
 }
 
 } // namespace detail
-
 } // namespace ponder

@@ -5,7 +5,7 @@
 ** The MIT License (MIT)
 **
 ** Copyright (C) 2009-2014 TEGESO/TEGESOFT and/or its subsidiary(-ies) and mother company.
-** Copyright (C) 2015-2017 Nick Trout.
+** Copyright (C) 2015-2018 Nick Trout.
 **
 ** Permission is hereby granted, free of charge, to any person obtaining a copy
 ** of this software and associated documentation files (the "Software"), to deal
@@ -27,10 +27,9 @@
 **
 ****************************************************************************/
 
-
+#pragma once
 #ifndef PONDER_ENUM_HPP
 #define PONDER_ENUM_HPP
-
 
 #include <ponder/config.hpp>
 #include <ponder/enumbuilder.hpp>
@@ -40,9 +39,8 @@
 #include <ponder/detail/dictionary.hpp>
 #include <string>
 
-
-namespace ponder
-{
+namespace ponder {
+    
 /**
  * \brief ponder::Enum represents a metaenum composed of <name, value> pairs
  *
@@ -76,17 +74,18 @@ namespace ponder
  *
  * \sa Class, EnumBuilder
  */
-class PONDER_API Enum : detail::noncopyable
+class PONDER_API Enum : public Type
 {
+    PONDER__NON_COPYABLE(Enum);
 public:
-    typedef long EnumValue;         //!< Type used to hold the enum value.
+    typedef long EnumValue;  //!< Type used to hold the enum value.
 
     /**
      * \brief Structure defining the <name, value> pairs stored in metaenums
      */
     struct Pair {
-        Id name;    //!< Enum name
-        EnumValue value;            //!< Enum value
+        Id name;            //!< Enum name
+        EnumValue value;    //!< Enum value
         
         /**
          * \brief Constructor.
@@ -107,8 +106,6 @@ public:
         E valueAs() const {return static_cast<E>(value);}
     };
     
-public:
-
     /**
      * \brief Declare a new metaenum
      *
@@ -288,6 +285,5 @@ private:
 } // namespace ponder
 
 #include <ponder/enum.inl>
-
 
 #endif // PONDER_ENUM_HPP

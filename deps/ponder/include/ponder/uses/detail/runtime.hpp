@@ -4,7 +4,7 @@
 **
 ** The MIT License (MIT)
 **
-** Copyright (C) 2016-17 Nick Trout.
+** Copyright (C) 2015-2018 Nick Trout.
 **
 ** Permission is hereby granted, free of charge, to any person obtaining a copy
 ** of this software and associated documentation files (the "Software"), to deal
@@ -26,6 +26,7 @@
 **
 ****************************************************************************/
 
+#pragma once
 #ifndef PONDER_USES_RUNTIME_IMPL_HPP
 #define PONDER_USES_RUNTIME_IMPL_HPP
 
@@ -44,7 +45,7 @@ template <typename R, typename U = void> struct CallReturnCopy;
 template <typename R>
 struct CallReturnCopy<R, typename std::enable_if<!detail::IsUserType<R>::value>::type>
 {
-    static inline Value value(R&& o) {return std::move(Value(o));}
+    static inline Value value(R&& o) {return Value(o);}
 };
 
 template <typename R>
@@ -65,7 +66,7 @@ struct CallReturnInternalRef<R,
         && !std::is_same<typename detail::RawType<R>::Type, UserObject>::value
     >::type>
 {
-    static inline Value value(R&& o) {return std::move(Value(o));}
+    static inline Value value(R&& o) {return Value(o);}
 };
 
 template <typename R>
@@ -184,7 +185,7 @@ class CallHelper
 public:
 
     template<typename F, typename... A, size_t... Is>
-    static Value call(F func, const Args& args, _PONDER_SEQNS::index_sequence<Is...>)
+    static Value call(F func, const Args& args, PONDER__SEQNS::index_sequence<Is...>)
     {
         typedef typename ChooseCallReturner<FPolicies, R>::type CallReturner;
         return CallReturner::value(func(ConvertArgs<A>::convert(args, Is)...));
@@ -198,7 +199,7 @@ class CallHelper<void, FTraits, FPolicies>
 public:
 
     template<typename F, typename... A, size_t... Is>
-    static Value call(F func, const Args& args, _PONDER_SEQNS::index_sequence<Is...>)
+    static Value call(F func, const Args& args, PONDER__SEQNS::index_sequence<Is...>)
     {
         func(ConvertArgs<A>::convert(args,Is)...);
         return Value::nothing;
@@ -217,7 +218,7 @@ template <typename R, typename... A> struct FunctionWrapper<R, std::tuple<A...>>
     template <typename F, typename FTraits, typename FPolicies>
     static Value call(F func, const Args& args)
     {
-        typedef _PONDER_SEQNS::make_index_sequence<sizeof...(A)> ArgEnumerator;
+        typedef PONDER__SEQNS::make_index_sequence<sizeof...(A)> ArgEnumerator;
         return CallHelper<R, FTraits, FPolicies>::template
             call<F, A...>(func, args, ArgEnumerator());
     }
@@ -230,9 +231,9 @@ class FunctionCaller
 {
 public:
     FunctionCaller(const IdRef name) : m_name(name) {}
-    
-    FunctionCaller(const FunctionCaller&) = delete; // no copying
     virtual ~FunctionCaller() {}
+
+    FunctionCaller(const FunctionCaller&) = delete; // no copying
     
     const IdRef name() const { return m_name; }
     
@@ -245,7 +246,7 @@ private:
 // The FunctionImpl class is a template which is specialized according to the
 // underlying function prototype.
 template <typename F, typename FTraits, typename FPolicies>
-class FunctionCallerImpl : public FunctionCaller
+class FunctionCallerImpl final : public FunctionCaller
 {
 public:
 
@@ -257,13 +258,13 @@ public:
 private:
 
     typedef typename FTraits::Details::FunctionCallTypes CallTypes;
-    typedef FunctionWrapper<typename FTraits::ReturnType, CallTypes> FunctionType;
+    typedef FunctionWrapper<typename FTraits::ExposedType, CallTypes> DispatchType;
     
-    typename FunctionType::Type m_function; // Object containing the actual function to call
+    typename DispatchType::Type m_function; // Object containing the actual function to call
     
-    Value execute(const Args& args) const
+    Value execute(const Args& args) const final
     {
-        return FunctionType::template
+        return DispatchType::template
             call<decltype(m_function), FTraits, FPolicies>(m_function, args);
     }
 };

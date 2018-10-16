@@ -9,3 +9,4 @@
 #define IS_TRUE(T)      REQUIRE((T))
 #define IS_FALSE(T)     REQUIRE_FALSE((T))
 #define IS_EQUAL(X,Y)   REQUIRE(X == Y)
+

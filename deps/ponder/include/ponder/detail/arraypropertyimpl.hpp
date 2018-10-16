@@ -5,7 +5,7 @@
 ** The MIT License (MIT)
 **
 ** Copyright (C) 2009-2014 TEGESO/TEGESOFT and/or its subsidiary(-ies) and mother company.
-** Copyright (C) 2015-2017 Nick Trout.
+** Copyright (C) 2015-2018 Nick Trout.
 **
 ** Permission is hereby granted, free of charge, to any person obtaining a copy
 ** of this software and associated documentation files (the "Software"), to deal
@@ -27,20 +27,17 @@
 **
 ****************************************************************************/
 
-
+#pragma once
 #ifndef PONDER_DETAIL_ARRAYPROPERTYIMPL_HPP
 #define PONDER_DETAIL_ARRAYPROPERTYIMPL_HPP
-
 
 #include <ponder/arrayproperty.hpp>
 #include <ponder/arraymapper.hpp>
 #include <ponder/detail/valueprovider.hpp>
 
-
-namespace ponder
-{
-namespace detail
-{
+namespace ponder {
+namespace detail {
+    
 /**
  * \brief Typed implementation of ArrayProperty
  *
@@ -55,7 +52,7 @@ namespace detail
  * \sa ArrayProperty, ponder_ext::ArrayMapper
  */
 template <typename A>
-class ArrayPropertyImpl : public ArrayProperty
+class ArrayPropertyImpl final : public ArrayProperty
 {
 public:
 
@@ -65,63 +62,59 @@ public:
      * \param name Name of the property
      * \param accessor Object used to access the actual C++ property
      */
-    ArrayPropertyImpl(IdRef name, const A& accessor);
+    ArrayPropertyImpl(IdRef name, A&& accessor);
 
 protected:
 
     /**
      * \see ArrayProperty::getSize
      */
-    std::size_t getSize(const UserObject& object) const override;
+    std::size_t getSize(const UserObject& object) const final;
 
     /**
      * \see ArrayProperty::setSize
      */
-    void setSize(const UserObject& object, std::size_t size) const override;
+    void setSize(const UserObject& object, std::size_t size) const final;
 
     /**
      * \see ArrayProperty::getElement
      */
-    Value getElement(const UserObject& object, std::size_t index) const override;
+    Value getElement(const UserObject& object, std::size_t index) const final;
 
     /**
      * \see ArrayProperty::setElement
      */
-    void setElement(const UserObject& object, std::size_t index, const Value& value) const override;
+    void setElement(const UserObject& object, std::size_t index, const Value& value) const final;
 
     /**
      * \see ArrayProperty::insertElement
      */
-    void insertElement(const UserObject& object, std::size_t before, const Value& value) const override;
+    void insertElement(const UserObject& object, std::size_t before, const Value& value) const final;
 
     /**
      * \see ArrayProperty::removeElement
      */
-    void removeElement(const UserObject& object, std::size_t index) const override;
+    void removeElement(const UserObject& object, std::size_t index) const final;
 
 private:
 
-    typedef typename std::remove_reference<typename A::DataType>::type ArrayType;
-    typedef ponder_ext::ArrayMapper<ArrayType> Mapper;
+    typedef typename A::ExposedType ArrayType;
+    typedef typename A::InterfaceType Mapper;
     typedef typename Mapper::ElementType ElementType;
 
-    /**
+    /*
      * \brief Retrieve a reference to the array
-     *
      * \param object Owner object
-     *
      * \return Reference to the underlying array
      */
     ArrayType& array(const UserObject& object) const;
 
-    A m_accessor; ///< Object used to access the actual C++ property
+    A m_accessor; // Object used to access the actual C++ property
 };
 
 } // namespace detail
-
 } // namespace ponder
 
 #include <ponder/detail/arraypropertyimpl.inl>
-
 
 #endif // PONDER_DETAIL_ARRAYPROPERTYIMPL_HPP

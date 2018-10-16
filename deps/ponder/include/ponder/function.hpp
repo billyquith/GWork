@@ -5,7 +5,7 @@
 ** The MIT License (MIT)
 **
 ** Copyright (C) 2009-2014 TEGESO/TEGESOFT and/or its subsidiary(-ies) and mother company.
-** Copyright (C) 2015-2017 Nick Trout.
+** Copyright (C) 2015-2018 Nick Trout.
 **
 ** Permission is hereby granted, free of charge, to any person obtaining a copy
 ** of this software and associated documentation files (the "Software"), to deal
@@ -27,20 +27,17 @@
 **
 ****************************************************************************/
 
-
+#pragma once
 #ifndef PONDER_FUNCTION_HPP
 #define PONDER_FUNCTION_HPP
-
 
 #include <ponder/config.hpp>
 #include <ponder/detail/getter.hpp>
 #include <ponder/args.hpp>
-#include <ponder/tagholder.hpp>
 #include <ponder/type.hpp>
 #include <ponder/value.hpp>
 #include <string>
 #include <vector>
-
 
 namespace ponder {
     
@@ -54,8 +51,9 @@ class ClassVisitor;
  * Functions are members of metaclasses. Their purpose is to provide detailed information
  * about their prototype.
  */
-class PONDER_API Function : public TagHolder
+class PONDER_API Function : public Type
 {
+    PONDER__NON_COPYABLE(Function);
 public:
 
     /**
@@ -129,16 +127,14 @@ protected:
 
     // FunctionImpl inherits from this and constructs.
     Function(IdRef name) : m_name(name) {}
-    Function(const Function&) = delete;
 
-    Id m_name;                  // Name of the function
-    FunctionKind m_funcType;    // Kind of function
+    Id m_name;                          // Name of the function
+    FunctionKind m_funcType;            // Kind of function
     ValueKind m_returnType;             // Runtime return type
     policy::ReturnKind m_returnPolicy;  // Return policy
     const void *m_usesData;
 };
     
 } // namespace ponder
-
 
 #endif // PONDER_FUNCTION_HPP

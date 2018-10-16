@@ -5,7 +5,7 @@
 ** The MIT License (MIT)
 **
 ** Copyright (C) 2009-2014 TEGESO/TEGESOFT and/or its subsidiary(-ies) and mother company.
-** Copyright (C) 2015-2017 Nick Trout.
+** Copyright (C) 2015-2018 Nick Trout.
 **
 ** Permission is hereby granted, free of charge, to any person obtaining a copy
 ** of this software and associated documentation files (the "Software"), to deal
@@ -67,7 +67,7 @@ struct ValueTo<Value>
 template <typename T>
 Value::Value(const T& val)
     : m_value(ponder_ext::ValueMapper<T>::to(val))
-    , m_type(mapType<T>())
+    , m_type(ponder_ext::ValueMapper<T>::kind) // mapType<T> NOT used so get same kind as to()
 {
 }
 
@@ -108,13 +108,6 @@ const T& Value::cref() const
     {
         PONDER_ERROR(BadType(kind(), mapType<T>()));
     }
-}
-
-
-template <typename T>
-Value::operator T() const
-{
-    return to<T>();
 }
 
 template <typename T>

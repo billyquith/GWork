@@ -5,7 +5,7 @@
 ** The MIT License (MIT)
 **
 ** Copyright (C) 2009-2014 TEGESO/TEGESOFT and/or its subsidiary(-ies) and mother company.
-** Copyright (C) 2015-2017 Nick Trout.
+** Copyright (C) 2015-2018 Nick Trout.
 **
 ** Permission is hereby granted, free of charge, to any person obtaining a copy
 ** of this software and associated documentation files (the "Software"), to deal
@@ -27,7 +27,7 @@
 **
 ****************************************************************************/
 
-
+#pragma once
 #ifndef PONDER_DETAIL_TYPEID_HPP
 #define PONDER_DETAIL_TYPEID_HPP
 
@@ -52,12 +52,7 @@ struct StaticTypeId
         return T::PONDER_TYPE_NOT_REGISTERED();
     }
 
-    enum
-    {
-        defined = false,
-        copyable = true
-    };
-    
+    static constexpr bool defined = false, copyable = true;
     typedef T type;
 };
 
@@ -90,8 +85,7 @@ struct HasPonderRtti
     template <typename U> static std::true_type check(TestForMember<U, &U::ponderClassId>*);
     template <typename U> static std::false_type check(...);
 
-    static constexpr bool
-        value = std::is_same<decltype(check<typename RawType<T>::Type>(0)), std::true_type>::value;
+    static constexpr bool value = std::is_same<decltype(check<T>(0)), std::true_type>::value;
 };
 
 /**
@@ -105,12 +99,13 @@ struct HasPonderRtti
 template <typename T, typename E = void>
 struct DynamicTypeId
 {
-    typedef ObjectTraits<const T&> Traits;
-
     static const char* get(const T& object)
     {
+        typedef ReferenceTraits<const T&> Traits;
         typename Traits::PointerType pointer = Traits::getPointer(object);
-        return pointer ? pointer->ponderClassId() : staticTypeId<T>();
+        static_assert(Traits::kind != ReferenceKind::None, "");
+        static_assert(std::is_pointer<decltype(pointer)>::value, "Not pointer");
+        return pointer != 0 ? pointer->ponderClassId() : staticTypeId<T>();
     }
 };
 
@@ -120,10 +115,7 @@ struct DynamicTypeId
 template <typename T>
 struct DynamicTypeId<T, typename std::enable_if<!HasPonderRtti<T>::value >::type>
 {
-    static const char* get(const T&)
-    {
-        return staticTypeId<T>();
-    }
+    static const char* get(const T&) {return staticTypeId<T>();}
 };
 
 /**
@@ -139,15 +131,8 @@ template <typename T> const char* typeId(const T& object) {return DynamicTypeId<
 template <typename T, typename E = void>
 struct SafeTypeId
 {
-    static const char* get()
-    {
-        return typeId<T>();
-    }
-
-    static const char* get(const T& object)
-    {
-        return typeId(object);
-    }
+    static const char* get()                {return typeId<T>();}
+    static const char* get(const T& object) {return typeId(object);}
 };
 
 /**
@@ -156,15 +141,8 @@ struct SafeTypeId
 template <typename T>
 struct SafeTypeId<T, typename std::enable_if<!HasStaticTypeId<T>::value >::type>
 {
-    static const char* get()
-    {
-        return "";
-    }
-
-    static const char* get(const T&)
-    {
-        return "";
-    }
+    static const char* get()            {return "";}
+    static const char* get(const T&)    {return "";}
 };
 
 /**
@@ -188,6 +166,5 @@ const char* safeTypeId(const T& object) {return SafeTypeId<T>::get(object);}
 
 } // namespace detail
 } // namespace ponder
-
 
 #endif // PONDER_DETAIL_TYPEID_HPP

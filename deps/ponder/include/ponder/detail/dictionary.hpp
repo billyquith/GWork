@@ -1,14 +1,14 @@
 /****************************************************************************
  **
  ** Copyright (C) 2009-2014 TEGESO/TEGESOFT and/or its subsidiary(-ies) and mother company.
- ** Copyright (C) 2015-2017 Nick Trout.
+ ** Copyright (C) 2015-2018 Nick Trout.
  **
  ** This file is part of the Ponder library, formerly CAMP.
  **
  ** The MIT License (MIT)
  **
  ** Copyright (C) 2009-2014 TEGESO/TEGESOFT and/or its subsidiary(-ies) and mother company.
- ** Copyright (C) 2015-2017 Nick Trout.
+ ** Copyright (C) 2015-2018 Nick Trout.
  **
  ** Permission is hereby granted, free of charge, to any person obtaining a copy
  ** of this software and associated documentation files (the "Software"), to deal
@@ -30,7 +30,7 @@
  **
  ****************************************************************************/
 
-
+#pragma once
 #ifndef PONDER_DICTIONARY_HPP
 #define PONDER_DICTIONARY_HPP
 
@@ -95,6 +95,7 @@ public:
         const_iterator end() const      { return m_end; }
     };
     
+    // Allow iteration of dictionary without exposing the API.
     Iterator getIterator() const { return Iterator(begin(), end()); }
 
     const_iterator findKey(KEY_REF key) const
@@ -157,7 +158,7 @@ public:
         if (it != m_contents.end())
         {
             // Avoid std::vector.erase here due to bug in libstdc++ < v4.9
-#if _PONDER_WORKAROUND_GCC_N2350
+#if PONDER__WORKAROUND_GCC_N2350
             std::size_t pos = it - m_contents.begin();
             const std::size_t sz = m_contents.size() - 1;
             while (pos < sz)

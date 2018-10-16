@@ -5,7 +5,7 @@
 ** The MIT License (MIT)
 **
 ** Copyright (C) 2009-2014 TEGESO/TEGESOFT and/or its subsidiary(-ies) and mother company.
-** Copyright (C) 2015-2017 Nick Trout.
+** Copyright (C) 2015-2018 Nick Trout.
 **
 ** Permission is hereby granted, free of charge, to any person obtaining a copy
 ** of this software and associated documentation files (the "Software"), to deal
@@ -27,16 +27,14 @@
 **
 ****************************************************************************/
 
-
+#pragma once
 #ifndef PONDER_ENUMPROPERTY_HPP
 #define PONDER_ENUMPROPERTY_HPP
 
-
 #include <ponder/property.hpp>
 
-
-namespace ponder
-{
+namespace ponder {
+    
 class Enum;
 
 /**
@@ -76,10 +74,9 @@ public:
 
 private:
 
-    const Enum* m_enum; ///< Owner enum of the property
+    const Enum* m_enum; // Owner enum of the property
 };
 
 } // namespace ponder
-
 
 #endif // PONDER_ENUMPROPERTY_HPP

@@ -5,7 +5,7 @@
 ** The MIT License (MIT)
 **
 ** Copyright (C) 2009-2014 TEGESO/TEGESOFT and/or its subsidiary(-ies) and mother company.
-** Copyright (C) 2015-2017 Nick Trout.
+** Copyright (C) 2015-2018 Nick Trout.
 **
 ** Permission is hereby granted, free of charge, to any person obtaining a copy
 ** of this software and associated documentation files (the "Software"), to deal
@@ -27,10 +27,9 @@
 **
 ****************************************************************************/
 
-
+#pragma once
 #ifndef PONDER_CLASSBUILDER_HPP
 #define PONDER_CLASSBUILDER_HPP
-
 
 #include <ponder/type.hpp>
 #include <ponder/classget.hpp>
@@ -40,12 +39,12 @@
 #include <ponder/detail/constructorimpl.hpp>
 #include <ponder/detail/propertyfactory.hpp>
 #include <ponder/pondertype.hpp>
+#include <ponder/userdata.hpp>
 #include <cassert>
 #include <string>
 
-
 namespace ponder {
-    
+        
 /**
  * \brief Proxy class which fills a metaclass with its members
  *
@@ -57,7 +56,7 @@ namespace ponder {
  * ClassBuilder also contains functions to set attributes of metafunctions
  * and metaproperties.
  *
- * This class should never be explicitely instanciated, unless you
+ * This class should never be explicitely instantiated, unless you
  * need to split the metaclass creation in multiple parts.
  */
 template <typename T>
@@ -101,8 +100,7 @@ public:
      * \code
      * struct Point
      * {
-     *     float x;
-     *     float y;
+     *     float x, y;
      *
      *     float length() const;
      * };
@@ -140,7 +138,6 @@ public:
      * class Entity
      * {
      * public:
-     *
      *     Point p;
      * };
      *
@@ -153,7 +150,6 @@ public:
      * \param accessor1 First accessor to the C++ implementation of the property (getter)
      * \param accessor2 Second accessor to the C++ implementation of the property (setter or 
      *        getter to compose)
-     *
      * \return Reference to this, in order to chain other calls
      */
     template <typename F1, typename F2>
@@ -163,82 +159,18 @@ public:
      * \brief Declare a new function from any bindable type
      *
      * The function parameter can be any valid type: a non-member function,
-     * a member function, const, non-const, etc.
+     * member function, const, non-const, lambda, etc. Polices can be applied to the
+     * function to affect things like the way objects are returned. See \ref ponder::policy.
      *
      * \param name Name of the function (must be unique within the metaclass)
      * \param function C++ callable entity to bind to the function
-     *
+     * \param policies Optional policies applied to function exposer
      * \return Reference to this, in order to chain other calls
+     *
+     * \sa property(), ponder::policy, \ref eg_page_shapes
      */
     template <typename F, typename... P>
     ClassBuilder<T>& function(IdRef name, F function, P... policies);
-
-    /**
-     * \brief Declare a new static tag
-     *
-     * \param id Identifier of the new tag (must be unique within the metaclass)
-     *
-     * \return Reference to this, in order to chain other calls
-     */
-    ClassBuilder<T>& tag(const Value& id);
-
-    /**
-     * \brief Declare a new tag with value
-     *
-     * \param id Identifier of the new tag (must be unique within the metaclass)
-     * \param value Value associated to the tag. It can be a static value, or a function
-     *              which will be evaluated each time the tag will be requested
-     *
-     * \return Reference to this, in order to chain other calls
-     */
-    template <typename U>
-    ClassBuilder<T>& tag(const Value& id, const U& value);
-
-    /**
-     * \brief Set the readable state of the current property with a static value
-     *
-     * \param value True to set the current property as readable, false otherwise
-     *
-     * \return Reference to this, in order to chain other calls
-     */
-    ClassBuilder<T>& readable(bool value);
-
-    /**
-     * \brief Set the readable state of the current property with a dynamic value
-     *
-     * function can be any C++ callable type, and will be called to return the
-     * readable state of the property each time it is requested. This way, the readable
-     * state of a property can depend on metaclass instances.
-     *
-     * \param function Function to call to get the readable state of the property
-     *
-     * \return Reference to this, in order to chain other calls
-     */
-    template <typename F>
-    ClassBuilder<T>& readable(F function);
-
-    /**
-     * \brief Set the writable state of the current property with a static value
-     *
-     * \param value True to set the current property as writable, false otherwise
-     *
-     * \return Reference to this, in order to chain other calls
-     */
-    ClassBuilder<T>& writable(bool value);
-
-    /**
-     * \brief Set the writable state of the current property with a dynamic value
-     *
-     * function can be any C++ callable type, and will be called to return the
-     * writable state of the property each time it is requested. This way, the writable
-     * state of a property can depend on metaclass instances.
-     *
-     * \param function Function to call to get the writable state of the property
-     *
-     * \return Reference to this, in order to chain other calls
-     */
-    template <typename F>
-    ClassBuilder<T>& writable(F function);
 
     /**
      * \brief Declare a constructor for the metaclass.
@@ -249,7 +181,7 @@ public:
      */
     template <typename... A>
     ClassBuilder<T>& constructor();
-
+    
     /**
      * \brief Add properties and/or functions from an external source
      *
@@ -268,7 +200,6 @@ public:
      * class MyClassMapper
      * {
      * public:
-     *
      *     MyClassMapper();
      *
      *     size_t propertyCount();
@@ -292,35 +223,36 @@ public:
     template <template <typename> class U>
     ClassBuilder<T>& external();
 
+    /**
+     * \brief Add user data to the last declared member type
+     *
+     * \code
+     * ponder::Class::declare<MyClass>("MyClass")
+     *     .function("foo", &MyClass::foo)( ponder::UserData("user", 3) );
+     * \endcode
+     *
+     * \return Reference to this, in order to chain other calls
+     */
+    template <typename... U>
+    ClassBuilder<T>& operator () (U&&... uds)
+    {
+        const std::initializer_list<UserData> il = {uds...};
+        for (UserData const& ud : il)
+            userDataStore()->setValue(*m_currentType, ud.getName(), ud.getValue());
+        return *this;
+    }
+
 private:
 
-    /**
-     * \brief Add a new property to the target class
-     *
-     * \param property Property to add
-     *
-     * \return Reference to this, in order to chain other calls
-     */
     ClassBuilder<T>& addProperty(Property* property);
-
-    /**
-     * \brief Add a new function to the target class
-     *
-     * \param function Function to add
-     *
-     * \return Reference to this, in order to chain other calls
-     */
     ClassBuilder<T>& addFunction(Function* function);
 
-    Class* m_target; ///< Target metaclass to fill
-    TagHolder* m_currentTagHolder; ///< Last tag holder which has been declared
-    Property* m_currentProperty; ///< Last metaproperty which has been declared
-    Function* m_currentFunction; ///< Last function which has been declared
+    Class* m_target; // Target metaclass to fill
+    Type* m_currentType; // Last member type which has been declared
 };
 
 } // namespace ponder
 
 #include <ponder/classbuilder.inl>
-
 
 #endif // PONDER_CLASSBUILDER_HPP

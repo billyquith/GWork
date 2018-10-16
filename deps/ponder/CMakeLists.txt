@@ -8,7 +8,7 @@
 ## The MIT License (MIT)
 ##
 ## Copyright (c) 2009-2014 TEGESO/TEGESOFT
-## Copyright (C) 2015-2017 Nick Trout.
+## Copyright (C) 2015-2018 Nick Trout.
 ##
 ## Permission is hereby granted, free of charge, to any person obtaining a copy
 ## of this software and associated documentation files (the "Software"), to deal
@@ -31,13 +31,25 @@
 ###############################################################################
 
 
-cmake_minimum_required(VERSION 3.1)
+cmake_minimum_required(VERSION 3.5)
 cmake_policy(SET CMP0042 NEW) # MACOSX_RPATH
 
-# set project's name
-project(Ponder)
+set(VERSION_MAJOR 3)
+set(VERSION_MINOR 0)
+set(VERSION_PATCH 0)
+set(VERSION_NOTE "") # e.g. "-alpha", "-beta".
+
+set(PONDER_VERSION ${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH})
+set(PONDER_VERSION_STR "${PONDER_VERSION}${VERSION_NOTE}")
+
+project(ponder
+        VERSION ${PONDER_VERSION}
+        DESCRIPTION "C++ reflection library"
+        LANGUAGES C CXX)
+message("Project version: ${PONDER_VERSION_STR}")
 
 set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(PONDER_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 
@@ -76,8 +88,8 @@ set(SRC_HEADERS
     include/ponder/pondertype.hpp
     include/ponder/property.hpp
     include/ponder/simpleproperty.hpp
-    include/ponder/tagholder.hpp
     include/ponder/type.hpp
+    include/ponder/userdata.hpp
     include/ponder/userobject.hpp
     include/ponder/userobject.inl
     include/ponder/userproperty.hpp
@@ -125,14 +137,18 @@ set(SRC_HEADERS
     include/ponder/qt/qthelper.hpp
     include/ponder/qt/qtmapper.hpp
     include/ponder/qt/qtsimpleproperty.hpp
-    include/ponder/qt/qvector.hpp        
+    include/ponder/qt/qvector.hpp
     # Uses
     include/ponder/uses/uses.hpp
-    include/ponder/uses/report.hpp
     include/ponder/uses/runtime.hpp
     include/ponder/uses/detail/runtime.hpp
     include/ponder/uses/lua.hpp
     include/ponder/uses/detail/lua.hpp
+    # Archive
+    include/ponder/uses/serialise.hpp
+    include/ponder/uses/serialise.inl
+    include/ponder/uses/archive/rapidjson.hpp
+    include/ponder/uses/archive/rapidxml.hpp
 )
 
 set(SRC_SOURCE
@@ -155,13 +171,13 @@ set(SRC_SOURCE
     src/pondertype.cpp
     src/property.cpp
     src/simpleproperty.cpp
-    src/tagholder.cpp
+    src/type.cpp
+    src/userdata.cpp
     src/userobject.cpp
     src/userproperty.cpp
     src/util.cpp
     src/value.cpp
     # Uses
-    src/uses/report.cpp
 )
 
 source_group("Headers"
@@ -174,6 +190,8 @@ source_group("Headers\\Qt"
              REGULAR_EXPRESSION "include/ponder/qt/.+")
 source_group("Headers\\Uses"
              REGULAR_EXPRESSION "include/ponder/uses/.+")
+source_group("Headers\\Uses\\Archive"
+             REGULAR_EXPRESSION "include/ponder/uses/archive/.+")
 source_group("Headers\\Uses\\Detail"
              REGULAR_EXPRESSION "include/ponder/uses/detail/.+")
 source_group("Headers\\XML"
@@ -184,10 +202,30 @@ set(PONDER_SRCS
     ${SRC_SOURCE}
 )
 
-# include files search paths
-include_directories(
-    ${PONDER_SOURCE_DIR}/include
-)
+###############################
+# dependencies
+###############################
+
+set(PONDER_DEPS_INCLUDES)
+set(PONDER_DEPS_LIBRARIES)
+
+if(USES_RAPIDJSON)
+    set(RAPIDJSON_INCLUDES ${PONDER_SOURCE_DIR}/deps/rapidjson/include)
+    message(STATUS "Including RapidJSON from ${RAPIDJSON_INCLUDES}")
+    set(PONDER_DEPS_INCLUDES ${PONDER_DEPS_INCLUDES} ${RAPIDJSON_INCLUDES})
+    include_directories(${RAPIDJSON_INCLUDES})
+endif()
+
+if(USES_RAPIDXML)
+    set(RAPIDXML_INCLUDES ${PONDER_SOURCE_DIR}/deps/rapidxml/include)
+    message(STATUS "Including RapidXML from ${RAPIDXML_INCLUDES}")
+    set(PONDER_DEPS_INCLUDES ${PONDER_DEPS_INCLUDES} ${RAPIDXML_INCLUDES})
+    include_directories(${RAPIDXML_INCLUDES})
+endif()
+
+###############################
+# compile environment
+###############################
 
 # generate version.hpp
 message("Generate version.hpp")
@@ -197,8 +235,14 @@ configure_file(${PONDER_SOURCE_DIR}/cmake/version.in
 # instruct CMake to build a shared library from all of the source files
 add_library(ponder ${PONDER_SRCS})
 
+# include files search paths
+target_include_directories(ponder PUBLIC
+    $<BUILD_INTERFACE:${PONDER_SOURCE_DIR}/include>
+    $<INSTALL_INTERFACE:include>
+)
+
 # define the export macro
-if(BUILD_SHARED_LIBS)    
+if(BUILD_SHARED_LIBS)
     set_target_properties(ponder PROPERTIES DEFINE_SYMBOL PONDER_EXPORTS)
 else()
     add_definitions(-DPONDER_STATIC)
@@ -224,13 +268,7 @@ if(BUILD_TEST)
 endif()
 
 ###############################
-# uses
-###############################
-
-add_subdirectory(uses)
-
-###############################
-# doc
+# documentation
 ###############################
 
 add_subdirectory(doc)
@@ -251,7 +289,7 @@ configure_package_config_file(cmake/PonderConfig.cmake.in
 
 write_basic_package_version_file(
     ${CMAKE_CURRENT_BINARY_DIR}/PonderConfigVersion.cmake
-    VERSION ${VERSION_STR}
+    VERSION ${PONDER_VERSION}
     COMPATIBILITY AnyNewerVersion
 )
 

@@ -5,7 +5,7 @@
 ** The MIT License (MIT)
 **
 ** Copyright (C) 2009-2014 TEGESO/TEGESOFT and/or its subsidiary(-ies) and mother company.
-** Copyright (C) 2015-2017 Nick Trout.
+** Copyright (C) 2015-2018 Nick Trout.
 **
 ** Permission is hereby granted, free of charge, to any person obtaining a copy
 ** of this software and associated documentation files (the "Software"), to deal
@@ -27,9 +27,11 @@
 **
 ****************************************************************************/
 
-
+#pragma once
 #ifndef PONDER_TYPE_HPP
 #define PONDER_TYPE_HPP
+
+#include <ponder/config.hpp>
 
 /**
  * \namespace ponder
@@ -43,6 +45,8 @@
  */
 
 namespace ponder {
+    
+class Value;
     
 /**
  * \brief Special empty type associated to \c noType
@@ -61,28 +65,28 @@ struct NoType
 enum class ValueKind
 {
     None,       ///< No type has been defined yet
-    Boolean,    ///< Boolean type (bool)
-    Integer,    ///< Integer types (unsigned/signed char short int long)
-    Real,       ///< Real types (float, double)
-    String,     ///< String types (char*, ponder::String)
+    Boolean,    ///< Boolean type (`bool`)
+    Integer,    ///< Integer types (`unsigned`,`signed` `char` `short` `int` `long`)
+    Real,       ///< Real types (`float`, `double`)
+    String,     ///< String types (`char*`, `ponder::String`)
     Enum,       ///< Enumerated types
-    Array,      ///< Array types (std::vector, std::list, T[])
+    Array,      ///< Array types (`T[]`, `std::vector`, `std::list`)
     User        ///< User-defined classes
 };
 
 /**
- * \brief Enumeration of kinds of object
+ * \brief Enumeration of ways to reference an object
  *
  * \sa Value ValueMapper
  */
-enum class ObjectKind
+enum class ReferenceKind
 {
-    None,               // not an object
-    Object,             // a raw object, e.g. int
-    Pointer,            // pointer to an object, e.g. T*
-    Reference,          // reference to an object, e.g. T&
-    SmartPointer,       // smart pointer reference
-    BuiltinArray,       // builtin array, e.g. T[N]
+    None,               ///< not an object
+    Instance,           ///< an object instance, e.g. int, T
+    Pointer,            ///< pointer to an object, e.g. T*
+    Reference,          ///< reference to an object, e.g. T&
+    SmartPointer,       ///< smart pointer reference, e.g. std::shared_ptr<T>
+    BuiltinArray,       ///< builtin array, e.g. T[N]
 };
     
 /**
@@ -95,12 +99,44 @@ enum class FunctionKind
     None,               ///< not a function
     Function,           ///< a function
     MemberFunction,     ///< function in a class or struct
-    MemberObject,       ///< object in a class or struct
     FunctionWrapper,    ///< `std::function<>`
     BindExpression,     ///< `std::bind()`
     Lambda              ///< lambda function `[](){}`
 };
 
+/**
+ * \brief Enumeration of the kinds of property exposed
+ *
+ * \sa Property, Function
+ */
+enum class PropertyKind
+{
+    Function,           ///< a function
+    MemberObject        ///< member object in a class or struct
+};
+    
+/**
+ * \brief Enumeration of the kinds of Property accessors use
+ *
+ * \sa Property
+ */
+enum class PropertyAccessKind
+{
+    Simple,
+    Enum,
+    Container,
+    User
+};
+    
+
+/**
+ * \brief Base class for all supported types.
+ */
+class PONDER_API Type
+{
+public:
+    virtual ~Type() {}
+};
     
 namespace policy {
 
@@ -152,8 +188,6 @@ struct ReturnMultiple
 };
     
 } // namespace policy
-    
 } // namespace ponder
-
 
 #endif // PONDER_TYPE_HPP

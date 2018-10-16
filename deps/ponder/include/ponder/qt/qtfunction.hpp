@@ -5,7 +5,7 @@
 ** The MIT License (MIT)
 **
 ** Copyright (C) 2009-2014 TEGESO/TEGESOFT and/or its subsidiary(-ies) and mother company.
-** Copyright (C) 2015-2017 Nick Trout.
+** Copyright (C) 2015-2018 Nick Trout.
 **
 ** Permission is hereby granted, free of charge, to any person obtaining a copy
 ** of this software and associated documentation files (the "Software"), to deal
@@ -46,7 +46,7 @@ namespace ponder_ext
 /**
  * \brief Specialization of ponder::Function implemented using a Qt method
  *
- * This class is instanciated and returned by QtMapper<T>.
+ * This class is instantiated and returned by QtMapper<T>.
  *
  * \sa QtMapper
  */

@@ -5,7 +5,7 @@
 ** The MIT License (MIT)
 **
 ** Copyright (C) 2009-2014 TEGESO/TEGESOFT and/or its subsidiary(-ies) and mother company.
-** Copyright (C) 2015-2017 Nick Trout.
+** Copyright (C) 2015-2018 Nick Trout.
 **
 ** Permission is hereby granted, free of charge, to any person obtaining a copy
 ** of this software and associated documentation files (the "Software"), to deal
@@ -27,14 +27,11 @@
 **
 ****************************************************************************/
 
-
 #include <ponder/userobject.hpp>
 #include <ponder/userproperty.hpp>
 #include <ponder/class.hpp>
 
-
-namespace ponder
-{
+namespace ponder {
     
 const UserObject UserObject::nothing;
 
@@ -53,7 +50,7 @@ UserObject::UserObject(const UserObject& other)
 UserObject::UserObject(UserObject&& other) noexcept
 {
     std::swap(m_class, other.m_class);
-    std::swap(m_holder, other.m_holder);
+    m_holder.swap(other.m_holder);
 }
 
 UserObject& UserObject::operator = (const UserObject& other)
@@ -66,13 +63,13 @@ UserObject& UserObject::operator = (const UserObject& other)
 UserObject& UserObject::operator = (UserObject&& other) noexcept
 {
     std::swap(m_class, other.m_class);
-    std::swap(m_holder, other.m_holder);
+    m_holder.swap(other.m_holder);
     return *this;
 }
 
 void* UserObject::pointer() const
 {
-    return m_holder ? m_holder->object() : nullptr;
+    return m_holder != nullptr ? m_holder->object() : nullptr;
 }
 
 const Class& UserObject::getClass() const

@@ -5,7 +5,7 @@
 ** The MIT License (MIT)
 **
 ** Copyright (C) 2009-2014 TEGESO/TEGESOFT and/or its subsidiary(-ies) and mother company.
-** Copyright (C) 2015-2017 Nick Trout.
+** Copyright (C) 2015-2018 Nick Trout.
 **
 ** Permission is hereby granted, free of charge, to any person obtaining a copy
 ** of this software and associated documentation files (the "Software"), to deal
@@ -27,10 +27,11 @@
 **
 ****************************************************************************/
 
+//! \file classget.hpp
 
+#pragma once
 #ifndef PONDER_CLASSGET_HPP
 #define PONDER_CLASSGET_HPP
-
 
 #include <ponder/config.hpp>
 #include <ponder/error.hpp>
@@ -39,41 +40,34 @@
 #include <ponder/detail/util.hpp>
 #include <string>
 
-
-namespace ponder
-{
+namespace ponder {
+    
 /**
- * \relates Class
- *
  * \brief Get the total number of existing metaclasses
+ *
+ * \relates Class
  *
  * \return Global metaclass count
  */
 std::size_t classCount();
-
+    
 /**
+ * \brief Get an iterator that can be used to iterate over all registered classes
+ *
  * \relates Class
+ * \snippet inspect.cpp classIterator
  *
- * \brief Get a metaclass from its global index
- *
- * The purpose of this function is to provide a way to iterate through
- * all existing metaclasses. \sa classCount
- *
- * \param index Index of the metaclass to get
- *
- * \return Reference to the index-th metaclass
- *
- * \throw OutOfRange index is out of range
+ * \return Class iterator: `pair<String, Class*>`
  */
-const Class& classByIndex(std::size_t index);
+const detail::ClassManager& classIterator();
 
 /**
- * \relates Class
- *
  * \brief Get a metaclass from its name
  *
  * \note Automated registration does not occur when using this lookup call (since we don't
  *       have the object type). Use PONDER_TYPE() registration if you use this.
+ *
+ * \relates Class
  *
  * \param name Name of the metaclass to retrieve (case sensitive)
  *
@@ -84,13 +78,13 @@ const Class& classByIndex(std::size_t index);
 const Class& classByName(IdRef name);
 
 /**
- * \relates Class
- *
  * \brief Get a metaclass from a C++ object
+ *
+ * \relates Class
  *
  * \param object object to get the metaclass of
  *
- * \return Reference to the etaclass bound to type T
+ * \return Reference to the metaclass bound to type T
  *
  * \throw ClassNotFound no metaclass has been declared for T or any of its bases
  */
@@ -98,9 +92,9 @@ template <typename T>
 const Class& classByObject(const T& object);
 
 /**
- * \relates Class
- *
  * \brief Get a metaclass from its C++ type
+ *
+ * \relates Class
  *
  * \return Reference to the metaclass bound to type T
  *
@@ -110,11 +104,11 @@ template <typename T>
 const Class& classByType();
 
 /**
- * \relates Class
- *
  * \brief Get a metaclass from its C++ type
  *
- * \return Pointer to the metaclass bound to type T, or null pointer if no metaclass has 
+ * \relates Class
+ *
+ * \return Pointer to the metaclass bound to type T, or null pointer if no metaclass has
  *         been declared
  */
 template <typename T>
@@ -123,6 +117,5 @@ const Class* classByTypeSafe();
 } // namespace ponder
 
 #include <ponder/classget.inl>
-
 
 #endif // PONDER_CLASSGET_HPP

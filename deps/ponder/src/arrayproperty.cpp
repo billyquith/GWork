@@ -5,7 +5,7 @@
 ** The MIT License (MIT)
 **
 ** Copyright (C) 2009-2014 TEGESO/TEGESOFT and/or its subsidiary(-ies) and mother company.
-** Copyright (C) 2015-2017 Nick Trout.
+** Copyright (C) 2015-2018 Nick Trout.
 **
 ** Permission is hereby granted, free of charge, to any person obtaining a copy
 ** of this software and associated documentation files (the "Software"), to deal
@@ -27,13 +27,10 @@
 **
 ****************************************************************************/
 
-
 #include <ponder/arrayproperty.hpp>
 #include <ponder/classvisitor.hpp>
 
-
-namespace ponder
-{
+namespace ponder {
     
 ArrayProperty::ArrayProperty(IdRef name, ValueKind elementType, bool dynamic)
     : Property(name, ValueKind::Array)
@@ -59,7 +56,7 @@ bool ArrayProperty::dynamic() const
 std::size_t ArrayProperty::size(const UserObject& object) const
 {
     // Check if the property is readable
-    if (!readable(object))
+    if (!isReadable())
         PONDER_ERROR(ForbiddenRead(name()));
 
     return getSize(object);
@@ -72,7 +69,7 @@ void ArrayProperty::resize(const UserObject& object, std::size_t newSize) const
         PONDER_ERROR(ForbiddenWrite(name()));
 
     // Check if the property is writable
-    if (!writable(object))
+    if (!isWritable())
         PONDER_ERROR(ForbiddenWrite(name()));
 
     setSize(object, newSize);
@@ -81,7 +78,7 @@ void ArrayProperty::resize(const UserObject& object, std::size_t newSize) const
 Value ArrayProperty::get(const UserObject& object, std::size_t index) const
 {
     // Check if the property is readable
-    if (!readable(object))
+    if (!isReadable())
         PONDER_ERROR(ForbiddenRead(name()));
 
     // Make sure that the index is not out of range
@@ -95,7 +92,7 @@ Value ArrayProperty::get(const UserObject& object, std::size_t index) const
 void ArrayProperty::set(const UserObject& object, std::size_t index, const Value& value) const
 {
     // Check if the property is writable
-    if (!writable(object))
+    if (!isWritable())
         PONDER_ERROR(ForbiddenWrite(name()));
 
     // Check if the index is in range
@@ -113,7 +110,7 @@ void ArrayProperty::insert(const UserObject& object, std::size_t before, const V
         PONDER_ERROR(ForbiddenWrite(name()));
 
     // Check if the property is writable
-    if (!writable(object))
+    if (!isWritable())
         PONDER_ERROR(ForbiddenWrite(name()));
 
     // Check if the index is in range
@@ -131,7 +128,7 @@ void ArrayProperty::remove(const UserObject& object, std::size_t index) const
         PONDER_ERROR(ForbiddenWrite(name()));
 
     // Check if the property is writable
-    if (!writable(object))
+    if (!isWritable())
         PONDER_ERROR(ForbiddenWrite(name()));
 
     // Check if the index is in range

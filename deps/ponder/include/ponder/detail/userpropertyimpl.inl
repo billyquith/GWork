@@ -5,7 +5,7 @@
 ** The MIT License (MIT)
 **
 ** Copyright (C) 2009-2014 TEGESO/TEGESOFT and/or its subsidiary(-ies) and mother company.
-** Copyright (C) 2015-2017 Nick Trout.
+** Copyright (C) 2015-2018 Nick Trout.
 **
 ** Permission is hereby granted, free of charge, to any person obtaining a copy
 ** of this software and associated documentation files (the "Software"), to deal
@@ -27,51 +27,40 @@
 **
 ****************************************************************************/
 
-
-namespace ponder
-{
-namespace detail
-{
-/**
- * \brief Helper structure to construct a UserObject according
- *        to whether a type is a reference type or not
- *
- * The generic version assumes a non-reference type and stores
- * the object by copy.
+namespace ponder {
+namespace detail {
+    
+/*
+ * Only copy user object if it is not
  */
-template <bool IsRef>
+template <bool ReadOnly> // = false
 struct ToUserObject
 {
     template <typename T>
-    static UserObject get(const T& value)
+    static inline UserObject get(const T& value)
     {
         return UserObject::makeCopy(value);
     }
 };
 
-/**
- * \brief Specialization of ToUserObject for reference types
- *
- * This version stores the object by reference (no copy).
- */
 template <>
-struct ToUserObject<true>
+struct ToUserObject<true> // writable
 {
     template <typename T>
-    static UserObject get(const T& value)
+    static inline UserObject get(const T& value)
     {
         return UserObject::makeRef(value);
     }
 
     template <typename T>
-    static UserObject get(T& value)
+    static inline UserObject get(T& value)
     {
         return UserObject::makeRef(value);
     }
 };
 
 template <typename A>
-UserPropertyImpl<A>::UserPropertyImpl(IdRef name, const A& accessor)
+UserPropertyImpl<A>::UserPropertyImpl(IdRef name, A&& accessor)
     : UserProperty(name, classByType<typename A::DataType>())
     , m_accessor(accessor)
 {
@@ -80,21 +69,22 @@ UserPropertyImpl<A>::UserPropertyImpl(IdRef name, const A& accessor)
 template <typename A>
 Value UserPropertyImpl<A>::getValue(const UserObject& object) const
 {
-    return ToUserObject<A::Traits::isRef>::get(m_accessor.get(object.get<typename A::ClassType>()));
+    return ToUserObject<A::canWrite>::get(
+                m_accessor.m_interface.getter(object.get<typename A::ClassType>()));
 }
 
 template <typename A>
 void UserPropertyImpl<A>::setValue(const UserObject& object, const Value& value) const
 {
-    if (!m_accessor.set(object.get<typename A::ClassType>(), value))
+    if (!m_accessor.m_interface.setter(object.ref<typename A::ClassType>(), value.to<typename A::DataType>()))
         PONDER_ERROR(ForbiddenWrite(name()));
 }
 
 template <typename A>
 UserObject UserPropertyImpl<A>::getObject(const UserObject& objectInstance) const
 {
-    return ToUserObject<A::Traits::isRef>::get(
-                    m_accessor.get(objectInstance.get<typename A::ClassType>()));
+    return ToUserObject<A::RefTraits::isRef>::get(
+                m_accessor.m_interface.getter(objectInstance.get<typename A::ClassType>()));
 }
 
 template <typename A>
@@ -110,5 +100,4 @@ bool UserPropertyImpl<A>::isWritable() const
 }
 
 } // namespace detail
-
 } // namespace ponder

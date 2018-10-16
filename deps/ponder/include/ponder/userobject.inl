@@ -5,7 +5,7 @@
 ** The MIT License (MIT)
 **
 ** Copyright (C) 2009-2014 TEGESO/TEGESOFT and/or its subsidiary(-ies) and mother company.
-** Copyright (C) 2015-2017 Nick Trout.
+** Copyright (C) 2015-2018 Nick Trout.
 **
 ** Permission is hereby granted, free of charge, to any person obtaining a copy
 ** of this software and associated documentation files (the "Software"), to deal
@@ -27,22 +27,33 @@
 **
 ****************************************************************************/
 
-
 namespace ponder {
     
 template <typename T>
 UserObject::UserObject(const T& object)
-    : m_class(&classByObject(object))
-    , m_holder()
+    :   m_class(&classByType<T>())
 {
-    typedef detail::ObjectTraits<T&> Traits;
-    typedef detail::ObjectHolderByRef<typename Traits::DataType> Holder;
-
-    m_holder.reset(new Holder(Traits::getPointer(const_cast<T&>(object))));
+    typedef detail::ReferenceTraits<const T> Traits;
+    typedef detail::ObjectHolderByCopy<typename Traits::DataType> Holder;
+    m_holder.reset(new Holder(Traits::getPointer(object)));
 }
 
 template <typename T>
-typename detail::ObjectTraits<T>::RefReturnType UserObject::get() const
+UserObject::UserObject(T* object)
+    :   m_class(&classByType<T>())
+{
+    typedef detail::ReferenceTraits<T> Traits;
+    static_assert(!Traits::isRef, "Cannot make reference to reference");
+    
+    typedef typename std::conditional<std::is_const<T>::value,
+    detail::ObjectHolderByConstRef<typename Traits::DataType>,
+    detail::ObjectHolderByRef<typename Traits::DataType>>::type Holder;
+    
+    m_holder.reset(new Holder(object));
+}
+
+template <typename T>
+typename detail::ReferenceTraits<T>::ReferenceType UserObject::get() const
 {
     // Make sure that we have a valid internal object
     void *ptr = pointer();
@@ -57,56 +68,44 @@ typename detail::ObjectTraits<T>::RefReturnType UserObject::get() const
     // Apply the proper offset to the pointer (solves multiple inheritance issues)
     ptr = classCast(ptr, *m_class, *targetClass);
 
-    return detail::ObjectTraits<T>::get(ptr);
+    return detail::ReferenceTraits<T>::get(ptr);
 }
 
 template <typename T>
 UserObject UserObject::makeRef(T& object)
 {
-    typedef detail::ObjectTraits<T&> Traits;
-    typedef detail::ObjectHolderByRef<typename Traits::DataType> Holder;
+    typedef detail::ReferenceTraits<T> RefTraits;
+    static_assert(!RefTraits::isRef, "Cannot make reference to reference");
 
-    UserObject userObject;
-    userObject.m_class = &classByObject(object);
-    userObject.m_holder.reset(new Holder(Traits::getPointer(object)));
+    typedef typename std::conditional<std::is_const<T>::value,
+                 detail::ObjectHolderByConstRef<typename RefTraits::DataType>,
+                 detail::ObjectHolderByRef<typename RefTraits::DataType>>::type Holder;
 
-    return userObject;
+    return UserObject(&classByObject(object), new Holder(RefTraits::getPointer(object)));
 }
 
 template <typename T>
-UserObject UserObject::makeRef(const T& object)
+inline UserObject UserObject::makeRef(T* object)
 {
-    typedef detail::ObjectTraits<const T&> Traits;
-    typedef detail::ObjectHolderByConstRef<typename Traits::DataType> Holder;
-
-    UserObject userObject;
-    userObject.m_class = &classByObject(object);
-    userObject.m_holder.reset(new Holder(Traits::getPointer(object)));
-
-    return userObject;
+    return makeRef(*object);
 }
 
 template <typename T>
 UserObject UserObject::makeCopy(const T& object)
 {
-    typedef detail::ObjectTraits<const T&> Traits;
+    typedef detail::ReferenceTraits<const T> Traits;
     typedef detail::ObjectHolderByCopy<typename Traits::DataType> Holder;
-
-    UserObject userObject;
-    userObject.m_class = &classByType<T>();
-    userObject.m_holder.reset(new Holder(Traits::getPointer(object)));
-
-    return userObject;
+    return UserObject(&classByType<T>(), new Holder(Traits::getPointer(object)));
 }
 
 template <typename T>
-T& UserObject::ref()
+inline T& UserObject::ref() const
 {
     return *reinterpret_cast<T*>(m_holder->object());
 }
 
 template <typename T>
-const T& UserObject::cref() const
+inline const T& UserObject::cref() const
 {
     return *reinterpret_cast<T*>(m_holder->object());
 }

@@ -5,7 +5,7 @@
 ** The MIT License (MIT)
 **
 ** Copyright (C) 2009-2014 TEGESO/TEGESOFT and/or its subsidiary(-ies) and mother company.
-** Copyright (C) 2015-2017 Nick Trout.
+** Copyright (C) 2015-2018 Nick Trout.
 **
 ** Permission is hereby granted, free of charge, to any person obtaining a copy
 ** of this software and associated documentation files (the "Software"), to deal
@@ -27,13 +27,12 @@
 **
 ****************************************************************************/
 
-
+#pragma once
 #ifndef PONDER_CONSTRUCTOR_HPP
 #define PONDER_CONSTRUCTOR_HPP
 
-
-namespace ponder
-{
+namespace ponder {
+    
 class Args;
 class UserObject;
 
@@ -44,7 +43,7 @@ class UserObject;
  *
  * \sa Property, Function
  */
-class Constructor
+class Constructor : public Type
 {
 public:
 
@@ -52,7 +51,7 @@ public:
      * \brief Destructor
      */
     virtual ~Constructor() {}
-
+    
     /**
      * \brief Check if the constructor matches the given set of arguments
      *
@@ -74,6 +73,5 @@ public:
 };
 
 } // namespace ponder
-
 
 #endif // PONDER_CONSTRUCTOR_HPP

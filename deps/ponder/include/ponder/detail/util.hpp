@@ -5,7 +5,7 @@
 ** The MIT License (MIT)
 **
 ** Copyright (C) 2009-2014 TEGESO/TEGESOFT and/or its subsidiary(-ies) and mother company.
-** Copyright (C) 2015-2017 Nick Trout.
+** Copyright (C) 2015-2018 Nick Trout.
 **
 ** Permission is hereby granted, free of charge, to any person obtaining a copy
 ** of this software and associated documentation files (the "Software"), to deal
@@ -27,28 +27,19 @@
 **
 ****************************************************************************/
 
-
+#pragma once
 #ifndef PONDER_UTIL_HPP
 #define PONDER_UTIL_HPP
 
 #include <ponder/config.hpp>
 #include <ponder/type.hpp>
 #include <type_traits>
+#include <memory>
 
 namespace ponder {
 namespace detail {
 
-class noncopyable
-{
-protected:
-    noncopyable() {}
-    ~noncopyable() {}
-    
-private:
-    noncopyable( const noncopyable& ) = delete;
-    noncopyable& operator=( const noncopyable& ) = delete;
-};
-
+//------------------------------------------------------------------------------
 
 template<bool C, typename T, typename F>
 struct if_c
@@ -61,6 +52,8 @@ struct if_c<false,T,F>
 {
     typedef F type;
 };
+
+//------------------------------------------------------------------------------
 
 class bad_conversion : public std::exception {};
 
@@ -134,20 +127,21 @@ T convert(const F& from)
     return convert_impl<T,F>()(from);
 }
 
+//------------------------------------------------------------------------------
 // index_sequence
 // From: http://stackoverflow.com/a/32223343/3233
 // A pre C++14 version supplied here. MSVC chokes on this but has its own version.
 //
 #ifdef _MSC_VER
-#   define _PONDER_SEQNS std
+#   define PONDER__SEQNS std
 #else
-#   define _PONDER_SEQNS ::ponder::detail
+#   define PONDER__SEQNS ::ponder::detail
 
-template <size_t... Ints>
+template <std::size_t... Ints>
 struct index_sequence
 {
     using type = index_sequence;
-    using value_type = size_t;
+    using value_type = std::size_t;
     static constexpr std::size_t size() { return sizeof...(Ints); }
 };
 
@@ -170,6 +164,40 @@ template<> struct make_index_sequence<1> : index_sequence<0> { };
 
 #endif // index_sequence
 
+//------------------------------------------------------------------------------
+// make_unique supplied for compilers missing it (e.g. clang 5.0 on Travis Linux).
+// source: http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2013/n3656.htm
+    
+template<class T> struct _Unique_if {
+    typedef std::unique_ptr<T> _Single_object;
+};
+
+template<class T> struct _Unique_if<T[]> {
+    typedef std::unique_ptr<T[]> _Unknown_bound;
+};
+
+template<class T, std::size_t N> struct _Unique_if<T[N]> {
+    typedef void _Known_bound;
+};
+
+template<class T, class... Args>
+typename _Unique_if<T>::_Single_object
+make_unique(Args&&... args) {
+    return std::unique_ptr<T>(new T(std::forward<Args>(args)...));
+}
+
+template<class T>
+typename _Unique_if<T>::_Unknown_bound
+make_unique(std::size_t n) {
+    typedef typename std::remove_extent<T>::type U;
+    return std::unique_ptr<T>(new U[n]());
+}
+
+template<class T, class... Args>
+typename _Unique_if<T>::_Known_bound
+make_unique(Args&&...) = delete;
+    
+//------------------------------------------------------------------------------
 // Return true if all args true. Useful for variadic template expansions.
 static inline bool allTrue()
     {return true;}
@@ -195,6 +223,5 @@ PONDER_API const char* valueTypeAsString(ValueKind t);
 
 } // detail
 } // Ponder
-
 
 #endif // PONDER_UTIL_HPP
