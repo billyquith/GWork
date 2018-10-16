@@ -66,7 +66,7 @@ if(WITH_TESTS)
 
     target_link_libraries(GworkTest Gwork Gwork${GWK_RENDERER_NAME} ${LUA_LIBRARIES})
     
-    if(WANT_ALLOC_STATS)
+    if(WITH_ALLOC_STATS)
         # where to write stats
         set(STATS_DIR "${CMAKE_CURRENT_SOURCE_DIR}/stats/")
         target_compile_definitions(GworkTest PUBLIC "-DGWK_STATS_DIR=\"${STATS_DIR}\"")

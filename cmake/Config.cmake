@@ -36,7 +36,7 @@ option(WITH_SAMPLE          "Include sample" ON)
 option(WITH_REFLECTION      "Use reflection (requires external dependencies)" OFF)
 
 # This is for development but can be used by the user.
-option(WANT_ALLOC_STATS     "Track memory allocations" OFF)
+option(WITH_ALLOC_STATS     "Track memory allocations" OFF)
 
 #-----------------------------------------------------------
 # Configure once options known

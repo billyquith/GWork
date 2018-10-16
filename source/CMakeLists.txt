@@ -18,7 +18,7 @@ if(WITH_REFLECTION)
     add_definitions("-DPONDER_STATIC")      # optional. TODO: shared libs not tested
 endif()
 
-if(WANT_ALLOC_STATS)
+if(WITH_ALLOC_STATS)
     add_definitions("-DGWK_ALLOC_STATS=1")
 endif()
 

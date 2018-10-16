@@ -7,8 +7,8 @@ case $(uname -s) in
 Darwin) CM_GEN="-GXcode" ;;
 *) echo "Unsupported OS"; exit 1 ;;
 esac
-CM_OPTS="-DWANT_TESTS=ON -DWANT_SAMPLE=ON"
-CM_REFLECT="-DWANT_REFLECTION=ON"
+CM_OPTS="-DWITH_TESTS=ON -DWITH_SAMPLE=ON"
+CM_REFLECT="-DWITH_REFLECTION=ON"
 CM_PROJ=gwork.xcodeproj
 BUILD_LOG_NAME=maintain_build.txt
 BUILD_LOG=../$BUILD_LOG_NAME
