@@ -48,7 +48,8 @@ namespace Drawing
             Color *px = &pb.At(r.x, r.y + y);
             for (int x = r.w; x > 0; --x)
             {
-                *px++ = BlendAlpha(c, *px);
+                *px = BlendAlpha(c, *px);
+                ++px;
             }
         }
     }
@@ -102,7 +103,8 @@ namespace Drawing
 // See "Font Size in Pixels or Points" in "stb_truetype.h"
 static constexpr float c_pointsToPixels = 1.333f;
 // arbitrary font cache texture size
-static constexpr int c_texsz = 800; // Texture size too small for wchar_t characters but stbtt_BakeFontBitmap crashes on larger sizes
+// Texture size too small for wchar_t characters but stbtt_BakeFontBitmap crashes on larger sizes
+static constexpr int c_texsz = 800;
 
 Font::Status Software::LoadFont(const Font& font)
 {
@@ -262,10 +264,10 @@ bool Software::EnsureTexture(const Gwk::Texture& texture)
 
 Software::Software(ResourcePaths& paths, PixelBuffer& pbuff)
     :   Base(paths)
-    ,   m_isClipping(false)
-    ,   m_pixbuf(&pbuff)
     ,   m_lastFont(nullptr)
     ,   m_lastTexture(nullptr)
+    ,   m_isClipping(false)
+    ,   m_pixbuf(&pbuff)
 {
 }
 
@@ -322,7 +324,7 @@ void Software::RenderText(const Gwk::Font& font, Gwk::Point pos,
     char* text_ptr = const_cast<char*>(text.c_str());
     const auto clipRect = ClipRegion();
     const Point srcSize(fontData.width, fontData.height);
-    const unsigned char * const fontBmp =fontData.m_ReadData.get();
+    const unsigned char * const fontBmp = fontData.m_ReadData.get();
 
     // Height of font, allowing for descenders, because baseline is bottom of capitals.
     const float offset = font.size * Scale() * c_pointsToPixels * 0.8f;
