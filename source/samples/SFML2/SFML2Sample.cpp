@@ -5,7 +5,6 @@
  *  See license in Gwork.h
  */
 
-#define GWK_SAMPLE
 #include <SFML/Graphics.hpp>
 
 #include <Gwork/Renderers/SFML2.h>

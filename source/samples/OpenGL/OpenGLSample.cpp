@@ -5,7 +5,6 @@
  *  See license in Gwork.h
  */
 
-#define GWK_SAMPLE
 #include <Gwork/Gwork.h>
 #include <Gwork/Platform.h>
 #include <Gwork/Skins/Simple.h>

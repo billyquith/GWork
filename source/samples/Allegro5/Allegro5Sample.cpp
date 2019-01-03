@@ -5,7 +5,6 @@
  *  See license in Gwork.h
  */
 
-#define GWK_SAMPLE
 #include <Gwork/Skins/TexturedBase.h>
 #include <Gwork/Test/Test.h>
 #include <Gwork/Input/Allegro5.h>
