@@ -51,8 +51,9 @@ add_library(Gwork${GWK_RENDER_NAME} STATIC
 
 target_include_directories(Gwork${GWK_RENDER_NAME} PUBLIC
         ${GWK_SOURCE_DIR}/source/platform/include
-        ${GWK_RENDER_INCLUDES}
-)
+        ${GWK_RENDER_INCLUDES})
+
+target_link_libraries(Gwork${GWK_RENDER_NAME} PRIVATE ${GWK_RENDER_LIBRARIES})
 
 install(FILES ${GWK_PLATFORM_HEADERS}
         DESTINATION include/Gwork)

@@ -38,6 +38,9 @@ option(WITH_REFLECTION      "Use reflection (requires external dependencies)" OF
 # This is for development but can be used by the user.
 option(WITH_ALLOC_STATS     "Track memory allocations" OFF)
 
+# Find SFML by SFMLConfig.cmake instead of local CMake module FindSFML.cmake.
+option(USE_SFML_CONFIG "Use SFMLConfig.cmake to find SFML (>=2.5)" OFF)
+
 #-----------------------------------------------------------
 # Configure once options known
 
@@ -207,12 +210,19 @@ if(RENDER_SFML2)
     set(GWK_INPUT_NAME "SFML2")
     set(GWK_PLATFORM_NAME "Cross")
     set(SFML_STATIC_LIBRARIES FALSE) # But note we edited FindSFML...
-    find_package(SFML 2 COMPONENTS system window graphics REQUIRED)
+    find_package(OpenGL REQUIRED)
+    if(USE_SFML_CONFIG)
+        find_package(SFML 2 CONFIG COMPONENTS system window graphics REQUIRED)
+        set(GWK_RENDER_INCLUDES ${OPENGL_INCLUDE_DIRS})
+        set(GWK_RENDER_LIBRARIES ${OPENGL_LIBRARIES} sfml-system sfml-window sfml-graphics)
+    else()
+        find_package(SFML 2 COMPONENTS system window graphics REQUIRED)
+        set(GWK_RENDER_INCLUDES ${OPENGL_INCLUDE_DIRS} ${SFML_INCLUDE_DIR})
+        set(GWK_RENDER_LIBRARIES ${SFML_LIBRARIES} ${SFML_DEPENDENCIES})
+    endif()
     if(NOT SFML_FOUND)
         message(FATAL_ERROR "SFML2 is missing components")
     endif()
-    set(GWK_RENDER_INCLUDES "${SFML_INCLUDE_DIR}")
-    set(GWK_RENDER_LIBRARIES ${SFML_LIBRARIES} ${SFML_DEPENDENCIES})
 endif(RENDER_SFML2)
 
 if(RENDER_SW)
