@@ -4,6 +4,10 @@ Changelog
 
 This is a changelog for Gwork. There are also notes [on my blog][blog]
 
+#### 0.3.1
+
+- Add option to use SFML 2.5 cmake config. Thanks roepel@github. #94
+
 ### 0.3
 
 - **Irrlicht renderer** added. Thanks kklouzalk@github
