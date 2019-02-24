@@ -4,8 +4,8 @@
 # Version
 set(GWK_VERSION_MAJOR 0)
 set(GWK_VERSION_MINOR 3)
-set(GWK_VERSION_PATCH 0)
-set(GWK_BRANCH "Dev")       # Dev or Release
+set(GWK_VERSION_PATCH 1)
+set(GWK_BRANCH "Release")       # Dev or Release
 set(GWK_VERSION_STR "${GWK_VERSION_MAJOR}.${GWK_VERSION_MINOR}.${GWK_VERSION_PATCH} ${GWK_BRANCH}")
 message("Project version: ${GWK_VERSION_STR}")
 
