@@ -344,6 +344,11 @@ void OpenGLCore::Begin()
 {
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glEnable(GL_BLEND);
+    glDisable(GL_CULL_FACE);
+    glDisable(GL_DEPTH_TEST);
+
+    //reset texture, we dont know what state someone else left it in
+    m_current_texture=0;
 }
 
 void OpenGLCore::End()
