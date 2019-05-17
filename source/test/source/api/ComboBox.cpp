@@ -11,11 +11,11 @@
 namespace Gwk {
 namespace Test {
 
-class ComboBox : public TestUnit
+class ComboBox:public ControlClass<ComboBox, TestUnit>
 {
 public:
 
-    GWK_CONTROL_INLINE(ComboBox, TestUnit)
+    ComboBox(Gwk::Controls::Base *parent, const Gwk::String &name=""):BaseClass(parent, name)
     {
         {
             Gwk::Controls::ComboBox* combo = new Gwk::Controls::ComboBox(this);

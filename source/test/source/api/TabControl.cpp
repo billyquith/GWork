@@ -12,13 +12,13 @@
 namespace Gwk {
 namespace Test {
 
-class TabControl : public TestUnit
+class TabControl:public ControlClass<TabControl, TestUnit>
 {
 public:
 
     Controls::TabControl* m_dockControlLeft;
 
-    GWK_CONTROL_INLINE(TabControl, TestUnit)
+    TabControl(Gwk::Controls::Base *parent, const Gwk::String &name=""):BaseClass(parent, name)
     {
         {
             m_dockControlLeft = new Controls::TabControl(this);

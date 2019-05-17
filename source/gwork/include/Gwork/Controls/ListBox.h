@@ -20,11 +20,11 @@ namespace Gwk
     {
         class ScrollControl;
 
-        class GWK_EXPORT ListBox : public ScrollControl
+        class GWK_EXPORT ListBox : public ControlClass<ListBox, ScrollControl>
         {
         public:
 
-            GWK_CONTROL(ListBox, ScrollControl);
+            ListBox(Gwk::Controls::Base *parent, const Gwk::String &name="");
 
             typedef std::list<Layout::TableRow*> Rows;
 

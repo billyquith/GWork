@@ -16,11 +16,11 @@ namespace Gwk
 {
     namespace ControlsInternal
     {
-        class GWK_EXPORT Text : public Controls::Base
+        class GWK_EXPORT Text : public ControlClass<Text, Controls::Base>
         {
         public:
 
-            GWK_CONTROL(Text, Controls::Base);
+            Text(Gwk::Controls::Base *parent, const Gwk::String &name="");
 
             virtual ~Text();
             const Gwk::Font& GetFont() const;

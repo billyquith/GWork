@@ -18,9 +18,10 @@ namespace Gwk
 {
     namespace Controls
     {
-        class GWK_EXPORT MenuStrip : public Menu
+        class GWK_EXPORT MenuStrip : public ControlClass<MenuStrip, Menu>
         {
-            GWK_CONTROL(MenuStrip, Menu);
+        public:
+            MenuStrip(Gwk::Controls::Base *parent, const Gwk::String &name="");
 
             void Render(Skin::Base* skin) override;
             void RenderUnder(Skin::Base* /*skin*/) override {}

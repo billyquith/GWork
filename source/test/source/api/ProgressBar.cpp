@@ -12,11 +12,11 @@
 namespace Gwk {
 namespace Test {
 
-class ProgressBar : public TestUnit
+class ProgressBar:public ControlClass<ProgressBar, TestUnit>
 {
 public:
 
-    GWK_CONTROL_INLINE(ProgressBar, TestUnit)
+    ProgressBar(Gwk::Controls::Base *parent, const Gwk::String &name=""):BaseClass(parent, name)
     {
         {
             Gwk::Controls::ProgressBar* pb = new Gwk::Controls::ProgressBar(this);

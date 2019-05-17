@@ -19,9 +19,10 @@ namespace Gwk
 {
     namespace ControlsInternal
     {
-        class Modal : public Controls::Base
+        class Modal : public ControlClass<Modal, Controls::Base>
         {
-            GWK_CONTROL_INLINE(Modal, Controls::Base)
+        public:
+            Modal(Gwk::Controls::Base *parent, const Gwk::String &name=""):BaseClass(parent, name)
             {
                 SetKeyboardInputEnabled(true);
                 SetMouseInputEnabled(true);

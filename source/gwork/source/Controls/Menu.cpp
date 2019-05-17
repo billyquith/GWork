@@ -16,7 +16,7 @@ using namespace Gwk;
 using namespace Gwk::Controls;
 
 
-GWK_CONTROL_CONSTRUCTOR(Menu)
+Menu::Menu(Gwk::Controls::Base *parent, const Gwk::String &name):BaseClass(parent, name)
 {
     SetBounds(0, 0, 10, 10);
     SetPadding(Padding(2, 2, 2, 2));

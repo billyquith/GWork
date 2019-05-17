@@ -15,9 +15,10 @@ namespace Gwk
 {
     namespace Controls
     {
-        class GWK_EXPORT SplitterVertical : public Controls::Base
+        class GWK_EXPORT SplitterVertical : public ControlClass<SplitterVertical, Controls::Base>
         {
-            GWK_CONTROL_INLINE(SplitterVertical, Controls::Base)
+        public:
+            SplitterVertical(Gwk::Controls::Base *parent, const Gwk::String &name=""):BaseClass(parent, name)
             {
                 m_panels[0] = new Controls::Base(this);
                 m_panels[1] = new Controls::Base(this);
@@ -91,9 +92,9 @@ namespace Gwk
         };
 
 
-        class GWK_EXPORT SplitterHorizontal : public SplitterVertical
+        class GWK_EXPORT SplitterHorizontal : public ControlClass<SplitterHorizontal, SplitterVertical>
         {
-            GWK_CONTROL_INLINE(SplitterHorizontal, SplitterVertical)
+            SplitterHorizontal(Gwk::Controls::Base *parent, const Gwk::String &name=""):BaseClass(parent, name)
             {
                 m_splitter->SetCursor(Gwk::CursorType::SizeWE);
                 m_splitter->SetPos(100, 0);

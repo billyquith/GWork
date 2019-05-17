@@ -18,11 +18,11 @@ namespace Gwk
 {
     namespace Controls
     {
-        class GWK_EXPORT FolderPicker : public Controls::Base
+        class FolderPicker:public ControlClass<FolderPicker, Controls::Base>
         {
         public:
 
-            GWK_CONTROL_INLINE(FolderPicker, Controls::Base)
+            FolderPicker(Gwk::Controls::Base *parent, const Gwk::String &name=""):BaseClass(parent, name)
             {
                 m_button = new Controls::Button(this);
                 m_button->Dock(Position::Right);

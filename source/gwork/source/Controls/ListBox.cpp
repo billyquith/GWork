@@ -13,9 +13,10 @@
 using namespace Gwk;
 using namespace Gwk::Controls;
 
-class ListBoxRow : public Layout::TableRow
+class ListBoxRow:public ControlClass<ListBoxRow, Layout::TableRow>
 {
-    GWK_CONTROL_INLINE(ListBoxRow, Layout::TableRow)
+public:
+    ListBoxRow(Gwk::Controls::Base *parent, const Gwk::String &name=""):BaseClass(parent, name)
     {
         SetMouseInputEnabled(true);
         SetSelected(false);
@@ -62,7 +63,7 @@ private:
 };
 
 
-GWK_CONTROL_CONSTRUCTOR(ListBox)
+ListBox::ListBox(Gwk::Controls::Base *parent, const Gwk::String &name):BaseClass(parent, name)
 {
     SetScroll(false, true);
     SetAutoHideBars(true);

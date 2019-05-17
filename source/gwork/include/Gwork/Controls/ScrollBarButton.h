@@ -15,11 +15,11 @@ namespace Gwk
 {
     namespace ControlsInternal
     {
-        class GWK_EXPORT ScrollBarButton : public Controls::Button
+        class GWK_EXPORT ScrollBarButton : public ControlClass<ScrollBarButton, Controls::Button>
         {
         public:
 
-            GWK_CONTROL(ScrollBarButton, Controls::Button);
+            ScrollBarButton(Gwk::Controls::Base *parent, const Gwk::String &name="");
 
             void Render(Skin::Base* skin) override;
 

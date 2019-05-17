@@ -12,7 +12,7 @@
 using namespace Gwk;
 using namespace Gwk::Controls;
 
-GWK_CONTROL_CONSTRUCTOR(HorizontalScrollBar)
+HorizontalScrollBar::HorizontalScrollBar(Gwk::Controls::Base *parent, const Gwk::String &name):BaseClass(parent, name)
 {
     m_bar->SetHorizontal();
     m_scrollButton[SCROLL_BUTTON_LEFT]->SetDirectionLeft();

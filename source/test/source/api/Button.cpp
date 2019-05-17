@@ -10,11 +10,11 @@
 namespace Gwk {
 namespace Test {
 
-class Button : public TestUnit
+class Button:public ControlClass<Button, TestUnit>
 {
 public:
 
-    GWK_CONTROL_INLINE(Button, TestUnit)
+    Button(Gwk::Controls::Base *parent, const Gwk::String &name=""):BaseClass(parent, name)
     {
         // Normal button
         Controls::Button* buttonA = new Controls::Button(this);

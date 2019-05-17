@@ -20,11 +20,11 @@ namespace Gwk
 {
     namespace Controls
     {
-        class GWK_EXPORT HSVColorPicker : public Controls::Base
+        class GWK_EXPORT HSVColorPicker : public ControlClass<HSVColorPicker, Controls::Base>
         {
         public:
 
-            GWK_CONTROL(HSVColorPicker, Controls::Base);
+            HSVColorPicker(Gwk::Controls::Base *parent, const Gwk::String &name="");
 
             Gwk::Color GetColor();
             Gwk::Color GetDefaultColor()

@@ -12,7 +12,7 @@ using namespace Gwk;
 using namespace Gwk::Controls;
 
 
-GWK_CONTROL_CONSTRUCTOR(GroupBox)
+GroupBox::GroupBox(Gwk::Controls::Base *parent, const Gwk::String &name):BaseClass(parent, name)
 {
     // Set to true, because it's likely that our
     // children will want mouse input, and they

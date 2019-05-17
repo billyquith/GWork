@@ -18,11 +18,11 @@ namespace Gwk
 {
     namespace Controls
     {
-        class GWK_EXPORT ProgressBar : public Label
+        class GWK_EXPORT ProgressBar : public ControlClass<ProgressBar, Label>
         {
         public:
 
-            GWK_CONTROL(ProgressBar, Label);
+            ProgressBar(Gwk::Controls::Base *parent, const Gwk::String &name="");
 
             void Render(Skin::Base* skin) override;
 

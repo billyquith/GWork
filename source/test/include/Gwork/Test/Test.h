@@ -25,10 +25,10 @@ namespace Gwk {
         //
         /// Frame into which all tests go.
         //
-        class TestFrame : public Gwk::Controls::DockBase
+        class TestFrame : public Gwk::ControlClass<TestFrame, Gwk::Controls::DockBase>
         {
         public:
-            GWK_CONTROL(TestFrame, Gwk::Controls::DockBase);
+            TestFrame(Gwk::Controls::Base *parent, const Gwk::String &name="");
             
             //void PrintText(const Gwk::String& str);
             
@@ -48,10 +48,10 @@ namespace Gwk {
         //
         /// Tab page into which test category goes.
         //
-        class TestCategory : public Gwk::Controls::DockBase
+        class TestCategory : public Gwk::ControlClass<TestCategory, Gwk::Controls::DockBase>
         {
         public:
-            GWK_CONTROL(TestCategory, Gwk::Controls::DockBase);
+            TestCategory(Gwk::Controls::Base *parent, const Gwk::String &name="");
             
             void OutputToLog(const Gwk::String& str);
             
@@ -64,12 +64,12 @@ namespace Gwk {
         //
         /// Individual test. All tests derive from this.
         //
-        class TestUnit : public Gwk::Controls::Base
+        class TestUnit : public Gwk::ControlClass<TestUnit, Gwk::Controls::Base>
         {
         public:
             
-            GWK_CONTROL_INLINE(TestUnit, Gwk::Controls::Base)
-            ,   m_testCategory(nullptr)
+            TestUnit(Gwk::Controls::Base *parent, const Gwk::String &name=""):
+                BaseClass(parent, name), m_testCategory(nullptr)
             {}
             
             void SetTestCategory(TestCategory* t)

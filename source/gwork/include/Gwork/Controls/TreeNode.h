@@ -20,11 +20,11 @@ namespace Gwk
     {
         class TreeControl;
 
-        class GWK_EXPORT TreeNode : public Base
+        class GWK_EXPORT TreeNode : public ControlClass<TreeNode, Base>
         {
         public:
 
-            GWK_CONTROL(TreeNode, Base);
+            TreeNode(Gwk::Controls::Base *parent, const Gwk::String &name="");
 
             virtual TreeNode* AddNode(const String& strLabel);
 

@@ -13,7 +13,7 @@
 using namespace Gwk;
 using namespace Gwk::Controls;
 
-GWK_CONTROL_CONSTRUCTOR(LabelClickable)
+LabelClickable::LabelClickable(Gwk::Controls::Base *parent, const Gwk::String &name):BaseClass(parent, name)
 {
     SetIsToggle(false);
     SetCursor(Gwk::CursorType::Finger);

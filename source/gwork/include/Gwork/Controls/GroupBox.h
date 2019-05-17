@@ -19,11 +19,11 @@ namespace Gwk
 {
     namespace Controls
     {
-        class GWK_EXPORT GroupBox : public Label
+        class GWK_EXPORT GroupBox : public ControlClass<GroupBox, Label>
         {
         public:
 
-            GWK_CONTROL(GroupBox, Label);
+            GroupBox(Gwk::Controls::Base *parent, const Gwk::String &name="");
 
             void Render(Skin::Base* skin) override;
             void Layout(Skin::Base* skin) override;

@@ -18,9 +18,10 @@ namespace Gwk
 {
     namespace Controls
     {
-        class GWK_EXPORT TextBox : public Label
+        class GWK_EXPORT TextBox : public ControlClass<TextBox, Label>
         {
-            GWK_CONTROL(TextBox, Label);
+        public:
+            TextBox(Gwk::Controls::Base *parent, const Gwk::String &name="");
 
             void Render(Skin::Base* skin) override;
             void RenderFocus(Gwk::Skin::Base* /*skin*/) override {}
@@ -117,11 +118,11 @@ namespace Gwk
         };
 
 
-        class GWK_EXPORT TextBoxNumeric : public TextBox
+        class GWK_EXPORT TextBoxNumeric : public ControlClass<TextBoxNumeric, TextBox>
         {
         public:
 
-            GWK_CONTROL(TextBoxNumeric, TextBox);
+            TextBoxNumeric(Gwk::Controls::Base *parent, const Gwk::String &name="");
 
             virtual float GetFloatFromText();
 
@@ -132,11 +133,11 @@ namespace Gwk
         };
 
 
-        class GWK_EXPORT TextBoxMultiline : public TextBox
+        class GWK_EXPORT TextBoxMultiline : public ControlClass<TextBoxMultiline, TextBox>
         {
         public:
 
-            GWK_CONTROL(TextBoxMultiline, TextBox);
+            TextBoxMultiline(Gwk::Controls::Base *parent, const Gwk::String &name="");
 
             bool OnKeyReturn(bool bDown) override;
             void Render(Skin::Base* skin) override;
@@ -154,11 +155,11 @@ namespace Gwk
         };
 
 
-        class GWK_EXPORT PasswordTextBox : public TextBox
+        class GWK_EXPORT PasswordTextBox : public ControlClass<PasswordTextBox, TextBox>
         {
         public:
 
-            GWK_CONTROL(PasswordTextBox, TextBox);
+            PasswordTextBox(Gwk::Controls::Base *parent, const Gwk::String &name="");
 
             void SetText(const String& str, bool bDoEvents = true) override;
             virtual void SetPasswordChar(const char c);

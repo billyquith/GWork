@@ -20,9 +20,10 @@ namespace Gwk
 {
     namespace Controls
     {
-        class GWK_EXPORT HorizontalSlider : public Slider
+        class GWK_EXPORT HorizontalSlider : public ControlClass<HorizontalSlider, Slider>
         {
-            GWK_CONTROL(HorizontalSlider, Slider);
+        public:
+            HorizontalSlider(Gwk::Controls::Base *parent, const Gwk::String &name="");
 
             void Layout(Skin::Base* skin) override;
             void Render(Skin::Base* skin) override;

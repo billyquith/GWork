@@ -18,11 +18,11 @@ namespace Gwk
 {
     namespace Controls
     {
-        class GWK_EXPORT RadioButtonController : public Base
+        class GWK_EXPORT RadioButtonController : public ControlClass<RadioButtonController, Base>
         {
         public:
 
-            GWK_CONTROL(RadioButtonController, Base);
+            RadioButtonController(Gwk::Controls::Base *parent, const Gwk::String &name="");
 
             void Render(Skin::Base* /*skin*/) override
             {

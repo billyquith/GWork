@@ -19,9 +19,9 @@ namespace Gwk
     {
         namespace Property
         {
-            class Folder : public Property::Text
+            class Folder : public ControlClass<Folder, Property::Text>
             {
-                GWK_CONTROL_INLINE(Folder, Property::Text)
+                Folder(Gwk::Controls::Base *parent, const Gwk::String &name=""):BaseClass(parent, name)
                 {
                     Controls::Button* button = new Controls::Button(this);
                     button->Dock(Position::Right);

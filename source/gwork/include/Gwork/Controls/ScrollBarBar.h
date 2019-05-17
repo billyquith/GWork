@@ -17,11 +17,11 @@ namespace Gwk
 {
     namespace ControlsInternal
     {
-        class GWK_EXPORT ScrollBarBar : public ControlsInternal::Dragger
+        class GWK_EXPORT ScrollBarBar : public ControlClass<ScrollBarBar, ControlsInternal::Dragger>
         {
         public:
 
-            GWK_CONTROL(ScrollBarBar, ControlsInternal::Dragger);
+            ScrollBarBar(Gwk::Controls::Base *parent, const Gwk::String &name="");
 
             void Render(Skin::Base* skin) override;
             void Layout(Skin::Base* skin) override;

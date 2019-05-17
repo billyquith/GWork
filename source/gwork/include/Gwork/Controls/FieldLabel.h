@@ -16,7 +16,7 @@ namespace Gwk
 {
     namespace Controls
     {
-        class GWK_EXPORT FieldLabel : public Controls::Label
+        class FieldLabel:public ControlClass<FieldLabel, Controls::Label>
         {
         public:
 
@@ -32,7 +32,7 @@ namespace Gwk
 
         public:
 
-            GWK_CONTROL_INLINE(FieldLabel, Controls::Label)
+            FieldLabel(Gwk::Controls::Base *parent, const Gwk::String &name=""):BaseClass(parent, name)
             {
                 m_field = nullptr;
                 SetMargin(Margin(0, 1, 0, 1));

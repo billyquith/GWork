@@ -15,7 +15,7 @@ namespace Gwk
 using namespace Gwk::Controls;
 using namespace Gwk::ControlsInternal;
 
-GWK_CONTROL_CONSTRUCTOR(SliderBar)
+SliderBar::SliderBar(Gwk::Controls::Base *parent, const Gwk::String &name):BaseClass(parent, name)
 {
     SetTarget(this);
     RestrictToParent(true);
@@ -26,7 +26,7 @@ void SliderBar::Render(Skin::Base* skin)
     skin->DrawSlideButton(this, IsDepressed(), IsHorizontal());
 }
 
-GWK_CONTROL_CONSTRUCTOR(Slider)
+Slider::Slider(Gwk::Controls::Base *parent, const Gwk::String &name):BaseClass(parent, name)
 {
     SetBounds(Gwk::Rect(0, 0, 32, 128));
     m_sliderBar = new SliderBar(this);

@@ -39,11 +39,11 @@ inline T Approach(T fCurrent, T fTarget, T2 fDelta)
     return fCurrent;
 }
 
-class TabControlInner : public Base
+class GWK_EXPORT TabControlInner:public ControlClass<TabControlInner, Base>
 {
 public:
 
-    GWK_CONTROL_INLINE(TabControlInner, Base)
+    TabControlInner(Gwk::Controls::Base *parent, const Gwk::String &name=""):BaseClass(parent, name)
     {
     }
 
@@ -55,7 +55,7 @@ public:
 };
 
 
-GWK_CONTROL_CONSTRUCTOR(TabControl)
+TabControl::TabControl(Gwk::Controls::Base *parent, const Gwk::String &name):BaseClass(parent, name)
 {
     m_scrollOffset = 0;
     m_currentButton = nullptr;

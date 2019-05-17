@@ -19,11 +19,11 @@ namespace Gwk
 {
     namespace Controls
     {
-        class GWK_EXPORT TabTitleBar : public Label
+        class GWK_EXPORT TabTitleBar : public ControlClass<TabTitleBar, Label>
         {
         public:
 
-            GWK_CONTROL_INLINE(TabTitleBar, Label)
+            TabTitleBar(Gwk::Controls::Base *parent, const Gwk::String &name=""):BaseClass(parent, name)
             {
                 SetMouseInputEnabled(true);
                 SetTextPadding(Gwk::Padding(5, 2, 5, 2));

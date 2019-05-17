@@ -17,11 +17,11 @@ namespace Gwk
 {
     namespace Controls
     {
-        class GWK_EXPORT CrossSplitter : public Controls::Base
+        class GWK_EXPORT CrossSplitter:public ControlClass<CrossSplitter, Controls::Base>
         {
         public:
 
-            GWK_CONTROL(CrossSplitter, Controls::Base);
+            CrossSplitter(Gwk::Controls::Base *parent, const Gwk::String &name="");
 
             void Layout(Skin::Base* skin) override;
 

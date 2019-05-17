@@ -21,11 +21,11 @@ namespace Gwk
 {
     namespace Controls
     {
-        class PropertyTreeNode : public TreeNode
+        class PropertyTreeNode : public ControlClass<PropertyTreeNode, TreeNode>
         {
         public:
 
-            GWK_CONTROL_INLINE(PropertyTreeNode, TreeNode)
+            PropertyTreeNode(Gwk::Controls::Base *parent, const Gwk::String &name=""):BaseClass(parent, name)
             {
                 m_title->SetTextColorOverride(GetSkin()->Colors.Properties.Title);
             }
@@ -38,11 +38,11 @@ namespace Gwk
         };
 
 
-        class PropertyTree : public TreeControl
+        class PropertyTree : public ControlClass<PropertyTree, TreeControl>
         {
         public:
 
-            GWK_CONTROL_INLINE(PropertyTree, TreeControl)
+            PropertyTree(Gwk::Controls::Base *parent, const Gwk::String &name=""):BaseClass(parent, name)
             {
             }
 

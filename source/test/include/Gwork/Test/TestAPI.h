@@ -19,10 +19,10 @@ namespace Gwk {
         /// Here we test the Gwork C++ API.
         ///  - All controls created with C++.
         //
-        class TestAPI : public TestCategory
+        class TestAPI : public Gwk::ControlClass<TestAPI, TestCategory>
         {
         public:
-            GWK_CONTROL(TestAPI, TestCategory);
+            TestAPI(Gwk::Controls::Base *parent, const Gwk::String &name="");
             
         private:
             

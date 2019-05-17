@@ -11,11 +11,11 @@
 namespace Gwk {
 namespace Test {
 
-class ImagePanel : public TestUnit
+class ImagePanel:public ControlClass<ImagePanel, TestUnit>
 {
 public:
 
-    GWK_CONTROL_INLINE(ImagePanel, TestUnit)
+    ImagePanel(Gwk::Controls::Base *parent, const Gwk::String &name=""):BaseClass(parent, name)
     {
         // Normal
         {

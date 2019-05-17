@@ -32,11 +32,11 @@ Maecenas venenatis dui sit amet dolor luctus quis scelerisque mi tincidunt. Cum 
 natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.";
 
 
-class GroupBox : public TestUnit
+class GroupBox:public ControlClass<GroupBox, TestUnit>
 {
 public:
 
-    GWK_CONTROL_INLINE(GroupBox, TestUnit)
+    GroupBox(Gwk::Controls::Base *parent, const Gwk::String &name=""):BaseClass(parent, name)
     {
         Gwk::Controls::GroupBox* group = new Gwk::Controls::GroupBox(this);
         group->SetText("Group Box");

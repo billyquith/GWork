@@ -19,7 +19,7 @@ using namespace Gwk::ControlsInternal;
 static const int gc_pickChannelHeight = 40;     // As small as boxes will go without clipping.
 
 
-GWK_CONTROL_CONSTRUCTOR(ColorPicker)
+ColorPicker::ColorPicker(Gwk::Controls::Base *parent, const Gwk::String &name):BaseClass(parent, name)
 {
     SetMouseInputEnabled(true);
     SetSize(256, 150);

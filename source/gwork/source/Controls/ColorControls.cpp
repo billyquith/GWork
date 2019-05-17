@@ -97,7 +97,7 @@ static inline HSV RGBtoHSV(int r, int g, int b)
     return hsv;
 }
 
-GWK_CONTROL_CONSTRUCTOR(ColorLerpBox)
+ColorLerpBox::ColorLerpBox(Gwk::Controls::Base *parent, const Gwk::String &name):BaseClass(parent, name)
 {
     SetColor(Gwk::Color(255, 128, 0, 255));
     SetSize(128, 128);
@@ -198,7 +198,7 @@ void ColorLerpBox::Render(Gwk::Skin::Base* skin)
     skin->GetRender()->DrawShavedCornerRect(testRect);
 }
 
-GWK_CONTROL_CONSTRUCTOR(ColorSlider)
+ColorSlider::ColorSlider(Gwk::Controls::Base *parent, const Gwk::String &name):BaseClass(parent, name)
 {
     SetSize(32, 128);
     SetMouseInputEnabled(true);

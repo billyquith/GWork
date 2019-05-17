@@ -22,7 +22,7 @@ using namespace Gwk::Controls;
 
 WindowCanvas::WindowCanvas(int x, int y, int w, int h, Gwk::Skin::Base* skin,
                            const Gwk::String& strWindowTitle)
-: ParentClass(nullptr)
+: Canvas(nullptr)
 {
     m_bQuit = false;
     m_bCanMaximize = true;
@@ -54,9 +54,9 @@ WindowCanvas::WindowCanvas(int x, int y, int w, int h, Gwk::Skin::Base* skin,
     m_titleBar->SetMargin(Margin(0, 0, 0, 0));
     m_titleBar->Dock(Position::Top);
     m_titleBar->SetDoMove(false);
-    m_titleBar->onDragged.Add(this, &ThisClass::Dragger_Moved);
-    m_titleBar->onDragStart.Add(this, &ThisClass::Dragger_Start);
-    m_titleBar->onDoubleClickLeft.Add(this, &ThisClass::OnTitleDoubleClicked);
+    m_titleBar->onDragged.Add(this, &WindowCanvas::Dragger_Moved);
+    m_titleBar->onDragStart.Add(this, &WindowCanvas::Dragger_Start);
+    m_titleBar->onDoubleClickLeft.Add(this, &WindowCanvas::OnTitleDoubleClicked);
 
     m_title = new Gwk::Controls::Label(m_titleBar);
     m_title->SetAlignment(Position::Left|Position::CenterV);
@@ -115,7 +115,7 @@ void WindowCanvas::Layout(Skin::Base* skin)
 {
     m_sizer->BringToFront();
     m_sizer->SetPosition(Position::Right|Position::Bottom);
-    ParentClass::Layout(skin);
+    Canvas::Layout(skin);
 }
 
 void WindowCanvas::DoThink()
@@ -124,7 +124,7 @@ void WindowCanvas::DoThink()
     {
         Redraw();
     }
-    ParentClass::DoThink();
+    Canvas::DoThink();
     RenderCanvas();
 }
 
@@ -205,7 +205,7 @@ Skin::Base* WindowCanvas::GetSkin(void)
         m_skinChange = nullptr;
     }
 
-    return ParentClass::GetSkin();
+    return Canvas::GetSkin();
 }
 
 void WindowCanvas::Dragger_Start(Event::Info)
@@ -265,7 +265,7 @@ void WindowCanvas::Sizer_Moved(Event::Info)
     Gwk::Platform::SetBoundsPlatformWindow(m_oSWindowSWindow, m_windowPos.x, m_windowPos.y, w, h);
     GetSkin()->GetRender()->ResizedContext(this, w, h);
     this->SetSize(w, h);
-    ParentClass::DoThink();
+    Canvas::DoThink();
     RenderCanvas();
 }
 
@@ -286,7 +286,7 @@ void WindowCanvas::SetMaximize(bool b)
     SetSize(size.x, size.y);
     m_windowPos = pos;
     GetSkin()->GetRender()->ResizedContext(this, size.x, size.y);
-    ParentClass::DoThink();
+    Canvas::DoThink();
     RenderCanvas();
 }
 

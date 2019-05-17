@@ -18,11 +18,11 @@ namespace Gwk
 {
     namespace Controls
     {
-        class GWK_EXPORT ColorLerpBox : public Controls::Base
+        class GWK_EXPORT ColorLerpBox:public ControlClass<ColorLerpBox, Controls::Base>
         {
         public:
 
-            GWK_CONTROL(ColorLerpBox, Controls::Base);
+            ColorLerpBox(Gwk::Controls::Base *parent, const Gwk::String &name="");
             void Render(Gwk::Skin::Base* skin) override;
             Gwk::Color  GetColorAtPos(int x, int y);
             void         SetColor(Gwk::Color color, bool onlyHue = true);
@@ -41,11 +41,11 @@ namespace Gwk
         };
 
 
-        class GWK_EXPORT ColorSlider : public Controls::Base
+        class GWK_EXPORT ColorSlider:public ControlClass<ColorSlider, Controls::Base>
         {
         public:
 
-            GWK_CONTROL(ColorSlider, Controls::Base);
+            ColorSlider(Gwk::Controls::Base *parent, const Gwk::String &name="");
             void Render(Gwk::Skin::Base* skin) override;
             void OnMouseMoved(int x, int y, int deltaX, int deltaY) override;
             void OnMouseClickLeft(int x, int y, bool bDown) override;

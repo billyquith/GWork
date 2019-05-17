@@ -12,7 +12,7 @@ using namespace Gwk;
 using namespace Gwk::ControlsInternal;
 
 
-GWK_CONTROL_CONSTRUCTOR(Resizer)
+Resizer::Resizer(Gwk::Controls::Base *parent, const Gwk::String &name):BaseClass(parent, name)
 {
     m_resizeDir = Position::Left;
     SetMouseInputEnabled(true);

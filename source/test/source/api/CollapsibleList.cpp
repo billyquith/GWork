@@ -11,11 +11,11 @@
 namespace Gwk {
 namespace Test {
 
-class CollapsibleList : public TestUnit
+class CollapsibleList:public ControlClass<CollapsibleList, TestUnit>
 {
 public:
 
-    GWK_CONTROL_INLINE(CollapsibleList, TestUnit)
+    CollapsibleList(Gwk::Controls::Base *parent, const Gwk::String &name=""):BaseClass(parent, name)
     {
         Gwk::Controls::CollapsibleList* control = new Gwk::Controls::CollapsibleList(this);
         control->SetSize(100, 200);

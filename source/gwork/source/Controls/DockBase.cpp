@@ -18,7 +18,7 @@ using namespace Gwk;
 using namespace Gwk::Controls;
 
 
-GWK_CONTROL_CONSTRUCTOR(DockBase)
+DockBase::DockBase(Gwk::Controls::Base *parent, const Gwk::String &name):BaseClass(parent, name)
 {
     SetPadding(Padding(1, 1, 1, 1));
     SetSize(200, 200);

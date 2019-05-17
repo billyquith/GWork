@@ -18,11 +18,11 @@ namespace Gwk
 {
     namespace Controls
     {
-        class GWK_EXPORT FilePicker : public Controls::Base
+        class FilePicker:public ControlClass<FilePicker, Controls::Base>
         {
         public:
 
-            GWK_CONTROL_INLINE(FilePicker, Controls::Base)
+            FilePicker(Gwk::Controls::Base *parent, const Gwk::String &name=""):BaseClass(parent, name)
             {
                 m_button = new Controls::Button(this);
                 m_button->Dock(Position::Right);

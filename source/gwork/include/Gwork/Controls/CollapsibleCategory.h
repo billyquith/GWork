@@ -21,11 +21,11 @@ namespace Gwk
     {
         class CollapsibleList;
 
-        class GWK_EXPORT CollapsibleCategory : public Gwk::Controls::Base
+        class GWK_EXPORT CollapsibleCategory:public ControlClass<CollapsibleCategory, Gwk::Controls::Base>
         {
         public:
 
-            GWK_CONTROL(CollapsibleCategory, Gwk::Controls::Base);
+            CollapsibleCategory(Gwk::Controls::Base *parent, const Gwk::String &name="");
 
             void Render(Skin::Base* skin) override;
 

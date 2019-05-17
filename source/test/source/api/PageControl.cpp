@@ -11,11 +11,11 @@
 namespace Gwk {
 namespace Test {
 
-class PageControl : public TestUnit
+class PageControl:public ControlClass<PageControl, TestUnit>
 {
 public:
 
-    GWK_CONTROL_INLINE(PageControl, TestUnit)
+    PageControl(Gwk::Controls::Base *parent, const Gwk::String &name=""):BaseClass(parent, name)
     {
         Gwk::Controls::PageControl* control = new Gwk::Controls::PageControl(this);
         control->SetSize(500, 300);

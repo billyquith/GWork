@@ -18,11 +18,11 @@ namespace Gwk
 {
     namespace Controls
     {
-        class GWK_EXPORT RichLabel : public Controls::Base
+        class GWK_EXPORT RichLabel : public ControlClass<RichLabel, Controls::Base>
         {
         public:
 
-            GWK_CONTROL(RichLabel, Gwk::Controls::Base);
+            RichLabel(Gwk::Controls::Base *parent, const Gwk::String &name="");
 
             void AddLineBreak();
             void AddText(const Gwk::String& text, Gwk::Color color, Gwk::Font* font = nullptr);

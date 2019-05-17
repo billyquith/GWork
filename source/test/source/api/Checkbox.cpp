@@ -11,11 +11,11 @@
 namespace Gwk {
 namespace Test {
 
-class Checkbox : public TestUnit
+class Checkbox:public ControlClass<Checkbox, TestUnit>
 {
 public:
 
-    GWK_CONTROL_INLINE(Checkbox, TestUnit)
+    Checkbox(Gwk::Controls::Base *parent, const Gwk::String &name=""):BaseClass(parent, name)
     {
         Gwk::Controls::CheckBox* check = new Gwk::Controls::CheckBox(this);
         check->SetPos(10, 10);

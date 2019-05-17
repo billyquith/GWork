@@ -24,9 +24,6 @@ namespace Gwk
         class GWK_EXPORT WindowCanvas : public Canvas, public Gwk::WindowProvider
         {
         public:
-
-            GWK_CLASS(WindowCanvas, Controls::Canvas);
-
             WindowCanvas(int x, int y, int w, int h, Gwk::Skin::Base* renderer,
                          const Gwk::String& strWindowTitle = "");
             ~WindowCanvas();

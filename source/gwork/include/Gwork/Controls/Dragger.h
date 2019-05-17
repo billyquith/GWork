@@ -18,11 +18,11 @@ namespace Gwk
 {
     namespace ControlsInternal
     {
-        class GWK_EXPORT Dragger : public Controls::Base
+        class GWK_EXPORT Dragger : public ControlClass<Dragger, Controls::Base>
         {
         public:
 
-            GWK_CONTROL(Dragger, Controls::Base);
+            Dragger(Gwk::Controls::Base *parent, const Gwk::String &name="");
 
             void OnMouseMoved(int x, int y, int deltaX, int deltaY) override;
 

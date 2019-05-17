@@ -11,7 +11,7 @@
 using namespace Gwk;
 using namespace Gwk::Controls;
 
-GWK_CONTROL_CONSTRUCTOR(RadioButton)
+RadioButton::RadioButton(Gwk::Controls::Base *parent, const Gwk::String &name):BaseClass(parent, name)
 {
     SetSize(15, 15);
     SetMouseInputEnabled(true);

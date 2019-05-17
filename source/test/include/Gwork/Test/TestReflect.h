@@ -19,10 +19,10 @@ namespace Gwk {
         /// Here we test Ponder reflection
         ///  - We use the runtime API of Ponder to create controls.
         //
-        class TestReflect : public TestCategory
+        class TestReflect : public ControlClass<TestReflect, TestCategory>
         {
         public:
-            GWK_CONTROL(TestReflect, TestCategory);
+            TestReflect(Gwk::Controls::Base *parent, const Gwk::String &name="");
     
         private:
 

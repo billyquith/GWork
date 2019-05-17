@@ -19,11 +19,11 @@ namespace Gwk
 {
     namespace Controls
     {
-        class GWK_EXPORT CheckBox : public Button
+        class GWK_EXPORT CheckBox : public ControlClass<CheckBox, Button>
         {
         public:
 
-            GWK_CONTROL(CheckBox, Button);
+            CheckBox(Gwk::Controls::Base *parent, const Gwk::String &name="");
 
             void Render(Skin::Base* skin) override;
             void OnPress(Event::Info) override;
@@ -57,11 +57,11 @@ namespace Gwk
         };
 
 
-        class GWK_EXPORT CheckBoxWithLabel : public Base
+        class GWK_EXPORT CheckBoxWithLabel : public ControlClass<CheckBoxWithLabel, Base>
         {
         public:
 
-            GWK_CONTROL_INLINE(CheckBoxWithLabel, Base)
+            CheckBoxWithLabel(Gwk::Controls::Base *parent, const Gwk::String &name=""):BaseClass(parent, name)
             {
                 SetSize(200, 19);
                 m_checkbox = new CheckBox(this);

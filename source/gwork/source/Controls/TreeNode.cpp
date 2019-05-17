@@ -13,9 +13,10 @@
 using namespace Gwk;
 using namespace Gwk::Controls;
 
-class OpenToggleButton : public Button
+class GWK_EXPORT OpenToggleButton:public ControlClass<OpenToggleButton, Button>
 {
-    GWK_CONTROL_INLINE(OpenToggleButton, Button)
+public:
+    OpenToggleButton(Gwk::Controls::Base *parent, const Gwk::String &name=""):BaseClass(parent, name)
     {
         SetIsToggle(true);
         SetTabable(false);
@@ -33,9 +34,10 @@ class OpenToggleButton : public Button
 };
 
 
-class TreeNodeText : public Button
+class GWK_EXPORT TreeNodeText:public ControlClass<TreeNodeText, Button>
 {
-    GWK_CONTROL_INLINE(TreeNodeText, Button)
+public:
+    TreeNodeText(Gwk::Controls::Base *parent, const Gwk::String &name=""):BaseClass(parent, name)
     {
         SetAlignment(Position::Left|Position::CenterV);
         SetShouldDrawBackground(false);
@@ -61,7 +63,7 @@ class TreeNodeText : public Button
 
 const int TreeIndentation = 14;
 
-GWK_CONTROL_CONSTRUCTOR(TreeNode)
+TreeNode::TreeNode(Gwk::Controls::Base *parent, const Gwk::String &name):BaseClass(parent, name)
 {
     m_treeControl = nullptr;
     m_toggleButton = new OpenToggleButton(this);

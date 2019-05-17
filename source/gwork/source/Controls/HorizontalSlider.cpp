@@ -14,7 +14,7 @@ using namespace Gwk::Controls;
 using namespace Gwk::ControlsInternal;
 
 
-GWK_CONTROL_CONSTRUCTOR(HorizontalSlider)
+HorizontalSlider::HorizontalSlider(Gwk::Controls::Base *parent, const Gwk::String &name):BaseClass(parent, name)
 {
     m_sliderBar->SetHorizontal(true);
 }

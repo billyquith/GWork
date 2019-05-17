@@ -13,7 +13,7 @@
 using namespace Gwk;
 using namespace Gwk::Controls;
 
-GWK_CONTROL_CONSTRUCTOR(MenuStrip)
+MenuStrip::MenuStrip(Gwk::Controls::Base *parent, const Gwk::String &name):BaseClass(parent, name)
 {
     SetBounds(0, 0, 200, 22);
     Dock(Position::Top);

@@ -21,11 +21,11 @@ namespace Gwk
     {
         namespace Property
         {
-            class GWK_EXPORT Base : public Gwk::Controls::Base
+            class GWK_EXPORT Base : public ControlClass<Base, Gwk::Controls::Base>
             {
             public:
 
-                GWK_CONTROL_INLINE(Base, Gwk::Controls::Base)
+                Base(Gwk::Controls::Base *parent, const Gwk::String &name=""):BaseClass(parent, name)
                 {
                     SetHeight(17);
                 }

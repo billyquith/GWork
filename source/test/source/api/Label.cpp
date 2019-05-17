@@ -11,11 +11,11 @@
 namespace Gwk {
 namespace Test {
 
-class Label : public TestUnit
+class Label:public ControlClass<Label, TestUnit>
 {
 public:
 
-    GWK_CONTROL_INLINE(Label, TestUnit)
+    Label(Gwk::Controls::Base *parent, const Gwk::String &name=""):BaseClass(parent, name)
     {
         {
             Gwk::Controls::Label* label = new Gwk::Controls::Label(this);

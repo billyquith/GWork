@@ -20,11 +20,11 @@ namespace Gwk
     {
         class Menu;
 
-        class GWK_EXPORT MenuItem : public Button
+        class GWK_EXPORT MenuItem : public ControlClass<MenuItem, Button>
         {
         public:
 
-            GWK_CONTROL(MenuItem, Button);
+            MenuItem(Gwk::Controls::Base *parent, const Gwk::String &name="");
 
             virtual ~MenuItem();
 

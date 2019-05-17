@@ -13,11 +13,11 @@
 namespace Gwk {
 namespace Test {
 
-class Slider : public TestUnit
+class Slider:public ControlClass<Slider, TestUnit>
 {
 public:
 
-    GWK_CONTROL_INLINE(Slider, TestUnit)
+    Slider(Gwk::Controls::Base *parent, const Gwk::String &name=""):BaseClass(parent, name)
     {
         {
             Gwk::Controls::HorizontalSlider* slider = new Gwk::Controls::HorizontalSlider(this);

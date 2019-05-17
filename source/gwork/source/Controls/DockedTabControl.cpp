@@ -16,7 +16,7 @@
 using namespace Gwk;
 using namespace Gwk::Controls;
 
-GWK_CONTROL_CONSTRUCTOR(DockedTabControl)
+DockedTabControl::DockedTabControl(Gwk::Controls::Base *parent, const Gwk::String &name):BaseClass(parent, name)
 {
     m_windowControl = nullptr;
     Dock(Position::Fill);

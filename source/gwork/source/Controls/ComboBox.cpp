@@ -14,11 +14,11 @@ using namespace Gwk;
 using namespace Gwk::Controls;
 using namespace Gwk::ControlsInternal;
 
-class GWK_EXPORT DownArrow : public Controls::Base
+class GWK_EXPORT DownArrow:public ControlClass<DownArrow, Controls::Base>
 {
 public:
 
-    GWK_CONTROL_INLINE(DownArrow, Controls::Base)
+    DownArrow(Gwk::Controls::Base *parent, const Gwk::String &name=""):BaseClass(parent, name)
     {
         SetMouseInputEnabled(false);
         SetSize(15, 15);
@@ -45,7 +45,7 @@ protected:
 };
 
 
-GWK_CONTROL_CONSTRUCTOR(ComboBox)
+ComboBox::ComboBox(Gwk::Controls::Base *parent, const Gwk::String &name):BaseClass(parent, name)
 {
     SetSize(100, 20);
 

@@ -22,11 +22,11 @@ namespace Gwk
 {
     namespace Controls
     {
-        class GWK_EXPORT ScrollControl : public Base
+        class GWK_EXPORT ScrollControl : public ControlClass<ScrollControl, Base>
         {
         public:
 
-            GWK_CONTROL(ScrollControl, Base);
+            ScrollControl(Gwk::Controls::Base *parent, const Gwk::String &name="");
 
             void Layout(Skin::Base* skin) override;
             void Render(Skin::Base* skin) override;

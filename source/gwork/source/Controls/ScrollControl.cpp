@@ -16,7 +16,7 @@ using namespace Gwk;
 using namespace Gwk::Controls;
 using namespace Gwk::ControlsInternal;
 
-GWK_CONTROL_CONSTRUCTOR(ScrollControl)
+ScrollControl::ScrollControl(Gwk::Controls::Base *parent, const Gwk::String &name):BaseClass(parent, name)
 {
     SetMouseInputEnabled(false);
     m_verticalScrollBar = new VerticalScrollBar(this);

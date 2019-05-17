@@ -42,7 +42,7 @@ GWK_DECLARE_TEST(CollapsibleList);
 GWK_DECLARE_TEST(ColorPicker);
 
 
-GWK_CONTROL_CONSTRUCTOR(TestAPI)
+TestAPI::TestAPI(Gwk::Controls::Base *parent, const Gwk::String &name):BaseClass(parent, name)
 {
     GWK_IF_ALLOC_STATS( Platform::AllocStatsAddMark("API test"); )
 

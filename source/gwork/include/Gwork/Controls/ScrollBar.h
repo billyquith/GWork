@@ -25,11 +25,11 @@ namespace Gwk
 {
     namespace Controls
     {
-        class GWK_EXPORT BaseScrollBar : public Base
+        class GWK_EXPORT BaseScrollBar : public ControlClass<BaseScrollBar, Base>
         {
         public:
 
-            GWK_CONTROL(BaseScrollBar, Base);
+            BaseScrollBar(Gwk::Controls::Base *parent, const Gwk::String &name="");
 
             void Render(Skin::Base* skin) override;
 

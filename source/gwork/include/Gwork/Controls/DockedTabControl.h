@@ -16,11 +16,11 @@ namespace Gwk
 {
     namespace Controls
     {
-        class GWK_EXPORT DockedTabControl : public TabControl
+        class GWK_EXPORT DockedTabControl : public ControlClass<DockedTabControl, TabControl>
         {
         public:
 
-            GWK_CONTROL(DockedTabControl, TabControl);
+            DockedTabControl(Gwk::Controls::Base *parent, const Gwk::String &name="");
 
             void SetShowTitlebar(bool bShow)
             {

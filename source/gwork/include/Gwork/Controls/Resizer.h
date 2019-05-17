@@ -19,11 +19,11 @@ namespace Gwk
 {
     namespace ControlsInternal
     {
-        class GWK_EXPORT Resizer : public Dragger
+        class GWK_EXPORT Resizer : public ControlClass<Resizer, Dragger>
         {
         public:
 
-            GWK_CONTROL(Resizer, Dragger);
+            Resizer(Gwk::Controls::Base *parent, const Gwk::String &name="");
 
             void OnMouseMoved(int x, int y, int deltaX, int deltaY) override;
             virtual void SetResizeDir(Position dir);

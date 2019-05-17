@@ -17,9 +17,10 @@ namespace Gwk
 {
     namespace Controls
     {
-        class GWK_EXPORT NumericUpDownButton_Up : public Button
+        class GWK_EXPORT NumericUpDownButton_Up : public ControlClass<NumericUpDownButton_Up, Button>
         {
-            GWK_CONTROL_INLINE(NumericUpDownButton_Up, Button)
+        public:
+            NumericUpDownButton_Up(Gwk::Controls::Base *parent, const Gwk::String &name=""):BaseClass(parent, name)
             {
                 SetSize(7, 7);
             }
@@ -32,9 +33,10 @@ namespace Gwk
         };
 
 
-        class GWK_EXPORT NumericUpDownButton_Down : public Button
+        class GWK_EXPORT NumericUpDownButton_Down : public ControlClass<NumericUpDownButton_Down, Button>
         {
-            GWK_CONTROL_INLINE(NumericUpDownButton_Down, Button)
+        public:
+            NumericUpDownButton_Down(Gwk::Controls::Base *parent, const Gwk::String &name=""):BaseClass(parent, name)
             {
                 SetSize(7, 7);
             }
@@ -47,11 +49,11 @@ namespace Gwk
         };
 
 
-        class GWK_EXPORT NumericUpDown : public TextBoxNumeric
+        class GWK_EXPORT NumericUpDown : public ControlClass<NumericUpDown, TextBoxNumeric>
         {
         public:
 
-            GWK_CONTROL(NumericUpDown, TextBoxNumeric);
+            NumericUpDown(Gwk::Controls::Base *parent, const Gwk::String &name="");
 
             virtual void SetMin(int i);
             virtual void SetMax(int i);

@@ -12,6 +12,8 @@
 #include <Gwork/Controls/Button.h>
 #include <Gwork/Utility.h>
 
+#include <type_traits>
+
 namespace Gwk
 {
     namespace Controls
@@ -20,11 +22,12 @@ namespace Gwk
         {
             class Table;
 
-            class GWK_EXPORT TableRow : public Base
+            class GWK_EXPORT TableRow:public ControlClass<TableRow, Base>
             {
                 static const int MaxColumns = 16;
 
-                GWK_CONTROL_INLINE(TableRow, Base)
+            public:
+                TableRow(Gwk::Controls::Base *parent, const Gwk::String &name=""):BaseClass(parent, name)
                 {
                     SetEven(false);
 
@@ -168,11 +171,11 @@ namespace Gwk
             };
 
 
-            class GWK_EXPORT Table : public Base
+            class GWK_EXPORT Table : public ControlClass<Table, Base>
             {
             public:
 
-                GWK_CONTROL_INLINE(Table, Base)
+                Table(Gwk::Controls::Base *parent, const Gwk::String &name=""):BaseClass(parent, name)
                 {
                     m_columnCount = 1;
                     m_defaultRowHeight = 22;

@@ -19,11 +19,11 @@ namespace Gwk
     {
         // class TabControl;
 
-        class GWK_EXPORT TabStrip : public Base
+        class GWK_EXPORT TabStrip : public ControlClass<TabStrip, Base>
         {
         public:
 
-            GWK_CONTROL(TabStrip, Base);
+            TabStrip(Gwk::Controls::Base *parent, const Gwk::String &name="");
 
             void Layout(Skin::Base* skin) override;
 

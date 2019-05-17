@@ -18,11 +18,11 @@ namespace Gwk
     {
         class TabControl;
 
-        class GWK_EXPORT TabButton : public Button
+        class GWK_EXPORT TabButton : public ControlClass<TabButton, Button>
         {
         public:
 
-            GWK_CONTROL(TabButton, Button);
+            TabButton(Gwk::Controls::Base *parent, const Gwk::String &name="");
             void Render(Skin::Base* skin) override;
             void Layout(Skin::Base* skin) override;
 

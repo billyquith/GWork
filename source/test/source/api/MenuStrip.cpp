@@ -11,11 +11,11 @@
 namespace Gwk {
 namespace Test {
 
-class MenuStrip : public TestUnit
+class MenuStrip:public ControlClass<MenuStrip, TestUnit>
 {
 public:
 
-    GWK_CONTROL_INLINE(MenuStrip, TestUnit)
+    MenuStrip(Gwk::Controls::Base *parent, const Gwk::String &name=""):BaseClass(parent, name)
     {
         Dock(Position::Fill);
         Gwk::Controls::MenuStrip* menu = new Gwk::Controls::MenuStrip(this);

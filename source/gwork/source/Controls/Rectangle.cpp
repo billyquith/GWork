@@ -12,7 +12,7 @@ using namespace Gwk;
 using namespace Gwk::Controls;
 
 
-GWK_CONTROL_CONSTRUCTOR(Rectangle)
+Rectangle::Rectangle(Gwk::Controls::Base *parent, const Gwk::String &name):BaseClass(parent, name)
 {
     m_color = Gwk::Color(255, 255, 255, 255);
 }

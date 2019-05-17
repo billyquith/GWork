@@ -17,9 +17,10 @@ namespace Gwk
 {
     namespace Controls
     {
-        class ToolBarButton : public Gwk::Controls::Button
+        class ToolBarButton : public ControlClass<ToolBarButton, Gwk::Controls::Button>
         {
-            GWK_CONTROL_INLINE(ToolBarButton, Gwk::Controls::Button)
+        public:
+            ToolBarButton(Gwk::Controls::Base *parent, const Gwk::String &name=""):BaseClass(parent, name)
             {
                 SetSize(20, 20);
                 Dock(Position::Left);
@@ -33,9 +34,9 @@ namespace Gwk
         };
 
 
-        class ToolBarStrip : public Base
+        class ToolBarStrip : public ControlClass<ToolBarStrip, Base>
         {
-            GWK_CONTROL_INLINE(ToolBarStrip, Base)
+            ToolBarStrip(Gwk::Controls::Base *parent, const Gwk::String &name=""):BaseClass(parent, name)
             {
                 SetSize(25, 25);
                 SetPadding(Padding(2, 2, 2, 2));

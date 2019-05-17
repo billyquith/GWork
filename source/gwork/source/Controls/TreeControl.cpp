@@ -14,7 +14,7 @@
 using namespace Gwk;
 using namespace Gwk::Controls;
 
-GWK_CONTROL_CONSTRUCTOR(TreeControl)
+TreeControl::TreeControl(Gwk::Controls::Base *parent, const Gwk::String &name):BaseClass(parent, name)
 {
     m_treeControl = this;
     m_toggleButton->DelayedDelete();

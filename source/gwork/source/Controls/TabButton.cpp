@@ -17,7 +17,7 @@ using namespace Gwk;
 using namespace Gwk::Controls;
 
 
-GWK_CONTROL_CONSTRUCTOR(TabButton)
+TabButton::TabButton(Gwk::Controls::Base *parent, const Gwk::String &name):BaseClass(parent, name)
 {
     m_page = nullptr;
     m_control = nullptr;

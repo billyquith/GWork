@@ -15,7 +15,7 @@ using namespace Gwk::ControlsInternal;
 
 // Actual bar representing height of parent
 
-GWK_CONTROL_CONSTRUCTOR(ScrollBarBar)
+ScrollBarBar::ScrollBarBar(Gwk::Controls::Base *parent, const Gwk::String &name):BaseClass(parent, name)
 {
     RestrictToParent(true);
     SetTarget(this);

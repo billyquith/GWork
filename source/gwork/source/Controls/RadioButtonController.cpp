@@ -14,7 +14,7 @@ using namespace Gwk;
 using namespace Gwk::Controls;
 
 
-GWK_CONTROL_CONSTRUCTOR(RadioButtonController)
+RadioButtonController::RadioButtonController(Gwk::Controls::Base *parent, const Gwk::String &name):BaseClass(parent, name)
 {
     m_selected = nullptr;
     SetTabable(false);

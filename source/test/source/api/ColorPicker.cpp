@@ -12,11 +12,11 @@
 namespace Gwk {
 namespace Test {
 
-class ColorPicker : public TestUnit
+class ColorPicker:public ControlClass<ColorPicker, TestUnit>
 {
 public:
     
-    GWK_CONTROL_INLINE(ColorPicker, TestUnit)
+    ColorPicker(Gwk::Controls::Base *parent, const Gwk::String &name=""):BaseClass(parent, name)
     {
         Controls::ColorPicker* ctrl = new Controls::ColorPicker(this);
         ctrl->SetBounds(0, 10, 250, 150);

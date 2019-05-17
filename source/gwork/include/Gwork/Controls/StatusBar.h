@@ -16,11 +16,11 @@ namespace Gwk
 {
     namespace Controls
     {
-        class StatusBar : public Controls::Label
+        class StatusBar : public ControlClass<StatusBar, Controls::Label>
         {
         public:
 
-            GWK_CONTROL_INLINE(StatusBar, Controls::Label)
+            StatusBar(Gwk::Controls::Base *parent, const Gwk::String &name=""):BaseClass(parent, name)
             {
                 SetHeight(22);
                 Dock(Position::Bottom);

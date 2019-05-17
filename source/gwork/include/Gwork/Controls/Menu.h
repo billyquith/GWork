@@ -20,11 +20,11 @@ namespace Gwk
     {
         class MenuItem;
 
-        class GWK_EXPORT Menu : public ScrollControl
+        class GWK_EXPORT Menu : public ControlClass<Menu, ScrollControl>
         {
         public:
 
-            GWK_CONTROL(Menu, ScrollControl);
+            Menu(Gwk::Controls::Base *parent, const Gwk::String &name="");
 
             void Render(Skin::Base* skin) override;
             void RenderUnder(Skin::Base* skin) override;
@@ -86,11 +86,11 @@ namespace Gwk
         };
 
 
-        class GWK_EXPORT MenuDivider : public Base
+        class GWK_EXPORT MenuDivider : public ControlClass<MenuDivider, Base>
         {
         public:
 
-            GWK_CONTROL_INLINE(MenuDivider, Base)
+            MenuDivider(Gwk::Controls::Base *parent, const Gwk::String &name=""):BaseClass(parent, name)
             {
                 SetHeight(1);
             }

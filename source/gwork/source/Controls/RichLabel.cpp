@@ -17,7 +17,7 @@ using namespace Gwk::Controls;
 const unsigned char Type_Text = 0;
 const unsigned char Type_Newline = 1;
 
-GWK_CONTROL_CONSTRUCTOR(RichLabel)
+RichLabel::RichLabel(Gwk::Controls::Base *parent, const Gwk::String &name):BaseClass(parent, name)
 {
     m_bNeedsRebuild = false;
 }

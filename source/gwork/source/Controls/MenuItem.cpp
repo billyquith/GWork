@@ -14,11 +14,11 @@
 using namespace Gwk;
 using namespace Gwk::Controls;
 
-class GWK_EXPORT RightArrow : public Controls::Base
+class GWK_EXPORT RightArrow:public ControlClass<RightArrow, Controls::Base>
 {
 public:
 
-    GWK_CONTROL_INLINE(RightArrow, Controls::Base)
+    RightArrow(Gwk::Controls::Base *parent, const Gwk::String &name=""):BaseClass(parent, name)
     {
         SetMouseInputEnabled(false);
     }
@@ -31,7 +31,7 @@ public:
 };
 
 
-GWK_CONTROL_CONSTRUCTOR(MenuItem)
+MenuItem::MenuItem(Gwk::Controls::Base *parent, const Gwk::String &name):BaseClass(parent, name)
 {
     m_menu = nullptr;
     m_bOnStrip = false;

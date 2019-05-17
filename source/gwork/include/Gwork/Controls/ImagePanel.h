@@ -16,11 +16,11 @@
 namespace Gwk {
     namespace Controls {
         
-        class GWK_EXPORT ImagePanel : public Controls::Base
+        class ImagePanel:public ControlClass<ImagePanel, Controls::Base>
         {
         public:
 
-            GWK_CONTROL_INLINE(ImagePanel, Controls::Base)
+            ImagePanel(Gwk::Controls::Base *parent, const Gwk::String &name=""):BaseClass(parent, name)
             {
                 SetUV(0, 0, 1, 1);
                 SetMouseInputEnabled(false);

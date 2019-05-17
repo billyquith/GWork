@@ -30,7 +30,7 @@ namespace Gwk
         //
         //! This is the base class for all Gwork controls.
         //
-        class GWK_EXPORT Base : public Event::Handler
+        class GWK_EXPORT Base:public Event::Handler
         {
         public:
 
@@ -639,40 +639,80 @@ namespace Gwk
         return gwk_cast<T>(FindChildByName(name, bRecursive));
     }
 
-#define GWK_DYNAMIC(THISNAME, BASENAME) \
-    static const char* GetIdentifier()                                  \
-    {                                                                   \
-        static const char* ident = #BASENAME ":" #THISNAME;             \
-        return ident;                                                   \
-    }                                                                   \
-    Gwk::Controls::Base* DynamicCast(const char* Variable) override \
-    {                                                                   \
-        if (GetIdentifier() == Variable)                                \
-            return this;                                                \
-                                                                        \
-        return ParentClass::DynamicCast(Variable);                        \
+template <typename _Class>
+struct TypeName
+{
+    static std::string get()
+    {
+        std::string fullName=typeid(_Class).name();
+
+        size_t beginPos=0;
+        size_t classPos=fullName.find("class");
+        size_t nameSpacePos=fullName.find_last_of("::");
+
+        if(classPos!=std::string::npos)
+            beginPos=classPos+6;
+        if(nameSpacePos!=std::string::npos)
+        {
+            if(nameSpacePos+1 > beginPos)
+                beginPos=nameSpacePos+1;
+        }
+        return fullName.substr(beginPos);
+    }
+};
+
+template<typename _Class, typename _BaseClass>
+class Class:public _BaseClass
+{
+public:
+    template<typename ..._Args>
+    Class(_Args... args):_BaseClass(args...) {}
+
+    typedef _BaseClass ParentClass;
+    typedef _Class ThisClass;
+};
+
+template<typename _Class, typename _BaseClass>
+class DynamicClass:public Class<_Class, _BaseClass>
+{
+public:
+    template<typename ..._Args>
+    DynamicClass(_Args... args):Class<_Class, _BaseClass>(args...) {}
+
+    static const char *GetIdentifier()
+    {
+        std::string typeName=TypeName<_BaseClass>::get()+":"+TypeName<_Class>::get();
+        static const char *ident=typeName.c_str();
+        return ident;
     }
 
-#define GWK_CLASS(THISNAME, BASENAME) \
-    typedef BASENAME ParentClass; \
-    typedef THISNAME ThisClass;
+    Gwk::Controls::Base *DynamicCast(const char* Variable) override
+    {
+        if(GetIdentifier()==Variable)
+            return this;
+        return _BaseClass::DynamicCast(Variable);
+    }
+};
 
-// To be placed in the controls .h definition.
-#define GWK_CONTROL(THISNAME, BASENAME) \
-public: \
-    GWK_CLASS(THISNAME, BASENAME)  \
-    GWK_DYNAMIC(THISNAME, BASENAME) \
-    static  const char* GetTypeNameStatic() { return #THISNAME; } \
-    const char* GetTypeName() const override { return GetTypeNameStatic(); } \
-    const char* GetParentTypeName() const override { return ParentClass::GetTypeNameStatic(); } \
-    THISNAME(Gwk::Controls::Base* parent, const Gwk::String& name = "")
+template<typename _Class, typename _BaseClass>
+class ControlClass:public DynamicClass<_Class, _BaseClass>
+{
+public:
+    typedef ControlClass<_Class, _BaseClass> BaseClass;
 
-#define GWK_CONTROL_INLINE(THISNAME, BASENAME) \
-    GWK_CONTROL(THISNAME, BASENAME) : ParentClass(parent, name)
+    template<typename ..._Args>
+    ControlClass(_Args... args):DynamicClass<_Class, _BaseClass>(args...) {}
 
-#define GWK_CONTROL_CONSTRUCTOR(THISNAME) \
-    THISNAME::THISNAME(Gwk::Controls::Base* parent, const Gwk::String& name) \
-        : ParentClass(parent, name)
+    static const char* GetTypeNameStatic() { return m_className.c_str(); }
+    const char* GetTypeName() const override { return GetTypeNameStatic(); }
+    const char* GetParentTypeName() const override { return _BaseClass::GetTypeNameStatic(); }
+
+private:
+    static std::string m_className;
+};
+
+template<typename _Class, typename _BaseClass>
+std::string ControlClass<_Class, _BaseClass>::m_className=TypeName<_Class>::get();
 
 } // namespace Gwk
 

@@ -19,9 +19,10 @@ namespace Gwk
 {
     namespace ControlsInternal
     {
-        class GWK_EXPORT SliderBar : public ControlsInternal::Dragger
+        class GWK_EXPORT SliderBar : public ControlClass<SliderBar, ControlsInternal::Dragger>
         {
-            GWK_CONTROL(SliderBar, ControlsInternal::Dragger);
+        public:
+            SliderBar(Gwk::Controls::Base *parent, const Gwk::String &name="");
 
             void Render(Skin::Base* skin) override;
             virtual void SetHorizontal(bool b)
@@ -44,9 +45,10 @@ namespace Gwk
 
     namespace Controls
     {
-        class GWK_EXPORT Slider : public Base
+        class GWK_EXPORT Slider : public ControlClass<Slider, Base>
         {
-            GWK_CONTROL(Slider, Base);
+        public:
+            Slider(Gwk::Controls::Base *parent, const Gwk::String &name="");
 
             void Render(Skin::Base* skin) override = 0;
             void Layout(Skin::Base* skin) override;

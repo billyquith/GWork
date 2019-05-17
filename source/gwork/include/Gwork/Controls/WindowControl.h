@@ -27,11 +27,11 @@ namespace Gwk
     {
         class CloseButton;
 
-        class GWK_EXPORT WindowControl : public ResizableControl
+        class GWK_EXPORT WindowControl : public ControlClass<WindowControl, ResizableControl>
         {
         public:
 
-            GWK_CONTROL(WindowControl, ResizableControl);
+            WindowControl(Gwk::Controls::Base *parent, const Gwk::String &name="");
 
             virtual ~WindowControl();
             void Render(Skin::Base* skin) override;

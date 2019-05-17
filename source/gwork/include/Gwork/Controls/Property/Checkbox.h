@@ -18,11 +18,11 @@ namespace Gwk
     {
         namespace Property
         {
-            class GWK_EXPORT Checkbox : public Property::Base
+            class GWK_EXPORT Checkbox : public ControlClass<Checkbox, Property::Base>
             {
             public:
 
-                GWK_CONTROL_INLINE(Checkbox, Property::Base)
+                Checkbox(Gwk::Controls::Base *parent, const Gwk::String &name=""):BaseClass(parent, name)
                 {
                     m_checkbox = new Gwk::Controls::CheckBox(this);
                     m_checkbox->SetShouldDrawBackground(false);

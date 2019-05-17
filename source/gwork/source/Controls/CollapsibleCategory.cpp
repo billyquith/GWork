@@ -14,9 +14,10 @@ namespace Gwk {
 using namespace Gwk::Controls;
 
 
-class CategoryButton : public Button
+class GWK_EXPORT CategoryButton:public ControlClass<CategoryButton, Button>
 {
-    GWK_CONTROL_INLINE(CategoryButton, Button)
+public:
+    CategoryButton(Gwk::Controls::Base *parent, const Gwk::String &name=""):BaseClass(parent, name)
     {
         SetAlignment(Position::Left | Position::CenterV);
         m_bAlt = false;
@@ -72,9 +73,10 @@ class CategoryButton : public Button
 };
 
 
-class CategoryHeaderButton : public Button
+class GWK_EXPORT CategoryHeaderButton:public ControlClass<CategoryHeaderButton, Button>
 {
-    GWK_CONTROL_INLINE(CategoryHeaderButton, Button)
+public:
+    CategoryHeaderButton(Gwk::Controls::Base *parent, const Gwk::String &name=""):BaseClass(parent, name)
     {
         SetShouldDrawBackground(false);
         SetIsToggle(true);
@@ -92,7 +94,7 @@ class CategoryHeaderButton : public Button
 };
 
 
-GWK_CONTROL_CONSTRUCTOR(CollapsibleCategory)
+CollapsibleCategory::CollapsibleCategory(Gwk::Controls::Base *parent, const Gwk::String &name):BaseClass(parent, name)
 {
     m_list = nullptr;
     m_button = new CategoryHeaderButton(this);

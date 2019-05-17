@@ -24,11 +24,11 @@ namespace Gwk
     {
         class PropertyRow;
 
-        class GWK_EXPORT Properties : public Base
+        class GWK_EXPORT Properties : public ControlClass<Properties, Base>
         {
         public:
 
-            GWK_CONTROL(Properties, Base);
+            Properties(Gwk::Controls::Base *parent, const Gwk::String &name="");
 
             void PostLayout(Gwk::Skin::Base* skin) override;
 
@@ -50,11 +50,11 @@ namespace Gwk
         };
 
 
-        class GWK_EXPORT PropertyRow : public Base
+        class GWK_EXPORT PropertyRow : public ControlClass<PropertyRow, Base>
         {
         public:
 
-            GWK_CONTROL(PropertyRow, Base);
+            PropertyRow(Gwk::Controls::Base *parent, const Gwk::String &name="");
 
             virtual Label* GetLabel()
             {

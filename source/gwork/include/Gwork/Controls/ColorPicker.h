@@ -18,11 +18,11 @@ namespace Gwk
 {
     namespace ControlsInternal
     {
-        class GWK_EXPORT ColorDisplay : public Controls::Base
+        class ColorDisplay:public ControlClass<ColorDisplay, Controls::Base>
         {
         public:
 
-            GWK_CONTROL_INLINE(ColorDisplay, Controls::Base)
+            ColorDisplay(Gwk::Controls::Base *parent, const Gwk::String &name=""):BaseClass(parent, name)
             {
                 SetSize(32, 32);
                 m_color = Color(255, 0, 0, 255);
@@ -55,11 +55,11 @@ namespace Gwk
 
     namespace Controls
     {
-        class GWK_EXPORT ColorPicker : public Base
+        class GWK_EXPORT ColorPicker:public ControlClass<ColorPicker, Base>
         {
         public:
 
-            GWK_CONTROL(ColorPicker, Base);
+            ColorPicker(Gwk::Controls::Base *parent, const Gwk::String &name="");
 
             virtual void SetAlphaVisible(bool visible);
 

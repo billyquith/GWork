@@ -12,7 +12,7 @@
 using namespace Gwk;
 using namespace Gwk::Controls;
 
-GWK_CONTROL_CONSTRUCTOR(VerticalScrollBar)
+VerticalScrollBar::VerticalScrollBar(Gwk::Controls::Base *parent, const Gwk::String &name):BaseClass(parent, name)
 {
     m_bar->SetVertical();
     m_scrollButton[SCROLL_BUTTON_UP]->SetDirectionUp();

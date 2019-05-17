@@ -19,11 +19,11 @@ namespace Gwk
 {
     namespace Controls
     {
-        class GWK_EXPORT Rectangle : public Controls::Base
+        class GWK_EXPORT Rectangle : public ControlClass<Rectangle, Controls::Base>
         {
         public:
 
-            GWK_CONTROL(Rectangle, Controls::Base);
+            Rectangle(Gwk::Controls::Base *parent, const Gwk::String &name="");
 
             void Render(Skin::Base* skin) override;
 

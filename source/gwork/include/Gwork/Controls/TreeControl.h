@@ -16,11 +16,11 @@ namespace Gwk
 {
     namespace Controls
     {
-        class GWK_EXPORT TreeControl : public TreeNode
+        class GWK_EXPORT TreeControl : public ControlClass<TreeControl, TreeNode>
         {
         public:
 
-            GWK_CONTROL(TreeControl, TreeNode);
+            TreeControl(Gwk::Controls::Base *parent, const Gwk::String &name="");
 
             void Render(Skin::Base* skin) override;
 

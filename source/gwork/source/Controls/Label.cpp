@@ -13,7 +13,7 @@
 using namespace Gwk;
 using namespace Gwk::Controls;
 
-GWK_CONTROL_CONSTRUCTOR(Label)
+Label::Label(Gwk::Controls::Base *parent, const Gwk::String &name):BaseClass(parent, name)
 {
     m_createdFont = nullptr;
     m_text = new ControlsInternal::Text(this);

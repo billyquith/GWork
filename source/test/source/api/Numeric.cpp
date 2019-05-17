@@ -11,11 +11,11 @@
 namespace Gwk {
 namespace Test {
 
-class Numeric : public TestUnit
+class Numeric:public ControlClass<Numeric, TestUnit>
 {
 public:
 
-    GWK_CONTROL_INLINE(Numeric, TestUnit)
+    Numeric(Gwk::Controls::Base *parent, const Gwk::String &name=""):BaseClass(parent, name)
     {
         Controls::NumericUpDown* ctrl = new Controls::NumericUpDown(this);
         ctrl->SetBounds(10, 10, 50, 20);

@@ -11,11 +11,11 @@
 namespace Gwk {
 namespace Test {
 
-class ScrollControl : public TestUnit
+class ScrollControl:public ControlClass<ScrollControl, TestUnit>
 {
 public:
 
-    GWK_CONTROL_INLINE(ScrollControl, TestUnit)
+    ScrollControl(Gwk::Controls::Base *parent, const Gwk::String &name=""):BaseClass(parent, name)
     {
         {
             Gwk::Controls::ScrollControl* ctrl = new Gwk::Controls::ScrollControl(this);

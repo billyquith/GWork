@@ -19,11 +19,11 @@ namespace Gwk
     {
         namespace Layout
         {
-            class GWK_EXPORT CalcPosition : public Base
+            class GWK_EXPORT CalcPosition : public ControlClass<CalcPosition, Base>
             {
             public:
 
-                GWK_CONTROL_INLINE(CalcPosition, Base)
+                CalcPosition(Gwk::Controls::Base *parent, const Gwk::String &name=""):BaseClass(parent, name)
                 {
                     SetPosition(Position::Left | Position::Top);
                 }
@@ -54,9 +54,10 @@ namespace Gwk
             };
 
 
-            class GWK_EXPORT Center : public CalcPosition
+            class GWK_EXPORT Center : public ControlClass<Center, CalcPosition>
             {
-                GWK_CONTROL_INLINE(Center, CalcPosition)
+            public:
+                Center(Gwk::Controls::Base *parent, const Gwk::String &name=""):BaseClass(parent, name)
                 {
                     SetPosition(Position::Center);
                 }

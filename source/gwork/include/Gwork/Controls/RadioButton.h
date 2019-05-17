@@ -21,9 +21,10 @@ namespace Gwk
 {
     namespace Controls
     {
-        class GWK_EXPORT RadioButton : public CheckBox
+        class GWK_EXPORT RadioButton : public ControlClass<RadioButton, CheckBox>
         {
-            GWK_CONTROL(RadioButton, CheckBox);
+        public:
+            RadioButton(Gwk::Controls::Base *parent, const Gwk::String &name="");
             void Render(Skin::Base* skin) override;
 
         private:
@@ -37,11 +38,11 @@ namespace Gwk
         };
 
 
-        class GWK_EXPORT LabeledRadioButton : public Base
+        class GWK_EXPORT LabeledRadioButton : public ControlClass<LabeledRadioButton, Base>
         {
         public:
 
-            GWK_CONTROL_INLINE(LabeledRadioButton, Base)
+            LabeledRadioButton(Gwk::Controls::Base *parent, const Gwk::String &name=""):BaseClass(parent, name)
             {
                 SetSize(200, 19);
                 m_radioButton = new RadioButton(this);

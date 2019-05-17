@@ -25,6 +25,7 @@
 
 
 namespace Gwk {
+
 namespace Controls {
 
 Base::Base(Base* parent, const Gwk::String& Name)

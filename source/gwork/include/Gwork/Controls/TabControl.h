@@ -24,9 +24,10 @@ namespace Gwk
 
     namespace Controls
     {
-        class GWK_EXPORT TabControl : public Base
+        class GWK_EXPORT TabControl : public ControlClass<TabControl, Base>
         {
-            GWK_CONTROL(TabControl, Base);
+        public:
+            TabControl(Gwk::Controls::Base *parent, const Gwk::String &name="");
 
             virtual TabButton* AddPage(const String strText, Controls::Base* page = nullptr);
 

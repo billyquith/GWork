@@ -17,7 +17,7 @@ using namespace Gwk;
 using namespace Gwk::Controls;
 
 
-GWK_CONTROL_CONSTRUCTOR(HSVColorPicker)
+HSVColorPicker::HSVColorPicker(Gwk::Controls::Base *parent, const Gwk::String &name):BaseClass(parent, name)
 {
     SetMouseInputEnabled(true);
     SetSize(256, 64);

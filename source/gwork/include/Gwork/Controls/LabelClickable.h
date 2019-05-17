@@ -16,11 +16,11 @@ namespace Gwk
 {
     namespace Controls
     {
-        class GWK_EXPORT LabelClickable : public Button
+        class GWK_EXPORT LabelClickable : public ControlClass<LabelClickable, Button>
         {
         public:
 
-            GWK_CONTROL(LabelClickable, Button);
+            LabelClickable(Gwk::Controls::Base *parent, const Gwk::String &name="");
 
             void Render(Skin::Base* skin) override;
             void UpdateColors() override;

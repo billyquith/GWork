@@ -17,11 +17,11 @@ namespace Gwk
 {
     namespace Controls
     {
-        class GWK_EXPORT SplitterBar : public ControlsInternal::Dragger
+        class GWK_EXPORT SplitterBar : public ControlClass<SplitterBar, ControlsInternal::Dragger>
         {
         public:
 
-            GWK_CONTROL(SplitterBar, ControlsInternal::Dragger);
+            SplitterBar(Gwk::Controls::Base *parent, const Gwk::String &name="");
 
             void Layout(Skin::Base* skin) override;
         };

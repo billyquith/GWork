@@ -17,11 +17,11 @@ namespace Gwk
     {
         namespace Layout
         {
-            class GWK_EXPORT Tile : public Base
+            class GWK_EXPORT Tile : public ControlClass<Tile, Base>
             {
             public:
 
-                GWK_CONTROL_INLINE(Tile, Base)
+                Tile(Gwk::Controls::Base *parent, const Gwk::String &name=""):BaseClass(parent, name)
                 {
                     Dock(Position::Fill);
                     SetTileSize(22, 22);

@@ -11,7 +11,7 @@
 using namespace Gwk;
 using namespace Controls;
 
-GWK_CONTROL_CONSTRUCTOR(SplitterBar)
+SplitterBar::SplitterBar(Gwk::Controls::Base *parent, const Gwk::String &name):BaseClass(parent, name)
 {
     SetTarget(this);
     RestrictToParent(true);

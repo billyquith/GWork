@@ -17,7 +17,7 @@ TestFrame* CreateTests(Gwk::Controls::Base *parent)
     return new TestFrame(parent);
 }
 
-GWK_CONTROL_CONSTRUCTOR(TestFrame)
+TestFrame::TestFrame(Gwk::Controls::Base *parent, const Gwk::String &name):BaseClass(parent, name)
 {
     Dock(Position::Fill);
     
@@ -49,7 +49,7 @@ void TestFrame::Render(Skin::Base* skin)
     ParentClass::Render(skin);
 }
 
-GWK_CONTROL_CONSTRUCTOR(TestCategory)
+TestCategory::TestCategory(Gwk::Controls::Base *parent, const Gwk::String &name):BaseClass(parent, name)
 {
     Dock(Position::Fill);
 }

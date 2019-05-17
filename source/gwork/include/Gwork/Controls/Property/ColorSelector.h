@@ -21,9 +21,10 @@ namespace Gwk
     {
         namespace Internal
         {
-            class ColorButton : public Button
+            class ColorButton : public ControlClass<ColorButton, Button>
             {
-                GWK_CONTROL_INLINE(ColorButton, Button)
+            public:
+                ColorButton(Gwk::Controls::Base *parent, const Gwk::String &name=""):BaseClass(parent, name)
                 {
                     m_color = Colors::Black;
                     SetText("");
@@ -48,9 +49,10 @@ namespace Gwk
 
         namespace Property
         {
-            class ColorSelector : public Property::Text
+            class ColorSelector : public ControlClass<ColorSelector, Property::Text>
             {
-                GWK_CONTROL_INLINE(ColorSelector, Property::Text)
+            public:
+                ColorSelector(Gwk::Controls::Base *parent, const Gwk::String &name=""):BaseClass(parent, name)
                 {
                     m_button = new Controls::Internal::ColorButton(m_textBox);
                     m_button->Dock(Position::Right);

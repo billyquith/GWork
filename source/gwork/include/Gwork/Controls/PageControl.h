@@ -16,11 +16,12 @@ namespace Gwk
 {
     namespace Controls
     {
-        class GWK_EXPORT PageControl : public Base
+        class GWK_EXPORT PageControl : public ControlClass<PageControl, Base>
         {
+        public:
             static const unsigned int MaxPages = 64;
 
-            GWK_CONTROL(PageControl, Base);
+            PageControl(Gwk::Controls::Base *parent, const Gwk::String &name="");
 
             virtual void         SetPageCount(unsigned int i);
             virtual unsigned int GetPageCount()

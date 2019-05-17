@@ -19,10 +19,10 @@ namespace Gwk
         //
         //! A control that contains a text item.
         //
-        class GWK_EXPORT Label : public Controls::Base
+        class GWK_EXPORT Label : public ControlClass<Label, Controls::Base>
         {
         public:
-            GWK_CONTROL(Label, Controls::Base);
+            Label(Gwk::Controls::Base *parent, const Gwk::String &name="");
 
             void PreDelete(Gwk::Skin::Base* skin) override;
 

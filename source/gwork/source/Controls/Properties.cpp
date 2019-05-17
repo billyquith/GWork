@@ -14,7 +14,7 @@
 using namespace Gwk;
 using namespace Gwk::Controls;
 
-GWK_CONTROL_CONSTRUCTOR(Properties)
+Properties::Properties(Gwk::Controls::Base *parent, const Gwk::String &name):BaseClass(parent, name)
 {
     m_splitterBar = new SplitterBar(this);
     m_splitterBar->SetPos(80, 0);
@@ -89,9 +89,10 @@ void Properties::Clear()
     }
 }
 
-class PropertyRowLabel : public Label
+class GWK_EXPORT PropertyRowLabel:public ControlClass<PropertyRowLabel, Label>
 {
-    GWK_CONTROL_INLINE(PropertyRowLabel, Label)
+public:
+    PropertyRowLabel(Gwk::Controls::Base *parent, const Gwk::String &name=""):BaseClass(parent, name)
     {
         SetAlignment(Position::Left|Position::CenterV);
         m_propertyRow = nullptr;
@@ -122,7 +123,7 @@ protected:
 };
 
 
-GWK_CONTROL_CONSTRUCTOR(PropertyRow)
+PropertyRow::PropertyRow(Gwk::Controls::Base *parent, const Gwk::String &name):BaseClass(parent, name)
 {
     m_property = nullptr;
     PropertyRowLabel* label = new PropertyRowLabel(this);

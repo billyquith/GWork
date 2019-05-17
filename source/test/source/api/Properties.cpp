@@ -15,11 +15,11 @@
 namespace Gwk {
 namespace Test {
 
-class Properties : public TestUnit
+class Properties:public ControlClass<Properties, TestUnit>
 {
 public:
 
-    GWK_CONTROL_INLINE(Properties, TestUnit)
+    Properties(Gwk::Controls::Base *parent, const Gwk::String &name=""):BaseClass(parent, name)
     {
         {
             Gwk::Controls::Properties* props = new Gwk::Controls::Properties(this);

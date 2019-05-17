@@ -16,7 +16,7 @@ using namespace Gwk;
 using namespace Gwk::Controls;
 
 
-GWK_CONTROL_CONSTRUCTOR(PageControl)
+PageControl::PageControl(Gwk::Controls::Base *parent, const Gwk::String &name):BaseClass(parent, name)
 {
     m_pageCount = 0;
     m_currentPage = 0;

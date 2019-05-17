@@ -18,11 +18,11 @@ namespace Gwk
     {
         namespace Property
         {
-            class GWK_EXPORT ComboBox : public Property::Base
+            class GWK_EXPORT ComboBox : public ControlClass<ComboBox, Property::Base>
             {
             public:
 
-                GWK_CONTROL_INLINE(ComboBox, Property::Base)
+                ComboBox(Gwk::Controls::Base *parent, const Gwk::String &name=""):BaseClass(parent, name)
                 {
                     m_comboBox = new Gwk::Controls::ComboBox(this);
                     m_comboBox->Dock(Position::Fill);

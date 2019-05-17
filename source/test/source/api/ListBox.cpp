@@ -11,11 +11,11 @@
 namespace Gwk {
 namespace Test {
 
-class ListBox : public TestUnit
+class ListBox:public ControlClass<ListBox, TestUnit>
 {
 public:
 
-    GWK_CONTROL_INLINE(ListBox, TestUnit)
+    ListBox(Gwk::Controls::Base *parent, const Gwk::String &name=""):BaseClass(parent, name)
     {
         {
             Gwk::Controls::ListBox* ctrl = new Gwk::Controls::ListBox(this);

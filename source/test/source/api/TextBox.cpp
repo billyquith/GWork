@@ -11,11 +11,11 @@
 namespace Gwk {
 namespace Test {
 
-class TextBox : public TestUnit
+class TextBox:public ControlClass<TextBox, TestUnit>
 {
 public:
 
-    GWK_CONTROL_INLINE(TextBox, TestUnit)
+    TextBox(Gwk::Controls::Base *parent, const Gwk::String &name=""):BaseClass(parent, name)
     {
         {
             Gwk::Controls::TextBox* label = new Gwk::Controls::TextBox(this);

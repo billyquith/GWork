@@ -18,9 +18,10 @@ namespace Gwk
 {
     namespace Controls
     {
-        class GWK_EXPORT WindowCloseButton : public Button
+        class GWK_EXPORT WindowCloseButton : public ControlClass<WindowCloseButton, Button>
         {
-            GWK_CONTROL_INLINE(WindowCloseButton, Button)
+        public:
+            WindowCloseButton(Gwk::Controls::Base *parent, const Gwk::String &name=""):BaseClass(parent, name)
             {
                 m_window = nullptr;
                 SetSize(31, 31);
@@ -49,9 +50,10 @@ namespace Gwk
         };
 
 
-        class GWK_EXPORT WindowMaximizeButton : public WindowCloseButton
+        class GWK_EXPORT WindowMaximizeButton :public ControlClass<WindowMaximizeButton, WindowCloseButton>
         {
-            GWK_CONTROL_INLINE(WindowMaximizeButton, WindowCloseButton)
+        public:
+            WindowMaximizeButton(Gwk::Controls::Base *parent, const Gwk::String &name=""):BaseClass(parent, name)
             {
                 m_bMaximized = false;
             }
@@ -79,9 +81,10 @@ namespace Gwk
         };
 
 
-        class GWK_EXPORT WindowMinimizeButton : public WindowCloseButton
+        class WindowMinimizeButton:public ControlClass<WindowMinimizeButton, WindowCloseButton>
         {
-            GWK_CONTROL_INLINE(WindowMinimizeButton, WindowCloseButton)
+        public:
+            WindowMinimizeButton(Gwk::Controls::Base *parent, const Gwk::String &name=""):BaseClass(parent, name)
             {
             }
 

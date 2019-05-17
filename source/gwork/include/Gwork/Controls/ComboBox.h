@@ -21,11 +21,11 @@ namespace Gwk
 {
     namespace Controls
     {
-        class GWK_EXPORT ComboBox : public Button
+        class GWK_EXPORT ComboBox:public ControlClass<ComboBox, Button>
         {
         public:
 
-            GWK_CONTROL(ComboBox, Button);
+            ComboBox(Gwk::Controls::Base *parent, const Gwk::String &name="");
 
             void Render(Skin::Base* skin) override;
             void Layout(Skin::Base* skin) override;

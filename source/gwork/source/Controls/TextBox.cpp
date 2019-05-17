@@ -34,7 +34,7 @@ public:
 #endif // if GWK_ANIMATE
 
 
-GWK_CONTROL_CONSTRUCTOR(TextBox)
+TextBox::TextBox(Gwk::Controls::Base *parent, const Gwk::String &name):BaseClass(parent, name)
 {
     SetSize(200, 20);
     SetMouseInputEnabled(true);
@@ -489,7 +489,7 @@ void TextBox::MoveCaretToStart()
     RefreshCursorBounds();
 }
 
-GWK_CONTROL_CONSTRUCTOR(TextBoxMultiline)
+TextBoxMultiline::TextBoxMultiline(Gwk::Controls::Base *parent, const Gwk::String &name):BaseClass(parent, name)
 {
     SetWrap(true);
     SetAlignment(Position::Left|Position::Top);
@@ -730,7 +730,7 @@ bool TextBoxMultiline::OnKeyDown(bool bDown)
     return true;
 }
 
-GWK_CONTROL_CONSTRUCTOR(PasswordTextBox)
+PasswordTextBox::PasswordTextBox(Gwk::Controls::Base *parent, const Gwk::String &name):BaseClass(parent, name)
 {
     m_realText = "";
     m_passwordChar = '*';

@@ -33,7 +33,7 @@ public:
 };
 
 
-GWK_CONTROL_CONSTRUCTOR(ProgressBar)
+ProgressBar::ProgressBar(Gwk::Controls::Base *parent, const Gwk::String &name):BaseClass(parent, name)
 {
     SetMouseInputEnabled(true);
     SetBounds(Gwk::Rect(0, 0, 128, 32));

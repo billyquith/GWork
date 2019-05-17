@@ -12,11 +12,11 @@
 namespace Gwk {
 namespace Test {
 
-class LabelMultiline : public TestUnit
+class LabelMultiline:public ControlClass<LabelMultiline, TestUnit>
 {
 public:
 
-    GWK_CONTROL_INLINE(LabelMultiline, TestUnit)
+    LabelMultiline(Gwk::Controls::Base *parent, const Gwk::String &name=""):BaseClass(parent, name)
     {
         Dock(Position::Fill);
         Gwk::Controls::CrossSplitter* splitter = new Gwk::Controls::CrossSplitter(this);

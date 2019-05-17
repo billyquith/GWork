@@ -23,11 +23,11 @@ namespace Gwk
 {
     namespace Controls
     {
-        class GWK_EXPORT ResizableControl : public Base
+        class GWK_EXPORT ResizableControl : public ControlClass<ResizableControl, Base>
         {
         public:
 
-            GWK_CONTROL(ResizableControl, Base);
+            ResizableControl(Gwk::Controls::Base *parent, const Gwk::String &name="");
 
             virtual void SetClampMovement(bool shouldClamp)
             {

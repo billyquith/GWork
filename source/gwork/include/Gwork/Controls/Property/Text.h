@@ -18,11 +18,11 @@ namespace Gwk
     {
         namespace Property
         {
-            class GWK_EXPORT Text : public Property::Base
+            class GWK_EXPORT Text : public ControlClass<Text, Property::Base>
             {
             public:
 
-                GWK_CONTROL_INLINE(Text, Property::Base)
+                Text(Gwk::Controls::Base *parent, const Gwk::String &name=""):BaseClass(parent, name)
                 {
                     m_textBox = new TextBox(this);
                     m_textBox->Dock(Position::Fill);

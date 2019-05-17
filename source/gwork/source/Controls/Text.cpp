@@ -14,7 +14,7 @@
 using namespace Gwk;
 using namespace Gwk::ControlsInternal;
 
-GWK_CONTROL_CONSTRUCTOR(Text)
+Text::Text(Gwk::Controls::Base *parent, const Gwk::String &name):BaseClass(parent, name)
 {
     m_font = &GetSkin()->GetDefaultFont();
     m_colorOverride = Color(255, 255, 255, 0);

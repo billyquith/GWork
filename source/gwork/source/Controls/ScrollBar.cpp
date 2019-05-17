@@ -15,7 +15,7 @@ using namespace Gwk::Controls;
 using namespace Gwk::ControlsInternal;
 
 
-GWK_CONTROL_CONSTRUCTOR(BaseScrollBar)
+BaseScrollBar::BaseScrollBar(Gwk::Controls::Base *parent, const Gwk::String &name):BaseClass(parent, name)
 {
     for (int i = 0; i < 2; i++)
     {

@@ -11,11 +11,11 @@
 namespace Gwk {
 namespace Test {
 
-class TreeControl : public TestUnit
+class TreeControl:public ControlClass<TreeControl, TestUnit>
 {
 public:
 
-    GWK_CONTROL_INLINE(TreeControl, TestUnit)
+    TreeControl(Gwk::Controls::Base *parent, const Gwk::String &name=""):BaseClass(parent, name)
     {
         {
             Gwk::Controls::TreeControl* ctrl = new Gwk::Controls::TreeControl(this);

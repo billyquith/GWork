@@ -17,11 +17,11 @@ namespace Gwk
     {
         class ImagePanel;
 
-        class GWK_EXPORT Button : public Label
+        class GWK_EXPORT Button : public ControlClass<Button, Label>
         {
         public:
 
-            GWK_CONTROL(Button, Label);
+            Button(Gwk::Controls::Base *parent, const Gwk::String &name="");
 
             void Render(Skin::Base* skin) override;
             void OnMouseClickLeft(int x, int y, bool bDown) override;

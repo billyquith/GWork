@@ -15,7 +15,7 @@ using namespace Gwk;
 using namespace Gwk::Controls;
 
 
-GWK_CONTROL_CONSTRUCTOR(Button)
+Button::Button(Gwk::Controls::Base *parent, const Gwk::String &name):BaseClass(parent, name)
 {
     m_image = nullptr;
     m_bDepressed = false;

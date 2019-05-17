@@ -19,11 +19,11 @@ namespace Gwk
         class DockedTabControl;
         class TabControl;
 
-        class GWK_EXPORT DockBase : public Base
+        class GWK_EXPORT DockBase : public ControlClass<DockBase, Base>
         {
         public:
 
-            GWK_CONTROL(DockBase, Base);
+            DockBase(Gwk::Controls::Base *parent, const Gwk::String &name="");
 
             void Render(Skin::Base* skin) override;
             void RenderOver(Skin::Base* skin) override;

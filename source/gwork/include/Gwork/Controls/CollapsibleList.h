@@ -21,7 +21,7 @@ namespace Gwk
 {
     namespace Controls
     {
-        class GWK_EXPORT CollapsibleList : public Gwk::Controls::ScrollControl
+        class CollapsibleList:public ControlClass<CollapsibleList, Gwk::Controls::ScrollControl>
         {
         public:
 
@@ -29,7 +29,7 @@ namespace Gwk
 
         public:
 
-            GWK_CONTROL_INLINE(CollapsibleList, Gwk::Controls::ScrollControl)
+            CollapsibleList(Gwk::Controls::Base *parent, const Gwk::String &name=""):BaseClass(parent, name)
             {
                 SetScroll(false, true);
                 SetAutoHideBars(true);

@@ -14,7 +14,7 @@ using namespace Gwk;
 using namespace Gwk::Controls;
 using namespace Gwk::ControlsInternal;
 
-GWK_CONTROL_CONSTRUCTOR(ResizableControl)
+ResizableControl::ResizableControl(Gwk::Controls::Base *parent, const Gwk::String &name):BaseClass(parent, name)
 {
     m_bResizable = true;
     m_minimumSize = Gwk::Point(5, 5);

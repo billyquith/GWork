@@ -16,7 +16,7 @@
 using namespace Gwk;
 using namespace Gwk::Controls;
 
-GWK_CONTROL_CONSTRUCTOR(TextBoxNumeric)
+TextBoxNumeric::TextBoxNumeric(Gwk::Controls::Base *parent, const Gwk::String &name):BaseClass(parent, name)
 {
     SetText("0");
 }

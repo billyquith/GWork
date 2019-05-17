@@ -11,11 +11,11 @@
 namespace Gwk {
 namespace Test {
 
-class RadioButton : public TestUnit
+class RadioButton:public ControlClass<RadioButton, TestUnit>
 {
 public:
 
-    GWK_CONTROL_INLINE(RadioButton, TestUnit)
+    RadioButton(Gwk::Controls::Base *parent, const Gwk::String &name=""):BaseClass(parent, name)
     {
         Gwk::Controls::RadioButtonController* rc = new Gwk::Controls::RadioButtonController(this);
         rc->AddOption("Option 1");

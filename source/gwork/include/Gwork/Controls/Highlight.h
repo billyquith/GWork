@@ -17,11 +17,11 @@ namespace Gwk
 {
     namespace ControlsInternal
     {
-        class GWK_EXPORT Highlight : public Controls::Base
+        class GWK_EXPORT Highlight:public ControlClass<Highlight, Controls::Base>
         {
         public:
 
-            GWK_CONTROL_INLINE(Highlight, Controls::Base)
+            Highlight(Gwk::Controls::Base *parent, const Gwk::String &name=""):BaseClass(parent, name)
             {
             }
 

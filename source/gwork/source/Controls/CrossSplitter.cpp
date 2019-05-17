@@ -13,7 +13,7 @@
 using namespace Gwk;
 using namespace Controls;
 
-GWK_CONTROL_CONSTRUCTOR(CrossSplitter)
+CrossSplitter::CrossSplitter(Gwk::Controls::Base *parent, const Gwk::String &name):BaseClass(parent, name)
 {
     m_vSplitter = new SplitterBar(this);
     m_vSplitter->SetPos(0, 128);

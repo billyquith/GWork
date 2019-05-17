@@ -12,11 +12,11 @@
 namespace Gwk {
 namespace Test {
 
-class StatusBar : public TestUnit
+class StatusBar:public ControlClass<StatusBar, TestUnit>
 {
 public:
 
-    GWK_CONTROL_INLINE(StatusBar, TestUnit)
+    StatusBar(Gwk::Controls::Base *parent, const Gwk::String &name=""):BaseClass(parent, name)
     {
         Dock(Position::Fill);
         Gwk::Controls::StatusBar* status = new Gwk::Controls::StatusBar(this);

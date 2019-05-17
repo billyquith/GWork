@@ -13,11 +13,11 @@
 namespace Gwk {
 namespace Test {
 
-class CrossSplitter : public TestUnit
+class CrossSplitter:public ControlClass<CrossSplitter, TestUnit>
 {
 public:
 
-    GWK_CONTROL_INLINE(CrossSplitter, TestUnit)
+    CrossSplitter(Gwk::Controls::Base *parent, const Gwk::String &name=""):BaseClass(parent, name)
     {
         Dock(Position::Fill);
         m_bSplittersVisible = false;

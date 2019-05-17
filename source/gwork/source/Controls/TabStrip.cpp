@@ -18,7 +18,7 @@ using namespace Gwk;
 using namespace Gwk::Controls;
 
 
-GWK_CONTROL_CONSTRUCTOR(TabStrip)
+TabStrip::TabStrip(Gwk::Controls::Base *parent, const Gwk::String &name):BaseClass(parent, name)
 {
     m_tabDragControl = nullptr;
     m_bAllowReorder = false;
