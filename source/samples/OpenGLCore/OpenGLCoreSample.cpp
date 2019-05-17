@@ -4,7 +4,6 @@
  *  See license in Gwork.h
  */
 
-#include <GL/glew.h>
 #ifdef USE_DEBUG_FONT
 #   include <Gwork/Renderers/OpenGL_DebugFont.h>
 #else
@@ -63,14 +62,6 @@ int main()
     }
 
     glfwMakeContextCurrent(window);
-    glewExperimental = GL_TRUE;
-    GLuint error;
-    if ((error = glewInit()) != GLEW_OK)
-    {
-        std::cout << "Glew init error: " << glewGetErrorString(error) << std::endl;
-        glfwTerminate();
-        return EXIT_FAILURE;
-    }
 
     Gwk::Platform::RelativeToExecutablePaths paths(GWK_SAMPLE_RESOURCE_DIR);
 
@@ -95,7 +86,7 @@ int main()
     canvas->SetBackgroundColor(Gwk::Color(150, 170, 170, 255));
 
     // Create our unittest control (which is a Window with controls in it)
-    auto unit = new TestFrame(canvas);
+    auto unit = new Gwk::Test::TestFrame(canvas);
     GworkInput.Initialize(canvas);
 
     glfwSetKeyCallback(window, key_callback);

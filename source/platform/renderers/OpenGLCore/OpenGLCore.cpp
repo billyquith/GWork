@@ -41,6 +41,7 @@
 #define STBTT_STATIC
 #include <Gwork/External/stb_truetype.h>
 #include <iostream>
+#define GLM_ENABLE_EXPERIMENTAL
 #include <glm/gtx/matrix_decompose.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
@@ -52,6 +53,7 @@ namespace Renderer {
 static constexpr float c_pointsToPixels = 1.333f;
 // Arbitrary size chosen for texture cache target.
 static constexpr int c_texsz = 800; // Texture size too small for wchar_t characters but stbtt_BakeFontBitmap crashes on larger sizes
+bool OpenGLCore::m_initGlew=false;
 
 
 OpenGLCore::GLTextureData::~GLTextureData()
@@ -276,6 +278,19 @@ void checkErrors(unsigned int shader, std::string type)
 
 void OpenGLCore::Init()
 {
+    if(!m_initGlew)
+    {
+        glewExperimental=GL_TRUE;
+        GLuint error;
+
+        if((error=glewInit())!=GLEW_OK)
+        {
+            std::cout<<"Glew init error: "<<glewGetErrorString(error)<<std::endl;
+            return;
+        }
+        m_initGlew=true;
+    }
+
     m_projectionMatrix = glm::ortho(
         static_cast<float>(m_viewRect.x),
         static_cast<float>(m_viewRect.x + m_viewRect.w),
@@ -344,6 +359,11 @@ void OpenGLCore::Begin()
 {
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glEnable(GL_BLEND);
+    glDisable(GL_CULL_FACE);
+    glDisable(GL_DEPTH_TEST);
+
+    //reset texture, we dont know what state someone else left it in
+    m_current_texture=0;
 }
 
 void OpenGLCore::End()

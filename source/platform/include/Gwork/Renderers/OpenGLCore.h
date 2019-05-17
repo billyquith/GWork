@@ -180,6 +180,8 @@ namespace Gwk
 
             uint32_t m_vbo;
             uint32_t m_vao;
+
+            static bool m_initGlew;
         };
 
 
