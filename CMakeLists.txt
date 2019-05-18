@@ -6,6 +6,15 @@ cmake_minimum_required(VERSION 3.1)
 # we require C++11 - this set appropriate flags for compilers, which may not be portable
 set(CMAKE_CXX_STANDARD 14)
 
+option(GWK_USE_HUNTER "Use huter to build dependencies" OFF)
+if(GWK_USE_HUNTER)
+    include(${CMAKE_CURRENT_LIST_DIR}/cmake/Hunter/HunterGate.cmake)
+    HunterGate(
+        URL "https://github.com/ruslo/hunter/archive/v0.23.158.tar.gz"
+        SHA1 "4f3d8287a546091d1968ee80e02f121b312fceea"
+    )
+endif()
+
 project(gwork)
 
 set(GWK_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR})

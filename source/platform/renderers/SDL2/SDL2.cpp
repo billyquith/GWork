@@ -5,7 +5,7 @@
 #include <Gwork/BaseRender.h>
 #include <Gwork/Renderers/SDL2.h>
 #include <SDL_image.h>
-#include <SDL_ttf.h>
+#include <SDL_ttf/SDL_ttf.h>
 
 namespace Gwk
 {
