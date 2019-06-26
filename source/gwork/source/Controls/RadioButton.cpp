@@ -8,11 +8,14 @@
 
 #include <Gwork/Controls/RadioButton.h>
 
-using namespace Gwk;
-using namespace Gwk::Controls;
+namespace Gwk
+{
+namespace Controls
+{
 
 GWK_CONTROL_CONSTRUCTOR(RadioButton)
 {
+    SetSizeFlags({SizeFlag::Fixed, SizeFlag::Fixed});
     SetSize(15, 15);
     SetMouseInputEnabled(true);
     SetTabable(false);
@@ -22,3 +25,6 @@ void RadioButton::Render(Skin::Base* skin)
 {
     skin->DrawRadioButton(this, IsChecked(), IsDepressed());
 }
+
+}//namespace Controls
+}//namespace Gwk

@@ -44,7 +44,7 @@ GWK_CONTROL_CONSTRUCTOR(HSVColorPicker)
     int y = m_before->Y()+30;
     {
         Label* label = new Label(this);
-        label->SetText("r:");
+        label->SetText("R:");
         label->SizeToContents();
         label->SetPos(x, y);
 

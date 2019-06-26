@@ -55,6 +55,7 @@ namespace Gwk
                     m_button = new Controls::Internal::ColorButton(m_textBox);
                     m_button->Dock(Position::Right);
                     m_button->SetWidth(20);
+                    m_button->SetSizeFlags({SizeFlag::Fixed, SizeFlag::Elastic});
                     m_button->onPress.Add(this, &ThisClass::OnButtonPress);
                     m_button->SetMargin(Margin(1, 1, 1, 2));
                 }

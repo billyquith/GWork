@@ -15,6 +15,7 @@ using namespace Gwk::Controls;
 GWK_CONTROL_CONSTRUCTOR(CheckBox)
 {
     SetSize(15, 15);
+    SetSizeFlags({SizeFlag::Fixed, SizeFlag::Fixed});
     m_bChecked = true;
     Toggle();
 }

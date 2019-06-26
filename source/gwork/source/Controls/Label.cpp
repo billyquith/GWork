@@ -20,7 +20,8 @@ GWK_CONTROL_CONSTRUCTOR(Label)
     m_text->SetFont(GetSkin()->GetDefaultFont());
     SetMouseInputEnabled(false);
     SetBounds(0, 0, 100, 10);
-    SetAlignment(Position::Left | Position::Top);
+    SetAlignment(Position::Left | Position::CenterV);
+    SetSizeFlags(SizeFlags(SizeFlag::Elastic, SizeFlag::Elastic));
 }
 
 void Label::PreDelete(Gwk::Skin::Base* skin)

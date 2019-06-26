@@ -40,6 +40,7 @@ GWK_DECLARE_TEST(ScrollControl);
 GWK_DECLARE_TEST(PageControl);
 GWK_DECLARE_TEST(CollapsibleList);
 GWK_DECLARE_TEST(ColorPicker);
+GWK_DECLARE_TEST(Layout);
 
 
 GWK_CONTROL_CONSTRUCTOR(TestAPI)
@@ -61,6 +62,8 @@ GWK_CONTROL_CONSTRUCTOR(TestAPI)
     m_textOutput = new Controls::ListBox(GetBottom());
     GetBottom()->GetTabControl()->AddPage("Output", m_textOutput);
     GetBottom()->SetHeight(140);
+    
+    GetBottom()->SetSizeFlags({SizeFlag::Elastic, SizeFlag::Fixed});
 
 #define ADD_TEST(NAME) \
     { \
@@ -108,6 +111,7 @@ GWK_CONTROL_CONSTRUCTOR(TestAPI)
         ADD_TEST(TabControl);
         ADD_TEST(ScrollControl);
         ADD_TEST(PageControl);
+        ADD_TEST(Layout);
     }
     {
         Controls::CollapsibleCategory* cat = apiList->Add("Non-Standard");

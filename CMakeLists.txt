@@ -13,6 +13,7 @@ if(GWK_USE_HUNTER)
         URL "https://github.com/ruslo/hunter/archive/v0.23.158.tar.gz"
         SHA1 "4f3d8287a546091d1968ee80e02f121b312fceea"
     )
+    cmake_policy(SET CMP0074 NEW)
 endif()
 
 project(gwork)

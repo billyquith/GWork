@@ -9,6 +9,7 @@
 #include <Gwork/Controls/Base.h>
 #include <Gwork/Controls/Label.h>
 #include <Gwork/Controls/Canvas.h>
+#include <Gwork/Controls/Layout/Layout.h>
 #include <Gwork/Gwork.h>
 #include <Gwork/BaseRender.h>
 #include <Gwork/Skin.h>
@@ -22,6 +23,9 @@
 #   include <Gwork/Anim.h>
 #endif
 
+#include <sstream>
+#include <iostream>
+
 
 
 namespace Gwk {
@@ -29,6 +33,15 @@ namespace Controls {
 
 Base::Base(Base* parent, const Gwk::String& Name)
 {
+    Init(parent, Name);
+}
+
+void Base::Init(Base* parent, const Gwk::String& Name)
+{
+    m_sizeFlags={SizeFlag::Expand, SizeFlag::Expand};
+    m_minimumSize={0, 0};
+    m_maximumSize={std::numeric_limits<int>::max(), std::numeric_limits<int>::max()};
+    m_layoutItem=nullptr;
     m_parent = nullptr;
     m_actualParent = nullptr;
     m_innerPanel = nullptr;
@@ -157,6 +170,48 @@ Position Base::GetDock() const
     return m_dock;
 }
 
+SizeFlags Base::GetSizeFlags()
+{
+    return m_sizeFlags;
+}
+
+void Base::SetSizeFlags(SizeFlags sizeFlags)
+{
+    if((m_sizeFlags.horizontal==sizeFlags.horizontal)&&
+        (m_sizeFlags.vertical==sizeFlags.vertical))
+        return;
+
+    m_sizeFlags=sizeFlags;
+    Invalidate();
+    InvalidateParent();
+}
+
+void Base::SetLayout(LayoutItem *layoutItem)
+{
+    if(m_innerPanel)
+    {
+        m_innerPanel->SetLayout(layoutItem);
+        return;
+    }
+
+    //library owns items so we need to delete
+    if(m_layoutItem!=nullptr)
+        delete m_layoutItem;
+    
+    m_layoutItem=layoutItem;
+    m_layoutItem->SetParent(this);
+
+    for(Base *child:Children)
+        m_layoutItem->AddControl(child);
+}
+
+LayoutItem *Base::GetLayout()
+{
+    if(m_innerPanel)
+        return m_innerPanel->GetLayout();
+    return m_layoutItem;
+}
+
 bool Base::Hidden() const
 {
     return m_bHidden;
@@ -219,6 +274,9 @@ void Base::SetPosition(Position pos, int xpadding, int ypadding)
 
     if (pos & Position::CenterV)
         y = bounds.y + (bounds.h - Height())/2 + ypadding;
+    
+    x=std::max(0, x);
+    y=std::max(0, y);
 
     SetPos(x, y);
 }
@@ -302,8 +360,20 @@ void Base::AddChild(Base* child)
     }
 
     Children.push_back(child);
+
+    if(m_layoutItem)
+        m_layoutItem->AddControl(child);
+
     OnChildAdded(child);
     child->m_actualParent = this;
+}
+
+void Base::AddChildOfLayout(Base* child)
+{
+    Children.push_back(child);
+
+    OnChildAdded(child);
+    child->m_actualParent=this;
 }
 
 void Base::RemoveChild(Base* child)
@@ -312,8 +382,11 @@ void Base::RemoveChild(Base* child)
     if (m_innerPanel == child)
         m_innerPanel = nullptr;
 
-    if (m_innerPanel)
+    if(m_innerPanel)
         m_innerPanel->RemoveChild(child);
+
+    if(m_layoutItem)
+        m_layoutItem->RemoveControl(child);
 
     Children.remove(child);
     OnChildRemoved(child);
@@ -427,7 +500,41 @@ bool Base::SetBounds(const Gwk::Rect& bounds)
 
 bool Base::SetBounds(int x, int y, int w, int h)
 {
-    return SetBounds(Rect(x,y,w,h));
+    return SetBounds(Rect(x, y, w, h));
+}
+
+Size Base::GetMinimumSize()
+{
+    Size minimumSize=m_minimumSize;
+
+    if(m_sizeFlags.horizontal==SizeFlag::Fixed)
+        minimumSize.width=m_bounds.w;
+    else if((m_sizeFlags.horizontal == SizeFlag::Expand) || (m_sizeFlags.horizontal == SizeFlag::Bloat))
+        minimumSize.width=std::max(minimumSize.width, m_preferredSize.width);
+
+    if(m_sizeFlags.vertical==SizeFlag::Fixed)
+        minimumSize.height=m_bounds.h;
+    else if((m_sizeFlags.vertical==SizeFlag::Expand)||(m_sizeFlags.vertical==SizeFlag::Bloat))
+        minimumSize.height=std::max(minimumSize.height, m_preferredSize.height);
+
+    return minimumSize;
+}
+
+Size Base::GetMaximumSize()
+{
+    Size maximumSize=m_maximumSize;
+
+    if(m_sizeFlags.horizontal==SizeFlag::Fixed)
+        maximumSize.width=m_bounds.w;
+    else if(m_sizeFlags.horizontal == SizeFlag::Shrink)
+        maximumSize.width=std::max(maximumSize.width, m_preferredSize.width);
+
+    if(m_sizeFlags.vertical==SizeFlag::Fixed)
+        maximumSize.height=m_bounds.h;
+    else if(m_sizeFlags.horizontal == SizeFlag::Shrink)
+        maximumSize.height=std::max(maximumSize.height, m_preferredSize.height);
+
+    return maximumSize;
 }
 
 void Base::OnBoundsChanged(Gwk::Rect oldBounds)
@@ -752,7 +859,429 @@ void Base::Layout(Skin::Base* skin)
         skin->GetRender()->GetCTT()->CreateControlCacheTexture(this, this->GetBounds().GetSize());
 }
 
-void Base::RecurseLayout(Skin::Base* skin)
+std::string info(Base *control, Dim dim)
+{
+    const Rect &bounds=control->GetBounds();
+    const Size &preferredSize=control->GetPreferredSize();
+    const Margin &margin=control->GetMargin();
+    const Padding &padding=control->GetPadding();
+    const SizeFlags &sizeFlags=control->GetSizeFlags();
+
+    std::ostringstream output;
+
+    output<<control->GetTypeName()<<" : "<<control->GetName()<<"\n";
+    if(dim==Dim::X)
+        output<<"    X dim\n";
+    else
+        output<<"    Y dim\n";
+
+    output<<"    Bounds: "<<bounds.x<<", "<<bounds.y<<", "<<bounds.w<<", "<<bounds.h<<"\n";
+    output<<"    Preferred: "<<preferredSize.width<<", "<<preferredSize.height<<"\n";
+    output<<"    Margin: "<<margin.top<<", "<<margin.bottom<<", "<<margin.left<<", "<<margin.right<<"\n";
+    output<<"    Padding: "<<padding.top<<", "<<padding.bottom<<", "<<padding.left<<", "<<padding.right<<"\n";
+    output<<"    Size flags: "<<SizeFlagName(sizeFlags.horizontal)<<", "<<SizeFlagName(sizeFlags.horizontal)<<"\n";
+
+    return output.str();
+}
+
+bool Base::ProcessLayout(Skin::Base *skin, Dim dim)
+{
+    if(m_layoutItem)
+    {
+        m_layoutItem->CalculateSize(skin, dim);
+
+        const Size preferredSize=m_layoutItem->GetPreferredSize();
+
+        if(dim==Dim::X)
+        {
+            m_preferredSize.width=preferredSize.width+m_padding.left+m_padding.right;
+        }
+        else
+        {
+            m_preferredSize.height=preferredSize.height+m_padding.top+m_padding.bottom;
+        }
+        return true;
+    }
+    return false;
+}
+
+Size Base::SizeOfChildren(Skin::Base *skin, Dim dim)
+{
+    Size preferredSize=m_preferredSize;
+
+    if(dim==Dim::X)
+    {
+        int width=0;
+        int dockWidth=0;
+        int innerWidth=0;
+
+        for(auto&& child:Children)
+        {
+            if(child->Hidden())
+                continue;
+
+            child->CalculateSize(skin, dim);
+
+            Position dock=child->GetDock();
+            const Size &preferred=child->GetPreferredSize();
+            const Margin &margin=child->GetMargin();
+            int childWidth=preferred.width+margin.left+margin.right;
+
+            if((dock & Position::Top)||(dock & Position::Bottom))
+            {
+                if(childWidth>width)
+                    width=childWidth;
+            }
+            else if((dock & Position::Left)||(dock & Position::Right))
+            {
+                dockWidth+=childWidth;
+            }
+            else if(dock & Position::Fill)
+            {
+                innerWidth+=childWidth;
+            }
+            else
+            {
+                const Rect &bounds=child->GetBounds();
+
+                if(!HasAlignment())
+                    childWidth+=bounds.x;
+
+                if(childWidth>width)
+                    width=childWidth;
+            }
+        }
+        dockWidth+=innerWidth;
+        width=std::max(width, dockWidth);
+        width+=m_padding.left+m_padding.right;
+
+        switch(m_sizeFlags.horizontal)
+        {
+        case SizeFlag::Fixed:
+            preferredSize.width=m_bounds.w;
+            break;
+        case SizeFlag::Shrink:
+            preferredSize.width=std::min(width, m_maximumSize.width);
+            break;
+        case SizeFlag::Expand:
+            preferredSize.width=std::max(width, m_minimumSize.width);
+            break;
+        case SizeFlag::Elastic:
+            preferredSize.width=width;
+            break;
+        case SizeFlag::Bloat:
+            preferredSize.width=std::max(width, m_minimumSize.width);
+            break;
+        }
+    }
+    else
+    {
+        int height=0;
+        int dockHeight=0;
+        int innerHeight=0;
+
+        for(auto&& child:Children)
+        {
+            Label *label=dynamic_cast<Label *>(child);
+
+            if(label)
+            {
+                if(label->GetText()=="Basic")
+                    label=label;
+            }
+            if(child->Hidden())
+                continue;
+
+            child->CalculateSize(skin, dim);
+
+            Position dock=child->GetDock();
+            const Size &preferred=child->GetPreferredSize();
+            const Margin &margin=child->GetMargin();
+
+            int childHeight=preferred.height+margin.top+margin.bottom;
+
+            if((dock & Position::Top)||(dock & Position::Bottom))
+            {
+                dockHeight+=childHeight;
+            }
+            else if((dock & Position::Left)||(dock & Position::Right))
+            {
+                if(childHeight>height)
+                    height=childHeight;
+            }
+            else if(dock & Position::Fill)
+            {
+                innerHeight+=childHeight;
+            }
+            else
+            {
+                const Rect &bounds=child->GetBounds();
+
+                if(!HasAlignment())
+                    childHeight+=bounds.y;
+
+                if(childHeight>height)
+                    height=childHeight;
+            }
+        }
+
+        dockHeight+=innerHeight;
+        height=std::max(height, dockHeight);
+        height+=m_padding.top+m_padding.bottom;
+
+        switch(m_sizeFlags.vertical)
+        {
+        case SizeFlag::Fixed:
+            preferredSize.height=m_bounds.h;
+            break;
+        case SizeFlag::Shrink:
+            preferredSize.height=std::min(height, m_maximumSize.height);
+            break;
+        case SizeFlag::Expand:
+            preferredSize.height=std::max(height, m_minimumSize.height);
+            break;
+        case SizeFlag::Elastic:
+            preferredSize.height=height;
+            break;
+        case SizeFlag::Bloat:
+            preferredSize.height=std::max(height, m_minimumSize.height);
+            break;
+        }
+    }
+
+    return preferredSize;
+}
+
+void Base::CalculateSize(Skin::Base *skin, Dim dim)
+{
+    if(m_name=="MultilineLabel")
+        dim=dim;
+
+    if(ProcessLayout(skin, dim))
+        return;
+
+    m_preferredSize=SizeOfChildren(skin, dim);
+}
+
+void Base::Arrange(Skin::Base *skin, Dim dim)
+{
+    if(NeedsLayout())
+    {
+        m_bNeedsLayout=false;
+        Layout(skin);
+    }
+
+    if(m_name=="MultilineLabel")
+        dim=dim;
+
+    if(m_layoutItem)
+    {
+        Rect bounds=m_bounds;
+    
+        if(dim==Dim::X)
+            bounds.x=0;
+        else
+            bounds.y=0;
+        m_layoutItem->SetBounds(bounds);
+        m_layoutItem->Arrange(skin, dim);
+        return;
+    }
+
+    if(dim==Dim::X) 
+        ArrangeHorizontal(skin);
+    else
+        ArrangeVertical(skin);
+
+    for(auto&& child:Children)
+    {
+        if(child->Hidden())
+            continue;
+
+        child->Arrange(skin, dim);
+    }
+
+    PostLayout(skin);
+}
+
+void Base::ArrangeHorizontal(Skin::Base *skin)
+{
+    Gwk::Rect innerBounds=GetBounds();
+
+    innerBounds.x=m_padding.left;
+    innerBounds.w-=m_padding.left+m_padding.right;
+
+    for(auto&& child:Children)
+    {
+        if(child->Hidden())
+            continue;
+
+        Position dock=child->GetDock();
+        const Margin &margin=child->GetMargin();
+        Size preferred=child->GetPreferredSize();
+        const Rect &bounds=child->GetBounds();
+        SizeFlags sizeFlags=child->GetSizeFlags();
+
+        if(dock & Position::Top)
+        {
+            if(sizeFlags.horizontal==SizeFlag::Fixed)
+                child->SetBounds(innerBounds.x+margin.left,
+                    bounds.y,
+                    bounds.w,
+                    bounds.h);
+            else
+                child->SetBounds(innerBounds.x+margin.left,
+                    bounds.y,
+                    innerBounds.w-margin.left-margin.right,
+                    bounds.h);
+        }
+        else if(dock & Position::Left)
+        {
+            child->SetBounds(innerBounds.x+margin.left,
+                bounds.y,
+                preferred.width,
+                bounds.h);
+            int iWidth=margin.left+margin.right+preferred.width;
+            innerBounds.x+=iWidth;
+            innerBounds.w-=iWidth;
+        }
+        else if(dock & Position::Right)
+        {
+            child->SetBounds((innerBounds.x+innerBounds.w)-preferred.width-margin.right,
+                bounds.y,
+                preferred.width,
+                bounds.h);
+            int iWidth=margin.left+margin.right+preferred.width;
+            innerBounds.w-=iWidth;
+        }
+        else if(dock & Position::Bottom)
+        {
+            if(sizeFlags.horizontal==SizeFlag::Fixed)
+                child->SetBounds(innerBounds.x,
+                    bounds.y,
+                    bounds.w,
+                    bounds.h);
+            else
+                child->SetBounds(innerBounds.x,
+                    bounds.y,
+                    innerBounds.w-margin.left-margin.right,
+                    bounds.h);
+        }
+        else if(dock==Position::None)
+        {
+//            child->SetBounds(bounds.x, bounds.y, preferred.width, bounds.h);
+            child->SetBounds(bounds.x, bounds.y, bounds.w, bounds.h);
+        }
+    }
+
+    m_innerBounds.x=innerBounds.x;
+    m_innerBounds.w=innerBounds.w;
+
+    //now fill
+    for(auto&& child:Children)
+    {
+        Position dock=child->GetDock();
+
+        if(!(dock & Position::Fill))
+            continue;
+
+        const Margin& margin=child->GetMargin();
+        const Rect &bounds=child->GetBounds();
+        //            const Rect &preferred=child->GetPreferredSize();
+
+        child->SetBounds(innerBounds.x+margin.left, bounds.y,
+            innerBounds.w-margin.left-margin.right, bounds.h);
+    }
+}
+
+void Base::ArrangeVertical(Skin::Base *skin)
+{
+    Gwk::Rect innerBounds=GetBounds();
+
+    innerBounds.y=m_padding.top;
+    innerBounds.h-=m_padding.top+m_padding.bottom;
+
+    for(auto&& child:Children)
+    {
+        if(child->Hidden())
+            continue;
+
+        Position dock=child->GetDock();
+        const Margin &margin=child->GetMargin();
+        const Size &preferred=child->GetPreferredSize();
+        const Rect &bounds=child->GetBounds();
+        SizeFlags sizeFlags=child->GetSizeFlags();
+
+        if(dock & Position::Top)
+        {
+            child->SetBounds(bounds.x,
+                innerBounds.y+margin.top,
+                bounds.w,
+                preferred.height);
+            int iHeight=margin.top+margin.bottom+preferred.height;
+            innerBounds.y+=iHeight;
+            innerBounds.h-=iHeight;
+        }
+        else if(dock & Position::Left)
+        {
+            if(sizeFlags.vertical == SizeFlag::Fixed)
+                child->SetBounds(bounds.x,
+                    innerBounds.y+margin.top,
+                    bounds.w,
+                    bounds.h);
+            else
+                child->SetBounds(bounds.x,
+                    innerBounds.y+margin.top,
+                    bounds.w,
+                    innerBounds.h-margin.top-margin.bottom);
+        }
+        else if(dock & Position::Right)
+        {
+            if(sizeFlags.vertical==SizeFlag::Fixed)
+                child->SetBounds(bounds.x,
+                    innerBounds.y+margin.top,
+                    bounds.w,
+                    bounds.h);
+            else
+                child->SetBounds(bounds.x,
+                    innerBounds.y+margin.top,
+                    bounds.w,
+                    innerBounds.h-margin.top-margin.bottom);
+        }
+        else if(dock & Position::Bottom)
+        {
+            child->SetBounds(bounds.x,
+                (innerBounds.y+innerBounds.h)-preferred.height-margin.bottom,
+                bounds.w,
+                preferred.height);
+            innerBounds.h-=preferred.height+margin.bottom+margin.top;
+        }
+        else if(dock==Position::None)
+        {
+            const Rect &bounds=child->GetBounds();
+
+            child->SetBounds(bounds.x, bounds.y, bounds.w, bounds.h);
+        }
+    }
+
+    m_innerBounds.y=innerBounds.y;
+    m_innerBounds.h=innerBounds.h;
+
+    for(auto&& child:Children)
+    {
+        Position dock=child->GetDock();
+
+        if(!(dock & Position::Fill))
+            continue;
+
+        const Margin& margin=child->GetMargin();
+        const Rect &bounds=child->GetBounds();
+
+        child->SetBounds(bounds.x, innerBounds.y+margin.top,
+            bounds.w, innerBounds.h-margin.top-margin.bottom);
+    }
+}
+
+void Base::RecurseLayout(Skin::Base *skin)
 {
     if (m_skin)
         skin = m_skin;
@@ -760,99 +1289,12 @@ void Base::RecurseLayout(Skin::Base* skin)
     if (Hidden())
         return;
 
-    if (NeedsLayout())
-    {
-        m_bNeedsLayout = false;
-        Layout(skin);
-    }
+    CalculateSize(skin, Dim::X);
+    Arrange(skin, Dim::X);
+    CalculateSize(skin, Dim::Y);
+    Arrange(skin, Dim::Y);
 
-    Gwk::Rect rBounds = GetRenderBounds();
-
-    // Adjust bounds for padding
-    rBounds.x += m_padding.left;
-    rBounds.w -= m_padding.left + m_padding.right;
-    rBounds.y += m_padding.top;
-    rBounds.h -= m_padding.top + m_padding.bottom;
-
-    for (auto&& child : Children)
-    {
-        if (child->Hidden())
-            continue;
-
-        Position dock = child->GetDock();
-
-        if (dock & Position::Fill)
-            continue;
-
-        if (dock & Position::Top)
-        {
-            const Margin& margin = child->GetMargin();
-            child->SetBounds(rBounds.x+margin.left,
-                              rBounds.y+margin.top,
-                              rBounds.w-margin.left-margin.right,
-                              child->Height());
-            int iHeight = margin.top+margin.bottom+child->Height();
-            rBounds.y += iHeight;
-            rBounds.h -= iHeight;
-        }
-
-        if (dock & Position::Left)
-        {
-            const Margin& margin = child->GetMargin();
-            child->SetBounds(rBounds.x+margin.left,
-                              rBounds.y+margin.top,
-                              child->Width(),
-                              rBounds.h-margin.top-margin.bottom);
-            int iWidth = margin.left+margin.right+child->Width();
-            rBounds.x += iWidth;
-            rBounds.w -= iWidth;
-        }
-
-        if (dock & Position::Right)
-        {
-            // TODO: THIS MARGIN CODE MIGHT NOT BE FULLY FUNCTIONAL
-            const Margin& margin = child->GetMargin();
-            child->SetBounds((rBounds.x+rBounds.w)-child->Width()-margin.right,
-                              rBounds.y+margin.top,
-                              child->Width(),
-                              rBounds.h-margin.top-margin.bottom);
-            int iWidth = margin.left+margin.right+child->Width();
-            rBounds.w -= iWidth;
-        }
-
-        if (dock & Position::Bottom)
-        {
-            // TODO: THIS MARGIN CODE MIGHT NOT BE FULLY FUNCTIONAL
-            const Margin& margin = child->GetMargin();
-            child->SetBounds(rBounds.x+margin.left,
-                              (rBounds.y+rBounds.h)-child->Height()-margin.bottom,
-                              rBounds.w-margin.left-margin.right,
-                              child->Height());
-            rBounds.h -= child->Height()+margin.bottom+margin.top;
-        }
-
-        child->RecurseLayout(skin);
-    }
-
-    m_innerBounds = rBounds;
-
-    //
-    // Fill uses the left over space, so do that now.
-    //
-    for (auto&& child : Children)
-    {
-        Position dock = child->GetDock();
-
-        if (!(dock & Position::Fill))
-            continue;
-
-        const Margin& margin = child->GetMargin();
-        child->SetBounds(rBounds.x+margin.left, rBounds.y+margin.top,
-                         rBounds.w-margin.left-margin.right, rBounds.h-margin.top-margin.bottom);
-        child->RecurseLayout(skin);
-    }
-
-    PostLayout(skin);
+//    PostLayout(skin);
 
     if (IsTabable() && !IsDisabled())
     {

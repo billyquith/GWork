@@ -43,7 +43,7 @@ namespace Gwk
 
             GWK_CONTROL_INLINE(LabeledRadioButton, Base)
             {
-                SetSize(200, 19);
+//                SetSize(200, 19);
                 m_radioButton = new RadioButton(this);
                 m_radioButton->Dock(Position::Left);
                 m_radioButton->SetMargin(Margin(0, 2, 2, 2));
@@ -77,6 +77,16 @@ namespace Gwk
             virtual LabelClickable* GetLabel()
             {
                 return m_label;
+            }
+
+            virtual void SetText(const String& str, bool bDoEvents=true)
+            {
+                m_label->SetText(str, bDoEvents);
+            }
+
+            virtual const String& GetText() const
+            {
+                return m_label->GetText();
             }
 
             bool OnKeySpace(bool bDown) override

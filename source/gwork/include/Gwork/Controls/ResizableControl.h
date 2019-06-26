@@ -39,12 +39,12 @@ namespace Gwk
                 return m_bClampMovement;
             }
 
-            virtual void SetMinimumSize(const Gwk::Point& minSize)
+            virtual void SetMinimumSize(const Size &minSize)
             {
                 m_minimumSize = minSize;
             }
 
-            Gwk::Point GetMinimumSize() override
+            Size GetMinimumSize() override
             {
                 return m_minimumSize;
             }
@@ -68,7 +68,7 @@ namespace Gwk
 
             void OnResizedInternal(Event::Info);
 
-            Gwk::Point m_minimumSize;
+            Size m_minimumSize;
             bool m_bClampMovement;
             bool m_bResizable;
 

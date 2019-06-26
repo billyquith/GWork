@@ -30,7 +30,7 @@ namespace Gwk
             void Render(Skin::Base* skin) override;
             void Layout(Skin::Base* skin) override;
 
-            void RefreshSize();
+            Size RefreshSize(bool update=true);
 
             void SetFont(const Gwk::Font& font);
 
@@ -93,13 +93,16 @@ namespace Gwk
             virtual int   GetCharPosOnLine(int i);
             virtual unsigned NumLines();
 
+            void CalculateSize(Skin::Base *skin, Dim dim) override;
+            void Arrange(Skin::Base *skin, Dim dim) override;
+
         protected:
 
             virtual void SplitWords(const Gwk::String& s, std::vector<Gwk::String>& elems);
 
         private:
 
-            virtual void RefreshSizeWrap();
+            virtual Size RefreshSizeWrap(bool update=true);
 
             Gwk::String m_string;
             const Gwk::Font*   m_font;
