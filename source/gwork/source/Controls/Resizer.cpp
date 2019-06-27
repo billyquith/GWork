@@ -14,7 +14,7 @@ using namespace Gwk::ControlsInternal;
 
 GWK_CONTROL_CONSTRUCTOR(Resizer)
 {
-    m_resizeDir = Position::Left;
+    SetResizeDir(Position::Left);
     SetMouseInputEnabled(true);
     SetSize(6, 6);
 }
@@ -31,7 +31,7 @@ void Resizer::OnMouseMoved(int x, int y, int /*deltaX*/, int /*deltaY*/)
         return;
 
     Gwk::Rect bounds = m_target->GetBounds();
-    Gwk::Point pntMin = m_target->GetMinimumSize();
+    Size pntMin = m_target->GetMinimumSize();
     Gwk::Point cursorPos = m_target->CanvasPosToLocal(Gwk::Point(x, y));
     Gwk::Point delta = m_target->LocalPosToCanvas(m_holdPos);
     delta.x -= x;
@@ -44,9 +44,9 @@ void Resizer::OnMouseMoved(int x, int y, int /*deltaX*/, int /*deltaY*/)
 
         // Conform to minimum size here so we don't
         // go all weird when we snap it in the base conrt
-        if (bounds.w < pntMin.x)
+        if (bounds.w < pntMin.width)
         {
-            const int diff = pntMin.x-bounds.w;
+            const int diff = pntMin.width-bounds.w;
             bounds.w += diff;
             bounds.x -= diff;
         }
@@ -59,9 +59,9 @@ void Resizer::OnMouseMoved(int x, int y, int /*deltaX*/, int /*deltaY*/)
 
         // Conform to minimum size here so we don't
         // go all weird when we snap it in the base conrt
-        if (bounds.h < pntMin.y)
+        if (bounds.h < pntMin.height)
         {
-            const int diff = pntMin.y-bounds.h;
+            const int diff = pntMin.height-bounds.h;
             bounds.h += diff;
             bounds.y -= diff;
         }
@@ -79,8 +79,8 @@ void Resizer::OnMouseMoved(int x, int y, int /*deltaX*/, int /*deltaY*/)
         int diff = bounds.w;
         bounds.w = cursorPos.x + woff;
 
-        if (bounds.w < pntMin.x)
-            bounds.w = pntMin.x;
+        if (bounds.w < pntMin.width)
+            bounds.w = pntMin.width;
 
         diff -= bounds.w;
         m_holdPos.x -= diff;
@@ -92,8 +92,8 @@ void Resizer::OnMouseMoved(int x, int y, int /*deltaX*/, int /*deltaY*/)
         int diff = bounds.h;
         bounds.h = cursorPos.y + hoff;
 
-        if (bounds.h < pntMin.y)
-            bounds.h = pntMin.y;
+        if (bounds.h < pntMin.height)
+            bounds.h = pntMin.height;
 
         diff -= bounds.h;
         m_holdPos.y -= diff;
@@ -105,7 +105,19 @@ void Resizer::OnMouseMoved(int x, int y, int /*deltaX*/, int /*deltaY*/)
 
 void Resizer::SetResizeDir(Position dir)
 {
-    m_resizeDir = dir;
+    m_resizeDir=dir;
+
+    if((dir & Position::Left)||(dir & Position::Right))
+    {
+        m_sizeFlags.horizontal=SizeFlag::Fixed;
+        m_sizeFlags.vertical=SizeFlag::Expand;
+    }
+
+    if((dir & Position::Top)||(dir & Position::Bottom))
+    {
+        m_sizeFlags.horizontal=SizeFlag::Expand;
+        m_sizeFlags.vertical=SizeFlag::Fixed;
+    }
 
     if (((dir & Position::Left) && (dir & Position::Top))
         || ((dir & Position::Right) && (dir & Position::Bottom)))

@@ -101,6 +101,7 @@ GWK_CONTROL_CONSTRUCTOR(ColorLerpBox)
 {
     SetColor(Gwk::Color(255, 128, 0, 255));
     SetSize(128, 128);
+    SetSizeFlags({SizeFlag::Fixed, SizeFlag::Fixed});
     SetMouseInputEnabled(true);
     m_bDepressed = false;
 }
@@ -201,6 +202,7 @@ void ColorLerpBox::Render(Gwk::Skin::Base* skin)
 GWK_CONTROL_CONSTRUCTOR(ColorSlider)
 {
     SetSize(32, 128);
+    SetSizeFlags({SizeFlag::Fixed, SizeFlag::Fixed});
     SetMouseInputEnabled(true);
     m_bDepressed = false;
 }

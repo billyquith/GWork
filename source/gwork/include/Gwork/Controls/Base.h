@@ -26,6 +26,7 @@ namespace Gwk
     namespace Controls
     {
         class Canvas;
+        class LayoutItem;
 
         //
         //! This is the base class for all Gwork controls.
@@ -33,6 +34,7 @@ namespace Gwk
         class GWK_EXPORT Base : public Event::Handler
         {
         public:
+            friend class LayoutItem;
 
             typedef std::list<Base*> List;
 
@@ -84,6 +86,8 @@ namespace Gwk
         protected:
 
             virtual void AddChild(Controls::Base* child);
+            //used to add a child that is part of a layout not directly attached to parent
+            virtual void AddChildOfLayout(Base* child);
             virtual void RemoveChild(Controls::Base* parent);
             virtual void OnChildAdded(Controls::Base* child);
             virtual void OnChildRemoved(Controls::Base* child);
@@ -101,6 +105,12 @@ namespace Gwk
 
             virtual void Dock(Position dock);
             virtual Position GetDock() const;
+
+            virtual SizeFlags GetSizeFlags();
+            virtual void SetSizeFlags(SizeFlags sizeFlags);
+
+            virtual void SetLayout(LayoutItem *layoutItem);
+            virtual LayoutItem *GetLayout();
 
             virtual void RestrictToParent(bool restrict)    { m_bRestrictToParent = restrict; }
             virtual bool ShouldRestrictToParent()           { return m_bRestrictToParent; }
@@ -150,6 +160,14 @@ namespace Gwk
             virtual void MoveBy(int x, int y);
 
             virtual const Gwk::Rect& GetBounds() const { return m_bounds; }
+
+//            virtual void SetNeeded(const Gwk::Rect &needed) { m_needed=needed; }
+//            virtual const Gwk::Rect &GetNeeded() const { return m_needed; }
+            virtual Size GetMinimumSize();
+            virtual Size GetMaximumSize();
+
+            virtual void SetPreferredSize(const Size &size) { m_preferredSize=size; }
+            virtual const Size GetPreferredSize() const { return m_preferredSize; }
 
             virtual Controls::Base* GetControlAt(int x, int y, bool bOnlyIfMouseEnabled = true);
 
@@ -333,16 +351,6 @@ namespace Gwk
 
             virtual void UpdateCursor();
 
-            virtual Gwk::Point GetMinimumSize()
-            {
-                return Gwk::Point(1, 1);
-            }
-
-            virtual Gwk::Point GetMaximumSize()
-            {
-                return Gwk::Point(4096, 4096);
-            }
-
             virtual void SetTooltipText(const Gwk::String& strText);
             
             virtual void SetTooltip(Base* tooltip)
@@ -409,6 +417,7 @@ namespace Gwk
             Base::List Children;
 
         protected:
+            void Init(Base* parent, const Gwk::String& Name);
 
             //! The logical parent.
             //! It's usually what you expect, the control you've parented it to.
@@ -428,10 +437,17 @@ namespace Gwk
             Base* m_toolTip;
 
             Skin::Base* m_skin;
-
+            
+//            Gwk::Rect m_needed;
             Gwk::Rect m_bounds;
             Gwk::Rect m_renderBounds;
 
+            SizeFlags m_sizeFlags;
+            Size m_preferredSize;
+            Size m_minimumSize;
+            Size m_maximumSize;
+
+            LayoutItem *m_layoutItem;
             Padding m_padding;
             Margin m_margin;
 
@@ -465,9 +481,19 @@ namespace Gwk
             }
 
             void InvalidateChildren(bool bRecursive = false);
+
+            virtual bool HasAlignment() { return false; }
             void SetPosition(Position pos, int xpadding = 0, int ypadding = 0);
 
+            virtual void CalculateSize(Skin::Base *skin, Dim dim);
+            virtual void Arrange(Skin::Base *skin, Dim dim);
+
         protected:
+            bool ProcessLayout(Skin::Base *skin, Dim dim);
+            Size SizeOfChildren(Skin::Base *skin, Dim dim);
+
+            void ArrangeHorizontal(Skin::Base *skin);
+            void ArrangeVertical(Skin::Base *skin);
 
             virtual void RecurseLayout(Skin::Base* skin);
             virtual void Layout(Skin::Base* skin);
@@ -657,7 +683,7 @@ namespace Gwk
     typedef BASENAME ParentClass; \
     typedef THISNAME ThisClass;
 
-// To be placed in the controls .h definition.
+    // To be placed in the controls .h definition.
 #define GWK_CONTROL(THISNAME, BASENAME) \
 public: \
     GWK_CLASS(THISNAME, BASENAME)  \

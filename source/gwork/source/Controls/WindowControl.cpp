@@ -27,6 +27,7 @@ GWK_CONTROL_CONSTRUCTOR(WindowControl)
     m_titleBar->SetPadding(Padding(0, 0, 0, 0));
     m_titleBar->SetMargin(Margin(0, 0, 0, 4));
     m_titleBar->SetTarget(this);
+    m_titleBar->SetSizeFlags({SizeFlag::Expand, SizeFlag::Fixed});
     m_titleBar->Dock(Position::Top);
 
     m_title = new Label(m_titleBar);
@@ -38,6 +39,8 @@ GWK_CONTROL_CONSTRUCTOR(WindowControl)
 
     m_closeButton = new Gwk::Controls::WindowCloseButton(m_titleBar);
     m_closeButton->SetText("");
+    m_closeButton->SetSize(29, 24);
+    m_closeButton->SetSizeFlags({SizeFlag::Fixed, SizeFlag::Fixed});
     m_closeButton->Dock(Position::Right);
     m_closeButton->onPress.Add(this, &WindowControl::CloseButtonPressed);
     m_closeButton->SetTabable(false);
@@ -55,7 +58,7 @@ GWK_CONTROL_CONSTRUCTOR(WindowControl)
     BringToFront();
     SetTabable(false);
     Focus();
-    SetMinimumSize(Gwk::Point(100, 40));
+    SetMinimumSize(Size(100, 40));
     SetClampMovement(true);
     SetKeyboardInputEnabled(false);
 }

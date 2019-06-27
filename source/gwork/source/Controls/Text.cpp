@@ -20,6 +20,7 @@ GWK_CONTROL_CONSTRUCTOR(Text)
     m_colorOverride = Color(255, 255, 255, 0);
     m_color = GetSkin()->Colors.Label.Default;
     SetMouseInputEnabled(false);
+    SetSizeFlags({SizeFlag::Expand, SizeFlag::Expand});
     SetWrap(false);
 }
 
@@ -196,15 +197,39 @@ void Text::OnScaleChanged()
     Invalidate();
 }
 
-void Text::RefreshSize()
+void Text::CalculateSize(Skin::Base *skin, Dim dim)
+{
+    Size size=RefreshSize(false);
+
+    if(dim==Dim::X)
+        m_preferredSize.width=size.width;
+    else
+        m_preferredSize.height=size.height;
+//    Base::CalculateSize(skin, dim);
+}
+
+void Text::Arrange(Skin::Base *skin, Dim dim)
+{
+    if(dim==Dim::Y)
+    {
+        RefreshSize();
+        for(auto&& child:Children)
+        {
+            const Rect &bounds=child->GetBounds();
+            child->SetPreferredSize({bounds.w, bounds.h});
+        }
+    }
+}
+
+Size Text::RefreshSize(bool update)
 {
     if (m_bWrap)
-        return RefreshSizeWrap();
+        return RefreshSizeWrap(update);
 
     if (!m_font)
     {
         GWK_ASSERT_MSG(false, "Text::RefreshSize() - No Font!");
-        return;
+        return Size(0, 0);
     }
 
     Gwk::Point p(1, GetFont().size);
@@ -216,14 +241,19 @@ void Text::RefreshSize()
     p.y += GetPadding().top+GetPadding().bottom;
 
     if (p.x == Width() && p.y == Height())
-        return;
+        return Size(p.x, p.y);
 
     if (p.y < GetFont().size)
         p.y = GetFont().size;
 
-    SetSize(p.x, p.y);
-    InvalidateParent();
-    Invalidate();
+    if(update)
+    {
+        SetSize(p.x, p.y);
+        InvalidateParent();
+        Invalidate();
+    }
+
+    return Size(p.x, p.y);
 }
 
 void Text::SplitWords(const Gwk::String& s, std::vector<Gwk::String>& elems)
@@ -232,6 +262,9 @@ void Text::SplitWords(const Gwk::String& s, std::vector<Gwk::String>& elems)
 
     int w = GetParent()->Width()
                 - (GetParent()->GetPadding().left + GetParent()->GetPadding().right);
+
+    if(w<=0) //unable to place string in nothingness
+        return;
 
     for (size_t i = 0; i < s.length(); i++)
     {
@@ -272,15 +305,18 @@ void Text::SplitWords(const Gwk::String& s, std::vector<Gwk::String>& elems)
         elems.push_back(str);
 }
 
-void Text::RefreshSizeWrap()
+Size Text::RefreshSizeWrap(bool update)
 {
-    RemoveAllChildren();
-
-    for (auto&& line : m_lines)
+    if(update)
     {
-        delete line;
+        RemoveAllChildren();
+
+        for(auto&& line:m_lines)
+        {
+            delete line;
+        }
+        m_lines.clear();
     }
-    m_lines.clear();
 
     std::vector<Gwk::String> words;
     SplitWords(GetText(), words);
@@ -292,7 +328,7 @@ void Text::RefreshSizeWrap()
     if (!m_font)
     {
         GWK_ASSERT_MSG(false, "Text::RefreshSize() - No Font!");
-        return;
+        return Size(0, 0);
     }
 
     Point fontSize = GetSkin()->GetRender()->MeasureText(GetFont(), " ");
@@ -328,24 +364,34 @@ void Text::RefreshSizeWrap()
 
         if (bFinishLine)
         {
-            Text* t = new Text(this);
-            t->SetFont(GetFont());
-            t->SetTextColor(TextColor());
-            if (bWrapped)
+            if(update)
             {
-                t->SetString(strLine.substr(0, strLine.length()-(*it).length()));
-                // newline should start with the word that was too big
-                strLine = *it;
+                Text* t=new Text(this);
+                t->SetFont(GetFont());
+                t->SetTextColor(TextColor());
+                if(bWrapped)
+                {
+                    t->SetString(strLine.substr(0, strLine.length()-(*it).length()));
+                    // newline should start with the word that was too big
+                    strLine=*it;
+                }
+                else
+                {
+                    t->SetString(strLine.substr(0, strLine.length()));
+                    //new line is empty
+                    strLine.clear();
+                }
+                t->RefreshSize();
+                t->SetPos(x, y);
+                m_lines.push_back(t);
             }
             else
             {
-                t->SetString(strLine.substr(0, strLine.length()));
-                //new line is empty
-                strLine.clear();
+                if(bWrapped)
+                    strLine=*it;
+                else
+                    strLine.clear();
             }
-            t->RefreshSize();
-            t->SetPos(x, y);
-            m_lines.push_back(t);
             // newline should start with the word that was too big
             // strLine = *it;
 
@@ -356,13 +402,18 @@ void Text::RefreshSizeWrap()
         }
     }
 
-    // Size to children height and parent width
+    if(update)
     {
-        Point childsize = ChildrenSize();
-        SetSize(w, childsize.y);
+        // Size to children height and parent width
+        {
+            Point childsize=ChildrenSize();
+            SetSize(w, childsize.y);
+        }
+        InvalidateParent();
+        Invalidate();
     }
-    InvalidateParent();
-    Invalidate();
+
+    return Size(w, y);
 }
 
 unsigned int Text::NumLines()

@@ -130,6 +130,7 @@ GWK_CONTROL_CONSTRUCTOR(PropertyRow)
     label->Dock(Position::Left);
     label->SetAlignment(Position::Left|Position::CenterV);
     label->SetMargin(Margin(2, 0, 0, 0));
+    label->SetSizeFlags({SizeFlag::Fixed, SizeFlag::Elastic});
     m_label = label;
 }
 
@@ -171,6 +172,7 @@ void PropertyRow::SetProperty(Property::Base* prop)
     m_property = prop;
     m_property->SetParent(this);
     m_property->Dock(Position::Fill);
+    m_property->SetSizeFlags({SizeFlag::Fixed, SizeFlag::Elastic});
     m_property->onChange.Add(this, &ThisClass::OnPropertyValueChanged);
 }
 

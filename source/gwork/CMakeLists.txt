@@ -85,6 +85,7 @@ set(GWK_HEADERS
     include/Gwork/Controls/WindowCanvas.h
     include/Gwork/Controls/WindowControl.h
     # layout
+    include/Gwork/Controls/Layout/Layout.h
     include/Gwork/Controls/Layout/Position.h
     include/Gwork/Controls/Layout/Table.h
     include/Gwork/Controls/Layout/Tile.h
@@ -170,6 +171,8 @@ set(GWK_SOURCES
     source/Controls/VerticalSlider.cpp
     source/Controls/WindowCanvas.cpp
     source/Controls/WindowControl.cpp
+    # layout
+    source/Controls/Layout/Layout.cpp
     # dialog
     source/Controls/Dialog/FileOpen.cpp
     source/Controls/Dialog/FileSave.cpp
@@ -213,6 +216,8 @@ source_group("${GWK_SOURCE_FOLDER}\\Controls"
              REGULAR_EXPRESSION "source/Controls/[^/]+\\.cpp")
 source_group("${GWK_SOURCE_FOLDER}\\Controls\\Dialog"
              REGULAR_EXPRESSION "source/Controls/Dialog/[^/]+\\.cpp")
+source_group("${GWK_SOURCE_FOLDER}\\Controls\\Layout"
+             REGULAR_EXPRESSION "source/Controls/Layout/[^/]+\\.cpp")
 
 # Gwork library
 add_library(Gwork STATIC ${GWK_HEADERS} ${GWK_SOURCES} ${GWK_REFLECT_SOURCES})

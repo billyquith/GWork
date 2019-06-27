@@ -17,8 +17,9 @@ using namespace Gwk::ControlsInternal;
 GWK_CONTROL_CONSTRUCTOR(ResizableControl)
 {
     m_bResizable = true;
-    m_minimumSize = Gwk::Point(5, 5);
+    m_minimumSize = Size(5, 5);
     m_bClampMovement = false;
+    m_sizeFlags={SizeFlag::Fixed, SizeFlag::Fixed};
 
     // bottom
     m_resizers[0] = new Resizer(this);
@@ -87,11 +88,11 @@ void ResizableControl::DisableResizing()
 
 bool ResizableControl::SetBounds(int x, int y, int w, int h)
 {
-    Gwk::Point minSize = GetMinimumSize();
+    Size minSize = GetMinimumSize();
 
     // Clamp Minimum Size
-    w = std::max(w, minSize.x);
-    h = std::max(h, minSize.y);
+    w = std::max(w, minSize.width);
+    h = std::max(h, minSize.height);
 
     // Clamp to parent's window
     Base* parent = GetParent();

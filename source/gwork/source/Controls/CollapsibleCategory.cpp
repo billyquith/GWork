@@ -99,6 +99,7 @@ GWK_CONTROL_CONSTRUCTOR(CollapsibleCategory)
     m_button->SetText("Category Title");
     m_button->Dock(Position::Top);
     m_button->SetHeight(20);
+    m_button->SetSizeFlags({SizeFlag::Elastic, SizeFlag::Fixed});
     SetPadding(Padding(1, 0, 1, 5));
     SetSize(512, 512);
 }
@@ -110,6 +111,7 @@ Button* CollapsibleCategory::Add(const String& name)
     button->Dock(Position::Top);
     button->SizeToContents();
     button->SetSize(button->Width()+4, button->Height()+4);
+    button->SetSizeFlags({SizeFlag::Elastic, SizeFlag::Fixed});
     button->SetPadding(Padding(5, 2, 2, 2));
     button->onPress.Add(this, &ThisClass::OnSelection);
     return button;
@@ -154,6 +156,20 @@ void CollapsibleCategory::UnselectAll()
 
         child->SetToggleState(false);
     }
+}
+
+void CollapsibleCategory::CalculateSize(Skin::Base *skin, Dim dim)
+{
+    if(ProcessLayout(skin, dim))
+        return;
+
+    if(m_button->GetToggleState())
+    {
+        m_button->CalculateSize(skin, dim);
+        m_preferredSize=m_button->GetPreferredSize();
+    }
+    else
+        m_preferredSize=SizeOfChildren(skin, dim);
 }
 
 void CollapsibleCategory::PostLayout(Skin::Base* /*skin*/)

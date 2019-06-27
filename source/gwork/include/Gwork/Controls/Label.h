@@ -40,6 +40,7 @@ namespace Gwk
 
             virtual void SizeToContents();
 
+            bool HasAlignment() override { return true; }
             virtual void SetAlignment(Position area);
             virtual Position GetAlignment();
 

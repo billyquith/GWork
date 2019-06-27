@@ -24,6 +24,7 @@ set(GWK_TEST_API
     source/api/ImagePanel.cpp
     source/api/Label.cpp
     source/api/LabelMultiline.cpp
+    source/api/Layout.cpp
     source/api/ListBox.cpp
     source/api/MenuStrip.cpp
     source/api/Numeric.cpp

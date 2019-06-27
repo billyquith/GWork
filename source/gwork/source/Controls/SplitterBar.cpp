@@ -14,6 +14,7 @@ using namespace Controls;
 GWK_CONTROL_CONSTRUCTOR(SplitterBar)
 {
     SetTarget(this);
+    SetSizeFlags({SizeFlag::Fixed, SizeFlag::Fixed});
     RestrictToParent(true);
 }
 

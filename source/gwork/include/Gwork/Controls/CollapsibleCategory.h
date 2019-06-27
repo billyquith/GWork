@@ -55,6 +55,7 @@ namespace Gwk
             Gwk::Event::Listener onSelection;
 
         protected:
+            void CalculateSize(Skin::Base *skin, Dim dim) override;
 
             virtual void OnSelection(Event::Info info);
 

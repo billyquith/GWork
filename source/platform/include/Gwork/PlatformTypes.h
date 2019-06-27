@@ -87,7 +87,23 @@ namespace Gwk
             return Point(x - p.x, y - p.y);
         }
 
-        int x, y;
+        union
+        {
+            struct{int x, y;};
+            int v[2];
+        };
+    };
+
+    struct GWK_EXPORT Size
+    {
+        Size():width(0), height(0) {}
+        Size(int width, int height):width(width), height(height) {}
+
+        union
+        {
+            struct{int width, height;};
+            int value[2];
+        };
     };
 
     struct GWK_EXPORT Rect
@@ -118,7 +134,11 @@ namespace Gwk
 
         Point GetSize() const { return Point(w,h); }
 
-        int x, y, w, h;
+        union
+        {
+            struct{int x, y, w, h;};
+            int v[4];
+        };
     };
 
     struct GWK_EXPORT Color
