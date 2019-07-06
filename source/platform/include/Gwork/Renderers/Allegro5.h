@@ -31,6 +31,7 @@ namespace Gwk
         {
             template<typename T>
             using deleted_unique_ptr = std::unique_ptr<T, std::function<void(T*)>>;
+            
         public:
 
             Allegro(ResourcePaths& paths);
@@ -66,14 +67,26 @@ namespace Gwk
             void FreeTexture(const Gwk::Texture& texture) override;
             TextureData GetTextureData(const Gwk::Texture& texture) const override;
             bool EnsureTexture(const Gwk::Texture& texture) override;
-        protected:// Resourses
+            
+            void DrawLinedRect(Gwk::Rect rect) override;
+            void DrawShavedCornerRect(Gwk::Rect rect, bool bSlight = false) override;
+            // void DrawPixel(int x, int y);
+            
+            bool BeginContext(Gwk::WindowProvider* window) override;
+            bool EndContext(Gwk::WindowProvider* window) override;
+            bool PresentContext(Gwk::WindowProvider* window) override;
+            
+            // Cache to texture.
+            ICacheToTexture* GetCTT() override;
+
+        private:
 
             struct ALTextureData : public Gwk::TextureData
             {
-                ALTextureData()
-                {
-                }
+                ALTextureData() = default;
+
                 ALTextureData(const ALTextureData&) = delete;
+                
                 ALTextureData(ALTextureData&& other)
                     : ALTextureData()
                 {
@@ -83,50 +96,32 @@ namespace Gwk
                     texture.swap(other.texture);
                 }
 
-                ~ALTextureData()
-                {
-
-                }
+                ~ALTextureData() {}
 
                 deleted_unique_ptr<ALLEGRO_BITMAP> texture;
             };
 
             struct ALFontData
             {
-                ALFontData()
-                {
-                }
+                ALFontData() = default;
 
                 ALFontData(const ALFontData&) = delete;
+                
                 ALFontData(ALFontData&& other)
                     : ALFontData()
                 {
                     font.swap(other.font);
                 }
 
-                ~ALFontData()
-                {
-                }
+                ~ALFontData() {}
+
                 deleted_unique_ptr<ALLEGRO_FONT> font;
             };
 
             std::unordered_map<Font, ALFontData> m_fonts;
             std::unordered_map<Texture, ALTextureData> m_textures;
             std::pair<const Font, ALFontData>* m_lastFont;
-            std::pair<const Texture, ALTextureData>* m_lastTexture;
-        public:
-            void DrawLinedRect(Gwk::Rect rect) override;
-            void DrawShavedCornerRect(Gwk::Rect rect, bool bSlight = false) override;
-            // void DrawPixel(int x, int y);
-
-            bool BeginContext(Gwk::WindowProvider* window) override;
-            bool EndContext(Gwk::WindowProvider* window) override;
-            bool PresentContext(Gwk::WindowProvider* window) override;
-
-            // Cache to texture.
-            ICacheToTexture* GetCTT() override;
-
-        private:
+            std::pair<const Texture, ALTextureData>* m_lastTexture;            
 
             ALLEGRO_COLOR m_color;
             AllegroCTT *m_ctt;

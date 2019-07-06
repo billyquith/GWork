@@ -129,7 +129,8 @@ Font::Status Allegro::LoadFont(const Font& font)
     if (afont)
     {
         ALFontData fontData;
-        fontData.font = deleted_unique_ptr<ALLEGRO_FONT>(afont, [](ALLEGRO_FONT* mem) { if (mem) al_destroy_font(mem); });
+        fontData.font = deleted_unique_ptr<ALLEGRO_FONT>(afont,
+                                        [](ALLEGRO_FONT* mem) { if (mem) al_destroy_font(mem); });
         m_lastFont = &(*m_fonts.insert(std::make_pair(font, std::move(fontData))).first);
         return Font::Status::Loaded;
     }
@@ -181,7 +182,8 @@ Texture::Status Allegro::LoadTexture(const Texture& texture)
     if (bmp)
     {
         ALTextureData texData;
-        texData.texture = deleted_unique_ptr<ALLEGRO_BITMAP>(bmp, [](ALLEGRO_BITMAP* mem) { if (mem) al_destroy_bitmap(mem); });
+        texData.texture = deleted_unique_ptr<ALLEGRO_BITMAP>(bmp,
+                                    [](ALLEGRO_BITMAP* mem) { if (mem) al_destroy_bitmap(mem); });
         texData.width = al_get_bitmap_width(bmp);
         texData.height = al_get_bitmap_height(bmp);
         texData.readable = false;
@@ -244,9 +246,9 @@ bool Allegro::EnsureTexture(const Gwk::Texture& texture)
 
 Allegro::Allegro(ResourcePaths& paths)
 :   Base(paths)
-,   m_ctt(new AllegroCTT)
 ,   m_lastFont(nullptr)
 ,   m_lastTexture(nullptr)
+,   m_ctt(new AllegroCTT)
 {
     m_ctt->SetRenderer(this);
     m_ctt->Initialize();
@@ -291,7 +293,8 @@ Gwk::Point Allegro::MeasureText(const Gwk::Font& font, const Gwk::String& text)
 
     ALFontData& fontData = it->second;
 
-    return Point(al_get_text_width(fontData.font.get(), text.c_str()), al_get_font_line_height(fontData.font.get()));
+    return Point(al_get_text_width(fontData.font.get(), text.c_str()),
+                 al_get_font_line_height(fontData.font.get()));
 }
 
 void Allegro::StartClip()
@@ -312,7 +315,10 @@ void Allegro::DrawTexturedRect(const Texture& texture, Gwk::Rect rect,
                                float u2, float v2)
 {
     if (!EnsureTexture(texture))
+    {
         DrawMissingImage(rect);
+        return;
+    }
 
     Translate(rect);
 
