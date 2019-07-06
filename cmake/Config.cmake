@@ -49,7 +49,7 @@ option(WANT_SHARED_LIBS OFF) # TODO: Shared libs not implemented yet.
 option(WITH_REFLECTION_LOCAL "Use local libaries" ON) # TODO: OFF not tested.
 set(GWK_PONDER_INCLUDE "${GWK_SOURCE_DIR}/deps/ponder/include"
     CACHE STRING "Ponder includes directory")
-set(GWK_LUA_INCLUDE "${GWK_SOURCE_DIR}/deps/lua-5.3/src"
+set(GWK_LUA_INCLUDE "${GWK_SOURCE_DIR}/deps/ponder/deps/lua-5.3.4/src"
     CACHE STRING "Lua include directory")
 
 set(GWK_TARGET_ARCH "Unknown")      # default architecture e.g. x86, x64

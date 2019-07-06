@@ -15,7 +15,7 @@
 #include <functional>
 
 #if GWK_REFLECT
-#   include <ponder/value.hpp>
+#   include <ponder/pondertype.hpp>
 #endif
 
 namespace Gwk
@@ -84,7 +84,7 @@ namespace Gwk
          */
         class GWK_EXPORT Handler
         {
-            GWK_IF_REFLECT( PONDER_POLYMORPHIC )
+            GWK_IF_REFLECT( PONDER_POLYMORPHIC() )
         public:
 
             virtual ~Handler();
