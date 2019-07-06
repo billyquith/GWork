@@ -4,7 +4,6 @@ source/platform/include/Gwork/Version.h
 
 bin/
 lib/
-deps/
 
 build*/
 maintain_*.txt
