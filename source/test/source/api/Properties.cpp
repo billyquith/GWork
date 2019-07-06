@@ -12,7 +12,8 @@
 #include <Gwork/Controls/Property/Checkbox.h>
 #include <Gwork/Controls/Property/ComboBox.h>
 
-using namespace Gwk;
+namespace Gwk {
+namespace Test {
 
 class Properties : public TestUnit
 {
@@ -66,14 +67,16 @@ public:
         }
     }
 
-    void OnFirstNameChanged(Controls::Base* control)
+    void OnFirstNameChanged(Event::Info info)
     {
-        Gwk::Controls::PropertyRow* row = (Gwk::Controls::PropertyRow*)control;
+        auto row = static_cast<Gwk::Controls::PropertyRow*>(info.ControlCaller);
         OutputToLog(Utility::Format("First Name Changed: %s",
                                   row->GetProperty()->GetPropertyValue().c_str()));
     }
 
 };
 
+GWK_REGISTER_TEST(Properties);
 
-DECLARE_TEST(Properties);
+}}
+

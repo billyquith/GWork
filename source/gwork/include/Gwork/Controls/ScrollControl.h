@@ -55,8 +55,8 @@ namespace Gwk
 
             virtual void SetInnerSize(int w, int h);
 
-            virtual void VBarMoved(Controls::Base* control);
-            virtual void HBarMoved(Controls::Base* control);
+            virtual void OnVBarMoved(Event::Info);
+            virtual void OnHBarMoved(Event::Info);
 
             bool OnMouseWheeled(int iDelta) override;
 

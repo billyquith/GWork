@@ -8,7 +8,8 @@
 #include <Gwork/Test/TestAPI.h>
 #include <Gwork/Controls/NumericUpDown.h>
 
-using namespace Gwk;
+namespace Gwk {
+namespace Test {
 
 class Numeric : public TestUnit
 {
@@ -21,16 +22,19 @@ public:
         ctrl->SetIntValue(50);
         ctrl->SetMax(1000);
         ctrl->SetMin(-1000);
-        ctrl->onChanged.Add(this, &ThisClass::onChanged);
+        ctrl->onChanged.Add(this, &ThisClass::OnChanged);
     }
 
-    void onChanged(Controls::Base* control)
+    void OnChanged(Event::Info info)
     {
+        auto control = info.Control;
         Gwk::Controls::NumericUpDown* numeric = (Gwk::Controls::NumericUpDown*)control;
         OutputToLog(Utility::Format("Numeric Changed: %i", numeric->GetIntValue()));
     }
 
 };
 
+GWK_REGISTER_TEST(Numeric);
 
-DECLARE_TEST(Numeric);
+}}
+

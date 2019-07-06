@@ -25,56 +25,56 @@ Handler::~Handler()
 void Handler::CleanLinks()
 {
     // Tell all the callers that we're dead
-    std::list<Caller*>::iterator iter = m_callers.begin();
+    std::list<Listener*>::iterator iter = m_listeners.begin();
 
-    while (iter != m_callers.end())
+    while (iter != m_listeners.end())
     {
-        Caller* caller = *iter;
-        UnRegisterCaller(caller);
-        caller->RemoveHandler(this);
-        iter = m_callers.begin();
+        Listener* Listener = *iter;
+        UnRegisterCaller(Listener);
+        Listener->RemoveHandler(this);
+        iter = m_listeners.begin();
     }
 }
 
-void Handler::RegisterCaller(Caller* caller)
+void Handler::RegisterCaller(Listener* Listener)
 {
-    m_callers.push_back(caller);
+    m_listeners.push_back(Listener);
 }
 
-void Handler::UnRegisterCaller(Caller* caller)
+void Handler::UnRegisterCaller(Listener* Listener)
 {
-    m_callers.remove(caller);
+    m_listeners.remove(Listener);
 }
 
-Caller::Caller()
+Listener::Listener()
 {
 }
 
-Caller::~Caller()
+Listener::~Listener()
 {
     CleanLinks();
 }
 
-void Caller::CleanLinks()
+void Listener::CleanLinks()
 {
     for (auto&& h : m_handlers)
     {
-        h.object->UnRegisterCaller(this);
+        h.handler->UnRegisterCaller(this);
     }
 
     m_handlers.clear();
 }
 
-void Caller::Call(Controls::Base* pThis)
+void Listener::Call(Controls::Base* pThis)
 {
-    Gwk::Event::Information info;
+    Event::Info info(pThis);
     info.Control = pThis;
     Call(pThis, info);
 }
 
-void Caller::Call(Controls::Base* pThis, Gwk::Event::Info information)
+void Listener::Call(Controls::Base* pThis, Event::Info information)
 {
-    Gwk::Event::Information info;
+    Event::Info info(nullptr);
     info = information;
     info.ControlCaller = pThis;
 
@@ -82,52 +82,20 @@ void Caller::Call(Controls::Base* pThis, Gwk::Event::Info information)
     {
         info.Packet = &h.Packet;
 
-        if (h.fnFunction)
-            (h.object->*h.fnFunction)(pThis);
-
-        if (h.fnFunctionInfo)
-            (h.object->*h.fnFunctionInfo)(info);
-
-        if (h.fnFunctionBlank)
-            (h.object->*h.fnFunctionBlank)();
+        if (h.callback)
+            h.callback(*h.handler, info);
     }
 }
 
-void Caller::AddInternal(Event::Handler* object, Event::Handler::Function function)
+void Listener::AddInternal(Handler *handler, EventCallback const &ecb,
+                           const Gwk::Event::Packet& packet)
 {
-    HandlerInstance h;
-    h.fnFunction = function;
-    h.object = object;
+    HandlerInstance h = { ecb, packet, handler };
     m_handlers.push_back(h);
-    object->RegisterCaller(this);
+    handler->RegisterCaller(this);
 }
 
-void Caller::AddInternal(Event::Handler* object, Handler::FunctionWithInformation function)
-{
-    AddInternal(object, function, Gwk::Event::Packet());
-}
-
-void Caller::AddInternal(Event::Handler* object, Handler::FunctionWithInformation function,
-                         const Gwk::Event::Packet& packet)
-{
-    HandlerInstance h;
-    h.fnFunctionInfo    = function;
-    h.object            = object;
-    h.Packet            = packet;
-    m_handlers.push_back(h);
-    object->RegisterCaller(this);
-}
-
-void Caller::AddInternal(Event::Handler* object, Handler::FunctionBlank function)
-{
-    HandlerInstance h;
-    h.fnFunctionBlank = function;
-    h.object = object;
-    m_handlers.push_back(h);
-    object->RegisterCaller(this);
-}
-
-void Caller::RemoveHandler(Event::Handler* object)
+void Listener::RemoveHandler(Event::Handler* object)
 {
     object->UnRegisterCaller(this);
     std::list<HandlerInstance>::iterator iter = m_handlers.begin();
@@ -136,7 +104,7 @@ void Caller::RemoveHandler(Event::Handler* object)
     {
         HandlerInstance& h = *iter;
 
-        if (h.object == object)
+        if (h.handler == object)
             iter = m_handlers.erase(iter);
         else
             ++iter;

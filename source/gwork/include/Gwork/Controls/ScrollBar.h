@@ -37,7 +37,7 @@ namespace Gwk
             virtual int  GetBarSize() = 0;
             virtual int  GetBarPos() = 0;
 
-            virtual void OnBarMoved(Controls::Base* control);
+            virtual void OnBarMoved(Event::Info);
             void OnMouseClickLeft(int /*x*/, int /*y*/, bool /*bDown*/) override {}
 
             virtual void ScrollToLeft()     {}
@@ -87,7 +87,7 @@ namespace Gwk
                 return false;
             }
 
-            Gwk::Event::Caller onBarMoved;
+            Gwk::Event::Listener onBarMoved;
 
         protected:
 

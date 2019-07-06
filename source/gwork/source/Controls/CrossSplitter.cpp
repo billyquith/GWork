@@ -47,7 +47,7 @@ void CrossSplitter::UpdateHSplitter()
     m_hSplitter->MoveTo((Width()-m_hSplitter->Width())*(m_fHVal), m_hSplitter->Y());
 }
 
-void CrossSplitter::OnCenterMoved(Controls::Base* /*control*/)
+void CrossSplitter::OnCenterMoved(Event::Info)
 {
     // Move the other two bars into position
     CalculateValueCenter();
@@ -60,13 +60,13 @@ void CrossSplitter::UpdateCSplitter()
                         (Height()-m_cSplitter->Height())*(m_fVVal));
 }
 
-void CrossSplitter::OnHorizontalMoved(Controls::Base* /*control*/)
+void CrossSplitter::OnHorizontalMoved(Event::Info)
 {
     m_fHVal = CalculateValueHorizontal();
     Invalidate();
 }
 
-void CrossSplitter::OnVerticalMoved(Controls::Base* /*control*/)
+void CrossSplitter::OnVerticalMoved(Event::Info)
 {
     m_fVVal = CalculateValueVertical();
     Invalidate();

@@ -10,7 +10,8 @@
 #include <Gwork/Controls/WindowControl.h>
 #include <Gwork/Controls/Button.h>
 
-using namespace Gwk;
+namespace Gwk {
+namespace Test {
 
 class Window : public TestUnit
 {
@@ -40,7 +41,7 @@ public:
         m_windowCount = 1;
     }
 
-    void OpenWindow()
+    void OpenWindow(Event::Info)
     {
         Controls::WindowControl* window = new Controls::WindowControl(GetCanvas());
         window->SetTitle(Utility::Format("Window %i", m_windowCount));
@@ -54,7 +55,7 @@ public:
         m_windowCount++;
     }
 
-    void OpenModalWindow()
+    void OpenModalWindow(Event::Info)
     {
         Controls::WindowControl* window = new Controls::WindowControl(GetCanvas());
         window->SetTitle(Utility::Format("Window %i", m_windowCount));
@@ -65,7 +66,7 @@ public:
         m_windowCount++;
     }
 
-    void OpenNonResizeableWindow()
+    void OpenNonResizeableWindow(Event::Info)
     {
         Controls::WindowControl* window = new Controls::WindowControl(GetCanvas());
         window->SetTitle(Utility::Format("Window %i", m_windowCount));
@@ -84,5 +85,7 @@ public:
 
 };
 
+GWK_REGISTER_TEST(Window);
 
-DECLARE_TEST(Window);
+}}
+

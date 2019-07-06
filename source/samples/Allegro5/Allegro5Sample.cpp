@@ -46,7 +46,7 @@ int main(int argc, char** argv)
     al_register_event_source(event_queue, al_get_mouse_event_source());
     al_register_event_source(event_queue, al_get_keyboard_event_source());
 
-    Gwk::Platform::RelativeToExecutablePaths paths(GWORK_RESOURCE_DIR);
+    Gwk::Platform::RelativeToExecutablePaths paths(GWK_SAMPLE_RESOURCE_DIR);
 
     // Create a Gwork Allegro Renderer
     Gwk::Renderer::Allegro* renderer = new Gwk::Renderer::Allegro(paths);
@@ -69,7 +69,7 @@ int main(int argc, char** argv)
     canvas->SetBackgroundColor(Gwk::Color(150, 170, 170, 255));
 
     // Create our unittest control (which is a Window with controls in it)
-    auto unit = new TestFrame(canvas);
+    auto unit = Gwk::Test::CreateTests(canvas);
     unit->SetPos(10, 10);
 
     // Create a Windows Control helper

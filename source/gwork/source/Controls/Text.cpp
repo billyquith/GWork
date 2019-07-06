@@ -51,11 +51,9 @@ void Text::SetFont(const Gwk::Font& font)
     m_font = &font;
     m_bTextChanged = true;
     // Change the font of multilines too!
+    for (auto&& line : m_lines)
     {
-        for (auto&& line : m_lines)
-        {
-            line->SetFont(*m_font);
-        }
+        line->SetFont(*m_font);
     }
 
     Invalidate();
@@ -374,11 +372,15 @@ unsigned int Text::NumLines()
 
 Text* Text::GetLine(int i)
 {
-    for (auto&& line : m_lines)
+    TextLines::iterator it = m_lines.begin();
+    TextLines::iterator itEnd = m_lines.end();
+
+    while (it != itEnd)
     {
         if (i == 0)
-            return line;
+            return *it;
 
+        ++it;
         i--;
     }
 

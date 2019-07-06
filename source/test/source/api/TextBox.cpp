@@ -8,7 +8,8 @@
 #include <Gwork/Test/TestAPI.h>
 #include <Gwork/Controls/TextBox.h>
 
-using namespace Gwk;
+namespace Gwk {
+namespace Test {
 
 class TextBox : public TestUnit
 {
@@ -91,22 +92,24 @@ public:
         }
     }
 
-    void OnEdit(Gwk::Controls::Base* control)
+    void OnEdit(Event::Info info)
     {
-        Gwk::Controls::TextBox* textbox = (Gwk::Controls::TextBox*)(control);
+        auto textbox = static_cast<Gwk::Controls::TextBox*>(info.ControlCaller);
         OutputToLog(Utility::Format("Textbox Edit: [%s]\n",
-                                  textbox->GetText().c_str()));
+                                    textbox->GetText().c_str()));
     }
 
-    void OnSubmit(Gwk::Controls::Base* control)
+    void OnSubmit(Event::Info info)
     {
-        Gwk::Controls::TextBox* textbox = (Gwk::Controls::TextBox*)(control);
+        auto textbox = static_cast<Gwk::Controls::TextBox*>(info.ControlCaller);
         OutputToLog(Utility::Format("Textbox Submit: [%s]\n",
-                                  textbox->GetText().c_str()));
+                                    textbox->GetText().c_str()));
     }
 
     Gwk::Font m_font;
 };
 
+GWK_REGISTER_TEST(TextBox);
 
-DECLARE_TEST(TextBox);
+}}
+

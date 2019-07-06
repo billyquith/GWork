@@ -16,7 +16,7 @@ git clone https://github.com/billyquith/gwork.git $DOCDIR -b gh-pages --depth=1
 pushd $PROJDIR
 mkdir build && cd build
 cmake .. -G Ninja -DRENDER_NULL=ON
-cmake --build . --target doc
+cmake --build . --target gwork_docs
 cd ..
 popd
 

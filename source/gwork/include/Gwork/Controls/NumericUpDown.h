@@ -58,15 +58,15 @@ namespace Gwk
             virtual void SetIntValue(int i);
             virtual int GetIntValue();
 
-            Event::Caller onChanged;
+            Event::Listener onChanged;
 
         private:
 
             void OnEnter() override;
             virtual void OnChange();
 
-            virtual void OnButtonUp(Base* control);
-            virtual void OnButtonDown(Base* control);
+            virtual void OnButtonUp(Event::Info);
+            virtual void OnButtonDown(Event::Info);
 
             bool OnKeyUp(bool bDown) override
             {

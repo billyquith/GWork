@@ -14,7 +14,7 @@
 #include <Gwork/Skin.h>
 #include <Gwork/Platform.h>
 #include <Gwork/DragAndDrop.h>
-#include <Gwork/ToolTip.h>
+#include <Gwork/Tooltip.h>
 #include <Gwork/Utility.h>
 #include <list>
 
@@ -46,7 +46,7 @@ Base::Base(Base* parent, const Gwk::String& Name)
     SetKeyboardInputEnabled(false);
     Invalidate();
     SetCursor(Gwk::CursorType::Normal);
-    SetToolTip(nullptr);
+    SetTooltip(nullptr);
     SetTabable(false);
     SetShouldDrawBackground(true);
     m_bDisabled = false;
@@ -93,7 +93,7 @@ Base::~Base()
         Gwk::MouseFocus = nullptr;
 
     DragAndDrop::ControlDeleted(this);
-    ToolTip::ControlDeleted(this);
+    Tooltip::ControlDeleted(this);
 #if GWK_ANIMATE
     Anim::Cancel(this);
 #endif
@@ -641,10 +641,10 @@ void Base::OnMouseEnter()
 {
     onHoverEnter.Call(this);
 
-    if (GetToolTip())
-        ToolTip::Enable(this);
-    else if (GetParent() && GetParent()->GetToolTip())
-        ToolTip::Enable(GetParent());
+    if (GetTooltip())
+        Tooltip::Enable(this);
+    else if (GetParent() && GetParent()->GetTooltip())
+        Tooltip::Enable(GetParent());
 
     Redraw();
 }
@@ -653,8 +653,8 @@ void Base::OnMouseLeave()
 {
     onHoverLeave.Call(this);
 
-    if (GetToolTip())
-        ToolTip::Disable(this);
+    if (GetTooltip())
+        Tooltip::Disable(this);
 
     Redraw();
 }
@@ -1155,14 +1155,14 @@ void Base::RenderFocus(Gwk::Skin::Base* skin)
     skin->DrawKeyboardHighlight(this, GetRenderBounds(), 3);
 }
 
-void Base::SetToolTip(const String& strText)
+void Base::SetTooltipText(const String& strText)
 {
     Label* tooltip = new Label(this);
     tooltip->SetText(strText);
     tooltip->SetTextColorOverride(GetSkin()->Colors.TooltipText);
     tooltip->SetPadding(Padding(5, 3, 5, 3));
     tooltip->SizeToContents();
-    SetToolTip(tooltip);
+    SetTooltip(tooltip);
 }
 
 String Base::GetChildValue(const Gwk::String& strName)

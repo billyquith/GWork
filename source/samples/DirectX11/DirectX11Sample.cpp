@@ -6,10 +6,8 @@
  */
 
 #define WIN32_LEAN_AND_MEAN // Exclude rarely-used stuff from Windows headers
-// Windows Header Files:
 #include <windows.h>
 
-// C RunTime Header Files
 #include <stdlib.h>
 #include <memory.h>
 #include <tchar.h>
@@ -20,11 +18,11 @@
 #include <Gwork/Renderers/DirectX11.h>
 #include <Gwork/Platform.h>
 
-HWND                    g_pHWND = NULL;
-ID3D11Device*           g_pd3dDevice = NULL;
-ID3D11DeviceContext*    g_pImmediateContext = NULL;
-IDXGISwapChain*         g_pSwapChain = NULL;
-ID3D11RenderTargetView* g_pRenderTargetView = NULL;
+static HWND                    g_pHWND = NULL;
+static ID3D11Device*           g_pd3dDevice = NULL;
+static ID3D11DeviceContext*    g_pImmediateContext = NULL;
+static IDXGISwapChain*         g_pSwapChain = NULL;
+static ID3D11RenderTargetView* g_pRenderTargetView = NULL;
 
 //
 // Create a Window to render to.
@@ -161,7 +159,7 @@ int main( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nC
     GetClientRect( g_pHWND, &FrameBounds );
 
     // Create resource path calculator.
-    Gwk::Platform::RelativeToExecutablePaths paths(GWORK_RESOURCE_DIR);
+    Gwk::Platform::RelativeToExecutablePaths paths{ GWK_SAMPLE_RESOURCE_DIR };
 
     // Create a GWork DirectX renderer
     Gwk::Renderer::DirectX11* pRenderer = new Gwk::Renderer::DirectX11(paths, g_pd3dDevice);
@@ -177,7 +175,7 @@ int main( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nC
     pCanvas->SetBackgroundColor( Gwk::Color( 150, 170, 170, 255 ) );
 
     // Create our unittest control (which is a Window with controls in it)
-    auto pUnit = new TestFrame(pCanvas);
+    auto pUnit = Gwk::Test::CreateTests(pCanvas);
     pUnit->SetPos(10, 10);
 
     // Create a Windows Control helper
@@ -220,6 +218,7 @@ int main( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nC
         }
     }
 
+    delete pUnit;
     delete pCanvas;
     delete pSkin;
     //delete pRenderer;     /// @todo - Fix Windows font clean up

@@ -1,5 +1,21 @@
 # Gwork Travis config
 
+# Life cycle: (https://docs.travis-ci.com/user/customizing-the-build/)
+#
+#   - OPTIONAL Install apt addons
+#   - OPTIONAL Install cache components
+#   - before_install
+#   - install
+#   - before_script
+#   - script
+#   - OPTIONAL before_cache (for cleaning up cache)
+#   - after_success or after_failure
+#   - OPTIONAL before_deploy
+#   - OPTIONAL deploy
+#   - OPTIONAL after_deploy
+#   - after_script
+
+
 # Use Ubuntu Trusty (14) for mostly up-to-date packages
 sudo: required
 dist: trusty
@@ -14,86 +30,42 @@ language: cpp
 #
 # currently issue for adding the Trusty LLVM ppa to Travis’ whitelist, previous, 12.04
 # issue: https://github.com/travis-ci/apt-source-whitelist/pull/205
+
+# Linux packages are got using apt on Travis.
+# See: https://docs.travis-ci.com/user/installing-dependencies/
+
 matrix:
   include:
     - os: linux
       compiler: gcc
-      addons:
-        apt:
-          sources:
-            - ubuntu-toolchain-r-test
-          packages:
-            - g++-4.9
-      env: COMPILER=g++-4.9 BUILD_CONFIG=Debug
+      env: FEATURES="-DWANT_REFLECTION=OFF"
     - os: linux
       compiler: gcc
-      addons:
-        apt:
-          sources:
-            - ubuntu-toolchain-r-test
-          packages:
-            - g++-5
-            - doxygen
-      env: COMPILER=g++-5 BUILD_CONFIG=Debug
-    - os: linux
-      compiler: gcc
-      addons:
-        apt:
-          sources:
-            - ubuntu-toolchain-r-test
-          packages:
-            - g++-6
-            - doxygen
-      env: COMPILER=g++-6 BUILD_CONFIG=Debug
+      env: FEATURES="-DWANT_REFLECTION=ON"
+      
     - os: linux
       compiler: clang
-      addons:
-        apt:
-          sources:
-            - ubuntu-toolchain-r-test
-            - llvm-toolchain-precise-3.6
-          packages:
-            - clang-3.6
-      env: COMPILER=clang++-3.6 BUILD_CONFIG=Debug
+      env: FEATURES="-DWANT_REFLECTION=OFF"
     - os: linux
       compiler: clang
-      addons:
-        apt:
-          sources:
-            - ubuntu-toolchain-r-test
-            - llvm-toolchain-precise-3.7
-          packages:
-            - clang-3.7
-      env: COMPILER=clang++-3.7 BUILD_CONFIG=Debug
-    - os: linux
-      compiler: clang
-      addons:
-        apt:
-          sources:
-            - ubuntu-toolchain-r-test
-            - llvm-toolchain-precise-3.8
-          packages:
-            - clang-3.8
-            - doxygen
-      env: COMPILER=clang++-3.8 BUILD_CONFIG=Debug
+      env: FEATURES="-DWANT_REFLECTION=ON"
+
+    - os: osx               # Xcode (previous)
+      osx_image: xcode8.3
+      env: FEATURES="-DWANT_REFLECTION=OFF"
     - os: osx
-      osx_image: xcode7.3
-      compiler: clang
-      env: COMPILER=clang++ BUILD_CONFIG=Debug
-      install: ./ci/travis/install.sh
+      osx_image: xcode8.3
+      env: FEATURES="-DWANT_REFLECTION=ON"
+
+    - os: osx               # Xcode (latest)
+      osx_image: xcode9.2
+      env: FEATURES="-DWANT_REFLECTION=OFF"
     - os: osx
-      osx_image: xcode8.2
-      compiler: clang
-      env: COMPILER=clang++ BUILD_CONFIG=Release
-      install: ./ci/travis/install.sh
+      osx_image: xcode9.2
+      env: FEATURES="-DWANT_REFLECTION=ON"
 
-# install: ./ci/travis/install.sh
-
-before_script: ./ci/travis/make_build.sh $COMPILER
-
-script:
-  - cd build && cmake --build . --target GworkNullSample --config $BUILD_CONFIG
-
+script: ./ci/travis/build.sh
+    
 notifications:
   email:
     on_failure: change

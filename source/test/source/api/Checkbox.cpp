@@ -8,7 +8,8 @@
 #include <Gwork/Test/TestAPI.h>
 #include <Gwork/Controls/CheckBox.h>
 
-using namespace Gwk;
+namespace Gwk {
+namespace Test {
 
 class Checkbox : public TestUnit
 {
@@ -34,22 +35,24 @@ public:
         }
     }
 
-    void OnChecked(Controls::Base* control)
+    void OnChecked(Event::Info)
     {
         OutputToLog("Checkbox Checked (using 'OnChecked' event)");
     }
 
-    void OnUnchecked(Controls::Base* control)
+    void OnUnchecked(Event::Info)
     {
         OutputToLog("Checkbox Unchecked (using 'OnUnchecked' event)");
     }
 
-    void OnCheckChanged(Controls::Base* control)
+    void OnCheckChanged(Event::Info)
     {
         OutputToLog("Checkbox CheckChanged (using 'OnCheckChanged' event)");
     }
 
 };
 
+GWK_REGISTER_TEST(Checkbox);
 
-DECLARE_TEST(Checkbox);
+}}
+

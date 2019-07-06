@@ -44,13 +44,13 @@ void HorizontalScrollBar::Layout(Skin::Base* skin)
         SetScrolledAmount(GetScrolledAmount(), true);
 }
 
-void HorizontalScrollBar::NudgeLeft(Base* /*control*/)
+void HorizontalScrollBar::NudgeLeft(Event::Info)
 {
     if (!IsDisabled())
         SetScrolledAmount(GetScrolledAmount()-GetNudgeAmount(), true);
 }
 
-void HorizontalScrollBar::NudgeRight(Base* /*control*/)
+void HorizontalScrollBar::NudgeRight(Event::Info)
 {
     if (!IsDisabled())
         SetScrolledAmount(GetScrolledAmount()+GetNudgeAmount(), true);
@@ -117,12 +117,12 @@ bool HorizontalScrollBar::SetScrolledAmount(float amount, bool forceUpdate)
     return true;
 }
 
-void HorizontalScrollBar::OnBarMoved(Controls::Base* control)
+void HorizontalScrollBar::OnBarMoved(Event::Info info)
 {
     if (m_bar->IsDepressed())
     {
         SetScrolledAmount(CalculateScrolledAmount(), false);
-        ParentClass::OnBarMoved(control);
+        ParentClass::OnBarMoved(info);
     }
     else
     {

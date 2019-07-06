@@ -5,6 +5,7 @@
  *  See license in Gwork.h
  */
 
+#define GWK_SAMPLE
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 
@@ -190,7 +191,7 @@ int main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCm
     createDeviceResources();
 
     // Create path calculator and resource loader.
-    Gwk::Platform::RelativeToExecutablePaths paths(GWORK_RESOURCE_DIR);
+    Gwk::Platform::RelativeToExecutablePaths paths(GWK_SAMPLE_RESOURCE_DIR);
     Gwk::Renderer::Direct2DResourceLoader loader(paths, g_rT, g_dWriteFactory, g_wICFactory);
 
     // Create a Gwork Direct2D renderer

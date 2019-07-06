@@ -59,7 +59,7 @@ namespace Gwk
                     m_button->SetMargin(Margin(1, 1, 1, 2));
                 }
 
-                void OnButtonPress(Controls::Base* control)
+                void OnButtonPress(Event::Info info)
                 {
                     Gwk::Controls::Menu* menu = new Menu(GetCanvas());
                     menu->SetSize(256, 180);
@@ -78,10 +78,10 @@ namespace Gwk
                     menu->Open(Position::Right | Position::Top);
                 }
 
-                void ColorChanged(Controls::Base* control)
+                void ColorChanged(Event::Info info)
                 {
                     Gwk::Controls::HSVColorPicker* picker =
-                        gwk_cast<Gwk::Controls::HSVColorPicker>(control);
+                        gwk_cast<Gwk::Controls::HSVColorPicker>(info.ControlCaller);
                     Color col = picker->GetColor();
                     m_textBox->SetText(Utility::Format("%u,%u,%u", col.r, col.g, col.b));
                     DoChanged();

@@ -8,7 +8,8 @@
 #include <Gwork/Test/TestAPI.h>
 #include <Gwork/Controls/MenuStrip.h>
 
-using namespace Gwk;
+namespace Gwk {
+namespace Test {
 
 class MenuStrip : public TestUnit
 {
@@ -20,16 +21,16 @@ public:
         Gwk::Controls::MenuStrip* menu = new Gwk::Controls::MenuStrip(this);
         {
             Gwk::Controls::MenuItem* root = menu->AddItem("File");
-            root->GetMenu()->AddItem("New", "test16.png", "Ctrl + N")->SetAction(this,
-                                                                                    &ThisClass::MenuItemSelect);
-            root->GetMenu()->AddItem("Load", "test16.png", "Ctrl+")->SetAction(this,
-                                                                                   &ThisClass::MenuItemSelect);
-            root->GetMenu()->AddItem("Save", "", "CTRL+S")->SetAction(this,
-                                                                        &ThisClass::MenuItemSelect);
-            root->GetMenu()->AddItem("Save As..", "", "Ctrl+Shift+S")->SetAction(this,
-                                                                                   &ThisClass::MenuItemSelect);
-            root->GetMenu()->AddItem("Quit", "", "Ctrl+Q")->SetAction(this,
-                                                                        &ThisClass::MenuItemSelect);
+            root->GetMenu()->AddItem("New", "test16.png", "Ctrl + N")
+                             ->SetAction(this, &ThisClass::MenuItemSelect);
+            root->GetMenu()->AddItem("Load", "test16.png", "Ctrl+")
+                             ->SetAction(this,&ThisClass::MenuItemSelect);
+            root->GetMenu()->AddItem("Save", "", "CTRL+S")
+                             ->SetAction(this, &ThisClass::MenuItemSelect);
+            root->GetMenu()->AddItem("Save As..", "", "Ctrl+Shift+S")
+                             ->SetAction(this, &ThisClass::MenuItemSelect);
+            root->GetMenu()->AddItem("Quit", "", "Ctrl+Q")
+                             ->SetAction(this, &ThisClass::MenuItemSelect);
         }
         {
             Gwk::Controls::MenuItem* root = menu->AddItem(
@@ -102,13 +103,15 @@ public:
     }
 
 
-    void MenuItemSelect(Base* control)
+    void MenuItemSelect(Event::Info info)
     {
-        Gwk::Controls::MenuItem* menuItem = (Gwk::Controls::MenuItem*)control;
+        auto* menuItem = static_cast<Gwk::Controls::MenuItem*>(info.ControlCaller);
         OutputToLog(Utility::Format("Menu Selected: %s", menuItem->GetText().c_str()));
     }
 
 };
 
+GWK_REGISTER_TEST(MenuStrip);
 
-DECLARE_TEST(MenuStrip);
+}}
+

@@ -8,7 +8,8 @@
 #include <Gwork/Test/TestAPI.h>
 #include <Gwork/Controls/TreeControl.h>
 
-using namespace Gwk;
+namespace Gwk {
+namespace Test {
 
 class TreeControl : public TestUnit
 {
@@ -57,5 +58,7 @@ public:
 
 };
 
+GWK_REGISTER_TEST(TreeControl);
 
-DECLARE_TEST(TreeControl);
+}}
+

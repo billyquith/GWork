@@ -26,7 +26,7 @@ namespace Gwk
             GWK_CONTROL(CheckBox, Button);
 
             void Render(Skin::Base* skin) override;
-            void OnPress() override;
+            void OnPress(Event::Info) override;
 
             virtual void SetChecked(bool Checked);
             void Toggle() override
@@ -39,9 +39,9 @@ namespace Gwk
                 return m_bChecked;
             }
 
-            Gwk::Event::Caller onChecked;
-            Gwk::Event::Caller onUnChecked;
-            Gwk::Event::Caller onCheckChanged;
+            Gwk::Event::Listener onChecked;
+            Gwk::Event::Listener onUnChecked;
+            Gwk::Event::Listener onCheckChanged;
 
         private:
 

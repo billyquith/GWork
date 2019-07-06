@@ -25,7 +25,8 @@ Font::Status SDL2::LoadFont(const Font& font)
     if (tfont)
     {
         SDL2FontData fontData;
-        fontData.tFont = deleted_unique_ptr<TTF_Font>(tfont, [](TTF_Font* mem) { if (mem) TTF_CloseFont(mem); });
+        fontData.tFont = deleted_unique_ptr<TTF_Font>(tfont,
+                                            [](TTF_Font* mem) { if (mem) TTF_CloseFont(mem); });
         m_lastFont = &(*m_fonts.insert(std::make_pair(font, std::move(fontData))).first);
         return Font::Status::Loaded;
     }
@@ -88,7 +89,8 @@ Texture::Status SDL2::LoadTexture(const Texture& texture)
         else
         {
             tex = SDL_CreateTextureFromSurface(m_renderer, surf);
-            texData.surface = deleted_unique_ptr<SDL_Surface>(surf, [](SDL_Surface* mem) { if (mem) SDL_FreeSurface(mem); });
+            texData.surface = deleted_unique_ptr<SDL_Surface>(surf,
+                                        [](SDL_Surface* mem) { if (mem) SDL_FreeSurface(mem); });
             texData.readable = true;
         }
     }
@@ -170,10 +172,10 @@ bool SDL2::EnsureTexture(const Gwk::Texture& texture)
 
 SDL2::SDL2(ResourcePaths& paths, SDL_Window *window)
     :   Base(paths)
-    ,   m_window(window)
-    ,   m_renderer(nullptr)
     ,   m_lastFont(nullptr)
     ,   m_lastTexture(nullptr)
+    ,   m_window(window)
+    ,   m_renderer(nullptr)
 {
   m_renderer = SDL_GetRenderer( m_window );
 }

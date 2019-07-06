@@ -65,7 +65,7 @@ void TreeControl::OnNodeAdded(TreeNode* node)
     node->onNamePress.Add(this, &TreeControl::OnNodeSelection);
 }
 
-void TreeControl::OnNodeSelection(Controls::Base* /*control*/)
+void TreeControl::OnNodeSelection(Event::Info info)
 {
     if (!m_bAllowMultipleSelection || !Gwk::Input::IsKeyDown(Key::Control))
         DeselectAll();

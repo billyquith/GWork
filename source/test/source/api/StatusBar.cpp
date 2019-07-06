@@ -9,7 +9,8 @@
 #include <Gwork/Controls/StatusBar.h>
 #include <Gwork/Controls/Label.h>
 
-using namespace Gwk;
+namespace Gwk {
+namespace Test {
 
 class StatusBar : public TestUnit
 {
@@ -27,5 +28,7 @@ public:
     void Layout(Gwk::Skin::Base* skin) override {}
 };
 
+GWK_REGISTER_TEST(StatusBar);
 
-DECLARE_TEST(StatusBar);
+}}
+

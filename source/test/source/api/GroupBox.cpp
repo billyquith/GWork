@@ -8,8 +8,8 @@
 #include <Gwork/Test/TestAPI.h>
 #include <Gwork/Controls/GroupBox.h>
 
-using namespace Gwk;
-
+namespace Gwk {
+namespace Test {
 
 static const char *c_text =
 "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam et dolor sit amet quam euismod \
@@ -49,5 +49,7 @@ public:
     }
 };
 
+GWK_REGISTER_TEST(GroupBox);
 
-DECLARE_TEST(GroupBox);
+}}
+

@@ -43,7 +43,7 @@ namespace Gwk
 
         protected:
 
-            virtual void OnSplitterMoved(Controls::Base* control);
+            virtual void OnSplitterMoved(Event::Info info);
 
             Controls::SplitterBar*  m_splitterBar;
 
@@ -83,11 +83,11 @@ namespace Gwk
             virtual void OnEditingChanged();
             virtual void OnHoverChanged();
 
-            Event::Caller onChange;
+            Event::Listener onChange;
 
         protected:
 
-            void OnPropertyValueChanged(Gwk::Controls::Base* control);
+            void OnPropertyValueChanged(Event::Info info);
 
             Label*          m_label;
             Property::Base* m_property;

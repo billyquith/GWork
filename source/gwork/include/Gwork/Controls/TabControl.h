@@ -33,9 +33,6 @@ namespace Gwk
             virtual void AddPage(TabButton* button);
             virtual void RemovePage(TabButton* button);
 
-            virtual void OnTabPressed(Controls::Base* control);
-            virtual void OnLoseTab(TabButton* button);
-
             virtual int        TabCount(void);
             virtual TabButton* GetTab(int iNum);
             virtual TabButton* GetCurrentButton()
@@ -57,16 +54,19 @@ namespace Gwk
                 GetTabStrip()->SetAllowReorder(b);
             }
 
-            Gwk::Event::Caller onLoseTab;
-            Gwk::Event::Caller onAddTab;
+            Gwk::Event::Listener onLoseTab;
+            Gwk::Event::Listener onAddTab;
 
+            virtual void OnTabPressed(Event::Info info);
+            virtual void OnLoseTab(TabButton* button);
+            
         private:
 
             void PostLayout(Skin::Base* skin) override;
             void         HandleOverflow();
 
-            void ScrollPressLeft(Base* from);
-            void ScrollPressRight(Base* from);
+            void OnScrollPressLeft(Event::Info);
+            void OnScrollPressRight(Event::Info);
 
             TabStrip*       m_tabStrip;
             TabButton*      m_currentButton;

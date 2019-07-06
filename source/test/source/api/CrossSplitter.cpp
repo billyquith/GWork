@@ -10,7 +10,8 @@
 #include <Gwork/Controls/StatusBar.h>
 #include <Gwork/Controls/Button.h>
 
-using namespace Gwk;
+namespace Gwk {
+namespace Test {
 
 class CrossSplitter : public TestUnit
 {
@@ -67,7 +68,7 @@ public:
         }
     }
 
-    void ZoomTest(Gwk::Controls::Base* fromPanel)
+    void ZoomTest(Event::Info)
     {
         m_splitter->Zoom(m_curZoom);
         m_curZoom++;
@@ -76,12 +77,12 @@ public:
             m_curZoom = 0;
     }
 
-    void UnZoomTest(Gwk::Controls::Base* fromPanel)
+    void UnZoomTest(Event::Info)
     {
         m_splitter->UnZoom();
     }
 
-    void CenterPanels(Gwk::Controls::Base* fromPanel)
+    void CenterPanels(Event::Info)
     {
         m_splitter->CenterPanels();
         m_splitter->UnZoom();
@@ -95,5 +96,7 @@ public:
 
 };
 
+GWK_REGISTER_TEST(CrossSplitter);
 
-DECLARE_TEST(CrossSplitter);
+}}
+

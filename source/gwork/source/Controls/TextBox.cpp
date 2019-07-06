@@ -158,12 +158,12 @@ void TextBox::RefreshCursorBounds()
     Redraw();
 }
 
-void TextBox::OnPaste(Gwk::Controls::Base* /*ctrl*/)
+void TextBox::OnPaste(Event::Info)
 {
     InsertText(Platform::GetClipboardText());
 }
 
-void TextBox::OnCopy(Gwk::Controls::Base* /*ctrl*/)
+void TextBox::OnCopy(Event::Info)
 {
     if (!HasSelection())
         return;
@@ -171,7 +171,7 @@ void TextBox::OnCopy(Gwk::Controls::Base* /*ctrl*/)
     Platform::SetClipboardText(GetSelection());
 }
 
-void TextBox::OnCut(Gwk::Controls::Base* /*ctrl*/)
+void TextBox::OnCut(Event::Info)
 {
     if (!HasSelection())
         return;
@@ -180,7 +180,7 @@ void TextBox::OnCut(Gwk::Controls::Base* /*ctrl*/)
     EraseSelection();
 }
 
-void TextBox::OnSelectAll(Gwk::Controls::Base* /*ctrl*/)
+void TextBox::OnSelectAll(Event::Info)
 {
     m_cursorEnd = 0;
     m_cursorPos = TextLength();

@@ -37,16 +37,16 @@ namespace Gwk
                                           bool bFireChangeEvents = true);
             virtual Gwk::Controls::Label* GetSelectedItem();
 
-            void OnPress() override;
-            virtual void OnItemSelected(Controls::Base* control);
+            void OnPress(Event::Info info) override;
+            virtual void OnItemSelected(Event::Info info);
             virtual void OpenList();
             virtual void CloseList();
 
             virtual void ClearItems();
 
             virtual MenuItem* AddItem(const String& strLabel, const String& strName = "");
-            bool      OnKeyUp(bool bDown) override;
-            bool      OnKeyDown(bool bDown) override;
+            bool OnKeyUp(bool bDown) override;
+            bool OnKeyDown(bool bDown) override;
 
             void RenderFocus(Gwk::Skin::Base* skin) override;
             void OnLostKeyboardFocus() override;
@@ -59,7 +59,7 @@ namespace Gwk
                 return true;
             }
 
-            Gwk::Event::Caller onSelection;
+            Gwk::Event::Listener onSelection;
 
         protected:
 

@@ -52,11 +52,11 @@ namespace Gwk
 
         public:
 
-            Gwk::Event::Caller onSelection;
+            Gwk::Event::Listener onSelection;
 
         protected:
 
-            virtual void OnSelection(Controls::Base* control);
+            virtual void OnSelection(Event::Info info);
 
             Controls::Button*           m_button;
             Controls::CollapsibleList*  m_list;

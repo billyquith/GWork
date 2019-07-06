@@ -8,7 +8,8 @@
 #include <Gwork/Test/TestAPI.h>
 #include <Gwork/Controls.h>
 
-using namespace Gwk;
+namespace Gwk {
+namespace Test {
 
 class PageControl : public TestUnit
 {
@@ -54,5 +55,7 @@ public:
 
 };
 
+GWK_REGISTER_TEST(PageControl);
 
-DECLARE_TEST(PageControl);
+}}
+

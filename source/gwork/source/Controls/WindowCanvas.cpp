@@ -11,7 +11,7 @@
 #include <Gwork/Skin.h>
 #include <Gwork/Controls/Menu.h>
 #include <Gwork/DragAndDrop.h>
-#include <Gwork/ToolTip.h>
+#include <Gwork/Tooltip.h>
 
 #if GWK_ANIMATE
 #include <Gwork/Anim.h>
@@ -161,7 +161,7 @@ void WindowCanvas::RenderCanvas()
 
         DoRender(m_skin);
         DragAndDrop::RenderOverlay(this, m_skin);
-        ToolTip::RenderToolTip(m_skin);
+        Tooltip::RenderTooltip(m_skin);
         render->End();
     }
 
@@ -208,14 +208,14 @@ Skin::Base* WindowCanvas::GetSkin(void)
     return ParentClass::GetSkin();
 }
 
-void WindowCanvas::Dragger_Start()
+void WindowCanvas::Dragger_Start(Event::Info)
 {
     Gwk::Platform::GetCursorPos(m_holdPos);
     m_holdPos.x -= m_windowPos.x;
     m_holdPos.y -= m_windowPos.y;
 }
 
-void WindowCanvas::Dragger_Moved()
+void WindowCanvas::Dragger_Moved(Event::Info)
 {
     Gwk::Point p;
     Gwk::Platform::GetCursorPos(p);
@@ -244,7 +244,7 @@ void WindowCanvas::SetPos(int x, int y)
     Gwk::Platform::SetBoundsPlatformWindow(m_oSWindowSWindow, x, y, Width(), Height());
 }
 
-void WindowCanvas::CloseButtonPressed()
+void WindowCanvas::CloseButtonPressed(Event::Info)
 {
     InputQuit();
 }
@@ -254,7 +254,7 @@ bool WindowCanvas::IsOnTop()
     return Gwk::Platform::IsFocussedPlatformWindow(m_oSWindowSWindow);
 }
 
-void WindowCanvas::Sizer_Moved()
+void WindowCanvas::Sizer_Moved(Event::Info)
 {
     Gwk::Point p;
     Gwk::Platform::GetCursorPos(p);
@@ -269,7 +269,7 @@ void WindowCanvas::Sizer_Moved()
     RenderCanvas();
 }
 
-void WindowCanvas::OnTitleDoubleClicked()
+void WindowCanvas::OnTitleDoubleClicked(Event::Info)
 {
     if (!CanMaximize())
         return;
@@ -290,7 +290,7 @@ void WindowCanvas::SetMaximize(bool b)
     RenderCanvas();
 }
 
-void WindowCanvas::MaximizeButtonPressed()
+void WindowCanvas::MaximizeButtonPressed(Event::Info)
 {
     if (!CanMaximize())
         return;
@@ -298,7 +298,7 @@ void WindowCanvas::MaximizeButtonPressed()
     SetMaximize(!m_bIsMaximized);
 }
 
-void WindowCanvas::MinimizeButtonPressed()
+void WindowCanvas::MinimizeButtonPressed(Event::Info)
 {
     Gwk::Platform::SetWindowMinimized(m_oSWindowSWindow, true);
 }

@@ -49,10 +49,10 @@ namespace Gwk
 
             bool AccelOnlyFocus() override { return true; }
 
-            void OnPaste(Gwk::Controls::Base* ctrl) override;
-            void OnCopy(Gwk::Controls::Base* ctrl) override;
-            void OnCut(Gwk::Controls::Base* ctrl) override;
-            void OnSelectAll(Gwk::Controls::Base* ctrl) override;
+            void OnPaste(Event::Info info) override;
+            void OnCopy(Event::Info info) override;
+            void OnCut(Event::Info info) override;
+            void OnSelectAll(Event::Info info) override;
 
             void OnMouseDoubleClickLeft(int x, int y) override;
 
@@ -87,8 +87,8 @@ namespace Gwk
             virtual void MoveCaretToEnd();
             virtual void MoveCaretToStart();
 
-            Event::Caller onTextChanged;
-            Event::Caller onReturnPressed;
+            Event::Listener onTextChanged;
+            Event::Listener onReturnPressed;
 
             static constexpr int NO_MAX_LENGTH = -1;
 
@@ -170,7 +170,6 @@ namespace Gwk
             char m_passwordChar;
             String m_realText;
         };
-
 
     }
 }

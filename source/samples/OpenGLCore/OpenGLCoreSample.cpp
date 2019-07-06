@@ -72,7 +72,7 @@ int main()
         return EXIT_FAILURE;
     }
 
-    Gwk::Platform::RelativeToExecutablePaths paths(GWORK_RESOURCE_DIR);
+    Gwk::Platform::RelativeToExecutablePaths paths(GWK_SAMPLE_RESOURCE_DIR);
 
     // Create a Gwork OpenGL Renderer
 #ifdef USE_DEBUG_FONT

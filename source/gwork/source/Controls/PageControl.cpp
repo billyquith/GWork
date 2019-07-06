@@ -10,7 +10,7 @@
 #include <Gwork/Utility.h>
 #include <Gwork/Skin.h>
 #include <Gwork/Controls/PageControl.h>
-#include <Gwork/Controls.h>
+#include <Gwork/Anim.h>
 
 using namespace Gwk;
 using namespace Gwk::Controls;
@@ -111,7 +111,7 @@ void PageControl::ShowPage(unsigned int i)
     }
 
     {
-        Event::Information info;
+        Event::Info info(this);
         info.Integer = i;
         info.Control = m_pages[i];
         onPageChanged.Call(this, info);
@@ -128,7 +128,7 @@ Controls::Base* PageControl::GetCurrentPage()
     return GetPage(GetPageNumber());
 }
 
-void PageControl::NextPage()
+void PageControl::NextPage(Event::Info)
 {
     if (m_currentPage >= m_pageCount-1)
         return;
@@ -150,7 +150,7 @@ void PageControl::NextPage()
     }
 }
 
-void PageControl::PreviousPage()
+void PageControl::PreviousPage(Event::Info)
 {
     if (m_currentPage == 0)
         return;
@@ -172,7 +172,7 @@ void PageControl::PreviousPage()
     }
 }
 
-void PageControl::Finish()
+void PageControl::Finish(Event::Info)
 {
     onFinish.Call(this);
 }

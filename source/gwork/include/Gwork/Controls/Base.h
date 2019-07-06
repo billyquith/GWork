@@ -36,7 +36,7 @@ namespace Gwk
 
             typedef std::list<Base*> List;
 
-            typedef std::map<Gwk::String, Gwk::Event::Caller*> AccelMap;
+            typedef std::map<Gwk::String, Gwk::Event::Listener*> AccelMap;
 
             Base(Base* parent, const Gwk::String& Name = "");
             virtual ~Base();
@@ -69,7 +69,7 @@ namespace Gwk
             virtual unsigned int    NumChildren();
             virtual Controls::Base* GetChild(unsigned int i);
             virtual bool            SizeToChildren(bool w = true, bool h = true);
-            virtual Gwk::Point     ChildrenSize();
+            virtual Gwk::Point      ChildrenSize();
             virtual Controls::Base* FindChildByName(const Gwk::String& name,
                                                     bool bRecursive = false);
 
@@ -267,10 +267,10 @@ namespace Gwk
             virtual bool OnKeyPress(int iKey, bool bPress = true);
             virtual bool OnKeyRelease(int iKey);
 
-            virtual void OnPaste(Controls::Base* /*from*/)         {}
-            virtual void OnCopy(Controls::Base* /*from*/)          {}
-            virtual void OnCut(Controls::Base* /*from*/)           {}
-            virtual void OnSelectAll(Controls::Base* /*from*/)     {}
+            virtual void OnPaste(Event::Info info)         {}
+            virtual void OnCopy(Event::Info info)          {}
+            virtual void OnCut(Event::Info info)           {}
+            virtual void OnSelectAll(Event::Info info)     {}
 
             virtual bool OnKeyTab(bool bDown);
             virtual bool OnKeySpace(bool /*bDown*/)         { return false; }
@@ -343,8 +343,9 @@ namespace Gwk
                 return Gwk::Point(4096, 4096);
             }
 
-            virtual void SetToolTip(const Gwk::String& strText);
-            virtual void SetToolTip(Base* tooltip)
+            virtual void SetTooltipText(const Gwk::String& strText);
+            
+            virtual void SetTooltip(Base* tooltip)
             {
                 m_toolTip = tooltip;
                 if (m_toolTip)
@@ -353,8 +354,7 @@ namespace Gwk
                     m_toolTip->SetHidden(true);
                 }
             }
-
-            virtual Base* GetToolTip()
+            virtual Base* GetTooltip()
             {
                 return m_toolTip;
             }
@@ -366,7 +366,7 @@ namespace Gwk
             virtual void SetTabable(bool isTabable)     { m_tabable = isTabable; }
 
             // Accelerator functionality
-            void DefaultAccel(Gwk::Controls::Base* /*ctrl*/)
+            void DefaultAccel(Event::Info /*info*/)
             {
                 AcceleratePressed();
             }
@@ -377,18 +377,19 @@ namespace Gwk
             virtual bool HandleAccelerator(Gwk::String& accelerator);
 
             template <typename T>
-            void AddAccelerator(const String& accelerator, T func,
+            void AddAccelerator(const String& accelerator,
+                                T func,
                                 Gwk::Event::Handler* handler = nullptr)
             {
                 if (handler == nullptr)
                     handler = this;
 
-                Gwk::Event::Caller* caller = new Gwk::Event::Caller();
-                caller->Add(handler, func);
+                Gwk::Event::Listener* Listener = new Gwk::Event::Listener();
+                Listener->Add(handler, func);
                 Gwk::String str = accelerator;
                 Gwk::Utility::Strings::ToUpper(str);
                 Gwk::Utility::Strings::Strip(str, " ");
-                m_accelerators[ str ] = caller;
+                m_accelerators[ str ] = Listener;
             }
 
             void AddAccelerator(const String& accelerator)
@@ -400,8 +401,8 @@ namespace Gwk
 
             // Default Events
 
-            Gwk::Event::Caller onHoverEnter;
-            Gwk::Event::Caller onHoverLeave;
+            Gwk::Event::Listener onHoverEnter;
+            Gwk::Event::Listener onHoverLeave;
 
             // Childrens List
 
@@ -490,7 +491,7 @@ namespace Gwk
             virtual bool DragAndDrop_Draggable();
             virtual bool DragAndDrop_ShouldStartDrag()  { return true; }
 
-            virtual void DragAndDrop_StartDragging(Gwk::DragAndDrop::Package* package, int x, int y);
+            virtual void DragAndDrop_StartDragging(DragAndDrop::Package* package, int x, int y);
             virtual Gwk::DragAndDrop::Package* DragAndDrop_GetPackage(int x, int y);
             virtual void DragAndDrop_EndDragging(bool /*bSuccess*/, int /*x*/, int /*y*/) {}
 
@@ -571,7 +572,7 @@ namespace Gwk
             virtual void       DoAction() {}
 
             virtual void SetAction(Event::Handler* object,
-                                   Handler::FunctionWithInformation function,
+                                   Event::Listener::EventListener function,
                                    const Gwk::Event::Packet& packet)
             {
             }
@@ -583,13 +584,13 @@ namespace Gwk
 
         public:
 
-            UserDataStorage UserData;
+            UserDataStorage UserData;   // TODO - optimise memory usage.
 
         };
 
 
     }
-
+    
     /**
      *  To avoid using dynamic_cast we have gwk_cast.
      *

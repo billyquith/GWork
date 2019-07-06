@@ -25,8 +25,7 @@ namespace Gwk
         class Handler;
         struct Information;
         struct Packet;
-
-        typedef const Gwk::Event::Information& Info;
+        struct Info;
     }
 
     template <typename TYPE>

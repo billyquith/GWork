@@ -61,7 +61,7 @@ void Dragger::OnMouseMoved(int x, int y, int deltaX, int deltaY)
         m_target->MoveTo(p.x, p.y);
     }
 
-    Gwk::Event::Information info;
+    Gwk::Event::Info info(this);
     info.Point = Gwk::Point(deltaX, deltaY);
     onDragged.Call(this, info);
 }

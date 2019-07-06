@@ -1,6 +1,6 @@
 # Gwork samples
 
-set(APP_VERSION "0.1")
+set(APP_VERSION "Sample 1.0 - Gwork ${GWK_VERSION_STR}")
 set(APP_COPYRIGHT "Copyright 2018 Billy Quith")
 
 set(APP_BUNDLE ON)
@@ -10,9 +10,10 @@ include_directories(
     ${GWK_SOURCE_DIR}/source/gwork/include
     ${GWK_RENDER_INCLUDES}
     ${GWK_SOURCE_DIR}/source/test/include
+    ${GWK_REFLECT_INCLUDE}
 )
 
-if(BUILD_SAMPLE)
+if(WITH_SAMPLE)
 
     set(SAMPLE_NAME Gwork${GWK_RENDER_NAME}Sample)
 
@@ -35,17 +36,20 @@ if(BUILD_SAMPLE)
         set(APP_RUNTIME_RESOURCE_DIR "")
     endif()
 
-    add_definitions("-DGWORK_RESOURCE_DIR=\"${APP_RUNTIME_RESOURCE_DIR}\"")
+    add_definitions(-DGWK_SAMPLE -DGWK_SAMPLE_RESOURCE_DIR="${APP_RUNTIME_RESOURCE_DIR}")
 
     add_executable(${SAMPLE_NAME} ${APP_BUILD_TYPE} ${SAMPLE_SOURCES} ${SAMPLE_RESOURCES})
 
     target_link_libraries(${SAMPLE_NAME}
-                          Gwork Gwork${GWK_RENDER_NAME}
-                          ${GWK_RENDER_LIBRARIES})
+                          Gwork
+                          GworkUtil
+                          Gwork${GWK_RENDER_NAME}
+                          ${GWK_RENDER_LIBRARIES}
+                          ${GWK_REFLECT_LIBRARIES})
 
-    if(BUILD_TEST)
+    if(WITH_TESTS)
         target_link_libraries(${SAMPLE_NAME} GworkTest)
-    endif(BUILD_TEST)
+    endif(WITH_TESTS)
 
     if(APPLE AND APP_BUNDLE)
         # make MacOS bundle
@@ -73,4 +77,4 @@ if(BUILD_SAMPLE)
         endforeach()
     endif()
 
-endif(BUILD_SAMPLE)
+endif(WITH_SAMPLE)

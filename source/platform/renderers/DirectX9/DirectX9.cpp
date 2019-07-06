@@ -23,6 +23,7 @@ namespace Gwk
 {
 namespace Renderer
 {
+    
 DirectX9::DirectX9(IDirect3DDevice9* device)
 {
     m_D3D = nullptr;
@@ -71,7 +72,7 @@ void DirectX9::Flush()
     {
         m_device->SetFVF(D3DFVF_VERTEXFORMAT2D);
         m_device->DrawPrimitiveUP(D3DPT_TRIANGLELIST, m_vertNum/3, &m_verts[0],
-                                   sizeof(VertexFormat));
+                                  sizeof(VertexFormat));
         m_vertNum = 0;
     }
 }
@@ -447,5 +448,5 @@ bool DirectX9::EndContext(Gwk::WindowProvider* window)
     return true;
 }
 
-}
-}
+} // namespace Renderer
+} // namespace Gwk

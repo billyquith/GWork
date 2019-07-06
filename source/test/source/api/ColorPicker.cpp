@@ -9,12 +9,13 @@
 #include <Gwork/Controls/ColorPicker.h>
 #include <Gwork/Controls/HSVColorPicker.h>
 
-using namespace Gwk;
+namespace Gwk {
+namespace Test {
 
 class ColorPicker : public TestUnit
 {
 public:
-
+    
     GWK_CONTROL_INLINE(ColorPicker, TestUnit)
     {
         Controls::ColorPicker* ctrl = new Controls::ColorPicker(this);
@@ -24,5 +25,7 @@ public:
     }
 };
 
+GWK_REGISTER_TEST(ColorPicker);
 
-DECLARE_TEST(ColorPicker);
+}}
+

@@ -21,12 +21,12 @@ GWK_CONTROL_CONSTRUCTOR(ScrollControl)
     SetMouseInputEnabled(false);
     m_verticalScrollBar = new VerticalScrollBar(this);
     m_verticalScrollBar->Dock(Position::Right);
-    m_verticalScrollBar->onBarMoved.Add(this, &ScrollControl::VBarMoved);
+    m_verticalScrollBar->onBarMoved.Add(this, &ScrollControl::OnVBarMoved);
     m_verticalScrollBar->SetNudgeAmount(30);
     m_bCanScrollV = true;
     m_horizontalScrollBar = new HorizontalScrollBar(this);
     m_horizontalScrollBar->Dock(Position::Bottom);
-    m_horizontalScrollBar->onBarMoved.Add(this, &ScrollControl::HBarMoved);
+    m_horizontalScrollBar->onBarMoved.Add(this, &ScrollControl::OnHBarMoved);
     m_bCanScrollH = true;
     m_horizontalScrollBar->SetNudgeAmount(30);
     m_innerPanel = new Base(this);
@@ -50,12 +50,12 @@ void ScrollControl::SetInnerSize(int w, int h)
     m_innerPanel->SetSize(w, h);
 }
 
-void ScrollControl::VBarMoved(Controls::Base* /*control*/)
+void ScrollControl::OnVBarMoved(Event::Info)
 {
     Invalidate();
 }
 
-void ScrollControl::HBarMoved(Controls::Base* /*control*/)
+void ScrollControl::OnHBarMoved(Event::Info)
 {
     Invalidate();
 }

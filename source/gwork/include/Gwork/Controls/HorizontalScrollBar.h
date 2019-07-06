@@ -29,7 +29,7 @@ namespace Gwk
             void Layout(Skin::Base* skin) override;
 
             void OnMouseClickLeft(int x, int y, bool bDown) override;
-            void OnBarMoved(Controls::Base* control) override;
+            void OnBarMoved(Event::Info) override;
 
             int GetBarSize() override
             {
@@ -53,8 +53,8 @@ namespace Gwk
 
             void  ScrollToLeft() override;
             void  ScrollToRight() override;
-            virtual void  NudgeLeft(Base* control);
-            virtual void  NudgeRight(Base* control);
+            virtual void  NudgeLeft(Event::Info);
+            virtual void  NudgeRight(Event::Info);
             float GetNudgeAmount() override;
 
             float CalculateScrolledAmount() override;
@@ -64,7 +64,6 @@ namespace Gwk
             {
                 return true;
             }
-
         };
 
 

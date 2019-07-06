@@ -31,9 +31,6 @@ namespace Gwk
             virtual void  UpdateHSplitter();
             virtual void  UpdateVSplitter();
             virtual void  UpdateCSplitter();
-            virtual void  OnVerticalMoved(Controls::Base* control);
-            virtual void  OnHorizontalMoved(Controls::Base* control);
-            virtual void  OnCenterMoved(Controls::Base* control);
 
             virtual void            SetPanel(int i, Controls::Base* panel);
             virtual Controls::Base* GetPanel(int i);
@@ -57,6 +54,12 @@ namespace Gwk
             {
                 m_fBarSize = size;
             }
+            
+        protected:
+
+            virtual void  OnVerticalMoved(Event::Info);
+            virtual void  OnHorizontalMoved(Event::Info);
+            virtual void  OnCenterMoved(Event::Info);
 
         private:
 
@@ -72,9 +75,9 @@ namespace Gwk
 
             int m_zoomedSection;
 
-            Gwk::Event::Caller onZoomed;
-            Gwk::Event::Caller onUnZoomed;
-            Gwk::Event::Caller onZoomChange;
+            Gwk::Event::Listener onZoomed;
+            Gwk::Event::Listener onUnZoomed;
+            Gwk::Event::Listener onZoomChange;
         };
 
 

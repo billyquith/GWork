@@ -46,7 +46,6 @@ namespace Gwk
 
             void SetHidden(bool hidden) override;
 
-            void CloseButtonPressed();
             void RenderFocus(Gwk::Skin::Base* skin) override;
             void SetDeleteOnClose(bool b)
             {
@@ -56,10 +55,12 @@ namespace Gwk
             void MakeModal(bool bDrawBackground = true);
             void DestroyModal();
 
-            Gwk::Event::Caller onWindowClosed;
+            Gwk::Event::Listener onWindowClosed;
 
         protected:
 
+            void CloseButtonPressed(Event::Info);
+            
             Gwk::ControlsInternal::Dragger*    m_titleBar;
             Gwk::Controls::Label*              m_title;
             Gwk::Controls::WindowCloseButton*  m_closeButton;

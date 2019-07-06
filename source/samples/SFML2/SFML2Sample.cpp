@@ -9,7 +9,6 @@
 
 #include <Gwork/Renderers/SFML2.h>
 #include <Gwork/Input/SFML2.h>
-
 #include <Gwork/Skins/Simple.h>
 #include <Gwork/Skins/TexturedBase.h>
 #include <Gwork/Test/Test.h>
@@ -20,7 +19,7 @@ int main()
     // Create the window of the application
     sf::RenderWindow app(sf::VideoMode(1004, 650, 32), "Gwork SFML2 Sample");
 
-    Gwk::Platform::RelativeToExecutablePaths paths(GWORK_RESOURCE_DIR);
+    Gwk::Platform::RelativeToExecutablePaths paths(GWK_SAMPLE_RESOURCE_DIR);
 
     // Create renderer
     Gwk::Renderer::SFML2 renderer(paths, app);
@@ -40,7 +39,7 @@ int main()
     canvas.SetBackgroundColor(Gwk::Color(150, 170, 170, 255));
 
     // Create our unittest control (which is a Window with controls in it)
-    TestFrame unit(&canvas);
+    std::unique_ptr<Gwk::Controls::Base> unit(Gwk::Test::CreateTests(&canvas));
 
     // Create an input processor
     Gwk::Input::SFML input;

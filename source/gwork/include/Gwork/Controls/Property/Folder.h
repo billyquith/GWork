@@ -32,7 +32,7 @@ namespace Gwk
                     m_strDialogName = "Find Folder";
                 }
 
-                void OnButtonPress(Controls::Base* control)
+                void OnButtonPress(Event::Info)
                 {
                     String folder;
                     if (Dialogs::FolderOpen(true, m_strDialogName,

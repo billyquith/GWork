@@ -34,13 +34,13 @@ namespace Gwk
 
             void SetColor(Gwk::Color color, bool onlyHue = false, bool reset = false);
 
-            void ColorBoxChanged(Gwk::Controls::Base* control);
-            void ColorSliderChanged(Gwk::Controls::Base* control);
-            void NumericTyped(Gwk::Controls::Base* control);
+            void ColorBoxChanged(Event::Info info);
+            void ColorSliderChanged(Event::Info info);
+            void OnNumericTyped(Event::Info info);
 
             void UpdateControls(Gwk::Color newColor);
 
-            Event::Caller onColorChanged;
+            Event::Listener onColorChanged;
 
         protected:
 

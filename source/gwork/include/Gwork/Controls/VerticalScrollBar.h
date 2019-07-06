@@ -17,6 +17,7 @@ namespace Gwk
 {
     namespace Controls
     {
+        
         class GWK_EXPORT VerticalScrollBar : public BaseScrollBar
         {
             GWK_CONTROL(VerticalScrollBar, BaseScrollBar);
@@ -24,7 +25,7 @@ namespace Gwk
             void Layout(Skin::Base* skin) override;
 
             void OnMouseClickLeft(int x, int y, bool bDown) override;
-            void OnBarMoved(Controls::Base* control) override;
+            void OnBarMoved(Event::Info) override;
 
             int GetBarSize() override
             {
@@ -48,16 +49,14 @@ namespace Gwk
 
             void  ScrollToTop() override;
             void  ScrollToBottom() override;
-            virtual void  NudgeUp(Base* control);
-            virtual void  NudgeDown(Base* control);
+            virtual void  NudgeUp(Event::Info);
+            virtual void  NudgeDown(Event::Info);
             float GetNudgeAmount() override;
 
             float CalculateScrolledAmount() override;
             bool  SetScrolledAmount(float amount, bool forceUpdate) override;
-
         };
-
-
+        
     }
 }
 #endif // ifndef GWK_CONTROLS_VERTICALSCROLLBAR_H

@@ -69,19 +69,18 @@ namespace Gwk
 
             virtual Controls::Base::List& GetChildNodes();
 
-            Event::Caller onNamePress;
-            Event::Caller onRightPress;
-            Event::Caller onSelectChange;
-            Event::Caller onSelect;
-            Event::Caller onUnselect;
-
+            Event::Listener onNamePress;
+            Event::Listener onRightPress;
+            Event::Listener onSelectChange;
+            Event::Listener onSelect;
+            Event::Listener onUnselect;
 
             /*protected:*/
 
-            void OnToggleButtonPress(Base* control);
-            void OnDoubleClickName(Base* control);
-            void OnRightPress(Base* control);
-            void OnClickName(Base* control);
+            void OnToggleButtonPress(Event::Info);
+            void OnDoubleClickName(Event::Info);
+            void OnRightPress(Event::Info);
+            void OnClickName(Event::Info);
 
         protected:
 

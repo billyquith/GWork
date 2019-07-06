@@ -8,7 +8,8 @@
 #include <Gwork/Test/TestAPI.h>
 #include <Gwork/Controls/ScrollControl.h>
 
-using namespace Gwk;
+namespace Gwk {
+namespace Test {
 
 class ScrollControl : public TestUnit
 {
@@ -115,5 +116,7 @@ public:
 
 };
 
+GWK_REGISTER_TEST(ScrollControl);
 
-DECLARE_TEST(ScrollControl);
+}}
+

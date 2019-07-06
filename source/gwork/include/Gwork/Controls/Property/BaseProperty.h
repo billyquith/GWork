@@ -39,17 +39,17 @@ namespace Gwk
 
                 virtual void DoChanged()
                 {
-                    Event::Information info;
+                    Event::Info info(this);
                     info.String = GetPropertyValue();
                     onChange.Call(this, info);
                 }
 
-                void OnPropertyValueChanged(Gwk::Controls::Base* /*control*/)
+                void OnPropertyValueChanged(Event::Info)
                 {
                     DoChanged();
                 }
 
-                Event::Caller onChange;
+                Event::Listener onChange;
             };
 
 

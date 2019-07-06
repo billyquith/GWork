@@ -9,10 +9,14 @@
 #ifndef GWK_EVENTS_H
 #define GWK_EVENTS_H
 
-#include <list>
 #include <Gwork/Config.h>
 #include <Gwork/UiTypes.h>
 #include <Gwork/ControlList.h>
+#include <functional>
+
+#if GWK_REFLECT
+#   include <ponder/value.hpp>
+#endif
 
 namespace Gwk
 {
@@ -23,21 +27,21 @@ namespace Gwk
 
     namespace Event
     {
-        class Caller;
+        
+        class Listener;
 
         /**
-         *
          *  When adding an event hook you can add a Packet too.
          *  This will be passed in Event::Info when you receive an event.
-         *
          */
         struct Packet
         {
             Packet(Gwk::Controls::Base* control = nullptr)
-                :   Control(control)
+            :   Control(control)
             {}
 
-            Gwk::Controls::Base   *Control;
+            // TODO - union? variant?
+            Gwk::Controls::Base *Control;
             Gwk::String String;
             int Integer;
             float Float;
@@ -46,32 +50,18 @@ namespace Gwk
 
 
         /**
-         *
-         *  Passed to an event hook
-         *
+         *  Passed to an event listener.
          */
-        struct Information
+        struct Info
         {
-            Information()
-            {
-                Init();
-            }
+            Info(Gwk::Controls::Base* ctrl)
+            :   ControlCaller(nullptr)
+            ,   Packet(nullptr)
+            ,   Control(ctrl)
+            ,   Integer(0)
+            {}
 
-            Information(Gwk::Controls::Base* pctrl)
-            {
-                Init();
-                Control = pctrl;
-            }
-
-            void Init()
-            {
-                ControlCaller   = nullptr;
-                Packet          = nullptr;
-                Control         = nullptr;
-                Integer         = 0;
-            }
-
-            /// This is set by the event caller, it will always be
+            /// This is set by the event Listener, it will always be
             /// the control which is calling the event.
             Gwk::Controls::Base* ControlCaller;
 
@@ -81,121 +71,100 @@ namespace Gwk
             /// ~~~
             Gwk::Event::Packet* Packet;
 
-            //
             /// These are set by the event and may or may not be set.
-            //
             Gwk::Controls::Base* Control;
 
-            Gwk::ControlList ControlList;
             Gwk::String String;
             Gwk::Point Point;
             int Integer;
-
         };
 
-
-        typedef const Gwk::Event::Information& Info;
-
-        //
-        /// A class wanting to receive events must be derived from this.
-        //
+        /**
+         *  A class wanting to receive events must be derived from this.
+         */
         class GWK_EXPORT Handler
         {
+            GWK_IF_REFLECT( PONDER_POLYMORPHIC )
         public:
 
             virtual ~Handler();
 
-            void RegisterCaller(Caller*);
-            void UnRegisterCaller(Caller*);
+            void RegisterCaller(Listener*);
+            void UnRegisterCaller(Listener*);
 
         protected:
 
             Handler();  // Class needs to be derived.
 
+        private:
+
             void CleanLinks();
-            std::list<Caller*> m_callers;
-
-        public:
-
-            typedef void (Handler::*Function)                   (Gwk::Controls::Base* fromPanel);
-            typedef void (Handler::*FunctionBlank)              ();
-            typedef void (Handler::*FunctionWithInformation)    (Gwk::Event::Info info);
-
+            std::list<Listener*> m_listeners;
         };
-
-        //
-        /// Event callback management.
-        //
-        class GWK_EXPORT Caller
+        
+        /**
+         *  \brief Event listener.
+         *
+         *  Event handler callbacks are registered with this to receive event notifications.
+         *
+         *      Control (event) -> Listener (call) -> Handler (callback)
+         *
+         */
+        class GWK_EXPORT Listener
         {
         public:
 
-            Caller();
-            ~Caller();
+            typedef void (Handler::*EventListener)(Event::Info info);
 
-            void Call(Controls::Base* pThis);
-            void Call(Controls::Base* pThis, Gwk::Event::Info info);
+            typedef std::function<void(Handler&, Event::Info)> EventCallback;
+            
+            Listener();
+            ~Listener();
 
-            template <typename T>
-            void Add(Event::Handler* ob, T f)
+            // add function object handler
+            void AddCb(Handler *handler, EventCallback const& cb,
+                     const Event::Packet& packet = Event::Packet())
             {
-                AddInternal(ob, static_cast<Handler::Function>(f));
+                AddInternal(handler, cb, packet);
             }
 
+            // add class method handler
             template <typename T>
-            void Add(Event::Handler* ob, void (T::*f)(Gwk::Event::Info))
+            void Add(Handler* handler,
+                     void (T::*f)(Info),
+                     const Packet& packet = Packet())
             {
-                AddInternal(ob, static_cast<Handler::FunctionWithInformation>(f));
+                auto cb = [=](Handler &h, Info const& i) -> void {
+                    (static_cast<T&>(h).*f)(i);
+                };
+                AddCb(handler, EventCallback(cb), packet);
             }
-
-            template <typename T>
-            void Add(Event::Handler* ob,
-                     void (T::*f)(Gwk::Event::Info),
-                     const Gwk::Event::Packet& packet)
-            {
-                AddInternal(ob, static_cast<Handler::FunctionWithInformation>(f), packet);
-            }
-
-            template <typename T>
-            void Add(Event::Handler* ob, void (T::*f)())
-            {
-                AddInternal(ob, static_cast<Handler::FunctionBlank>(f));
-            }
-
+            
             void RemoveHandler(Event::Handler* object);
 
-        protected:
+            void Call(Controls::Base* pThis);
+            void Call(Controls::Base* pThis, Event::Info info);
+            
+        private:
+            
+            void AddInternal(Handler *handler, EventCallback const& ecb,
+                             const Event::Packet& packet);
 
             void CleanLinks();
-            void AddInternal(Event::Handler* object, Handler::Function function);
-            void AddInternal(Event::Handler* object, Handler::FunctionWithInformation function);
-            void AddInternal(Event::Handler* object, Handler::FunctionWithInformation function,
-                             const Gwk::Event::Packet& packet);
-            void AddInternal(Event::Handler* object, Handler::FunctionBlank function);
 
             struct HandlerInstance
             {
-                HandlerInstance()
-                    :   fnFunction(nullptr)
-                    ,   fnFunctionInfo(nullptr)
-                    ,   fnFunctionBlank(nullptr)
-                    ,   object(nullptr)
-                {}
-
-                Handler::Function fnFunction;
-                Handler::FunctionWithInformation fnFunctionInfo;
-                Handler::FunctionBlank fnFunctionBlank;
-
-                Event::Handler*         object;
-                Gwk::Event::Packet Packet;
+                EventCallback       callback;
+                Event::Packet       Packet;
+                Handler             *handler;
             };
 
             std::list<HandlerInstance> m_handlers;
         };
 
+    } // namespace Event
+} // namespace Gwk
 
-    }
-
-}
+GWK_IF_REFLECT( PONDER_TYPE(Gwk::Event::Handler) )
 
 #endif // ifndef GWK_EVENTS_H

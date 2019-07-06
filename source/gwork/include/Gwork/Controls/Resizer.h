@@ -28,7 +28,7 @@ namespace Gwk
             void OnMouseMoved(int x, int y, int deltaX, int deltaY) override;
             virtual void SetResizeDir(Position dir);
 
-            Event::Caller onResize;
+            Event::Listener onResize;
 
         protected:
 

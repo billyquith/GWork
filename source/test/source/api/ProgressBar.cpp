@@ -9,7 +9,8 @@
 #include <Gwork/Controls/RadioButtonController.h>
 #include <Gwork/Controls/ProgressBar.h>
 
-using namespace Gwk;
+namespace Gwk {
+namespace Test {
 
 class ProgressBar : public TestUnit
 {
@@ -84,5 +85,7 @@ public:
 
 };
 
+GWK_REGISTER_TEST(ProgressBar);
 
-DECLARE_TEST(ProgressBar);
+}}
+

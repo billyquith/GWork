@@ -5,9 +5,8 @@
  *  See license in Gwork.h
  */
 
-#define WIN32_LEAN_AND_MEAN             // Exclude rarely-used stuff from
-                                        // Windows headers
 // Windows Header Files:
+#define WIN32_LEAN_AND_MEAN             // Exclude rarely-used stuff from
 #include <windows.h>
 
 #include <d3d9.h>
@@ -122,7 +121,7 @@ int main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCm
     //
     // Create our unittest control (which is a Window with controls in it)
     //
-    UnitTest* unit = new UnitTest(canvas);
+    auto unit = Gwk::Test::CreateTests(canvas);
     unit->SetPos(10, 10);
     //
     // Create a Windows Control helper
@@ -167,6 +166,7 @@ int main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCm
         }
     }
 
+    delete unit;
     delete canvas;
     delete skin;
     delete renderer;

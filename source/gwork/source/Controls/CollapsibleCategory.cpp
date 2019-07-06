@@ -115,10 +115,10 @@ Button* CollapsibleCategory::Add(const String& name)
     return button;
 }
 
-void CollapsibleCategory::OnSelection(Controls::Base* control)
+void CollapsibleCategory::OnSelection(Event::Info info)
 {
-    CategoryButton* child = gwk_cast<CategoryButton>(control);
-
+    CategoryButton* child = gwk_cast<CategoryButton>(info.ControlCaller);
+    
     if (!child)
         return;
 

@@ -28,10 +28,6 @@ namespace Gwk
             {
             }
 
-            virtual void OnRadioClicked(Base* fromPanel);
-
-            virtual void OnChange();
-
             virtual LabeledRadioButton* AddOption(const Gwk::String& strText,
                                                   const Gwk::String& strOptionName = "");
 
@@ -50,8 +46,12 @@ namespace Gwk
                 return m_selected->GetLabel()->GetText();
             }
 
-            Event::Caller onSelectionChange;
+            Event::Listener onSelectionChange;
 
+            virtual void OnRadioClicked(Event::Info);
+            
+            virtual void OnChange();
+            
         private:
 
             LabeledRadioButton* m_selected;

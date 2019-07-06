@@ -218,5 +218,5 @@ bool GDIPlus::EndContext(Gwk::WindowProvider* window)
     return true;
 }
 
-}
-}
+} // namespace Renderer
+} // namespace Gwk

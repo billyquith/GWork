@@ -8,7 +8,8 @@
 #include <Gwork/Test/TestAPI.h>
 #include <Gwork/Controls/ComboBox.h>
 
-using namespace Gwk;
+namespace Gwk {
+namespace Test {
 
 class ComboBox : public TestUnit
 {
@@ -46,14 +47,16 @@ public:
         }
     }
 
-    void OnComboSelect(Gwk::Controls::Base* control)
+    void OnComboSelect(Event::Info info)
     {
-        Gwk::Controls::ComboBox* combo = (Gwk::Controls::ComboBox*)control;
+        Gwk::Controls::ComboBox* combo = static_cast<Controls::ComboBox*>(info.ControlCaller);
         OutputToLog(Utility::Format("Combo Changed: %s",
-                                  combo->GetSelectedItem()->GetText().c_str()));
+                                    combo->GetSelectedItem()->GetText().c_str()));
     }
 
 };
 
+GWK_REGISTER_TEST(ComboBox);
 
-DECLARE_TEST(ComboBox);
+}}
+

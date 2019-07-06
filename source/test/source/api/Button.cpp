@@ -7,7 +7,8 @@
 
 #include <Gwork/Test/TestAPI.h>
 
-using namespace Gwk;
+namespace Gwk {
+namespace Test {
 
 class Button : public TestUnit
 {
@@ -18,16 +19,16 @@ public:
         // Normal button
         Controls::Button* buttonA = new Controls::Button(this);
         buttonA->SetText("Event Tester");
-        buttonA->onPress.Add(this, &Button::onButtonA);
-        {
-            Controls::Button* buttonAA = new Controls::Button(this);
-            buttonAA->SetBounds(200, 30, 300, 200);
-            buttonAA->SetText("Event Tester 2");
-            buttonAA->onPress.Add(this, &Button::onButtonA);
-        }
+        buttonA->onPress.Add(this, &Button::OnButtonA);
+        // Big button
+        Controls::Button* bigButton = new Controls::Button(this);
+        bigButton->SetBounds(200, 30, 300, 200);
+        bigButton->SetText("Event Tester 2");
+        bigButton->onPress.Add(this, &Button::OnButtonA);
         // Unicode test
         Controls::Button* buttonB = new Controls::Button(this);
-        buttonB->SetText(Utility::Narrow(L"\u0417\u0430\u043C\u0435\u0436\u043D\u0430\u044F \u043C\u043E\u0432\u0430"));
+        buttonB->SetText(Utility::Narrow(
+            L"\u0417\u0430\u043C\u0435\u0436\u043D\u0430\u044F \u043C\u043E\u0432\u0430"));
         Gwk::Align::PlaceBelow(buttonB, buttonA, 10);
         // Image with text
         Controls::Button* buttonC = new Controls::Button(this);
@@ -56,31 +57,34 @@ public:
         // Tooltip Button
         Controls::Button* buttonG = new Controls::Button(this);
         buttonG->SetText("With Tooltip");
-        buttonG->SetToolTip("This is a tooltip!");
+        buttonG->SetTooltipText("This is a tooltip!");
         Gwk::Align::PlaceBelow(buttonG, buttonF, 10);
     }
 
-    void onButtonA(Controls::Base* control)
+    void OnButtonA(Event::Info)
     {
         OutputToLog("Button Pressed (using 'OnPress' event)");
     }
 
-    void OnToggle(Controls::Base* control)
+    void OnToggle(Event::Info)
     {
         OutputToLog("Button Toggled (using 'OnToggle' event)");
     }
 
-    void OnToggleOn(Controls::Base* control)
+    void OnToggleOn(Event::Info)
     {
         OutputToLog("Button Toggled ON (using 'OnToggleOn' event)");
     }
 
-    void OnToggleOff(Controls::Base* control)
+    void OnToggleOff(Event::Info)
     {
         OutputToLog("Button Toggled Off (using 'OnToggleOff' event)");
     }
 
 };
 
+GWK_REGISTER_TEST(Button);
 
-DECLARE_TEST(Button);
+}}
+
+

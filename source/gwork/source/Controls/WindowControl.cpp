@@ -150,7 +150,7 @@ void WindowControl::Touch()
     BringToFront();
 }
 
-void WindowControl::CloseButtonPressed()
+void WindowControl::CloseButtonPressed(Event::Info)
 {
     DestroyModal();
     onWindowClosed.Call(this);

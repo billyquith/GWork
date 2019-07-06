@@ -9,7 +9,6 @@
 #ifndef GWK_CONTROLS_BUTTON_H
 #define GWK_CONTROLS_BUTTON_H
 
-#include <Gwork/Controls/Base.h>
 #include <Gwork/Controls/Label.h>
 
 namespace Gwk
@@ -30,8 +29,8 @@ namespace Gwk
             void OnMouseDoubleClickLeft(int x, int y) override;
             bool OnKeySpace(bool bDown) override;
 
-            virtual void OnPress();
-            virtual void OnRightPress();
+            virtual void OnPress(Event::Info);
+            virtual void OnRightPress(Event::Info);
 
             void AcceleratePressed() override;
 
@@ -78,23 +77,25 @@ namespace Gwk
 
             void DoAction() override
             {
-                OnPress();
+                Event::Info info(this);
+                OnPress(info);
             }
 
             virtual void SetAction(Event::Handler* object,
-                                   Handler::FunctionWithInformation function,
+                                   Event::Listener::EventListener function,
                                    const Gwk::Event::Packet& packet) override;
 
         public:
 
-            Gwk::Event::Caller onPress;
-            Gwk::Event::Caller onRightPress;
-            Gwk::Event::Caller onDown;
-            Gwk::Event::Caller onUp;
-            Gwk::Event::Caller onDoubleClick;
-            Gwk::Event::Caller onToggle;
-            Gwk::Event::Caller onToggleOn;
-            Gwk::Event::Caller onToggleOff;
+            // TODO - It is inefficient to store all of these for every control when not used.
+            Gwk::Event::Listener onPress;
+            Gwk::Event::Listener onRightPress;
+            Gwk::Event::Listener onDown;
+            Gwk::Event::Listener onUp;
+            Gwk::Event::Listener onDoubleClick;
+            Gwk::Event::Listener onToggle;
+            Gwk::Event::Listener onToggleOn;
+            Gwk::Event::Listener onToggleOff;
 
         protected:
 

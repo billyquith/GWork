@@ -19,6 +19,7 @@ namespace Gwk
 {
 namespace Renderer
 {
+    
 //
 // Allegro texture cache.
 //

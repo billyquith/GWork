@@ -20,6 +20,7 @@
 
 
 typedef struct _TTF_Font TTF_Font;
+
 namespace Gwk
 {
     namespace Renderer
@@ -75,14 +76,18 @@ namespace Gwk
             TextureData GetTextureData(const Gwk::Texture& texture) const override;
             bool EnsureTexture(const Gwk::Texture& texture) override;
 
-        protected:// Resourses
+            bool BeginContext(Gwk::WindowProvider* window) override;
+            bool EndContext(Gwk::WindowProvider* window) override;
+            bool PresentContext(Gwk::WindowProvider* window) override;
+
+        private:
 
             struct SDL2TextureData : public Gwk::TextureData
             {
-                SDL2TextureData()
-                {
-                }
+                SDL2TextureData() = default;
+
                 SDL2TextureData(const SDL2TextureData&) = delete;
+                
                 SDL2TextureData(SDL2TextureData&& other)
                     : SDL2TextureData()
                 {
@@ -94,9 +99,7 @@ namespace Gwk
                 }
 
                 ~SDL2TextureData()
-                {
-
-                }
+                {}
 
                 deleted_unique_ptr<SDL_Texture> texture;
                 deleted_unique_ptr<SDL_Surface> surface;
@@ -104,20 +107,18 @@ namespace Gwk
 
             struct SDL2FontData
             {
-                SDL2FontData()
-                {
-                }
+                SDL2FontData() = default;
 
                 SDL2FontData(const SDL2FontData&) = delete;
+                
                 SDL2FontData(SDL2FontData&& other)
                     : SDL2FontData()
                 {
                     tFont.swap(other.tFont);
                 }
 
-                ~SDL2FontData()
-                {
-                }
+                ~SDL2FontData() {}
+
                 deleted_unique_ptr<TTF_Font> tFont;
             };
 
@@ -125,12 +126,7 @@ namespace Gwk
             std::unordered_map<Texture, SDL2TextureData> m_textures;
             std::pair<const Font, SDL2FontData>* m_lastFont;
             std::pair<const Texture, SDL2TextureData>* m_lastTexture;
-        public:
-
-            bool BeginContext(Gwk::WindowProvider* window) override;
-            bool EndContext(Gwk::WindowProvider* window) override;
-            bool PresentContext(Gwk::WindowProvider* window) override;
-
+            
         private:
 
             SDL_Window      *m_window;

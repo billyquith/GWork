@@ -513,3 +513,6 @@ bool Direct2D::EndContext(Gwk::WindowProvider* window)
 
 }
 }
+
+} // namespace Renderer
+} // namespace Gwk

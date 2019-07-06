@@ -1,5 +1,12 @@
 # Gwork library
 
+include_directories(
+    ${GWK_SOURCE_DIR}/source/platform/include
+    ${GWK_SOURCE_DIR}/source/gwork/include
+    ${GWK_RENDER_INCLUDES}
+    ${GWK_REFLECT_INCLUDE}    
+)
+
 set(GWK_HEADERS
     include/Gwork/Align.h
     include/Gwork/Anim.h
@@ -11,7 +18,7 @@ set(GWK_HEADERS
     include/Gwork/Hook.h
     include/Gwork/InputHandler.h
     include/Gwork/Skin.h
-    include/Gwork/ToolTip.h
+    include/Gwork/Tooltip.h
     include/Gwork/UiTypes.h
     include/Gwork/UserData.h
     # controls
@@ -110,7 +117,7 @@ set(GWK_SOURCES
     source/Hook.cpp
     source/InputHandler.cpp
     source/Skin.cpp
-    source/ToolTip.cpp
+    source/Tooltip.cpp
     source/Controls/Base.cpp
     source/Controls/Button.cpp
     source/Controls/Canvas.cpp
@@ -171,10 +178,17 @@ set(GWK_SOURCES
 )
 
 set(GWK_RENDER_SOURCES
-    include/Gwork/Renderers/${GWK_RENDER_NAME}.h
-    renderers/${GWK_RENDER_NAME}/${GWK_RENDER_NAME}.cpp
+    include/Gwork/Renderers/${GWK_RENDERER_NAME}.h
+    renderers/${GWK_RENDERER_NAME}/${GWK_RENDERER_NAME}.cpp
     source/Platforms/${GWK_PLATFORM_NAME}.cpp
 )
+
+if(WITH_REFLECTION)
+    set(GWK_REFLECT_SOURCES
+        include/Gwork/Reflection.h
+        source/Reflection.cpp
+    )    
+endif()
 
 # header folder groups
 source_group("${GWK_HEADER_FOLDER}"
@@ -201,7 +215,7 @@ source_group("${GWK_SOURCE_FOLDER}\\Controls\\Dialog"
              REGULAR_EXPRESSION "source/Controls/Dialog/[^/]+\\.cpp")
 
 # Gwork library
-add_library(Gwork STATIC ${GWK_HEADERS} ${GWK_SOURCES})
+add_library(Gwork STATIC ${GWK_HEADERS} ${GWK_SOURCES} ${GWK_REFLECT_SOURCES})
 target_link_libraries(Gwork Gwork${GWK_RENDER_NAME})
 
 target_include_directories(Gwork PUBLIC

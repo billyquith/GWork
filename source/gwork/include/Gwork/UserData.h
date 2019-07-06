@@ -62,6 +62,8 @@ namespace Gwk
             :   val(v)
             {}
 
+            // Give value a chance to clean itself up
+            // Note: could avoid using smart pointers.
             virtual void DeleteThis()
             {
                 delete this;
@@ -73,10 +75,8 @@ namespace Gwk
 
     public:
 
-        UserDataStorage()
-        {
-        }
-
+        UserDataStorage() {}
+    
         ~UserDataStorage()
         {
             for (auto&& item : m_list)
@@ -111,10 +111,11 @@ namespace Gwk
         T& Get(const Gwk::String& str)
         {
             Value<T> *v = static_cast< Value<T>* >(m_list[str]);
-            return v->val;        }
+            return v->val;
+        }
     };
 
 
-}
+} // namespace Gwk
 
 #endif // ifndef GWK_USERDATA_H

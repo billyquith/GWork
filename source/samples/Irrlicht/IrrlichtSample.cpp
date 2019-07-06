@@ -1,3 +1,9 @@
+/*
+ *  Gwork
+ *  Copyright (c) 2013-2018 Billy Quith
+ *  See license in Gwork.h
+ */
+
 #include <irrlicht.h>
 
 #include <Gwork/Gwork.h>
@@ -90,7 +96,7 @@ int main()
     //
     // Create a Gwork Irrlicht Renderer
     //
-    Gwk::Platform::RelativeToExecutablePaths paths(GWORK_RESOURCE_DIR);
+    Gwk::Platform::RelativeToExecutablePaths paths(GWK_SAMPLE_RESOURCE_DIR);
 
     Gwk::Renderer::Irrlicht* pRenderer = new Gwk::Renderer::Irrlicht(paths, device);
     //

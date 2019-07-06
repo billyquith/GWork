@@ -10,7 +10,8 @@
 #include <Gwork/Controls/VerticalSlider.h>
 #include <Gwork/Controls/HorizontalSlider.h>
 
-using namespace Gwk;
+namespace Gwk {
+namespace Test {
 
 class Slider : public TestUnit
 {
@@ -24,7 +25,7 @@ public:
             slider->SetSize(150, 20);
             slider->SetRange(0, 100);
             slider->SetFloatValue(25);
-            slider->onValueChanged.Add(this, &Slider::SliderMoved);
+            slider->onValueChanged.Add(this, &Slider::OnSliderMoved);
         }
         {
             Gwk::Controls::HorizontalSlider* slider = new Gwk::Controls::HorizontalSlider(this);
@@ -34,7 +35,7 @@ public:
             slider->SetFloatValue(20);
             slider->SetNotchCount(10);
             slider->SetClampToNotches(true);
-            slider->onValueChanged.Add(this, &Slider::SliderMoved);
+            slider->onValueChanged.Add(this, &Slider::OnSliderMoved);
         }
         {
             Gwk::Controls::VerticalSlider* slider = new Gwk::Controls::VerticalSlider(this);
@@ -42,7 +43,7 @@ public:
             slider->SetSize(20, 200);
             slider->SetRange(0, 100);
             slider->SetFloatValue(25);
-            slider->onValueChanged.Add(this, &Slider::SliderMoved);
+            slider->onValueChanged.Add(this, &Slider::OnSliderMoved);
         }
         {
             Gwk::Controls::VerticalSlider* slider = new Gwk::Controls::VerticalSlider(this);
@@ -52,17 +53,19 @@ public:
             slider->SetFloatValue(20);
             slider->SetNotchCount(10);
             slider->SetClampToNotches(true);
-            slider->onValueChanged.Add(this, &Slider::SliderMoved);
+            slider->onValueChanged.Add(this, &Slider::OnSliderMoved);
         }
     }
 
-    void SliderMoved(Base* control)
+    void OnSliderMoved(Event::Info info)
     {
-        Gwk::Controls::Slider* slider = (Gwk::Controls::Slider*)control;
+        auto slider = static_cast<Gwk::Controls::Slider*>(info.ControlCaller);
         OutputToLog(Utility::Format("Slider Value: %.2f", slider->GetFloatValue()));
     }
 
 };
 
+GWK_REGISTER_TEST(Slider);
 
-DECLARE_TEST(Slider);
+}}
+

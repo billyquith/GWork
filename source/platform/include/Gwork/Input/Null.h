@@ -20,10 +20,7 @@ namespace Gwk
 
             Null()
             :   m_eventListener(nullptr)
-            // ,   m_mouseX(0)
-            // ,   m_mouseY(0)
-            {
-            }
+            {}
 
             void Initialize(IInputEventListener* el)
             {
@@ -43,9 +40,6 @@ namespace Gwk
         protected:
 
             IInputEventListener *m_eventListener;
-            // int m_mouseX;
-            // int m_mouseY;
-
         };
     }
 }

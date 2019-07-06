@@ -4,9 +4,9 @@ source/platform/include/Gwork/Version.h
 
 bin/
 lib/
-deps/
 
 build*/
+maintain_*.txt
 
 source/test/stats/*_report.*
 source/test/stats/curr_allocs.*

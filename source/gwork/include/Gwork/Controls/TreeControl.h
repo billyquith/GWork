@@ -45,7 +45,7 @@ namespace Gwk
 
         private:
 
-            void OnNodeSelection(Controls::Base* control);
+            void OnNodeSelection(Event::Info info);
 
             ScrollControl*      m_scrollControl;
             bool m_bAllowMultipleSelection;

@@ -12,19 +12,27 @@
 
 #include <Gwork/Test/Test.h>
 
+namespace Gwk {
+    namespace Test {
+ 
+        //
+        /// Here we test the Gwork C++ API.
+        ///  - All controls created with C++.
+        //
+        class TestAPI : public TestCategory
+        {
+        public:
+            GWK_CONTROL(TestAPI, TestCategory);
+            
+        private:
+            
+            void OnCategorySelect(Gwk::Event::Info info);
+            
+            Gwk::Controls::Base *m_lastControl;
+            
+        };
 
-class TestAPI : public TestCategory
-{
-public:
-    GWK_CONTROL(TestAPI, TestCategory);
-
-private:
-
-    void OnCategorySelect(Gwk::Event::Info info);
-
-    Gwk::Controls::Base *m_lastControl;
-
-};
-
+    }
+}
 
 #endif // ifndef GWK_TEST_TESTAPI_H

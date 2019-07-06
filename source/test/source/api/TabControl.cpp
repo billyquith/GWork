@@ -9,7 +9,8 @@
 #include <Gwork/Controls/TabControl.h>
 #include <Gwork/Controls/RadioButtonController.h>
 
-using namespace Gwk;
+namespace Gwk {
+namespace Test {
 
 class TabControl : public TestUnit
 {
@@ -52,10 +53,9 @@ public:
         }
     }
 
-    void OnDockChange(Gwk::Controls::Base* control)
+    void OnDockChange(Event::Info info)
     {
-        Gwk::Controls::RadioButtonController* rc =
-            (Gwk::Controls::RadioButtonController*)control;
+        auto rc = static_cast<Gwk::Controls::RadioButtonController*>(info.ControlCaller);
 
         if (rc->GetSelectedLabel() == "Top")
             m_dockControlLeft->SetTabStripPosition(Position::Top);
@@ -73,5 +73,7 @@ public:
     Gwk::Font m_font;
 };
 
+GWK_REGISTER_TEST(TabControl);
 
-DECLARE_TEST(TabControl);
+}}
+

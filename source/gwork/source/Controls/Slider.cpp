@@ -39,7 +39,7 @@ GWK_CONTROL_CONSTRUCTOR(Slider)
     SetTabable(true);
 }
 
-void Slider::OnMoved(Controls::Base* /*control*/)
+void Slider::OnMoved(Event::Info)
 {
     SetValueInternal(CalculateValue());
 }

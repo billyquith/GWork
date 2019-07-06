@@ -9,7 +9,8 @@
 #include <Gwork/Controls/Label.h>
 #include <Gwork/Controls/CrossSplitter.h>
 
-using namespace Gwk;
+namespace Gwk {
+namespace Test {
 
 class LabelMultiline : public TestUnit
 {
@@ -54,5 +55,7 @@ public:
     Gwk::Font m_font;
 };
 
+GWK_REGISTER_TEST(LabelMultiline);
 
-DECLARE_TEST(LabelMultiline);
+}}
+

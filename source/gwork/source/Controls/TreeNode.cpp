@@ -199,7 +199,7 @@ Button* TreeNode::GetButton()
     return m_title;
 }
 
-void TreeNode::OnToggleButtonPress(Base* /*control*/)
+void TreeNode::OnToggleButtonPress(Event::Info)
 {
     if (m_toggleButton->GetToggleState())
         Open();
@@ -207,7 +207,7 @@ void TreeNode::OnToggleButtonPress(Base* /*control*/)
         Close();
 }
 
-void TreeNode::OnDoubleClickName(Base* /*control*/)
+void TreeNode::OnDoubleClickName(Event::Info)
 {
     if (!m_toggleButton->Visible())
         return;
@@ -215,13 +215,13 @@ void TreeNode::OnDoubleClickName(Base* /*control*/)
     m_toggleButton->Toggle();
 }
 
-void TreeNode::OnClickName(Base* /*control*/)
+void TreeNode::OnClickName(Event::Info)
 {
     onNamePress.Call(this);
     SetSelected(!IsSelected());
 }
 
-void TreeNode::OnRightPress(Base* control)
+void TreeNode::OnRightPress(Event::Info)
 {
     onRightPress.Call(this);
 }

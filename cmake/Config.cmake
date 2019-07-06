@@ -1,10 +1,10 @@
 
-#### Project Configuration
+#### Gwork Project Configuration
 
 # Version
-set(GWK_VERSION_MAJOR 0)
-set(GWK_VERSION_MINOR 3)
-set(GWK_VERSION_PATCH 1)
+set(GWK_VERSION_MAJOR 1)
+set(GWK_VERSION_MINOR 0)
+set(GWK_VERSION_PATCH 0)
 set(GWK_BRANCH "Release")       # Dev or Release
 set(GWK_VERSION_STR "${GWK_VERSION_MAJOR}.${GWK_VERSION_MINOR}.${GWK_VERSION_PATCH} ${GWK_BRANCH}")
 message("Project version: ${GWK_VERSION_STR}")
@@ -25,19 +25,32 @@ option(RENDER_OPENGL        "Renderer: OPENGL"              OFF)
 option(RENDER_OPENGL_CORE   "Renderer: OPENGL Core Profile" OFF)
 option(RENDER_SDL2          "Renderer: SDL2"                OFF)
 option(RENDER_SFML2         "Renderer: SFML2"               OFF)
-option(RENDER_SW            "Renderer: Software"            OFF) # Used for testing
+option(RENDER_SW            "Renderer: Software"            OFF)
 option(RENDER_NULL          "Renderer: Null"                OFF) # Used for testing
 
 option(USE_GLFW             "Use GLFW for OpenGL renderer." ON)
 
-option(BUILD_TEST           "Include unittests" ON)
-option(BUILD_SAMPLE         "Include sample"    ON)
+option(WITH_TESTS           "Include unittests" ON)
+option(WITH_SAMPLE          "Include sample" ON)
+
+option(WITH_REFLECTION      "Use reflection (requires external dependencies)" OFF)
 
 # This is for development but can be used by the user.
-option(ALLOC_STATS "Track memory allocations" OFF)
+option(WITH_ALLOC_STATS     "Track memory allocations" OFF)
+
+# Find SFML by SFMLConfig.cmake instead of local CMake module FindSFML.cmake.
+option(USE_SFML_CONFIG "Use SFMLConfig.cmake to find SFML (>=2.5)" OFF)
 
 #-----------------------------------------------------------
 # Configure once options known
+
+option(WANT_SHARED_LIBS OFF) # TODO: Shared libs not implemented yet.
+
+option(WITH_REFLECTION_LOCAL "Use local libaries" ON) # TODO: OFF not tested.
+set(GWK_PONDER_INCLUDE "${GWK_SOURCE_DIR}/deps/ponder/include"
+    CACHE STRING "Ponder includes directory")
+set(GWK_LUA_INCLUDE "${GWK_SOURCE_DIR}/deps/lua-5.3/src"
+    CACHE STRING "Lua include directory")
 
 set(GWK_TARGET_ARCH "Unknown")      # default architecture e.g. x86, x64
 
@@ -47,14 +60,6 @@ if(NOT CMAKE_BUILD_TYPE)
         CACHE STRING "Type of build, options are: None Debug Release RelWithDebInfo MinSizeRel."
     )
 endif()
-
-# TODO: Add an option for choosing the build type (shared or static)
-# if(NOT BUILD_SHARED_LIBS)
-#     set(BUILD_SHARED_LIBS TRUE
-#         CACHE BOOL "TRUE to build Gwork as a shared library, FALSE to build it as a static library."
-#     )
-# endif()
-set(BUILD_SHARED_LIBS FALSE)
 
 # define install directory for miscelleneous files
 if(WIN32 AND NOT UNIX)
@@ -71,17 +76,21 @@ elseif(UNIX)
     set(INSTALL_MISC_DIR share/gwork)
 endif()
 
-if(BUILD_TEST)
-    message(STATUS "Including Gwk tests")
-endif(BUILD_TEST)
+if(WITH_TESTS)
+    message("Including tests")
+endif(WITH_TESTS)
 
-if(BUILD_SAMPLE)
+if(WITH_SAMPLE)
     message(STATUS "Including Gwk sample")
 
     if (NOT USE_GLFW AND (RENDER_OPENGL OR RENDER_OPENGL_CORE))
         message(FATAL_ERROR "Samples with OpenGL or OpenGLCore require GLFW")
     endif()
-endif(BUILD_SAMPLE)
+endif(WITH_SAMPLE)
+
+if(WITH_REFLECTION)
+    message("Using reflection")
+endif(WITH_REFLECTION)
 
 #-----------------------------------------------------------
 # Renderer config
@@ -201,12 +210,19 @@ if(RENDER_SFML2)
     set(GWK_INPUT_NAME "SFML2")
     set(GWK_PLATFORM_NAME "Cross")
     set(SFML_STATIC_LIBRARIES FALSE) # But note we edited FindSFML...
-    find_package(SFML 2 COMPONENTS system window graphics REQUIRED)
+    find_package(OpenGL REQUIRED)
+    if(USE_SFML_CONFIG)
+        find_package(SFML 2 CONFIG COMPONENTS system window graphics REQUIRED)
+        set(GWK_RENDER_INCLUDES ${OPENGL_INCLUDE_DIRS})
+        set(GWK_RENDER_LIBRARIES ${OPENGL_LIBRARIES} sfml-system sfml-window sfml-graphics)
+    else()
+        find_package(SFML 2 COMPONENTS system window graphics REQUIRED)
+        set(GWK_RENDER_INCLUDES ${OPENGL_INCLUDE_DIRS} ${SFML_INCLUDE_DIR})
+        set(GWK_RENDER_LIBRARIES ${SFML_LIBRARIES} ${SFML_DEPENDENCIES})
+    endif()
     if(NOT SFML_FOUND)
         message(FATAL_ERROR "SFML2 is missing components")
     endif()
-    set(GWK_RENDER_INCLUDES "${SFML_INCLUDE_DIR}")
-    set(GWK_RENDER_LIBRARIES ${SFML_LIBRARIES} ${SFML_DEPENDENCIES})
 endif(RENDER_SFML2)
 
 if(RENDER_SW)
@@ -227,6 +243,10 @@ endif(RENDER_SW)
 
 #-----------------------------------------------------------
 # Sanity checks
+
+if(WANT_SHARED_LIBS)
+    message(FATAL_ERROR "Shared libraries not currently tested/supported")
+endif()
 
 if(NOT GWK_RENDER_NAME)
     message(FATAL_ERROR "No renderer was specified. See RENDER_<name> options.")

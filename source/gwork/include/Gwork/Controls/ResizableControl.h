@@ -57,8 +57,8 @@ namespace Gwk
             {
             }
 
-            Event::Caller onResize;
-
+            Event::Listener onResize;
+            
             virtual ControlsInternal::Resizer* GetResizer(int iResizer) // TODO - remove this?
             {
                 return m_resizers[iResizer];
@@ -66,7 +66,7 @@ namespace Gwk
 
         protected:
 
-            void OnResizedInternal(Controls::Base* control);
+            void OnResizedInternal(Event::Info);
 
             Gwk::Point m_minimumSize;
             bool m_bClampMovement;

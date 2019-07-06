@@ -38,12 +38,12 @@ GWK_CONTROL_CONSTRUCTOR(NumericUpDown)
     SetText("0");
 }
 
-void NumericUpDown::OnButtonUp(Base* /*control*/)
+void NumericUpDown::OnButtonUp(Event::Info)
 {
     SetIntValue(GetIntValueUnclamped() + 1);
 }
 
-void NumericUpDown::OnButtonDown(Base* /*control*/)
+void NumericUpDown::OnButtonDown(Event::Info)
 {
     SetIntValue(GetIntValueUnclamped() - 1);
 }

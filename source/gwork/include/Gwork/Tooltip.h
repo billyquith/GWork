@@ -15,7 +15,7 @@
 #include <Gwork/Skin.h>
 
 namespace Gwk {
-    namespace ToolTip
+    namespace Tooltip
     {
         GWK_EXPORT bool TooltipActive();
 
@@ -24,7 +24,7 @@ namespace Gwk {
 
         GWK_EXPORT void ControlDeleted(Controls::Base* control);
 
-        GWK_EXPORT void RenderToolTip(Skin::Base* skin);
+        GWK_EXPORT void RenderTooltip(Skin::Base* skin);
     }
 }
 

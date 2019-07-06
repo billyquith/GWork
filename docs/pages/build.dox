@@ -116,8 +116,8 @@ create multiple build folders and create different project files and targets in 
 
 Some tests and a sample are included for each target by default. These can be turned off using:
 
-- `-DBUILD_TEST=OFF`
-- `-DBUILD_SAMPLE=OFF`
+- `-DWITH_TESTS=OFF`
+- `-DWITH_SAMPLE=OFF`
 
 You should compile and run the sample before using Gwork in your own project to make sure that
 everything is working correctly.

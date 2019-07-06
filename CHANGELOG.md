@@ -4,6 +4,10 @@ Changelog
 
 This is a changelog for Gwork. There are also notes [on my blog][blog]
 
+## 1.0
+
+- Added reflection to Gwork using [Ponder][ponder] reflection library. #30.
+
 #### 0.3.1
 
 - Add option to use SFML 2.5 cmake config. Thanks roepel@github. #94
@@ -70,6 +74,7 @@ This is a changelog for Gwork. There are also notes [on my blog][blog]
 * camelCase variables.
 
 
+[ponder]: https://github.com/billyquith/ponder
 [gwen]: https://github.com/garrynewman/GWEN
 [sdl2]: https://www.libsdl.org/
 [sfml2]: http://www.sfml-dev.org

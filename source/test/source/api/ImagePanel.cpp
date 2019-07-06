@@ -8,7 +8,8 @@
 #include <Gwork/Test/TestAPI.h>
 #include <Gwork/Controls/ImagePanel.h>
 
-using namespace Gwk;
+namespace Gwk {
+namespace Test {
 
 class ImagePanel : public TestUnit
 {
@@ -32,5 +33,7 @@ public:
 
 };
 
+GWK_REGISTER_TEST(ImagePanel);
 
-DECLARE_TEST(ImagePanel);
+}}
+

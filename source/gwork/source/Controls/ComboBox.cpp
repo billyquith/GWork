@@ -102,12 +102,12 @@ void ComboBox::UpdateColors()
     ParentClass::UpdateColors();
 }
 
-void ComboBox::OnPress()
+void ComboBox::OnPress(Event::Info)
 {
     if (IsMenuOpen())
         return GetCanvas()->CloseMenus();
 
-    bool bWasMenuHidden = m_menu->Hidden();
+    const bool bWasMenuHidden = m_menu->Hidden();
     GetCanvas()->CloseMenus();
 
     if (bWasMenuHidden)
@@ -137,15 +137,15 @@ void ComboBox::SelectItem(MenuItem* item, bool bFireChangeEvents)
     }
 }
 
-void ComboBox::OnItemSelected(Controls::Base* control)
+void ComboBox::OnItemSelected(Event::Info info)
 {
     // Convert selected to a menu item
-    MenuItem* item = gwk_cast<MenuItem>(control);
+    MenuItem* item = gwk_cast<MenuItem>(info.ControlCaller);
 
-    if (!item)
-        return;
-
-    SelectItem(item);
+    if (item)
+    {
+        SelectItem(item);        
+    }
 }
 
 void ComboBox::SelectItemByName(const Gwk::String& name, bool bFireChangeEvents)

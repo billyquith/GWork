@@ -1,0 +1,3 @@
+[submodule "deps/ponder"]
+	path = deps/ponder
+	url = https://github.com/billyquith/ponder.git
