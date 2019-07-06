@@ -74,7 +74,7 @@ This is a changelog for Gwork. There are also notes [on my blog][blog]
 [gwen]: https://github.com/garrynewman/GWEN
 [sdl2]: https://www.libsdl.org/
 [sfml2]: http://www.sfml-dev.org
-[al5]: http://alleg.sourceforge.net
+[al5]: https://liballeg.org
 [issues]: https://github.com/billyquith/GWork/issues "Bugs/Issues"
 [1]: http://www.codinghorror.com/blog/2009/04/death-to-the-space-infidels.html "Interesting article on consistency"
 [2]: http://en.wikipedia.org/wiki/Indent_style#Allman_style "Not uncommon"
