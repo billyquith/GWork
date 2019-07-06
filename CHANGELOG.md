@@ -4,6 +4,10 @@ Changelog
 
 This is a changelog for Gwork. There are also notes [on my blog][blog]
 
+#### 1.0.1
+
+- Various fixes.
+
 ## 1.0
 
 - Added reflection to Gwork using [Ponder][ponder] reflection library. #30.

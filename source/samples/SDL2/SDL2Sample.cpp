@@ -36,9 +36,8 @@ int main(int argc, char** argv)
 
     {
         Gwk::Platform::RelativeToExecutablePaths paths(GWK_SAMPLE_RESOURCE_DIR);
-        Gwk::Renderer::SDL2ResourceLoader loader(paths, sdlRenderer);
         
-        std::unique_ptr<Gwk::Renderer::SDL2> renderer(new Gwk::Renderer::SDL2(loader, window));
+        std::unique_ptr<Gwk::Renderer::SDL2> renderer(new Gwk::Renderer::SDL2(paths, window));
         
         // Create a Gwork skin
         std::unique_ptr<Gwk::Skin::TexturedBase> skin(new Gwk::Skin::TexturedBase(renderer.get()));
