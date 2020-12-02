@@ -16,6 +16,10 @@
 
 #include <Gwork/Input/Allegro5.h>
 
+#if defined(_MSC_VER)
+#define WIN32_LEAN_AND_MEAN
+#include <windows.h>
+#endif
 
 static Gwk::Input::Allegro      g_gworkInput;
 static ALLEGRO_EVENT_QUEUE*     g_event_queue = nullptr;

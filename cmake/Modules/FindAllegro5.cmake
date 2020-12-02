@@ -17,6 +17,7 @@ find_path(ALLEGRO_INCLUDE
         /opt/local/include
         /sw/include
         ${CMAKE_BINARY_DIR}/packages/Allegro.5.*/build/native/include  # NuGet
+        ${USER_LOCAL}/include
 )
 
 # Components to find
@@ -50,6 +51,7 @@ foreach(ALLEGRO_LIB_EACH ${ALLEGRO_LIB_LIST})
             /opt/local/lib
             /sw/lib
             ${CMAKE_BINARY_DIR}/packages/Allegro.5.*/build/native/${AL_LIB_TYPE}/lib  # NuGet
+            ${USER_LOCAL}/lib
     )
     message("Component: ${ALLEGRO_LIB_EACH} -> ${${ALLEGRO_LIB_EACH}_LIB}")
     list(APPEND ALLEGRO_LIBRARIES ${${ALLEGRO_LIB_EACH}_LIB})

@@ -125,8 +125,8 @@ void Declare()
 
     ponder::Class::declare<Controls::Menu>()
         .base<Controls::Menu::ParentClass>()
-        .function("addItem", &Controls::Menu::AddItem)
-        .function("addDivider", &Controls::Menu::AddDivider)
+        .function("addItem", &Controls::Menu::AddItem, ponder::policy::ReturnInternalRef())
+        .function("addDivider", &Controls::Menu::AddDivider, ponder::policy::ReturnInternalRef())
         ;
 
     ponder::Class::declare<Controls::MenuStrip>()

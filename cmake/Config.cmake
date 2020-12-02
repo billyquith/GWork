@@ -39,7 +39,9 @@ option(WITH_REFLECTION      "Use reflection (requires external dependencies)" OF
 option(WITH_ALLOC_STATS     "Track memory allocations" OFF)
 
 # Find SFML by SFMLConfig.cmake instead of local CMake module FindSFML.cmake.
-option(USE_SFML_CONFIG "Use SFMLConfig.cmake to find SFML (>=2.5)" OFF)
+option(USE_SFML_CONFIG      "Use SFMLConfig.cmake to find SFML (>=2.5)" OFF)
+
+set(USER_LOCAL "" CACHE STRING "Users local install root")
 
 #-----------------------------------------------------------
 # Configure once options known
