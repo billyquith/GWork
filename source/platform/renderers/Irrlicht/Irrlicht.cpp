@@ -241,7 +241,7 @@ namespace Gwk {
                     texData.m_ReadData = deleted_unique_ptr<unsigned char>(
                         new unsigned char[texData.width * texData.height * bytes],
                         [](unsigned char* mem) { if (mem) delete[](mem); });
-                    memcpy(texData.m_ReadData.get(), buffer, texData.width * texData.height * bytes);
+                    memcpy(texData.m_ReadData.get(), buffer, static_cast<int>(texData.width) * static_cast<int>(texData.height) * static_cast<int>(bytes));
                     texData.readable = true;
                     const irr::video::SColor pixelColor = irr::video::SColor(*(unsigned int*)(buffer + (y * pitch) + (x*bytes)));
                     Texture->unlock();
