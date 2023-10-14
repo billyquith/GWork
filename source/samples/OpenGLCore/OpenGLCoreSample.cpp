@@ -69,6 +69,8 @@ int main()
     }
 
     glfwMakeContextCurrent(window);
+	
+	// MODIFIED: use glad flag to initialize opengl.
 
     #if defined(GWK_GL_GLAD)
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
@@ -111,7 +113,8 @@ int main()
     canvas->SetBackgroundColor(Gwk::Color(150, 170, 170, 255));
 
     // Create our unittest control (which is a Window with controls in it)
-    auto unit = new TestFrame(canvas);
+	// MODIFIED: I think this errored because of my compiler settings.
+    auto unit = new Gwk::Test::TestFrame(canvas);
     GworkInput.Initialize(canvas);
 
     glfwSetKeyCallback(window, key_callback);
