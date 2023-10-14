@@ -174,6 +174,8 @@ if(RENDER_OPENGL_CORE)
 
     find_package(glm REQUIRED)
 
+    # MODIFIED: add glad support with a macro flag to enable in the OPENGL_CORE renderer.
+
     if(USE_GLEW)
         find_package(GLEW REQUIRED)
         set(GWK_RENDER_INCLUDES "${GLM_INCLUDE_DIR}" "${GLEW_INCLUDE_DIR}")
@@ -181,10 +183,14 @@ if(RENDER_OPENGL_CORE)
     elseif(USE_GLAD)
         find_package(glad CONFIG REQUIRED)
         set(GWK_RENDER_LIBRARIES ${GLM_LIBRARIES} glad::glad)
+        set(GWK_GL_API "GLAD")
     endif()
 
 
     if(USE_GLFW)
+
+        # MODIFIED: add vcpkg flag for glfw
+
         if(NOT USE_VCPKG)
             find_package(GLFW REQUIRED)
         else()
