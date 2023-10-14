@@ -7,14 +7,14 @@
 #include <Gwork/Renderers/OpenGLCore.h>
 #if defined(__APPLE__)
 #if defined(GWK_GL_GLAD)
-#   include <GL/glad.h>
+#   include <glad/glad.h>
 #else
 #   include <GL/glew.h>
 #endif
 #   include <OpenGL/gl.h>
 #else
 #if defined(GWK_GL_GLAD)
-#   include <GL/glad.h>
+#   include <glad/glad.h>
 #else
 #   include <GL/glew.h>
 #endif
