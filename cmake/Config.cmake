@@ -185,8 +185,9 @@ if(RENDER_OPENGL_CORE)
 
 
     if(USE_GLFW)
-        find_package(GLFW REQUIRED)
-        if(USE_VCPKG)
+        if(NOT USE_VCPKG)
+            find_package(GLFW REQUIRED)
+        else()
             set(GLFW_LIBRARIES glfw)
         endif()
         if (APPLE)
