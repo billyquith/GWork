@@ -69,6 +69,15 @@ int main()
     }
 
     glfwMakeContextCurrent(window);
+
+    #if defined(GWK_GL_GLAD)
+    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+    {
+        std::cout << "Glad init error." << std::endl;
+        glfwTerminate();
+        return EXIT_FAILURE;
+    }
+    #else
     glewExperimental = GL_TRUE;
     GLuint error;
     if ((error = glewInit()) != GLEW_OK)
@@ -77,6 +86,7 @@ int main()
         glfwTerminate();
         return EXIT_FAILURE;
     }
+    #endif    
 
     Gwk::Platform::RelativeToExecutablePaths paths(GWK_SAMPLE_RESOURCE_DIR);
 
