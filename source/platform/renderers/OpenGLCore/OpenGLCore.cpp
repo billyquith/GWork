@@ -4,6 +4,8 @@
  *  See license in Gwork.h
  */
 
+// MODIFIED: uses glad flag.
+
 #include <Gwork/Renderers/OpenGLCore.h>
 #if defined(__APPLE__)
 #if defined(GWK_GL_GLAD)

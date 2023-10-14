@@ -3,8 +3,14 @@
  *  Copyright (c) 2013-2018 Billy Quith
  *  See license in Gwork.h
  */
+ 
+ // MODIFIED: uses glad flag.
 
-#include <GL/glew.h>
+#if defined(GWK_GL_GLAD)
+#   include <glad/glad.h>
+#else
+#   include <GL/glew.h>
+#endif
 #ifdef USE_DEBUG_FONT
 #   include <Gwork/Renderers/OpenGL_DebugFont.h>
 #else
