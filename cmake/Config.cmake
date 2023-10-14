@@ -173,10 +173,16 @@ if(RENDER_OPENGL_CORE)
     set(GWK_PLATFORM_NAME "Cross")
 
     find_package(glm REQUIRED)
-    find_package(GLEW REQUIRED)
 
-    set(GWK_RENDER_INCLUDES "${GLM_INCLUDE_DIR}" "${GLEW_INCLUDE_DIR}")
-    set(GWK_RENDER_LIBRARIES ${GLM_LIBRARIES} ${GLEW_LIBRARIES})
+    if(USE_GLEW)
+        find_package(GLEW REQUIRED)
+        set(GWK_RENDER_INCLUDES "${GLM_INCLUDE_DIR}" "${GLEW_INCLUDE_DIR}")
+        set(GWK_RENDER_LIBRARIES ${GLM_LIBRARIES} ${GLEW_LIBRARIES})
+    elseif(USE_GLAD)
+        find_package(glad CONFIG REQUIRED)
+        set(GWK_RENDER_LIBRARIES ${GLM_LIBRARIES} glad::glad)
+    endif()
+
 
     if(USE_GLFW)
         find_package(GLFW REQUIRED)
