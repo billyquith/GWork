@@ -44,8 +44,7 @@ source_group("${GWK_SOURCE_FOLDER}"
 
 add_definitions(${GWK_LIB_DEFINES})
 
-# MODIFIED: add definition flag for glad support
-if(GWK_GL_API)
+if(GWK_GLAD_API)
 add_definitions("-DGWK_GL_GLAD=1")
 endif()
 

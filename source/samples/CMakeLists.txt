@@ -38,8 +38,7 @@ if(WITH_SAMPLE)
 
     add_definitions(-DGWK_SAMPLE -DGWK_SAMPLE_RESOURCE_DIR="${APP_RUNTIME_RESOURCE_DIR}")
 
-    # MODIFIED: add definition flag for glad support
-    if(GWK_GL_API)
+    if(GWK_GLAD_API)
     add_definitions("-DGWK_GL_GLAD=1")
     endif()
 

@@ -1,7 +1,7 @@
 # CMake build instructions for Gwork
 
 # configure cmake
-cmake_minimum_required(VERSION 3.15) # MODIFIED: cmake 3.5 and below is deprecated.
+cmake_minimum_required(VERSION 3.15) 
 
 # we require C++11 - this set appropriate flags for compilers, which may not be portable
 set(CMAKE_CXX_STANDARD 14)
