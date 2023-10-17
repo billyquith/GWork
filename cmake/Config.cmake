@@ -66,7 +66,9 @@ if(WIN32 AND NOT UNIX)
     set(INSTALL_MISC_DIR .)
 
     # Determine the target architecture, which is useful for linking.
-    if (CMAKE_GENERATOR MATCHES "Win64")
+    cmake_host_system_information(RESULT host_is_64 QUERY IS_64BIT)
+
+    if (host_is_64)
         set(GWK_TARGET_ARCH "x64")
     else()
         set(GWK_TARGET_ARCH "x86")
@@ -275,7 +277,7 @@ endif()
 #-----------------------------------------------------------
 
 # MinGW problems
-if (WIN32)
+if (CMAKE_CXX_COMPILER_ID MATCHES MINGW)
     set(GWK_RENDER_LIBRARIES ${GWK_RENDER_LIBRARIES} -liconv)
 endif()
 
