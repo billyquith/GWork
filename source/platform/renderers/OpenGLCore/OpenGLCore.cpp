@@ -294,8 +294,8 @@ void OpenGLCore::Init()
     );
 
     // Creating buffers
-    glCreateVertexArrays(1, &m_vao);
-    glCreateBuffers(1, &m_vbo);
+    glGenVertexArrays(1, &m_vao);
+    glGenBuffers(1, &m_vbo);
 
     // Loading shaders
 
