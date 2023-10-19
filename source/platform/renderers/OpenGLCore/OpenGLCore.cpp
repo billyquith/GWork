@@ -373,7 +373,7 @@ void OpenGLCore::Flush()
     glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
 
     // Loading data into VBO
-    glNamedBufferData(
+    glBufferData(
         m_vbo,
         m_vertices.size() * sizeof(Vertex),
         m_vertices.data(),
