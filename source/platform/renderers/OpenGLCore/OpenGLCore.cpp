@@ -294,8 +294,8 @@ void OpenGLCore::Init()
     );
 
     // Creating buffers
-    glGenVertexArrays(1, &m_vao);
-    glGenBuffers(1, &m_vbo);
+    glCreateVertexArrays(1, &m_vao);
+    glCreateBuffers(1, &m_vbo);
 
     // Loading shaders
 
@@ -373,7 +373,7 @@ void OpenGLCore::Flush()
     glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
 
     // Loading data into VBO
-    glBufferData(
+    glNamedBufferData(
         m_vbo,
         m_vertices.size() * sizeof(Vertex),
         m_vertices.data(),
