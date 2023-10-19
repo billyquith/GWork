@@ -38,6 +38,10 @@ if(WITH_SAMPLE)
 
     add_definitions(-DGWK_SAMPLE -DGWK_SAMPLE_RESOURCE_DIR="${APP_RUNTIME_RESOURCE_DIR}")
 
+    if(GWK_GLAD_API)
+    add_definitions("-DGWK_GL_GLAD=1")
+    endif()
+
     add_executable(${SAMPLE_NAME} ${APP_BUILD_TYPE} ${SAMPLE_SOURCES} ${SAMPLE_RESOURCES})
 
     target_link_libraries(${SAMPLE_NAME}

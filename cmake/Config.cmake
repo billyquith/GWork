@@ -66,7 +66,9 @@ if(WIN32 AND NOT UNIX)
     set(INSTALL_MISC_DIR .)
 
     # Determine the target architecture, which is useful for linking.
-    if (CMAKE_GENERATOR MATCHES "Win64")
+    cmake_host_system_information(RESULT host_is_64 QUERY IS_64BIT)
+
+    if (host_is_64)
         set(GWK_TARGET_ARCH "x64")
     else()
         set(GWK_TARGET_ARCH "x86")
@@ -172,14 +174,37 @@ if(RENDER_OPENGL_CORE)
     set(GWK_INPUT_NAME "GLFW3")
     set(GWK_PLATFORM_NAME "Cross")
 
-    find_package(glm REQUIRED)
-    find_package(GLEW REQUIRED)
+    if(USE_VCPKG)
+        find_package(glm CONFIG REQUIRED)
+        set(GLM_INCLUDE_DIR ${glm_DIR})
+    else()
+        find_package(glm REQUIRED)
+    endif()
 
-    set(GWK_RENDER_INCLUDES "${GLM_INCLUDE_DIR}" "${GLEW_INCLUDE_DIR}")
-    set(GWK_RENDER_LIBRARIES ${GLM_LIBRARIES} ${GLEW_LIBRARIES})
+    if(USE_GLEW)
+        find_package(GLEW REQUIRED)
+        set(GWK_RENDER_INCLUDES "${GLM_INCLUDE_DIR}" "${GLEW_INCLUDE_DIR}")
+        set(GWK_RENDER_LIBRARIES ${GLM_LIBRARIES} ${GLEW_LIBRARIES})
+    elseif(USE_GLAD)
+        find_package(glad CONFIG REQUIRED)
+        set(GWK_RENDER_LIBRARIES ${GLM_LIBRARIES} glad::glad)
+        set(GWK_GLAD_API "GLAD")
+    endif()
+
 
     if(USE_GLFW)
-        find_package(GLFW REQUIRED)
+
+        if(USE_VCPKG)    
+            find_package(glfw3 CONFIG REQUIRED)
+        elseif()
+            find_package(GLFW REQUIRED)
+        endif()
+
+        if(USE_VCPKG)
+            set(GLFW_LIBRARIES glfw)
+            set(GLFW_INCLUDE_DIR ${glfw3_DIR})
+        endif()
+
         if (APPLE)
             set(GLFW_DEPENDENCIES "-framework OpenGL")
         elseif(UNIX)
@@ -263,7 +288,7 @@ endif()
 #-----------------------------------------------------------
 
 # MinGW problems
-if (WIN32)
+if (CMAKE_CXX_COMPILER_ID MATCHES MINGW)
     set(GWK_RENDER_LIBRARIES ${GWK_RENDER_LIBRARIES} -liconv)
 endif()
 

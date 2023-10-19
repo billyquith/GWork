@@ -6,10 +6,18 @@
 
 #include <Gwork/Renderers/OpenGLCore.h>
 #if defined(__APPLE__)
-#   include <GL/glew.h>
-#   include <OpenGL/gl.h>
+#if defined(GWK_GL_GLAD)
+#   include <glad/glad.h>
 #else
 #   include <GL/glew.h>
+#endif
+#   include <OpenGL/gl.h>
+#else
+#if defined(GWK_GL_GLAD)
+#   include <glad/glad.h>
+#else
+#   include <GL/glew.h>
+#endif
 #   include <GL/gl.h>
 #endif
 #include <Gwork/PlatformTypes.h>

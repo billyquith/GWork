@@ -4,8 +4,8 @@ include_directories(
     ${GWK_SOURCE_DIR}/source/platform/include
     ${GWK_SOURCE_DIR}/source/gwork/include
     ${GWK_RENDER_INCLUDES}
-    ${CMAKE_SOURCE_DIR}/source/util/include
-    ${CMAKE_SOURCE_DIR}/source/test/include
+    ${GWK_SOURCE_DIR}/source/util/include
+    ${GWK_SOURCE_DIR}/source/test/include
     ${GWK_REFLECT_INCLUDE}
 )
 

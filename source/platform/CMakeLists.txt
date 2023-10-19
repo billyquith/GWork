@@ -44,6 +44,10 @@ source_group("${GWK_SOURCE_FOLDER}"
 
 add_definitions(${GWK_LIB_DEFINES})
 
+if(GWK_GLAD_API)
+add_definitions("-DGWK_GL_GLAD=1")
+endif()
+
 # Gwork renderer & platform library
 add_library(Gwork${GWK_RENDER_NAME} STATIC
             ${GWK_PLATFORM_HEADERS} ${GWK_RENDERER_HEADERS} ${GWK_INPUT_HEADERS}

@@ -3,8 +3,12 @@
  *  Copyright (c) 2013-2018 Billy Quith
  *  See license in Gwork.h
  */
-
-#include <GL/glew.h>
+ 
+#if defined(GWK_GL_GLAD)
+#   include <glad/glad.h>
+#else
+#   include <GL/glew.h>
+#endif
 #ifdef USE_DEBUG_FONT
 #   include <Gwork/Renderers/OpenGL_DebugFont.h>
 #else
@@ -49,7 +53,7 @@ int main()
         return EXIT_FAILURE;
 
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 5);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GL_TRUE);
 
@@ -63,6 +67,15 @@ int main()
     }
 
     glfwMakeContextCurrent(window);
+	
+    #if defined(GWK_GL_GLAD)
+    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+    {
+        std::cout << "Glad init error." << std::endl;
+        glfwTerminate();
+        return EXIT_FAILURE;
+    }
+    #else
     glewExperimental = GL_TRUE;
     GLuint error;
     if ((error = glewInit()) != GLEW_OK)
@@ -71,6 +84,7 @@ int main()
         glfwTerminate();
         return EXIT_FAILURE;
     }
+    #endif    
 
     Gwk::Platform::RelativeToExecutablePaths paths(GWK_SAMPLE_RESOURCE_DIR);
 
@@ -95,7 +109,7 @@ int main()
     canvas->SetBackgroundColor(Gwk::Color(150, 170, 170, 255));
 
     // Create our unittest control (which is a Window with controls in it)
-    auto unit = new TestFrame(canvas);
+    auto unit = new Gwk::Test::TestFrame(canvas);
     GworkInput.Initialize(canvas);
 
     glfwSetKeyCallback(window, key_callback);
